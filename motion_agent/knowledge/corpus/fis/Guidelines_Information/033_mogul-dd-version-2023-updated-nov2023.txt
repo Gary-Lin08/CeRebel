@@ -1,0 +1,74 @@
+--- page 1 ---
+1. Mogul Basic Degree of Difficulty and Common Combinations 
+     
+ Jump Code DD. Men DD. Women 
+Straight Jumps     
+ Single   0.40 0.50 
+ Double   0.53 0.63 
+ Triple   0.65 0.75 
+ Quad   0.76 0.86 
+ Quint   0.86 0.96 
+ Twister  T -0.02 -0.02 
+ Spread  S -0.02 -0.02 
+ Daffy  D 0.01 0.01 
+ Iron Cross  X 0.01 0.01 
+ Back Scratcher  Y 0.01 0.01 
+ Mule Kick  M 0.01 0.01 
+ Kosak  K 0.01 0.01 
+ Zudnick  Z 0 0 
+Jump Multipliers       
+ Position (p) p 0.03 0.03 
+ Grab (G)  G 0.14 0.14 
+Rotational Jumps       
+ 360 3 0.68 0.78 
+ 360 Position 3p 0.71 0.81 
+ 360 Grab 3G 0.82 0.92 
+ 720 7 0.85 0.95 
+ 720 Position 7p 0.88 0.98 
+ 720 Grab 7G 1.01 1.11 
+ 1080 10 1.02 1.12 
+ 1080 Position 10p 1.05 1.15 
+ 1080 Grab 10G 1.20 1.30 
+Off Axis Jumps       
+ Off Axis 360/Flat 3 3op 0.71 0.81 
+ Off Axis 360/Flat 3 Grab 3oG 0.82 0.92 
+ Off Axis 720 Position 7op 0.88 0.98 
+ Off Axis 720 Grab 7oG 1.01 1.11 
+ Off Axis 1080 Position 10op 1.05 1.15 
+ Off Axis 1080 Grab 10oG 1.20 1.30 
+ Off Axis 1440 Position 14op 1.22 1.32 
+ Off Axis 1440 Grab 14oG 1.39 1.49
+
+--- page 2 ---
+Inverted Jumps       
+ Back Pike / Back Tuck bP / bT 0.68 0.78 
+ Back Lay bL 0.71 0.81 
+ Back Position bp 0.71 0.81 
+ Back Grab bG 0.82 0.92 
+ Back full  bF 0.88 0.98 
+ Back double Full  bdF 1.05 1.15 
+ Back triple full  btF 1.22 1.32 
+       
+ Front Tuck / Front Pike  fT / fP 0.68 0.78 
+ Front position fp 0.71 0.81 
+ Front Grab fG 0.82 0.92 
+ Front Full  fF 0.88 0.98 
+Loop Jumps       
+ Loop  l 0.68 0.78 
+ Loop position lp 0.71 0.81 
+ Loop Grab lG 0.82 0.92 
+ Loop Full lF 0.85 0.95 
+ Loop Position Full lpF 0.88 0.98 
+ Loop Grab Full lGF 1.01 1.11 
+     
+04.11.23 print date     
+ 
+Notes: 
+• For jumps with multiple rotations, every additional rotation beyond the base manoeuvre , a 
+score of 0.17 will be applied. 
+• In jumps with multiple rotations, for every additional rotation beyond the base manoeuvre, an 
+additional grab score of 0.02 will be applied for each additional full rotation. 
+• In jumps with full rotations in a back or a front, the layout position score of 0.03 will be applied. 
+• Additional upright manoeuvres score of 0.13, 0.12, 0.11, 0.10 will be applied. 
+ 
+04.11.2023

@@ -1,0 +1,49 @@
+--- page 1 ---
+Gate-Judge-card for Qualification 
+ Ski Cross 
+ Ski Cross WC  
+ Ski Cross EC 
+ Ski Cross FIS 
+Categorie 
+ Men  
+ Women 
+ Jun 
+Section 
+ 
+Nr ______ 
+Section design 
+Date 
+ 
+ Local 
+Gate Judge name 
+ 
+ Mobil Nr 
+ Bib Nr 
+Gate Nr  
+Remarques 
+GM=Gate missed 
+GU= Given up 
+fall 
+no DSQ, but what 
+happened 
+ 
+Bib Nr 
+Gate Nr  
+ 
+Remarques 
+GM=Gate missed 
+GU= Given up 
+Fall 
+no DSQ, but what 
+happened 
+ 
+ 
+Bib Nr 
+Gate Nr  
+ 
+Remarques 
+GM=Gate missed 
+GU= Given up 
+Fall 
+no DSQ, but what 
+happened

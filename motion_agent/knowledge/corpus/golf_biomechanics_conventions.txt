@@ -1,0 +1,26 @@
+Golf biomechanics conventions (CeRebel / motion agent)
+
+Handedness
+- Lead / trail are relative to the player's handedness, not absolute left/right.
+- Confirm from video (grip, stance, ball side) before mapping SMPL-X left_* / right_*
+  joints to lead/trail language.
+
+Swing plane & rotation
+- Pelvis and thorax axial rotation (and their separation, often called X-factor in
+  coaching language) are useful sequencing cues; report OpenSim DOF names when citing
+  numbers from tools.
+- Do not invent clubhead speed, smash factor, or launch numbers unless tools or the
+  knowledge base provide them.
+
+Ground forces
+- OpenSim estimated GRF is not force-plate truth. Prefer qualitative loading patterns
+  (trail → lead weight shift) and cite estimated dynamics uncertainty when discussing
+  push-off or bracing.
+
+Temporal windows
+- Prefer phase windows (e.g. transition→impact) over a single timestamp for sequencing,
+  weight transfer, and hip/shoulder turn questions.
+
+Knowledge base
+- Prefer corpus paths under golf/ and golf_*.txt for technique and Rules of Golf content.
+- Shared opensim_motion_tools.txt covers pipeline notes, not golf rules.

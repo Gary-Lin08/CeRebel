@@ -1,0 +1,8 @@
+{
+  "passed": [
+    "model_ok",
+    "markers_ok",
+    "ik_ok",
+    "continuity_ok"
+  ]
+}

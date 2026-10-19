@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cerebel Motion Lab</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0A0B0A; min-height: 100vh; }
+  #root { display: flex; align-items: flex-start; justify-content: center; padding: 24px 12px; min-height: 100vh; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- CerebelServer/web_api.py serves this on CEREBEL_WEB_API_PORT (default 8093). -->
+<script>window.CEREBEL_API_BASE = "";</script>
+
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+
+<script type="text/babel" data-presets="react" src="./app.jsx"></script>
+<script type="text/babel" data-presets="react">
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App />);
+</script>
+</body>
+</html>

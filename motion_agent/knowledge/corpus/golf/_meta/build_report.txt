@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-09-20T15:30:27.424275+00:00",
+  "chunks": 1050,
+  "concepts": 26,
+  "relations": 9,
+  "documents": [
+    {
+      "id": "randa_rules_2023_pdf",
+      "status": "ok",
+      "path": "01_rules/2023_Rules_of_Golf.pdf",
+      "pages": 260,
+      "empty_pages": 0,
+      "chunks": 372,
+      "sha256": "09bf0ca97f02049f252a50b4946f2c2f532e69af501eed89ee6cbe49e630c255"
+    },
+    {
+      "id": "randa_clarifications_2026_07",
+      "status": "ok",
+      "path": "01_rules/2026-07-01_Additional_Clarifications.pdf",
+      "pages": 13,
+      "empty_pages": 0,
+      "chunks": 25,
+      "sha256": "7c6e3df9c7527f3e7626969e535fe141844af3a34a586a843d4598b4754f83ee"
+    },
+    {
+      "id": "usga_local_rules_2023",
+      "status": "ok",
+      "path": "01_rules/USGA_Local_Rules_and_Terms_2023.pdf",
+      "pages": 1,
+      "empty_pages": 0,
+      "chunks": 5,
+      "sha256": "1614a697425b7175e58a16b11e17e6bf598ed08451ca57e805deb29731144c3b"
+    },
+    {
+      "id": "usga_15_rules_poster",
+      "status": "ok",
+      "path": "01_rules/USGA_15_Rules_Poster_2023.pdf",
+      "pages": 1,
+      "empty_pages": 0,
+      "chunks": 3,
+      "sha256": "fe174258b42bcead74a289777b973b5693ec35ae327a1a88d8646943e46e6dd8"
+    },
+    {
+      "id": "usga_handicap_2024",
+      "status": "ok",
+      "path": "02_handicap/2024_Rules_of_Handicapping_USGA.pdf",
+      "pages": 130,
+      "empty_pages": 5,
+      "chunks": 135,
+      "sha256": "4b7335c3ee19a51b103afca42d7ed725e00ddec199c98ed0b1ac7e888a27df70"
+    },
+    {
+      "id": "usga_equipment_rules",
+      "status": "ok",
+      "path": "03_equipment/Equipment_Rules.pdf",
+      "pages": 99,
+      "empty_pages": 0,
+      "chunks": 141,
+      "sha256": "513947dbd2b8e609ba2785da812a690d9e9300f797e15cc2e355ba2473dd8d83"
+    },
+    {
+      "id": "usga_conforming_golf_balls",
+      "status": "ok",
+      "path": "03_equipment/Conforming_Golf_Balls_CURRENT.pdf",
+      "pages": 94,
+      "empty_pages": 0,
+      "chunks": 188,
+      "sha256": "11f58b6817a00b6ec5ba5d85cebc9304a947311290618af0021a25d15e7fbb37"
+    },
+    {
+      "id": "biomech_kinematics_2022",
+      "status": "ok",
+      "path": "04_biomechanics_open_access/Golf_Swing_Biomechanics_Systematic_Review_2022.pdf",
+      "pages": 27,
+      "empty_pages": 0,
+      "chunks": 84,
+      "sha256": "43d86a43ed552e01dc36f2c061d0b9b6a479c534053b4089dbeba7177c5d30ea"
+    },
+    {
+      "id": "biomech_grf_cop_2026",
+      "status": "ok",
+      "path": "04_biomechanics_open_access/GRF_CoP_Golf_Systematic_Review_2026.pdf",
+      "pages": 22,
+      "empty_pages": 0,
+      "chunks": 56,
+      "sha256": "def72887115f52bf8224166cc4f82ca3d0fdb8122daeba12955d55c2412d9a68"
+    },
+    {
+      "id": "internal_ecosystem_research_zh",
+      "status": "ok",
+      "chunks": 15,
+      "sha256": "1767b4e315898bc1b5738fb40bb5b787daab59c0db1bda42b706d923487cf628"
+    },
+    {
+      "id": "internal_bilingual_taxonomy",
+      "status": "ok",
+      "chunks": 26,
+      "sha256": "2723681eb1e0aa3328e54c457c5918922aa27af1859d8568a407e8672a2b52a2"
+    }
+  ],
+  "outputs": [
+    "generated_corpus/chunks.jsonl",
+    "generated_corpus/golf_kb.sqlite"
+  ]
+}

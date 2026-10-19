@@ -1,0 +1,10 @@
+subject,predicate,object,evidence_type,source_hint
+golf:attack_angle,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
+golf:dynamic_loft,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
+golf:club_path,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
+golf:face_angle,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
+golf:backswing,golf:precedes,golf:downswing,ResearchFinding,Bourgain et al. 2022
+golf:downswing,golf:precedes,golf:impact,ResearchFinding,Bourgain et al. 2022
+golf:impact,golf:precedes,golf:follow_through,ResearchFinding,Bourgain et al. 2022
+golf:ground_reaction_force,golf:associatedWith,golf:club_speed,ResearchFinding,Watson et al. 2026
+golf:centre_of_pressure,golf:associatedWith,golf:club_speed,ResearchFinding,Watson et al. 2026

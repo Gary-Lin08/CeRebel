@@ -1,0 +1,29 @@
+Golf swing vocabulary (seed knowledge pack)
+
+Phases (full swing)
+- Address: setup posture before the club moves; ball position, stance width, posture.
+- Takeaway: early club motion away from the ball; often one-piece with arms/shoulders.
+- Backswing: club rises to the top; trail hip/shoulder turn, wrist hinge (cocking).
+- Transition: change of direction from backswing into downswing; lower body often leads.
+- Downswing: club accelerates toward impact; sequencing (hips → torso → arms → club).
+- Impact: clubface meets ball; face angle and path largely set ball start/curvature.
+- Follow-through / finish: post-impact continuation to a balanced finish pose.
+
+Path / face language
+- Club path: direction the clubhead is moving through impact (in-to-out / out-to-in).
+- Face angle: clubface pointing at impact relative to target line (open / closed / square).
+- Angle of attack (AoA): upward or downward clubhead motion through impact.
+- Fade / draw: intentional curvature; slice / hook typically larger unintentional curves.
+
+Sides
+- Lead side: left for a right-handed player; right for a left-handed player.
+- Trail side: opposite of lead. Confirm handedness from RGB before labeling.
+
+Short game (brief)
+- Chip: low running shot near the green; putting stroke: pendulum-like with minimal wrist.
+- Pitch: higher, softer landing; bunker: sand splash technique, ball often not struck first.
+
+When analyzing a swing in this pack
+1. Identify handedness and club type from RGB if relevant.
+2. Segment phases with timestamps using motion + video tools.
+3. Prefer joint/pelvis/thorax trajectories over single-frame posture for sequencing claims.

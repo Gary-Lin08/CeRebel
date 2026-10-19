@@ -1,0 +1,7 @@
+{
+  "model_type": "smplx",
+  "gender": "neutral",
+  "num_betas": 10,
+  "betas": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+  "notes": "Constant average / mean SMPL-X body shape used for golf phase mesh display. GEM-X emits SOMA identity_coeffs; those are NOT used for the displayed mesh. Pose is retargeted from GEM-X SOMA joints onto SMPL-X while betas stay fixed to this file."
+}

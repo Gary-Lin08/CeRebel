@@ -1,0 +1,43 @@
+--- page 1 ---
+REPORT BY THE REFEREE 
+PROCES VERBAL DU JUGE ARBITRE 
+PROTOKOLL DES SCHIEDSRICHTERS 
+Competition / Manifestation / Veranstaltung 
+L M 
+Event / Épreuve / Wettkampf Date / Date / Datum 
+The following competitors have been disqualified according to ICR: 
+Les coureurs suivants ont été disqualifiés selon le RIS: 
+Die folgenden Wettkämpfer wurden im Sinne der IWO disqualifiziert: 
+No. 
+No. 
+Nr. 
+Name - Surname Nat 
+Nom - Prénom Nat 
+Name - Vorname Nat 
+No. of gates 
+No. de portes 
+Tor Nr. 
+Gate judge 
+Juge de porte 
+Torrichter 
+Notes 
+Notes 
+Bemerkung 
+Did not start (No.) 
+Pas au départ (No.) 
+Nicht am Start (Nr.) 
+Did not finish (No.) 
+Pas à l'arrivée (No.) 
+Nicht im Ziel (Nr.) 
+Time published 
+Heure d'affichage 
+Anschlagzeit 
+Deadline 
+Délai 
+Ablauf 
+Date 
+Date 
+Datum 
+The Referee 
+Le juge arbitre 
+Der Schiedsrichter

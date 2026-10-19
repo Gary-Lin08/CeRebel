@@ -1,0 +1,3760 @@
+--- page 1 ---
+The Equipment Rules
+
+--- page 2 ---
+The Equipment Rules
+By
+The R&A and USGA
+Effective December 1, 2024
+(Version 1.3)
+
+--- page 3 ---
+This publication contains the comprehensive Rules, specifications and 
+guidelines to assist equipment manufacturers and designers, tournament 
+officials, players and other interested parties in understanding and applying 
+the Rules relating to clubs, balls, devices and other equipment.
+An interactive version of The Equipment Rules is accessible from 
+The
+ 
+R&A’s or United States Golf Association’s (USGA’s) website  
+(www.randa.org or www.usga.org), which includes links to official test 
+protocols and/or video demonstrations relevant to the specific Rule, 
+specification or measurement technique being covered.
+The Equipment Rules will continue to be reviewed and modifications may 
+be made from time to time in the future.
+The principles and philosophies expressed within this publication are held 
+by both The R&A and the USGA.
+© 2023 R&A Rules Limited and The United States Golf Association. 
+All rights reserved.
+
+--- page 4 ---
+Page
+IN
+TRODUCTION .....................................................................................................4
+THE EQUIPMENT RULES 
+Preamble  .......................................................................................................................5
+PART 1 – GOLF CLU
+B PLAYING RULES
+Rule 4 – The Player’s Equipment ..............................................................................7
+Rul
+e 4.1 – Clubs ...............................................................................................7
+(1)
+ Conforming Clubs  ....................................................................................7
+(2)Use, Repair or Replacement of Club Damaged During Round .....8
+(3) Deliberately Changing Club’s Playing Characteristics
+During Round ........................................................................................... 9
+PART 2 – CONFORMANCE OF CLUBS
+Preamble  ....................................................................................................................11
+1. C
+lubs a. Gene
+ral ...........................................................................................11
+(i) Trad
+itional and Customary Form and Make  .................12
+(ii) Club
+ Composition ................................................................13
+(iii
+) All Pa
+rts must be Fixed ......................................................13
+(iv) Exte
+rnal Attachments .........................................................13
+b. Adju
+stability ...................................................................................15
+(i) Gen
+eral ....................................................................................15
+(ii) Adjus
+tability for Weight .....................................................17
+(iii
+) Adju
+stability for Length  ......................................................17
+(iv) Othe
+r Kinds of Adjustability  .............................................18
+c. Len
+gth..............................................................................................19
+d. Align
+ment .......................................................................................21
+2. Shaf
+t a. Stra
+ightness ....................................................................................27
+b. Bend
+ing and Twisting Properties.............................................29
+c. Atta
+chment to Clubhead ...........................................................30
+3. 
+The Grip a. Defini
+tion ........................................................................................32
+b. Cro
+ss-section .................................................................................33
+(i) Circu
+lar Cross-section for Woods and Irons ...............33
+(ii) Putt
+ers .....................................................................................34
+(iii
+) Cross
+-Sectional Dimension ...............................................35
+(iv) Axis o
+f the Grip ....................................................................35
+c. Two Gr
+ips ......................................................................................35
+1Contents
+List of Contents
+
+--- page 5 ---
+Pa ge
+4. Clubhead a. P
+lain in Shape .................................................................................37
+(i) Al
+l Clubs..................................................................................38
+(i
+i) Wo
+ods and Irons ..................................................................46
+b. D
+imensions, Volume and Moment of Inertia  ......................48
+(i) W
+oods .....................................................................................48
+(ii) Ir
+ons ..........................................................................................51
+(ii
+i) P
+utters ......................................................................................52
+c. S
+pring Effect and Dynamic Properties  ....................................53
+d. S
+triking Faces ................................................................................54
+5.
+ Club Face a.
+ General ...........................................................................................55
+b. I
+mpact Area Roughness and Material  ....................................55
+(i
+) De
+finition of “Impact Area” ..........................................56
+(i
+i) Im
+pact Area Roughness ...................................................5
+7
+(i
+ii) Im
+pact Area Material .......................................................57
+c. I
+mpact Area Markings .................................................................5
+7
+(i) Gr
+ooves...............................................................................58
+(ii) Pu
+nch Marks .......................................................................59
+(i
+ii) Gr
+oove/Punch Mark Combinations .............................61
+d. D
+ecorative Markings ...................................................................62
+e. N
+on-metallic Club Face Markings  ..........................................63
+f.  P
+utter Face ....................................................................................63
+PART 
+3 – THE GOLF BALL PLAYING RULES
+Rule 4 - The Player’s Equipment ..............................................................................64
+R
+ule 4.2 – Balls ...............................................................................................64
+B
+alls Allowed in Play of Round ..................................................................64
+T
+he List of Conforming Golf Balls  ............................................................64
+PART 
+4 – CONFORMANCE OF BALLS
+1. General ......................................................................................................................65
+2
+. Weight .......................................................................................................................66
+3.
+Size .............................................................................................................................66
+4
+. Spherical Symmetry ...............................................................................................66
+5
+. Initial Velocity ..........................................................................................................66
+6
+. Overall Distance Standard  ...................................................................................67
+List of Contents
+2 Contents
+
+--- page 6 ---
+3Contents
+PART 5 – EQUIPMENT PLAYING RULES
+Rule 4.3 – Use of Equipment ...................................................................................68
+PART 6 – 
+DEVICES AND OTHER EQUIPMENT
+1. Tees (Rule 6.2) .........................................................................................................69
+2. Gl
+oves (Rule 4.3) .....................................................................................................69
+3. Sh
+oes (Rule 4.3) .......................................................................................................70
+4. C
+lothing (Rule 4.3) ..................................................................................................70
+5. Us
+e of Tape, including Kinesiology Tape (Rule 4.3) ......................................71
+6. Di
+stance Measuring Devices (Rule 4.3) ............................................................71
+7.  Defin
+ition of Alignment Device and
+Treatment of Ball-Markers (Rule 4.3) ...............................................................71
+PART 7 – MODIFIED EQUIPMENT RULES FOR PLAYERS WITH 
+DISABILITIES
+1. Length ........................................................................................................................72
+2. Gri
+ps ..........................................................................................................................72
+PART 8 – CO
+MMITTEE EQUIPMENT REQUIREMENTS
+1. The Flagstick a. The P
+ole .....................................................................................73
+b. The F
+lag and Ornamental Attachments  ...........................73
+c. Oth
+er Attachments .................................................................74
+SUPPLE
+MENTARY PAPER A
+Advice to Rules Officials Concerning Queries on the 
+Conformity of Clubs at Competitions  .................................................................75
+SUPPLE
+MENTARY PAPER B
+Guidance on how to Measure Grooves on Club Faces for
+Conformance to Pre-2010 Rules in the Field .....................................................79
+SUP
+PLEMENTARY PAPER C
+2010 Club Face Markings ..........................................................................................92
+
+--- page 7 ---
+Introduction
+With respect to the equipment which may be used to play the game, The 
+Rules of Golf (“the Rules”) reference the Equipment Rules. In general, the 
+Equipment Rules are “descriptive” and “restrictive” in nature – defining 
+what golf equipment should look like and limiting how it performs.
+The main objective of the Equipment Rules is to ensure that technological 
+advances in the design and manufacture of golf equipment are in the best 
+interests of the game of golf. While not wishing to stifle innovation, the 
+purpose of the Equipment Rules is to protect the traditions of the game, 
+to prevent an over-reliance on technological advances rather than on 
+practice and skill, and to preserve skill differentials throughout the game.
+It is the role of The R&A’s and USGA’s Equipment Standards Committees 
+to interpret and apply the Equipment Rules relevant to clubs, balls, devices 
+and other equipment and to determine and advise which equipment 
+conforms and which equipment does not. The Committee is also 
+responsible for recommending modifications to the Equipment Rules, if 
+and when changes are believed to be necessary.
+In order to achieve consistency in the decision-making process, a database 
+of all previous decisions is kept and maintained. Also, over time, the 
+Committee has developed a comprehensive set of “guidelines” based on 
+these decisions to help interpret the Equipment Rules in a consistent way.
+The Equipment Rules incorporate many of these guidelines and 
+interpretations to help equipment manufacturers and designers, 
+tournament officials, players and other interested parties interpret and 
+apply them. The purpose of Supplementary Paper A is to offer advice on 
+the procedure an official should follow when faced with an equipment 
+ruling immediately before or during a competition.
+Many of the Rules relating to clubs, balls, devices and other equipment 
+can be technical and complex in nature. However, almost without 
+exception, the Equipment Rules become understandable after only a brief 
+explanation, or with the aid of a simple diagram. Whenever possible, 
+the Equipment Rules will attempt to explain both the background to a 
+provision and the objective behind it. Also, where practical, the Equipment 
+Rules will offer advice as to how best to carry out certain measurements.
+Throughout The Equipment Rules there are specific sections which are 
+highlighted by blue shading. These sections are either direct statements 
+of Rule 4 or contain specific requirements for equipment. These are the 
+most important sections of The Equipment Rules and together constitute 
+the specifications against which equipment is evaluated.
+4 Introduction
+
+--- page 8 ---
+5Preamble
+PREAMBLE
+A player in doubt as to the conformity of equipment used to play the 
+game should consult The R&A or USGA. A manufacturer should submit 
+to The R&A or USGA a sample of the equipment to be manufactured for 
+a ruling as to whether it conforms with the Equipment Rules. The sample 
+becomes the property of The R&A or USGA for reference purposes. If a 
+manufacturer fails to submit a sample, or, having submitted a sample, fails 
+to await a ruling before manufacturing and/or marketing the equipment, 
+the manufacturer assumes the risk of a ruling that the equipment does not 
+conform to the Equipment Rules.
+Where a club, ball, device, other equipment, or part thereof, is required to 
+meet a specification within the Equipment Rules, it must be designed and 
+manufactured with the intention of meeting that specification. 
+This point can be illustrated using Part 2, Section 2a, which states, in part, 
+that “The shaft must be straight”. According to the above clause, this 
+means that manufacturers are expected to design shafts with the intention 
+that they will be straight. However, taking into consideration the materials 
+commonly used to make shafts and the manufacturing techniques involved, 
+it is not always possible for them to be perfectly straight. As long as it 
+is clear that the shaft is designed and manufactured with the intention 
+of being straight, a reasonable level of tolerance is given when evaluating 
+shafts for conformance.
+The R&A and USGA reserve the right, at any time, to change the rules 
+relating to clubs, balls, devices and other equipment and make or change 
+the interpretations relating to these Equipment Rules. For up to date 
+information, please contact The R&A or USGA, or refer to our respective 
+websites. Any design of a club, ball, device or other equipment that is not 
+covered by the Equipment Rules, which is contrary to the purpose and 
+intent of the Rules or that might significantly change the nature of the 
+game, will be ruled on by The R&A and USGA.
+The dimensions and limits contained in the Equipment Rules are given in 
+the units by which conformance is determined. An equivalent imperial/
+metric conversion is also referenced for information, calculated using a 
+conversion rate of 1 inch = 25.4 mm and 1 oz = 28.35g.
+
+--- page 9 ---
+The vast majority of people who play golf assume that when they buy 
+items of golf equipment, they conform with the Equipment Rules. To help 
+prevent non-conforming equipment from appearing in the marketplace 
+or from being used, The R&A and USGA offer an equipment testing and 
+evaluation service to manufacturers, and encourage manufacturers to 
+submit drawings, descriptions, and/or prototype samples of new product 
+to the appropriate governing body as early in the development process 
+as possible, prior to mass production and distribution, in order to avoid 
+potentially costly consequences should The R&A or USGA determine 
+that the product does not conform. Additionally, this process helps to 
+protect golfers from unwittingly obtaining non-conforming equipment 
+for use under the Rules of Golf. While this procedure works most of the 
+time, there are occasions when non-conforming equipment is sold in the 
+marketplace. That, combined with the fact that many golfers like to make 
+their own modifications to clubs (see Rule 4-1a. Clubs Allowed in Making 
+a Stroke), make the Equipment Rules an important tool for all concerned.
+6 Preamble
+
+--- page 10 ---
+7Part 1 – Golf Club Playing Rules
+PART 1 – GOLF CLUB PLAYING RULES
+Rule 4 – The Player’s Equipment
+Purpose: Rule 4 covers the equipment that players may use during a 
+round. Based on the principle that golf is a challenging game in which 
+success should depend on the player’s judgment, skills and abilities,  
+the player:
+• Must use conforming clubs and balls,
+•  Is limited to no more than 14 clubs and normally must not
+replace d
+amaged or lost clubs, and
+•  Is restricted in the use of other equipment that gives artificial
+help to his or her play.
+Rule 4.1 Clubs
+a. Clubs Allowed in Making a Stroke
+(1) Conforming Clubs. In making a stroke, a player must use a club that
+conforms to the requirements in the Equipment Rules when:
+•  It is new, or
+• Its playing characteristics have been changed in any way (but see Rule 4.1a(2) 
+when a club is damaged  during the round)
+But if 
+the playing characteristics of a conforming club change because of 
+wear through normal 
+use, it is still a conforming club.
+The “playing characteristics ” of a club are any part, feature or property that 
+affect
+s how the club performs or aids in alignment, including but not limited 
+to, weighting, lie, loft, alignment features and permissible attachments.
+Player’s Responsibility
+It is the player’s own responsibility to ensure that his or her clubs 
+conform to the Equipment Rules. If the player has any doubt as to the 
+conformity of a club, he or she should consult The R&A or USGA. 
+Queries may also be directed to the local committee in charge of a 
+competition or the local Rules Committee.
+
+--- page 11 ---
+Wear
+Over time, the face and grip of a club, in particular, may become worn 
+through normal use. For example, a grip may become so worn that it 
+becomes moulded for the hands, or the grooves on an iron club may 
+become so worn th
+at they no longer conform to the requirements in  
+Part 2, Section 5c of the Equipment Rules.
+A club that conforms with the Equipment Rules when new is still a 
+conforming club because of wear through normal use. In essence, a club 
+which conformed when new cannot be rendered non-conforming due to 
+its wear through normal use. However, a club which did not conform to 
+the Equipment Rules when new cannot be worn, through normal use, to a 
+conforming state. Such a club would 
+always be considered non-
+conforming. In general, “wear” is defined to be the erosion o
+f material (as 
+opposed t
+o “damage”, which i
+s usually caused by a single load or 
+repeatedly applied loads). Material decomposition or deterioration is not 
+generally considered to be wear.
+When a used club is pendulum tested (see Part 2 Section 4c(i)) in the field 
+and a result in excess of 257 μs is attained, the specific club will 
+be deemed to be damaged into a non-conforming state, based on the 
+presumption that it conformed when new and was included on the List of 
+Conforming Driver Heads. As such, any individual club tested in excess of 
+257 μs will not be permitted to be used in play during any subsequent 
+stipulated round since it does not conform to the Rules of Golf. The 
+damage will be deemed to have occurred after the start of the previous 
+stipulated round (i.e., prior to th
+e field test), so that no retrospective 
+penalties would be applied, unless the player had knowledge, prior to the 
+field test, that the club did not conform.
+Rule 4.1a continues
+(2) Use, Repair or Replacement of Club Damaged During Round. If a
+conforming club is damaged during a round or while play is stopped under
+Rule 5.7a, except in cases of abuse, the player may 
+repair it or replace it
+with another 
+club.
+But no matter what the nature or cause of the damage, the damaged club 
+is treated as conforming for the rest of the round (but not during a play-off 
+in stroke play, which is a new round). 
+8 Part 1 – Golf Club Playing Rules
+
+--- page 12 ---
+For the rest of the round, the player may:
+• Continue to make strokes with the damaged  club, or
+•  Except in cases of abuse, repair the club or replace it with another  club
+(see Rule 4.1b(4)).
+“Damaged during a round” means when any part, feature or property of a 
+club is changed because of any act during the round (including while play is 
+stopped under Rule 5.7a), whether:
+•  By the player (such as making a stroke or practice swing with the club,
+putting it in or taking it out of a golf bag, dropping or leaning on it, or
+throwing or abusing it), or
+• By any other person, outsid
+e influence o r natural forces.
+But a club is not “damaged during a round” if its playing  characteristics are 
+deliberately changed by the player during the round, as covered by Rule 
+4.1a(3).
+(3) Deliberately Changing Club’s Playing Characteristics During Round. A
+player must not make a stroke with a club when they 
+have deliberately
+changed that club's playing characteristics d
+uring the round (including
+while play is stopped under Rule 5.7a):
+•  By using an adjustable feature or physically changing the club (except
+when allowed to repair damage under Rule 4.1a(2)), or
+• By applying any substance to the clubhead (other than in cle
+aning it) to
+affect how it performs in making a stroke.
+Exception – Adjustable Club Restored to Original Position or Non- 
+Permissible External Attachment Removed: 
+There is no penalty and the 
+club may be used to 
+make a stroke in the following two situations:
+9Part 1 – Golf Club Playing Rules
+If the player replaces the damaged club with another club, the player must 
+take the damaged club out of play before making 
+another stroke using the 
+procedure in Rule 4.1c(1).
+•  If a club’s playing characteristics were changed by using an adjustable
+feature and, before the club is used to make a stroke, the club is
+restored as nearly 
+as possible to its original position by adjusting the
+feature back to where it was.
+•  A non-permissible external 
+attachment (such as a sticker on the club
+face) is removed from the club before the club is used to make a
+stroke.
+
+--- page 13 ---
+Playing C haracteristics Deliberately Changed
+The purpose of this Rule is to penalize a player that purposely modifies his 
+or her club during a round – for example to a flatter lie, a greater loft, an 
+alternative weight distribution or changing the head or shaft, regardless of 
+whether the club has been designed to be adjustable.
+Additionally, this Rule penalizes a player that applies materials of a 
+temporary nature to the face – such as saliva, grass juice, chalk, aerosol 
+spray or similar substances. Permanent attachments or coatings such as 
+plasma spray, “balata”-type rubber or paint are covered under Part 2, 
+Section 5 of the Equipment Rules.
+The most important question to ask when ruling on a club which has had 
+something temporarily applied to the face by a player is “why has it been 
+put there?” If a material or substance has been applied to the face in order 
+to protect it or clean it, then it would probably be permitted provided all 
+other Rules are satisfied. However, if the purpose of the application is to 
+influence the movement of the ball or assist the player in making a stroke,   
+it would be prohibited.
+Any type of tape or similar material added to the face is not permitted for 
+any
+ purpose.
+10 Part 1 – Golf Club Playing Rules
+
+--- page 14 ---
+11Part 2 – Conformance of Clubs
+The rules and specifications regarding golf clubs are divided into five 
+separate categories, describing the requirements that apply to each. The 
+five categories are:
+1. Club (General)
+2. Shaft
+3. Grip
+4. Clubhead
+5. Club Face
+1. Clubs
+a. General
+A club is an implement designed to be used for striking the ball and 
+generally comes in three forms: woods, irons and putters distinguished by 
+shape and intended use. A putter is a club with a loft not exceeding ten 
+degrees designed primarily for use on the putting green.
+The terms “wood” and “iron” refer to the general shape of the clubhead. 
+A wood club is one where the head is relatively broad from face to back, 
+and it can be made of a variety of materials. An iron club is one where 
+the head is relatively narrow from face to back, and it is usually made 
+of steel. While it can be challenging to distinguish between these two 
+club types because of the popularity of “hybrid”, rescue and utility clubs, 
+the determination of whether a club is a “wood” or an “iron” and, in 
+turn, which Equipment Rules apply to it is dealt with based on an overall 
+assessment of the shape and size of the head.
+By definition, the loft of a putter must not be greater than 10 degrees. 
+Putters are permitted to have negative loft. However, a negative loft 
+exceeding a magnitude of 15 degrees would not be considered “traditional 
+and customary in form and make” (see Section 1a(i) below).
+The Equipment Rules rarely distinguish between wood and iron clubs 
+(see Section 4b, Dimensions, Volume and Moment of Inertia, for the 
+main example of different treatment), but there are various instances 
+throughout the Equipment Rules where certain specifications do not apply 
+to putters or exceptions may be made for putters. These differences will 
+be highlighted at the appropriate places throughout the Equipment Rules.
+PART 2 – CONFORMANCE OF CLUBS
+
+--- page 15 ---
+Probably as a consequence of these differences, confusion often exists 
+as to which Equipment Rules apply to “chippers”. A “chipper” is an iron 
+club designed primarily for use off the putting green, generally with a loft 
+greater than ten degrees. As most players adopt a “putting stroke” when 
+using a chipper, there can be a tendency to design the club as if it was 
+a putter. To eliminate confusion, the Equipment Rules which apply to 
+chippers include:
+1.  The shaft must be attached 
+to the clubhead at the heel (Section 2c);
+2.  The grip must be circular in cross-section (Section 3b(i)) and 
+only one
+grip is permitted (Section 3c);
+3.  The clubhead must be generally plain in shape 
+(Section 4a) and have
+only one striking face (Section 4d); and,
+4.  The face of 
+the club must conform to the specifications with respect to
+hardness, surface roughness, material, markings in the impact area and
+dynamic properties (Sections 4c and 5).
+5.  The length of 
+the club must follow the guidelines for chippers specified
+in the table located in Section 1c.
+The club must not be substantially different from the traditional and 
+customary form and make. The club must be composed of a shaft and 
+a head and it may also have material added to the shaft to enable the 
+player to obtain a firm hold (see Section 3 below). All parts of the club 
+must be fixed so that the club is one unit, and it must have no external 
+attachments. Exceptions may be made for attachments that do not affect 
+the performance of the club.
+In explaining this provision, it is easier to break it down into the following 
+four sections:
+(i)
+Traditional and Customary Form and Make
+The phrase “traditional and customary form and make” does not mean
+that clubs must look the same as they did 100 years ago. If so, for
+example, steel shafts and metal-headed woods would not conform.
+The “traditional and customary” clause is used when there is not a specific 
+provision that can be applied to a specific, non-traditional club feature, 
+and/or the overall club design deviates from traditional appearance and/
+or construction standards. For clubheads, the “Plain in Shape” provision 
+generally applies (see Section 4a, below). 
+12 Part 2 – Conformance of Clubs
+
+--- page 16 ---
+13Part 2 – Conformance of Clubs
+(ii) Club Composition
+This clause means that a club is not permitted to have multiple shafts or
+heads. It also highlights that it is not essential for a club to have material
+added to the shaft to form a grip. For further information on a club which
+has no material added to form a grip, see Section 3.
+(iii) All Parts must be Fixed
+This clause means that no part of the golf club should be designed to
+move, nor should it be promoted as doing so. Once assembled, all parts
+of the club which are bonded must be bonded such that they require
+heat to loosen (see Section 1b below for clubs which are designed to
+be adjustable). If any part of a club were to incorporate moving powder,
+pellets, liquid, vibrating wires, rollers, tuning forks, or any number of
+other features which could be considered a “moving part”, the club would
+not conform.
+(iv
+) External Attachments
+While this clause prohibits the attachment of anything to the club which 
+could potentially have an effect on its performance (e.g. aiming bars or 
+weights), other items may be permitted to be attached to certain parts of 
+the club provided (a) no performance benefit can be derived, and (b) no 
+other Equipment Rules are breached, as well as Rule 4.3 of the Rules of 
+Golf (Use of Equipment).
+Examples of attachments that could be permitted include:
+•  Temporary, non-permanent attachments 
+to the shaft such as decals for
+identification - such attachments, for identification only, may also be
+permitted on the clubhead (other than the face). Additionally, tape to
+protect the shaft is permitted. However, these attachments must not be
+usable for any other purpose (e.g. alignment).
+•  Temporary, non-permanent attachments 
+to the shaft (e.g. “clip-on”
+devices), provided such items do not excessively protrude from the
+shaft, their cross-section conforms to the shape of the shaft and they
+are sufficiently fixed. Other “clip-on” devices that do not conform to
+the shape of the shaft (e.g. a club “prop” for use in wet weather) may
+be attached to the shaft between shots but must be removed prior to
+making a stroke.
+
+--- page 17 ---
+•  Other material added to the shaft, such as for alignment purposes,
+provided it is considered semi-permanent. However, such applications
+must not breach Rule 4.3. “Semi-permanent” is interpreted to mean
+durable and not easily removable. Additionally, it must not be re-usable
+and/or must be essentially destroyed upon removal.
+•  Temporary, non-permanent 
+attachments to the butt end of the grip such
+as tee pegs, ball markers or ball retrieving devices, provided:
+•  such items do 
+not cause the grip to be considered moulded for
+the hands or create a bulge or waist in the grip; and
+•  the outer diameter of the item is less than or equal to the outer
+diameter of the butt end of the grip and the item does not extend
+beyond the butt end of the grip by more than 2 inches (50.8mm).
+•  Other temporary, non-permanent 
+attachments to any part of the grip
+other than the butt end, provided such items are removed prior to
+making a stroke. However, tape or gauze applied to the full length of the
+grip is permitted provided the grip conforms in its modified state and
+the underlying grip conforms.
+•  Attachments to 
+the clubhead (other than the face), such as protective
+coverings, decorative items or alignment aids, provided the item is semi-
+permanent. However, such items must not excessively protrude from
+the clubhead and must conform to the shape of the clubhead. Also, for
+driving clubs, such attachments must not serve to cause any confusion
+with the correct identification of a club on the List of Conforming
+Driver Heads. Such attachments should, therefore, be subtle, plain in
+appearance and discreetly positioned. Permanent additions to a clubhead
+would be considered part of the head and, therefore, the head, in its
+modified state, would have to conform to Part 2, Section 4 of the
+Equipment Rules (i.e. for dimensions and “plain in  shape”).
+The two 
+long-standing permissible “external attachments” are (a) the 
+permission to use lead tape on the shaft or the head for weighting, and 
+(b) the use of a suction cup at the end of the grip of a putter to assist
+with retrieving the ball from the hole. While lead tape can affect the
+performance of the club and a rubber suction cup would exceed the
+diameter of the butt end of the grip, the use of both of these items
+continue to be permitted on a traditional basis (but see Section 4b(i)
+below for details on the use of lead tape on driver heads with a high
+Moment of Inertia).
+14 Part 2 – Conformance of Clubs
+
+--- page 18 ---
+15Part 2 – Conformance of Clubs
+b. Adjustability
+All clubs may incorporate features for weight adjustment. Other forms of 
+adjustability may also be permitted upon evaluation by The R&A or USGA. 
+The following requirements apply to all permissible methods of adjustment:
+(i) the adjustment cannot be readily made;
+(ii)  all adjustable parts are firmly fixed and there is no reasonable likelihood
+of them working loose during a round; and
+(iii) all configurations of adjustment conform with the Rules.
+During a round, a player must not make a stroke with a club when they 
+have deliberately changed that club's playing characteristics by adjustment 
+or by any other means (see Rule 4.1a(3) of the Rules of Golf).
+(i) General
+All clubs may be designed to be adjustable for many different characteristics 
+– for example, weight, length, lie and loft. In order to preserve the integrity
+of Rule 4.1a(3) of the Rules of Golf (“Deliberately” Changing Club’s
+Performance Characteristics During Round), the Equipment Rules clearly
+state that it must not be too easy for a player to make adjustments during
+a round and that the mechanism must be firmly fixed, with little chance
+of it working loose. All adjustment mechanisms must comply with the
+following requirements:
+• M
+ethod of Adjustment
+Adjustments must require the use of a special tool, such as an Allen key,
+a Phillips screwdriver or a custom made device. It must not be possible to
+make the adjustment just by using the fingers or some other object which
+would normally be kept in a golfer’s pocket, for example a coin or a pitch-
+mark repair tool.
+• Unusable Unless Locked or Fully Tightened
+If, as is often the case, a screw is used to fix the mechanism, the club must,
+for all practicable purposes, be unusable without the screw being in place
+and tightly fixed. One exception to this “unusable” requirement is for a
+long putter with a shaft which dismantles into two shorter lengths for
+travel purposes. Here, a screw together (“pool cue”) joint is permitted,
+in combination with an Allen key screw, or similar, which penetrates the
+threaded section of the joint by at least half way. The existence of both the
+threaded joint and the fixing screw potentially renders the putter usable,
+even when the screw is not tightened, or it is left out entirely. It also
+renders the putter potentially adjustable by hand. However, this exception
+was introduced as a specific concession for travel clubs.
+
+--- page 19 ---
+• Friction Fit Mechanisms
+Generally, 
+friction fit adjustment mechanisms are not permitted because
+there is potential for them to be readily adjustable (i.e. the mechanism
+could be sufficiently tightened such that the club is usable, but not quite
+enough to prohibit it from being adjustable by hand). However, a friction
+fit mechanism which can be only locked and unlocked and is fixed in
+its locked state and unusable in its unlocked state, may be permitted
+upon
+ evaluation.
+• D
+iscrete Steps
+A mechanism that allows for an adjustment to be made in discrete steps
+may be permitted provided all other Equipment Rules and specifications
+are satisfied. Without the adjustment mechanism locked in place, the club
+must essentially be unusable.
+The above restrictions have been included in the Equipment Rules in 
+order to encourage the player to make all of the necessary adjustments to 
+his or her clubs before starting the round, and to protect the player from 
+either unwittingly or purposely making adjustments during a round.
+When assessing the conformity of an adjustable club, it is important to 
+remember the third condition listed in Part 2, Section 1b, and to check 
+that it cannot be adjusted into a position which does not conform to the 
+Equipment Rules. For example, a putter which is adjustable for lie must not 
+be capable of being adjusted into a position where the shaft diverges from 
+the vertical by less than 10 degrees (see Section 1d, below), or any other 
+position which would render the club non-conforming (see
+ 
+Figure
+ 
+1).
+16 Part 2 – Conformance of Clubs
+Fig. 1
+10°
+Allen Key screw
+This putter is adjustable for lie – but must not 
+be adjustable into a position where the shaft 
+measures less than 10 degrees from the vertical.
+
+--- page 20 ---
+17Part 2 – Conformance of Clubs
+(ii) Adjustability for Weight
+All clubs may be designed to be adjustable for weight, provided the 
+adjustment mechanism conforms to the conditions described in Section 
+1b of the Equipment Rules. Examples of what would and would not be 
+permitted are illustrated in Figure 2.
+As noted in Section 1a, with respect to adjustments for weight, the 
+only exception to the conditions described in Section 1b(i) above is the 
+addition or removal of lead tape. This is a practice which pre-dates the 
+introduction of the adjustability rules and is permitted on ‘traditional’ 
+grounds. The addition, removal or alteration of lead tape during a round is 
+not permitted (see Rule 4.1a(3) of the Rules of Golf).
+(iii) Adjustability for Length
+• All Clubs
+All clubs may be adjustable for length, provided the adjustment
+mechanism conforms to the specifications already described and is
+consistent with other Equipment Rules.
+Integrated mechanisms are permitted, provided the bending and twisting 
+properties of the shaft remain substantially the same and the grip remains 
+conforming. Mechanisms externally attached to the grip are not
+ 
+permitted.
+Fig. 2 – Adjustability for weight
+(a) Mechanism can be adjusted by a coin
+(non-conforming).
+(b) Mechanism requires the use of an
+Allen key (conforming).
+Weight 
+screw
+
+--- page 21 ---
+Telescopic Mechanisms that can be fully extended into a locked position 
+for use and collapsed for travel purposes may be permitted. However, the 
+club must not be usable in its collapsed, unlocked state.
+• Putters
+Non-integrated mechanisms attached to the shaft may be permitted
+for putters only, provided that:
+•
+ T
+he mechanism is generally circular in cross-section with a maximum
+cross-sectional dimension of 1 inch and a maximum length of 2
+ 
+inches;
+•
+ If t
+he mechanism is situated between two grips, both grips are non-
+tapered, the end of the mechanism effectively touches the butt end of
+the lower grip, the cross-sectional dimension of the mechanism is less
+than or equal to the maximum cross-sectional dimension of the grips,
+and the mechanism is at least 1.5 inches in
+ 
+length;
+•
+ I
+f the mechanism is situated below a single grip or below the lower grip
+of a putter with two grips, the top of the mechanism is at least
+2 inches from the tip end of the grip. Exception: If the size and shape of
+the mechanism is consistent with the tip end of the grip or the outer
+diameter of the mechanism is less than the outer diameter of the grip,
+the mechanism can effectively touch the tip end of the grip.
+(iv) Other Kinds of Adjustability
+As previously noted, the adjustability provisions allow all clubs to be 
+designed to be adjustable for many different characteristics – provided 
+all specifications are satisfied. Manufacturers are encouraged, however, 
+to submit all new adjustable design innovations for evaluation in the early 
+stages of development.
+18 Part 2 – Conformance of Clubs
+
+--- page 22 ---
+c. Length
+The overall length of the club must be at least 18 inches (0.457m) and, 
+except for putters, must not exceed 48 inches (1.219m).
+For woods and irons, the measurement of length is taken when the club is 
+lying on a horizontal plane and the sole is set against a 60
+ 
+degree plane as 
+shown in Fig. 3. The length is defined as the distance from the point of the 
+intersection between the two planes to the top of the grip. For putters, 
+the measurement of length is taken from the top of the grip along the axis 
+of the shaft or a straight line extension of it to the sole of the club.
+This provision is straightforward and the measurement of woods and 
+irons is well described and illustrated above and in the the official test 
+protocol. The measurement of length for putters is illustrated in Figure 4.
+(a) This putter has a straight shaft
+attached to the clubhead. The
+measurement for club length follows
+the axis of the shaft and extends all
+the way down to the
+ 
+sole.
+(b) The shaft of this putter is attached to the head
+via a neck. The measurement for club length does
+not follow the axis of the bend in the neck, but
+follows a straight line extension of the straight
+part of the shaft all the way to the sole.
+LQFKHV²! LQFKHV²!
+Fig. 4
+Club length
+60º
+19Part 2 – Conformance of Clubs
+Fig. 3
+
+--- page 23 ---
+Loft Range (°) 
+Minim
+um Loft
+ 16
+ 
+20
+ 
+23
+ 
+26
+ 
+29
+ 
+33
+ 
+37
+ 
+41
+ 
+45
+Maximum Loft
+ 19
+ 
+22
+ 
+25
+ 
+28
+ 
+32
+ 
+36
+ 
+40
+ 
+44
+ 
+48
+Maximum Allowable Length (in)
+ 41.5
+ 
+41
+ 40.5
+ 
+40
+ 39.5
+ 
+39
+ 38.5
+ 
+38
+ 37.5
+Maxim
+um Allowable Length (m)
+ 1.054
+ 
+1.041
+ 
+1.029
+ 
+1.016
+ 
+1.003
+ 
+0.991
+ 
+0.978
+ 
+0.965
+ 
+0.953
+Local Committees may permit the use of clubs longer than the maximum 
+length allowed, provided that there is evidence of a medical or physical need 
+for the player to use such clubs and that the shortest club carried by the 
+player is no more than 10 inches shorter than his or her longest club, not 
+including the putter.
+The above provisions on club length mean that the concept of long and 
+mid-length putters still conform to the Equipment Rules. However, The 
+R&A and USGA have adopted a position that clubs designed for chipping, 
+including modified wedges, that are longer than standard length clubs of 
+similar loft are not traditional and customary in form and make (see Part 2, 
+Section 1a). 
+The following table is used for the purpose of determining the maximum 
+allowable length of a chipping club.
+20 Part 2 – Conformance of Clubs
+
+--- page 24 ---
+d. Alignment
+When the club is in its normal address position the shaft must be 
+so 
+aligned 
+that:
+(i) the projection of the straight part of the shaft on to the vertical plane
+through the toe and heel must diverge from the vertical by at least 10
+degrees (see Fig. 5). If the overall design of the club is such that the player
+can effectively use the club in a vertical or close-to-vertical position, the
+shaft may be required to diverge from the vertical in this plane by as much
+as 25
+ 
+degrees;
+(ii) the projection of the straight part of the shaft on to the vertical plane
+along the intended line of play must not diverge from the vertical by more
+than 20 degrees forwards or 10
+ 
+degrees backwards (see
+ 
+Fig. 6).
+Sole
+To e Heel
+Shaft
+Axis
+10º
+Min
+20º
+Max
+10º
+Max
+Back Face
+Fig. 5 Fig. 6
+21Part 2 – Conformance of Clubs
+This provision is particularly relevant to 
+putters and it exists mainly as a means 
+for disallowing croquet style putters 
+(with vertical shafts) and shuffle-board 
+style strokes (see Figure 7). It also seeks 
+to limit the potential for more standard 
+putters from being used effectively in a 
+vertical or near-vertical position using a 
+pendulum-style motion.
+
+--- page 25 ---
+7RH
+(a) This putter has a vertical shaft and a
+fl
+at toe – ideal for croquet-style strokes
+(non-conforming).
+(b) This ‘shuffle-board’ type putter has a
+cylindrical shaped head that can slide easily
+across the ground. The player stands behind
+the ball, facing the hole and “pushes”. The
+shaft diverges from the vertical by more than
+10° in the backwards plane (non-conforming).
+Fig. 7
+For this putter to 
+conform, angle A must 
+measure at least 10°.
+Fig. 8 –  M easuring the angle  
+of a putter shaft
+For most putters, the “normal address position” is determined by the 
+geometry of the head. The head would be placed on a horizontal flat 
+surface, with the sole touching that surface at a point directly below the 
+centre of the face. The shaft angle would then be measured with the head 
+in
+ 
+this position (see Figure 8).
+22 Part 2 – Conformance of Clubs
+
+--- page 26 ---
+Fig. 9 – Club with 
+asymmetric sole
+When the putter head is soled in this 
+position, the shaft does diverge from the 
+vertical by at least 10°.
+However, when the same putter head is 
+soled in this position, the shaft is vertical.
+Therefore, putter is non-conforming.
+If the putter head shape or weight distribution is very asymmetric, it may 
+be necessary to make a subjective judgement as to where the effective 
+centre of the face is and then to sole the club directly below that point. 
+The position of the head in this instance might not always be the position 
+that was intended when the club was designed, but in some cases a 
+judgement has to be made based on how the club could feasibly and 
+effectively be used (see Figure 9).
+The same subjectivity may also be needed when confronted with a putter 
+which has a very curved sole (see Figure 10). As before, the conformance 
+evaluation would take into account not only the manner in which the putter 
+is designed to be used, but also the way it could feasibly and effectively be 
+used, given the geometry of the head as well as other unique characteristics 
+of the overall design. This interpretation is particularly relevant to long-
+shafted putters with very curved or multi-planed soles – but standard length 
+putters of 34-38 inches can also be subjected to this assessment.
+Fig. 10 – Putter with very curved sole
+When the putter head is soled 
+in this
+ 
+position, the shaft angle is 
+greater
+ 
+than
+ 
+10°.
+However, when the same putter head is 
+grounded in this position, the shaft angle is less 
+than 10°. Therefore, putter is non-conforming.
+23Part 2 – Conformance of Clubs
+
+--- page 27 ---
+If the overall design of a putter is such that a player can putt effectively 
+with the shaft in a vertical or near-vertical position, it would be ruled 
+contrary to Part 2, Section 1d, even if the shaft angle does satisfy the 
+10 degree Rule when the putter is in its “normal address position”. The 
+shaft angle on such a putter would be required to be increased up to as 
+much as 25 degrees. In assessing whether a putter can be used effectively 
+in such a position and in order to determine what the shaft angle should 
+be increased to, the combination of all of the following features must 
+be
+ 
+considered:
+• length of shaft;
+• position of shaft attachment to head;
+• angle of shaft in toe to heel plane and front to back plane;
+• shape and weight distribution of head;
+• curvature and shape of sole; and
+• intent of the design.
+This means that a long putter which has the shaft attached to the toe, a 10 
+degree lie angle in the toe to heel plane and a curved sole could potentially 
+be ruled non-conforming. Even though each of these features, when taken 
+in isolation, might conform to the Equipment Rules, it is the combination of 
+these features which could lead to a non-conforming decision.
+Fig. 11 – Putter with curved sole
+(a) The sole of this putter
+is not considered to be
+‘very curved’. Therefore,
+the normal address
+position is deemed to be
+in the centre of the face.
+(b) While the angle
+of the shaft from the
+vertical is less than 10°
+in this position, it is not
+considered to be a feasible
+address position. Therefore,
+the putter is conforming
+and, hence, the player can
+use it in this
+ 
+position.
+It should be noted that all putters can usually be positioned in such a way 
+that the shaft diverges from the vertical by less than 10° or even to a 
+position where the shaft itself is vertical. Also, it is unusual for the sole of 
+a putter to be completely flat all the way from heel to toe. When faced 
+with a ruling of this kind, the decision should not be based on whether 
+a player uses the putter with the shaft in a position less than 10° – 
+but
+ 
+whether the putter design facilitates this (see Figure 11).
+24 Part 2 – Conformance of Clubs
+
+--- page 28 ---
+This is a good example of an area where rules officials should take 
+care not to make decisions unless they are completely certain that it is 
+correct. If, after examining the club and carrying out all of the appropriate 
+consultations, it is still not possible to give a definitive ruling, a Duration 
+of Competition or Duration of Round Answer should be given (see 
+Supplementary Paper A – Advice to Rules Officials Concerning Queries 
+on the Conformity of Clubs at Competitions).
+The determination of a putter’s “normal address position” or whether it 
+can be used in a vertical or close-to-vertical position can be highly subjective 
+and in terms of those putters which are actually submitted to The R&A or 
+USGA, the job of making rulings on them is only made easier because it is 
+possible to compare them with previous submissions and rulings.
+Except for putters, all of the heel portion of the club must lie within 
+0.625 inches (15.88 mm) of the plane containing the axis of the straight 
+part of the shaft and the intended (horizontal) line of play (see Fig. 12).
+25Part 2 – Conformance of Clubs
+Shaft
+Axis
+Shaft
+Axis
+Sole
+Sole
+0.625”
+ Max
+0.625” Max
+Fig. 12
+
+--- page 29 ---
+Fig. 13 – Shaft axis/heel measurement
+The distance between the heel 
+and the plane containing the 
+axis of the straight part of the 
+shaft is greater than 0.625 inches 
+(15.88 mm) on this iron club 
+(non-conforming).
+The intent of the provision is to prevent centre shafted clubs (see Section 
+2c below – “Attachment to the Clubhead”), and the measurement of an 
+iron club is illustrated in Figure 13.
+26 Part 2 – Conformance of Clubs
+It is worth highlighting that the heel portion of the club extends from the 
+face all the way to the back of the head. Therefore, for unusually shaped 
+heads (e.g. flared or square shaped), where the outermost part of the 
+heel may be further back from the face than for more traditionally shaped 
+heads, the measurement will be completed at that point.
+It is also worth stressing that, in most cases, the shaft of a putter may be 
+attached at any point on the clubhead (see Section 2c).
+
+--- page 30 ---
+2. Shaft
+a. Straightness
+The shaft must be straight 
+from the top of the grip to  
+a point not more than 5 
+inches (127 mm) above the 
+sole, measured from the  
+point where the shaft ceases 
+to be straight along the axis 
+of the bent part of the shaft 
+and the neck and/or socket 
+(see
+ 
+Fig. 14).
+This provision is interpreted 
+to mean that the shaft must 
+extend to the end of the 
+grip, or at least that the grip 
+should not extend beyond 
+the top end of the shaft 
+more than is necessary to 
+accommodate the butt cap 
+(see Figure 15).
+Fig. 15 – Illustrations of “butt caps”
+In both examples, the 
+shaft must extend at 
+least to point ‘X’.
+27Part 2 – Conformance of Clubs
+The “5-inch” measurement should be made using a pair of callipers 
+(to
+ 
+measure the depth of the head at the point where the shaft is 
+attached) and a flexible measuring tape, or a piece of string (to measure 
+the length of any bend or bends in the shaft from the point where the 
+shaft ceases to be straight) (see Figure 16). 
+Bent Shaft
+Axis 5’’  Max
+Shaft straightness
+measurement
+ends here
+Sole
+Fig. 14
+
+--- page 31 ---
+The point where the shaft ceases to be straight can be determined by 
+placing a rigid steel ruler along the straight part of the shaft and marking 
+the point where the shaft and the ruler are no longer in contact.  
+This provision is particularly relevant to putters where the shaft is 
+inserted directly into the head. (For putter heads that have a “neck” – 
+see Section 2c).
+1”
+Fig. 16 –  Measuring shaft 
+straightness Point at which 
+the shaft begins 
+to bend
+The tape 
+should be used 
+to measure 
+along the 
+surface of the 
+shaft, following 
+any curves.
+Callipers
+28 Part 2 – Conformance of Clubs
+
+--- page 32 ---
+b. Bending and Twisting Properties
+At any point along its length, the shaft must: 
+(i)  bend in such a way that the deflection is the same regardless of how the 
+shaft is rotated about its longitudinal axis; and
+(ii) twist the same amount in both directions.
+This provision effectively restricts shafts from being designed to have 
+asymmetric properties, so that irrespective of how the club is assembled, 
+or whichever way the shaft is orientated, it will make no difference to the 
+performance of the club. Clause (i) is interpreted to mean that the way in 
+which the shaft deflects must be the same regardless of its orientation. It 
+is not simply a measure of the magnitude of deflection.
+It is challenging to assess the conformance of a shaft in the field. However, 
+a standard shaft with a circular cross-section would most likely conform 
+unless there is specific evidence to the contrary (e.g. claims by the 
+manufacturer which indicate non-conformance, including advertising 
+claims). A shaft which is not symmetrical in all axes (e.g. a shaft with an 
+oval or rectangular cross-section) would not normally be expected to 
+conform to the Equipment Rules. Manufacturers of shafts with unusual 
+cross-sections or other unique features should submit them to The R&A 
+or USGA for a ruling prior to marketing and/or manufacturing. Whether 
+such a ruling exists can be confirmed by contacting The R&A or USGA.
+Many graphite shafts have a small “spine” or “spines” running along 
+the length of the shaft which may make them bend a little differently 
+depending on how they are oriented during installation. The existence 
+of a small spine is generally regarded as being the result of normal 
+manufacturing processes and therefore not a breach of Section 2b. As 
+previously noted, The R&A and USGA recognizes that it is difficult to 
+produce a perfectly symmetrical shaft. Therefore, provided that the shaft 
+is manufactured with the intention of meeting the above requirement, a 
+reasonable tolerance is applied when evaluating shafts for conformance.
+Manufacturers of clubs may orientate or align shafts which have spines for 
+uniformity in assembling sets or in an effort to make the shafts perform 
+as if they were perfectly symmetrical. However, a shaft which has been 
+orientated for the purpose of influencing the performance of a club, e.g. to 
+correct wayward shots, would be contrary to the intent of this provision.
+29Part 2 – Conformance of Clubs
+
+--- page 33 ---
+c. Attachment to Clubhead
+The shaft must be attached to 
+the clubhead at the heel either 
+directly or through a single plain 
+neck and/or socket. The length 
+from the top of the neck and/ 
+or socket to the sole of the 
+club must not exceed 5
+ 
+inches 
+(127
+ 
+mm), measured along the 
+axis of, and following any bend 
+in, the neck and/or socket  
+(see Fig. 17).
+Exception for Putters: 
+The shaft or neck or socket of a 
+putter may be fixed at any point 
+in the
+ 
+head.
+The most important points to remember here are that a club must only 
+have one neck, that it must be “plain” and, in order to restrict elaborate 
+shapes and curves, the length of the neck is limited to 5 inches (127 mm). 
+The interpretation of a “plain” neck is clarified as follows:
+All clubs
+The neck must not be shaped for any purpose, other than connecting the 
+shaft to the head in a traditional manner. While a neck may contain features 
+such as an adjustability mechanism, a method for damping vibration or 
+an alignment line, it must not be unusually shaped in order to house or 
+accommodate such a feature. For example, in most cases, lines which have 
+been painted or lightly engraved onto an otherwise plain neck are permitted. 
+However, a neck designed specifically to accommodate such lines or marks 
+would be considered non-conforming. Small scale features, on an otherwise 
+plain neck, which are purely for decorative purposes, and could not 
+effectively perform, or be used for, another purpose, may also be permitted.
+Woods
+The above requirements also apply to woods, however there is some 
+accommodation for the transition area between the head of a wood and its 
+neck. This transition area must fit within a cylinder of a diameter and height 
+of 1 inch (25.4 mm) measured from the base of the transition and parallel 
+to the axis of the shaft. Any transition which satisfies this restriction should 
+be permitted provided it does not contain any other non-plain feature (for 
+example, holes or alignment bars).
+Neck or socket
+measurement
+starts here
+Neck or socket
+axis 5’’ Max
+Sole Sole
+Dotted line
+shows neck
+or socket
+measurement
+to the sole
+5’’  Max
+Fig. 17
+30 Part 2 – Conformance of Clubs
+
+--- page 34 ---
+NOTE: Some exceptions may be made for clubheads made of wood. 
+Ferrules shaped to circumvent this interpretation are not permitted.
+The measurement of the length of a neck should be made in the same way 
+as a bend in the bottom of a shaft (see Section 2a and Figure 16).
+The majority of necks are designed to have the shaft inserted into them, 
+and this normally avoids any confusion as to where the neck begins. 
+However, if the neck is inserted into the shaft, the measurement should 
+be taken from the end of the shaft.
+Figure 18 contains diagrams of various neck features which would not 
+be permitted.
+31Part 2 – Conformance of Clubs
+(f) If the shaft or the neck 
+of a putter is attached to 
+the head near the centre of 
+the face, it must protrude 
+forward of the face by no 
+more than 0.84 inches (the 
+radius of a ball). The neck on 
+this putter extends forward 
+by more than half of the ball 
+(non-“plain”, non-conforming).
+(c) Putter with holes 
+through the neck (non-“plain”, 
+non-conforming).
+(a)  Putter with two necks  
+(non-conforming).
+Fig. 18
+(b) Putter with aiming 
+bar attached to the neck 
+(non-“plain”, non-conforming).
+(e) Putter with forward 
+protruding neck. If a neck 
+protrudes forward of the face 
+then the shaft connection 
+must be made at the 
+forward most point. This 
+putter is contrary to that 
+requirement (non-“plain”, 
+non-conforming).
+(d) The length of this spiral 
+neck is measured following 
+the axis of the bends and 
+is longer than 5 inches and 
+non-“plain” (non-conforming).
+
+--- page 35 ---
+3. The Grip
+a. Definition
+The grip consists of material added to the shaft to enable the player to 
+obtain a firm hold. The grip must be fixed to the shaft, must be straight 
+and plain in form, must extend to the end of the shaft and must not be 
+moulded for any part of the hands. If no material is added, that portion of 
+the shaft designed to be held by the player must be considered the grip.
+The grip is primarily for the purpose of assisting the player in obtaining 
+a firm hold – so that the club does not slip or twist out of the player’s 
+hands. However, the installation of a grip onto the shaft is optional.
+When no material is added to the part of the shaft designed to be held 
+by the player, the provisions relating to the grip take precedence over 
+the provisions relating to the shaft. Therefore, the dimensions and cross-
+section of that area of the shaft could change (per Section 3b) and equal 
+bending in any direction would not be required (so Section 2b does not 
+apply in this case).
+In order to accommodate both hands, the grip must be at least 7 inches 
+(177.8 mm) in length. This also applies to clubs which have been designed 
+to be used one-handed. For putters which have two grips, see Section 
+3c below.
+Due to the nature of grips and the grip provisions, it is sometimes 
+challenging to make a ruling without examining and comparing examples 
+of other grips which are known to either conform or not conform. 
+However, this is not something which would normally be possible in the 
+field. It may help to remember that the overall consideration is that a grip 
+“must not be moulded for any part of the hands”. If a certain feature on 
+the grip enables the player to place his or her hands in exactly the same 
+position every time, solely by feel, then it must be determined whether 
+that feature renders the grip “moulded for the hands”. An extreme 
+example of a grip which would be ruled “moulded for the hands” is 
+the type of training grip often used to help beginners. However, a grip 
+which has subtle changes in surface texture would usually be considered 
+conforming. Likewise, printed markings which assist with the correct 
+placement of the hands visually would normally be considered conforming. 
+Most of the details contained in Sections 3b and 3c below serve to clarify 
+and expand on this basic principle.
+32 Part 2 – Conformance of Clubs
+
+--- page 36 ---
+b. Cross-section (See Fig. 19)
+(i) For clubs other than putters the 
+grip must be circular in cross-section, 
+except that a continuous, straight, 
+slightly raised rib may be incorporated 
+along the full length of the grip, and a 
+slightly indented spiral is permitted on 
+a wrapped grip or a replica of one.
+(ii) A putter grip may have a non-
+circular cross-section, provided the 
+cross-section has no concavity, is 
+symmetrical and remains generally 
+similar throughout the length of the 
+grip. (See Section 3b(ii) explanation 
+on p34).
+(iii) The grip may be tapered but 
+must not have any bulge or waist. Its 
+cross-sectional dimensions measured 
+in any direction must not exceed 
+1.75 inches (44.45 mm).
+(iv) For clubs other than putters the 
+axis of the grip must coincide with 
+the axis of the shaft.
+To take these each in turn:
+(i)  Circular Cross-section for Woods and Irons
+Grips on woods and iron clubs are allowed to deviate from circular by 
+having a slightly raised rib running along the full length of the grip (often 
+called a “reminder rib”).
+33Part 2 – Conformance of Clubs
+Circular
+cross-section
+Non-circular
+cross-section
+(putters only)
+W aist
+(not permitted)
+Bulge
+(not permitted)
+Fig. 19
+Fig. 20 – View from inside the grip
+
+--- page 37 ---
+“Slightly raised” is interpreted to mean that the maximum and minimum 
+diameters of the cross-section at any point must not differ by more than 
+0.040 inches (1.016 mm). While this measurement can be taken using 
+a pair of callipers, due to the nature of gripping materials, the results 
+of these measurements should be interpreted with caution in the field. 
+An additional requirement, mainly for the benefit of manufacturers, is that 
+the dimension of the rib width, from edge to edge, should not exceed 50% 
+of the grip’s internal diameter.
+In the case of a standard length grip (approximately 10 inches (254 mm) 
+in length), the “full length of the grip” is interpreted to mean that the rib 
+must extend to within 3 inches (76.2 mm) of the tip (see Figure 20).  
+This should generally be enough to cover the span of the player’s hands on 
+the grip.
+Simulated leather wrapped grips moulded out of a rubber-like material 
+with an indented spiral or other similar indentations are considered to be 
+circular in cross-section and are permitted, as long as the fingers cannot 
+comfortably fit in between the spirals or indentations. Similarly, features 
+such as lines, dots or other patterned indentations, which are too small 
+to fit even the smallest of fingers, would not of themselves render a grip 
+non-circular in cross-section. However, any feature which is considered 
+wide and deep enough to accommodate a finger or fingers could be ruled 
+“moulded for the hands” and, hence, non-conforming.
+(ii) Putters
+As clearly stated in this clause, a putter grip may have a non-circular 
+cross-section, provided that, among other things, the cross-section 
+remains generally similar throughout the length of the grip.
+In order to accommodate the popular (and somewhat traditional) “pistol-
+type” putter grips and also limit the amount of potential offset, the phrase 
+“generally similar” is interpreted to mean: (i) that the butt (top) end of 
+the grip must not involve a sharp change in slope or dramatic flare on the 
+underside (see Figures 21(a) and (b)); (ii) that the flat front must extend 
+to within 1 inch (25.4 mm) of the top and bottom ends (see Figure 21(c)); 
+and (iii) if the axis of the grip and the shaft do not coincide, the grip must 
+be at least 10 inches (254 mm) in length.
+As with circular grips, features such as lines, dots, or other patterned 
+indentations, which are too small to fit even the smallest of fingers, would 
+not of themselves render a putter grip not “generally similar throughout 
+the length of the grip” or “moulded for the hands”.
+34 Part 2 – Conformance of Clubs
+
+--- page 38 ---
+(b) – Conforming pistol grip. Flat
+front is continuous throughout
+the length. The flare is not
+considered to be too dramatic.
+(a) – Non-conforming
+pistol
+ g
+rip, i.e. the flare is
+too dramatic.
+Fig. 21
+(c) – Non-conforming
+pistol grip. The flat front
+does not extend to within
+an inch of the
+ 
+top.
+(iii) Cross-sectional Dimension
+This clause is self explanatory, though it is important to note that the
+measurement may be made in any direction on the horizontal plane,
+including diagonally.
+(iv) Axis of the Grip
+This clause requires that the axis of the circular grip on an iron or wood
+club coincides with the axis of the shaft. Therefore, a circular grip with
+the maximum diameter of 1.75 inches (44.45 mm) must not be mounted
+onto the shaft either off-centre or at an angle.
+c. Two Grips
+A putter may have two grips provided each is circular in cross-section, the 
+axis of each coincides with the axis of the shaft, and they are separated by 
+at least 1.5 inches (38.1 mm).
+If a putter were allowed to have two non-circular grips, it would be 
+possible to mount the grips such that their cross-section would not be 
+“generally similar” throughout the entire length (see Section 3b above). 
+For this reason, putters which have two grips must have two circular grips 
+and this is interpreted strictly such that the grips must not incorporate a 
+reminder
+ 
+rib.
+35Part 2 – Conformance of Clubs
+
+--- page 39 ---
+Where a putter has two grips, these grips are only considered separate 
+if the gap between them is at least 1.5 inches (38.1 mm) in length. If a 
+smaller gap exists, or if no gap exists, the total length from the bottom 
+of the lower grip to the top of the upper one would be considered 
+“one grip”. Therefore, it is unlikely that the grip would conform if two 
+conventional circular grips were installed without the required gap. Either 
+the exposed piece of shaft between the two grips would constitute a 
+waist, or the point where the two grips meet in the middle would cause 
+a bulge. If there was no gap between the upper and lower grip, the grip 
+could conform if the lower grip is a continuation of the upper grip, i.e. 
+a continuation of the same taper, and the transition between the two 
+sections is smooth (see Figure 22(d)).
+If a putter does have two separated grips, the upper grip must be at least 
+5 inches (127 mm) in length. If the grip does not satisfy this requirement, 
+it would be considered to be “moulded for the hands”.
+Note: It is worth emphasising that it is not permissible for wood or iron 
+clubs to have more than one grip.
+Fig. 22
+(b) Two circular grips touching (non-conforming). These grips need to be 
+separated by at least 1.5 inches
+(a) Two separate grips, both non-circular, lower grip mounted sideways (non-conforming). 
+(c) Two circular grips too close (non-conforming). Gap is less than 1.5 inches.
+Viewed as being one grip with waist
+(d) Two circular grips touching (conforming).
+Smooth joint – no waist or bulge.
+Continuation of the same taper.
+36 Part 2 – Conformance of Clubs
+
+--- page 40 ---
+4. Clubhead
+a. Plain in Shape
+The “plain in shape” requirement originates from the ‘traditional and 
+customary’ requirement in Section 1a. It is purely a descriptive provision, 
+although in reality it can be challenging to define exactly what a golf club 
+can or should look like. The following sections assists in explaining and 
+illustrating what is and what is not permitted, but it should be noted 
+that the examples that follow are not all-inclusive. Additionally, even if 
+a clubhead satisfies all of the points outlined below, there may still be 
+features or characteristics which render it not generally plain in shape. An 
+overall assessment of the appearance of the head should always be made.
+The essence of Section 4a is encapsulated in the first three sentences of 
+the general provision:
+The clubhead must be generally plain in shape. All parts must be rigid, 
+structural in nature and functional. The clubhead or its parts must not be 
+designed to resemble any other object.  
+This provision basically means that the design of the clubhead must be free 
+from gimmicks (though putters are viewed more liberally than woods and 
+irons), must have the general appearance of a golf clubhead as opposed to 
+another object and must not incorporate features which are designed to 
+resemble another object (see Figure 23). All parts of the head (including 
+permanent, permissible appendages) must be rigid throughout their length.  
+As a general guideline, “rigid” means that it must not be possible to bend 
+or flex the head or its parts by hand. (see Figure 24).
+Fig. 24
+Putter with appendage for aiming/accommodating a sighting line. 
+As long as the appendage is rigid, putter is conforming.
+(a) Putter head in the shape 
+of a car (non-conforming).
+Fig. 23 – Facsimiles 
+of other objects
+(b) Putter head in the shape of 
+a foot (non-conforming).
+(c) Putter head incorporating 
+three facsimiles of a golf 
+ball (non-conforming).
+37Part 2 – Conformance of Clubs
+
+--- page 41 ---
+The general provision of Section 4a continues to state:
+It is not practicable to define plain in shape precisely and comprehensively. 
+However, features that are deemed to be in breach of this requirement 
+and are therefore not permitted include, but are not limited to:
+The above statement acknowledges that defining whether a clubhead 
+is “plain in shape” is subjective. To better clarify the provision and its 
+interpretation, it is split into two categories – one which covers “all 
+clubs” and the other which covers the additional specifications relevant 
+only to “irons and woods”. The Section also reflects the more liberalized 
+application for putters which has evolved over the years and provides 
+more detail regarding what is and what is not permitted for iron heads 
+and woodheads. 
+Following are general guidelines and illustrations for the two categories of 
+“plain in shape”:
+(i) All Clubs
+• holes through the face; 
+•  holes through the head (some exceptions may be made for putters and 
+cavity back irons);
+• features that are for the purpose of meeting dimensional specifications;
+• features that extend into or ahead of the face;
+• features that extend significantly above the top line of the head;
+•  furrows in or runners on the head that extend into the face (some 
+exceptions may be made for putters); and 
+• optical or electronic devices.
+To take each of these clauses in turn:
+Holes through the Face
+Holes through the face are not permitted – see Figure 25.
+(a)  Putter with holes in the face 
+inset (non-conforming).
+Fig. 25 (b)  Iron head with holes through the 
+face (non-conforming).
+38 Part 2 – Conformance of Clubs
+
+--- page 42 ---
+Holes through the Head
+•  Holes through the head are not permitted for wood heads – see 
+Figure 26.
+•  Holes through the head are not permitted for iron heads. However, 
+features within the cavity back of an iron clubhead that form a hole or 
+holes may be permitted, (e.g. support bars), provided that the feature is 
+contained within the outline of the main body of the head and the hole 
+cannot be viewed from above – see Figure 27 a/b.
+39Part 2 – Conformance of Clubs
+Wood head with hole 
+from crown to sole 
+(non-conforming).
+Fig. 26
+EDU
+KROH
+(b) The bar across the cavity back 
+of this iron head creates a hole, but 
+the feature is contained within the 
+outline of the main body of the head 
+(conforming).KROH
+(a) Sand wedge with 
+hole through the head 
+designed to help head 
+cut through the sand 
+(non-conforming).
+Fig. 27
+•  This provision is interpreted very liberally for putters and holes through 
+the head (excluding the face) for any purpose including aiming, sighting 
+or alignment are permitted – see Figure 28 for examples of permissible 
+holes through the head of a putter.
+(b) Putter with vertical holes from 
+top to bottom (conforming).
+(a) Putter with hole extending 
+from toe to heel (conforming).
+Fig. 28
+
+--- page 43 ---
+Features for the purpose of meeting Dimensional Specifications
+For all clubs, the distance from the heel to the toe of the clubhead must 
+be greater than the distance from the front to the back (see Section
+ 
+4b, 
+below). Clubs which incorporate features which are designed to or 
+have the effect of circumventing this requirement are not permitted – 
+see
+ Figure 29.
+F
+eatures that extend into or ahead of the face
+•
+ Permitted 
+features in or on the main body of the head must not extend
+into the face of an iron or wood club. This would include alignment
+features on the crown – see Figure 30. Alignment lines which have
+been engraved or inscribed onto an iron clubhead would generally
+be
+ 
+permitted.
+(b) I ron head with raised
+alignment feature on the crown
+which extends into the face
+(non-conforming).
+(c) I ron head with indented
+alignment feature on the crown
+which extends into the face
+(non-conforming).
+(a) R aised alignment feature
+on crown of head, which
+does not extend into the
+face (conforming).
+Fig. 30
+•  Certain features are permitted to extend into the face of a putter,
+including alignment features and concavities (or furrows) on the crown
+(see Section below on Furrows and Runners). However, such features
+must not have a depth or height greater than 0.25 inches (6.35 mm)
+when measured against the top line of the face.
+•
+ Features 
+of any nature that extend ahead of the face are not permitted
+on any club – see Figure 31.
+40 Part 2 – Conformance of Clubs
+)URQWYLHZ
+7RH +HHO
+7 RSYLHZ
+)URQW %DFN
+)URQWYLHZ
+7RH +HHO
+7 RSYLHZ
+)URQW %DFN
+Fig. 29
+
+--- page 44 ---
+Features above the top line of the head
+•  For putters, alignment or other features must not extend above the top 
+line of the face by more than 0.25 inches (6.35 mm) – see Figure 32.
+•  For woods and irons, features which otherwise meet the requirements 
+for “plain in shape” must not extend above the top line of the head by 
+more than 0.1 inch (2.54 mm).
+•  Permanent or semi-permanent lines or other markings which have 
+been painted, inscribed or otherwise incorporated (see Section 1a) for 
+alignment purposes are permitted.
+Furrows and Runners
+•  Furrows or runners which extend into the face of a wood or iron club 
+from any part of the head are not permitted – see Figure 33.
+Putter with projection 
+ahead of the face for aiming 
+(non-conforming).
+Fig. 31
+UDLVHGULGJH
+The alignment feature or ridge which 
+extends above the top line of this face of this 
+putter is less than 0.25 inches (6.35 mm) in 
+depth. Therefore, putter is conforming.
+Fig. 32
+(a) Iron head with rake-like furrows in 
+the sole – which extend into the face 
+(non-conforming).
+(b) Wood head with runners which 
+extend into the face (non-conforming).
+Fig. 33
+41Part 2 – Conformance of Clubs
+
+--- page 45 ---
+•  While this provision is applied strictly for furrows or runners which may
+appear on the sole of a putter, exceptions may be made for other parts
+of the head – see Figure 34.
+Furrows and/or runners are deemed to extend into the face if the leading 
+edge of the face has any concavity (point of inflection or turning point).
+The application of this provision is fairly straightforward in most cases 
+and can be determined simply by placing a straight edge along the leading 
+edge of the face and looking to see if there is a gap between these two 
+edges. However, woods and hybrids commonly have a smooth transition 
+between the face and the rest of the body which can sometimes make it 
+difficult to determine, in a repeatable and reproducible manner, whether 
+features “extend into” or intersect the face.
+Where the transition between the body and the face is not clearly 
+defined, i.e. the face does not meet the body at a sharp edge or chamfer, 
+the point of intersection shall be defined as the point where a line inclined at 
+45° from the reference plane is tangent to the cross-section (see Figure 35).
+42 Part 2 – Conformance of Clubs
+Examples of putters with features on the top/crown of the head which extend 
+into the face. These are permitted as long as they do not have a depth greater 
+than 0.25 inches (6.35 mm).
+Fig. 34
+Example clubhead illustrating 
+a tangent point defining the 
+intersection between the face 
+and body.
+Fig. 35 45° angle included
+Tangent Point
+Centre of impact area
+Reference Plane
+
+--- page 46 ---
+Any substantial concavities in said profile are considered sufficient 
+evidence that a runner or furrow extends into the face and thus does not 
+conform with Section 4a(i).
+Where the transition between the body and face is clearly defined by a 
+chamfer of at least 45° with respect to the face, furrows and/or runners 
+are permitted to intersect the chamfered surface, provided the feature 
+does not intersect the face itself (see Figure 37).
+•
+ A 
+reference plane is defined as the plane tangent to the face at the
+centre of the impact area.
+•
+ A vertical cross-section is created by establishing a plane perpendicular
+to the reference plane, usually running through the centre of the face/
+clubhead and the area of interest (i.e. furrow or runner).
+Projecting 
+the points of intersection so defined onto the reference plane 
+may be used to define a profile (see Figure 36).
+43Part 2 – Conformance of Clubs
+Profile generated by connecting 
+tangent points identified using the 
+method illustrated in Figure 35. The 
+club in this figure is non-conforming 
+due to the substantial concavity.
+Fig. 36
+Substantial concavity
+Centre of 
+impact area
+Profile connecting 
+tangent points
+Conforming and non-
+conforming furrows, where the 
+transition between the face 
+and the body of the clubhead is 
+defined by a chamfer of angle 
+not less than 45°
+Fig. 37
+Sole meets face 
+at chamfer
+Conforming
+45° to face
+Non-Conforming
+
+--- page 47 ---
+If a runner has been chamfered back away from the face, by at least 45°, 
+then it would not be considered to extend into the face – see Figure 38.
+)URQWYLHZ 6LGHYLHZ
+´5XQQHUµ ´5XQQHUµ5DLVHGIDFH
+LQWKHFHQWUH
+5XQQHUH[WHQGVLQWRWKH
+IDFHQRQFRQIRUPLQJ
+)DFH
+Fig. 38a – Putter with runners at the heel and toe
+Fig. 38b – Putter with chamfered runners at the heel and toe
+)URQWYLHZ 6LGHYLHZ
+´5XQQHUµ ´5XQQHUµ5DLVHGIDFH
+LQWKHFHQWUH
+5XQQHUFKDPIHUHGEDFNE\GRHV
+QRWH[WHQGLQWRWKHIDFHFRQIRUPLQJ
+44 Part 2 – Conformance of Clubs
+
+--- page 48 ---
+Electronic devices in or on the club shaft or grip, which have the sole 
+purpose of identifying the club, may be permitted. The identification 
+information is restricted to:
+ (a) the club’s owner, such as address and phone number;
+ (b) inventory tracking information;
+ (c) detection of the club’s use during a round.
+Any such device must meet all other requirements of the Equipment 
+Rules and must not vibrate or emit light or sound. If the device is capable 
+of any function other than identification, the golf club will be considered 
+not traditional and customary in form and make (see Section 1a (i)) and, 
+therefore, non-conforming. 
+Note: Any device or application used in conjunction with a club 
+incorporating such a device must comply with the provisions of Rule 4.3 
+of the Rules of Golf.
+Optical and Electrical Devices
+Clubheads which incorporate prisms, mirrors, reflective materials, light 
+beams, metronomes or mechanical devices such as spirit levels are not 
+permitted – see Figures 39 and 40.
+45Part 2 – Conformance of Clubs
+(a) Putter with laser beam 
+sighting mechanism 
+built into the head 
+(non-conforming).
+Fig. 39 – Optical devices Fig. 40 – Electrical and mechanical devices
+(b) Putter with spirit level 
+at the back of the head 
+(non-conforming).
+Putter head with sighting 
+mirror attached to the 
+back of the head at 45 
+degree angle to view target 
+(non-conforming).
+
+--- page 49 ---
+In addition to the provisions above, the “plain in shape” guidelines and 
+illustrations for woods and irons are:
+(ii) Woods and Irons
+• all features listed in (i) above;
+•  cavities in the outline of the heel and/or the toe of the head that can be 
+viewed from above;
+•  severe or multiple cavities in the outline of the back of the head that can 
+be viewed from above;
+•  transparent material added to the head with the intention of rendering 
+conforming a feature that is not otherwise permitted; and 
+•  features that extend beyond the outline of the head when viewed 
+from above.
+In essence, the purpose of these additional requirements is to help 
+preserve the traditional shape and appearance of such clubheads when 
+viewed from above. The “plain in shape” provisions for woods and irons 
+are less focused on sole features or other features which cannot be 
+viewed from above. To go through each of these provisions in turn:
+Cavities in the Outline of the Heel and/or Toe
+When making this assessment, “viewed from above” is interpreted to 
+mean the range from directly above the head to the normal address 
+position for that club. The restriction does not apply to horizontal cavities 
+around the skirt of the head, which might be visible from above – see 
+Figures 41a and b.
+46 Part 2 – Conformance of Clubs
+&DYLWLHV
+LQVNLUW
+(a)  Wood head with cavities in 
+the ‘skirt’ or sides of the head 
+(conforming).
+Fig. 41
+(b)  Wood head with cavity in outline of the 
+toe and the heel which can be viewed 
+at address (non-conforming). The single 
+cavity at the back of the head is not 
+‘severe’ and, therefore, is permitted.
+&DYLW\
+LQKHHO
+&DYLW\
+LQWRH
+6LQJOHFDYLW\
+LQEDFN
+RIKHDG
+
+--- page 50 ---
+Severe or Multiple Cavities in the Outline of the Back of the Head
+•  Severe cavities (as viewed at address), which go all the way through the 
+head, are not permitted. A “severe” cavity is one where the entrance to 
+the cavity is narrower than its width at any other point – see Figure 41c.
+•  A single cavity in the back of the head is permitted – see Figure 41b. 
+However, multiple cavities are not permitted – see Figure 41d.
+•  Cavities in the crown of the head are permitted, even if they are 
+designed primarily as an aid to sighting, aiming or aligning the swing plane 
+or the head position, or to accommodate markings for such aids – see 
+Figure 41e. However, all cavities on the crown are filled for the purpose 
+of measuring the volume of the head – see Section 4b(i)). 
+ 
+47Part 2 – Conformance of Clubs
+(c) Wood head with ‘severe’ 
+concavity (non-conforming).
+6HYHUH
+FRQFDYLW\
+1DUURZ
+HQWUDQFH
+(e) Wood head with 
+cavity in crown of head 
+(conforming – with or 
+without sighting lines).
+(d) Wood head with 
+multiple cavities in 
+outline of back of head 
+(non-conforming).
+Transparent Material
+• Clubheads made entirely of transparent material are permitted.
+•   Transparent material that is added to an otherwise non-plain head does 
+not render the head “plain in shape”. For example, a wood head which 
+has a vertical hole from the top surface through to the sole would be 
+ruled non-conforming (see Section 4a(i) and Figure 26). Filling this  
+hole with a transparent material (e.g. perspex or glass), would not alter 
+this ruling. 
+Fig. 41 – cont.
+
+--- page 51 ---
+Features Extending Beyond the Outline of the Head
+Any fin, knob, appendage or plate which is protruding beyond the outline 
+of the head is not permitted, whatever the purpose.
+NOTE: While this provision does not apply to putters, The R&A and 
+USGA have determined that unusual features which protrude beyond the 
+outline of the toe and/or heel of a putter head may be ruled not “plain 
+in shape” or not “traditional and customary”. However, as previously 
+noted, other permanent appendages to the putter head are permitted 
+provided 
+that:
+•  the 
+feature is rigid throughout its length (i.e., cannot be bent or flexed
+by hand);
+• the feature does not extend forward of the face; and,
+•
+ the features 
+does not extend above the top line of the face by more
+than 0.25 inches (6.35 mm).
+b. Dimensions, Volume and Moment of Inertia
+Section 4b is divided into three categories – woods, irons and putters.
+The
+ 
+volume and moment of inertia limits apply only to woodheads.
+(i) Woods
+Dimensional specifications:
+When the club is in a 60 degree lie angle, the dimensions of the clubhead 
+must be such that:
+•
+ t
+he distance from the heel to the toe of the clubhead is greater than the
+distance from the face to the back;
+•
+ t
+he distance from the heel to the toe of the clubhead is not greater than
+5 inches (127 mm); and
+•
+ t
+he distance from the sole to the crown of the clubhead, including any
+permitted features, is not greater than 2.8 inches (71.12 mm).
+These dimensions are measured on horizontal lines between vertical 
+projections of the outermost points of:
+• the heel and the toe; and
+•
+ t
+he face and the back (see Fig. 42, dimension A); and on vertical lines
+between the horizontal projections of the outermost points of the sole
+and the crown (see Fig. 42, dimension B). If the outermost point of
+the heel is not clearly defined, it is deemed to be 0.875 inches (22.23
+mm) above the horizontal plane on which the club is lying (see Fig. 42,
+dimension C).
+48 Part 2 – Conformance of Clubs
+
+--- page 52 ---
+60º
+Heel
+To e
+Crown
+C
+B
+0.875 ’’
+Sole
+BackFace
+A
+Fig. 42
+When performing these measurements in the field, the best method 
+would be to use a pair of callipers. For the heel to toe measurement, 
+a rigid, straight edge (e.g. a ruler) should be held upright against the 
+extremity of the toe end.
+Volume limit:
+The volume of the clubhead must not exceed 460 cubic centimetres (28.06 
+cubic inches), plus a tolerance of 10 cubic centimetres (0.61 cubic inches).
+In practice, many of the larger headed clubheads in the market place have 
+a marking somewhere on the head indicating the approximate volume of 
+the head (this is the cubic centimetres or “cc” value).
+Fortunately, for clubs where there is no indication of volume, there is a 
+fairly simple method of determining the actual volume of a clubhead 
+in the field and it is broadly based on Archimedes’ Principle and the 
+displacement of water. All that is needed is a large measuring container, 
+half filled with water. The measure of clubhead volume would be the 
+amount by which the water level rises once the clubhead has been 
+submerged into the water. Therefore, if the container is filled with 1 litre 
+of water and the level rises to 1450 millilitres when the head is submerged 
+to the base of the hosel – this would mean that the head has a volume of 
+450 cubic centimetres.
+The official test protocol for measuring volume is a more accurate 
+method, but not that much more complicated, and it requires a similar 
+container of water placed on a set of digital weighing scales.
+49Part 2 – Conformance of Clubs
+
+--- page 53 ---
+50 Part 2 – Conformance of Clubs
+Archimedes’ Principle states that the buoyant force on a submerged object 
+is equal to the weight of the fluid that is displaced by the object – and 
+since water has a specific gravity of 1.0, this means that 1 cubic centimetre 
+of water has a mass of 1 gram. Therefore, the container of water should 
+be placed on the scales and the weight should be set to zero. When 
+the head is submerged in the water, the weight displayed on the scales 
+(in grams) is equivalent to the volume of the head (in cubic centimetres).
+In situations where a club is marked with a “cc” value which is in excess 
+of the Rule (i.e. above 460 cubic centimetres), The R&A’s and USGA’s 
+policy is to rule that the club is non-conforming – regardless of the actual 
+volume measurement. This is to avoid confusion in the marketplace.
+Prior to measuring the volume of a clubhead, the head should be inspected 
+for cavities. All cavities on the crown should be filled with waterproof clay 
+or other similar material to create a ‘straight line’ which connects the edges 
+of the cavity. The ‘straight line filling technique’ does not follow the taper 
+or curvature of the surface of the head, rather the cavity is filled so that it 
+becomes a flat surface which adjoins the outer edges.
+Only significant concavities on the sole will be filled, meaning any cavity or 
+series of cavities which have a collective volume of greater than 15 cc.
+Electronic scales (set to zero) with 
+water-filled container and club head 
+ready for submergence.
+Fig. 43
+
+--- page 54 ---
+Moment of Inertia (MOI):
+When the club is in a 60 degree lie angle, the moment of inertia 
+component around the vertical axis through the clubhead’s centre of 
+gravity must not exceed 5900 g cm2 (32.259 oz in2), plus a test tolerance 
+of 100 g cm2 (0.547 oz in2).
+The MOI test is a measurement of a clubhead’s resistance to twisting and, 
+therefore, it is an indication of its ‘forgiveness’.
+The measurement of MOI is one of the few limits within the Equipment 
+Rules which cannot easily be performed in the field. This is because the 
+testing equipment is very specialized and it can only be measured by 
+de-shafting the head (the hosel remains on the head for the purpose of 
+the test). However, high MOI is only associated with modern, hollow, high 
+volume driver heads and, due to the publication of the List of Conforming 
+Driver Heads (see Rule 4c below), most of these clubs are now routinely 
+submitted to the Governing Bodies for a ruling – so that they can be 
+included on this List.
+As the MOI of a driver head is affected by a change in its weight and 
+the position of the centre of gravity, a driver which is designed to 
+be adjustable for weight must conform to the Equipment Rules in all 
+configurations (see
+ Rule 
+1b). Moreover, when adding additional weight to 
+a driver (e.g. with lead tape), the player must be certain that the club is 
+still within the limit. To assist golfers with this determination, The R&A 
+and USGA have developed a policy whereby if a driver head is submitted 
+for a ruling and it is measured to have an MOI which is close to the 
+limit, the manufacturer will be encouraged to advise its customers that 
+the addition of any other weights to that model (including lead tape), 
+other than the weights which were supplied by the manufacturer, is not 
+permitted as it would likely render the club non-conforming. Additionally, 
+the manufacturer must take care over its claims and must not advertise 
+that the product is over the limit for MOI.
+(ii) Irons
+When the clubhead is in its normal address position, the dimensions of the 
+head must be such that the distance from the heel to the toe is greater 
+than the distance from the face to the back.
+In practice, due to the shape and size of iron heads, this provision is rarely 
+encroached. It is retained in the Equipment Rules, in part, to help maintain 
+the traditional shape by which irons are recognized. However, while most 
+irons are still relatively narrow from front to back, the popularity of hybrid 
+clubs means that this provision has greater utility today.
+51Part 2 – Conformance of Clubs
+
+--- page 55 ---
+(iii) Putters (see Fig. 44)
+When the clubhead is in its normal address position, the dimensions of the 
+head must be such that:
+•
+ t
+he distance from the heel to the toe is greater than the distance from
+the face to the back;
+•
+ t
+he distance from the heel to the toe of the head is less than or equal to
+7 inches (177.8 mm);
+•
+ t
+he distance from the heel to the toe of the face is greater than or equal
+to two thirds of the distance from the face to the back of the head;
+•
+ t
+he distance from the heel to the toe of the face is greater than or equal
+to half of the distance from the heel to the toe of the head; and
+•  t
+he distance from the sole to the top of the head, including any permitted
+features, is less than or equal to 2.5 inches (63.5 mm).
+52 Part 2 – Conformance of Clubs
+Top View Face View
+Back
+A
+D
+C B
+Face
+A     7
+B     2/3 C
+B     1/2 A
+A >  C
+D     2.5
+Fig. 44
+For traditionally shaped heads, these dimensions will be measured on 
+horizontal lines between vertical projections of the outermost points of:
+• the heel and the toe of the head;
+• the heel and the toe of the face; and
+• the face and the back;
+and on vertical lines between the horizontal projections of the outermost 
+points of the sole and the top of the head.
+For unusually shaped heads, the toe to heel dimension may be made at 
+the
+ 
+face.
+Given all of the dimensional restrictions for putter heads, which help 
+define the size and shape, the additional clause regarding unusually shaped 
+heads is rarely, if ever, applied. 
+It is important to note that appendages are not permitted if their only 
+purpose is to make the clubhead meet the dimensional specifications 
+described in this provision (see Section 4a(iv) and Figure 29).
+
+--- page 56 ---
+c. Spring Effect and Dynamic Properties
+The design, material and/or construction of, or any treatment to, the 
+clubhead (which includes the club face) must not:
+(i)
+ h
+ave the effect of a spring which exceeds the limit set forth in the
+Pendulum Test Protocol on file with The R&A and USGA; or
+(ii)
+ i
+ncorporate features or technology including, but not limited to,
+separate springs or spring features, that have the intent of, or the effect
+of, unduly influencing the clubhead’s spring effect; or
+(iii) unduly influence the movement of the ball.
+Note: (i) above does not apply to putters.
+Given that the “spring-effect rule” is purely a performance related 
+limit which cannot be measured easily in the field without specialized 
+equipment and cannot be assessed through a visual inspection of the 
+clubhead, The R&A and USGA have compiled and maintain a List of 
+Conforming Driver Heads. This List can be accessed via The R&A’s or 
+USGA’s website and it is updated weekly.
+For competitions involving highly skilled players, a Model Local Rule may 
+be introduced requiring players to use a driver which is included on this 
+List. This Local Rule is an additional requirement for these players, which 
+means that, not only must their clubs conform to the Equipment Rules, 
+but the model and loft must also be included on the List of Conforming 
+Driver Heads. This Local Rule is not recommended for use at other levels 
+of golf. However, it is the player’s responsibility to ensure that his or her 
+driver conforms to the Equipment Rules if it is not on the List.
+As well as meeting the requirements of clause (i) in the above Rule, clubs 
+are also tested for compliance to clause (ii) using the Pendulum at points 
+on the face other than at the centre and, depending on the results, other 
+tests may be carried out. Any club which is found to include a feature 
+that is designed to act like a spring, independent of the level of flexibility 
+achieved by the design, could be ruled non-conforming.
+Finally, if claims of “spring like” qualities are made by the manufacturer 
+which suggest that a club is manufactured to be in excess of the limit, or 
+there is evidence to suggest that the club is indeed over the limit, then the 
+club would be deemed to be non-conforming.
+53Part 2 – Conformance of Clubs
+
+--- page 57 ---
+d. Striking Faces
+The clubhead must have only one striking face, except that a putter may 
+have two such faces if their characteristics are the same, and they are 
+opposite each other.
+The exception for putters was introduced in order to accommodate 
+traditional blade
+-
+type putters.
+Determining whether a surface constitutes a second (or third) striking 
+face is often a matter of interpretation. However, in general, a surface 
+should be considered an additional striking face if: 
+•  the 
+area is flat and it is clearly designed to be used for striking the ball; or
+•  it 
+is opposite the intended face and consists of a flat surface of a
+different loft and/or material; or
+•  it 
+is a flat surface on the toe and/or heel of a cylindrical, rectangular or
+square head design which could effectively be used to strike the ball; or
+•
+ it could 
+otherwise effectively be used to strike the ball.
+All three of the putters illustrated in Figure 45 would be ruled 
+non
+-
+conforming.
+54 Part 2 – Conformance of Clubs
+The addition of lead tape to the secondary face of a dual-faced putter 
+would not be contrary to the Equipment Rules. In addition, cosmetic or 
+decorative markings on one of two permissible surfaces, that do not affect 
+the performance, will not usually create a different striking face in breach of 
+this provision.
+Fig. 45
+(a) T his putter has one small
+face at the front and a
+second much longer face
+at the back.
+(b) T his putter has a ‘balata’
+type inset in the front, but
+the back of the head is a
+smooth, flat metal surface.
+(c) T his putter has two
+identical surfaces at
+the front and the back.
+However, it also has a third
+striking face at the toe.
+
+--- page 58 ---
+5. Club Face
+a. General
+The face of the club must be hard and rigid and must not impart significantly 
+more or less spin to the ball than a standard steel face (some exceptions 
+may be made for putters). Except for such markings listed below, the club 
+face must be smooth and must not have any degree of concavity.
+If claims of excessive spin are made by the manufacturer, or if there is strong 
+supporting evidence of excessive spin, then the club would be deemed to be 
+non-conforming.
+The “hardness” provision is particularly relevant to putters, many of which 
+have a urethane or other “soft” material inset in the face.
+The measure for hardness is made using a durometer. A putter face must 
+be no less than 85 on a Shore A scale durometer. A simple measure of 
+hardness in the field would be to use a fingernail. If a fingernail leaves a 
+significant imprint in the face of a club, it is possible that the material does 
+not satisfy the “hard and rigid” requirement. The face of a wood or iron 
+club must be substantially harder than a putter face, i.e. no less than 75 on 
+the Shore D
+ 
+scale.
+In the field, “rigidity” is interpreted to mean that the face should not have 
+any visible signs of movement or flex when manual pressure is exerted.
+Where there is an inset in the face of the club, it should be flush with the 
+rest of the face so that the face can still be considered smooth with no 
+concavity. While we interpret concavity in this provision strictly, we also 
+recognize that, due to manufacturing tolerances, it is sometimes difficult for 
+every insert to be exactly flush with the rest of the face.  As a result, we 
+allow an inset to be up to 0.006 inches (0.15 mm) proud of the rest of the 
+face or no deeper than 0.004 inches (0.1 mm) below the rest of the face.
+b. Impact Area Roughness and Material
+Except for markings specified in the 
+following paragraphs, the surface 
+roughness within the area where impact 
+is intended (the “impact area”) must not 
+exceed that of decorative sandblasting, 
+or of fine milling (see
+ F
+ig. 46).
+The whole of the impact area must be 
+of the same material (exceptions may be 
+made for clubheads made of wood).
+55Part 2 – Conformance of Clubs
+Illustrative
+impact area
+Fig. 46
+
+--- page 59 ---
+(i) Definition of “Impact Area”
+Irons
+For iron clubs, the “impact area” is deemed to be that part of the 
+club face where a treatment has been applied (for instance grooves, 
+sandblasting, etc.) or the central strip down the middle of the club face 
+having a width of 1.68 inches (42.67 mm), whichever is greater.
+Woods
+The impact area on driving clubs and fairway woods is deemed to be the 
+central strip down the middle of the clubface having a width of 1.68 inches 
+(42.67 mm) – see Figure 47a.
+56 Part 2 – Conformance of Clubs
+(a) M etal wood head showing size and shape
+of impact area.
+Fig. 47 – Impact Area for Driving Clubs and Fairway Woods
+(b) Grooves 
+indicating traditional
+impact area
+NOTE: Grooves and/or punch marks indicating a traditional impact area 
+(see Figure 47b), or any groove which encroaches into the heel or toe 
+portions of the impact area by less than 0.25 inches (6.35 mm), will not 
+be considered to be within the impact area. However, any such markings 
+must not be designed to unduly influence, or have the effect of unduly 
+influencing, the movement of the ball.
+For clubs with insets in the face, the boundary of the impact area is 
+defined by the boundary of the inset, as long as any markings outside the 
+boundary do not encroach the impact area by more than 0.25 inches  
+(6.35 mm) and/or are not designed to influence the movement of the ball.
+Moreover, the inset itself must extend to at least 0.84 inches (21.34 mm) 
+either side of the centre line of the face and to within at least 0.2 inches 
+(5.08 mm) of the top line and leading edge of the face.
+IMPORTANT NOTE: 
+The above definitions of the impact area only apply to models of clubs 
+manufactured on or after 1 January 2010. For clubs manufactured prior to 
+1 January 2010, please refer to the end of Supplementary Paper B.
+
+--- page 60 ---
+(ii) Impact Area Roughness
+When dealing with the surface roughness of a club face (not including
+putters, see Section 5f), the claims made by the manufacturer must be
+taken into account – especially if there is a claim that the roughness of
+the face influences the movement of the ball. In the absence of such
+claims, the ruling is made purely on the amount of roughness there is.
+Sandblasting or other treatments of roughness greater than 180 micro
+inches (4.5
+ μ
+metre) are not permitted. In addition to this requirement for
+roughness, milling is not permitted if the crest to trough depth exceeds
+0.001 inches (0.025 mm). A reasonable tolerance is allowed for both of
+the above measurements. Non-conforming sandblasting or milling usually
+feels rough to the touch.
+(iii) Impact Area Material
+The requirement that the whole of the impact area must be of the same
+material does not apply to clubs made of wood or putters (see Section
+5f). The reason why it does not apply to wooden headed clubs is to allow
+the continued use of traditional wooden clubs which have plastic insets
+and brass screws in the centre of the face. This design was commonly
+used in the old persimmon woods, some of which may still be in use. It is
+worth noting that a club face or inset made of a composite material would
+be considered to be of a single material and, therefore, would not be
+contrary to this provision.
+Metal wood club faces which have insets of different material not 
+trapezoidal in shape may be permitted if the height of the inset meets 
+the definition of the impact area and the width of the inset is the same as 
+the height in at least one point. However, in order to preserve the intent 
+of the “same material” Rule, clubs which have unusually shaped insets of 
+different material (i.e. other than circular, oval, square or rectangular) 
+would not normally be permitted.
+If an inset of different material is permitted under the above guideline, 
+the inset would be considered the impact area for that club. Therefore, 
+any markings outside that area need not conform to the specifications 
+in Section 5c. However, such markings must not be designed to unduly 
+influence the movement of the ball.
+c. Impact Area Markings
+If a club has grooves and/or punch marks in the impact area they must 
+meet the following specifications:
+57Part 2 – Conformance of Clubs
+
+--- page 61 ---
+(i) Grooves
+• Grooves must be straight and parallel.
+•
+ G
+rooves must have a symmetrical cross-section and have sides which do
+not converge (see Fig. 48).
+*URRYHGHSWK
+PD[µ
+*URRYHZLGWK
+PD[µ
+$[LVRI
+6\PPHWU\
+&RQIRUPLQJ 1RQ&RQIRUPLQJ
+&RQYHUJLQJ $V\PPHWULF
+
+Fig. 48
+30° 30°
+Fig. 49 A
+W + S
+� 0.0030in²/in
+•  * For clubs that have a loft angle greater than or equal to 25 degrees,
+grooves must have a plain cross-section.
+•
+ T
+he width, spacing and cross-section of the grooves must be consistent
+throughout the impact area (some exceptions may be made for woods).
+•  The width (W) of each gr
+oove must not exceed 0.035 inches (0.9 mm), using
+the 30 degree method of measurement on file with The R&A and USGA.
+•  The distance betw
+een edges of adjacent grooves (S) must not be less
+than three times the width of the grooves, and not less than 0.075 inches
+(1.905
+ 
+mm).
+• The depth of each groove must not exceed 0.020 inches (0.508 mm).
+•
+ *
+For clubs other than driving clubs, the cross-sectional area (A)
+of a groove divided by the groove pitch (W+S) must not exceed
+0.0030
+ 
+square inches per inch (0.0762 mm2/mm) (see Fig. 49).
+58 Part 2 – Conformance of Clubs
+
+--- page 62 ---
+&RQIRUPLQJ1 RQ&RQIRUPLQJ
+5 µ
+µ
+Fig. 50
+59Part 2 – Conformance of Clubs
+• Grooves must not have sharp edges or raised lips.
+•
+ *
+For clubs that have a loft angle greater than or equal to 25 degrees,
+groove edges must be substantially in the form of a round having
+an effective radius which is not less than 0.010 inches (0.254 mm)
+when measured as shown in Fig. 50, and not greater than 0.020
+inches (0.508
+ 
+mm). Deviations in effective radius within 0.001 inches
+(0.0254
+ 
+mm) are permissible.
+(ii) Punch Marks
+•
+ T
+he maximum dimension of any punch mark must not exceed
+0.075
+ 
+inches (1.905 mm).
+•
+ T
+he distance between adjacent punch marks (or between punch marks
+and grooves) must not be less than 0.168 inches (4.27 mm), measured
+from centre to centre.
+• The depth of any punch mark must not exceed 0.040 inches (1.02 mm).
+• Punch marks must not have sharp edges or raised lips.
+•
+ *
+For clubs that have a loft angle greater than or equal to 25 degrees,
+punch mark edges must be substantially in the form of a round having
+an effective radius which is not less than 0.010 inches (0.254 mm) when
+measured as shown in Figure 50, and not greater than 0.020 inches
+(0.508 mm). Deviations in effective radius within 0.001 inches
+(0.0254 mm) are permissible.
+Note 1: The groove and punch mark specifications above indicated by an 
+asterisk (*) apply only to new models of clubs manufactured on or after 
+1
+ 
+January 2010 and any club where the face markings have been purposely 
+altered, for example, by re-grooving. For further information on the status 
+of clubs available before 1 January 2010, refer to the ‘‘Equipment Search’’ 
+section of www.randa.org or “Club and Ball Lists” section of www.usga.org.
+
+--- page 63 ---
+Note 2: The Committee may require, in the Model Local Rule, that 
+the clubs the player carries must conform to the groove and punch 
+mark specifications above indicated by an asterisk (*). This Term is 
+recommended only for competitions involving expert players. For further 
+information, refer to to the Commitee Procedures, Section 8, Model Local 
+Rule G-2 in The Official Guide to the Rules of Golf.
+The groove and punch mark specifications were updated in 2010 and 
+many pre-2010 models of clubs do not meet the new specifications. The 
+above Notes mean that the vast majority of golfers can continue to carry 
+clubs manufactured prior to 2010 until at least 2024. 
+Supplementary Paper B sets out guidance on how to measure width, 
+depth and separation of grooves using the ‘ink and scratch’ method and 
+how to determine the conformance status of a club to the pre-2010 
+Equipment Rules. This is an adequate method for use in the field where 
+the Committee has not introduced the Groove and Punch Mark Model 
+Local Rule (i.e. at the non-elite level).
+There are several methods which can be used to measure grooves and 
+punch marks against the updated specifications detailed above – most of 
+which require specialized equipment.
+Full details of the procedure for measuring club face markings and 
+determining their status against the post-2010 specifications can be 
+found on The R&A’s and USGA’s websites. A summary can also be found 
+in Supplementary Paper C.
+As noted, The R&A and USGA do not recommend adoption of the 
+Model Local Rule referenced in Note 2 unless the competition involves 
+professional-level players and/or players at the highest levels of amateur 
+golf. In order to assist players and officials to determine whether a 
+player’s clubs meet the condition, The R&A and USGA have compiled an 
+informational database of irons, wedges, fairway woods and hybrids that 
+have been submitted to either organization and evaluated for conformance 
+to the updated specifications. This information is available on The R&A’s 
+and USGA’s websites, respectively.
+Notably, clubs where the face markings have been purposely altered, for 
+example, by re-grooving must conform to the 2010 groove and punch 
+mark specifications. However, clubs which have only been refurbished 
+back to their original state (perhaps by light sandblasting) may still benefit 
+from the period of grace given to pre-2010 models.
+For the avoidance of doubt, all new models available after 31 December 
+2009 must conform to the current Equipment Rules.
+60 Part 2 – Conformance of Clubs
+
+--- page 64 ---
+(iii) Groove/Punch Mark Combinations
+If punch marks are used in conjunction with grooves, the following
+guidelines apply:
+Iron Clubs
+• Small punch marks 
+which are in line with a conforming groove, and
+which would be totally contained within a continuation of the groove do
+not have to meet the punch mark to groove specifications (See Figure
+51). However, if the diameter of such punch marks exceeds the width
+of the groove, then they must meet the specifications.
+61Part 2 – Conformance of Clubs
+Fig. 51 The diameter of these punch marks is 
+smaller than the width of the grooves.
+Therefore, if these grooves conform, the 
+‘punch mark to groove separation Rule’ 
+does not apply.
+Fig. 52
+• When measur ing the centre to centre distance between a punch mark
+and the end of an in-line groove, the centre of the groove is deemed to
+be half a groove width from the end edge of the groove (See Figure 52).
+Metal Wood Clubs
+Provided the following three conditions are satisfied, the above 
+interpretation of the specifications for punch marks in line with a groove 
+may also be granted for metal woods, even if the punch marks would not 
+be totally contained by the continuation of the groove: 
+• t
+here must be no more than three in-line punch marks in the part
+of the groove that is missing (i.e. in the gap between the ends of the
+partial grooves);
+
+--- page 65 ---
+• the combined area of all of the in-line punch marks in any one such gap
+must not exceed the area of the missing groove; and
+• the separation
+ of the in-line punch marks from adjacent parallel grooves
+– measured from centre to centre – must be at least four times the
+width of the groove.
+Fig. 53 illustrates each of the above conditions:
+VPXVWEHZ
+Fig. 53 – Exceptions for Metal Woods
+Combined area in the line punch marks 
+must be < wl
+(w = groove width; s = separation; and  
+l
+= distance between end of grooves)
+d. Decorative Markings
+The centre of the impact area may be indicated by a design within the 
+boundary of a square whose sides are 0.375 inches (9.53 mm) in length. 
+Such a design must not unduly influence the movement of the ball. 
+Decorative markings are permitted outside the impact area.
+This provision permits small, decorative logos in the centre of the face or 
+at the side of the impact area (see Fig. 54). Decorative markings or logos 
+that marginally encroach on the impact area, i.e. by less than 0.25 inches 
+(6.35 mm), may be permitted. However, any such markings must not 
+be designed to unduly influence or have the effect of unduly influencing 
+the movement of the ball. Markings outside the impact area which are 
+designed to influence the movement of the ball when it has been mis-hit 
+would be contrary to this provision.
+Fig. 54 – Decorative Markings
+1.68 inches
+(42.67mm)
+The decorative marking in the centre 
+fits into the boundaries of a square 
+whose sides are 0.375” (9.52 mm) in 
+length, and thus conforms with the 
+Rules. However, the word “Accuracy”, 
+is deemed to significantly encroach 
+on the impact area, and therefore the 
+club is non-conforming.
+62 Part 2 – Conformance of Clubs
+
+--- page 66 ---
+e. Non-metallic Club Face Markings
+The above specifications do not apply to clubheads made of wood on 
+which the impact area of the face is of a material of hardness less than the 
+hardness of metal and whose loft angle is 24 degrees or less, but markings 
+which could unduly influence the movement of the ball are prohibited.
+f. Putter Face
+Any markings on the face of a putter must not have sharp edges or raised 
+lips. The specifications with regard to roughness, material and markings in 
+the impact area do not apply.
+In addition, if a groove or the grooves on the face of a putter exceed 
+0.035 inches (0.9 mm) in width and 0.020 inches (0.508 mm) in depth, 
+the
+ 
+following guidelines apply:
+• The width may not exceed 0.060 inches (1.524 mm);
+• The width to spacing ratio must be no less than 1:1; and
+•
+ T
+he depth must be less than the width, and may not exceed
+0.040 inches (1.016 mm).
+63Part 2 – Conformance of Clubs
+
+--- page 67 ---
+PART 3 – THE GOLF BALL PLAYING RULES
+64 Part 3 – The Golf Ball Playing Rules
+4.2 Balls 
+a. Balls Allowed in Play of Round
+(1) Conforming Ball Must Be Played. In making each stroke, a player must
+use a ball that conforms to the requirements in the Equipment Rules.
+A player may get a conforming ball to play from anyone else, including 
+another player on the course. 
+(2) Deliberately Altered Ball Must Not Be Played. A player must not make
+a stroke at a ball whose performance characteristics have been deliberately
+altered, such as by scuffing or heating the ball or by applying any substance
+(other than in cleaning it).
+Markings applied using a felt-tip pen are not contrary to Rule 4.2a(2). 
+Rule
+ 6.3a 
+encourages the player to put an identification mark on his or her 
+ball to help ensure that he or she plays their own ball throughout the round. 
+There are no regulations to limit what or how many markings can be applied 
+to the ball by the player, provided its original markings can be discerned.
+The List of Conforming Golf Balls
+Manufacturers may submit balls to The R&A and USGA for testing. 
+Twenty-four samples of each ball type or model must be submitted to 
+obtain a conformance ruling. If the samples conform to the Equipment 
+Rules, the model is included on the List of Conforming Golf Balls, which is 
+updated on a monthly basis. The current list can be found on The R&A’s 
+and USGA’s websites. Full details of the golf ball submission procedure can 
+be obtained from The R&A or USGA.
+Balls remain on the List for one year. Random tests are carried out 
+by The R&A and USGA on selected balls to ensure that the ball 
+characteristics remain the same. If a conformance issue is identified during 
+random testing, the ball may be removed from the list.
+Normally, only the Committees in charge of competitions involving expert 
+players (professional-level players and/or players at the highest levels of 
+amateur golf) should introduce a Model Local Rule requiring a player to 
+use a ball included in the List of Conforming Golf Balls, the penalty for 
+breach of the Local Rule being disqualification. However, if this Local Rule 
+is not in place, then the assumption is that a ball used by a player conforms 
+unless there is strong evidence to the contrary e.g. a player used a 1.62 inch 
+diameter golf ball (a ball which used to be in circulation and was permitted 
+under the Rules before finally being prohibited worldwide in 1990).
+
+--- page 68 ---
+General
+The Rules and specifications regarding the golf ball are divided into the 
+following six categories:
+1.
+General
+2.
+Weight
+3.
+Size
+4. S
+pherical Symmetry
+5. I
+nitial Velocity
+6. O
+verall Distance Standard
+1. General
+The ball must not be substantially different from the traditional and 
+customary form and make. The material and construction of the ball must 
+not be contrary to the purpose and intent of the Rules.
+Prior to 2008, all of the provisions on the golf ball were precise and 
+quantitative in comparison to the generally more descriptive Equipment 
+Rules that relate to clubs. However, in 2008, new language was introduced 
+to protect against any new technology which may be developed in the 
+future which circumvents the intent of the existing Equipment Rules. 
+Therefore, along with the guidelines and specifications listed below, 
+The R&A or USGA may conduct additional testing and inspections to 
+identify whether golf balls contain unusual material, construction and/
+or performance characteristics which might be considered substantially 
+different from the traditional and customary form and make and/or contrary 
+to the purpose and intent of the Equipment Rules.
+Golf Ball Construction
+Only golf balls constructed entirely from elastomeric materials  
+(i.e., viscoelastic materials having a low elastic modulus) will be considered 
+to be of traditional and customary form and make. Allowance may be 
+made for the presence of some traces of non-elastomeric materials. The 
+elastomeric materials may be thermoset or thermoplastic polymers, but 
+must not be designed or manufactured to facilitate intentional modification 
+of the ball’s playing characteristics. In addition, the design of the golf ball 
+may not include parts or components that move with respect to each 
+other or the ball or that are not concentric with the golf ball. Exceptions 
+to the requirement that the ball must not be substantially different from 
+the traditional and customary form and make are noted below.
+PART 4 – CONFORMANCE OF BALLS
+65Part 4 – Conformance of Balls
+
+--- page 69 ---
+Exceptions:
+Golf balls may have a single, concentric core with a diameter of ≤ 0.9-in 
+(22.9mm), provided that the core:
+• contains 
+fluid constrained within a single chamber; OR
+•
+ if non-elastomeric, is effectively rigid (such as 
+a solid or hollow, thick
+shell metallic sphere)
+An embedded computer chip may be permitted within the ball for 
+identification purposes, provided that the ball meets all other conformance 
+requirements.
+2. Weight
+The weight of the ball must not be greater than 1.620 ounces avoirdupois 
+(45.93 g).
+This is one of the simpler tests, as all that is required is an accurate set 
+of scales. There is no minimum weight thus a ball can be as light as the 
+manufacturer desires.
+3. Size
+The diameter of the ball must not be less than 1.680 inches (42.67 mm).
+The official test protocol uses a metal ring gauge suspended in perspex. 
+It is important to note that there is no maximum size, the ball can be as 
+large as desired provided it conforms to all other standards.
+4. Spherical Symmetry
+The ball must not be designed, manufactured or intentionally modified to 
+have properties which differ from those of a spherically symmetrical ball.
+The intent of this provision is simply to ensure that a ball is manufactured 
+and designed to behave symmetrically.
+5. Initial Velocity
+The initial velocity of the ball must not exceed the limit specified under the 
+conditions set forth in the Initial Velocity Standard for golf balls on file with 
+The R&A and USGA.
+There is a formal test procedure carried out using equipment approved 
+by The R&A and USGA to evaluate whether golf balls meet the Initial 
+Velocity specification. The intent of the provision is to limit the speed of 
+the ball off the clubface. Full details of the test specification are available 
+on The R&A’s or USGA’s website.
+66 Part 4 – Conformance of Balls
+
+--- page 70 ---
+67Part 4 – Conformance of Balls
+6. Overall Distance Standard
+The combined carry and roll of the ball, when tested on apparatus 
+approved by The R&A and USGA, must not exceed the distance specified 
+under the conditions set forth in the Overall Distance Standard for golf 
+balls on file with the R&A and USGA.
+This provision was first introduced in 1976 in order to restrict the overall 
+distance (carry and roll) a ball can travel under certain specific conditions. 
+This test protocol is continuously reviewed to ensure that it reflects the 
+modern game and modern equipment.
+
+--- page 71 ---
+68 Part 56 – Equipment Playing Rules
+PART 5 – EQUIPMENT PLAYING RULES
+Rule 4.3 Use of Equipment 
+Rule 4.3 applies to all types of equipment that a player might use during 
+a round, except that the requirement to play with conforming clubs and 
+balls is covered by Rules 4.1 and 4.2, not by this Rule.
+This Rule only concerns how equipment is used. It does not limit the 
+equipment that a player may have with him or her during a round.
+4.3a. Allowed and Prohibited Uses of Equipment 
+A player may use equipment to help his or her play during a round, 
+except that a player must not create a potential advantage by:
+•  U
+sing equipment (other than a club or a ball) that artificially eliminates or
+reduces the need for a skill or judgment that is essential to the challenge
+of the game, or
+•
+ U
+sing equipment (including a club or a ball) in an abnormal way in making
+a stroke. “Abnormal way” means a way that is fundamentally different
+than its intended use and is not normally recognized as part of playing
+the
+ 
+game.
+This Rule does not affect the application of any other Rule that limits 
+actions a player is allowed to take with a club, ball, device or other 
+equipment (such as setting down a club or other object to help the player 
+in lining up, see Rule 10.2b(3)). 
+Common examples of uses of equipment that are allowed and not allowed 
+during a player’s round under Rule 4.3 are provided in the Rules of Golf.
+
+--- page 72 ---
+PART 6 – DEVICES AND OTHER EQUIPMENT
+The following paragraphs prescribe general regulations for the design 
+of devices and other equipment, together with specifications and 
+interpretations. They should be read in conjunction with Rule 6.2 (Teeing) 
+and Rule 4.3 (Use of Equipment) of The Rules of Golf.
+1. Tees (Rule 6.2)
+A tee is a device designed to raise the ball off the ground. A tee must not:
+• be longer than 4 inches (101.6 mm);
+•
+ be designed 
+or manufactured in such a way that it could indicate
+line
+ 
+of play;
+• unduly influence the movement of the ball; or
+• otherwise assist the player in making a stroke or in his play.
+Note: As an exception for difficult turf conditions, tees tethered 
+together or to an anchor may be used during the round provided that 
+the player does not align the tees or tether in such a way that could 
+indicate line of play or otherwise assist the player in making a stroke.
+2. Gloves (Rule 4.3)
+Gloves may be worn to assist the player in gripping the club, provided
+they are plain.
+A “plain” glove must: 
+•  consist 
+of a fitted covering of the hand with a separate sheath or
+opening for each digit (fingers and thumb); and
+•
+ be made 
+of smooth materials on the full palm and gripping surface of
+the digits.
+A “plain” glove must not incorporate: 
+•
+ material on 
+the gripping surface or inside of the glove, the primary
+purpose of which is to provide padding or which has the effect of
+providing padding. Padding is defined as an area of glove material
+which is more than 0.025 inches (0.635 mm) thicker than the adjacent
+areas of the glove without the added material;
+Note: Material may be added for wear resistance, moisture absorption 
+or other functional purposes, provided it does not exceed the 
+definition of padding (see above). 
+69Part 6 – Devices and Other Equipment
+
+--- page 73 ---
+70 Part 6 – Devices and Other Equipment
+•  straps to assist in preventing the club from slipping or to attach the
+hand to the club;
+• any means of binding digits together;
+• material on the glove that adheres to material on the grip;
+•
+ features, 
+other than visual aids, designed to assist the player in placing
+his hands in a consistent and/or specific position on the grip;
+• weight to assist the player in making a stroke;
+• any feature that might restrict the movement of a joint; or
+•
+ any 
+other feature that might assist the player in making a stroke or
+in
+ his play.
+3. S
+hoes (Rule 4.3)
+Shoes that assist the player in obtaining a firm stance may be worn.
+Subject to the conditions of competition, features such as spikes on the
+sole are permitted, but shoes must not incorporate features:
+•  designed to assist the player in taking his 
+stance and/or building a stance;
+• designed to assist the player with his alignment; or
+•  that might otherwise assist 
+the player in making a stroke or in his
+ play.
+4. C
+lothing (Rule 4.3)
+Articles of clothing must not incorporate features:
+• designed to assist the player with his alignment; or
+•  that might otherwise assist 
+the player in making a stroke or in his
+ 
+play.
+Use of Compression Clothing: Compression clothing has been available 
+for many years and its use is widespread in both the winter and summer 
+for temperature regulation and sun protection. Compression garments are 
+not considered unusual equipment and consequently are permitted under 
+Rule 4.3. 
+Use of Posture Garments (e.g., shirts): Posture garments, as currently 
+available (2012), are considered to be a type of compression garment 
+and should be permitted under Rule 4.3. These include: Posture shirts, 
+Posture/sports bras, Girdles, and Shaping undergarments. 
+Clothing incorporating features designed to or which have the effect of: 
+Storing and releasing energy, or Inhibiting or enhancing movement, are 
+considered unusual equipment in breach of Rule 4.3.
+
+--- page 74 ---
+71Part 6 – Devices and Other Equipment
+5. Use of Tape, including Kinesiology Tape (Rule 4.3)
+In general, tape or similar coverings (including kinesiology tape) may be 
+used for medical reasons, provided it is not used in an excessive manner 
+and the Committee is satisfied that its use does not give the player any 
+undue advantage. However, if the adhesive tape or similar covering is used 
+for other than medical reasons and in a manner that might assist a player 
+in gripping the club or making a stroke it would be considered use of 
+equipment in an unusual manner in breach of Rule 4.3. 
+6. Distance Measuring Devices (Rule 4.3)
+The allowed usages of Distance Measuring Devices (DMDs) are identified 
+under Rule 4.3a(1), (2) and (3). More detailed information and examples 
+can be found on either the R&A’s or USGA’s websites.
+7. Definition of Alignment Device and Treatment of Ball-Markers
+(Rule 4.3)
+The following criteria are used to determine when an object manufactured 
+to mark the spot of a ball is an alignment device. Features include, but are 
+not limited to:
+•
+ The object incorporates 
+features designed to measure, gauge or
+interpret slope, green speed or other conditions, or includes optical or
+electronic components or,
+•  The 
+vertical height of the object, in any configuration, is greater than
+1.0” or,
+•  The 
+maximum dimension in any horizontal direction exceeds 2.0” and
+incorporates any of the features noted below (or similar features):
+o  the object incorporates 
+painted, etched or inscribed line(s) or similar
+features greater than or equal to 2.0” in length (“line” includes any
+line, arrow or other straight marking that could be solid or broken,
+but has a defined start, a defined end and whose length can be
+measured),
+o  the object has 
+an appendage(s) or an extended feature(s) greater
+than 2.0” in length or that extends a feature of the object to a length
+greater than 2.0”.
+Note 1: An object is an alignment device if it exceeds the dimensional 
+specifications listed above and advertising, marketing or intellectual 
+property descriptions or claims related to the object indicates that it is 
+primarily for the purpose of showing the line of play.
+Note 2: An object is an alignment device if it is modified in any manner 
+that would satisfy any of the above provisions.
+
+--- page 75 ---
+72 Part 7 – Modified Playing Rules for Players with Disabilities
+PART 7 – MODIFIED EQUIPMENT RULES 
+FOR PLAYERS WITH DISABILITIES
+Rule 25 – Modifications for Players with Disabilities
+The full text of Rule 25 can be found in the Rules of Golf.
+A number of players have physical limitations that may result in some degree 
+of disability and that may affect their ability to play the game. Rule 25 allows a 
+player with a disability to compete fairly with players who have no disabilities, 
+the same disability or different disabilities. 
+For the most part, the modifications covered in Rule 25 are such that there is 
+no allowance for modification to clubs, balls, devices or other equipment. 
+However, there are some cases where a modification is required.
+There are two cases where a modification to a club or other equipment could 
+be allowed without consultation with the R&A or USGA, but only if the 
+Committee is of the opinion that it is warranted and does not provide the 
+player with an undue advantage.
+1. Length
+Players who can demonstrate a need to use clubs that are longer than the 48-
+inch (1.219m) limit defined in Part 2 Section 1c may use clubs longer than 48 
+inches (1.219m) in length, provided that the shortest club carried by the 
+player (excluding the putter) is no more than 10 inches (254 mm) shorter 
+than his or her longest club (again, excluding the putter) and the Local 
+Committee authorizes it. This is the same allowance included in Part 2 Section 
+1c of the Equipment Rules.
+2. Grips
+Players who have a physical limitation, such as missing digits or other medical 
+condition restricting the use of one or both hands, may be permitted to use 
+grips on their clubs which do not meet the requirements of Part 2 Section 3 
+of the Equipment Rules, provided that the Local Committee determines that 
+the player would not gain an undue advantage over other players. The grips to 
+be used should be commercially available (e.g. putter grips) not modified in 
+any way, and should not generally 
+be manufactured in such a way that they would be considered to be a 
+“training grip” i.e. a grip that is designed to place the hands in a consistent 
+position or assist with the stroke.
+Other grip modifications may be permitted under Rule 4.3b.(1), but in these 
+instances it is highly recommended that the Committee consults with the 
+R&A or USGA before giving an allowance.
+
+--- page 76 ---
+73Part 8 – Committee Equipment Requirements
+This section covers items of equipment which are not a player’s 
+responsibility, but that are used by the player during the round. These 
+items may still be required to meet certain specifications to allow 
+the game to be played to the Rules of Golf. It is the responsibility of 
+the Committee to ensure that all such items of equipment meet the 
+requirements laid out in this section.
+1. The Flagstick
+The flagstick is provided by the Committee and is placed in the hole to
+show players where the hole is. The flagstick comprises a removable pole
+and other components attached to the pole as defined below. None of the
+components of the flagstick may be designed to, or include features that
+unduly influence the movement of the ball or allow a player to measure
+wind speed or direction.
+Requirements:
+a. The Pole
+i. Must be circular in cross-section.
+ii. 
+Must have a diameter of no greater than 2 inches (50.8 mm) from the
+top of the pole to a point no less than 3 inches (76.2 mm) above the
+putting green 
+surface.
+iii. Must have a constant diameter of no greater than 0.75 inches (19
+mm) from 
+a point 3 inches (76.2 mm) above to 3 inches (76.2 mm)
+below the putting gren surface.
+iv.  Must not incorporate features, including its material composition,
+designed to act in a shock absorbing manner or have shock absorbing
+properties upon impact with the ball.
+b. The Flag and Ornamental Attachments
+i.  Must be of reasonable 
+size and be located near the top of the pole.
+ii.  Can indicate but must not 
+measure wind direction and speed; and must
+not have any functional purpose other than to aid identification of the
+location of the hole.
+iii. Attachments to the flag are not permitted.
+PART 8 – COMMITTEE EQUIPMENT REQUIREMENTS
+
+--- page 77 ---
+74 Part 8 – Committee Equipment Requirements
+c. Other Attachments
+i.
+ Attachments 
+to the pole may be permitted more than 3 inches
+(76.2 mm) below the putting green surface but must be constrained to
+this area.
+ii.
+ Attachments 
+to the pole may be permitted more than 3 inches
+(76.2 mm) above the putting green surface provided that they fall within
+at least one of the following categories:
+a. Indicators of a reasonable size used to identify the location of the
+flagstick on the green (e.g. front, middle, back);
+b. Reflectors and similar attachments of a reasonable size for use
+with distance-measuring devices are permitted;
+c. Attachments to the pole other than those specified in a and b that
+are generally circular in cross-section and no greater than 2 inches
+(50.8 mm) in dimension perpendicular to the pole.
+Note: Specifications relative to the putting green surface are based on the 
+flagstick being located correctly in the hole.
+
+--- page 78 ---
+75Supplementary Paper A
+ADVICE TO RULES OFFICIALS CONCERNING QUERIES ON THE 
+CONFORMITY OF CLUBS AT COMPETITIONS
+Introduction
+It is the player’s responsibility to ensure that his or her clubs conform 
+with the Rules and if in doubt about a particular club, he or she would be 
+well advised not to use it. However, such advice is not always appropriate, 
+particularly when a query arises during or after a competition, in which 
+case a decision is required.
+Notes on Terminology Used
+• “R&A or USGA 
+Decision” is one which already exists in The R&A or
+USGA Equipment Standards database or Official Guide to the Rules
+of Golf at the time the query arises, though maybe unknown to the
+player or Official concerned.
+• “R&A or USGA 
+Ruling” is one that The R&A or USGA Equipment
+Standards Committee or its authorized sub-Committee may make on
+the club which is the subject of the query. It is made after the query
+has been communicated to the appropriate Equipment Standards
+representative, whether it be before, during or after the competition.
+• “Duration of Competition 
+Answer” is made by an Official involved
+in running a stroke-play competition. “Duration of Competition
+Answers” have no standing beyond the end of the competition and,
+therefore, the player should be advised to submit the club to The R&A
+or USGA for an official conformance determination prior to using
+the club in subsequent competitions. The player should also be made
+aware that any subsequent ruling may be different from the Duration
+of Competition Answer which was given.
+• “Duration of Round 
+Answer” is usually made by an Official involved
+in running a match play competition. “Duration of Round Answers”
+have no standing beyond the end of the round and, therefore, the
+player should be advised to submit the club to The R&A or USGA
+for an official conformance determination prior to using the club
+in subsequent rounds. The player should also be made aware that
+any subsequent ruling may be different from the Duration of Round
+Answer which was given.
+Supplementary Paper A
+
+--- page 79 ---
+76 Supplementary Paper A
+A. Queries Arising Before the Competition Begins
+1.  Officials should always ascertain why the player, opponent or third 
+party is querying the club.
+2.  A positive ruling should only be given at this stage if the Official is 
+absolutely certain he or she is correct. As a precautionary measure, 
+always refer to the Equipment Rules, the Rules of Golf, and the Official 
+Guide to the Rules of Golf before giving the ruling.
+3. I f the Official is not certain of the ruling, and time permits, advice 
+should be sought from The R&A or USGA. First, it should be 
+determined whether the club has ever been formally submitted for a 
+decision.
+4. I f an R&A or USGA decision exists, and the Official is made aware of 
+that decision in time, the player should be informed accordingly.
+5. I f there is no R&A or USGA decision on record, the Official should 
+provide The R&A or USGA with a detailed description of the club. If 
+time permits and appropriate facilities exist, an e-mailed or texted 
+image should be sent. The R&A or USGA will then offer as much 
+guidance as possible based on the information given – and in most 
+cases, offer a recommended ruling.
+6.  The Official should make a ruling on the club based on the advice given 
+by The R&A or USGA. If the club is clearly either ‘conforming’ or ‘non-
+conforming’, the Official should provide a ruling to that effect. 
+However, if there is even a small amount of uncertainty, the Official 
+should only offer a Duration of Competition or Duration of Round 
+Answer.
+7. I f, due to the close proximity of a player’s starting time, the Official 
+cannot reasonably seek advice, or is unable to contact The R&A or 
+USGA, then he or she should advise the player not to make a stroke 
+with the club for that round.
+8. I f later advice confirms that the club does conform and the player has 
+already started his or her round without the club, then the player 
+should be given a formal ruling as soon as possible. This would mean 
+that the player could add the club to his or her bag during the round 
+(provided the player had started with less than 14) or could make a 
+stroke with the club in the next round. If later advice confirms that the 
+club probably conforms and the player has already started his or her 
+round without the club, then the player should be advised as soon as 
+possible that he or she can make a stroke with the club for the 
+duration of the competition in stroke play (Duration of Competition 
+Answer) or for the duration of the round in match play (Duration of 
+Round Answer). This would also mean that the player could add the 
+club to his or her bag during that round (provided the player had 
+started with less than 14).
+
+--- page 80 ---
+77Supplementary Paper A
+9. Any player who ignores an  Official’s advice  and makes a stroke with a
+doubtful club would be subject to penalty under Rule 4.1 of the Rules of
+Golf in the event of a subsequent non-conforming Duration of
+Competition, Duration of Round Answer, or formal ruling. This would
+apply whether the competition was closed or not.
+B. Queries Arising During Stroke Play Competition
+1. If the club has already been used to make a stroke, Officials should 
+only accept queries between rounds, or at the conclusion of play 
+before the competition is closed.
+2. The Official should ascertain why the player or third party is querying 
+the club.
+3. If the Official is absolutely certain of the correct decision, then the 
+player should be informed (see A2 above).
+4. If the Official is unsure of the ruling, the player should be advised that 
+he or she will receive either a formal ruling or a Duration
+of Competition Answer before the close of the competition. The 
+procedure is the same as for a query arising before the competition 
+began (see A3 – A6 above).
+5. If no Duration of Competition Answer is given and later advice 
+confirms that the club does not conform, then the player should be 
+penalized under Rule 4.1 of the Rules of Golf.
+C. Queries Arising During Match Play Competition
+1. During a match play event the above procedure may need to
+be modified.
+2. If the query arises between rounds, then it would be too late for a
+defeated opponent of the player with a suspect club to make a ruling
+request, but a query from him or her would be grounds for checking
+the club
+ before the player starts his or her next round.
+3. The procedure would be to consult with the player, opponent or third
+party 
+and obtain all available information before making a
+determination. While the main procedures would be the same as for
+stroke play competitions (see A3 – A6 above), there may be more
+urgency in match play as it would be desirable to know whether the
+club is non-conforming before the player starts his or her next round,
+which might be the same day.
+4. If a formal ruling is obtained or a Duration of Round Answer reached,
+the player should be told as soon as possible. If the decision is that the
+club does not conform, the official would warn the player that if he or
+she makes a stroke with the club in the next round, the player would
+be subject to penalty under Rule 4.1 of the Rules of Golf.
+
+--- page 81 ---
+78 Supplementary Paper A
+5. If a player makes a ruling request during a match that his or her 
+opponent has made a stroke with a non-conforming club, the Official 
+will have to make a ruling under even greater time constraints. Ideally, 
+a ruling should be made before the match is finished. In that event, if 
+there is no clear evidence that the club does not conform, the Official 
+should almost always err towards ruling the club to conform. 
+However, such a ruling would be considered to be a Duration of 
+Round Answer and a more formal decision should be made prior to 
+the next round.
+6. Thereafter, if the opponent wins, the procedure is the same as for a 
+query arising between rounds (see C3 and C4 above).
+D. Queries Arising After Competition Closed
+Once a competition has closed, there is plenty of time to contact
+The R&A or USGA to find out whether the club conforms or not and/
+or to submit the club. If it turns out that the club is non-conforming, the
+decision whether to disqualify the player or not depends on whether he
+or she knew the club was non-conforming (see Rule 20.2e(2)). This is a
+question of fact, but in determining the facts, the Committee may wish to
+consider other evidence as well as the player’s own statement.
+Conclusion
+The vast majority of golf clubs conform to the Rules and, therefore, 
+equipment conformance queries of this kind are rare. However, queries 
+do arise from time to time and Officials need to know how to deal with 
+them. It is important to remember that it is a player’s responsibility to  
+play with conforming clubs. He or she cannot shift this responsibility to 
+the Official. For their part, Officials should respond to such queries with 
+due consideration to all parties involved. Appropriate consultations should 
+be made (i.e. referencing the Equipment Rules, the Rules of Golf, and the 
+Clarifications on the Rules of Golf, contacting The R&A or USGA, etc.). If it 
+is not possible to give a definitive ruling straight away, a Duration of 
+Competition or Duration of Round Answer should be given (but see A7).
+In giving Duration of Competition or Duration of Round Answers, 
+Officials in doubt should err towards deeming clubs to conform. Penalizing 
+a player for making a stroke with a club that later turns out to be 
+conforming is a more serious error than allowing use of a club which later 
+turns out to be non-conforming.
+
+--- page 82 ---
+79Supplementary Paper B
+GUIDANCE ON HOW TO MEASURE GROOVES ON CLUB FACES 
+FOR CONFORMANCE TO PRE-2010 RULES IN THE FIELD
+Introduction
+The following pages give guidance on how to measure grooves on club 
+faces for width and separation, using the “Ink and Scratch” method, and 
+depth. They concentrate solely on the Rules which apply to the grooves 
+on iron and wood clubs manufactured prior to 1 January 2010, but, if 
+necessary, the same procedures and equipment can be used to measure 
+grooves on a putter face (see Rule 5f of the Equipment Rules).
+For those Officials who have not carried out these measurements 
+before, we recommend setting aside time, a day or more prior to the 
+tournament, for groove checking if required, rather than doing it on the 
+first day. It only takes a few minutes to measure the grooves on a club, 
+but it is important not to be rushed. We also recommend practice-
+measuring on at least six club faces – preferably more – before doing it “in 
+the field”.
+A one-page summary of the procedure for measuring the width and 
+separation of the grooves on iron and wood clubs is attached, which, in 
+conjunction with the specially designed results sheet, may give sufficient 
+instruction, once the user has gained some experience in measuring 
+grooves. An abbreviated form of the test, appropriate for clubs which 
+comfortably meet the groove specifications, is also outlined.
+Groove Width and Separation
+In order to carry out the “Ink and Scratch” method of measuring grooves, 
+the following equipment is required:
+1. A t
+hick black marker pen
+2. A c
+arbite wedge ‘Marking Tool’ with Allen key (see Figure 2 below)
+3. A 
+magnifier
+4. A s
+teel ruler
+5. A
+n alcohol wipe (to clean the club face)
+This equipment may be available from The R&A or USGA at a 
+reasonable
+ 
+cost.
+How to Ink and Mark the Grooves
+1. M
+ake sure that the club face and grooves are clean. Also check that
+the tungsten carbite “wedge” in the marking tool is properly square
+to the axis of the tool and securely fixed. If not, adjust with the Allen
+key provided.
+Supplementary Paper B
+
+--- page 83 ---
+80 Supplementary Paper B
+2. Use the marker pen to coat a 0.25 to 0.5 inch (5 to 10 mm) width of 
+the edges of ten grooves (and the nearby part of the flat area between 
+them), making sure that the ink gets down into the grooves. The inked 
+pattern thus formed should lie in a line running from sole to top edge 
+of the club face. For new clubs do this about 0.5 inches (10 mm) to 
+one side of the centre of the face (See Figure 1 below). For used clubs 
+do it near the toe, but not at the very end of the grooves (but see also 
+Paragraph 13).
+3. When the ink is dry take the marking tool, hold it like a pencil at 
+about 45° to the club face and insert the pointed corner of its tip  
+into one of the blackened grooves. (See Figure 2 below) Using firm 
+but not too heavy pressure, pull the tool along the groove for about 
+0.25” (5 mm). Two narrow bright lines of exposed metal should now 
+be visible, one on each side of the groove denoting the position of the 
+edges of the grooves. (See Figure 3).
+ Do the same for all ten blackened grooves.
+Fig. 1
+Fig. 2 Fig. 3
+
+
+--- page 84 ---
+81Supplementary Paper B
+How to Use the Magnifier
+4. T
+he magnifier comes with two scale glasses, one already fitted and
+the other in a separate holder. They are identical, except that scale
+markings are black on one and white on the other. On nearly all club
+faces the white scale will be easier to read.
+5. R
+est the clubhead on a table or other surface, so that the club face
+is horizontal. You may find it helps to rest the club’s shaft on your
+shoulder or on some raised object, in order to leave both hands free
+to adjust the magnifier.
+S
+ince good light is needed it is helpful, indoors, to place a reading lamp
+close to the clubhead, preferably shining along the direction of the
+grooves on the club face. Make sure you hold the magnifier in such a
+way that your fingers do not obscure the light.
+6. P
+lace the magnifier on the club face and look through it. By turning the
+knurled ring on the eyepiece you should be able to bring into sharp
+focus both the scale and surface features on the club face. You should
+also be able to see clearly the bright edges you have scraped on the
+grooves against the black background.
+N
+otice that the magnifier scale is in thousandths of an inch (or
+millimetres) and is marked at intervals of 0.005 inches (0.5 mm),
+except immediately to the right of the long vertical zero line, where
+the intervals are 0.008 inches (0.2 mm) or 0.004 inches (0.1 mm). You
+should use this latter part of the scale for the precise measurement of
+the groove width (See Figure 4).
+Fig. 4
+Use this part of the scale 
+groove width measurement
+
+--- page 85 ---
+82 Supplementary Paper B
+Measuring the Grooves
+7. U
+se the magnifier to measure the width (W) of ten grooves whose
+edges have been marked by the tool. This may be done by lining up
+the long vertical zero line on the magnifier scale along the left edge of
+each groove (i.e. along the middle of the bright line scratched by the
+tool) and reading off the position of the other edge on the portion of
+the magnifier scale which reads to 0.005 inches or 0.1 mm. For best
+results the scratched line should be about 0.005 inches or 0.1 mm
+wide, in which case each measurement can be made to the nearest
+0.002 inches or 0.05 mm (e.g. 0.65 mm, 0.80 mm). If it is appreciably
+wider than 0.005 inches or 0.1 mm, then too much pressure has been
+applied in using the marking tool. In that case abandon that particular
+part of the groove and do a repeat “ink and scratch” a little to
+one 
+side.
+R
+ecord all ten groove widths. Often they will be the same, or differ by
+only 0.002 inches or 0.05 mm.
+C
+alculate and record the average width, Wav; note the largest
+measured width, Wmax.
+Note the second largest width, and the second smallest. Calculate the
+difference between them, and record it as W var (“Width variation”).
+8. D
+etermine the pitch of the grooves – the distance from a specific
+point on a groove to the same on the next groove, for example centre
+to centre, or left edge to left edge (See Figure 5).
+This measurement can be made either with the steel ruler or with the 
+magnifier; but, in most cases, the steel ruler is the more convenient. 
+Measure the left edge to left edge distance from groove 1 to groove 
+11 (or 2 to 12 etc), and divide this distance by 10 to arrive at the 
+pitch, P. If a ten groove span is not available, then nine or eight will be 
+satisfactory (but remember to divide by the appropriate number to 
+find P)
+.
+Fig. 5
+
+--- page 86 ---
+83Supplementary Paper B
+Alternatively, and this is the only option if a span of fewer than eight 
+grooves is available, you can use the magnifier. Measure the distance 
+from one edge of groove 1 to the corresponding edge of groove 
+5. The best way to do this is to position the long zero line of the
+magnifier scale on the left edge of groove 3 then read off the distances
+on either side of it to grooves 1 and 5 and add them together. You
+can, of course, use any two grooves spaced four apart (e.g. 3 and 7, or
+6 and 10); indeed, it may be as well to check your first measurement
+by repeating the procedure with another such pair of grooves.
+It is good enough to make this measurement to the nearest 0.005 
+inches or 0.1 mm. Then divide the measured span of four grooves by 4 
+to give the pitch,
+ 
+P.
+Whichever method is used, the object is to get the best possible 
+measure of the average groove pitch (P).
+At this stage it may be worth checking your average by measuring the 
+pitch from one groove to the next one, e.g. grooves 1 to 2, or 5 to 
+6. If these measurements differ from the average by more than 0.005
+or 0.1 mm, then either you calculated the average incorrectly (check
+it), or the grooves are unevenly spaced. In the latter event you must
+measure the grooves differently (see Section 14).
+Errors and Uncertainty in Measuring
+9. W
+ith a little practice you can measure the groove width with an
+uncertainty as little as 0.002 inches or 0.05 mm (i.e. it could be wrong
+by at most 0.02 inches or 0.05 mm). In tests for conformity the
+manufacturer is given the benefit of all of that uncertainty.
+This is done by subtracting 0.02 inches or 0.05 mm from all
+the measurements noted in Section 7, namely Wav, Wmax and
+Wvar, to give “adjusted” values of these quantities. We call them
+AWav, AWmax and AWvar; it is these which are used in all tests
+for 
+conformity.
+
+--- page 87 ---
+84 Supplementary Paper B
+10. How to Determine whether Clubs Available Prior to  
+1 January 2010 Conform to Pre-2010 Groove Requirements 
+(applicable to golf played where the Groove and Punch Mark 
+Condition is not in use)
+(i) Groove Width
+  If the average width of the measured groove widths exceed 0.035” 
+(0.889 mm) then the club is non-conforming.
+  If any single measured groove width exceeds 0.039” (1.0 mm) then the 
+club is non-conforming.
+(ii) Groove Separation
+  The pitch of the grooves, as described in Section 8, must not be less 
+than four times the width. Thus, the grooves do not conform if P/
+AWav is less than 4.0.
+ P – AWav must not be less than 0.075” or 1.9 mm.
+(iii) Groove Consistency
+  The difference in width between the second widest and the second 
+narrowest groove must not exceed 0.004” or 0.1 mm. The grooves do 
+not conform if AWvar is greater than 0.004” or 0.1 mm.
+11. It is recognized that groove measurements made, as these are, at 
+one point along the length of the grooves, are sensitive to small 
+manufacturing errors. Therefore, if a club fails on one of the above 
+criteria, it should not immediately be declared non-conforming; but 
+the whole measuring procedure should be repeated at a slightly 
+different part of the face (say 0.394” or 10 mm to the other side of the 
+centre of a club face from the first set). For a club to be declared non-
+conforming, it must fail to meet the same specification on both sets of 
+measurements. In the case of a single overwidth groove (AW max), the 
+same groove must be overwidth on both measurements.
+
+--- page 88 ---
+85Supplementary Paper B
+Fig. 6
+Irregular or Unusual Grooves
+12. For grooves with markedly varying separation (See Figure 6 below), 
+the above procedures need modification, though the same measuring 
+technique applies. In general, the concept of average  groove pitch has 
+to be abandoned and groove pitch (or separation) taken for individual 
+pairs of adjacent grooves. In the sample illustrated, the club face would 
+need to be divided into two or even three separation regions.
+Difficult cases should be submitted to the The R&A or USGA for 
+a ruling.
+13. For used clubs with worn grooves the width measurements must 
+be made on grooves which are not worn. These can nearly always 
+be found near the toe of the club, or high on the face. Avoid the 
+extreme end of the grooves since the width sometimes varies there. 
+If it is impossible to find ten unworn grooves, measure as many as 
+possible and make the necessary modifications to the calculation of 
+average width.
+ If the grooves on a used club have been deliberately altered by filing 
+or the use of a groove scoring tool, then the club should be treated 
+as though it were new and the grooves measured near the centre of 
+the face.
+14. Very occasionally grooves will be found which are either very shallow, 
+or have sides which make an angle of less than 30° to the horizontal. 
+In these circumstances the marking tool will not work properly and 
+the club should be submitted to The R&A or USGA for a ruling, 
+although it may be possible to give an “on the spot” conforming ruling 
+if the grooves clearly conform.
+Example of non-uniform 
+spacing where the ‘average’ 
+pitch is meaningless
+
+--- page 89 ---
+86 Supplementary Paper B
+SUMMARY OF GROOVE MEASURING PROCEDURE
+(The bracketed numbers refer to the corresponding paragraphs in 
+Supplementary Paper B – “Guidance on the Measurement of Grooves on 
+Club Faces”)
+1. Clean club face [1]; ink the edges of ten grooves in a 5mm wide 
+band. [2]
+2. Check marking tool [1]; use it as described in full instructions [3] to 
+scrape the edges of the inked grooves.
+3. Use the magnifier to measure the width of all ten grooves, and record 
+on the results sheet. [4, 5, 6, 7]
+4. Calculate and record on the results sheet the average width, the 
+greatest width and the width variation. [7]
+5. Calculate and record the adjusted widths which allow for the 
+uncertainties of measurement. [9]
+6. Use the ruler to measure a span of ten grooves (e.g. from groove 1 to 
+groove 11 (not 10), or 2 to 12). [8]
+{OR, if preferred, use the magnifier to measure a four groove span. [8]}
+7. Calculate and record the average groove-to-groove pitch. [8]
+8. Calculate and record the pitch to width ratio, remembering to 
+use the adjusted width; also calculate the separation (pitch minus 
+adjusted width).
+9. Using quantities calculated in 5 and 8 above, answer the questions 
+near the foot of the results sheet to determine whether the grooves 
+conform. [10, 11] Manufacturers are advised to use actual widths in 
+these calculations. [9]
+10. Follow the steps on the results sheet to reach a decision on the club, if 
+necessary repeating the measurement. [11]
+* * *
+NB. Consult the full instructions for grooves with inconsistent spacing, or 
+other unusual features [12, 13, 14].
+
+--- page 90 ---
+87Supplementary Paper B
+ABBREVIATED PROCEDURE FOR GROOVE MEASUREMENTS
+It may be quite acceptable, for an experienced user of the measuring 
+equipment, to abbreviate the measuring procedure on clubs whose 
+grooves clearly lie well within the specified dimensions.
+First, inspect the club face by eye, and check whether the grooves are:
+ a) unevenly spaced
+ b) of unequal width
+ c) unusually wide
+ d) unusually close together
+If any of these conditions apply, then the full measurement must be 
+carried out.
+If none of these conditions apply, then the following abbreviated 
+procedure may save some time and effort without affecting the outcome:
+Ink and mark three grooves, and measure their width with the 
+magnifier. Take the greatest of the three measured widths and add 
+0.002” or 0.05 mm to it. Call this W(+).
+(For example, if the three widths were measured as 0.030” or 0.75 mm, 
+0.033” or 0.80 mm and 0.030” or 0.75 mm, then W(+) would be 0.033”  
+or 0.85 mm).
+Then measure the pitch, P, with the steel ruler as described in the  
+full procedure.
+Then check:
+ Is W(+) less than 0.035” or 0.9 mm?
+ Is W(+) less than P/4?
+ Is P-W(+) greater than 0.075” or 1.9 mm?
+If all the answers are YES (and you have carried out the initial visual 
+check), the club is certain to meet the requirements of the full tests; 
+and it may be deemed to conform without further testing.
+If any of the answers are NO, the full measurement must be  
+carried out.
+IF YOU HAVE ANY DOUBT, CARRY OUT THE FULL MEASUREMENT.
+
+--- page 91 ---
+88 Supplementary Paper B
+AWav =        in or mm AWmax =      in or mm AWvar =       in or mm
+GROOVE MEASUREMENT ON   (club name)
+DATE: MEASURED BY:
+1. WIDTH OF INDIVIDUAL GROOVES
+Groove 1 =  in or mm Groove 6 =  in or mm
+Groove 2 =  in or mm Groove 7 = in or mm
+Groove 3 =  in or mm Groove 8 =  in or mm
+Groove 4 = in or mm Groove 9 =  in or mm
+Groove 5 = in or mm Groove 10 = in or mm
+Average width (Wav) = in or mm Greatest width (Wmax) =        in or mm
+Second greatest minus second smallest width (Wvar) = in or mm
+To give benefit of measuring error to the club, subtract 0.002” or 0.05mm 
+(the maximum error) from these widths to give the corresponding 
+“adjusted widths”:
+THESE ARE THE WIDTHS USED IN ALL CALCULATIONS HEREAFTER
+2. PITCH OF GROOVES
+Span of ten grooves (measured by steel ruler) = in or mm
+Therefore pitch, P = /10 = in or mm
+{ALTERNATIVELY: Span of four grooves (measured by magnifier) =  
+     in or mm 
+Therefore pitch, P = /4 = in or mm
+Note pitch measurement in left hand box below. Calculate and enter the 
+other quantities.
+3. TEST FOR CONFORMANCE
+Is AWav > 0.035” or 0.9 mm? YES/NO
+Is AWmax > 0.004” or 1.0 mm? YES/NO
+Is P/AWav < 4.0?  YES/NO
+Is P - AWav < 0.075” or 1.9 mm? YES/NO
+Is AWvar > 0.004” or 0.1 mm? YES/NO
+IF ALL ANSWERS ARE ‘NO’, OR If ‘YES’ ANSWERS ARISE ONLY 
+WHERE THE FIRST MEASUREMENT GAVE ‘NO’, GROOVES ON CLUB 
+CONFORM. No further measurements are needed.
+IF ANY ‘YES’ ANSWERS ARE REPEATS OF THOSE IN FIRST MEASUREMENT, 
+THE GROOVES DO NOT CONFORM.
+Circle the appropriate word: CONFORMING     NON-CONFORMING 
+P =             in or mm     P/AWav = P - AWav =   in or mm
+
+--- page 92 ---
+89Supplementary Paper B
+3. TEST FOR CONFORMANCE
+Is AWav > 0.035” or 0.9 mm? YES/NO
+Is AWmax > 0.004” or 1.0 mm? YES/NO
+Is P/AWav < 4.0?  YES/NO
+Is P - AWav < 0.075” or 1.9 mm? YES/NO
+Is AWvar > 0.004” or 0.1 mm? YES/NO
+IF ALL ANSWERS ARE ‘NO’, OR If ‘YES’ ANSWERS ARISE ONLY 
+WHERE THE FIRST MEASUREMENT GAVE ‘NO’, GROOVES ON CLUB 
+CONFORM. No further measurements are needed.
+IF ANY ‘YES’ ANSWERS ARE REPEATS OF THOSE IN FIRST MEASUREMENT, 
+THE GROOVES DO NOT CONFORM.
+Circle the appropriate word: CONFORMING     NON-CONFORMING 
+REPEAT GROOVE MEASUREMENT ON   (club name)
+DATE: MEASURED BY:
+1. WIDTH OF INDIVIDUAL GROOVES
+Groove 1 =  in or mm Groove 6 =  in or mm
+Groove 2 =  in or mm Groove 7 = in or mm
+Groove 3 =  in or mm Groove 8 =  in or mm
+Groove 4 = in or mm Groove 9 =  in or mm
+Groove 5 = in or mm Groove 10 = in or mm
+Average width (Wav) = in or mm Greatest width (Wmax) =        in or mm
+Second greatest minus second smallest width (Wvar) = mm
+To give benefit of measuring error to the club, subtract 0.002” or 0.05mm 
+(the maximum error) from these widths to give the corresponding 
+“adjusted widths”:
+THESE ARE THE WIDTHS USED IN ALL CALCULATIONS HEREAFTER
+2. PITCH OF GROOVES
+Span of ten grooves (measured by steel ruler) = in or mm
+Therefore pitch, P = /10 = in or mm
+{ALTERNATIVELY: Span of four grooves (measured by magnifier) =  
+     in or mm 
+Therefore pitch, P = /4 = in or mm
+Note pitch measurement in left hand box below. Calculate and enter the 
+other quantities.
+AWav =        in or mm AWmax =      in or mm AWvar =       in or mm
+P =             in or mm     P/AWav = P - AWav =   in or mm
+
+--- page 93 ---
+90 Supplementary Paper B
+Groove Depth
+In order to help Officials rule on the groove depth “in the field”, a simple 
+gauge has been developed which is available from The R&A or USGA at a 
+reasonable cost.
+The gauge consists of a small circular disc which has a raised, thin  
+ridge running across the diameter. This ridge measures exactly  
+0.022 inches (0.559 mm) in depth, which offers a small tolerance suitable 
+for measurements carried out “in the field”.
+Method of Use
+In order to judge the depth of a groove on a club, the disc should be 
+placed onto the face with the ridge running along the inside of the groove. 
+The user should then apply pressure to the disc, on both sides of the 
+ridge, to see if the disc will rock from side to side.
+If the disc does noticeably rock, then the groove cannot be too deep. It 
+means that the depth of the ridge is greater that the depth of the groove.
+If, on the other hand, the disc lies flush with the face and cannot be 
+rocked, it means that the groove is likely to be too deep.
+In both instances above, the gauge should be used on at least six grooves 
+within the “impact area” of the face (or near the toe for club faces which 
+are quite worn).
+If 50% or more of the grooves tested appear to be too deep when using 
+this gauge, the club should not be carried.
+Punch Marks
+Punch marks are almost always circular in shape and, therefore, the area 
+of the punch mark can be determined using the calculation �r 2  
+(where �  3.142). The radius of the punch mark can be measured 
+using a magnifier as can the separation of two punch marks – measured 
+centre to centre. The depth measurement would require the use of a 
+depth probe. While the depth of a punch mark is limited to 0.040 inches 
+(1.02 mm) within the Rules, it is highly unlikely that this measurement 
+would ever be queried “in the field”.
+
+--- page 94 ---
+91Supplementary Paper B
+Definition of “Impact Area” – for clubs manufactured prior to  
+1 January 2010
+For iron clubs, the “impact area” is deemed to be that part of the face 
+which lies within 0.79 inches (20 mm) either side of the vertical centre 
+line of the face, but excluding strips 0.25 inches (6.25 mm) wide from the 
+top and bottom edges.
+For metal wood clubs, the shape of the impact area is generally based 
+on the traditional insets used in persimmon type wood clubs. Figure 7 
+illustrates the shape and dimensions of this area.
+The height (h) of the trapezium is used to fix the horizontal dimensions 
+namely “1/2h” at the top and “h” at the base. This ensures that all impact 
+areas are similar.
+Figure 7 – Impact Area for Metal Woods (for pre-2010 Clubs)
+(b) Metal wood head showing 
+size and shape of impact area. 
+The word “Premier” does not 
+encroach the area, therefore 
+the club is conforming.
+(a) Guideline is based in style of 
+the traditional inset used in 
+persimmon wood clubs.
+
+--- page 95 ---
+92 Supplementary Paper C
+2010 CLUB FACE MARKINGS
+New Specifications and Interpretations
+From 1 January 2010, the Rules on club face markings include the 
+following three additional specifications for clubs other than driving clubs 
+and putters:
+•  The total cross-sectional area of a groove divided by the groove pitch 
+(width plus separation) will be limited to 0.0030 square inches per inch 
+(0.0762 mm2/mm);
+•  Groove edge sharpness will be required to be substantially in the form 
+of a round having an effective minimum radius of 0.010 inches  
+(0.254 mm). This limit will only apply to clubs with lofts of 25 degrees 
+and above.
+• Grooves will be required to be plain.
+As previously intimated (see Section 5c), these new specifications only 
+affect new models of clubs manufactured on or after 1 January 2010 and 
+competitions where the Groove and Punch Mark Condition is in use.
+Interpretation of a Plain Groove
+•  The groove starts where there is a significant departure from the plane 
+of the face and this is joined to the side (or wall) of the groove via the 
+edge. The side (or wall) continues to the base of the groove.
+•  The sides (or walls) of the groove must be substantially plain and planar. 
+This disallows features such as bends, indentations in or protrusions 
+from the wall.
+•  The base of the groove must also be substantially plain and join the two 
+opposing sides (or walls) of the groove using a concave shape or a plane.
+•  Groove edges must be a convex curve and must not include serrations, 
+gear teeth or other similar features.
+•  For clubs with lofts less than 25 degrees, where it is difficult to 
+determine whether a groove violates either the edge requirement or 
+the plain wall requirement, the groove will be deemed to meet the plain 
+wall requirement.
+Supplementary Paper C
+
+--- page 96 ---
+93Supplementary Paper C
+Based on all of the above, the following images are illustrative examples of 
+permissible groove geometries:
+Determining the Status of Markings in the Impact Area Against 
+2010 Specifications
+Full details of the procedure for measuring club face markings and 
+determining their status against the 2010 specifications can be found on 
+The R&A’s website. However, a summary is as follows:
+The following algorithm will be used to determine the conformance status 
+of clubs to the new Rules on impact area markings from 1 January 2010, 
+regardless of what method has been used to obtain the measurements. 
+Within the following procedure, the inherent difficulty of manufacturing 
+grooves has been taken into consideration. However, it should be 
+stressed that clubs must be designed and manufactured with the intent of 
+conforming to the Rules.
+Note that, for all dimensional limitations described below, each 
+measurement will be based on a confidence level of at least 95% 
+confidence as determined by standard Gauge R&R procedures. All 
+measurements will include appropriate outlier controls to ensure that 
+rulings are not based on spurious or anomalous data. Improvements to 
+measurement techniques and consequently the associated measurement 
+tolerances may be introduced at any time.
+(i) Groove Width
+ •  If 50% or more of the measured groove widths exceed 0.035”  
+(0.889 mm) then the club is non-conforming.
+ •  If any single measured groove width exceeds 0.037” (0.940 mm)  
+then the club is non-conforming.
+
+--- page 97 ---
+94 Supplementary Paper C
+(ii) Groove Depth
+ •  If 50% or more of the measured groove depths exceed 0.020”  
+(0.508 mm) then the club is non-conforming.
+ •  If any single measured groove depth exceeds 0.022” (0.559 mm) 
+then the club is non-conforming.
+(iii) Groove Separation
+ •  If 50% or more of the measured groove separations are less than 
+three times the maximum adjacent measured groove width then the 
+club is non-conforming.
+ •  If any single measured groove separation is less than three times the 
+maximum adjacent measured groove width minus 0.008”  
+(0.203 mm) then the club is non-conforming.
+ •  If 50% or more of the measured groove separations are less than 
+0.075” (1.905 mm) then the club is non-conforming.
+ •  If any single measured groove separation is less than 0.073”  
+(1.854 mm) then the club is non-conforming.
+(iv) Groove Consistency
+Grooves must be designed and manufactured with the intent of 
+being symmetric, parallel and consistent throughout the impact area. 
+Consistency is interpreted to be:
+ •  The range of measured groove widths cannot exceed 0.010”  
+(0.254 mm).
+ •  The range of measured groove depths cannot exceed 0.010”  
+(0.254 mm).
+Inconsistencies in the groove width, spacing or cross-section for the 
+purpose of influencing the movement of the ball are not permitted, 
+regardless of whether the above requirements are satisfied.
+(v) Area over Width Plus Separation
+ •  If 50% or more of the measured values of A/(W+S) are greater than 
+0.0030 square inches per inch (0.0762 mm2/mm) then the club is 
+non-conforming.
+ •  If the measured value of A/(W+S) value for any single groove is 
+greater than 0.0032 square inches per inch (0.0813 mm 2/mm) then 
+the club is non-conforming.
+
+--- page 98 ---
+95Supplementary Paper C
+(vi) Groove Edge Radius
+Rounding of groove edges shall be in the form of a radius having an 
+effective radius not less than 0.010” (0.254 mm) as determined by the 
+two circles method, nor greater than 0.020” (0.508 mm). The following 
+two criteria are used for determining conformance:
+ •  If 50% or more of the upper groove edges or 50% or more of the 
+lower groove edges fail the two circles method subject to a 10 
+degree angular allowance, then the club is non-conforming.
+ •  If any single groove edge protrudes more than 0.0003” (0.0076 mm) 
+outside the outer circle, then the club is non-conforming.
+(vii) Punch Marks
+ •   If 50% or more of the punch mark edges fail the two circles  
+method subject to a 10 degree angular allowance, then the club is 
+non-conforming.
+ •  If any single punch mark edge protrudes more than 0.0003”  
+(0.0076 mm) outside the outer circle, then the club is  
+non-conforming.
+NB:  As a result of the new Rule limiting the A/(W+S) of grooves, from  
+1 January 2010 the volume of punch marks in the impact area must 
+not exceed the allowable value for an equivalent groove (that is, 
+0.0030 in3 per square inch (0.0762 mm3/mm2) of impact area covered 
+by punch marks).
+
+--- page 99 ---
+The R&A and USGA evaluate golf balls, 
+golf clubs and other equipment for 
+conformance to the Equipment Rules 
+at their Research and Test Centers in 
+Kingsbarns, Scotland and Liberty Corner, 
+New Jersey, USA. For more information on 
+the Equipment Rules and the Rules of Golf, 
+please contact The R&A or USGA.

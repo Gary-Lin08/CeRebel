@@ -1,0 +1,86 @@
+--- page 1 ---
+FIS Specifications for Ski Cross Gates, Version 07.10.2025 
+ 
+Due to safety and functional reasons gate panels as from the season 2026/27 must 
+fulfil the requirements listed below. 
+ 
+1. Poles and panel  
+ 
+Ski Cross gates as defined by this specification consist of a stubby (turning pole), an 
+outside pole and a triangular panel. Poles consist of a base shaft as brush base or 
+similar, and an upright pole.  
+ 
+Stubby (turning pole) 
+Length of the upright pole  550 mm 
+Diameter of upright pole   29-36 mm 
+Round, uniform diameter and uniform flexural stiffness of the upright pole are required. 
+ 
+Outside pole 
+Length of the upright pole  1100 mm 
+Diameter of upright pole   26-28 mm 
+Upright pole must have a round, uniform diameter and uniform flexural stiffness. 
+Upright pole must consist of non-splintering material.  
+ 
+Panel 
+Base length    1100 mm 
+Height short side      350 mm 
+Height long side     700 mm 
+The panel must be attached 20 cm from the snow surface, which must be ensured by 
+a closed upper end of the panel sleeve at the turning pole (stubby).  
+Panels shall not be attached to the stubby with rigid, protruding components. 
+The panel must be made of wind-permeable material.  
+Advertising prints or banners shall not impair compliance with safety or functional 
+requirements.
+
+--- page 2 ---
+2. Panel Release 
+The panel must release from the stubby in case of hooking.  
+ 
+Panel Release Test: 
+The panel is tested with the supplied poles. The testing is conducted at an ambient 
+temperature of -5° C. The point of force application is located at the base of the panel 
+at distance of 100 mm from the stubby with the direction of force applied perpendicular 
+to the stubby along the panel. The withdrawal is performed at a constant speed not 
+exceeding 2 m/s. T he test must be repeated three times. In each repetition, the 
+measured withdrawal force shall not exceed 120 N. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. Panel Retention 
+The panel must not release from the poles during normal gate approach by skiers. 
+ 
+Panel Retention Test: 
+The panel is tested with the supplied stubby. The testing is conducted at an ambient 
+temperature of -5° C. The panel must be detached from the outside pole prior to testing. 
+The point of force application is located at the upper end of the panel, immediately 
+adjacent to the sleeve seam, with the direction of force applied along the stubby. The 
+withdrawal is perf ormed at a constant speed not exceeding 2 m/s. The test must be 
+repeated three times. In each repetition, the measured withdrawal force shall be 
+greater than 40 N. 
+ 
+ 
+ 
+ 
+ 
+4. Documentation  
+Certified panels must have an imprint or an insert documenting the manufacturer and 
+the year of homologation. Additionally, panel imprints or inserts must clearly identify 
+the related stubby (manufacturer and year of homologation).  
+Certified stubbies must have an imprint documenting the manufacturer and the year 
+of homologation. 
+ 
+5. Validity 
+FIS homologation applies only to the complete gate system consisting of poles and 
+panel. The gate homologation remains valid, provided that no technical modifications 
+are implemented and no new panel specifications are introduced. A list of homologated 
+gates is published on the FIS homepage. 
+100 mm

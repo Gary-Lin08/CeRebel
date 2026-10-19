@@ -1,0 +1,24 @@
+{
+  "Chest->Neck1": {
+    "mean_step_deg": 0.4543,
+    "p95_step_deg": 1.7635,
+    "max_step_deg": 2.4044
+  },
+  "Chest->Neck2": {
+    "mean_step_deg": 0.7176,
+    "p95_step_deg": 2.1031,
+    "max_step_deg": 3.5273
+  },
+  "Neck1->Head": {
+    "mean_step_deg": 0.9156,
+    "p95_step_deg": 3.1718,
+    "max_step_deg": 4.8187
+  },
+  "Neck2->Head": {
+    "mean_step_deg": 1.0446,
+    "p95_step_deg": 4.0068,
+    "max_step_deg": 5.7976
+  },
+  "selected": "Chest\u2192Neck1 (lower cervical), Neck2\u2192Head (upper cervical / skull)",
+  "reason": "Neck1 is the first cervical-like child of Chest; Head is parented to Neck2 in SOMA77. Using Neck2\u2192Head keeps the C1/skull joint from absorbing the whole cervical chain."
+}

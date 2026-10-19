@@ -1,0 +1,41 @@
+--- page 1 ---
+PROTESTS 
+RECLAMATIONS 
+PROTESTE 
+Competition / Manifestation / Veranstaltung 
+Codex: 
+Event /Discipline / Disziplin Date / Date / Datum 
+Reasons for protest 
+Motifs de la réclamation 
+Gründe des Protestes 
+ICR References 
+Références RIS 
+Bezugsquellen IWO 
+Name of protester 
+Auteur de la réclamation 
+Verfasser des Protestes 
+Team 
+Equipe 
+Mannschaft 
+Func
+tion 
+Fonction 
+Funktion 
+Date and time of submission 
+Date et heure du dépôt 
+Datum und Zeit der Zustellung 
+Payment of deposit 
+Versement de la caution 
+Einzahlung des Betrages 
+Protest and deposit received by 
+Réclamation et caution reçues par 
+Protest und Betrag hinterlegt bei 
+Function 
+Fonction 
+Funktion 
+Date 
+Date 
+Datum 
+Signature of protester 
+Signature de l'auteur de la réclamation 
+Unterschrift des Protestverfassers

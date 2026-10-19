@@ -1,0 +1,9 @@
+{
+  "sequence": "3F7E02D7-706E-4916-8F75-E0439FFFCE7B",
+  "model": "/root/CerebelServer/kinetic-lens/retargeting_neck_v2/models/RajagopalLaiUhlrich2023_neck.osim",
+  "old_head_rmse_deg": 92.8935,
+  "new_head_rmse_deg": 59.0433,
+  "improvement_percent": 36.44,
+  "video": "/root/CerebelServer/kinetic-lens/retargeting_neck_v2/outputs/3F7E02D7-706E-4916-8F75-E0439FFFCE7B/plots/old_vs_new.mp4",
+  "outputs": "/root/CerebelServer/kinetic-lens/retargeting_neck_v2/outputs/3F7E02D7-706E-4916-8F75-E0439FFFCE7B"
+}

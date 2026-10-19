@@ -1,0 +1,64 @@
+# Architecture / 架构说明
+
+## 设计目标
+
+这个知识库优先保证答案可追溯，而不是追求抓取规模。数据进入系统前必须有来源记录；检索结果必须能回到文档、页码和原始 URL。
+
+## 四层结构
+
+1. **来源层**：PDF、实时链接、下载时间、哈希、许可证与版本。
+2. **语义层**：双语概念 ID、同义词、关系和证据类型。
+3. **检索层**：逐页解析、重叠分块、SQLite FTS5 与术语扩展。
+4. **应用层**：CLI 检索；后续可接入向量数据库、聊天助手或分析产品。
+
+## 证据类型
+
+| 类型 | 用途 | 默认权威级别 |
+|---|---|---|
+| RuleFact | 官方规则、定义、澄清 | A+ |
+| StatisticalFact | 官方/授权赛事统计 | A |
+| MeasuredFact | 传感器或设备测量 | A/B+ |
+| ResearchFinding | 论文结论 | B+ |
+| ManufacturerClaim | 厂商规格或产品主张 | A（自有规格）/B |
+| CoachingAdvice | 教练方法与训练建议 | B |
+| CommunityOpinion | 论坛、评论与个人经验 | C |
+
+这些类型不能在回答时无条件合并。例如，社区挥杆建议不能覆盖官方规则；单篇论文的相关性也不能被表述为因果事实。
+
+## Source policy
+
+- `download_by_script=yes`：仅下载来源方直接提供的 PDF。
+- `download_by_script=no`：只登记链接。商业 API、网站正文和社区内容必须在取得许可后增加专用连接器。
+- 所有下载文件保存 SHA-256。动态来源应保存 `retrieved_at`。
+- 规则答案需要按 `version` 和 `valid_from/valid_to` 过滤；若本库版本落后，应提示访问实时官方来源。
+
+## RAG chunk contract
+
+每行 `chunks.jsonl` 包含：
+
+```json
+{
+  "chunk_id": "source-id:p12:c03",
+  "source_id": "source-id",
+  "title": "Document title",
+  "category": "rules",
+  "text": "...",
+  "page": 12,
+  "source_url": "https://...",
+  "source_version": "Effective January 2023",
+  "publisher": "The R&A / USGA",
+  "license_notice": "...",
+  "authority_level": "A+",
+  "evidence_type": "RuleFact",
+  "retrieved_at": "2026-09-20T...Z",
+  "sha256": "..."
+}
+```
+
+## 下一阶段
+
+- 使用 Wikidata QID 建立球员、组织和赛事的主实体 ID。
+- 使用 OSM ID / geometry 建立球场与球洞拓扑（遵守 ODbL）。
+- 对接获得授权的 PGA TOUR / LPGA / Data Golf 数据，落入独立统计表。
+- 加入向量检索时，把 SQLite/BM25 与 embedding 结果融合；不要替换来源过滤。
+- 为规则条款增加结构化 `rule_number -> definition -> exception -> penalty -> clarification` 关系。

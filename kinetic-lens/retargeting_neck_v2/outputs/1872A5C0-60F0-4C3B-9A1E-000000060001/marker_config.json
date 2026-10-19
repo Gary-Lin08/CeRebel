@@ -1,0 +1,108 @@
+{
+  "legacy_markers": [
+    "L_HIP",
+    "R_HIP",
+    "L_SHOULDER",
+    "R_SHOULDER",
+    "L_KNEE",
+    "R_KNEE",
+    "L_ANKLE",
+    "R_ANKLE",
+    "L_TOE",
+    "R_TOE",
+    "L_ELBOW",
+    "R_ELBOW",
+    "L_WRIST",
+    "R_WRIST"
+  ],
+  "neck_markers": [
+    "C7",
+    "T1",
+    "JUGULAR",
+    "L_ACROMION",
+    "R_ACROMION",
+    "HEAD_A",
+    "HEAD_B",
+    "HEAD_C"
+  ],
+  "weights": {
+    "L_HIP": 4.0,
+    "R_HIP": 4.0,
+    "L_SHOULDER": 3.0,
+    "R_SHOULDER": 3.0,
+    "L_KNEE": 2.5,
+    "R_KNEE": 2.5,
+    "L_ANKLE": 2.5,
+    "R_ANKLE": 2.5,
+    "L_TOE": 1.0,
+    "R_TOE": 1.0,
+    "L_ELBOW": 2.0,
+    "R_ELBOW": 2.0,
+    "L_WRIST": 1.5,
+    "R_WRIST": 1.5,
+    "C7": 4.0,
+    "T1": 3.5,
+    "JUGULAR": 3.5,
+    "L_ACROMION": 2.5,
+    "R_ACROMION": 2.5,
+    "HEAD_A": 5.0,
+    "HEAD_B": 5.0,
+    "HEAD_C": 5.0
+  },
+  "anatomical_offsets": {
+    "description": "Body-frame offsets. Landmark = p_body + R_body @ delta. These are not optical markers; they are geometric estimates.",
+    "body_frames": {
+      "C7": "Chest",
+      "T1": "Chest",
+      "JUGULAR": "Chest",
+      "L_ACROMION": "Chest",
+      "R_ACROMION": "Chest",
+      "HEAD_A": "Head",
+      "HEAD_B": "Head",
+      "HEAD_C": "Head"
+    },
+    "delta_m": {
+      "C7": [
+        0.02,
+        0.11,
+        0.0
+      ],
+      "T1": [
+        -0.03,
+        0.08,
+        0.0
+      ],
+      "JUGULAR": [
+        0.08,
+        0.06,
+        0.0
+      ],
+      "L_ACROMION": [
+        0.02,
+        0.12,
+        -0.16
+      ],
+      "R_ACROMION": [
+        0.02,
+        0.12,
+        0.16
+      ],
+      "HEAD_A": [
+        0.07,
+        0.11,
+        0.0
+      ],
+      "HEAD_B": [
+        0.04,
+        0.05,
+        0.06
+      ],
+      "HEAD_C": [
+        0.04,
+        0.05,
+        -0.06
+      ]
+    },
+    "hierarchy_choice": "Chest\u2192Neck1 and Neck2\u2192Head"
+  }
+}

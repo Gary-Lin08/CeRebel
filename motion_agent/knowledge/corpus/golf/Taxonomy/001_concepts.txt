@@ -1,0 +1,27 @@
+concept_id,category,label_en,label_zh_cn,aliases_en,aliases_zh_cn,definition_en,source_hint
+golf:penalty_area,rules,penalty area,罚杆区,red penalty area|yellow penalty area,红色罚杆区|黄色罚杆区,An area from which relief with a one-stroke penalty is allowed under the Rules.,R&A / USGA Rules of Golf
+golf:stroke,rules,stroke,击球,make a stroke|making a stroke,挥杆击球,The forward movement of the club made to strike the ball.,R&A / USGA Rules of Golf
+golf:abnormal_course_condition,rules,abnormal course condition,异常球场状况,animal hole|ground under repair|immovable obstruction|temporary water,动物洞穴|修理地|不可移动妨碍物|临时积水,A defined Rules category that can permit free relief.,R&A / USGA Rules of Golf
+golf:general_penalty,rules,general penalty,一般处罚,loss of hole|two-stroke penalty,该洞负|罚两杆,The penalty specified by the Rules for match play or stroke play.,R&A / USGA Rules of Golf
+golf:handicap_index,handicap,Handicap Index,差点指数,handicap,差点,A standardized measure of a player's demonstrated ability.,World Handicap System
+golf:course_handicap,handicap,Course Handicap,球场差点,,场地差点,The strokes a player receives for a specific course and set of tees.,World Handicap System
+golf:score_differential,handicap,Score Differential,成绩差点值,differential,差点值,A standardized numerical value derived from an acceptable score.,World Handicap System
+golf:club_speed,measurement,club speed,杆头速度,clubhead speed|CHS,球杆速度|杆头速率,The linear speed of the clubhead around impact.,TrackMan / biomechanics literature
+golf:ball_speed,measurement,ball speed,球速,,初始球速,The speed of the golf ball immediately after impact.,Launch monitor vocabulary
+golf:attack_angle,measurement,attack angle,攻角,angle of attack,杆头攻角,The vertical direction of clubhead travel at impact relative to the horizon.,TrackMan vocabulary
+golf:dynamic_loft,measurement,dynamic loft,动态杆面倾角,delivered loft,动态倾角,The effective loft delivered by the clubface at impact.,TrackMan vocabulary
+golf:club_path,measurement,club path,杆头路径,swing path,挥杆路径,The horizontal direction of clubhead travel at impact.,TrackMan vocabulary
+golf:face_angle,measurement,face angle,杆面角,clubface angle,杆面方向,The horizontal direction the clubface points at impact.,TrackMan vocabulary
+golf:spin_rate,measurement,spin rate,旋转率,backspin,后旋率,The rate at which the ball rotates after impact.,Launch monitor vocabulary
+golf:launch_angle,measurement,launch angle,起飞角,vertical launch angle,发射角,The initial vertical angle of the ball trajectory.,Launch monitor vocabulary
+golf:low_point,measurement,low point,挥杆最低点,swing low point,最低点,The lowest point of the clubhead arc relative to the ball.,TrackMan vocabulary
+golf:strokes_gained,statistics,strokes gained,得分增益,SG,相对标准杆增益,A performance measure comparing strokes taken with a benchmark expectation.,PGA TOUR / Data Golf
+golf:ground_reaction_force,biomechanics,ground reaction force,地面反作用力,GRF,地反力,The force exerted by the ground on the golfer.,Biomechanics literature
+golf:centre_of_pressure,biomechanics,centre of pressure,压力中心,center of pressure|CoP,足底压力中心,The location of the resultant ground reaction force on a support surface.,Biomechanics literature
+golf:x_factor,biomechanics,X-factor,X因子,shoulder-pelvis separation,肩髋分离角,A measure of axial separation between upper trunk and pelvis.,Biomechanics literature
+golf:kinematic_sequence,biomechanics,kinematic sequence,运动学序列,proximal-to-distal sequence,近端到远端序列,The timing order of peak segmental rotational velocities in the swing.,Biomechanics literature
+golf:address,swing_event,address,站位,address position|setup,准备姿势,The static preparation phase before the swing begins.,Biomechanics literature
+golf:backswing,swing_event,backswing,上杆,,后摆,The phase that moves the club away from the ball toward the top.,Biomechanics literature
+golf:downswing,swing_event,downswing,下杆,,下摆,The phase from the top of the swing toward impact.,Biomechanics literature
+golf:impact,swing_event,impact,击球瞬间,ball contact,触球,The event at which the clubhead contacts the ball.,Biomechanics literature
+golf:follow_through,swing_event,follow-through,随挥,follow through,收杆,The phase after impact as the motion decelerates.,Biomechanics literature

@@ -1,0 +1,454 @@
+"""Minimal FastAPI-free HTTP chat server for the motion reasoning demo."""
+
+from __future__ import annotations
+
+import json
+import logging
+import mimetypes
+import os
+import traceback
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+
+from motion_agent.app.routes import EXAMPLE_QUESTIONS, chat_payload, sse_pack, trace_to_dict
+from motion_agent.llm.agent import (
+    answer_question,
+    get_current_session_info,
+    get_golf_phase_cards,
+    get_sport_analysis,
+)
+from motion_agent.llm.prompts import (
+    DEFAULT_PROMPT_MODE,
+    ORIGINAL_SYSTEM_PROMPT,
+    list_prompt_presets,
+)
+from motion_agent.llm.qwen_client import build_vlm
+from motion_agent.mesh.opensim_clip import get_smplx_mesh_clip, smplx_mesh_status
+from motion_agent.storage.motion_store import default_data_dir, newest_ready_session_dir
+from motion_agent.storage.video_store import resolve_media_file
+
+LOG = logging.getLogger("motion_agent.chat_server")
+
+UI_DIR = Path(__file__).resolve().parent / "ui"
+DATA_DIR = Path(os.environ.get("CEREBEL_DATA_DIR", str(default_data_dir())))
+HOST = os.environ.get("MOTION_AGENT_HOST", "0.0.0.0")
+PORT = int(os.environ.get("MOTION_AGENT_PORT", "8092"))
+BACKEND = os.environ.get("MOTION_AGENT_BACKEND", "dashscope")
+PROMPT_EDIT_PASSWORD = os.environ.get("MOTION_AGENT_PROMPT_PASSWORD", "20081005")
+
+
+def _public_presets() -> list[dict]:
+    """Preset metadata without prompt bodies (password-gated)."""
+    return [
+        {
+            "id": p["id"],
+            "label": p["label"],
+            "description": p["description"],
+        }
+        for p in list_prompt_presets()
+    ]
+
+
+def _check_prompt_password(provided: str | None) -> bool:
+    return bool(provided) and provided == PROMPT_EDIT_PASSWORD
+
+
+def _password_from_request(handler: BaseHTTPRequestHandler, parsed=None) -> str | None:
+    header = handler.headers.get("X-Prompt-Password")
+    if header:
+        return header.strip()
+    if parsed is not None:
+        qs = parse_qs(parsed.query or "")
+        vals = qs.get("password") or qs.get("prompt_password") or []
+        if vals:
+            return str(vals[0])
+    return None
+
+
+def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) -> None:
+    raw = json.dumps(payload, default=str).encode("utf-8")
+    handler.send_response(code)
+    handler.send_header("Content-Type", "application/json")
+    handler.send_header("Content-Length", str(len(raw)))
+    handler.send_header("Access-Control-Allow-Origin", "*")
+    handler.end_headers()
+    handler.wfile.write(raw)
+
+
+class Handler(BaseHTTPRequestHandler):
+    def log_message(self, fmt: str, *args) -> None:
+        LOG.info("%s - " + fmt, self.address_string(), *args)
+
+    def do_OPTIONS(self) -> None:  # noqa: N802
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Prompt-Password")
+        self.end_headers()
+
+    def do_GET(self) -> None:  # noqa: N802
+        parsed = urlparse(self.path)
+        path = parsed.path
+
+        if path in ("/", "/index.html"):
+            return self._serve_file(UI_DIR / "index.html")
+        if path.startswith("/static/"):
+            return self._serve_file(UI_DIR / path[len("/static/") :])
+        if path == "/api/health":
+            return _json_response(self, 200, {"ok": True, "backend": BACKEND})
+        if path == "/api/session":
+            info = get_current_session_info(DATA_DIR)
+            info["example_questions"] = EXAMPLE_QUESTIONS
+            info["backend"] = BACKEND
+            info["default_prompt_mode"] = DEFAULT_PROMPT_MODE
+            info["prompt_presets"] = _public_presets()
+            info["prompt_locked"] = True
+            return _json_response(self, 200, info)
+        if path == "/api/golf_phases":
+            qs = parse_qs(parsed.query or "")
+            video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            max_swings = 5
+            raw_max = (qs.get("max_swings") or [None])[0]
+            if raw_max is not None:
+                try:
+                    max_swings = int(raw_max)
+                except (TypeError, ValueError):
+                    max_swings = 5
+            payload = get_golf_phase_cards(
+                video_id=video_id,
+                data_dir=DATA_DIR,
+                max_swings=max_swings,
+            )
+            code = 200 if not payload.get("error") else 404 if payload.get("type") == "NO_SESSION" else 500
+            return _json_response(self, code, payload)
+        if path == "/api/sport_analysis":
+            qs = parse_qs(parsed.query or "")
+            video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            sport = ((qs.get("sport") or ["golf"])[0] or "golf").strip().lower()
+            handedness = ((qs.get("handedness") or ["right"])[0] or "right").strip().lower()
+            payload = get_sport_analysis(
+                sport,
+                video_id=video_id,
+                data_dir=DATA_DIR,
+                handedness=handedness,
+            )
+            code = 200 if not payload.get("error") else 404 if payload.get("type") == "NO_SESSION" else 500
+            return _json_response(self, code, payload)
+        if path == "/api/smplx_mesh_status":
+            qs = parse_qs(parsed.query or "")
+            video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            if video_id:
+                session_dir = DATA_DIR / "sessions" / str(video_id)
+            else:
+                session_dir = newest_ready_session_dir(DATA_DIR)
+            if session_dir is None or not session_dir.is_dir():
+                return _json_response(
+                    self,
+                    404,
+                    {
+                        "error": True,
+                        "type": "NO_SESSION",
+                        "message": "No preprocessed video session found.",
+                        "fallback": "raw_video",
+                    },
+                )
+            return _json_response(self, 200, smplx_mesh_status(session_dir))
+        if path == "/api/smplx_mesh_clip":
+            qs = parse_qs(parsed.query or "")
+            video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            try:
+                t0 = float((qs.get("t0") or qs.get("start") or ["0"])[0])
+                t1 = float((qs.get("t1") or qs.get("end") or ["0"])[0])
+            except (TypeError, ValueError):
+                return _json_response(
+                    self,
+                    400,
+                    {
+                        "error": True,
+                        "fallback": "raw_video",
+                        "message": "t0 and t1 must be numbers",
+                    },
+                )
+            if video_id:
+                session_dir = DATA_DIR / "sessions" / str(video_id)
+            else:
+                session_dir = newest_ready_session_dir(DATA_DIR)
+            if session_dir is None or not session_dir.is_dir():
+                return _json_response(
+                    self,
+                    404,
+                    {
+                        "error": True,
+                        "type": "NO_SESSION",
+                        "fallback": "raw_video",
+                        "message": "No preprocessed video session found.",
+                    },
+                )
+            raw_max = (qs.get("max_frames") or [None])[0]
+            max_frames = 90
+            if raw_max is not None:
+                try:
+                    max_frames = max(12, min(180, int(raw_max)))
+                except (TypeError, ValueError):
+                    max_frames = 90
+            muscles_flag = (qs.get("muscles") or ["1"])[0]
+            include_muscles = str(muscles_flag).lower() not in ("0", "false", "no", "off")
+            payload = get_smplx_mesh_clip(
+                session_dir,
+                t0,
+                t1,
+                max_frames=max_frames,
+                include_muscles=include_muscles,
+            )
+            # Soft failures still 200 so the UI can fall back to raw video cleanly.
+            return _json_response(self, 200, payload)
+        if path == "/api/system_prompt":
+            password = _password_from_request(self, parsed)
+            if not _check_prompt_password(password):
+                return _json_response(
+                    self,
+                    401,
+                    {
+                        "error": True,
+                        "locked": True,
+                        "message": "Password required to view system prompts",
+                    },
+                )
+            presets = list_prompt_presets()
+            return _json_response(
+                self,
+                200,
+                {
+                    "ok": True,
+                    "original": ORIGINAL_SYSTEM_PROMPT,
+                    "default_prompt_mode": DEFAULT_PROMPT_MODE,
+                    "presets": presets,
+                    "note": (
+                        "Switch prompt_mode among 'general', 'snowboarding', 'golf', and 'baseball'. "
+                        "Pass system_prompt in POST /api/chat with X-Prompt-Password to override. "
+                        "UI Save stores overrides per mode in the browser."
+                    ),
+                },
+            )
+        if path.startswith("/media/"):
+            parts = path.strip("/").split("/")
+            if len(parts) >= 3:
+                session_id = parts[1]
+                rel = "/".join(parts[2:])
+                cand = resolve_media_file(session_id, rel, DATA_DIR)
+                if cand is not None:
+                    return self._serve_file(cand)
+            return _json_response(self, 404, {"error": True, "message": "media not found"})
+
+        _json_response(self, 404, {"error": True, "message": "not found"})
+
+    def do_POST(self) -> None:  # noqa: N802
+        parsed = urlparse(self.path)
+        if parsed.path not in ("/api/chat", "/api/chat/stream"):
+            return _json_response(self, 404, {"error": True, "message": "not found"})
+        length = int(self.headers.get("Content-Length", "0"))
+        raw = self.rfile.read(length) if length else b"{}"
+        try:
+            body = json.loads(raw.decode("utf-8"))
+        except json.JSONDecodeError:
+            return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+
+        question = (body.get("question") or "").strip()
+        if not question:
+            return _json_response(self, 400, {"error": True, "message": "question required"})
+        video_id = body.get("video_id")
+        attach_video = bool(body.get("attach_video", True))
+        backend = body.get("backend") or BACKEND
+        system_prompt = body.get("system_prompt")
+        if isinstance(system_prompt, str):
+            system_prompt = system_prompt.strip() or None
+        else:
+            system_prompt = None
+        prompt_mode = body.get("prompt_mode")
+        if isinstance(prompt_mode, str):
+            prompt_mode = prompt_mode.strip().lower() or None
+        else:
+            prompt_mode = None
+
+        if system_prompt is not None:
+            password = body.get("prompt_password")
+            if not isinstance(password, str):
+                password = _password_from_request(self, parsed)
+            elif not password.strip():
+                password = _password_from_request(self, parsed)
+            else:
+                password = password.strip()
+            if not _check_prompt_password(password):
+                return _json_response(
+                    self,
+                    401,
+                    {
+                        "error": True,
+                        "locked": True,
+                        "message": "Password required to override system prompt",
+                    },
+                )
+
+        stream = parsed.path == "/api/chat/stream"
+        if stream:
+            return self._chat_stream(
+                question=question,
+                video_id=video_id,
+                attach_video=attach_video,
+                backend=backend,
+                system_prompt=system_prompt,
+                prompt_mode=prompt_mode,
+            )
+
+        try:
+            vlm = build_vlm(backend)
+            result = answer_question(
+                question,
+                video_id=video_id,
+                data_dir=DATA_DIR,
+                vlm=vlm,
+                attach_video=attach_video,
+                system_prompt=system_prompt,
+                prompt_mode=prompt_mode,
+            )
+            return _json_response(self, 200, chat_payload(result))
+        except Exception as exc:  # noqa: BLE001
+            LOG.exception("chat failed")
+            return _json_response(
+                self,
+                500,
+                {
+                    "error": True,
+                    "message": str(exc),
+                    "traceback": traceback.format_exc(),
+                },
+            )
+
+    def _chat_stream(
+        self,
+        *,
+        question: str,
+        video_id: str | None,
+        attach_video: bool,
+        backend: str,
+        system_prompt: str | None,
+        prompt_mode: str | None = None,
+    ) -> None:
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache, no-transform")
+        self.send_header("Connection", "close")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("X-Accel-Buffering", "no")
+        self.end_headers()
+
+        def emit(event: dict) -> None:
+            self.wfile.write(sse_pack(event))
+            self.wfile.flush()
+
+        try:
+            vlm = build_vlm(backend)
+            result = answer_question(
+                question,
+                video_id=video_id,
+                data_dir=DATA_DIR,
+                vlm=vlm,
+                attach_video=attach_video,
+                system_prompt=system_prompt,
+                prompt_mode=prompt_mode,
+                on_event=emit,
+            )
+            # Ensure a terminal done event even if the agent already emitted one.
+            emit(
+                {
+                    "type": "done",
+                    "answer": result.answer,
+                    "session_id": result.session_id,
+                    "tool_calls_used": result.tool_calls_used,
+                    "error": result.error,
+                    "trace": trace_to_dict(result),
+                    "interim": False,
+                }
+            )
+        except Exception as exc:  # noqa: BLE001
+            LOG.exception("chat stream failed")
+            try:
+                emit(
+                    {
+                        "type": "error",
+                        "message": str(exc),
+                        "traceback": traceback.format_exc(),
+                        "interim": False,
+                    }
+                )
+                emit(
+                    {
+                        "type": "done",
+                        "answer": f"Error: {exc}",
+                        "session_id": video_id or "",
+                        "tool_calls_used": 0,
+                        "error": str(exc),
+                        "interim": False,
+                    }
+                )
+            except Exception:  # noqa: BLE001
+                LOG.exception("failed to write stream error event")
+        finally:
+            try:
+                self.close_connection = True
+                self.wfile.flush()
+            except Exception:  # noqa: BLE001
+                pass
+
+    def _serve_file(self, path: Path) -> None:
+        if not path.is_file():
+            return _json_response(self, 404, {"error": True, "message": f"missing {path.name}"})
+        data = path.read_bytes()
+        mime, _ = mimetypes.guess_type(str(path))
+        if path.suffix.lower() == ".js" or path.name.endswith(".module.js"):
+            mime = "text/javascript; charset=utf-8"
+        self.send_response(200)
+        self.send_header("Content-Type", mime or "application/octet-stream")
+        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        # Allow video seeking
+        self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Cache-Control", "no-cache")
+        self.end_headers()
+        self.wfile.write(data)
+
+
+def main() -> None:
+    try:
+        from cerebel_config import apply_cli_flags, fake_egocentric_enabled
+    except ImportError:
+        apply_cli_flags = None
+        fake_egocentric_enabled = lambda: False  # noqa: E731
+    if apply_cli_flags is not None:
+        remaining = apply_cli_flags()
+        if remaining:
+            raise SystemExit(f"unknown arguments: {' '.join(remaining)}")
+    logging.basicConfig(
+        level=os.environ.get("CEREBEL_LOG_LEVEL", "INFO"),
+        format="%(asctime)s %(levelname)s %(name)s %(message)s",
+    )
+    session = newest_ready_session_dir(DATA_DIR)
+    LOG.info(
+        "motion agent chat server on %s:%s backend=%s session=%s fake_egocentric=%s",
+        HOST,
+        PORT,
+        BACKEND,
+        session,
+        fake_egocentric_enabled(),
+    )
+    server = ThreadingHTTPServer((HOST, PORT), Handler)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        LOG.info("shutting down")
+        server.server_close()
+
+
+if __name__ == "__main__":
+    main()

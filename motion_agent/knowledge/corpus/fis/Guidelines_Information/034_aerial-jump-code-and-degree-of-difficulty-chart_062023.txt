@@ -1,0 +1,62 @@
+--- page 1 ---
+Aerial Jump Code and Degree of Difficulty Chart 
+ 
+ 
+1. Jump Code with Degree of Difficulty 
+ 
+Jump Description  Jump Code DD Men DD Women 
+ 
+Back Tuck   bT  2.000  2.000 
+Back Pike   bP  2.000  2.000 
+Back Lay   bL  2.050  2.050 
+Back Full   bF  2.300  2.300 
+Back Double Full  bdF  2.900  2.900 
+ 
+Back Tuck-Tuck*  bTTs  2.300  2.300 
+Back Lay–Tuck  bLT  2.600  2.600 
+Back Lay-Lay  bLL  2.650  2.650 
+Back Full-Tuck  bFT  2.850  2.850 
+Back Lay-Full bLF  2.900  2.900 
+Back Full-Full bFF  3.150  3.150 
+ 
+Back Double Full-Tuck bdFT  3.225  3.225 
+Back Lay-Double Full bLdF  3.275  3.275 
+ 
+Back Double Full-Full bdFF  3.525  3.525 
+Back Full-Double Full bFdF  3.525  3.525 
+Back Lay-Triple Full bLtF  3.750  3.750 
+Back Double Full-Double Full bdFdF  3.900  3.900 
+Back Full-Triple Full bFtF  4.000  4.000 
+Back Triple Full-Full btFF  4.000  4.000 
+ 
+Back Lay-Tuck-Tuck bLTT  3.200  3.392 
+Back Lay-Full-Tuck bLFT  3.500  3.710 
+Back Lay-Pike-Full bLPF  3.500  3.710 
+Back Lay-Tuck-Full bLTF  3.500  3.710 
+Back Full-Tuck-Full bFTF  3.750  3.975 
+Back Lay-Full-Full bLFF  3.800  4.028 
+ 
+Back Full-Full-Full bFFF  4.050  4.293 
+Back Lay-Double Full-Full bLdFF  4.175  4.425 
+Back Lay-Full-Double Full bLFdF  4.275  4.531 
+Back Full-Double Full-Tuck bFdFT  4.125  4.373 
+Back Full-Double Full-Full bFdFF  4.425  4.690 
+Back Double Full-Full-Full bdFFF  4.525  4.796 
+Back Full-Full-Double Full bFFdF  4.525  4.796
+
+--- page 2 ---
+2 
+Back Lay-Triple Full-Full bLtFF  4.650  4.929 
+Back Double Full-Full-Double Full bdFFdF  5.000  5.300 
+Back Double Full-Double Full-Full bdFdFF 5.100 5.406 
+Back Full-double Full-Double Full bFdFdF 5.100 5.406 
+Back Full-Triple Full-Full bFtFF 5.200 5.512 
+Back Full-Full-Triple Full bFFtF 5.300 5.618 
+Back Double Full-Double Full-Double Full bdFdFdF 5.675 6.0155 
+Back Full-Triple Full-Double Full bFtFdF 5.775 6.1215 
+ 
+ 
+*off single kicker 
+ 
+ 
+23.06.2023

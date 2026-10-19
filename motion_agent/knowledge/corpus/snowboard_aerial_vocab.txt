@@ -1,0 +1,15 @@
+Snowboarding aerial vocabulary (demo knowledge pack)
+
+- Backside / frontside: rotation direction relative to the rider's lead shoulder and
+  the wall or feature — not the same as frontflip vs backflip.
+- Cork / off-axis: flips that are not purely about a left-right somersault axis;
+  may combine tilt and twist.
+- Switch: riding with the non-dominant foot forward; facing for intrinsic somersault
+  should still follow travel / COM velocity when possible.
+- Grab names (indy, mute, stalefish, etc.) describe hand-to-board contact and are
+  primarily visual; use RGB frame/clip tools to confirm grabs.
+
+When classifying a flip in this demo
+1. Check RGB around initiation and apex.
+2. Check intrinsic_somersault_net_change_deg / flip_direction_hint over the aerial.
+3. Use world-frame cumulative rotation only for how much rotation occurred.

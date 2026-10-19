@@ -1,0 +1,62 @@
+--- page 1 ---
+COURSE REPORT AERIALS  COMPETITION      AREA YEAR              CODEX
+WID
+TH LEN
+GTH INC
+LINATION 
+Name of Trail INRUN --0-- 
+Homologation Number 10 
+Geographic Orientation NE   N    NW   W     SW  S  SE   E 20 
+MEASUREMENTS DISTANCE WIDTH ANGLE( ° ) --30-- 
+Inrun (L3) 40 
+Transition (R1) 50 
+Table(T) --60-- 
+Landing (L1) TRANS A 3 
+Transition (R2) 6 
+Finish Area (F) 9 
+JUMPS DISTANCE HEIGHT ANGLE ( ° ) WIDTH 12 
+Jump 1 15 
+Jump 2 TABLE 18 
+Jump 3 19 
+Jump 4 --20-- 
+Jump 5 21 
+Jump 6 22 
+Jump 7 --23-- 
+24 
+25 
+COMMENTS INSTALLATIONS  LANDING --28-- 
+Judges Stand Location  29 
+Judges Stand View 30 
+Bathroom Facilities? --31-- 
+32 
+33 
+COMMENTS  OPERATIONS  --34-- 
+Velocity Indicator 35 
+Communications TRANS B 3 
+Sound System 6 
+9 
+COMMENTS  OFFICIALS  12 
+Competition Officials 15 
+Course Police OUTRUN 20 
+Judging --25-- 
+30 
+35 
+Any problems with the course?
+WEATHER Temperature Wind Visibility Snow Conditions 
+COMPETITION PROTOCOL Scheduled
+Start 
+Actual 
+Start 
+Actual 
+Finished 
+Nr. of 
+Competitors Bre
+aks, Pauses 
+  First Run on Lift 
+  Course Inspection  
+  Official Training Group ....  
+  Start Time of Group ......  
+  Official Training Group ....  
+  Start Time of Group ......  
+  Official Results 
+  Time of prizegiving

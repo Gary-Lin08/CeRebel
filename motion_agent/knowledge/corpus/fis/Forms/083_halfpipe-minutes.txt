@@ -1,0 +1,60 @@
+--- page 1 ---
+MINUTES 
+PROCES-VERBAL TC-MEETING HP   
+PROTOKOLL 
+Competition / Manifestation / Veranstaltung Place / Lieu / Ort Date / Date / Datum 
+HALFPIPE W M 
+Team Captains' Meeting of / Réunion des Chefs d'équipe du / Mannschaftsführersitzung vom 
+JURY / JURY / JURY 
+Name-Surname/Nom-Prénom/Name-Vorname Nat 
+TECHN. DATA/DONNEES TECHN./TECHNISCHE DATEN 
+TD Name of course/Nom de la piste/Name der Strecke 
+Head Judge/Juge  principal /Oberkampfrichter       Length/ Longeur / Weite 
+m 
+Inclination/ Angle / Gefälle  
+º
+Chief of Race/Directeur de l'épreuve/Rennleiter Width wall to wall 
+m 
+Chief of Halfpipe/Chef de Hafpipe/Halfpipechef Inner heigth of walls 
+m 
+Inclination of Vert 
+m 
+Starter/Juge au départ/Starter 
+Knockout format Single format  FIS Homolog. No./No. Homolog. FIS/FIS Homolog. Nr 
+Qualifications 1st RUN 
+Nat 
+Qualifications 2nd RUN Nat 
+Forerunners/Ouvreurs/Vorläufer 
+- A -
+Forerunners/Ouvreurs/Vorläufer 
+- A -
+- B - - B - 
+- C - - C - 
+- D - - D - 
+Finals Finals
+1st RUN/1ère MANCHE/1. LAUF 2nd RUN/2ème MANCHE/2. LAUF 
+Weather Forecast/Prévisions du temps/Wetterprognose 
+Starting times/Heures des départ/Startzeiten  
+Training Qualification/Entraînement Qualification/QualifikationTraining 
+Qualification/Qualification/Qualifikation  
+Training Final/Entraînement Final/Qualifikation Finale
+
+--- page 2 ---
+Final/Final/Finale 
+Ascent of Jury/Montée du Jury/Bergfahrt Jury 
+Jury meeting at finish/Réunion du Jury à l'arrivée/Treffpunkt Jury Ziel 
+Distribution of radio equipment/Remise des appareils radio/Abgabe Funkgeräte 
+Next Team Captains' meeting/Prochaine réunion des chefs d'équipe/Nächste Mannschaftsführersitzung 
+Miscellaneous/Divers/Besonderes 
+Press Inspection/Reconnaissance par la presse/Presse-Besichtiigung 
+Lift facilities/Remontées mécaniques/Bergbahnen 
+Parking/Places de parc/Parkplätze 
+Prizegiving/Distribution des prix/Preisverteilung 
+Opening times of race office/Heures d'ouverture bureau des courses/Öffnungszeiten Wettkampfbüro 
+Comments in the language of the country + one of the FIS languages 
+Commentaires dans la langue du pays + une des langues FIS 
+Kommentare in Landessprache + eine FIS-Sprache 
+Sound System/Sonorisation/Musikanlage 
+Computer 
+Signature of Race Secretary/Signature du secrétaire de la 
+course/Unterschrift Wettkampfsekretär

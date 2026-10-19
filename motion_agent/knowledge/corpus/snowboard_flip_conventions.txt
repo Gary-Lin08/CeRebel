@@ -1,0 +1,21 @@
+Snowboard flip orientation conventions (CeRebel / motion agent)
+
+Frontflip vs backflip
+- In a backflip, the rider rotates backward: the head goes rearward relative to the
+  direction of travel / facing, and the board comes up and over toward the back.
+- In a frontflip, the rider rotates forward: the head dives toward the snow / downhill
+  first, and the board follows over the front.
+
+Tool signals (do not confuse frames)
+- root_euler_* and root_cumulative_rotation_* are OpenSim WORLD / ground frame (Y-up).
+  Use them for flip *extent* (how many degrees the body rotated), NOT for deciding
+  front vs back from the Euler X sign alone.
+- intrinsic_somersault_* is rider-intrinsic rotation about the horizontal rightward
+  axis (facing × world_up). Sign convention: positive = backflip direction;
+  negative = frontflip direction.
+- OpenSim pelvis_tilt can stall or reverse near ±180° even when the body keeps spinning.
+  Prefer continuous root orientation / intrinsic somersault for aerial flips.
+
+Facing estimate
+- Rider facing is taken from horizontal COM velocity when speed is sufficient;
+  otherwise the pelvis body +X projected onto the ground plane.

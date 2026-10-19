@@ -1,0 +1,9 @@
+{
+  "sequence": "1872A5C0-60F0-4C3B-9A1E-000000060001",
+  "model": "/root/CerebelServer/kinetic-lens/retargeting_neck_v2/models/RajagopalLaiUhlrich2023_neck.osim",
+  "old_head_rmse_deg": 68.6041,
+  "new_head_rmse_deg": 45.2915,
+  "improvement_percent": 33.98,
+  "video": "/root/CerebelServer/kinetic-lens/retargeting_neck_v2/outputs/1872A5C0-60F0-4C3B-9A1E-000000060001/plots/old_vs_new.mp4",
+  "outputs": "/root/CerebelServer/kinetic-lens/retargeting_neck_v2/outputs/1872A5C0-60F0-4C3B-9A1E-000000060001"
+}

@@ -1,0 +1,9 @@
+EXISTING	2023 Rules of Golf	01_rules/2023_Rules_of_Golf.pdf
+EXISTING	Additional Clarifications of the 2023 Rules of Golf	01_rules/2026-07-01_Additional_Clarifications.pdf
+EXISTING	Local Rules and Terms of the Competition for USGA Championships	01_rules/USGA_Local_Rules_and_Terms_2023.pdf
+EXISTING	15 Rules Every Golfer Should Know	01_rules/USGA_15_Rules_Poster_2023.pdf
+EXISTING	Rules of Handicapping	02_handicap/2024_Rules_of_Handicapping_USGA.pdf
+EXISTING	Equipment Rules	03_equipment/Equipment_Rules.pdf
+EXISTING	List of Conforming Golf Balls	03_equipment/Conforming_Golf_Balls_CURRENT.pdf
+EXISTING	Golf Swing Biomechanics: A Systematic Review and Methodological Recommendations for Kinematics	04_biomechanics_open_access/Golf_Swing_Biomechanics_Systematic_Review_2022.pdf
+EXISTING	Ground Reaction Force and Centre of Pressure During the Golf Swing and Associations with Clubhead Speed and Skill Level: A Systematic Review	04_biomechanics_open_access/GRF_CoP_Golf_Systematic_Review_2026.pdf

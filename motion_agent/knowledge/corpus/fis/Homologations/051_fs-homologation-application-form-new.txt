@@ -1,0 +1,346 @@
+--- page 1 ---
+INTERNATIONAL SKI FEDERATION 
+FREESTYLE / SKI CROSS 
+ 
+APPLICATION FOR COURSE HOMOLOGATION 
+ 
+APPLICANT ORGANISATION  
+address  
+phone, fax, e-mail  
+RESPONSIBLE PERSON  
+address  
+phone, fax, e-mail  
+STATION / TOWN  
+address  
+phone, fax, e-mail  
+NATIONAL SKI ASSOCIATION  
+address  
+phone, fax, e-mail  
+ 
+ 
+APPLICATION FOR THE FOLLOWING COURSES  
+Name of the course Type (moguls, aerials) 
+  
+  
+  
+ 
+ 
+FOR THE APPLICANT ORGANISATION   
+Name Date Signature 
+   
+ 
+FOR THE NATIONAL SKI ASSOCIATION   
+Name Date Signature
+
+--- page 2 ---
+GENERAL INFORMATION 
+ 
+STATION / TOWN  
+Name  
+size  
+elevation  
+Geographic location  
+Connections and travel 
+times to national and 
+international centers 
+ 
+Type of housing, number 
+of beds 
+ 
+Medical facilities 
+ 
+Other events organized by 
+station/town 
+ 
+ 
+SKI AREA  
+Name  
+size  
+Elevation (from/to)  
+Number of lifts and trails  
+Skiing season 
+(from/to/peaks)  
+First aid, emergency 
+evacuation, helicopter 
+access 
+ 
+ 
+AVERAGE WEATHER CONDITIONS 
+Temperatures  
+General snow coverage 
+ 
+ 
+FREESTYLE EVENTS HELD ON COURSES 
+Date, level, TD-Reports 
+ 
+ 
+ADDITIONAL INFORMATION 
+ 
+ 
+ATTACHMENTS (plans, drawings, photos, TD-Reports)
+
+--- page 3 ---
+MOGULS / DUAL MOGULS 
+ 
+Name of course   COURSE MEASURES 
+ In portions of equal inclination 
+Elevation   Width  Length Inclination 
+  TOP   
+Geographic orientation    ---0---   
+  ----   
+     ----   
+GENERAL MEASURES     ---30---   
+Length of course (L1)     ----   
+   ----   
+Length start to judges stand 
+(L2)     ---60---   
+   ----   
+Width of course     ----   
+   ---90---   
+Inclination (start to finish line)     ----   
+   ----   
+     ---120---   
+ACCESS MOGUL COURSE BOTTOM TO TOP   ----   
+Turnaround time    ----   
+  ---150----   
+Name / type of lift    ----   
+  ----   
+Capacity (per hour)    ----180---   
+  ----   
+Alternate access    ----   
+  ---210---   
+     ----   
+ACCESS STATION / TOWN TO MOGUL COURSE   ----   
+Time    ---240---   
+  ----   
+Names / types of lifts  
+  ----   
+  ---270----   
+  ----   
+capacity    ----   
+  ---300---   
+     BOTTOM   
+      
+TECHNICAL INSTALLATIONS (permanent, temporary)      
+Judges stand     
+ AVERAGE WEATHER CONDITIONS 
+Power   Visibility  
+Communication   Wind effects  
+ 
+DESCRIPTION OF THE COURSE 
+ 
+ 
+ALTERNATE COURSE (specifications, advantages, ...)
+
+--- page 4 ---
+AERIALS 
+ 
+Name of course   COURSE MEASURES 
+ In portions of equal inclination 
+Elevation   Width  Length Inclination 
+  Top of inrun  
+Geographic orientation    ---100---   
+  ----   
+     ---90---   
+GENERAL MEASURES Length Inclination width   ----   
+inrun      ---80---   
+  ----   
+table      ---70---   
+  ----   
+Landing hill      ---60---   
+  ----   
+Finish area      ---50---   
+  ----   
+     ---40---   
+ACCESS AERIAL COURSE BOTTOM TO TOP   ----   
+Turnaround time    ---30---   
+  ----   
+Name / type of lift    ---20---   
+  ----   
+Capacity (per hour)    ----10---   
+  ----   
+Alternate access   ------------- ------------- Knoll line  --------------- 
+  ----   
+     ----10---   
+ACCESS STATION / TOWN TO AERIAL COURSE   ----   
+Time    ---20---   
+  ----   
+Names / types of lifts  
+  ---30---   
+  ----   
+  ---40---   
+capacity    ----   
+  ---50---   
+       
+   Finish area  
+TECHNICAL INSTALLATIONS (permanent, temporary)      
+Judges stand     
+ AVERAGE WEATHER CONDITIONS 
+Power   Visibility  
+Communication   Wind effects  
+ 
+DESCRIPTION OF THE COURSE 
+ 
+ 
+ALTERNATE COURSE (specifications, advantages, ...)
+
+--- page 5 ---
+CROSS 
+ 
+Name of course   COURSE MEASURES 
+ In portions of equal inclination 
+Elevation   Width  Length Inclination 
+  TOP   
+Geographic orientation GPS    ---0---   
+  ----   
+     ----   
+GENERAL MEASURES     --100--   
+Length of course      ----   
+   ----   
+Width of course     ---200---   
+   ----   
+Inclination (start to finish line)     ----   
+   --300--   
+     ---   
+ACCESS ACRO COURSE BOTTOM TO TOP   ---   
+Turnaround time    ----   
+  --400--   
+Name / type of lift    ---   
+  ----   
+Capacity (per hour)    --500--   
+  ----   
+Alternate access  
+  ---- 
+--600-   
+  ---   
+     ----   
+ACCESS STATION / TOWN TO SKI CROSS COURSE   700   
+Time    ----   
+  ----   
+Names / types of lifts  
+  900   
+  ----   
+  ----   
+capacity  
+  1000   
+  ----   
+       
+     ----   
+      
+Timing and Data 
+Building     
+ AVERAGE WEATHER CONDITIONS 
+Power   Visibility  
+Communication   Wind effects  
+ 
+DESCRIPTION OF THE COURSE 
+ 
+ 
+ALTERNATE COURSE (specifications, advantages, ...)
+
+--- page 6 ---
+HALFPIPE 
+ 
+Name of course   COURSE MEASURES 
+ In portions of equal inclination 
+Elevation   Width  Length Inclination 
+  TOP   
+Geographic orientation    ---0---   
+  ----   
+     ----   
+GENERAL MEASURES     --25--   
+Length of course      ----   
+   ----   
+Width of course     ---50---   
+   ----   
+Inclination (start to finish line)     ----   
+   --75--   
+     ---   
+ACCESS HP COURSE BOTTOM TO TOP   ---   
+Turnaround time    ----   
+  --100--   
+Name / type of lift    ---   
+  ----   
+Capacity (per hour)    --125--   
+  ----   
+Alternate access  
+  ---- 
+--150-   
+  ---   
+     ----   
+ACCESS STATION / TOWN TO HALFPIPE  COURSE   175   
+Time    ----   
+  ----   
+Names / types of lifts  
+  200   
+  ----   
+  ----   
+capacity  
+  225   
+  ----   
+       
+     ----   
+      
+Judges Stand     
+ AVERAGE WEATHER CONDITIONS 
+Power   Visibility  
+Communication   Wind effects  
+ 
+DESCRIPTION OF THE COURSE 
+ 
+ 
+ALTERNATE COURSE (specifications, advantages, ...)
+
+--- page 7 ---
+SLOPESTYLE 
+ 
+Name of course   COURSE MEASURES 
+ In portions of equal inclination 
+Elevation   Width  Length Inclination 
+  TOP   
+Geographic orientation    ---0---   
+  ----   
+     ----   
+GENERAL MEASURES     --100--   
+Length of course      ----   
+   ----   
+Width of course     ---200---   
+   ----   
+Inclination (start to finish line)     ----   
+   --300--   
+     ---   
+ACCESS SLOPSTYLE COURSE BOTTOM TO TOP   ---   
+Turnaround time    ----   
+  --400--   
+Name / type of lift    ---   
+  ----   
+Capacity (per hour)    --500--   
+  ----   
+Alternate access  
+  ---- 
+--600-   
+  ---   
+     ----   
+ACCESS STATION / TOWN TO SLOPESTYLE COURSE   700   
+Time    ----   
+  ----   
+Names / types of lifts  
+  900   
+  ----   
+  ----   
+capacity  
+  1000   
+  ----   
+       
+     ----   
+      
+Timing and Data 
+Building     
+ AVERAGE WEATHER CONDITIONS 
+Power   Visibility  
+Communication   Wind effects  
+ 
+DESCRIPTION OF THE COURSE 
+ 
+ 
+ALTERNATE COURSE (specifications, advantages, ...)

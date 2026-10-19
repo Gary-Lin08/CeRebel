@@ -1,0 +1,78 @@
+--- page 1 ---
+ENTRY FORM (ICR Art. 215) 
+FORMULAIRE D'INSCRIPTION (RIS Art. 215) 
+ANMELDUNGSFORMULAR (IWO Art. 215) 
+Competition (Name/Place) 
+Manifestation (Nom/Lieu) 
+Veranstatlung (Name/Ort) 
+Responsible for entry 
+Responsable de l'incription 
+Für die Meldung verantwortlich 
+Date of Competition 
+National Association 
+Fédération Nationale 
+Nationaler Verband 
+Cat. 
+Cat. 
+Kat. 
+EC NAC WJC 
+FIS NC JUN 
+Female Male 
+Code No. 
+N. de code
+Code Nr.
+Surname 
+Nom de famille 
+Familienname 
+First Name 
+Prénom 
+Vorname 
+Gender 
+Genre 
+Geschlecht 
+YB 
+AN 
+JG 
+PAR SBX HP SS BA 
+Arrival 
+Arrivée 
+Anreise 
+Departure 
+Départ 
+Abreise 
+COMPETITORS / COUREURS / WETTKÄMPFER
+
+--- page 2 ---
+OFFICIALS / OFFICIELS / OFFIZIELLE 
+Surname 
+Nom de famille 
+Familienname 
+First Name 
+Prénom 
+Vorname 
+Function 
+Genre 
+Geschlecht 
+Arrival 
+Arrivée 
+Anreise 
+Departure 
+Départ 
+Abreise 
+Room 1 
+Room 2 
+Room 3 
+Room 4 
+Room 5 
+Room 6 
+Room 7 
+Room 8 
+Room 9 
+Room 10 
+Place, Date 
+Lieu, Date 
+Ort, Datum 
+Signature: 
+Signature: 
+Unterschrfit: 
+Entry form rooming.doc/16.06.2020

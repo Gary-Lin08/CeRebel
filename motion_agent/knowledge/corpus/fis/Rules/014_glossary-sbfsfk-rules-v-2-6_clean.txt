@@ -1,0 +1,381 @@
+--- page 1 ---
+Definitions 
+ 
+Each of the terms in the table below is used in the various Rule Books with the 
+corresponding meaning. 
+ 
+Term Meaning 
+  
+Athlete 
+ 
+ 
+ 
+ 
+Bib 
+A person registered with FIS for the purpose 
+of competing.  An athlete is referred to as a 
+competitor in the context of participation in a 
+competition. 
+ 
+A garment worn on the competitor’s upper 
+body for identification, usually by means of a 
+clearly visible number.  
+ 
+Category 
+ 
+The level at which a Competition is defined in 
+the FIS Calendar (e.g. World Cup, Continental 
+Cup, FIS etc.) The Category of a Competition 
+determines how FIS Points are calculated and 
+may also indicate that special rules apply to 
+participation and quotas. 
+ 
+Competition An instance of an Event having a specified 
+date and location and intended to produce a 
+single set of Results. (e.g. Men’s Moguls 
+World Cup, Deer Valley, 2017). Each 
+competition is listed in the FIS Calendar with a 
+Codex number that is unique within a given 
+FIS Calendar Year.  
+ 
+Competitor  A person who competes, or intends to 
+compete, in the competition.  A competitor is 
+referred to as an athlete when not actually 
+participating in a competition, as, for example, 
+when mentioned in a rule of the FIS Points. 
+ 
+Course The defined area within which an Event 
+takes place. 
+ 
+Discipline A grouping of competitive activities as 
+defined in ICR 201.4.  (e.g. Alpine Skiing, 
+Cross-Country Skiing, Snowboarding…) 
+ 
+Entry A notification of a competitor’s  intention to 
+compete, made in accordance with ICR 215. 
+ 
+Event A competitive activity belonging to a single 
+Discipline, as defined in ICR 201.5. (e.g. 
+Slopestyle, Ski Cross, Snowboard Cross.)
+
+--- page 2 ---
+Finish (noun) (also “Finish Area”) The area in which the competitor finishes .  
+Depending on the Event, this may be 
+separated from the rest of the course by a 
+marked line or gate. 
+ 
+Finish (verb) A competitor finishes by arriving in the Finish 
+Area having passed correctly through the 
+course.  
+  
+Gate A part of the track usually denoted by one or 
+more poles, with or without attached flags, 
+through which a competitor is required to 
+make correct passage according to the 
+defined course. 
+ 
+Heat 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Jersey 
+1. The lowest level of subdivision of a phase.  
+This definition is used in SX, SBX, DM, 
+PAR. In this definition, a heat comprises a 
+single run in which two or more 
+competitors participate concurrently. 
+ 
+2. The first subdivision of a Qualification 
+phase. This definition is used in HP, SS, 
+BA. In this definition, a heat comprises a 
+sub-grouping of the competitors devised 
+to limit the number of runs the Judges are 
+required to compare together.  Each heat 
+normally consists of two or more runs per 
+competitor. 
+ 
+A coloured garment worn over the bib in 
+Cross heats to simplify identification of 
+competitors within the heat. 
+ 
+Jump 1. A single run in any Event consisting only 
+of aerial manoeuvres.  
+2. An aerial manoeuvre performed as part 
+of a run in a judged Event and intended 
+to contribute to the competitor’s score. 
+3. An aerial feature of a course. 
+ 
+National Ski Association  A governing body in membership of FIS.  
+ 
+Organising Committee  
+ 
+The committee appointed under ICR 
+211.2 to manage one or more 
+competitions. 
+ 
+Phase The first sub -division of a competition. A 
+phase may be further subdivided, depending 
+on the format of the Event. A competition is 
+normally defined to consist of a Qualification
+
+--- page 3 ---
+phase followed by a Final phase in which a 
+subset of the competitors participate. 
+ 
+Precisions A document describing the most recent 
+amendments to the ICR and other rules 
+documents.  Precisions normally comprise 
+only those changes that have not yet been 
+fully incorporated in the most recent 
+published version, and thus last for no more 
+than one year. 
+ 
+Results A formal list of ranks published in the manner 
+specified in the rules for the Event. 
+ 
+Round A subdivision of a phase. A round may refer 
+to:  
+1. a group of heats in a knockout format Event 
+(DM, SX, SBX) 
+2. a set of runs involving all the competitors in 
+a phase of an Event in which each 
+competitor takes more than one run in the 
+phase. 
+ 
+Rule A formally stated prescription, with unique 
+alphanumeric reference, in any Volume of 
+the ICR and related documents. 
+ 
+Run A single passage, or attempted passage 
+through the course. The number of runs in a 
+heat, round or phase depends on the format 
+of the Event. 
+ 
+Seeding 
+ 
+ 
+ 
+ 
+ 
+ 
+Snow Control 
+The process of assigning start order priority 
+in a phase to competitors in the competition.  
+Depending on the format of the competition, 
+this may make use of results from a 
+Qualification phase, or other attributes 
+earned in previous competitions.   
+ 
+A procedure specifying a date on which a 
+definitive decision will be made whether to 
+confirm that a competition will be held.  The 
+decision will normally be made by the Race 
+Director or other official in a similar role, in 
+consultation with the Organising Committee 
+and having regard to the general condition of 
+the courses. 
+ 
+Start (noun) The position on the course from which a 
+competitor is required to start.  When used in 
+this sense, it is written with an initial capital. 
+ 
+Start (verb) A competitor has started when, having been 
+given permission by the Starter, he/she
+
+--- page 4 ---
+makes a purposeful move away from the 
+Start into the course. 
+ 
+Start Device 1. A structure with doors or barriers 
+designed to prevent competitors in a 
+Parallel, Cross or Dual Moguls heat from 
+starting until released by the Starter. 
+2. A wand -operated gate or photocell 
+installation placed so as to detect the 
+instant when the competitor starts. 
+ 
+Tie A tie exists between two or more competitors 
+if they have the same rank before any 
+specified tie -breaking procedures for the 
+Event have been executed. An unbreakable 
+tie exists if the competitors’ ranks remain 
+equal after the application of all specified tie-
+breaking procedures. 
+ 
+Track 
+ 
+The part of the course that competitors are 
+required to pass through correctly in order to 
+complete a run and finish. In some Events, 
+the track is defined by the use of gates; in 
+others, the track is the same as the course. 
+ 
+Conventions 
+ 
+Approved terms 
+Certain conventions govern the selection of terms to be used in the ICR and other publications 
+of FIS. Some of these are listed here. 
+ 
+Conventional term Term(s) to be avoided 
+Competitor Athlete (except at times when not actually 
+competing), skier, rider, snowboarder. 
+Man, Men Gentleman, Gentlemen 
+Woman, Women Lady, Ladies 
+ 
+Gender neutrality 
+The language used in these rules should as far as reasonably possible be gender neutral. The 
+use of “he” or “she” is to be avoided in favour of “the competitor”, “the TD” etc. This can best be 
+achieved during drafting by choosing a different clause structu re: instead of “if a competitor 
+misses a gate he/she must leave the course” a construction such as “a competitor who misses 
+a gate must leave the course” is to be preferred.  
+ 
+Spelling and grammar 
+The standard adopted for the ICR is UK English (see FIS Style Guide, p.4). The following is a 
+non-exhaustive list of standard spellings, with explanations as necessary. 
+  
+Spelling Notes 
+Licence (noun), license 
+(verb) 
+US English is exactly the other way round. 
+Colour  
+Organiser, Organising This is a “soft” preference, as UK English dictionaries admit 
+of both spellings.
+
+--- page 5 ---
+Abbreviations 
+ 
+Documents 
+ICR International Competition Rules 
+  
+ 
+Competition organisation 
+OC  Organising Committee 
+TCM Team Captains’ Meeting 
+ 
+Results  
+DD Degree of Difficulty 
+DNF Did Not Finish 
+DNI Does Not Improve 
+DNS Did Not Start 
+DQB Disqualified for Unsportsmanlike Behaviour 
+DSQ Disqualified 
+Fn Final n (e.g. F1, F2, F3) 
+IRM Invalid Result Mark 
+JNS Jump Not Scored 
+NPS Not Permitted to Start 
+Qn  Qualification n (e.g. Q1, Q2) 
+RAL Ranked As Last 
+YB Year of Birth 
+ 
+Competition officials 
+HJ Head Judge 
+J Judge 
+RD/CD Race Director / Contest Director 
+TD Technical Delegate 
+ 
+Competition Categories 
+AC Asia Cup 
+ACP Asia Cup Premium 
+ANC Australia New Zealand Cup 
+ANCP Australia New Zealand Cup Premium 
+AWG Asian Winter Games 
+CHI Children 
+CoC  Continental Cup 
+EC  European Cup 
+ECP European Cup Premium 
+EYOF European Youth Olympic Festival 
+FIS 
+GP 
+FIS level 
+Grand Prix 
+JRC Junior Regional Cup 
+JUN 
+NAC  
+Junior  
+NorAm Cup 
+NACP NorAm Cup Premium 
+MAS Masters 
+NC National Championships 
+NJC National Junior Championships 
+OPN Open
+
+--- page 6 ---
+OWG  Olympic Winter Games 
+PARA Para Events 
+QUA Qualification 
+SAC South American Cup 
+SACP South American Premium Cup 
+SCOC Super Continental Cup 
+UNI University 
+UVS World University Games 
+WC  World Cup 
+WJC  Junior World Ski/Snowboard Championships 
+WRG Official Warning 
+WSC  World Ski / Snowboard Championships 
+YOG Youth Olympic Games 
+ 
+For the full formal name of each competition mentioned above, refer to the FIS Style Guide. 
+ 
+Events 
+AE 
+AES 
+Aerials 
+Aerials Synchro 
+AET Aerials Team 
+BA Big Air 
+BAT 
+BSL 
+DBSL 
+Big Air Team 
+Banked Slalom 
+Dual Banked Slalom 
+DM Dual Moguls 
+DMT Dual Moguls Team 
+GS Snowboard Giant Slalom 
+HP Halfpipe 
+MO Moguls 
+PGS Parallel Giant Slalom 
+PSL Parallel Slalom 
+PRT Parallel Team 
+SBX Snowboard Cross 
+BXT  Snowboard Cross Team 
+ST 
+SL 
+Street Style 
+Slalom 
+SS Slopestyle 
+SX Ski Cross 
+SXT Ski Cross Team 
+TE Team Competition 
+TSL Triple Slalom Event 
+XT Ski-Snowboard Cross Team 
+ 
+Disciplines 
+FS Freestyle 
+SB Snowboard 
+ 
+Structure of FIS  
+AG  Advisory Group 
+NSA National Ski / Snowboard Association  
+WG  Working Group
+
+--- page 7 ---
+Other 
+FK Freeski 
+Note: although “Freeski” has been adopted for various purposes including the 
+name of the SBFSFK Committee, it has not yet been formally recognised as a 
+Discipline within FIS.   
+ 
+ 
+Glossary version 2.6_26.06.2026

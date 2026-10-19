@@ -1,0 +1,25 @@
+MoBL-ARMS Dynamic Upper Limb Model
+==================================
+
+Source: https://github.com/CEINMS-RT/UpperLimbModel (MOBL_ARMS_41.osim)
+Upstream project: https://simtk.org/projects/upexdyn/
+
+License: non-commercial BSD 3-Clause (see LICENSE excerpt in README.md of this
+folder / upstream). Commercial use requires a separate license from the
+copyright holders.
+
+Required citations when using the model:
+  Saul KR, Hu X, Goehler CM, Daly M, Vidt ME, Velisar A, Murray WM.
+  Benchmarking of dynamic simulation predictions in two software platforms
+  using an upper limb musculoskeletal model. CMBBE. 2015; 18:1445-58.
+
+  McFarland DC, McCain EM, Poppo MN, Saul KR. Spatial Dependency of
+  Glenohumeral Joint Stability During Dynamic Unimanual and Bimanual
+  Pushing and Pulling. ASME J Biomech Eng. 2019; 141(5): 051006.
+
+Integration note (CeRebel):
+  MoBL-ARMS is a right upper-extremity model with clavicle/scapula DOFs.
+  It is NOT a drop-in replacement for Rajagopal full-body. CeRebel keeps
+  Rajagopal(+neck) as the primary IK skeleton and optionally drives MoBL
+  from solved arm poses to export upper-limb musculotendon path polylines
+  for visualization alongside Rajagopal lower-limb muscles.

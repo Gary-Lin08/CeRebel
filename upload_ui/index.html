@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CeRebel · Upload</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0A0B0B;
+      --lime: #E1FE67;
+      --lime-dim: #b6d44a;
+      --bg: #070808;
+      --panel: #121413;
+      --panel-2: #1a1c1a;
+      --text: #f3f5ee;
+      --muted: #9aa392;
+      --border: #2a2e26;
+      --danger: #e07a6a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1000px 520px at 8% -8%, color-mix(in srgb, var(--lime) 16%, transparent) 0%, transparent 55%),
+        radial-gradient(800px 480px at 100% 0%, color-mix(in srgb, var(--lime) 8%, #101210) 0%, transparent 50%),
+        var(--bg);
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem 1.1rem 3rem;
+      display: grid;
+      gap: 1.1rem;
+    }
+    header.brand { display: grid; gap: 0.45rem; }
+    header.brand .logo {
+      display: block;
+      width: min(260px, 70vw);
+      height: auto;
+    }
+    header.brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 28rem;
+    }
+    .card {
+      background: color-mix(in srgb, var(--panel) 94%, transparent);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      backdrop-filter: blur(8px);
+    }
+    .card h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .card .lead {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .drop {
+      position: relative;
+      display: grid;
+      place-items: center;
+      gap: 0.55rem;
+      min-height: 180px;
+      padding: 1.25rem;
+      border: 1.5px dashed color-mix(in srgb, var(--lime) 40%, var(--border));
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--lime) 6%, var(--panel-2));
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      text-align: center;
+    }
+    .drop:hover, .drop.is-drag {
+      border-color: var(--lime);
+      background: color-mix(in srgb, var(--lime) 14%, var(--panel-2));
+    }
+    .drop strong {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .drop span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .drop input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-chip {
+      display: none;
+      margin-top: 0.85rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .file-chip.is-on { display: block; }
+    .file-chip b { color: var(--text); font-weight: 500; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+    button {
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, var(--lime) 45%, var(--border));
+      background: var(--lime);
+      color: var(--ink);
+      cursor: pointer;
+    }
+    button:hover { background: #f0ff9a; }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    button.ghost {
+      background: var(--panel-2);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    button.ghost:hover {
+      border-color: color-mix(in srgb, var(--lime) 45%, var(--border));
+      background: color-mix(in srgb, var(--lime) 12%, var(--panel-2));
+    }
+    .progress-card { display: none; }
+    .progress-card.is-on { display: block; }
+    .stage-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.55rem;
+    }
+    .stage-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .pct {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .bar > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--lime-dim), var(--lime), var(--lime-dim));
+      background-size: 200% 100%;
+      box-shadow: 0 0 12px color-mix(in srgb, var(--lime) 40%, transparent);
+      transition: width 0.35s ease;
+    }
+    .bar.is-pulse > i {
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .bar.is-creep > i {
+      animation: pulse 1.2s ease-in-out infinite, sheen 2.4s linear infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.25); }
+    }
+    @keyframes sheen {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    .msg {
+      margin: 0.75rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+      min-height: 1.3em;
+    }
+    .msg.err { color: var(--danger); }
+    .meta {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.55;
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .meta strong { color: var(--text); font-weight: 500; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.35rem;
+      margin-top: 1rem;
+    }
+    .steps span {
+      text-align: center;
+      padding: 0.4rem 0.2rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .steps span.is-done {
+      border-color: color-mix(in srgb, var(--lime) 40%, var(--border));
+      color: var(--lime);
+    }
+    .steps span.is-active {
+      border-color: var(--lime);
+      background: color-mix(in srgb, var(--lime) 16%, var(--panel-2));
+      color: var(--text);
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 0.45rem 0.8rem;
+      border-radius: 8px;
+      background: var(--lime);
+    }
+    .links a.secondary {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .links a:hover {
+      filter: brightness(1.06);
+    }
+    .destinations {
+      margin-top: 0.15rem;
+    }
+    .destinations .dest-label {
+      margin: 0 0 0.55rem;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .destinations .links {
+      margin-top: 0;
+    }
+    @media (max-width: 560px) {
+      .steps { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="brand">
+      <img class="logo" src="/static/cerebel-logo.svg" width="595" height="194" alt="CeRebel" />
+      <p>An intelligence that sees motion.</p>
+    </header>
+
+    <section class="card">
+      <h1>Share a motion</h1>
+      <p class="lead">
+        Upload a clip for CeRebel AI. Human motion perception is supported by
+        CeRebel Foundation — our world model for human motion. Progress updates live
+        while insight is prepared.
+      </p>
+
+      <label class="drop" id="drop" for="fileInput">
+        <input id="fileInput" type="file" accept="video/*,.mp4,.mov,.webm,.mkv,.avi" />
+        <strong>Drop video here, or click to choose</strong>
+        <span>MP4, MOV, WebM, MKV · up to 512&nbsp;MB</span>
+      </label>
+      <div class="file-chip" id="fileChip"></div>
+
+      <div class="actions">
+        <button type="button" id="uploadBtn" disabled>Start analysis</button>
+        <button type="button" class="ghost" id="resetBtn">Clear</button>
+      </div>
+
+      <div class="destinations" aria-label="CeRebel destinations">
+        <p class="dest-label">Continue exploring</p>
+        <div class="links" id="links">
+          <a id="linkKinetic" href="https://0i5-79nucyondu7h6sp1a-cdhea2bz-custom.service.onethingrobot.com/" target="_blank" rel="noopener">Open Kinetic Lens</a>
+          <a id="linkChat" class="secondary" href="https://0i5-79nucyondu7h6sp1a-cdhea2bq-custom.service.onethingrobot.com/" target="_blank" rel="noopener">Open chat</a>
+          <a id="linkWebsite" class="secondary" href="https://cerebel.tech/" target="_blank" rel="noopener">cerebel.tech</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="card progress-card" id="progressCard">
+      <div class="stage-row">
+        <span class="stage-label" id="stageLabel">waiting</span>
+        <span class="pct" id="pctLabel">0%</span>
+      </div>
+      <div class="bar" id="bar"><i id="barFill"></i></div>
+      <p class="msg" id="msg">Ready when you are.</p>
+      <div class="steps" id="steps" aria-hidden="true">
+        <span data-stage="uploading">Upload</span>
+        <span data-stage="extracting">Prepare</span>
+        <span data-stage="queued">Queue</span>
+        <span data-stage="gemx">Foundation</span>
+        <span data-stage="ik">Analysis</span>
+      </div>
+      <div class="meta" id="meta"></div>
+    </section>
+  </div>
+
+  <script>
+    const drop = document.getElementById("drop");
+    const fileInput = document.getElementById("fileInput");
+    const fileChip = document.getElementById("fileChip");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const progressCard = document.getElementById("progressCard");
+    const stageLabel = document.getElementById("stageLabel");
+    const pctLabel = document.getElementById("pctLabel");
+    const bar = document.getElementById("bar");
+    const barFill = document.getElementById("barFill");
+    const msg = document.getElementById("msg");
+    const meta = document.getElementById("meta");
+    const linkKinetic = document.getElementById("linkKinetic");
+    const linkChat = document.getElementById("linkChat");
+    const linkWebsite = document.getElementById("linkWebsite");
+    const stepEls = [...document.querySelectorAll("#steps span")];
+
+    const DEFAULT_LINKS = {
+      kinetic_lens: "https://0i5-79nucyondu7h6sp1a-cdhea2bz-custom.service.onethingrobot.com/",
+      chat: "https://0i5-79nucyondu7h6sp1a-cdhea2bq-custom.service.onethingrobot.com/",
+      website: "https://cerebel.tech/",
+    };
+
+    function applyDestinationLinks(linksMap) {
+      const map = { ...DEFAULT_LINKS, ...(linksMap || {}) };
+      if (linkKinetic && map.kinetic_lens) linkKinetic.href = map.kinetic_lens;
+      if (linkChat && map.chat) linkChat.href = map.chat;
+      if (linkWebsite && map.website) linkWebsite.href = map.website;
+    }
+
+    const STAGE_ORDER = ["uploading", "extracting", "queued", "gemx", "ik", "ready"];
+    const STAGE_LABELS = {
+      uploading: "upload",
+      extracting: "prepare",
+      queued: "queue",
+      gemx: "foundation",
+      ik: "analysis",
+      ready: "ready",
+      error: "error",
+    };
+    let selectedFile = null;
+    let pollTimer = null;
+    let creepTimer = null;
+    let sessionId = null;
+    let displayPct = 0;
+    let lastServerPct = 0;
+    let activeCreepStage = null;
+    let creepStageStarted = 0;
+
+    const CREEP_RANGE = {
+      gemx: [45, 74],
+      ik: [78, 96],
+    };
+    const CREEP_TAU_MS = {
+      gemx: 55000,
+      ik: 35000,
+    };
+
+    function fmtBytes(n) {
+      if (!n && n !== 0) return "";
+      if (n < 1024) return n + " B";
+      if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+      return (n / (1024 * 1024)).toFixed(1) + " MB";
+    }
+
+    function setFile(file) {
+      selectedFile = file || null;
+      uploadBtn.disabled = !selectedFile;
+      if (!selectedFile) {
+        fileChip.classList.remove("is-on");
+        fileChip.textContent = "";
+        return;
+      }
+      fileChip.classList.add("is-on");
+      fileChip.innerHTML = `<b>${file.name}</b> · ${fmtBytes(file.size)}`;
+    }
+
+    function paintBar(pct, { creep = false, pulse = false } = {}) {
+      const clipped = Math.max(0, Math.min(100, pct));
+      displayPct = clipped;
+      pctLabel.textContent = Math.round(clipped) + "%";
+      barFill.style.width = clipped + "%";
+      bar.classList.toggle("is-pulse", pulse && !creep);
+      bar.classList.toggle("is-creep", creep);
+    }
+
+    function stopCreep() {
+      if (creepTimer) {
+        clearInterval(creepTimer);
+        creepTimer = null;
+      }
+      activeCreepStage = null;
+      bar.classList.remove("is-creep");
+    }
+
+    function creepTick() {
+      if (!activeCreepStage || !CREEP_RANGE[activeCreepStage]) return;
+      const [lo, hi] = CREEP_RANGE[activeCreepStage];
+      const tau = CREEP_TAU_MS[activeCreepStage] || 45000;
+      const elapsed = Math.max(0, performance.now() - creepStageStarted);
+      const t = 1 - Math.exp(-elapsed / tau);
+      const local = lo + (hi - lo) * t;
+      // Never drop below server-reported percent; never exceed stage ceiling.
+      const next = Math.min(hi, Math.max(displayPct, lastServerPct, local));
+      paintBar(next, { creep: true, pulse: true });
+    }
+
+    function startCreep(stage) {
+      if (!CREEP_RANGE[stage]) {
+        stopCreep();
+        return;
+      }
+      if (activeCreepStage !== stage) {
+        activeCreepStage = stage;
+        creepStageStarted = performance.now();
+        const [lo] = CREEP_RANGE[stage];
+        if (displayPct < lo) displayPct = lo;
+      }
+      if (!creepTimer) {
+        creepTimer = setInterval(creepTick, 200);
+      }
+      creepTick();
+    }
+
+    function setProgress(p) {
+      progressCard.classList.add("is-on");
+      const stage = p.stage || "uploading";
+      const serverPct = Math.max(0, Math.min(100, Number(p.percent) || 0));
+      lastServerPct = serverPct;
+      stageLabel.textContent = STAGE_LABELS[stage] || stage;
+
+      if (stage === "gemx" || stage === "ik") {
+        startCreep(stage);
+        // Seed from server so a late join / refresh continues forward.
+        if (serverPct > displayPct) displayPct = serverPct;
+        creepTick();
+      } else {
+        stopCreep();
+        paintBar(serverPct, {
+          pulse: stage !== "ready" && stage !== "error",
+        });
+      }
+
+      msg.textContent = p.message || "";
+      msg.classList.toggle("err", stage === "error");
+
+      const idx = STAGE_ORDER.indexOf(stage === "error" ? (p.last_ok_stage || "uploading") : stage);
+      stepEls.forEach((el) => {
+        const s = el.dataset.stage;
+        const si = STAGE_ORDER.indexOf(s);
+        el.classList.toggle("is-active", s === stage || (stage === "ready" && s === "ik"));
+        el.classList.toggle("is-done", stage === "ready" || (idx >= 0 && si < idx));
+      });
+
+      const bits = [];
+      if (p.session_id) bits.push(`session <strong>${p.session_id}</strong>`);
+      if (p.frame_count) bits.push(`${p.frame_count} frames`);
+      if (p.fps) bits.push(`${Number(p.fps).toFixed(1)} fps`);
+      if (p.width && p.height) bits.push(`${p.width}×${p.height}`);
+      meta.innerHTML = bits.join(" · ");
+
+      if (p.links) applyDestinationLinks(p.links);
+    }
+
+    function stopPoll() {
+      if (pollTimer) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+      stopCreep();
+    }
+
+    async function pollProgress(id) {
+      try {
+        const r = await fetch(`/api/progress?session_id=${encodeURIComponent(id)}&t=${Date.now()}`);
+        if (!r.ok) return;
+        const p = await r.json();
+        setProgress(p);
+        if (p.stage === "ready" || p.stage === "error") stopPoll();
+      } catch (_) { /* ignore transient */ }
+    }
+
+    async function startUpload() {
+      if (!selectedFile) return;
+      uploadBtn.disabled = true;
+      fileInput.disabled = true;
+      stopPoll();
+      sessionId = null;
+      setProgress({
+        stage: "uploading",
+        percent: 3,
+        message: "Sending your clip to CeRebel…",
+      });
+
+      const body = new FormData();
+      body.append("file", selectedFile, selectedFile.name);
+
+      try {
+        const xhr = new XMLHttpRequest();
+        const result = await new Promise((resolve, reject) => {
+          xhr.open("POST", "/api/upload");
+          xhr.upload.onprogress = (ev) => {
+            if (!ev.lengthComputable) return;
+            const pct = 3 + Math.round((ev.loaded / ev.total) * 7);
+            setProgress({
+              stage: "uploading",
+              percent: pct,
+              message: `Uploading… ${fmtBytes(ev.loaded)} / ${fmtBytes(ev.total)}`,
+              filename: selectedFile.name,
+            });
+          };
+          xhr.onload = () => {
+            let data = {};
+            try { data = JSON.parse(xhr.responseText || "{}"); } catch (_) {}
+            if (xhr.status >= 200 && xhr.status < 300) resolve(data);
+            else reject(new Error(data.message || `HTTP ${xhr.status}`));
+          };
+          xhr.onerror = () => reject(new Error("network error"));
+          xhr.send(body);
+        });
+
+        sessionId = result.session_id;
+        setProgress({
+          stage: "extracting",
+          percent: 10,
+          message: "Upload received — CeRebel Foundation is preparing the motion…",
+          session_id: sessionId,
+          filename: result.filename,
+        });
+        pollTimer = setInterval(() => pollProgress(sessionId), 1500);
+        pollProgress(sessionId);
+      } catch (e) {
+        setProgress({
+          stage: "error",
+          percent: 100,
+          message: String(e.message || e),
+          error: String(e.message || e),
+        });
+        uploadBtn.disabled = !selectedFile;
+        fileInput.disabled = false;
+      }
+    }
+
+    drop.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      drop.classList.add("is-drag");
+    });
+    drop.addEventListener("dragleave", () => drop.classList.remove("is-drag"));
+    drop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      drop.classList.remove("is-drag");
+      const file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) setFile(file);
+    });
+    fileInput.addEventListener("change", () => {
+      setFile(fileInput.files && fileInput.files[0]);
+    });
+    uploadBtn.addEventListener("click", () => startUpload());
+    resetBtn.addEventListener("click", () => {
+      stopPoll();
+      fileInput.value = "";
+      fileInput.disabled = false;
+      setFile(null);
+      sessionId = null;
+      progressCard.classList.remove("is-on");
+      msg.classList.remove("err");
+    });
+    applyDestinationLinks();
+  </script>
+</body>
+</html>

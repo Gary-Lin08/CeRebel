@@ -1,0 +1,474 @@
+--- page 1 ---
+WorldSnowboardingPointsLists
+RuleBook
+TableofContents
+1WorldSnowboardingPointsLists
+1.1TheWSPLPointsSystem
+1.1.1Levelofevent
+1.1.2EventRequirements
+1.1.3QualityofField
+1.1.4FieldSize
+1.2Injured/ParentalRiderStatus
+1.2.1RiderStatus
+1.2.1.1Athlete(Health)Status
+1.2.1.2ProtectedPointsStatus
+1.2.2ParentalProtectedPoints
+1.2.3StatusTool
+1.3PointsListCalculations
+1.3.1WorldSnowboardingSlopestylePointsList
+1.3.2WorldSnowboardingHalfpipePointsList
+1.3.3WorldSnowboardingBigAirPointsList
+1.3.4WorldSnowboardingRailsPointsList
+1.4Publication
+1.5Validity
+1.6PeriodofObjection
+AAppendices
+1.R-Value
+2.P-Value
+3.PointsFormula
+4.PointsLevelTable24/25
+
+--- page 2 ---
+TheWorldSnowboardingPointsLists(WSPL)aretheresultofaglobalcollaborativeeffortto
+createoneuniversal,transparentandfairrankingsystemforcompetitivesnowboarding.The
+WSPLevaluateseventresultsfromallrelevantsnowboardingcompetitionsglobally.Atany
+givenpointintime,theWSPLaimstoprovidethemostaccurateandtransparentrepresentation
+ofthetopridersintheworldandtheircorrespondingresults.
+Arider’spositionontherelevantPointsListisdeterminedbycalculatinganaverageofariders
+WSPLpointsfromhis/herbest3resultsintherespectivefreestyledisciplinewithinacontinuous
+52-weekperiod.
+1.1TheWSPLPointsSystem
+ThepointssystemusedfortheWSPLcalculationisbasedonadynamic10-scalePoints
+Systemwithtenpointslevelsrangingfrom100to1000points.Threefactorsdeterminethe
+pointslevelofaneventandtherankingpointsaridergetsforhis/herindividualplacementatan
+event:Levelofevent,Qualityoffield,andFieldsize.
+1.1.1Levelofevent
+EacheventisratedaccordingtotheWSPLstarratingsystem.Thissystemusesascaleof1to
+5stars,with1starrepresentinglower-leveleventsand5starsrepresentinghigher-levelevents.
+Thevalueoftheeventwillfallwithinthepointsrangeprovided:
+Levels/
+Criteria
+★ ★★ ★★★ ★★★★ ★★★★★
+GrassrootsAmateur Challenger Pro Elite
+Max.Points300 400 600 800 1000
+Min.Points 100 100 200 300 600
+FIS
+CategoriesJUN,NJCNC,FIS
+CoC(EC,NAC,
+AC,ANC,SAC),
+NC
+UVS,AWG,
+EYOF
+WJC,YOG,
+CoCP(ECP,
+NCP)
+WC,OWG,
+WSC
+WSF
+Categories
+World
+Rookie
+Events,
+Regional
+eventsor
+smallNation
+Events
+WorldRookie
+Fest,National
+Events,well
+visited
+independent
+Series
+WorldRookie
+Finals,Mountain
+Mash(depending
+onclassification)
+SpringBattle,
+X-Games,Snow
+League,World
+RookieFinals
+(dependingon
+classification
+decision)
+SpringBattle,
+X-Games,Snow
+League
+(dependingon
+classification
+decision)
+Min.WSPL
+EntryPoints – – EC:75SS/BA,-
+HP
+EC:75SS/BA,-
+HP
+WC:230
+SS/BA,120HP
+
+--- page 3 ---
+1.1.2EventRequirements
+Requirementsaredevelopedforseveralreasons,primarilytoensurethatalllevelsof
+competitionmeetcertainstandardsandmaintainconsistentsafetymeasures.
+1.1.3Qualityoffield
+Thequalityofthefieldforaspecificcompetitionisdeterminedbycalculatingafieldqualityvalue
+foreachcompetitionresult.Thevaluecalculationprocessevaluatesthehighestrankedriders,
+basedonactiverank(seedefinitionbelow),whoreceivedascoredruninthecompetitionas
+perthemostcurrentWorldSnowboardingPointsListatthetimethecompetitiontookplacein
+therespectivediscipline:
+ForMen,theEIGHT(8)bestrankedriderswillbeevaluated
+ForWomen,theFIVE(5)bestrankedriderswillbeevaluated
+Ifnoneoftheridersontheresultisrankedonthecurrentpointslist,theminimumpoints
+level(see1.1.1)isapplied
+Levels/Criteria ★ ★★ ★★★ ★★★★ ★★★★★
+Grassroots AmateurChallengerPro Elite
+CourseElementSize M&S,Family L&M L
+TBCSpring2025TBCSpring2025
+CourseNr.Elements
+(SS)
+2
+(min1AirorRail)
+3
+(Min1AirorRail)
+4
+(min1Air/Rail)
+HPminSize/Length(m) 10' 12'60m 12'80m
+EntrysystemFIS Open Open,FISQuotaRulesFISQuotaRules
+EntrySystemWSF
+(IndependentEvents) Open OpenorInternational
+YouthRanking
+Open,PointList
+max30%Wildcard
+or
+WSPL/International
+YouthRanking
+TD/Supervisor LevelC
+(HeadJudge)
+HeadJudge LevelC
+certifiedbyWSF
+LevelC
+certifiedbyWSF
+LevelB
+certifiedbyFIS
+Judges LevelC
+recommended LevelA,B,C LevelA,B,C
+NrofJudgesincl.Head
+Judge min2 min3 min5
+VideoSupportJudging – optional SSrecommended
+LiveStreamorTV – – optional
+PrizeMoney
+Recommended
+200USD
+allinkind
+Recommended
+500USD
+allinkind
+Recommended
+1000USD
+allinkind
+FieldSizeMen
+(min.invite/available) shouldnotbedefined shouldnotbedefined shouldnotbe
+defined
+FieldSizeWomen
+(min.invite/available) shouldnotbedefined shouldnotbedefined shouldnotbe
+defined
+
+--- page 4 ---
+Riderswhoarenotscoreddonotreceivepointsfromeventandarenotconsideredin
+thecalculationforthepointslevel
+
+--- page 5 ---
+Twodifferentvaluesarecalculatedautomaticallybytherankingengineduringtheresultload:
+RValue:CalculatedastheaverageofthecurrentWSPLranksofthe5/8bestranked
+ridersontheresultlist
+PValue:CalculatedastheaverageofthecurrentWSPLpointsofthe5/8bestranked
+ridersontheresultlist
+ActiveRankingList:Athleteswithinjuredstatuswillnotbeconsideredintheoverall
+rankinglistandallactivestatusriderswillbere-ranked.Thisnewrankwillbeusedfor
+theRandPValuecalculations.Thisisonlyusedforeventpointscalculations.
+Example:
+1.ActiveAthleteA
+2.ActiveAthleteB
+3.“notdisplayedbecauseAthleteCisinjured”
+4.ActiveAthleteD
+InthisexampleAthleteDisnowthe3rdrankedriderforcalculationpurposes,all
+proceedingriderswillgain1rankforcalculations.
+Thisistoensureallmaximumpointsareavailableforallevents.
+FordetailsonAthleteStatuspleasereferto1.2.1.1
+FormoredetailedinformationonthecalculationformulaseeAppendice1&2.
+RandPValueCalculations(Pleaseseeappendices4.forcurrentPandRvalue
+parameters)
+IfthecalculatedcompetitionR-Valueis“<25.01”formenand<19.01forwomen,thepoints
+levelshallbedeterminedbytheR-Value.IftheR-Valueis“>25.00”formenand>19.00,the
+pointslevelshallbedeterminedbytheP-Value.
+Thepointslevelofthecompetitionisautomaticallyderivedasperthefollowingtablebasedon
+thecategoryofeventandthecalculatedR-orP-Valueofthecompetition.
+TheP-LevelThresholdsarecalculatedattheendofJuneforeverynewseason.Themaximum
+P-LevelValueforthe600erleveliscalculatedasfollowing:
+P-Valuemen=1.05*PointsR25/6*Level
+P-Valuewomen=1.05*PointsR19/6*Level
+
+--- page 6 ---
+Example:
+R25,meaningtherankingpointsofthe25thrankedmaleathleteattheendoftheprevious
+season=480.09Points
+PmaxforLevel600Slopestyle=480.09*1.05/6*6=504.09
+PmaxforforLevel200Slopestyle=480.09*1.05/6*2=168.03
+…
+
+--- page 7 ---
+1.1.4FieldSize
+Therankingpointsaridergetsattributedfortheirplacementdependonthepointslevelofthe
+competitionandthetotalnumberofrankedridersonthefinalresult.Asageneralrule,the
+rankingpointsforacertainplacementarehigherinlargerfieldsthaninsmallerfields.
+Themoreathletescompete,thehigherthepointsawardedperrank,exceptthefirstplace,
+whichisfixed.Theexactpointsforeachrankisdeterminedbyaformulathatdefinesa
+descendingpointsperrankcurve,whichissteeperthefewerparticipantsthecompetitionhas.
+Obviously,athirdplaceinacompetitionwith5participantsshouldbeworthlessthanathird
+placeinacompetitionwith30riders.Depictedbelowisanexamplepointsdistributionfora100
+pointresultwith10,15,25,50and100participants(curveslefttoright).Seeappendix3forthe
+fieldsizeformula.
+
+--- page 8 ---
+1.2RiderStatusProtocols
+TheInured/ParentalRiderruleallowsaninjuredrider,expectingmotherornewfathertoretain
+his/herseedingrights(WSPLpoints)duringtheperiodofinjuryandforaperiodoftimeafter
+he/shehasrecoveredfromtheinjury,orafteraparentalleave.
+Itwillbeuptothenationstosubmitinjuriesusingthe“statustool”providedbyWylDatawith
+proofofamedicalcertificate,signedbyamedicaldoctor,ariderspointswillbefrozenasper
+theircurrentpointsvalueontheofficialWorldSnowboardingPointsLists(WSPL)atthetimethe
+injuryhappened.MoredetailsoftheStatustoolprovidedin1.2.3
+1.2.1Statuses
+1.2.1.1Athlete(Health)Status
+TheAthleteStatusindicatesifanathleteiscurrentlycompetingornot.Thisstatusisglobaland
+isalwaysappliedacrossalldisciplines.ThisisseparatefromtheProtectedPointsstatus
+describedin1.2.1.2butshowstheathleteisinjured,abletocompete,orhasretired.Beloware
+thedefinitionsforeachathletestatus.
+1.2.1.2ProtectedPointsStatus
+TheProtectedPointsStatusdefinestheprocessofanathletegettinginjuredandthecurrent
+pointsaveragebeingprotected.TheProtectedPointsStatuscanbekeptforamaximumof
+StatusDate Meaning Triggered
+InjuredDateofInjuryathletehasacertifiedinjurywheninjuryishandedin,small
+iconwillshownearridersname
+ActiveDateoffirstresultathleteisabletocompetewhenwereceivearesultofthe
+athlete
+RetiredDateoflastresultathleteisnolongercompetingwhentheyrequestthestatusto
+besettoretired
+
+--- page 9 ---
+threeyearsperinjury.Thestatusisdisciplinespecificmeaninganathletecanstillhave
+protectedpointsinonedisciplinebutcanbeunprotectedinanotheratthesametime.
+Athleteswilllosetheirprotectedstatusthroughoneofthefollowingtriggers:
+Activity-Theycompete4timessincetheinjury(disciplinespecific)
+Improvement-Thecurrentaverageofthetop3resultswithinthecurrent365day
+periodishigherthantheprotectedpoints
+Expiration-Havecompletedall3phases(3years)oftheProtectedpointsstatus
+DuringtheProtectedPointsPhase3anathletecanhandinanewinjurywhichwilltriggeranew
+threeyearcycleoftheProtectedPointsStatusonday1069basedontheProtectedPoints
+Phase3
+ie:AthleteAhas1000ptsgoesintoinjuryprotocol
+Startofphase2athletedeductionof33.33%-333.33pts=666.67
+Startofphase3athletedeductionof33.33%oforiginalprotectedpoints333.33=
+333.34
+Reapplicationofinjuryduringphase3whilepointsareprotected,newprotected
+pointsare333.34
+Status StartDate EndDateMeaning Trigger
+Protected
+PointsPhase1
+Dateofinjury Endofthe
+365thday
+afterdateof
+injury
+athletepointswillbe
+settoprotected
+wheninjury
+ishanded
+withinone
+monthof
+dateofinjury
+Protected
+PointsPhase2
+Onthestartofthe
+366thdayafterinjury
+Endofthe
+730thdays
+afterdateof
+injury
+athletegetsa
+33.333%points
+deductionon
+originalprotected
+points
+Protected
+PointsPhase3
+onthestartofthe
+731stdayafterdate
+ofinjury
+Endofthe
+1095thday
+afterdateof
+injury
+athletegetsa
+further33.333%
+pointsdeductionon
+originalprotected
+points
+
+--- page 10 ---
+UnprotectedOnthestartofthe
+1096thdayafterdate
+ofinjury,
+orcurrentaverageis
+higherthanprotected
+orhavecompeted4
+timessinceinjury
+athletegetsa
+furtherreductionof
+remainingpointsor
+getsettocurrent52
+weekavg.
+1096days
+passsince
+injuryor
+athletehas4
+resultsor
+athlete
+improveson
+protected
+pointsavg.
+1.2.2ParentalStatusProtocol
+Definitions:
+ChildbearingParentisaparentwhocarriesthechildthroughoutpregnancyandwhocaresfor
+thechildorsharescaringforthechildafterbirth.
+Non-ChildbearingParentisaparentwhocaresforachildpostbirth,includingincasesof
+fostering,adoption,orunforeseencircumstanceswithachild.
+ChildbearingParents
+Childbearingparentscanapplytohavetheirpointsfrozenassoonastheylearnthattheyare
+expectingachild.Thepointsfreezedatewillbetakenfromtheestimatedtimeofconceptionfor
+aperiodofuptotwoyearsonreceiptofaparentalstatuspointsfreezeapplicationsupportedby
+aletterorcertificatefromamedicalprofessional.
+Undercertainspecialcircumstancesrelatedtomedicalcomplicationspointsfreezecanbe
+extendedforafurtherperiodofuptooneyearonrecommendationsfromamedical
+professional.
+Inthecircumstancethatthesameathletebecomespregnantforasecondtimewithinthefirst
+pointsfreezeperiod,thiswillbetakenasanewapplicationandthesameruleswillapplysothat
+twoconsecutiveapplicationscanrunback-to-back.
+Inalltheabovecircumstancesthepointsfreezewillbesubjecttothesamerulesasthe
+standardprotectedpointsstatusclause(see1.2.1.2)intermsofthenumberofeventsthe
+athletecanstartinbeforetheirpointsareunfrozen.
+
+--- page 11 ---
+Non-ChildbearingParents
+Non-childbearingparentscanapplytohavetheirpointsfrozenassoonastheylearnthatthey
+areexpectingachildoranytimefollowingthis.Thepointsfreezedatemaybetakenfromthe
+estimatedtimeofconceptionforaperiodofuptooneyearonreceiptofaparentalstatuspoints
+freezeapplicationsupportedbyaletterorcertificatefromamedicalprofessional.
+Incircumstancesoffosteringoradoptionthepointsfreezecanbeappliedfromaperiodofone
+monthbeforetheofficialarrivalofanewchild.
+Thepointsfreezewindowfornon-childbearingparentsisoneyearandissubjecttothesame
+rulesonthenumberofstartsallowedbeforetherider'spointsaremadeliveagainasthe
+protectedpointsstatusprotocol(see1.2.1.2)
+1.2.3StatusSubmissionTool
+ThestatustoolisanonlinetoolthatallowsNSAstologinandmanagetheirathletes.Theyshall
+beableto
+Submitaninjurywithin30daysofinjurydateforoneoftheirathletesandchangeboth
+theAthleteStatustoInjuredandProtectedPointsStatustoPhase1
+SubmitanewinjuryduringProtectedPointsPhase3ofanathlete’scurrentinjuryto
+triggeranotherinjurycyclebasedontheprotectedpointsofanathletestartingonday
+1069ofpreviousinjury
+SetanathleteProtectedPointsStatusto“Unprotected”inadiscipline(thiswillalso
+triggertheathletebeingsettoAthleteStatusto“Active”acrossalldisciplines)
+SetanAthleteStatusto“Retired”
+EverytimeaninjuryissubmittedbyaNSA,selectedpeoplefromCLAGwillbeinformedwitha
+chancetoreviewtheinjuryandpotentiallydeclineit.Sameforsettingstatusto“unprotected”.
+ThehealthinformationprovidedwillnotbesharedfurtherthanWyldataemployeesandCLAG
+members.
+
+--- page 12 ---
+1.3PointsListCalculation
+1.3.1WorldSnowboardingSlopestylePointsList
+TheSlopestyleWorldSnowboardingPointsListwillbecalculatedfromtherider´sbest
+THREE(3)Slopestyleresultsinthelast52weeks(AVERAGE;Men&Women).
+1.3.2WorldSnowboardingHalfpipePointsList
+TheHalfpipeWorldSnowboardingPointsListwillbecalculatedfromtherider´sbestTHREE(3)
+Halfpiperesultsinthelast52weeks(AVERAGE;Men&Women).
+1.3.3WorldSnowboardingBigAirPointsList
+TheBigAirWorldSnowboardingPointsListwillbecalculatedfromtherider´sbestTHREE(3)
+BigAirresultsinthelast52weeks(AVERAGE;Men&Women).
+1.3.4WorldSnowboardingRailPointsList
+TheRailSnowboardingPointsListwillbecalculatedfromtherider´sbestTHREE(3)Railresults
+inthelast52weeks(AVERAGE;Men&Women).
+1.4Publication
+TheWorldSnowboardingPointsListsarecalculatedandpublishedeveryMondayand
+Thursdayat4.00amPST(2.00PMCET)forHalfpipe,Slopestyle,RailandBigAirdisciplinesfor
+bothmenandwomen.TheWorldSnowboardingPointsListsareavailableontheWyldata
+websiteathttps://wyldata.com/wsplinthePointsListsection.
+1.5Validity
+ThecurrentWorldSnowboardingPointsListsshallremainvalidandinuseuntilanewPoints
+Listsupdatehasbeenpublished.IfthenewListsareunattainablethemostrecentlistsshallbe
+usedwiththeprovisionthatallpointsattributionbeclearlymarked"unofficial"andaresubjectto
+change.
+
+--- page 13 ---
+1.6PeriodofObjection
+RidersmaycontesttheaccuracyofanypublishedPointsListuntil10daysaftertheresultin
+questionhasbeenposted.Itistheresponsibilityoftheathletetoregularlychecktheriderreport
+andverifythatallresultshavebeencorrectlypostedandattributedtotherightperson.Any
+objectionhastobeaddressedbyemailtoWyldataCoordinatoratinfo@wyldata.com
+Protestsreceivedafterthatpointintimecannotbeconsiderednorcananyclaimsbemadeat
+thetimeofseedingordraws.
+
+--- page 14 ---
+Appendices
+1.R-Value(RankValueofacompetition)
+Calculatedfor5top-rankedwomenor8toprankedmenonaresult
+UsesthemostcurrentPointsListatthetimeofcompetitionasthebaselist
+CalculatedastheaverageofthecurrentranksoftheXtop-rankedridersontheresult
+ExampleTop5WomenRanks1,2,4,6,7=4
+Specialrule:iflessthan5/8ridersontheresultareWSPLrankedtheeventlevelwillbe
+evaluatedbytheP-Value
+2.P-Value(PointsValueofacompetition)
+Calculatedfor5top-rankedwomenor8toprankedmenonaresult
+UsesthemostcurrentPointsListatthetimeofcompetitionasthebaselist
+CalculatedastheaverageofthecurrentpointsoftheXtop-rankedridersontheresult
+ExampleTop5WomenPoints1000,900,760,500,400=712
+3.PointsFormula
+Theformulatocalculatetheriderspointsforanindividualplacementisasfollows:
+P=PL/100*(e((-R-1)/t)*Pdelta+(101-(R*100/F-(100/F-1)))*delta–(e(-F/t)*Pdelta)/F*(R-1))
+with
+P=PointsofRider(valuewillberoundedtotwodecimals)
+PL=PointsLevelEvent(i.e.1000)
+R=FinalRankofRideronresult(Placementi.e.1,3,5etc)
+F=GenderFieldSize(Totalnumberofrankedridersonresult)
+delta=0.5
+t=6
+e=EulerscheZahl=2,718(Thisvalueallowstheformulatogivethenaturaldistributionofpoints
+Pdelta=100(1-delta)=50
+
+--- page 15 ---
+4.PointsLevelTable
+Rank25/19 530.03 443.32 419.57 568.4 477.58 157.74
+Men Women
+R8-Value R5-Value
+1000 4.5-6 3-4.3
+900 6.01-9.3 4.31-7
+800 9.31-16 7.01-12
+700 16.01-25 12.01-19
+P8-Value P5-Value
+SS
+min max
+HP
+min max
+BA
+min max
+SS
+min max
+HP
+min max
+BA
+min max
+700 556.54 ... 465.50 ... 440.56 ... 596.83 ... 501.47 ... 165.64 ...
+600 463.79 556.53 387.92 465.49 367.13 440.55 497.36 596.82 417.89 501.46 138.03 165.63
+500 371.03 463.78 310.33 387.91 293.71 367.12 397.89 497.35 334.32 417.88 110.43 138.02
+400 278.28 371.02 232.75 310.32 220.28 293.70 298.42 397.88 250.74 334.31 82.82 110.42
+300 185.52 278.27 155.17 232.74 146.86 220.27 198.95 298.41 167.16 250.73 55.22 82.81
+200 92.77 185.51 77.59 155.16 73.43 146.85 99.48 198.94 83.59 167.15 27.61 55.21
+100 0.00 92.76 0.00 77.58 0.00 73.42 0.00 99.47 0.00 83.58 0.00 27.60

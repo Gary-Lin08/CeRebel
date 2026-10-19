@@ -1,0 +1,15 @@
+relative_path,chars
+Rules/001_2023_Rules_of_Golf.txt,410195
+Rules/002_2026-07-01_Additional_Clarifications.txt,31347
+Rules/003_USGA_15_Rules_Poster_2023.txt,4686
+Rules/004_USGA_Local_Rules_and_Terms_2023.txt,4848
+Handicap/001_2024_Rules_of_Handicapping_USGA.txt,132820
+Equipment/001_Conforming_Golf_Balls_CURRENT.txt,223697
+Equipment/002_Equipment_Rules.txt,169642
+Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt,73058
+Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt,111477
+Taxonomy/001_concepts.txt,4101
+Taxonomy/002_relations.txt,832
+Schema/001_golf-ontology.txt,3637
+Docs/001_ARCHITECTURE.txt,1581
+Docs/002_ecosystem_research_zh.txt,20925

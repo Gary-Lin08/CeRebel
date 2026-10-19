@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neck v2 · old vs new</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070808;
+      --panel: #121413;
+      --line: #2a2e26;
+      --text: #f3f5ee;
+      --muted: #9aa392;
+      --lime: #e1fe67;
+      --purple: #b99bff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "IBM Plex Sans", sans-serif;
+      background:
+        radial-gradient(900px 420px at 10% -10%, color-mix(in srgb, var(--lime) 14%, transparent), transparent 55%),
+        radial-gradient(700px 380px at 100% 0%, color-mix(in srgb, var(--purple) 12%, transparent), transparent 50%),
+        var(--bg);
+    }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 1.1rem 1rem 2rem; display: grid; gap: 1rem; }
+    header { display: grid; gap: 0.35rem; }
+    header h1 { margin: 0; font-size: 1.45rem; font-weight: 560; letter-spacing: -0.02em; }
+    header p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      padding: 0.75rem 0.9rem;
+    }
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font: 500 0.66rem "IBM Plex Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .metric strong { display: block; margin-top: 0.25rem; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .metric.good strong { color: var(--lime); }
+    .viewers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      min-height: 420px;
+    }
+    .pane {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #050505;
+      min-height: 420px;
+    }
+    .pane canvas { display: block; width: 100%; height: 100%; }
+    .pane__label {
+      position: absolute;
+      z-index: 2;
+      top: 12px;
+      left: 12px;
+      margin: 0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+      color: var(--accent);
+      background: rgba(8, 10, 8, 0.72);
+      font: 500 0.68rem "IBM Plex Mono", monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .pane__note {
+      position: absolute;
+      z-index: 2;
+      left: 12px;
+      bottom: 12px;
+      margin: 0;
+      color: #c9c2b4;
+      font-size: 0.78rem;
+      pointer-events: none;
+    }
+    .pane.old { --accent: #c9c2b4; }
+    .pane.new { --accent: var(--purple); }
+    .controls {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+    }
+    button {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--lime);
+      color: #0a0b0b;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    input[type="range"] { width: 100%; }
+    .time {
+      min-width: 7ch;
+      font: 500 0.85rem "IBM Plex Mono", monospace;
+      color: var(--muted);
+      text-align: right;
+    }
+    .extras {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 0.75rem;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      padding: 0.8rem;
+    }
+    .card h2 {
+      margin: 0 0 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    video, img { display: block; width: 100%; border-radius: 8px; background: #000; }
+    .plots { display: grid; gap: 0.55rem; }
+    .status { color: var(--muted); font-size: 0.82rem; }
+    @media (max-width: 900px) {
+      .viewers, .extras, .metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Original IK vs neck-aware retargeting v2</h1>
+      <p id="subtitle">Session loading…</p>
+    </header>
+    <div class="metrics">
+      <div class="metric"><span>Old head RMSE</span><strong id="oldRmse">—</strong></div>
+      <div class="metric"><span>New head RMSE</span><strong id="newRmse">—</strong></div>
+      <div class="metric good"><span>Improvement</span><strong id="improve">—</strong></div>
+    </div>
+    <div class="viewers">
+      <div class="pane old" id="paneOld">
+        <p class="pane__label">Original · skull on torso</p>
+        <p class="pane__note" id="noteOld">Loading…</p>
+      </div>
+      <div class="pane new" id="paneNew">
+        <p class="pane__label">Neck v2 · torso → neck → head</p>
+        <p class="pane__note" id="noteNew">Loading…</p>
+      </div>
+    </div>
+    <div class="controls">
+      <button type="button" id="play" aria-label="Play">▶</button>
+      <input id="scrub" type="range" min="0" max="1" step="0.01" value="0" />
+      <div class="time" id="clock">0.00 s</div>
+    </div>
+    <div class="extras">
+      <div class="card">
+        <h2>Stick comparison (demo export)</h2>
+        <video id="cmpVideo" controls playsinline muted loop></video>
+      </div>
+      <div class="card plots">
+        <h2>Error plots</h2>
+        <img id="plotOrient" alt="Head orientation error" />
+        <img id="plotNeck" alt="Neck coordinates" />
+      </div>
+    </div>
+    <p class="status" id="status">Preparing viewers…</p>
+  </div>
+  <script type="module">
+    import * as THREE from "/static/three/three.module.js";
+    import { OrbitControls } from "/static/three/OrbitControls.js";
+    import { GLTFLoader } from "/static/three/GLTFLoader.js";
+
+    const report = await fetch("/REPORT.json").then((r) => r.json());
+    document.getElementById("subtitle").textContent =
+      `Session ${report.sequence} · head orientation vs SOMA`;
+    document.getElementById("oldRmse").textContent = `${Number(report.old_head_rmse_deg).toFixed(1)}°`;
+    document.getElementById("newRmse").textContent = `${Number(report.new_head_rmse_deg).toFixed(1)}°`;
+    document.getElementById("improve").textContent = `${Number(report.improvement_percent).toFixed(1)}%`;
+    document.getElementById("cmpVideo").src = "/plots/old_vs_new.mp4";
+    document.getElementById("plotOrient").src = "/plots/head_orientation_error.png";
+    document.getElementById("plotNeck").src = "/plots/neck_coordinates.png";
+
+    async function loadMotion(url) {
+      const motion = await fetch(url).then((r) => r.json());
+      return motion;
+    }
+
+    function applyFrame(model, bodyNames, frame) {
+      if (!model || !frame || !frame.bodies) return;
+      bodyNames.forEach((name) => {
+        const object = model.getObjectByName(name);
+        const transform = frame.bodies[name];
+        if (!object || !transform) return;
+        const p = transform.p || [0, 0, 0];
+        const q = transform.q || [0, 0, 0, 1];
+        object.position.set(p[0], p[1], p[2]);
+        object.quaternion.set(q[0], q[1], q[2], q[3]);
+        object.updateMatrix();
+      });
+    }
+
+    function highlightNeck(model, bodyNames, accentHex) {
+      const accent = new THREE.Color(accentHex);
+      const quiet = new THREE.Color("#6a6474");
+      const bone = new THREE.Color("#eee9dd");
+      const hot = new Set(["neck", "head", "torso"]);
+      model.traverse((object) => {
+        if (!object.isMesh || !object.material) return;
+        let node = object;
+        let name = "";
+        while (node) {
+          if (bodyNames.includes(node.name)) { name = node.name; break; }
+          node = node.parent;
+        }
+        const on = hot.has(name);
+        object.material.color.copy(on ? accent : bone).lerp(quiet, on ? 0 : 0.45);
+        object.material.emissive.copy(on ? accent : quiet).multiplyScalar(on ? 0.35 : 0);
+      });
+    }
+
+    async function makeViewer(host, { motionUrl, glbUrl, accent, noteId, labelBodies }) {
+      const motion = await loadMotion(motionUrl);
+      const frames = motion.frames || [];
+      const bodyNames = motion.bodyNames || Object.keys((frames[0] && frames[0].bodies) || {});
+      const note = document.getElementById(noteId);
+      note.textContent = `${frames.length} frames · ${bodyNames.includes("neck") ? "neck+head" : "no neck body"}`;
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+      renderer.setClearColor(0x050505, 1);
+      host.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(32, 1, 0.02, 40);
+      camera.position.set(2.1, 1.35, 2.55);
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.target.set(0, 1.0, 0);
+      controls.minDistance = 1.2;
+      controls.maxDistance = 6;
+      scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+      const key = new THREE.DirectionalLight(0xf3f5ee, 1.1);
+      key.position.set(2.2, 3.5, 2.0);
+      scene.add(key);
+      const fill = new THREE.DirectionalLight(accent, 0.35);
+      fill.position.set(-2.0, 1.2, -1.4);
+      scene.add(fill);
+      scene.add(new THREE.GridHelper(3, 12, 0x3a4032, 0x222620));
+
+      const gltf = await new GLTFLoader().loadAsync(glbUrl);
+      const model = gltf.scene;
+      model.traverse((object) => {
+        if (!object.isMesh) return;
+        object.material = new THREE.MeshStandardMaterial({
+          color: 0xeee9dd,
+          roughness: 0.48,
+          metalness: 0.05,
+          emissive: new THREE.Color(0x000000),
+        });
+      });
+      scene.add(model);
+      applyFrame(model, bodyNames, frames[0]);
+      model.updateMatrixWorld(true);
+      if (labelBodies) highlightNeck(model, bodyNames, accent);
+
+      function resize() {
+        const w = host.clientWidth || 480;
+        const h = host.clientHeight || 420;
+        camera.aspect = w / Math.max(h, 1);
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      return {
+        frames,
+        bodyNames,
+        model,
+        renderer,
+        scene,
+        camera,
+        controls,
+        setFrame(index) {
+          const i = Math.max(0, Math.min(frames.length - 1, index));
+          applyFrame(model, bodyNames, frames[i]);
+          if (labelBodies) highlightNeck(model, bodyNames, accent);
+        },
+        render() {
+          controls.update();
+          renderer.render(scene, camera);
+        },
+      };
+    }
+
+    const [oldView, newView] = await Promise.all([
+      makeViewer(document.getElementById("paneOld"), {
+        motionUrl: "/old/opensim-motion.json",
+        glbUrl: "/old/rajagopal-bones.glb",
+        accent: "#c9c2b4",
+        noteId: "noteOld",
+        labelBodies: true,
+      }),
+      makeViewer(document.getElementById("paneNew"), {
+        motionUrl: "/new/opensim-motion.json",
+        glbUrl: "/new/rajagopal-bones-neck.glb",
+        accent: "#b99bff",
+        noteId: "noteNew",
+        labelBodies: true,
+      }),
+    ]);
+
+    const n = Math.min(oldView.frames.length, newView.frames.length);
+    const fps = Number((await fetch("/old/opensim-motion.json").then((r) => r.json())).metadata?.fps)
+      || (n > 1
+        ? 1 / Math.max(1e-6, Number(oldView.frames[1].time) - Number(oldView.frames[0].time))
+        : 30);
+    const scrub = document.getElementById("scrub");
+    const clock = document.getElementById("clock");
+    const playBtn = document.getElementById("play");
+    scrub.max = String(Math.max(n - 1, 0));
+    // Keep a fractional playhead; show() only floors for the mesh index.
+    let playhead = 0;
+    let playing = false;
+    let last = performance.now();
+
+    function show(at) {
+      const idx = Math.max(0, Math.min(n - 1, Math.floor(Number(at))));
+      oldView.setFrame(idx);
+      newView.setFrame(idx);
+      scrub.value = String(idx);
+      const t = Number(oldView.frames[idx]?.time ?? idx / fps);
+      clock.textContent = `${t.toFixed(2)} s`;
+    }
+
+    scrub.addEventListener("input", () => {
+      playing = false;
+      playBtn.textContent = "▶";
+      playhead = Number(scrub.value);
+      show(playhead);
+    });
+    playBtn.addEventListener("click", () => {
+      playing = !playing;
+      playBtn.textContent = playing ? "❚❚" : "▶";
+      last = performance.now();
+    });
+
+    show(0);
+    document.getElementById("status").textContent =
+      "Drag either view to orbit. Playback is synced. Purple highlights torso / neck / head.";
+
+    function tick(now) {
+      requestAnimationFrame(tick);
+      if (playing) {
+        const dt = Math.min(0.05, (now - last) / 1000);
+        last = now;
+        playhead += dt * fps;
+        if (playhead >= n - 1) playhead = 0;
+        show(playhead);
+      }
+      oldView.render();
+      newView.render();
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "description": "Body-frame offsets. Landmark = p_body + R_body @ delta. These are not optical markers; they are geometric estimates.",
+  "body_frames": {
+    "C7": "Chest",
+    "T1": "Chest",
+    "JUGULAR": "Chest",
+    "L_ACROMION": "Chest",
+    "R_ACROMION": "Chest",
+    "HEAD_A": "Head",
+    "HEAD_B": "Head",
+    "HEAD_C": "Head"
+  },
+  "delta_m": {
+    "C7": [0.02, 0.11, 0.0],
+    "T1": [-0.03, 0.08, 0.0],
+    "JUGULAR": [0.08, 0.06, 0.0],
+    "L_ACROMION": [0.02, 0.12, -0.16],
+    "R_ACROMION": [0.02, 0.12, 0.16],
+    "HEAD_A": [0.07, 0.11, 0.0],
+    "HEAD_B": [0.04, 0.05, 0.06],
+    "HEAD_C": [0.04, 0.05, -0.06]
+  },
+  "hierarchy_choice": "Chest→Neck1 and Neck2→Head"
+}

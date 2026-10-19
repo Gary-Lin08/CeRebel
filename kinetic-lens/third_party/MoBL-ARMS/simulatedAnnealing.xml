@@ -1,0 +1,54 @@
+﻿<?xml version="1.0"?>
+<!--
+This source code is part of:
+
+"CEINMS-RT: an open-source framework for the continuous neuro-mechanical model-based control of wearable robots".
+Copyright (C) 2024 Massimo Sartori, Mohamed Irfan Refai, Lucas Avanci Gaudio, Christopher Pablo Cop, Donatella Simonetti, Federica Damonte, David G. Lloyd, Claudio Pizzolato, Guillaume Durandau.
+
+CEINMS-RT is an open-source software. Any changes to this code, should be shared back in the open repository: https://github.com/CEINMS-RT. See license as described here: https://github.com/CEINMS-RT/ceinmsrt-core-cpp/blob/main/LICENSE.
+
+The methodologies and ideas implemented in this code are described in the manuscripts below, which should be cited in all publications making use of this code:
+
+Massimo Sartori, Mohamed Irfan Refai, Lucas Avanci Gaudio, Christopher Pablo Cop, Donatella Simonetti, Federica Damonte, David G. Lloyd, Claudio Pizzolato, Guillaume Durandau., (2024) "CEINMS-RT: an open-source framework for the continuous neuro-mechanical model-based control of wearable robots. TechRxiv. DOI: 10.36227/techrxiv.173397962.28177284/v1"
+-->
+<simulatedAnnealing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../XSD/simulatedAnnealing.xsd">
+        
+	<EMGProccesing>cfg/UpperLimbModel/executionEMG.xml</EMGProccesing>
+	<osimFile>cfg/UpperLimbModel/MOBL_ARMS_41_Scaled.osim</osimFile>
+	<subjectXML>cfg/UpperLimbModel/Right_arm.xml</subjectXML>
+	<nameOfSubject>UpperLimbModel</nameOfSubject>
+	<dofsSpline>pro_sup flexion elbow_flexion</dofsSpline>
+	<computeSpline>
+		<use>true</use>
+		<printingOption>3</printingOption>
+		<numberOfNode>9</numberOfNode>
+	</computeSpline>
+	<calibration>
+		<use>false</use>
+		<objectiveFunction>StrengthCoefficients_ShapeFactor_TendonSlackLength_single_widerRange</objectiveFunction>
+		<EMD>0.1</EMD>
+		<dofToCalibrate>
+			<dofs>pro_sup flexion elbow_flexion</dofs>
+		</dofToCalibrate>
+		<trials>
+			<directory>cfg/UpperLimbModel/</directory>
+			<trial>
+				<trialName>static</trialName>
+				<cropMinTimeFromZero>2</cropMinTimeFromZero>
+				<cropMaxTimeFromZero>5</cropMaxTimeFromZero>
+			</trial>
+		</trials>
+		<option>
+			<noEpsilon>4</noEpsilon>
+			<RT>0.9</RT>
+			<T>20000</T>
+			<NS>5</NS>
+			<NT>5</NT>
+			<epsilon>1.E-5</epsilon>
+			<maxNoEval>20000</maxNoEval>
+		</option>
+		<inputSubjectXMLName>Right_arm.xml</inputSubjectXMLName>
+		<outputSubjectXMLName>Right_arm_calibrated.xml</outputSubjectXMLName>
+	</calibration>
+</simulatedAnnealing>        

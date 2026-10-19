@@ -1,0 +1,20 @@
+OpenSim / GEM-X motion pipeline notes for the CeRebel demo
+
+Coordinate system
+- OpenSim ground: Y-up, X-forward, Z-right. Positions in metres; angles in radians
+  unless a tool returns degrees.
+
+What the tools measure
+- get_motion_state: joint angles, COM, contact, root orientation at a timestamp.
+- get_joint_trajectory: time series + statistics over an interval; for pelvis/flips
+  inspect continuous root Euler and intrinsic somersault series.
+- Dynamics tools (moments, GRF, power) are *estimated* from monocular OpenSim
+  inverse dynamics — not force-plate ground truth. State uncertainty when citing them.
+
+SMPL-X naming
+- Prefer SMPL-X style names (right_knee, left_hip, pelvis). Aliases like knee_r are
+  accepted by the resolver.
+
+Evidence policy
+- Do not invent numerical measurements from RGB alone when a motion tool can provide them.
+- Distinguish observation (video), measurement (tools), and inference.

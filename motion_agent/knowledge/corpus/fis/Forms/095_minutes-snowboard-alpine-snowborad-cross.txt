@@ -1,0 +1,57 @@
+--- page 1 ---
+MINUTES 
+PROCES-VERBAL TC-MEETING PGS/PSL/SBX/GS/SL
+PROTOKOLL 
+Competition / Manifestation / Veranstaltung Place / Lieu / Ort Date / Date / Datum 
+PGS  PSL  SBX  GS SL 
+Team Captains' Meeting of / Réunion des Chefs d'équipe du / Mannschaftsführersitzung vom 
+JURY / JURY / JURY 
+Name-Surname/Nom-Prénom/Name-Vorname Nat 
+TECHN. DATA/DONNEES TECHN./TECHNISCHE DATEN 
+1st run/1ère manche/1. Lauf / 2nd run/2ème manche/2. Lauf 
+TD Name of course/Nom de la piste/Name der Strecke 
+Referee/Arbitre/Schiedsrichter Start/Départ/Start 
+m 
+Assistant Referee/Arbitre adjoint/SR-Assistent Finish/Arrivée/Ziel 
+m 
+Chief of Race/Directeur de l'épreuve/Rennleiter Vertical drop/Dénivelée/Höhendifferenz 
+m 
+Chief of Course/Chef de piste/Pistenchef Course Length / longeur de la compétition / Streckenlänge 
+m 
+Start Referee/Juge au départ/Startrichter FIS Homolog. No./No. Homolog. FIS/FIS Homolog. Nr. 
+Finish Referee/Juge à l'arrivée/Zielrichter Average 5 starters 
+QUALIFICATION/QUALIFICATIONE/QUALIFIKATION NAT FINAL /FINAL/FINALE NAT
+Course Setter/Traceur/Kurssetzer Course Setter/Traceur/Kurssetzer 
+Forerunners/Ouvreurs/Vorläufer 
+- A -
+Forerunners/Ouvreurs/Vorläufer 
+- A -
+- B - - B - 
+- C - - C - 
+Number of gates/Nombre de portes/Anzahl Tore Number of gates/Nombre de portes/Anzahl Tore 
+Weather Forecast/Prévisions du temps/Wetterprognose 
+Starting Times/Heure des départs/ Startzeiten 
+Training Qualification/Entraînement Qualification/Qualifikation Training 
+Qualification/Qualification/Qualifikation 
+Training Final/Entraînemet Final/Training Finale 
+Final/Final/Finale
+
+--- page 2 ---
+Training course/Piste d’entraînement/Einfahrstrecke 
+Ascent of Jury/Montée du Jury/Bergfahrt Jury 
+Jury meeting at finish/Réunion du Jury à l'arrivée/Treffpunkt Jury Ziel 
+Distribution of radio equipment/Remise des appareils radio/Abgabe Funkgeräte 
+Next Team Captains' meeting/Prochaine réunion des chefs d'équipe/Nächste Mannschaftsführersitzung 
+Miscellaneous/Divers/Besonderes 
+Press Inspection/Reconnaissance par la presse/Presse-Besichtigung 
+Lift facilities/Remontées mécaniques/Bergbahnen 
+Parking/Places de parc/Parkplätze 
+Prizegiving/Distribution des prix/Preisverteilung 
+Opening times of race office/Heures d'ouverture bureau des courses/Öffnungszeiten Wettkampfbüro 
+Comments in the language of the country + one of the FIS languages 
+Commentaires dans la langue du pays + une des langues FIS 
+Kommentare in Landessprache + eine FIS-Sprache 
+Timing/Chronométrage/Zeitmessung 
+Computer 
+Signature of Race Secretary/Signature du secrétaire de la 
+course/Unterschrift Wettkampfsekretär

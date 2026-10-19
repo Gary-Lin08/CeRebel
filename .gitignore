@@ -1,0 +1,12 @@
+.venv/
+.venv-ik/
+__pycache__/
+*.pyc
+data/
+*.egg-info/
+.DS_Store
+._*
+*.log
+*.sto
+kinetic-lens/node_modules/
+kinetic-lens/dist/

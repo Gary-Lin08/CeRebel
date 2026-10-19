@@ -1,0 +1,2674 @@
+--- page 1 ---
+FREESTYLE SOLUTION MANUAL 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+FOR ANY HELP CONTACT: 
+ 
+Karin Arnold 
+phone: +49 160 979 585 04 
+email: karin.arnold@fis-ski.com 
+ 
+Version 1.7 - Published 7th  May 2026 
+ 
+We would like to welcome you to our WhatsApp group “WORKING GROUP GSS DATASYSTEM”, a fast way to 
+help each other during the season. Contact Karin Arnold to join the group.
+
+--- page 2 ---
+2 
+Table of Contents 
+  
+TABLE OF CONTENTS ........................................................................................................................................................................... 2 
+STARTING THE SOFTWARE ................................................................................................................................................................. 4 
+WORKING WITH MAIN AND CLIENT INSTANCES .............................................................................................................................. 5 
+CREATING AND OPENING A COMPETITION ..................................................................................................................................... 6 
+CREATING AND RUNNING A TEST EVENT ........................................................................................................................................ 7 
+UNLOCKING THE SOFTWARE ............................................................................................................................................................. 8 
+IMPORT FIS ATHLETE DATA ................................................................................................................................................................ 9 
+IMPORT ENTRIES FROM FIS ONLINE ENTRY SYSTEM .................................................................................................................. 10 
+COMPETITION AND ATHLETE SETUP .............................................................................................................................................. 12 
+COMPETITOR DATA ........................................................................................................................................................................................... 12 
+IMPORT COMPETITORS FROM CSV FILE: ............................................................................................................................................................ 13 
+ADD COMPETITORS MANUALLY ......................................................................................................................................................................... 14 
+ASSIGN RANDOM BIBS: ...................................................................................................................................................................................... 14 
+ASSIGN BIBS MANUALLY: ................................................................................................................................................................................... 14 
+ASSIGN RANDOM START ORDER: ....................................................................................................................................................................... 15 
+GENERAL EVENT DATA ..................................................................................................................................................................................... 16 
+COURSE DATA IN MOGULS: ............................................................................................................................................................................... 16 
+COURSE DATA IN DUAL MOGULS: ..................................................................................................................................................................... 16 
+COURSE DATA IN AERIALS: ............................................................................................................................................................................... 17 
+JUDGES: ............................................................................................................................................................................................................ 17 
+COMPETITION MODE: ........................................................................................................................................................................................ 17 
+OFFICIALS / JURY: ............................................................................................................................................................................................. 17 
+SCHEDULE ......................................................................................................................................................................................................... 18 
+WEATHER .............................................................................................................................................................................................. 19 
+ONLINE TCM ......................................................................................................................................................................................... 20 
+SEND CONFIRMATION LINK MANUALLY .............................................................................................................................................................. 22 
+ISSUES WITH ONLINE TCM ............................................................................................................................................................................... 23 
+ASSIGN BIBS IN AE AND MO/DM CONTINENTAL CUP .................................................................................................................. 24 
+ASSIGN START ORDER IN AE AND MO CONTINENTAL CUP ....................................................................................................... 26 
+DUAL MOGULS SEEDING BY SEED CRITERIA ............................................................................................................................... 28 
+EXPORT SINGLE MOGULS RESULT ................................................................................................................................................................... 28 
+IMPORT DUAL MOGULS CUP STANDINGS ......................................................................................................................................................... 28 
+SELECT SEEDING CRITERIA .............................................................................................................................................................................. 29 
+WHICH SEEDING CRITERIA TO CHOOSE FOR DUAL MOGULS? ......................................................................................................................... 30 
+ASSIGN BRACKETS BY SEEDING ....................................................................................................................................................................... 30 
+DUAL MOGULS SEEDING BY SINGLE MOGULS QUALIFICATION ............................................................................................... 32 
+TIMING IN SINGLE MOGULS ............................................................................................................................................................... 34 
+TIMING IN DUAL MOGULS ................................................................................................................................................................... 36 
+ONLINE JUDGING ................................................................................................................................................................................. 37
+
+--- page 3 ---
+3 
+CREATE A NEW USERNAME AND PASSWORD .................................................................................................................................................... 38 
+JUDGES’ TABLETS ............................................................................................................................................................................... 39 
+DURING EVENT .................................................................................................................................................................................... 42 
+SINGLE MOGULS WITH ONLINE JUDGING .......................................................................................................................................................... 42 
+SINGLE MOGULS WITH ON-SITE JUDGING ......................................................................................................................................................... 44 
+DUAL MOGULS WITH ONLINE JUDGING .............................................................................................................................................................. 44 
+DUAL MOGULS WITH ON-SITE JUDGING ............................................................................................................................................................ 46 
+AERIALS WITH ONLINE JUDGING ........................................................................................................................................................................ 47 
+AERIALS WITH ON-SITE JUDGING ....................................................................................................................................................................... 49 
+CHANGE BIBS, ASSIGNMENTS AND START ORDERS MANUALLY ............................................................................................ 50 
+COPY COMPETITORS TO 2ND QUALIFICATION RUN IN AERIALS .......................................................................................................................... 51 
+EXPORT COMPETITORS TO A .CSV FILE ........................................................................................................................................ 52 
+LIVE RESULTS ...................................................................................................................................................................................... 53 
+FIS LIVE SCORING ............................................................................................................................................................................... 55 
+CREATE FIS LIVE SCORING ACCOUNT .............................................................................................................................................................. 55 
+LIVE RESULTS REGISTRATION ........................................................................................................................................................................... 55 
+ADDING A TEST COMPETITION ........................................................................................................................................................................... 56 
+RUNNING FIS LIVE SCORING FROM THE FSS SOFTWARE................................................................................................................................ 57 
+SOME KNOWN ISSUES ....................................................................................................................................................................................... 61 
+DUAL MOGULS .................................................................................................................................................................................................. 62 
+RESULT PUBLISHING .......................................................................................................................................................................... 64 
+PRINT AND GENERATE .PDF FILES ..................................................................................................................................................................... 64 
+ADD LOGOS TO PDF RESULTS ............................................................................................................................................................................ 66 
+HOW TO SAVE A .PDF FILE .................................................................................................................................................................................. 67 
+HOW TO EDIT A PDF FILE ................................................................................................................................................................................... 67 
+UPLOAD PDF DOCUMENTS TO THE FIS WEBSITE ............................................................................................................................................... 68 
+WHAT PDFS SHOULD BE UPLOADED TO THE FIS WEBSITE ............................................................................................................................... 68 
+.XML EXPORT ........................................................................................................................................................................................ 69 
+TIMING REPORT ................................................................................................................................................................................... 70 
+VMIX ........................................................................................................................................................................................................ 72 
+REPLAY: ............................................................................................................................................................................................................. 75 
+TWITCH .............................................................................................................................................................................................................. 76 
+MESHCAST.IO: BACKUP STREAMING ............................................................................................................................................................. 77 
+REPLAY RECORDING .......................................................................................................................................................................................... 78 
+DURING COMPETITION ....................................................................................................................................................................................... 78
+
+--- page 4 ---
+4 
+Starting the software 
+Right-click "Freestylesolution.exe" and run it as administrator. 
+ 
+ 
+ 
+Upon running Freestylesolution.exe a window opens , where you can choose your  database ‘.sdf’  file. 
+Please select  Main A and  click the  three dots to select the database  of your competition. Then click 
+"Connect to Database and Start". This is how you start the Main Instance.
+
+--- page 5 ---
+5 
+Working with Main and Client Instances 
+ 
+Do all the pre-event setup in the Main Instance (which you start by choosing “Main A”). 
+ 
+After assigning the start order, please close the Main Instance. 
+ 
+Then you may restart it and leave it running in the background but do not open any windows there. 
+ 
+Everything that is done during the competition (e.g. live scoring, online judging, pdf results, score validation, 
+timing) should be opened in Client Instances.  
+ 
+You can start as many Client Instances as you like.  
+It is recommended to open a separate Client Instance for every task. 
+It is possible to utilize more than one computer for these operations. If the judges' tablets are set up (as in 
+Europa Cup), you can add additional computers to the same network (via a switch) and run the Client 
+Instances on them (see chapter Judges’ Tablets). 
+  
+ 
+ 
+ 
+- To start the Client Instance, run “Freestylesolution.exe” and choose “Client” instead of “Main A” 
+ 
+- A window pops up where you should click “Connect and Start” 
+ 
+- If this window does not appear click “start as slave”
+
+--- page 6 ---
+6 
+Creating and Opening a Competition 
+ 
+Once you have clicked “Connect to Database and Start”, the 
+event window will open. Here you can select your competition 
+or create a new one. 
+ 
+If you have already created your competition, choose it and  
+click "Start". To create a new competition, click  
+“add Competition (Light)”.  
+ 
+After clicking “add Competiton (Light)” a new window  
+named "Add Competition" will open. 
+Select the details, enter all your data and then click “save”. 
+ 
+ 
+ 
+ 
+ 
+ 
+You can find the competition codices on the FIS website. Make 
+sure you enter correct ones for women and men: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+After creating a competition, choose it and click “Start”
+
+--- page 7 ---
+7 
+Creating and Running a Test Event 
+ 
+ 
+ 
+ 
+ To familiarize yourself with the program, you can create 
+ and run a test competition. A test competition is basically  
+created and run as any event. Here are a couple of tips. 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+When you create the test competition you can enter 
+ a “fake” competition codex. 
+ 
+ NOTE: Don’t use the same codex as any ongoing freestyle  
+competition at the same time. 
+ 
+ 
+  
+ 
+ 
+ 
+In the window “During Event” 
+ -> “Current Run and Scoring” you will 
+ find “test buttons” to generate random  
+scores. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+With online judging or judges’ tablets 
+you should use window “During Event”  
+-> “Current Run and Scoring – Advanced  
+User, needed for OnlineJudging”.  
+ 
+There you can also 
+find buttons to generate times and 
+scores for testing purposes.
+
+--- page 8 ---
+8 
+Unlocking the Software 
+ 
+After creating a competition, you need to unlock the software. This must be done for every competition in a 
+database. Go to “Setup Database and Event” -> “Unlock Software”.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A new window will open. Choose “Unlock Online 
+(Username and Password needed)” and write in 
+Username: karin.arnold@fis-ski.com and 
+Password: ElvisIsInTheHouse Then click “check 
+/ request unlock key”. 
+Be aware there’s a loading processs that lasts a  
+few seconds, after which you will see a message 
+“Successfully unlocked”. Then simply click “ok”. 
+ 
+ 
+ 
+If unlocking doesn’t work, please send an email to 
+Karin Arnold: karin.arnold@fis-ski.com.
+
+--- page 9 ---
+9 
+Import FIS Athlete Data 
+ 
+You need to import into the software the FIS athletes and their FIS points from the FIS database.  
+ 
+To import the FIS athletes and FIS points go to “Setup Database and Event”  
+-> “Import FIS Competitor Data/Points/Cups”  
+-> “from FIS Online DB (Competitor + FIS Points)”. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A new window will open. Make sure you are  
+connected to the internet before 
+proceeding with the next steps: 
+➔ “Connect to Db” 
+➔ “load competitor” 
+➔ “import competitor” 
+➔ “load FisPoints” 
+➔ “import FisPoints” 
+ 
+NOTE: Each step may take several minutes.  
+ 
+ 
+ 
+ 
+After completion of all the steps, click “Close” and restart the software.
+
+--- page 10 ---
+10 
+Import Entries from FIS Online Entry System 
+ 
+In some competitions, for example in all Europa Cup events, you can get the entries from the FIS Online Entry 
+System. 
+ 
+If you don’t use the FIS Online Entry System for your event, see chapter Competition and Athlete Setup for 
+how to add competitors. 
+ 
+ You can download entries from the FIS Online Entry System as follows: 
+ 
+Go to "Setup Database and Event"  
+-> "Import Competitor Data/Points/Cup"  
+-> "import competitorassignments from fis db / get Bio.csv" 
+ 
+ 
+A new window titled “ImportEntriesFromFisDb” will open. Click “connect to db” and then “load data
+
+--- page 11 ---
+11 
+The entries will appear divided by gender. Click “import into database”.
+
+--- page 12 ---
+12 
+Competition and Athlete Setup 
+ 
+  
+Go to “Setup Database and Event” 
+ -> “Competition and Athlete Setup” 
+ A new window will open. 
+ 
+ 
+ 
+ 
+ 
+ 
+Competitor Data 
+ 
+The tab "Competitor Data" allows you to manage data  
+related to the event's competitors. To maintain a clear  
+overview of the athletes, they are separated by gender.  
+ 
+The "Bib" field displays the bib assigned to a competitor,  
+while the "StartNr" field indicates the running order in the  
+selected run. 
+ 
+On the top, you can choose the run you are viewing. 
+ 
+You can edit the competitor’s information by double-clicking  
+the respective athlete.
+
+--- page 13 ---
+13 
+Import competitors from csv file: 
+ 
+ 
+If your event does not use the FIS Online Entry 
+System, you can import entries from a csv file 
+or add competitors manually.  
+ 
+To import competitors from a csv file, click 
+“Import Comp (one event)”. Another window 
+will open titled “CompetitorImportAdv”.  
+ 
+First click "Select File" to choose the import csv 
+file. Make sure this file is correctly formatted. 
+ 
+ 
+ 
+ 
+ 
+ 
+If you click “format” you will see how the import 
+file should be formatted: 
+        Example of an import file:
+ 
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Click “(try) to import :-)” to start the import process. 
+ 
+The program goes through the import file and tries to match the data from your file to data from the FIS 
+Database.   
+ 
+All competitors who are matched successfully will be assigned to the first run. 
+ 
+Those that could not be matched will appear on the list on the left.
+
+--- page 14 ---
+14 
+ 
+If an unmatched athlete has a FIS license, choose “USE Data from (FIS-) Database” 
+ 
+If an unmatched athlete does not have a FIS license but will compete anyway, in National 
+Championships for example, choose “USE Data from Import-File”. 
+ 
+ 
+Add competitors manually 
+ 
+Occasionally, after the bulk of competitors have 
+been imported, due to late entries etc., a 
+competitor may need to be added. Instead of 
+creating another import file you have the possibility 
+to add competitors one by one by clicking the "Add 
+Competitor Manually" button.  
+ 
+You can then search for a competitor from the FIS 
+database or fill in the details manually (if the 
+competitor doesn’t have a FIS license). 
+ 
+Assign random bibs: 
+To assign random bibs to your competitors, 
+click the "Assign Bib" button. Do not select any 
+seeding details, just click “do it”.  
+NOTE: For assigning bibs in Continental Cup 
+see chapter “Assign bibs in AE and MO/DM 
+Continental Cup”. 
+ 
+Assign bibs manually: 
+If you want to assign bibs manually for every 
+athlete, go to “Setup Database and Event” -> 
+“Expert: Competitor 2 Run”. Choose gender 
+and write in the bib field of the selected athlete
+
+--- page 15 ---
+15 
+Assign random start order: 
+To assign a random start order click “Assign 
+StartOrder”. Do not select any seeding details, 
+just click “do it”.  
+NOTE: A random start order is used in aerials 
+events (see ICR 4114). 
+NOTE: For assigning start order in Moguls 
+Continental Cup, see chapter “Assign start 
+order in Moguls Continental Cup”
+
+--- page 16 ---
+16 
+General Event Data 
+ 
+The tab “General Event Data” lets you enter the course data, the judges, the competition mode and the officials. 
+ 
+ 
+Course data in Moguls: 
+Once you have entered the course measurements click 
+"Calc Pace". On the right will you will the pace time for each 
+gender. The FIS Technical Delegate should provide you 
+with all the measurements. 
+ 
+ 
+ 
+Course data in Dual Moguls:  
+ 
+In dual moguls, you also have settings regarding 
+seeding the brackets. Usually, you only need  
+to choose between two of them, either “Quali is  
+used to seed Brackets” or “no Quali, seed by  
+SeedCriteria”. 
+ 
+Details regarding seeding by “seed criteria” are 
+explained in the chapter of the manual “Dual  
+Moguls Seeding by Seed Criteria”.
+
+--- page 17 ---
+17 
+Course data in Aerials: 
+ 
+In Aerials you can enter the specs  
+of the kickers. The FIS Technical  
+Delegate should provide you with all  
+the measurements. 
+ 
+ 
+ 
+ 
+Judges: 
+Choose the number of judges. Enter their full names  
+(LASTNAME Firstname) and nationality. 
+If you are working with the online judging system enter the 
+"OnlineUsername" (email address) as well. You should get 
+judges’ online usernames from the Head Judge or Race 
+Director. 
+ 
+ 
+ 
+ 
+ 
+ 
+Competition Mode: 
+ 
+Here you can select the number of runs for qualification  
+and final for each gender and how many competitors  
+will qualify from qualification to finals or from final 1 to final 2. 
+ 
+ 
+NOTE: The format for moguls in Europa and Nor-Am Cup is one  
+qualification run + two final runs. The format for aerials is two qualification 
+runs + one final run. 
+ 
+ 
+Officials / Jury: 
+ 
+Enter the members of the jury and other officials. 
+Please remember that only TD, Head Judge and Chief  
+of Competition are members of jury. Check the 
+box on the left for them. 
+ 
+NOTE: The nation of the Race Director is “FIS”. Enter all  
+the names in FIS format: “LASTNAME Firstname”
+
+--- page 18 ---
+18 
+Schedule 
+The tab “Schedule” lets you set the timetable for all runs. Choose “scheduled” or “unscheduled” and set 
+the dates and start times. 
+ 
+ 
+When you are done entering all the information click “Save and Close” at the bottom of the window.
+
+--- page 19 ---
+19 
+Weather 
+ 
+ 
+You can enter weather information that will appear at the end of the result lists. To add weather information go 
+to “Setup Database and Event” -> “Weather”. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+In the window that opens, you can enter all the weather information. In Continental Cup, consult your race 
+director about what information you should enter.
+
+--- page 20 ---
+20 
+Online TCM 
+ 
+NOTE: If you have two qualification runs in an aerials event you must assign all competitors to both runs before 
+the Online TCM. Otherwise, you cannot import jump codes for the second run. See chapter “Change bibs, 
+assignments and start orders manually” for how to do the assignment to the 2nd qualification. 
+ 
+ 
+Go to “Online Judging”  
+-> "Online TCM". A new window will open. 
+➔ click "Authenticate / Login" 
+➔ select "Confirmation Meeting” for “Template” 
+➔ click “Save Settings” 
+➔ click “Upload to Server” 
+➔ click “Send E-mails” and select a .xlsx file with the nations and the respective emails 
+(usually coaches’ emails).  
+ 
+Every nation will receive an email with a link to confirm or scratch athletes. 
+Remind the teams, to check their emails.
+
+--- page 21 ---
+21 
+At the bottom of the window, you will find an overall link, open it in your browser and you will see which nations 
+have completed the confirmation process. (In Europa Cup, send the overall link to the Race Director.) 
+Overall link opened: 
+Coaches’ emails file example: 
+ 
+ 
+ 
+When all nations have confirmed or scratched their athletes (you can see them marked green if you access the 
+overall link) click “Import into SW”. 
+ 
+NOTE: In an Aerials event, the coaches can enter jumps codes. To enable this, click on “Upload Comment 
+Fields/TeamNr” before sending the emails. When all the teams have confirmed their entries click "Import Jump 
+Codes". 
+ 
+After clicking “Import into SW” go back to "Setup Database and Event" ➔ "Expert Competitor 2 Run", another 
+window will open. 
+ 
+Here you will see athletes’ confirmation status, “TcmConfirmed” or “TcmScratched”. 
+ 
+You must remove the scratched athletes manually. Right click an athlete and choose “Remove selected 
+Competitor” 
+ 
+NOTE: If you have two qualification runs in aerials, remember to remove scratched athletes from both runs.
+
+--- page 22 ---
+22 
+ 
+ 
+NOTE: After removing the scratched athletes, you should remove the online TCM markers for both genders.  
+  
+Choose the gender and go to “Other” and click “Remove Online Tcm Marker” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Send confirmation link manually 
+  
+Sometimes it happens that a coach’s email address was missing from the import file or maybe the address 
+was a wrong one. In these cases, you can send a confirmation link manually. Follow these instructions: 
+ 
+ Choose “Confirmation Meeting…” for template. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ At the bottom of the window click “Check E-Mail Text / show sample for first nation”.  
+By clicking it again it shows the next nation etc. Click as many times as needed until you see the nation whose 
+confirmation link you want to send.
+
+--- page 23 ---
+23 
+Once you see the nation you want, select and copy the link from the email text sample. Send it to the coach 
+who needs it. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Issues with Online TCM 
+ 
+If you run into problems with your online TCM (e.g. if you can’t upload athletes, especially in Dual Moguls) 
+follow these steps:  
+Go to “Setup Database and Event” 
+-> “Edit Runs / Heats” 
+A window will open. 
+ 
+ 
+ 
+ 
+ 
+ 
+Check here if your qualification runs are shown as scheduled. You can select the gender at the bottom left 
+corner.  
+ 
+If the runs are not show as scheduled select “Show Unscheduled Runs”. Choose the qualification run and 
+select “Edit”. Then you can set the run scheduled in the dropdown menu.
+
+--- page 24 ---
+24 
+Assign Bibs in AE and MO/DM Continental Cup 
+ 
+In Continental Cup events bibs should be assigned by Cup standings. In the first event of the season, when 
+standings are not yet available, the FIS points list should be used instead. 
+ 
+The top 25 competitors will get their bibs according to the standings. The rest of the athletes get randomized. 
+ 
+NOTE: If you use the FIS point list to assign the bibs, see chapter “Import FIS Athlete Data” on how to import 
+FIS points. Complete those steps before you proceed with the bib assignment. 
+ 
+If you use cup standings, follow these instructions for cup standings import: 
+ 
+Go to “Setup Database and Event” 
+-> “Import Competitor Data / Points / Cups” 
+-> “from FIS Online: import Standings (NorAM, EC, …)” 
+ A window opens. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+- Select “As Additional cup” and 
+“Default”. 
+ 
+- Select your cup, “Europa cup” for  
+example 
+ 
+- Click “connect to db” 
+-> “load data” 
+-> “import data” 
+ 
+ 
+ 
+ 
+ 
+ 
+NOTE: After the import, please restart the software. 
+ 
+ 
+NOTE: If you cannot see the cup points on the bib assignment list, and you want to add them, please redo the 
+cup standing import. When you redo it, choose “As (World) Cup” instead of “As additional Cup” and “Default”
+
+--- page 25 ---
+25 
+To assign the bibs go to “Setup Database and Event” -> “Expert: Competitor 2 Run” 
+ 
+ 
+ 
+ 
+ 
+ 
+Choose gender and click “Assign (Quali) Bibs”. A new window will open. 
+ 
+ 
+ 
+ 
+Choose gender and click “Assign (Quali) Bibs”. A new window will open 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ - Choose “use Discipline Fis Points Rank” or  
+ “use Additional Cup (Cup Type Default)” 
+ 
+ - click “do it”
+
+--- page 26 ---
+26 
+Assign Start Order in AE and MO Continental Cup 
+ 
+In the Continental Cup events start order should be assigned by Cup standings. In the first event of the 
+season, when standings are not yet available, FIS points list should be used instead. 
+ 
+The top 30 competitors will be randomly drawn to the first 30 positions on the startlist, with the rest of the 
+athletes drawn randomly to the remaining positions. 
+ 
+To assign the start order, follow these instructions. 
+ 
+NOTE: If you use the FIS point list to assign the start order, see chapter “Import FIS Athlete Data” on how to 
+import FIS points. Complete those steps before you proceed with the draw. 
+ 
+If you use cup standings, follow these instructions for cup standings import: 
+ 
+Go to “Setup Database and Event” 
+-> “Import Competitor Data / Points / Cups” 
+-> “from FIS Online: import Standings (NorAM, EC, …)” 
+ A window opens. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+- Select “As Additional cup” and 
+“Default”. 
+ 
+- Select your cup, “Europa cup” for  
+example 
+ 
+- Click “connect to db” 
+-> “load data” 
+-> “import data” 
+ 
+ 
+ 
+ 
+ 
+ 
+NOTE: After the import, please restart the software. 
+ 
+NOTE: If you cannot see the cup points on the start list, and you want to add them, please redo the cup 
+standing import. When you redo it, choose “As (World) Cup” instead of “As additional Cup” and “Default”
+
+--- page 27 ---
+27 
+For the assignment, go to  
+“Setup Database and Event” 
+-> “Competition and 
+Athlete Setup” 
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+Click “Assign StartOrder” at the bottom of the window. A new window will open. 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Select here “use additional Cup Rk (eg EC, Wspl)” or “use Discipline Fis Points Rank” and click “do it”.
+
+--- page 28 ---
+28 
+Dual Moguls Seeding by Seed Criteria 
+  
+This chapter explains how to seed dual moguls when you start with competing pairs in the beginning and 
+there’s no qualification. 
+ 
+Go to “Setup Database and Event”  
+-> “General Event Data” 
+-> “Course Data” 
+Make sure you have selected  
+“no Quali, seed by SeedCriteria” 
+ 
+ 
+ 
+ 
+ 
+ 
+Export Single Moguls Result 
+If you have an MO competition in the same 
+event you need to export results from that 
+competition. You need to have the MO 
+competition open in the program when you 
+do this.  
+NOTE: You should have both DM and MO 
+competitions in the same database to do 
+this. 
+Go to “During Event” -> “Export 
+EventResult” 
+Another window will open. Select gender 
+and click “Export Competition Result”. Make 
+sure the competition codex is correct. 
+ 
+ 
+Import Dual Moguls Cup standings 
+ 
+Open the Dual Moguls competition. If your event is part of Continental Cup, you must import the current cup 
+standings. If your event is not part of Continental Cup, you can skip this step. If your event has the first duals 
+competition of the season and there’s no cup standing yet, you can also skip this step. 
+ 
+Go to “Setup Database and Event”  
+-> Import Competitor Data / Points / Cups”  
+-> “from FIS Online: import Standings (NorAM,EC,…)”
+
+--- page 29 ---
+29 
+ 
+ 
+ 
+Another widow will open. 
+ 
+- Click “connect to db”.  
+- Choose “As additional cup” and “Default” * 
+- Select your cup and season 
+- Click “load data” and “import data” 
+  
+NOTE: After the import, restart the software. 
+ 
+* NOTE: If this does not work, choose “As (World)  
+Cup” instead of “As additional Cup” and “Default” 
+ 
+ 
+ 
+Select Seeding Criteria 
+ 
+Then you need to select the seeding criteria. 
+ 
+Go to “Setup Database and Event” 
+-> “Select Seeding Criterium” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A new window opens titled  
+“SelectSeedingCriteria” 
+ 
+- Select the seeding criteria you need 
+- click “Select Details” 
+- click “Save”
+
+--- page 30 ---
+30 
+Which seeding criteria to choose for Dual Moguls? 
+ 
+ Europa Cup: 
+ In the first duals event of the season, choose “Prev MO Event Result, FIS Points List” 
+ 
+ In later events: 
+- Choose “Prev MO Event Result, Cup Rank” 
+- If there’s no MO competition in the event choose “Cup Rank, FIS Points List” 
+ 
+ Other Continental Cups: 
+ Consult your Race Director. 
+ 
+ Other FIS competitions: 
+- Choose “Prev MO Event Result, FIS Points List” 
+- If there’s no MO competition in the event, choose the same as above. The program will then use only FIS 
+points. 
+ 
+ 
+ 
+Assign Brackets by Seeding 
+  
+ After completing the previous steps, you can finally assign the brackets. 
+Go to “Setup Database and Event” 
+-> “Expert: Competitor 2 Run” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+Select a gender and click "Assign Brackets by Seeding"
+
+--- page 31 ---
+31 
+A new window opens titled “SeedToBrackets”. 
+ 
+- You don’t need to change or select any criteria in  
+this window. 
+- Just click “assign Competitor”. 
+ 
+After you have assigned the brackets for both genders, 
+the program will ask you if you want to assign run 
+orders. Choose “Yes”
+
+--- page 32 ---
+32 
+Dual Moguls Seeding by Single Moguls Qualification 
+ 
+ 
+This chapter explains how to seed dual moguls with a single moguls qualification round.  
+ 
+Go to “Setup Database and Event” -> “Competition and Athlete Setup” 
+ Open tab “General Event Data” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ In the section “Course Data” select “Quali is used to seed Brackets” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+In the section “Competition Mode”, you need to define how many athletes 
+will proceed from qualification to final brackets.
+
+--- page 33 ---
+33 
+ 
+Once you’re done with the setup you can proceed with the qualification as in any moguls competition. See 
+chapter During Event for details, e.g. how to assign start orders, bibs etc. 
+ 
+After the qualification round, go to “During Event” -> “Current Run and Scoring”. A new window will open. 
+If you don’t have online judges or judges’ tablets, you should be already working in this window. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+To assign the brackets, choose “Progr Next Phase”. Then you can proceed with the rest of the competition.
+
+--- page 34 ---
+34 
+Timing in Single Moguls 
+ 
+Go to “Hardware Interfaces” -> "Timing Single Athlete". 
+Another window will open where you can select the "Device" and "Interface". 
+ 
+ 
+ 
+Then click "Start Timing" and you should see the runtime entering automatically in the "Current Run and Scoring 
+– Advanced user" window. 
+  
+ 
+“Check In” blocks the timing impulses; you can use it during breaks in the competition 
+ 
+NOTE: If you have problems with Alge Timing, please update Timy driver software on the scoring laptop as a first 
+step.
+
+--- page 35 ---
+35 
+NOTE: If the timing hardware you are using is not compatible with the software (for example Microgate) you 
+must enter the times manually.  
+ 
+If you have online judges or use the tablets enter the times as follows: 
+ 
+- Go to “During Event ->” "Current Run and Scoring – Advanced User needed for OnlineJudging" -> “Edit Time” 
+ 
+- Enter the times in the field “Run Time” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ If you have only on-site judges and you don’t use the tablets, do as follows: 
+ 
+ - You can enter the times in the window where you enter all the scores 
+ 
+-  Go to “During Event” -> "Current Run and Scoring” 
+ 
+ - There’s a field for time
+
+--- page 36 ---
+36 
+Timing in Dual Moguls 
+ 
+To set up the timing in dual moguls, go to “Hardware Interfaces” -> “Timing SX/DM”  
+ 
+ 
+ 
+Here you can choose the hardware e. g. “Alge TD”. 
+ 
+If you are connected to the timing device via USB, write “USB” in the field named “Interface”.  
+ 
+You can also choose COM3, for example, if that’s how your timing device is connected to the computer. 
+ 
+Choose “MainA” in the field named “System” 
+ 
+To start the timing click “Start Timing” 
+ 
+NOTE: If the “Ignore All” button is red, you must click it.  Otherwise, the times will not appear in the scoring 
+window. 
+ 
+ 
+ 
+ 
+NOTE: If your timing device is not compatible with the software, e.g. Microgate, the speed judge must calculate 
+the timing scores. If you’re connected to the judges’ tablets, the speed judge can enter the scores on his/her 
+tablet.
+
+--- page 37 ---
+37 
+Online Judging 
+NOTE: To use online judging, you must first enter the judges’ usernames in "Setup Database and Event" -> 
+"Competitor and Athlete Setup" -> “General Event Data” as described earlier in the manual.  
+ 
+Every Europa Cup and World Cup judge has a username.  
+ 
+For setting up online judging, select “Online Judging” -> "Online Judging Interface". A new window will open. 
+ 
+➔ click "Authenticate" 
+➔ check the box "for Remotejudges VisibleFrom:" and set the dates when you want the competition to be visible 
+(it is recommended to select from a day before the competition till the day after). 
+➔ click "Upload Event, Athletes, Startlist,…" 
+➔ check the box for "Auto upload Current Athlete" 
+➔ check the box "Auto import” 
+➔ set the Twitch streaming ID and/or backup stream and click "update stream setting" 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+   
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+NOTE: The “Online Judging Interface” window should be closed and restarted between qualification and final 
+and between final 1 and final 2.  
+ 
+- Restart the window after assigning the start order 
+- Don’t change the dates or streaming settings 
+- Re-do the other steps listed above
+
+--- page 38 ---
+38 
+When you’ve set up the online judging system, you can check if it’s working by visiting the web page  
+https://judge.click/#/login 
+ 
+Log in with these 
+credentials: 
+Username: LLTest 
+Password: 
+LLTestPassword  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Create a new username and password 
+ 
+You might work in a competition, in National Championship for example, where a judge is not a Europa Cup or 
+World Cup judge and has no username for judge.click. In these cases, you need to create a username and 
+password manually. Follow these instructions. 
+ 
+Create a csv file like the example below. Make sure you have all the fields. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+You may choose “J1_Turns” for function and “MogulsTurns” for JudgeType, even though that wouldn’t be the 
+judge’s assignment. You can change the assignment later. 
+ 
+Click “Upload HJ/Judges (User)” in the 
+“Online judging Interface” window and 
+upload the csv file. 
+ 
+After the previous steps, go to  
+"Setup Database and Event" 
+ -> "Competitor and Athlete Setup"  
+-> “General Event Data”  
+and enter judges’ username and details  
+assigned for the correct judge number.
+
+--- page 39 ---
+39 
+Judges’ Tablets 
+ 
+Judges’ tablets are Windows tablets where judges, who are on site, can enter their scores. Tablets can also be 
+set up for the Head Judge to review the scores, and for the announcer to follow the results.  Instead of tablets, 
+also computers can be used for this purpose. Tablets must have the GSS software package installed on them. 
+ 
+In Europa Cup the Race Director will provide you with the tablets. 
+ 
+In order to connect the tablets, you need to set a static IP address on your scoring laptop. Follow these 
+instructions on Windows: 
+ 
+Go to Control panel       
+-> Network and Internet 
+-> Network and Sharing Center 
+-> Change adapter settings 
+-> Ethernet 
+-> Properties 
+-> Internet Protocol Version 4 (TCP/IPv4) 
+-> Properties 
+ 
+Set a static IP address as shown in the screenshot. 
+ 
+ NOTE: The tablets must also have a static IP address, as  
+any other devices in the same setup. 
+All the IP addresses must be within a certain range: 
+  
+- subnet: 255.255.192.0 
+- IP addresses: 192.168.212.XXX 
+  - for the last three numbers of the IP addresses,  
+  use values from 211 to 299 
+  - the tablets provided by Race Director for Europa Cup 
+  have the last value between 201 and 210 
+ 
+ NOTE: Don’t use the same IP address for two devices. 
+ 
+Tablets are connected to the scoring laptop by network cable and via a switch. Do not connect the switch to the 
+internet. The scoring laptop must get internet via Wi-Fi.
+
+--- page 40 ---
+40 
+ 
+NOTE: The software on the tablets should be installed in the same folder/level as the folder for 
+ClientTaskManager. The folders for tablets’ software must be named: “FssJudgeNG” and “FssCisNG” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+To start the tablets, first make sure that ClientTaskManager is running on them (and started as administrator). 
+Then start ServerTaskManager (as administrator) on the scoring laptop. 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+Choose “FssJudgeNG” and click “Start UDP Listener”.
+
+--- page 41 ---
+41 
+You will then see all the tablets that  
+are connected. You need to choose 
+whom each tablet is for. 
+ 
+ The options you need are: 
+ 
+- Judge 1, 2, 3 etc. for scoring judges 
+- “HeadJudge” for the Head Judge 
+- “CIS NG” for the announcer 
+  
+Choose what you need to, and click 
+“Start”, which will start the software on 
+a tablet.
+
+--- page 42 ---
+42 
+During Event  
+ 
+Single Moguls with online judging 
+ 
+ This is the window you need during a competition, if you have online judges or use judges’ tablets. 
+  
+ 
+Go to “During Event ” -> "Current Run and Scoring – Advanced User…". Another window will open. 
+ 
+ 
+ 
+On the left you can select gender, run, and the current competitor. 
+Make sure to click "make active!" for the current athlete. 
+ 
+ 
+Be aware that the correct status of a  
+competitor is "OK" if the athlete finishes their  
+run. You can also choose DNS or DNF, please  
+click “Save” if you do.
+
+--- page 43 ---
+43 
+With online judging, the points will enter automatically into 
+the software from the online judging portal (judge.click). 
+If you need to edit scores click "Edit All Points". 
+ 
+ 
+"Run Time" will enter automatically if you connect the 
+timing device to  the software (see Timing  in Single 
+Moguls). If you need to enter it manually  just click  "Edit 
+Time" and write the time in the field “Run Time”. 
+ 
+ 
+ 
+Click "validate ALL scores" to confirm the scores.  
+ 
+If you select "Allow HJ Confirmation" the HJ can confirm the 
+scores on their tablet. 
+ 
+If you select "activate next competitor after validation", the 
+next competitor will become active automatically after score 
+validation. For a smooth competition, we  recommend you 
+choose only 1 second of delay here. 
+ 
+ 
+An air judge can enter the jump codes on a judge’s tablet. 
+If you don’t use the tablets,  you can enter  the jump codes 
+manually here. If you do so, remember to click “Save”. The 
+DDs are already in the system. 
+ 
+ 
+ 
+ 
+        Choose here “Running” and click “set”. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+After Qualification you need to assign the start order for final.  Go to “Setup Database and Event” 
+-> “Expert: Competitor 2 Run”. Choose gender and click “Ass StartOrder to F1”
+
+--- page 44 ---
+44 
+Single Moguls with on-site judging 
+ 
+If you don’t use online judging or judges’ tablets, go to “During Event” -> "Current Run and Scoring” 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Here you can enter all the scores and times manually. You can choose between “OK”, “DNF” and “DNS”. 
+ You can choose to auto jump to the next competitor after confirming the scores. 
+Between runs and phases of competition, choose “Progr Next Run” or “Progr Next Phase” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dual Moguls with online judging 
+ 
+This is the window you need during a competition, if you have online judges or use judges’ tablets. 
+ 
+Select “During Event” -> ”Current Run and DM Final”. A new window will open.
+
+--- page 45 ---
+45 
+ On the left you can choose gender, run and pair. 
+ After selecting the current pair click “make active!” at the bottom left corner. 
+ Program gets the scores automatically from online judges and judges’ tablets. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Choose here “Running” and click “set”  In the right bottom corner you can calculate the result and  
+move to the next pair 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+         
+ 
+ 
+ 
+Timing ties can be entered by choosing “DM Tie” ->  
+“Set 2.5 Time points for each athlete”
+
+--- page 46 ---
+46 
+If you need to edit points choose “edit points” 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+You can set an athlete DNF or DNS by right clicking the athlete and choosing from the options. 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dual Moguls with on-site judging 
+ 
+If you don’t use online judging or the tablets, go to “During Event” -> "Current Run and Scoring”. A new window 
+will open.
+
+--- page 47 ---
+47 
+Here you can enter all the scores manually. 
+You can choose “DNS” instead of “OK”, if needed 
+You can choose to auto jump to the next competitor after confirming the scores. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Aerials with online judging 
+ 
+This is the window you need during a competition, if you have online judges or use judges’ tablets. 
+ 
+Go to “During Event ->” "Current Run and Scoring – Advanced User, needed for OnlineJudging". Another 
+window will open.
+
+--- page 48 ---
+48 
+ The view here is very similar to the one in single moguls. See the previous subchapter “Single Moguls with 
+online judging” for instructions in detail. Jump codes and kicker information are what coaches have entered in 
+online TCM. You can change them if needed. If you do, remember to click “Save” to save the changes. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+If you have two runs of qualification in aerials, you must assign start order to the 2nd qualification run after 
+completing the 1st qualification run. 
+ 
+Go to “Setup Database and Event”  
+-> “Expert: Competitor 2 Run” 
+ 
+ Choose gender and click “Ass StartOrder 
+ to Quali 2” 
+ 
+ 
+ 
+ 
+ 
+After Qualification you need to assign the start order for final.   
+ 
+Go to “Setup Database and Event” -> “Expert: Competitor 2 Run”.  
+Choose gender and click “Ass StartOrder to F1”
+
+--- page 49 ---
+49 
+Aerials with on-site judging 
+ 
+ 
+ 
+If you don’t use online judging 
+ or the tablets, go to “During Event” 
+ -> "Current Run and Scoring”. A new  
+window will open. 
+ 
+ 
+ 
+ 
+ 
+ 
+Here you can enter all the scores manually. The view here is like the one in moguls, except there’s not a field for time. 
+See the previous subchapter “Single Moguls with on-site judging” for more detailed instructions.
+
+--- page 50 ---
+50 
+Change Bibs, Assignments and Start Orders Manually 
+ 
+Sometimes you need to make changes to bibs, run assignments or start orders manually before or during a 
+competition. The fastest way to make these kinds of changes is window “Expert: Competitor 2 Run” 
+ 
+Go to “Setup Database and Event” 
+-> “Expert: Competitor 2 Run” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Always select the gender and run first. By using the search feature, you can search for and add competitors 
+to a selected run. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+By double clicking a bib or a start number you can  
+change them for the selected athlete.  
+By right clicking a selected athlete you can copy or move 
+them to another run. In Duals Moguls you can assign the 
+athlete to another position in the brackets.
+
+--- page 51 ---
+51 
+By right clicking an athlete you can also remove them from the selected run. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Copy competitors to 2nd qualification run in Aerials 
+  
+In an Aerials event with two qualification runs you must assign competitors to the 2nd qualification run before 
+the Online TCM.  
+ 
+NOTE: You should assign the bibs before proceeding with these steps. 
+ 
+- select the 2nd qualification run from the list on the left 
+ 
+- right click and choose “copy competitor from:” and “Quali 1”
+
+--- page 52 ---
+52 
+Export Competitors to a .csv File 
+ 
+ 
+Sometimes it’s useful to export competitors to a .csv file. This may be the case when you want to transfer 
+already assigned bibs from one discipline to another e.g. from MO to DM. 
+ 
+Go to “Setup Database and Event”  
+-> “Expert: Import Export Competition / Athletes” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+- select “only Competitor” 
+- choose file name and location by 
+clicking the three dots 
+- export by clicking “Export 
+Competitor only” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ The program will then ask you 
+ if you want to include bibs 
+ and start order. 
+ 
+ 
+ 
+ 
+ 
+You can use the .csv file that you to import athletes to a different discipline, as explained earlier in the manual. 
+ 
+ 
+Go to “Setup Database and Event” 
+ -> “Competition and Athlete Setup” 
+ 
+Choose “Import Comp (one event)” and 
+select the .csv file, you have created.
+
+--- page 53 ---
+53 
+Live Results 
+ 
+NOTE: This chapter explains how to use the built in live scoring system in the program. For FIS Live Scoring 
+see the next chapter. 
+ 
+ 
+ 
+ 
+ 
+ 
+To set up the live scoring go to "Result Publishing" -> "Livescoring Upload". 
+A new window will open. 
+ Click “init and try connect” 
+-> “publish Competition” 
+-> “Upload Startlists/Results” 
+ 
+During the competition, turn on auto upload by clicking “Auto Upload Startlist/Results” 
+ 
+NOTE: You can edit “Event Indentifier” if you want to. Then the live scoring link will also change. But if you 
+close and re-open this window, you just need to write in your custom event indentifier again. 
+ 
+ 
+ 
+ 
+Under "Full Event Link" you will find the live scoring link 
+the software generates for the competition. Share it with 
+anyone who wants to follow live results from your 
+competition.
+
+--- page 54 ---
+54 
+ 
+NOTE: If you lose your internet connection for a moment, you should reconnect to the live scoring server and 
+click “Upload Startlist/Result”. 
+ 
+It’s recommended to keep the live scoring link open during the event and follow it to see if it’s working correctly. 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+NOTE: Do not run live results upload during training, to avoid uploading any training scores by mistake.
+
+--- page 55 ---
+55 
+ FIS Live Scoring 
+ 
+ 
+ 
+Create FIS live scoring account 
+ 
+In order to use the FIS live scoring you will need to request a Live Registration account. You can do this by 
+sending the following information to it@fis-ski.com:  
+ 
+• name  
+• country  
+• address and telephone number (optional)  
+• email address that will become your username  
+• the FIS discipline you want to use the FIS live result system for  
+ 
+After your account is created you will be able to set up your password to be used for all competitions 
+you manage on this website https://profile.fis-ski.com/ 
+ 
+ 
+NOTE:  For more detailed instructions on how to create a FIS live scoring account see Live Result Registration 
+instructions in the FIS document library: https://www.fis-ski.com/inside-fis/general-fis-documents/timing-
+data#Live%20Results  
+ 
+ 
+ 
+ 
+ 
+Live results registration 
+ 
+Before using the live results for your competitions, you need to register the competitions here:  
+https://profile.fis-ski.com/results/live-registration  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+From the list of available competitions, find the one that you will work on and click “Add”. You will be 
+asked for your password.
+
+--- page 56 ---
+56 
+Adding a test competition 
+ 
+For testing purposes, you can create a test event by clicking on “Add test competition”.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A window will open where you will be asked for your password, and you will need to select a discipline e.g. 
+Moguls. To create a test competition, click “Submit”.  
+ 
+ 
+The competition should now appear among other competitions on the list: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A test codex was created, which must match the codex of the event in the FSS software.
+
+--- page 57 ---
+57 
+Running FIS Live scoring from the FSS software 
+ 
+NOTE: These are general instructions for Moguls and Aerials. The specific instructions for Dual Moguls are at 
+the end of this chapter. 
+ 
+In the Freestyle Solution software go to the result publishing tab and select  
+“fis-ski.com Live Soring (fis user/pwd needed)”:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+This will open the live scoring window: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+For the field “Host” enter livedata.fis-ski.com. In the field “Password” enter the password you used for the 
+registration above. You can also specify a name for the competition to be displayed the live results page.  
+ 
+ 
+After filling in the information click “initialise/reinitialise”:
+
+--- page 58 ---
+58 
+The window will change and all scheduled runs of the competition will appear: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+You must also choose the location where the program saves the live scoring log files. 
+ 
+Go to “write log” -> “Path” -> “select path”. There you can choose the folder for the log files. 
+ 
+Also make sure the “write log” is enabled. It should be green at the bottom of the window. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+At this point, there is still no data on the live scoring page:
+
+--- page 59 ---
+59 
+If you click “show codex buttons”, you will be able to send the competition configuration to the live scoring page by 
+clicking “configuration” for each gender 
+ 
+NOTE: You might have to click twice on the “show codex button” to see the genders. 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+Clicking “configuration” will update the basic information on the live scoring page: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+You can upload the start lists by clicking “Startlist” for each of the runs:
+
+--- page 60 ---
+60 
+This will update the live scoring page to include the start lists  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+NOTE: You won’t see the final start list until you create it in the FSS software after the qualification run is finished. 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Clicking “set Current” in the FSS software will move the red dot on the live scoring page to that run. 
+ 
+If you want the results to be automatically updated during the competition (which is recommended) you can select 
+“auto export enable / disable”. The “auto export” indicator at the bottom of the window should turn green. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Now you are ready to run the competition, and the scores should be automatically updated on the  
+live scoring page.
+
+--- page 61 ---
+61 
+In the window “Current Run and Scoring – Advanced User…” make sure that you choose “Running” for the 
+current run: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+The results will then automatically be updated for each of the athletes once the scores are validated: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Some known issues 
+ 
+It may happen that the results will not be updated automatically, even if you have auto export enabled (see 
+above) and even if your run is set to “Running” in the window “Current Run and Scoring – Advanced User…”.  
+ 
+In most cases the reason lies in the FIS live scoring server. In that case you will have to update the results 
+manually. You can do that by choosing either “incr R” or “full Results”:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+The first one will send only the latest result if the results have changed from the previous state and the second 
+one will upload all results that are available.
+
+--- page 62 ---
+62 
+Dual Moguls 
+ 
+For dual moguls the initial steps are the same. The only difference is that you will now see all the heats in the  
+live scoring window:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+You could take the same approach as for an MO event and press “Startlist” button for each heat to upload the 
+competitors. However, that is not recommended, because it will take a lot of time. 
+ 
+An alternative is to click “reset, startlist, results” which will upload all the competitors and assign them to appropriate 
+brackets.
+
+--- page 63 ---
+63 
+You have the option to view either heats or brackets on the live scoring page.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+If you have auto export enabled (same as with MO) and run state set to “Running” (see below), the results should be 
+updated automatically, and the current heat should be highlighted. If this does not work you can update the results 
+manually for each heat as in MO.
+
+--- page 64 ---
+64 
+Result Publishing 
+ 
+Print and generate .pdf files 
+  
+ 
+Go to “Result Publishing” 
+-> “PDF Print/Publishing”. 
+ 
+ 
+ 
+ 
+By clicking on the Buttons “TCM Lists”, “Start 
+Lists”, “Result” and “cup List” on the top left 
+you can show and hide the respective 
+documents on the list. 
+ 
+First, select the phase (Quali, Final) in the dropdown, then the gender. Click on the list you want to generate on 
+the left. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+You can print the list directly without saving a pdf file first.
+
+--- page 65 ---
+65 
+Select “Customize Report Fields” to open 
+“ReportFieldsEditor”. 
+ 
+ 
+ 
+In “ReportFieldsEditor” you can edit the name of 
+the competition or cup that will appear on all pdfs. 
+ 
+In Europa Cup write for name “FIS FREESTYLE 
+EUROPA CUP 20XX” 
+ 
+You can also select the cup code. 
+ 
+ 
+ 
+ 
+NOTE: If you have problems generating pdfs, choose cup code “WC”. 
+         
+ 
+Here are the pdfs you usually need in a competition:
+
+--- page 66 ---
+66 
+Add logos to pdf results 
+ 
+Go to “PDF Print / publishing” -> "Help" -> "Manage header-footer-cup" 
+ 
+ 
+Another window will open. Select first "Header", "footer" or "Cup" (logo next to the event title), then click the 3 
+dots "…" on the right. 
+ 
+Select the picture file that you need. 
+ 
+NOTE: Both header and footer must be sized 2291 x 354. 
+ 
+ 
+ 
+Click "Apply"
+
+--- page 67 ---
+67 
+ 
+Once you click "Refresh(F5)" the graphic will show up on all documents. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+How to save a .pdf file 
+First you must choose the location where you want to save the pdfs on your computer. The location will 
+be saved, so it’s enough to choose it once for every competition. 
+ 
+To select a location, go to “AutoExport PDF” -> “select Path”.  
+After selecting the location, you can save the pdf by clicking “create now with FIS filenames”. 
+ 
+ 
+You can also choose “Save” or “Print” -> “print to pdf”,  
+but then you need to name the file manually. 
+ 
+ How to edit a pdf file 
+ 
+In some cases, you must edit the pdf files: 
+- If you import Continental Cup standings as World Cup, you will find “World Cup Points” instead of “Europa Cup 
+Points” in some pdfs 
+- If the course length or gradient is missing from the result pdf 
+- If the descriptions of judges’ assignments are not correct 
+ 
+To edit a pdf, choose the list you want, and click the edit icon to open the pdf editor in the program. 
+ 
+ 
+ 
+ 
+ 
+ 
+Once you have opened the pdf editor, select the text you want to edit  
+or the place where you want to add text in the pdf. Then you can write  
+in the text field that you find on the list on the right in the pdf editor. 
+  
+ NOTE: You must print or save the pdf immediately after editing, before 
+selecting another list in the program. Changes cannot be saved for later.
+
+--- page 68 ---
+68 
+Upload pdf documents to the FIS website 
+In order to upload pdfs to the FIS website you need to send them to Kathrin Hostettler of FIS, who will 
+upload the files. 
+ 
+- send the pdfs by email to hostettler@fis-ski.com 
+ 
+NOTE: Make sure the files are named correctly before you send them to Kathrin Hostettler. 
+ 
+The pdf files must be named according to a specific FIS format, and the program should name them correctly. 
+If you name them manually, make sure the names are correct. 
+- Name example: 2025FS8389RLF.pdf 
+- A file name must include the following parts in this order:  
+season + "FS" + competition codex + type of list 
+- The type of list is an abbreviation: RLF = result list final, SLQ = startlist qualification, SBLF= start bracket 
+list final etc. 
+ 
+ 
+What pdfs should be uploaded to the FIS website 
+ 
+In all FIS events, you must upload the final results (final + those who didn’t qualify). This is the minimum, you 
+can upload startlists too for example, if you want to. 
+ 
+In Europa cup, you must upload the following lists: 
+ 
+Moguls and Aerials: 
+- Startlist for qualification 
+- Results from qualification 
+- Startlist for final 
+- Final results (final + those who didn’t qualify)  
+ 
+Dual Moguls: 
+- startlist (brackets) 
+- final result list 
+- final result brackets 
+ 
+In other Continental Cups 
+- consult your Race Director
+
+--- page 69 ---
+69 
+.xml Export 
+Go to “Result Publishing” -> “FIS XML Export”. 
+The following window will open: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+- by clicking the three dots you can choose the location on your computer where you  
+export the xml files.  
+- choose the gender 
+- write in correct cup code, for example EC, FIS, NAC etc. 
+ - click “Generate XML” to create the file for selected gender 
+ 
+In order to upload xml files to the FIS website:  
+ 
+- send an email to results@fis-ski.com  
+- attach the file you want to upload  
+- You can attach one xml file per email
+
+--- page 70 ---
+70 
+Timing Report 
+ 
+From every Moguls and Dual Moguls event a timing report must be prepared and sent to FIS. The timing report 
+is usually prepared by the Chief of Timing of the event. You must do a separate timing report for each gender. 
+ 
+In order to create the report, download the Timing Report software from the FIS website and install it on your 
+computer: 
+ 
+https://www.fis-ski.com/inside-fis/general-fis-documents/timing-data#Timing%20Report 
+ 
+ 
+The program lets you create the report, as an xml file, which you must send to FIS by email. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+When you enter the name of the results software company choose “Global-Sportservice GmbH”. For the 
+software name, write “Fss Light”. You can find the software version in the first window, when you open the 
+scoring software.
+
+--- page 71 ---
+71 
+ 
+Finally, you must send the timing report to FIS. 
+ 
+- send an email to results@fis-ski.com 
+- write as subject nation + competition codex, for example: FRA1234 
+- attach the xml 
+ 
+ 
+NOTE: For more detailed instructions, see the Timing Report User Manual on the FIS website:  
+https://www.fis-ski.com/inside-fis/general-fis-documents/timing-data#Timing%20Report
+
+--- page 72 ---
+72 
+Vmix 
+VMix is the streaming program for online judging. 
+ 
+Connect the “UltraStudio Recorder 3G” to the camera and the streaming computer. 
+Then turn on the camera. 
+ 
+ 
+ 
+ 
+ 
+ 
+Open “Desktop Video Setup” and choose the connection of the video cable to the 
+UltraStudio Recorder 3G (HDMI/SDI), then click “save”, the white light on the Blackmagic 
+should be on. 
+ 
+check the resolution
+
+--- page 73 ---
+73 
+When you open Vmix this window will open. 
+Click on “new”: all the settings are going to be saved, click on “last”: you get the last saved setting. 
+ 
+After setting the Video Input open the Vmix program: This window will open. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+➔ click on "Camera" 
+➔ Choose “UltraStudioRecorder 3G” 
+➔ Click “ok” 
+Resolution and Frame rate has to be the same! 
+Click on “Add Input” (bottom left) 
+→ next window will open. 
+ 
+ 
+ 
+ 2. 
+1. 
+3.
+
+--- page 74 ---
+74 
+➔ Click “Add Input” 
+➔ Click “Instant Replay” 
+➔ Choose the correct folder for the Videos 
+(create a new folder for every competition) 
+➔ Make sure the right camera is inserted 
+➔ Click “ok” 
+ 
+Control that the settings for resolution and frame rate are the same here as above. 
+ 
+3. 
+2. 
+ 4. 
+5. 
+1.
+
+--- page 75 ---
+75 
+Replay: 
+➔ click on the “wheel” 
+➔ click on “Layers” 
+➔ choose: “Texting Bound Rainbow gtzip” 
+➔ close this window 
+ 
+ 
+ 
+1. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+1. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Change “Rainbow text” to “REPLAY” and press “ok” 
+2.
+
+--- page 76 ---
+76 
+Twitch 
+ 
+Then click on “Stream” setting. 
+ 
+ 
+Another window will open: 
+➔ choose the streaming destination: Twitch 
+➔ click on “Login and Update Channels 
+➔ Wait until you see a channel 
+➔ click “Save and Close” 
+ 
+ 
+ 
+once you are connected with “twitch” click on “Stream” and wait until it turns 
+red (see the picture in the next page). 
+1. 
+2. 
+3. 
+4.
+
+--- page 77 ---
+77 
+MESHCAST.IO: Backup streaming 
+Go to your browser and search “meshcast.io”. This window open: 
+➔ click on “no audio” 
+➔ click on “ViMix” Video 
+➔ click on “Randomize”--> see the next picture, that shows the link 
+ 
+ 
+ 
+3. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+1. 
+ 
+ 
+ 
+This link has to be inserted in the GSS Data Programm when you are setting the Online Judging (view page 
+n°12), it is needed as a backup streaming if Twitch does not work. 
+ 
+ 
+Keep open this window to make sure Meshcast is running. 
+Always use the same link with 
+the ongoing events name at the 
+end (ex: “ecairolo”).
+
+--- page 78 ---
+78 
+Replay recording this picture shows the streaming 
+Turn on the camera and you should see this screen with the live event you are 
+filming. 
+Click on “instant replay” 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Click on this sign to be ready to stream 
+ 
+With this bottom you change the two pictures. 
+Judges see what is on the right side. 
+To show the replay change the “screens” 
+ 
+During competition 
+For replay: push “in” when the athlete starts their run and “out” when they cross the finish line. 
+To show the replay to the judges what do you press? So, you can see the last run. 
+how to slow down? MO 100% and AE 50%. 
+If you need to see older runs you need to choose the right clip and click here and manually change the 
+two sliders so the judges can see the replay.

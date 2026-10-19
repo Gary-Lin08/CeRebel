@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package cerebel.playground.v1;
+
+// Capture contract for CeRebel Playground.
+// The iOS app streams 640x480 JPEG frames in blocks for body-mesh reconstruction.
+
+service CaptureService {
+  // Client-streaming capture session: header, then video frames.
+  rpc StreamCapture(stream CapturePacket) returns (CaptureAck);
+
+  // Lightweight reachability check used by the app settings screen.
+  rpc Ping(PingRequest) returns (PingResponse);
+}
+
+message CapturePacket {
+  oneof payload {
+    SessionHeader header = 1;
+    VideoFrame frame = 2;
+    FrameBlock block = 3;
+  }
+}
+
+message SessionHeader {
+  string session_id = 1;
+  string device_model = 2;
+  string os_version = 3;
+  string app_version = 4;
+  int32 width = 5;
+  int32 height = 6;
+  int32 target_fps = 7;
+  PixelFormat pixel_format = 8;
+  CameraPosition camera_position = 9;
+  CameraIntrinsics intrinsics = 10;
+  bool synthetic_source = 11;
+}
+
+message VideoFrame {
+  int64 timestamp_ns = 1;
+  int32 frame_index = 2;
+  int32 width = 3;
+  int32 height = 4;
+  PixelFormat pixel_format = 5;
+  bytes plane0 = 6;
+  bytes plane1 = 7;
+  int32 stride0 = 8;
+  int32 stride1 = 9;
+  CameraIntrinsics intrinsics = 10;
+  DeviceMotion motion = 11;
+  int32 rotation_degrees = 12;
+}
+
+message CameraIntrinsics {
+  float fx = 1;
+  float fy = 2;
+  float cx = 3;
+  float cy = 4;
+}
+
+message DeviceMotion {
+  float qx = 1;
+  float qy = 2;
+  float qz = 3;
+  float qw = 4;
+  float gravity_x = 5;
+  float gravity_y = 6;
+  float gravity_z = 7;
+}
+
+message CaptureAck {
+  string session_id = 1;
+  int64 frames_received = 2;
+  int64 bytes_received = 3;
+}
+
+message FrameBlock {
+  repeated VideoFrame frames = 1;
+}
+
+message PingRequest {}
+
+message PingResponse {
+  string server_version = 1;
+}
+
+enum PixelFormat {
+  PIXEL_FORMAT_UNSPECIFIED = 0;
+  PIXEL_FORMAT_NV12 = 1;
+  PIXEL_FORMAT_BGRA32 = 2;
+  PIXEL_FORMAT_JPEG = 3;
+}
+
+enum CameraPosition {
+  CAMERA_POSITION_UNSPECIFIED = 0;
+  CAMERA_POSITION_BACK = 1;
+  CAMERA_POSITION_FRONT = 2;
+}

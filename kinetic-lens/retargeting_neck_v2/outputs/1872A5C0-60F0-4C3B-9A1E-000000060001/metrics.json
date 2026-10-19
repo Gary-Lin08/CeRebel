@@ -1,0 +1,140 @@
+{
+  "n_frames": 148,
+  "head_orientation_world_old_deg": {
+    "mean": 50.7312,
+    "median": 43.2969,
+    "p95": 113.8162,
+    "max": 115.4979,
+    "rmse": 68.6041
+  },
+  "head_orientation_world_new_deg": {
+    "mean": 30.6795,
+    "median": 18.5383,
+    "p95": 97.966,
+    "max": 98.4398,
+    "rmse": 45.2915
+  },
+  "head_orientation_error_deg": {
+    "old_RMSE_deg": 68.6041,
+    "new_RMSE_deg": 45.2915,
+    "improvement_percent": 33.98,
+    "old": {
+      "mean": 50.7312,
+      "median": 43.2969,
+      "p95": 113.8162,
+      "max": 115.4979,
+      "rmse": 68.6041
+    },
+    "new": {
+      "mean": 30.6795,
+      "median": 18.5383,
+      "p95": 97.966,
+      "max": 98.4398,
+      "rmse": 45.2915
+    },
+    "note": "SO(3) geodesic after aligning frame 0; old uses torso as welded head"
+  },
+  "head_orientation_relative_to_torso": {
+    "old": {
+      "mean": 87.7884,
+      "median": 93.0411,
+      "p95": 120.7304,
+      "max": 126.5266,
+      "rmse": 90.2476
+    },
+    "new": {
+      "mean": 77.1547,
+      "median": 74.1973,
+      "p95": 103.6512,
+      "max": 104.3358,
+      "rmse": 78.6028
+    },
+    "note": "Uncalibrated torso-relative geodesic; SOMA vs OpenSim body frames differ by a near-constant offset"
+  },
+  "neck_relative_orientation_error_deg": {
+    "torso_to_neck": {
+      "mean": 18.6213,
+      "median": 17.0371,
+      "p95": 47.3475,
+      "max": 48.0409,
+      "rmse": 22.1442
+    },
+    "neck_to_head": {
+      "mean": 88.2004,
+      "median": 89.6084,
+      "p95": 96.7305,
+      "max": 97.676,
+      "rmse": 88.4049
+    }
+  },
+  "head_position_error_m": {
+    "old": {
+      "rmse": 0.2028,
+      "mean": 0.1607
+    },
+    "new": {
+      "rmse": 0.223,
+      "mean": 0.1884
+    }
+  },
+  "hierarchy": {
+    "Chest->Neck1": {
+      "mean_step_deg": 0.4543,
+      "p95_step_deg": 1.7635,
+      "max_step_deg": 2.4044
+    },
+    "Chest->Neck2": {
+      "mean_step_deg": 0.7176,
+      "p95_step_deg": 2.1031,
+      "max_step_deg": 3.5273
+    },
+    "Neck1->Head": {
+      "mean_step_deg": 0.9156,
+      "p95_step_deg": 3.1718,
+      "max_step_deg": 4.8187
+    },
+    "Neck2->Head": {
+      "mean_step_deg": 1.0446,
+      "p95_step_deg": 4.0068,
+      "max_step_deg": 5.7976
+    },
+    "selected": "Chest\u2192Neck1 (lower cervical), Neck2\u2192Head (upper cervical / skull)",
+    "reason": "Neck1 is the first cervical-like child of Chest; Head is parented to Neck2 in SOMA77. Using Neck2\u2192Head keeps the C1/skull joint from absorbing the whole cervical chain."
+  },
+  "calibration_neutral_index": 147,
+  "ik": {
+    "n_frames": 148,
+    "start": 0.0,
+    "end": 2.45,
+    "mean_marker_rmse_m": 0.075985,
+    "bodies": [
+      "pelvis",
+      "femur_r",
+      "tibia_r",
+      "patella_r",
+      "talus_r",
+      "calcn_r",
+      "toes_r",
+      "femur_l",
+      "tibia_l",
+      "patella_l",
+      "talus_l",
+      "calcn_l",
+      "toes_l",
+      "torso",
+      "neck",
+      "head",
+      "humerus_r",
+      "ulna_r",
+      "radius_r",
+      "hand_r",
+      "humerus_l",
+      "ulna_l",
+      "radius_l",
+      "hand_l"
+    ],
+    "has_neck": true,
+    "has_head": true,
+    "nan_coords": false
+  }
+}

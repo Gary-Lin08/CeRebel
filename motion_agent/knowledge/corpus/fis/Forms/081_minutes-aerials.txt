@@ -1,0 +1,79 @@
+--- page 1 ---
+MINUTES      Aerials
+PROCES-VERBAL 
+PROTOKOLL  
+Competition / Manifestation / Veranstaltung Place / Lieu / Ort Date / Date / Datum 
+Event 
+  F  
+  M
+Team Captains' Meeting of / Réunion des Chefs d'équipe du / Mannschaftsführersitzung vom
+TD Nat Name of course / Nom de la piste / Name der Strecke 
+/
+Head Judge / Juge  principal / 
+Oberkampfrichter     
+Start Area / de départ / Startplatz 
+Length/Longeur/Weite   Angle/Angle/Winkel    Width / Largeur / Breite 
+_____m/   ____ º/  _____m
+Chief of Competition / Directeur de l'épreuve / 
+Rennleiter 
+Inrun /   /  
+Length/Longeur/Weite  Angle/Angle/Winkel  Width/ Largeur / Breite 
+_____m/   ____ º/  _____m
+Chief of Course / Chef de piste / Pistenchef Table /  
+Number/Nombre/Nummer Angle/Angle/Winkel Width/Largeur /Breite 
+_____   ____º/  m /
+Assit. Chief of Course / Chef de piste / 
+Pistenchef 
+Landing Hill /  
+Number/Nombre/ Nummer Angle/Angle/Winkel Width/Largeur / Breite 
+ _____  ____º/   m
+Starter / Juge au départ / Startrichter Finish/Arrivée/Ziel     
+Number/Nombre/ Nummer Angle/Angle/Winkel Width/Largeur / Breite 
+ _____  ____º/   m
+Competition Format FIS Homolog. No. / No. Homolog. FIS / FIS Homolog. Nr. 
+Jump Dimensions Height (m) From Knoll (m) Width(m) Angle(
+ ) Shaper Nat. 
+Jump 1 
+Jump 2 
+Jump 3 
+Jump 4 
+Jump 5 
+Jump 6 
+Jump 7 
+Qualifications/ Qualification / Qualifikation Nat Final Round or A seed Nat 
+Forerunners/Ouvreurs/Vorläufer 
+- A -
+Forerunners/Ouvreurs/Vorläufer 
+- A -
+- B - - B - 
+- C - - C - 
+Weather Forecast/Prévisions du temps/Wetterprognose 
+Competition Program /  Compétition Programme / Rennen Programm start 
+time
+finish time 
+- Breakfast start
+- First run on lift  / Ouverture des remontées mécaniques / Erste Bergfahrt
+- Official Training Seeded Groups / Entraînement officiel / Offizielles Training
+- Fore Runners / Ouvreur / Vorläufer
+- Start Time Competition
+- Official Training Groups
+- Start Time of Group Competition
+- Official Results
+- Time and place of prizegiving/ Heure de la distribution des prix / Ort der Preisverteilung
+
+--- page 2 ---
+Velocity Indicator 
+Jury meeting Réunion du Jury /Treffpunkt Jury 
+Distribution of radio equipment/Remise des appareils radio/Abgabe Funkgeräte 
+Next Team Captains' meeting/Prochaine réunion des chefs d'équipe/Nächste Mannschaftsführersitzung 
+Miscellaneous/Divers/Besonderes 
+Press Inspection/Reconnaissance par la presse/Presse-Besichtiigung 
+Lift facilities/Remontées mécaniques/Bergbahnen 
+Parking/Places de parc/Parkplätze 
+Prizegiving/Distribution des prix/Preisverteilung 
+Opening times of race office/Heures d'ouverture bureau des courses/Öffnungszeiten Wettkampfbüro 
+Comments in the language of the country + one of the FIS languages 
+Commentaires dans la langue du pays + une des langues FIS 
+Kommentare in Landessprache + eine FIS-Sprache 
+Signature of Competition Secretary/Signature du secrétaire de 
+la course/Unterschrift Wettkampfsekretär

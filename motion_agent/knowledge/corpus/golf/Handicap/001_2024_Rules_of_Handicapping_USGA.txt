@@ -1,0 +1,3514 @@
+--- page 1 ---
+Rulesof
+Handicapping
+EffectiveJanuary2024
+© 2023 The United States Golf Association and R&A Rules Limited.
+All Rights Reserved.
+
+--- page 2 ---
+Together,theUSGA,basedinLibertyCorner,NewJersey,and
+TheR&A,basedinStAndrews,Scotlandgovernthegame
+worldwide,includingwritingandinterpretingtheRulesofGolf,
+RulesofAmateurStatusandRulesofHandicapping.
+IncollaboratingtoissuetheRulesofGolfandRulesofAmateur
+Status,theUSGAandTheR&Aoperateinseparateworking
+jurisdictions.TheUSGAisresponsibleforadministeringthe
+RulesofGolfandRulesofAmateurStatusintheUnitedStates,
+itsterritoriesandMexico,andTheR&A,operatingwiththe
+consentofitsaffiliatedgolfingbodies,hasthesame
+responsibilitiesforallotherpartsoftheworld.
+IncollaboratingtoissuetheRulesofHandicapping,aswellas
+theotherpartsoftheWorldHandicapSystem,theUSGAandThe
+R&Aoperatejointlythroughouttheworld.
+www.RandA.org www.USGA.org
+
+--- page 3 ---
+3
+Contents
+FOREWORD 7
+PRINCIPAL CHANGES 10
+DEFINITIONS 12
+I. FUNDAMENTALS OF HANDICAPPING (RULE 1) 19
+Rule 1 - Purpose and Authorization; Obtaining a Handicap Index 20
+1.1 PurposeoftheWorldHandicapSystem 20
+1.2 AuthorizationtoUsetheWorldHandicapSystem 21
+1.3 ResponsibilitiesofPlayer,HandicapCommitteeandAuthorized
+Association 22
+1.4 HowtoObtainaHandicapIndex 24
+1.4a JoiningaGolfClub
+1.4b DesignatingaHomeClub
+24
+25
+II. SCORES FOR HANDICAP PURPOSES (RULES 2 - 4) 27
+Rule 2 - Scores Acceptable for Handicap Purposes 28
+2.1 AcceptabilityofScores 28
+2.1a PlayedinanAuthorizedFormatofPlay
+2.1b PlayedbyTheRulesofGolf
+30
+33
+2.2 MinimumNumberofHolesPlayedforScoretobeAcceptable 35
+2.2a Foran18-holeScore
+2.2b Fora9-holeScore
+35
+35
+Rule 3 - Adjustment of Hole Scores 36
+3.1 MaximumHoleScoreforHandicapPurposes 36
+3.1a BeforeaHandicapIndexHasBeenEstablished
+3.1b AfteraHandicapIndexHasBeenEstablished
+36
+36
+3.2 WhenaHoleisNotPlayed 38
+3.2aReasonforNotPlayingOneorMoreHoles 38
+3.2bScoretoRecordWhenOneorMoreHolesNotPlayed 39
+3.3 WhenaHoleisStartedButPlayerDoesNotHoleOut 41
+Contents
+
+--- page 4 ---
+4
+Rule 4 - Submitting a Score 45
+4.1 InformationRequiredforScoringRecord 45
+4.1a General
+4.1b ForScoresPriortoEstablishingaHandicapIndex
+45
+47
+4.2 EligibilitytoSubmitaScore 47
+4.3 TimeFrameforSubmittingaScore 47
+4.4 CertificationofaScore 48
+4.5 NumberofScoresRequiredforInitialHandicapIndex 49
+III. HANDICAP CALCULATION AND UPDATING A HANDICAP
+INDEX (RULES 5 - 6) 51
+Rule 5 - Handicap Index Calculation 52
+5.1 CalculationofaScoreDifferential 52
+5.1a Foran18-holeScore
+5.1b Fora9-holeScore
+5.1c RoundingofMinusScoreDifferentials
+52
+53
+53
+5.2 CalculationofaHandicapIndex 54
+5.2a ForFewerThan20Scores
+5.2b For20Scores
+5.2c ForPlusHandicapIndex
+54
+56
+56
+5.3 MaximumHandicapIndex 57
+5.4 FrequencyofRevisionofaHandicapIndexUpdate 57
+5.5 AgeingofScoresandLapsingofaHandicapIndex 58
+5.6 PlayingConditionsCalculation 59
+5.7 LowHandicapIndex 63
+5.8 LimitonUpwardMovementofaHandicapIndex 65
+5.9 SubmissionofanExceptionalScore 66
+Rule 6 - Course Handicap and Playing Handicap Calculation 68
+6.1 CourseHandicapCalculation 68
+6.1a Foran18-holeRound
+6.1b Fora9-holeRound
+68
+69
+6.2 PlayingHandicapCalculation 70
+6.2a StandardCalculation
+6.2b CalculationWhenMultipleTeeswithDifferentParsAre
+UsedinaCompetition
+70
+71
+Contents
+
+--- page 5 ---
+5
+IV. ADMINISTRATION OF A HANDICAP INDEX (RULE 7) 73
+Rule 7 - Committee Actions 74
+7.1 HandicapCommittee 74
+7.1a ConductingaHandicapReviewandAdjustingaHandicap
+Index
+7.1b PostingaMissingScoreorPenaltyScore
+7.1c WithdrawingaHandicapIndex
+7.1d ReinstatingaHandicapIndex
+74
+78
+80
+81
+7.2 CommitteeinChargeofaCompetition 81
+7.2a TermsoftheCompetition
+7.2b OtherActions
+81
+82
+V. APPENDICES 84
+Appendix A: Rights & Responsibilities 84
+Appendix B: Player’s Scoring Record 90
+Appendix C: Handicap Allowances 96
+Appendix D: Handicap Review 103
+Appendix E: Stroke Index Allocation 106
+Appendix F: Establishing Par 108
+Appendix G: The Golf Course, Course Rating and Slope Rating 110
+VI. LOCAL GUIDANCE FOR GOLF CLUB COMMITTEES 117
+INDEX 119
+Contents
+
+--- page 7 ---
+7
+Forewordtothe2024Editionofthe
+RulesofHandicapping
+WelcometothefirstrevisiontotheRulesofHandicapping™;anupdatetothesinglesetofRules
+thatwasfirstintroducedin2020toenhancetheenjoymentofgolfersworldwide.
+TheRulesofHandicappingarepartoftheWorldHandicapSystem™(WHS™),whichalsoincludes
+theCourseRatingSystem™,andtheyarejointlygovernedbytheUSGAandTheR&Aonaunified
+basisthroughouttheworld.Theadministrationandoversightofhandicappingineachcountryis
+theresponsibilityofNationalAssociationsorotherauthorizedbodies,whichensuresthesystem
+operateseffectivelyandresponsivelyatthelocallevel.
+Recentyearshaveseenasignificantincreaseinparticipationinthegameofgolfand,withthat,an
+increaseinthenumberofscoressubmittedforhandicappurposes.SinceitslaunchinJanuary
+2020,theWHShasbeenadoptedbyover125countriesandisbeingactivelyusedbymillionsof
+golfers.WearedelightedattheparttheWHSisplayingtopromoteandsupportthegrowthofthe
+sport.
+ThisfirstrevisiontotheRulesofHandicappingcontinuestobuildontheoriginalthreeobjectives,
+whichhaveeachguidedthedevelopmentofWHSsinceitsinceptionandformedastrong
+foundation:(i)toencourageasmanygolfersaspossibletoobtainandmaintainahandicap;(ii)to
+enablegolfersofdifferingabilities,gendersandnationalitiestotaketheirhandicaptoanycourse
+intheworldandcompeteonafairbasis,and(iii)toindicatewithsufficientaccuracythescorea
+golferisreasonablycapableofachievingonanycoursearoundtheworld,playingundernormal
+conditions.
+Inparticular,therevisionsaimtoenhancetheinclusivity,accessibilityandintegrityofthesystem
+andexamplesinclude(i)alowerminimumlengthrequirementforaCourseRating™tobeissued,a
+changethatwillaccommodatemanyshorterandpar3courses,and(ii)morerobustand
+meaningfulsafeguards,includingincreasedguidanceontheHandicapReviewprocedureand
+eligibilitycriteriaforelitelevelevents.
+AsummaryoftheprincipalchangescanbefoundonPage10.Mostofthesechangeswillbe
+implementedbythehandicapsoftwareusedbyNationalAssociationsandgolfclubsand,therefore,
+donotrequireanychangeinbehaviourbygolfers.However,onechangethatplayersmaybeasked
+toundertakemorefrequentlyisthesubmissionofhole-by-holescorestofacilitatethenew
+methodofhandling‘holesnotplayed’underRule3.2.
+ThanksmustgototheHandicapOperationsCommitteeanditssub-Committeesfortheinvaluable
+insightsthattheycontinuetoprovide,andwhichhaveultimatelyhelpedtoproducethisnew
+editionoftheRulesofHandicapping.
+Sharon Ritchey (USGA)
+Chair
+WorldHandicapAuthority
+Birgitta Ljung (The R&A)
+Chair
+HandicapOperationsCommittee
+Foreword
+
+--- page 8 ---
+:ROLEX; 
+ONE STANDARD 
+A tradition of excellence comes not just from celebrating a game's great 
+past, but in leading it into the future. Alongside the USGA and The R&A, 
+Rolex is proud to be part of the vision of a truly timeless sport. 
+#Perpetual
+
+--- page 10 ---
+10
+Principal Changes Introduced in
+the 2024 Rules of Handicapping
+Rule 3.2a When a Hole is Not Played
+Rule 3.2 has been restructured as follows:
+Rule 3.2a provides more clarity on what might constitute a valid or invalid 
+reason for not playing one or more holes.
+Rule 3.2b sets out a new method for calculating an 18-hole Score 
+Differential when one or more holes have not been played for a valid reason. 
+This new method replaces the net par procedure with an expected score (see 
+new Definition).
+Two new Clarifications set out:
+l AsummaryoftheprocedureforcalculatingaScoreDifferentialusingan
+expectedscore,and
+l Allowingfortheuseofnetparinlimitedcircumstances.
+Rule 5.1b Calculation of a Score Differential – For a 9-hole 
+Score
+The previous method of combining two 9-hole scores has been replaced with 
+use of an expected score where the 9-hole Score Differential is combined with 
+the expected score of a player with a given Handicap Index to produce an 18-
+hole Score Differential.
+Rule 5.2c For Plus Handicap Index
+ThisRulehasbeenupdatedtoincludetheClarificationissuedinJuly2022
+providingguidanceonthedesignationofaplus(+)HandicapIndex.
+Rule 6.2a Playing Handicap Calculation – Standard
+Calculation
+ThisRulehasbeenupdatedtoincludetheClarificationissuedinSeptember
+2021givingsomediscretiononwhenroundingoccurs.
+Principal Changes
+
+--- page 11 ---
+11
+Rule 7.1b Posting a Missing Score or Penalty Score
+ThisRulehasbeenrestructuredforclarityandtoprovidemoreguidanceon
+whatpenaltyscoretoapply,indifferentcircumstances.
+Rule 7.2a Committee in Charge of the Competition - Terms
+of the Competition
+Rule7.2ahasbeenupdatedtoincorporatetheClarificationissuedinJanuary
+2023,providingadditionalguidanceforCommitteesinchargeofelitelevel
+competitionsregardingentry/eligibilityrequirements.
+Appendix C Handicap Allowances
+AppendixChasbeenamendedtoclarifythattherecommendedallowancesare
+basedona‘normal’fieldsizeandmake-up,andthataCommitteecanconsider
+adjustingtheallowancesforotherfieldsizesordifferentfieldmake-ups.
+Arecommendedallowancefora3-playerscrambleformathasbeenaddedto
+thetable.
+Theapplicationofallowancesinteammatchplayeventshasalsobeenchanged
+sothatthe%isappliedtothedifference,ratherthantotheindividual.
+Appendix D Handicap Review
+AppendixDhasbeenupdatedtoincorporateadditionalguidance,whichwill
+enhancethetoolsavailabletoHandicapCommitteestoassistthemwiththe
+handicapreviewprocess.
+Appendix F Establishing Par
+Rule6.2ahasbeenamendedtorecommendthestandardizationofparacross
+teesets,whereappropriate.
+Appendix G The Golf Course, Course Rating and Slope
+Rating
+AppendixGhasbeenupdatedtoincludethenewminimumlengthofagolf
+coursetobeeligibleforaCourseRatingandSlopeRating.Thiswillallowscores
+tobeacceptableforhandicappurposesoveragolfcourseof1500yards[1370
+metres]for18holesand750yards[685metres]for9holes.
+Principal Changes
+
+--- page 12 ---
+12
+Definitions
+Acceptable Score
+Ascorefromanauthorizedformatofplaywhichmeetsalltheprovisionssetout
+withintheRulesofHandicapping(seeRule2).
+Active Season
+Theperiodoftimewhenacceptablescoresfromaspecifiedareashouldbe
+submittedforhandicappurposes,asdeterminedbytheAuthorizedAssociation
+wheretheroundisplayed.
+Adjusted Gross Score
+Aplayer’sgrossscore,includinganypenaltystrokes,adjustedforwhen:
+l Theplayerexceedstheirmaximumholescore,
+l Aholeisnotplayed,or
+l Aholeisstartedbuttheplayerdoesnotholeout.
+(SeeRule3.)
+Authorized Association
+Anentitythatisauthorized,inaccordancewiththestructuresetoutbytheUnited
+StatesGolfAssociation(USGA)andR&ARulesLimited(TheR&A),toimplement
+andadministertheRulesofHandicappingwithinitsjurisdictionandtocarryout
+theresponsibilitiesasdelegatedtoitbytheauthoritythroughwhichitis
+authorized.SuchanentitymustbeaMulti-National,NationalorRegional
+Association,FederationorUnionunlessotherwiseapprovedbytheUSGAandThe
+R&Awherenosuchentityexists.
+Authorized Format of Play
+Aformatofplayeligibleforhandicappurposes,asdeterminedbytheAuthorized
+Associationwheretheroundisplayed(seeRule2.1a).
+Bogey Player
+AplayerwithaHandicapIndexofapproximately20.0formenandapproximately
+24.0forwomen.
+Definitions
+
+--- page 13 ---
+13
+Cap
+Theprocedurethatreducesorlimitstheamountbywhichaplayer’sHandicap
+Indexcanincreasewhenmeasuredagainsttheplayer’sLowHandicapIndex.There
+aretwotriggerpointswithinthecapprocedure:
+l Softcap–thepointafterwhichthereisareductionintherateofupward
+movementofaHandicapIndex.
+l Hardcap–thepointwhichsetsthemaximumlimitfortheupwardmovement
+ofaHandicapIndex.
+(SeeRule5.8.)
+Certification of Score
+Theverificationofaplayer’sscore.Thiscanbeevidencedintwoways:
+l Byamarker’sphysicalsignatureorelectroniccertification,and/or
+l Throughpeerreview.
+(SeeRule4.4.)
+Course Handicap
+Thenumberofhandicapstrokesaplayerreceives,beforehandicapallowances,
+fromaspecificsetofteesasdeterminedbytheSlopeRatingandthedifference
+betweenCourseRatingandpar(seeRule6.1).
+Course Rating
+Anindicationofthedifficultyofagolfcourseforthescratchplayerundernormal
+courseandweatherconditions(seeAppendixG).
+Exceptional Score
+AScoreDifferentialwhichisatleast7.0strokesbetterthantheplayer’sHandicap
+Indexatthetimetheroundwasplayed(seeRule5.9).
+Expected Score
+Thescoreaplayerisexpectedtoachieveoveraspecifiednumberofholesona
+courseofstandarddifficulty.Itiscalculatedusingtheplayer’sHandicapIndexand
+attributesanumericalvalueagainstanyholeorholesnotplayedduringaround.
+Definitions
+
+--- page 14 ---
+14
+General Play
+Whenanorganizedcompetitionisnotbeingcontestedandgolfersareplaying:
+l Acasualround;or
+l Competitively,butnotinaneventorganizedbyaCommittee.
+Golf Club
+Anorganizationthatispermitted,throughaffiliationtoitsAuthorizedAssociation,
+toadministerandmanagetheHandicapIndexofthoseplayerswhohave
+designateditastheirhomeclub,inaccordancewiththerequirementsoftheRules
+ofHandicapping.Toqualifyforaffiliation,agolfclubmayberequiredtosatisfy
+certainrequirementsasdeterminedbyitsAuthorizedAssociation.
+Golf Course
+Anareaoflandwheregolfisplayed,madeupofthefollowingfiveareasas
+definedintheRulesofGolf:
+1. Thegeneralarea,
+2. Theteeingareaaplayermustplayfrominstartingtheholebeingplayed,
+3. Allpenaltyareas,
+4. Allbunkers,and
+5. Theputtinggreenoftheholebeingplayed.
+Eachholemayhavemultipleteeingareasand,forhandicappurposes,agolf
+courseismadeupofadesignatedsetofteesoneachhole.Assuch,eachsetof
+tees(orgolfcourse)shouldhaveaseparateCourseRatingandSlopeRating,
+includingoneforeachgenderwhereappropriate.
+Handicap Allowance
+ThepercentageofaCourseHandicaprecommendedtocreateequityforallplayers
+participatinginaspecificformatofplay(seeAppendixC).
+Handicap Committee
+TheentityestablishedbyagolfcluboranAuthorizedAssociationwhichis
+responsibleforensuringcompliancewiththeobligationsofthegolfclubor
+AuthorizedAssociationundertheRulesofHandicapping(seeRule1.3and
+AppendixA).
+Definitions
+
+--- page 15 ---
+15
+Handicap Index
+Themeasureofaplayer’sdemonstratedabilitycalculatedagainsttheSlopeRating
+ofagolfcourseofstandardplayingdifficulty(thatis,acoursewithaSlopeRating
+of113)(seeRule5.2).
+Handicap Review
+AprocedurecarriedoutbytheHandicapCommitteetodetermineiftheHandicap
+Indexofanymemberwhohasdesignatedthatgolfclubastheirhomeclubneeds
+tobeadjusted(seeRule7.1aandAppendixD).
+Hard Cap (see Cap)
+Home Club
+Aplayer’sprimarygolfclubdesignatedbytheplayertoensuretheirHandicap
+IndexismanagedinaccordancewiththeRulesofHandicapping.
+Inactive Season
+Theperiodoftimewhenscoresinaspecifiedareacannotbesubmittedfor
+handicappurposes,asdeterminedbytheAuthorizedAssociationwheretheround
+isplayed.
+Jurisdiction
+ThegeographicterritoryinwhichanAuthorizedAssociationadministerstheRules
+ofHandicapping.
+Low Handicap Index
+ThelowestHandicapIndexcalculatedfortheplayerduringthe365-dayperiod
+(oneyear)precedingthedayonwhichthemostrecentscoreontheirscoring
+recordwasplayed(seeRule5.7).
+Member
+Anindividualwhojoinsagolfclubinamannerdeterminedbyclubpolicy,which
+allowstheplayertoobtainaHandicapIndex.
+Most Likely Score
+Thescoreaplayerrecordsforhandicappurposesforaholethatisstartedbut
+wheretheplayerdoesnotholeout(seeRule3.3).
+Definitions
+
+--- page 16 ---
+16
+Net Double Bogey
+Ascoreequaltotheparofaholeplustwostrokesandadjustedforanyhandicap
+strokesappliedonthathole.Anetdoublebogeyisaplayer’smaximumholescore
+forhandicappurposes(seeRule3.1).
+Net Par
+Ascoreequaltotheparofaholeadjustedforanyhandicapstrokesappliedon
+thathole(seeRule3.2).
+Par
+Thescorethatascratchplayerwouldgenerallybeexpectedtoachieveonahole
+undernormalcourseandweatherconditions,allowingfortwostrokesonthe
+puttinggreen(seeAppendixF).TheAuthorizedAssociation,oratthediscretionof
+theNationalAssociationthegolfclub,isresponsibleforadjudicatingpar(see
+AppendixA).
+Peer Review
+TheprocessbywhichascoreorHandicapIndexcanbeconfirmedorchallenged
+(seeRule4.4).
+Penalty Score
+AscorepostedatthediscretionoftheHandicapCommitteeforaplayerwho:
+l Failstosubmitanacceptablescore,and/or
+l Doesnotcompletetheirround,ordoesnotplayoneormoreholes,foran
+invalidreason(seeRule7.1b(ii)).
+Playing Conditions Calculation (PCC)
+Thestatisticalcalculationthatdeterminesifconditionsonadayofplaydiffered
+fromnormalplayingconditionstotheextentthattheysignificantlyimpacted
+players’performance.Examplesofconditionsthatcouldimpactplayers’
+performanceinclude:
+l Courseconditions,
+l Weatherconditions,and
+l Courseset-up.
+(SeeRule5.6.)
+Definitions
+
+--- page 17 ---
+17
+Playing Handicap
+TheCourseHandicapadjustedforanyhandicapallowancesorTermsofthe
+Competition.Itrepresentstheactualnumberofstrokestheplayergivesor
+receivesfortheroundbeingplayed(seeRule6.2).
+Rules of Golf
+TheRulesofGolfasapprovedbytheUnitedStatesGolfAssociation(“USGA”)and
+R&ARulesLimited(“TheR&A”),includinganyLocalRulesthe Committee adopts
+forthecompetitionorthe golfcourse.
+Rules of Handicapping
+TheRulesofHandicappingasapprovedbytheUnitedStatesGolfAssociation
+(“USGA”)andR&ARulesLimited(“TheR&A”)andadministeredbytheAuthorized
+Associationwithinitsjurisdiction.
+Score Differential
+Thedifferencebetweenaplayer’sadjustedgrossscoreandtheCourseRating,
+reflectingtheSlopeRatingandtheplayingconditionscalculation.Itisthenumerical
+valueattributedtoascoreachievedonagolfcourseonaspecificdaythatis
+postedintotheplayer’sscoringrecord. AScoreDifferentialmustbean18-hole
+valueoritscalculatedequivalent.
+(SeeRule5.1).
+Scoring Record
+Ahistoryofaplayer’sacceptablescoresalongwith:
+l Theplayer’scurrentHandicapIndex,
+l Theplayer’sLowHandicapIndex,
+l Otherdetailsabouteachround(suchas,thedatetheroundwasplayed),and
+l Anyapplicableadjustments(forexample,anexceptionalscore).
+(SeeAppendixB.)
+Score Type
+Adesignationthatidentifiesthetypeofacceptablescorethatappearswithina
+player’sscoringrecord(seeAppendixB).
+Scratch Player
+AplayerwithaHandicapIndexof0.0.
+Definitions
+
+--- page 18 ---
+18
+Slope Rating
+Anindicationoftherelativedifficultyofagolfcourseforplayerswhoarenot
+scratchplayerscomparedtoplayerswhoarescratchplayers(seeAppendixG).
+Soft Cap (see Cap)
+Stroke Index
+Thevalueassignedtoeachholeonagolfcoursetoindicatewherehandicap
+strokesaregivenorreceived(seeAppendixE).
+Definitions
+
+--- page 19 ---
+I
+I.Fundamentalsof
+Handicapping
+RULE 1
+
+--- page 20 ---
+Rule 1
+20
+RULE
+1
+PurposeandAuthorization;
+ObtainingaHandicapIndex
+1.1 Purpose of the World Handicap System
+TheWorldHandicapSystemincludestheRulesofHandicappingandtheCourse
+RatingSystem.Itspurposeistoenhancetheenjoymentofthegameofgolfand
+togiveasmanygolfersaspossibletheopportunityto:
+l ObtainandmaintainaHandicapIndex,
+l UsetheirHandicapIndexonanygolfcoursearoundtheworld,and
+l Compete,orplayacasualround,withanyoneelseonafairandequitable
+basis.
+Thisisachievedby:
+l EstablishingCourseRatingsandSlopeRatingsforeachsetoftees,basedon
+lengthandplayingdifficulty(seeDiagram1.1).
+l ApplyingadjustmentstoaHandicapIndextoreflectthegolfcoursebeing
+playedandtheformatofplay.
+l Assessingtheimpactofplayingconditions,usingplayers’scoresonaspecific
+dayandapplyingadjustmentswhennecessary.
+l LimitingthemaximumholescoreforhandicappurposestoensureaHandicap
+Indexcontinuestoreflectaplayer’sdemonstratedability.
+l ApplyingauniformcalculationforupdatingaHandicapIndexforallacceptable
+scoressubmitted.
+l UpdatingaHandicapIndexonadailybasis,orsoonthereafter.
+l Reviewingaplayer’sHandicapIndexonaregularbasistoensureitcontinuesto
+reflecttheplayer’sdemonstratedability.
+
+--- page 21 ---
+Rule 1
+1.2 Authorization to Use the World Handicap System
+InordertousetheWorldHandicapSystem,anAssociationmustbeauthorizedby
+theUSGAandTheR&A.Withinitsareaofjurisdiction,anAuthorizedAssociation
+may:
+l UsetheRulesofHandicappingandtheCourseRatingSystem.
+l UsetheregisteredmarksoftheWorldHandicapSystem.
+21
+
+--- page 22 ---
+Rule 1
+22
+l Issue a Handicap Index either directly or, where delegated, through a golf club.
+l Issue a Course Rating and a Slope Rating.
+1.3 Responsibilities of Player, Handicap Committee
+and Authorized Association
+Players,HandicapCommittees andAuthorizedAssociations allplayanimportant
+roleinensuringthe RulesofHandicapping arebeingimplementedand
+administeredappropriately.
+Themainareasofresponsibilityforeachkeystakeholderare:
+(i) Player
+Aplayerisexpectedto:
+l Actwithintegritybyfollowingthe RulesofHandicapping andtorefrain
+fromusing,orcircumventing,the RulesofHandicapping forthepurpose
+ofgaininganunfairadvantage,
+l Attempttomakethebestscorepossibleateachhole,
+l Submitall acceptablescores toprovidereasonableevidenceoftheir
+demonstratedability,
+l Submitacceptablescores forhandicappurposesassoonaspossibleafter
+theroundiscompletedandbeforemidnightlocaltime,
+l Playbythe RulesofGolf ,and
+l Certifythescoresofotherplayers.
+The following trademarks and service marks are owned or licensed by the USGA 
+and The R&A; all rights reserved:
+World Handicap System™, WHS™, Handicap Index®, Score Differential™, Low
+Handicap Index™, Course Handicap™, Playing Handicap™, Course Rating 
+System™, Course Rating™, Bogey Rating™ and Slope Rating™.
+Any organization that is not authorized to use the World Handicap System is 
+prohibited from using these marks or any part of the World Handicap System. 
+This includes the Course Rating System and the handicap calculation formula, 
+except when the organization provides handicapping products or services to a 
+golf club through an Authorized Association.
+
+--- page 23 ---
+Rule 1
+(ii) Golf Club/HandicapCommittee
+l Agolfclub isaffiliatedtoits AuthorizedAssociation andisresponsiblefor
+ensuringthe HandicapIndex ofthose memberswhohavedesignateditto
+betheir homeclub isadministeredinaccordancewiththerequirements
+ofthe RulesofHandicapping .
+l AHandicapCommittee isestablishedbya golfclub andisresponsiblefor
+ensuringcompliancewiththe golfclub’s specifiedobligationsand
+responsibilitiesunderthe RulesofHandicapping .
+l WhereaNationalAssociationadministersandmanagesaplayer’s
+HandicapIndex directly,theNationalAssociationassumesthe
+responsibilitiesofa golfclub.
+(iii) Regional GolfAssociation
+l ARegionalGolfAssociationisaffiliatedtoitsNationalAssociationand
+comprisedof golfclubs and/orgolferswithinadefinedarea.
+l ARegionalGolfAssociationhasspecificresponsibilitieswithintheWorld
+HandicapSystemandmaybedelegatedadditionalobligationsbyits
+NationalAssociation.
+(iv) National Association
+l AnauthorizedNationalAssociationhastheexclusiverightstoimplement
+andadministertheWorldHandicapSystemwithinits jurisdiction,
+includingtheissuanceofa HandicapIndex.
+l ANationalAssociationhasspecificresponsibilitieswithintheWorld
+HandicapSystemandmaybedelegatedadditionalobligationsbyaMulti-
+NationalAssociation.
+l AnauthorizedNationalAssociationmaydelegatesomeofits
+responsibilitiestoaRegionalGolfAssociationora golfclub.
+23
+
+--- page 24 ---
+Rule 1
+24
+(v) Multi-NationalAssociation
+l WhereaMulti-NationalAssociationistheAuthorizedHandicappingBody,
+theMulti-NationalAssociationhastheexclusiverightstoimplementand
+administertheWorldHandicapSystemwithinitsjurisdictiononbehalfof
+allmemberNationalAssociations.
+l AnauthorizedMulti-NationalAssociationmaydelegatecertainrightsor
+responsibilitiestoaNationalAssociationwithinitsjurisdictionto
+implementandfulfiltheobligationsoftheWorldHandicapSystemon
+behalfoftheMulti-NationalAssociation.
+(vi) TheUSGAandTheR&A
+l Together,theUSGAandTheR&Aareresponsibleforwritingand
+interpretingtheRulesofHandicappingandtheCourseRatingSystem.
+l TheUSGAandTheR&AarethejointgoverningauthoritiesoftheWorld
+HandicapSystemandareresponsibleforauthorizingtheuseofthe
+WorldHandicapSystem.
+Thefullrightsandresponsibilitiesofeachkeystakeholderareoutlinedin
+AppendixA.
+1.4 How to Obtain a Handicap Index
+1.4a Joining a Golf Club
+InordertoobtainaHandicapIndexthatcanbeadministeredinaccordancewith
+theRulesofHandicapping,aplayermustbe:
+l AmemberofagolfclubthatisaffiliatedwithanAuthorizedAssociation,or
+l AdirectmemberofanAuthorizedAssociationwhichhasassumedthe
+responsibilityofagolfclub(seeRule1.3(ii)).
+ByreturningascoreforthepurposeofobtainingormaintainingaHandicapIndex,
+theplayeracknowledgesthattheuseoftheirscoringrecordwillbeavailablefor:
+l Peerreviewpurposes(SeeRule4.4),
+l IssuanceofaHandicapIndex,and
+l Administrationandresearchpurposes.
+
+--- page 25 ---
+Rule 1
+Rule 1.4a Clarifications:
+1.4a/1 – Whether a Professional Golfer Can Obtain a Handicap Index
+AprofessionalgolfermayobtainaHandicapIndex,providedtheymeetallofthe
+playerresponsibilitieswithintheRulesofHandicapping.
+1.4b Designating a Home Club
+Aplayermustdesignateonegolfclubastheirhomeclub,toberesponsiblefor
+maintainingtheirHandicapIndex.
+Whenaplayerisamemberofmorethanonegolfclub,theplayermustensure
+eachgolfclubknowsthedetailsof:
+l Allothergolfclubsofwhichtheyareamember,and
+l Whichgolfclubtheyhavedesignatedastheirhomeclub.
+Allgolfclubsofwhichaplayerisamembershouldshareinformationwiththe
+player’shomecluband/ortheAuthorizedAssociationandmay:
+l RequestthatthehomecluborAuthorizedAssociationmakesanadjustmentto
+theplayer’sHandicapIndex,or
+l Maketheirownadjustmenttotheplayer'sHandicapIndex.
+AnyactionsmustcomplywiththeAuthorizedAssociation’slocalprocedures.
+Rule 1.4b Clarifications:
+1.4b/1 – Criteria to be Used When Designating a Home Club
+Rule1.4brequiresaplayertodesignateonegolfclubastheirhomeclub.
+Whereaplayerisamemberofmorethanonegolfclub,thedecisionastowhich
+golfclubtodesignateastheirhomeclubshouldbebasedononeormoreofthe
+followingcriteria:
+l Proximityofgolfclubtoprimaryresidence(whichisinthesamecountry),
+l Frequencyofplayatagolfclub,and/or
+l Thegolfclubwheretheysubmitmostoftheiracceptablescores.
+Agolfclubmustnotpermitplayerswhodonotsatisfyoneormoreoftheabove
+criteriatodesignateitastheirhomeclub.
+25
+
+--- page 26 ---
+Rule 1
+26
+Shouldaplayer’sprimaryresidencechangeonaregularbasissuchthat
+differentgolfclubssatisfytheabovecriteriaatdifferenttimesoftheyear,the
+playershouldconsiderchangingtheirhomeclubaccordingly.
+PlayersmustnotdesignateahomeclubforthepurposeofobtainingaHandicap
+Indexthatcouldgivethemanunfairadvantage.
+1.4b/2 – Player Changes Designation of Home Club
+Whenaplayerchangesthedesignationoftheirhomeclubforanyreason,they
+mustinformallgolfclubsofwhichtheyareamemberandprovidethenewhome
+clubwiththeirscoringrecord.
+1.4b/3 – Player Who Belongs to Multiple Golf Clubs Within Different
+Jurisdictions Resulting in More Than One Handicap Index
+AppendixA,1statesthat“aplayerisexpectedto…(ii)HaveonlyoneHandicap
+Indexfromasinglescoringrecord,whichismanagedbytheplayer’shomeclub
+inaccordancewiththeRulesofHandicapping.”Itgoesontostatethat“This
+HandicapIndexwillapplyelsewhere,includingatallothergolfclubsofwhichthe
+playerisamember.”
+Whereaplayerisamemberofagolfclublocatedinadifferentjurisdictionfrom
+thelocationoftheirhomeclub,theplayermayberequiredtoholdaseparate
+HandicapIndexissuedbytheAuthorizedAssociationresponsiblefor
+handicappingwithinthedifferentjurisdiction.Inordertoensurethesame
+HandicapIndexisissuedbybothAuthorizedAssociations,itistheplayer’s
+responsibilitytoreturnallacceptablescorestoboththeirhomeclubandthegolf
+clubthatislocatedinthedifferentjurisdiction.
+Shouldthereeverbeadiscrepancybetweenaplayer’sHandicapIndexasissued
+bydifferentAuthorizedAssociations,theHandicapIndexwithinthejurisdiction
+wheretheroundisbeingplayedshouldbeupdatedtoincludemissingscores
+fromallauthorizedformatsofplayand/oranyCommittee-appliedadjustments
+asappropriate.Whenplayingoutsideofeitherjurisdiction,thelowestHandicap
+IndexshouldbeusedortheHandicapIndexthatincludesthemostrecent20
+scores.
+
+--- page 27 ---
+II
+II.ScoresforHandicap
+Purposes
+RULES 2-4
+
+--- page 28 ---
+Rule 2
+28
+RULE
+2
+ScoresAcceptablefor
+HandicapPurposes
+Principle of the Rule:
+Thescoresaplayersubmitsforhandicappurposesareatthecoreofthe
+calculationoftheirHandicapIndex.
+Rule2coverstheconditionsascoremustsatisfyforittobeacceptablefor
+handicappurposes,providingconfidencethatitwillproducereasonable
+evidenceoftheplayer’sabilityand,ultimately,aHandicapIndexthatis
+reflectiveofdemonstratedability.
+2.1 Acceptability of Scores
+Ascoreisacceptableforhandicappurposesiftheroundhasbeenplayed:
+l Inanauthorizedformatofplay(seeRule2.1a)overatleasttheminimum
+numberofholesrequiredforeithera9-holeoran18-holescoretobe
+acceptable(seeRule2.2),
+l Inthecompanyofatleastoneotherperson,whomayalsoactasamarker
+(subjecttosatisfyinganyotherrequirementsoftheRulesofGolf),
+l BytheRulesofGolf(seeRule2.1b),
+l OnagolfcoursewithacurrentCourseRatingandSlopeRating,wherelength
+andnormalplayingdifficultyismaintainedataconsistentlevel(seeAppendix
+G),
+l Onagolfcourseduringitsactiveseason.
+Inaddition,theplayer’sscoremustalwaysbecertifiedinaccordancewiththe
+RulesofHandicapping(seeRule4.4).
+Ifoneormoreoftherequirementssetoutaboveisnotmet,thescoreisnot
+acceptableforhandicappurposes.
+
+--- page 29 ---
+Rule 2
+Rule 2.1 Clarifications:
+2.1/1 – Score is Acceptable for Handicap Purposes Even If Holes Have
+Not Been Played in the Order Set by the Committee
+Rule5.1oftheRulesofGolfrequiresholesinaroundtobeplayedintheorder
+setbyeithertheCommitteeinchargeofthecompetitionortheCommitteein
+chargeofthegolfcourse.However,providedtheplayerhasnotbeen
+disqualified,ascoreisacceptableforhandicappurposeseveniftheholesina
+roundhavenotbeenplayedintheordersetbytheCommittee.
+Forexample:
+l Whenthegolfcourseisbusyandstartingatanalternativeholewillallowa
+quickerpaceofplay.
+l Whenplayingholesinadifferentorderwillallowmoreplayerstocomplete
+theirrounds,particularlyduringperiodswhendaylightislimited.
+Iftheplayerhasbeendisqualified,seeRule2.1b.
+2.1/2 – Status of Scores Made When Match Play and Stroke Play
+Formats are Played Concurrently
+Whenaplayercompetesinamatchwhilealsoplayinginastroke-playround
+andbothareauthorizedformatsofplay,thestroke-playscoreisthescorethat
+shouldbesubmittedforhandicappurposes.Thematch-playscoreshouldnot
+besubmitted.
+2.1/3 – Returning Scores for Handicap Purposes While Playing on
+Temporary Greens or Tees
+TheAuthorizedAssociationshoulddeterminewhetherscoresmadeunder
+temporarycourseconditionsareacceptableforhandicappurposes.The
+AuthorizedAssociationshouldalsodeterminewhetheratemporarymodification
+totheCourseRatingandSlopeRatingisrequiredtoreflectthetemporary
+changes(seeAppendixG).
+29
+
+--- page 30 ---
+Rule 2
+30
+2.1a Played in an Authorized Format of Play
+Authorizedformatsofplayare:
+Format of Play Type of Round Number of Holes
+Individualstroke
+play
+Organizedcompetition 9 18
+Generalplay 9 18
+Stableford—organizedcompetition 9 18
+Stableford—generalplay 9 18
+Par/Bogey—organizedcompetition 9 18
+Par/Bogey—generalplay 9 18
+MaximumScore—organized
+competition 9 18
+MaximumScore—generalplay 9 18
+Four-Ballstroke
+play
+Organizedcompetition 9 18
+Generalplay 9 18
+Stableford—organizedcompetition 9 18
+Stableford—generalplay 9 18
+Par/Bogey—organizedcompetition 9 18
+Par/Bogey—generalplay 9 18
+MaximumScore—organized
+competition 9 18
+MaximumScore—generalplay 9 18
+Individualmatch
+play
+Organizedcompetition 9 18
+Generalplay 9 18
+Four-Ballmatch
+play
+Organizedcompetition 9 18
+Generalplay 9 18
+(i) RoundPlayedWithinaPlayer’sJurisdiction.Subjecttootherprovisionsset
+outwithintheRulesofHandicapping,anacceptablescorefromanauthorized
+formatofplaywithinaplayer’shomejurisdictionmustbesubmittedfor
+handicappurposes(seeDiagram2.1a).
+(ii) RoundPlayedOutsideaPlayer’sJurisdiction.Subjecttootherprovisionsset
+outwithintheRulesofHandicapping:
+
+--- page 31 ---
+Rule 2
+l Ascorefromanauthorizedformatofplaywithinthejurisdictionwherethe
+roundwasplayedisacceptableforhandicappurposesandmustbe
+submitted,eveniftheformatofplayisnotauthorizedinaplayer’shome
+jurisdiction.
+l Ascorefromaformatofplaythatisunauthorizedwithinthejurisdiction
+wheretheroundwasplayed,butisanauthorizedformatofplaywithinthe
+player’shomejurisdiction,isacceptableforhandicappurposesandmust
+besubmitted.
+l Ascorefromaformatofplaythatisunauthorizedwithinboththe
+jurisdictionwheretheroundwasplayedandwithintheplayer’shome
+jurisdictionisnotacceptableforhandicappurposesandmustnotbe
+postedtotheplayer’sscoringrecord.
+(SeeDiagram2.1a.)
+Rule 2.1a Clarifications:
+2.1a/1 – Scores Not Acceptable for Handicap Purposes
+SomeformatsofplayandscoresplayedundercertainrestrictedTermsofthe
+Competitionarenotacceptableforhandicappurposes.
+Thefollowingillustrativelistisnotexhaustiveandifaplayerisindoubtasto
+theacceptabilityofascore,itisrecommendedthattheycheckwiththegolfclub
+wheretheyareplayingortheAuthorizedAssociation.
+31
+
+--- page 32 ---
+Rule 2
+32
+
+--- page 33 ---
+Rule 2
+2.1a/2 – Scores From Competitions Not Organized By An Affiliated
+Golf Club
+Rule1.3(i)statesthataplayerisexpectedto“submitallacceptablescoresto
+providereasonableevidenceoftheirdemonstratedability”.Subjecttoother
+provisionssetoutwithintheRulesofHandicapping,anacceptablescorefroman
+authorizedformatofplaymustbesubmittedforhandicappurposes,evenifit
+wasfromacompetitionorganizedbyanentitythatisnotaffiliatedtothe
+AuthorizedAssociation,forexampleaSocietyorLeague.
+Whensuchscoresarenotsubmittedautomaticallybytheentityorganizingthe
+competition,theplayerisrequiredtosubmitthescoreusingtheproceduresset
+outbytheAuthorizedAssociation.
+Whereaplayerfailstosubmitanacceptablescoreorfailstocomplywiththe
+proceduressetoutbytheAuthorizedAssociation,theHandicapCommittee
+shouldactinaccordancewithRule7.1b.
+2.1b Played by the Rules of Golf
+AroundmustbeplayedbytheRulesofGolftobeacceptableforhandicap
+purposes,subjecttothefollowing:
+(i) OrganizedCompetitions.Inasituationwhereaplayerisdisqualifiedfroma
+competitionforabreachoftheRulesofGolf,butnosignificantscoring
+advantagehasbeengained,thescoreshouldremainacceptablefor
+handicappurposes.
+Ifaplayerisdisqualifiedfromacompetitionforanyotherbreachofthe
+RulesofGolf,thescoreisnotacceptableforhandicappurposes.
+ThefinaldeterminationisatthediscretionoftheCommittee,basedonthe
+circumstances.
+(ii) GeneralPlay.Whenanorganizedcompetitionisnotbeingcontested,a
+scoreisnotgenerallyacceptableforhandicappurposesiftheplayer:
+l BreachestheRulesofGolf,andthecorrectpenaltyisnotappliedunder
+theRulesofGolf,or
+l DeliberatelyignoresaRuleofGolf.
+WhereaplayerfollowstheprovisionssetdowninaModelLocalRule,even
+whentheCommitteeinchargeofthecoursehasnotadoptedthatModel
+LocalRule,thescoremaystillbeacceptableforhandicappurposes.The
+samesituationapplieswhereaplayerisinbreachofaModelLocalRulethat
+hasbeenadoptedbytheCommittee.
+33
+
+--- page 34 ---
+Rule 2
+34
+ExamplesofsituationsrelatingtoModelLocalRuleswhereascoremightbe
+acceptableforhandicappurposesinclude:
+l Aplayerhasproceededunderthealternativeoptiontothestrokeand
+distancereliefprocedure,despitethisModelLocalRulenotbeingin
+effect,or
+l Theplayerhasusedadistance-measuringdevicedespitetheModelLocal
+Ruleprohibitingtheirusebeingineffect.
+ThefinaldeterminationisatthediscretionoftheCommittee,basedonthe
+circumstances.
+Rule 2.1b Clarifications:
+2.1b/1 – Examples of When Player Has Been Disqualified From a
+Competition, But Gained No Significant Scoring Advantage
+TheCommitteehasthediscretiontoacceptascoreforhandicappurposesifa
+playerisdisqualifiedfromacompetition,butnosignificantscoringadvantage
+hasbeengained.
+ExamplesofsituationswhereaCommitteemayconsiderthatnosignificant
+scoringadvantagehasbeengainedinclude:
+Rule of Golf Nature of Disqualification Recommended Action
+for Handicap Purposes
+3.3b(2) ScorecardnotsignedandnoModel
+LocalRuleinplacetomodifypenalty Acceptscore
+3.3b(2) Scorecardnotreturnedpromptly Acceptscore
+3.3b(3) Holescoreenteredonscorecardis
+lowerthanactualscore Acceptcorrectedscore
+2.1b/2 – Examples of When Player Has Been Disqualified From a
+Competition for an Action That Would Have Provided a Significant
+Scoring Advantage
+ExamplesofsituationswhereaCommitteemaydeterminethataplayerhas
+gainedasignificantscoringadvantageinclude:
+
+--- page 35 ---
+Rule 2
+Rule of Golf Nature of Disqualification Recommended Action for
+Handicap Purposes
+1.3b Playersdeliberatelyagreetoignorea
+Ruleorpenaltytheyknowapplies Scorenotacceptable
+4.1a Makingastrokewithanon-
+conformingclub Scorenotacceptable
+4.3a(1) Usingadistance-measuringdeviceto
+measureelevationchanges Scorenotacceptable
+2.1b/3 – Hole Not Played by The Rules of Golf in General Play
+WhereaplayerhasbreachedtheRulesofGolfingeneralplayandknowingly
+failedtoapplythecorrectpenalty,thescoreshouldnotgenerallybeaccepted
+forhandicappurposes.However,dependingonthecircumstances,the
+Committeehasthediscretiontoproduceanacceptablescoreby:
+l Recordingtheactualscoreforthehole,or
+l Adjustingtheholescoreusingnetdoublebogey,or
+l Applyingascoreofnetpar.
+2.2 Minimum Number of Holes Played for Score to be
+Acceptable
+2.2a For an 18-hole Score
+Foran18-holescoretobeacceptableforhandicappurposes,aminimumof10
+holesmustbeplayed.
+2.2b For a 9-hole Score
+Fora9-holescoretobeacceptableforhandicappurposes,all9holesmustbe
+played.Ifaplayerhasnotplayedatleast9holes,thescoreisnotacceptablefor
+handicappurposes.
+Note:
+Anacceptable9-holescoremustbeplayedover9-holeswithacurrentCourse
+RatingandSlopeRating(seeRule2.1).
+35
+
+--- page 36 ---
+Rule 3
+36
+RULE
+3 AdjustmentofHoleScores
+Principle of the Rule:
+Ascoreforhandicappurposesshouldnotbeoverlyinfluencedbyoneortwo
+badholescoresthatarenotreflectiveofaplayer’sdemonstratedability. In
+addition,incompletescoresand/orscoreswhereaplayerdidnotholeout
+oneveryholecanprovidereasonableevidenceoftheplayer’sabilityandcan
+beusedforhandicappurposes.
+Rule3coversthecircumstanceswherescoresmaybeacceptableandhow
+theseholescoresshouldbeadjusted.
+3.1 Maximum Hole Score for Handicap Purposes
+3.1a Before a Handicap Index Has Been Established
+ForaplayersubmittingtheirfirstscorestoobtainaninitialHandicapIndex,the
+maximumscoreforeachholeplayedislimitedtopar+5strokes(seeDiagram
+3.1a).
+
+--- page 37 ---
+Rule 3
+3.1b After a Handicap Index Has Been Established
+ForaplayerwithanestablishedHandicapIndex,themaximumscoreforeachhole
+playedislimitedtoanetdoublebogey,calculatedasfollows:
+Parofthehole + 2strokes +
+Anyhandicapstroke(s)thattheplayer
+receivesonthathole*
+(*orminusanyhandicapstroke(s)thataplushandicapplayergivesbackonthat
+hole.)
+(SeeDiagram3.1b.)
+l Anetdoublebogeyisequaltothelowestscoreonaholeforwhichtheplayer
+wouldachievezeroStablefordpoints.
+l Thereisnolimittothenumberofholesinaroundwhereanetdoublebogey
+adjustmentmaybeapplied.
+l If,intheTermsoftheCompetition(seeRule7.2a)orthehandicapallowances,
+thereareanyrestrictionsonthenumberofstrokesreceived,thisrestricted
+PlayingHandicapshouldonlybeusedforthepurposeofthecompetition,for
+exampletodeterminethe:
+o Finishingpositionsandprizewinners,and
+o Numberofstrokesgivenorreceivedfordifferentformatsofplay.
+Theplayer’sfull,unrestrictedCourseHandicapshouldbeusedforall
+applicationsofnetdoublebogeyadjustments.ForthisproceduretheCourse
+Handicapisroundedtothenearestwholenumber(seeRule6.1a/b).
+l WhereaCourseHandicapiscalculatedatmorethan54andaplayerreceives4
+ormorestrokesonahole,themaximumholescoreispar+5forhandicap
+purposes.
+l Adjustingaholescoretoanetdoublebogeycanbedoneeither:
+o Automatically,whenhole-by-holescoreentryisused,or
+o Bytheplayer,whensubmittinganadjustedgrossscorefortheround.
+37
+
+--- page 38 ---
+Rule 3
+38
+3.2 When a Hole is Not Played
+3.2a Reason for Not Playing One or More Holes
+Therearevariousreasonswhyaroundisnotcompletedoroneormoreholesare
+notplayedduringtheround.Validreasonsmightinclude:
+l Fadinglightorweatherpreventingthecontinuationofplay,
+l Playerinjuryorillness,
+l Amatchfinishingbeforethefinalhole,
+
+--- page 39 ---
+Rule 3
+l Thecoursebeingplayedhasfewerthan9or18-holesbecause:
+o Ahole(orholes)hasbeendeclaredoutofplaybytheCommitteefor
+maintenanceorreconstructionpurposes,or
+o TheCommitteehasorganizedacompetitionoveranon-standardnumber
+ofholes,forexampleduringthewintermonths.
+l AnyothersituationsconsideredreasonablebytheCommittee.
+Ifitisdeterminedthattheplayerdoesnotcompletearoundordoesnotplayone
+ormoreholesforaninvalidreason,thescoreisnotacceptableforhandicap
+purposes.Invalidreasonsmightinclude:
+l Weatherthatdoesnotpreventthecontinuationofplay.
+l Notplayingaparticularholeonagolfcoursebecausetheplayerknowsit
+usuallycausesthemdifficultyandtheyarelikelytoreturnahighholescore.
+l Notplayingthefinalholesonagolfcourseinordertoavoidsubmittingahigh
+score(ifplayingbadly)oralowscore(ifplayingwell).
+l AnyothersituationsconsideredunreasonablebytheCommittee.
+IftheHandicapCommitteedeterminesthattheplayer’sactionswereforthe
+purposeofgaininganunfairscoringadvantage,itmayconsiderpostingapenalty
+scoretotheplayer’sscoringrecord(seeRule7.1b(ii)).
+3.2b Score to Record When One or More Holes Not Played
+Ascorefromanincompleteroundorwhenoneormoreholeshavenotbeen
+playedmayonlybeusedforhandicappurposesif,amongotherthings:
+l Theroundhasbeenplayedoveratleasttheminimumnumberofholes
+requiredforeithera9-holeoran18-holescoretobeacceptable(seeRule
+2.2),and
+l Thereasonfornotcompletingtheroundwasvalid(seeRule3.2a).
+WheretheHandicapCommitteedeterminesthatoneormoreholeshasnotbeen
+playedforavalidreason,a9-holeor18-holeScoreDifferentialwillbecreated
+usingtheirexpectedscorefortheholeorholesnotplayed.
+39
+
+--- page 40 ---
+Rule 3
+40
+Notes:
+1. Iftheplayer’sreasonfornotplayingoneholeormoreholesisconsidered
+invalid,thescoreisnotacceptableforhandicappurposes,butthe Handicap
+Committeemayconsiderpostinga penaltyscore totheplayer’s scoringrecord
+(seeRule7.1b(ii)).
+2. Iftheoutcomeofacompetitionhasbeendecidedbeforeallholeshavebeen
+completedandtheplayerdecidestoplayanyoftheremainingholes,the
+actualscoresforthoseremainingholesshouldberecorded.
+3. Aholeisconsideredtohavebeenplayedifithasbeenstarted.
+Rule 3.2b Clarifications:
+3.2b/1 – Procedure for Calculating a Score Differential using an
+Expected Score
+Thecalculationofan expectedscore isautomatedandisusedtoattributea
+statisticalvalueagainstanyholeorholesnotplayedwithinanacceptable9-
+holeor18-holeroundsothata9-holeor18-hole ScoreDifferential canbe
+calculated,subjecttootherprovisionssetoutwithinthe RulesofHandicapping .
+Theprocedureforcalculatinga ScoreDifferential usingan expectedscore canbe
+summarizedasfollows:
+1. Anexpected ScoreDifferential fortheholeorholesnotplayediscalculated,
+basedonagiven HandicapIndex andacourseofstandarddifficulty.
+2. A ScoreDifferential fortheholesplayediscalculatedusingtheplayer’s
+actualscoresandtheratingvalueoftheholesplayed.
+3. The ScoreDifferential fromtheholesplayediscombinedwiththeexpected
+ScoreDifferential toproduceeithera9-holeor18-hole ScoreDifferential.
+3.2b/2 – Use of Net Par for a Hole Not Played
+Incertaincircumstances,andonlywhenapprovedbythe Authorized
+Association,ascoreof netpar canbeusedforaholeorholesnotplayed,in
+placeofthe expectedscore.Examplesofsituationswhereascoreof netpar
+wouldbeacceptableinclude:
+l Whentheplayerisrequiredtosubmitan adjustedgrossscore ,including
+scoresforanyholesnotplayed,or
+l Whenoneormoreholesareoutofplayduetoconstructionormaintenance,
+whichaffectsallplayersoveraperiodoftime.
+
+--- page 41 ---
+Rule 3
+3.2b/3 – Designation of Holes Not Played
+Where one or more holes have not been played during the round and the player 
+is not required to submit an adjusted gross score, the player must submit hole-
+by-hole scores and designate which holes were not played as prescribed by the 
+Authorized Association. This is to ensure that all of the procedures set out 
+within the Rules of Handicapping can be carried out accurately, including the 
+calculation of the expected score for the hole or holes not played.
+3.3 When a Hole is Started But Player Does Not Hole
+Out
+Therearevariouscircumstancesthatmightresultinaplayerstartingaholebut
+notholingout.Forexample,when:
+l Theresultoftheholehasalreadybeendecided,
+l Aholehasbeenconcededinmatchplay,
+l Aplayer’spartnerhasalreadypostedabetterscoreinaFour-Ballformatand
+theplayerpicksup,or
+l Aplayerhasalreadyreachedtheir netdoublebogey limitonaspecifichole.
+Whenaplayerstartsaholebutdoesnotholeoutforavalidreason,subjectto
+otherprovisionssetoutwithinthe RulesofHandicapping ,theplayermustrecord
+theirmostlikelyscore ornetdoublebogey ,whicheverislower,asappropriatefor
+thesituationanddependingontheformatofplay.
+Themostlikelyscore is:
+l Thenumberofstrokesalreadytakentoreachapositiononahole,plus
+l Thenumberofstrokestheplayerwouldmostlikelyrequiretocompletethe
+holefromthatposition,plus
+l Anypenaltystrokesincurredduringplayofthehole.
+41
+
+--- page 42 ---
+Rule 3
+42
+Mostlikelyscoresshouldbedeterminedonanyholeinaccordancewiththe
+followingguidelines:
+Position of the Ball Strokes to be Added
+Iftheballliesontheputting
+green,andisnomorethan5feet
+(1.5metres)fromthehole:
+Addoneadditionalstroke.
+Iftheballliesbetween5feet(1.5
+metres)and20yards(20metres)
+fromthehole:
+Add2or3additionalstrokes,dependingon
+thepositionoftheball,thedifficultyofthe
+greenandtheabilityoftheplayer.
+Iftheballliesmorethan20yards
+(20metres)fromthehole:
+Add3or4additionalstrokes,dependingon
+thepositionoftheball,thedifficultyofthe
+greenandtheabilityoftheplayer.
+(SeeDiagram3.3.)
+
+--- page 43 ---
+Rule 3
+43
+
+--- page 44 ---
+Rule 3
+44
+Notes:
+1. Thereisnolimittothenumberofmostlikelyscoresthatcanberecorded
+withinaplayer’sadjustedgrossscore,providedthatthefailuretoholeoutis
+foravalidreasonandnotforthepurposeofgaininganunfairscoring
+advantage.
+2. ForplayerswithanestablishedHandicapIndex,themostlikelyscoreonany
+holecannotexceednetdoublebogeyforhandicappurposes.
+3. WhenaplayerissubmittingscoresforaninitialHandicapIndex,themost
+likelyscoreonanyholecannotexceedparplus5strokes.
+4. Iftheformatofplaydoesnotallowaplayertopickuptheirballbefore
+holingout,forexampleanindividualgrossscoreornetscorestroke-play
+competition,theplayerwillbedisqualifiedfromthecompetition(seeRule
+2.1b).
+5. InaMaximumScoreformatofstrokeplay,theremaybesituationswherea
+playerhasnotreachedtheirnetdoublebogeyscorebeforereachingthe
+maximumscoreasdeterminedbytheTermsoftheCompetition.Insuch
+cases,theplayershouldrecordeitheramostlikelyscoreornetdoublebogey,
+whicheveristhelowerscore(seeRulesofGolf,Rule21.2).
+Rule 3.3 Clarifications:
+3.3/1 – Clarification of the Meaning of Most Likely Score for Handicap
+Posting and When It Should Be Used
+Amostlikelyscoreisusedtorecordaplayer’sprobablescoreonahole,when
+theholehasbeenstartedbuttheplayerdidnotholeouttheirball.Itshouldbe
+areasonableassessmentofthenumberofstrokesneededtocompletethehole.
+Forexample,inaFour-Ballmatch-playcompetition,aplayer’spartnerholes
+theirballfromofftheputtinggreenforthree.Theplayer’sballlies15yards(14
+metres)awayfromtheholeinfourstrokesandthescoreforthesidecannotbe
+improved.Tosavetime,theplayermaypickupandrecordamostlikelyscorefor
+handicappurposes.
+Basedonthemostlikelyscoreguidelines,theplayerwouldrecordascoreofsix
+orsevenforhandicappurposes(fourstrokestakenplustwoorthreeadditional
+strokes).
+
+--- page 45 ---
+Rule 4
+RULE
+4 SubmittingaScore
+Principle of the Rule:
+Rule4coverstheprocessforthesubmissionofacceptablescoresfor
+handicappurposes,bothtoobtainaninitialHandicapIndexandtomaintain
+anestablishedHandicapIndex.
+Timelysubmissionofscoresbyaplayer,oranyoneelseresponsibleor
+authorizedtosubmitscoresontheirbehalf,allowsforresponsiveupdates
+andprovidesareal-timemeasureoftheplayer’sgolfingability.
+ThisRulealsooutlinestheinformationthatplayersarerequiredtosubmit
+foracceptablescoresandhowthesescorescanbeverified.
+4.1 Information Required for Scoring Record
+4.1a General
+(i) Ascorepostedintotheplayer’sscoringrecordmustbe:
+l Anacceptablescore(seeRule2.1),and
+l Recordedinthecorrectchronologicalorder,evenifthescoreis
+submittedonadaylaterthanthedatetheroundwasplayed.
+(ii) Ascoremustbepostedtotheplayer’sscoringrecordintheformprescribed
+bytheAuthorizedAssociation.Thismaybeintheformof:
+l Hole-by-holescores(stronglyrecommended;(seeClarification3.2b/1
+forDesignationofHolesNotPlayed)),
+l Anadjustedgrossscoreor
+l Stablefordpoints.
+45
+
+--- page 46 ---
+Rule 4
+46
+(iii) Uponsubmissionofascore,aplayermustensurethatthefollowing
+informationisprovidedforinclusionintheirscoringrecord:
+l Dateoftheroundplayed,
+l CourseRatingandSlopeRatingforthesetofteesplayed,and
+l Whereapplicable,theparandstrokeindexofeachhole.
+Thisinformationisgenerallycontainedonthescorecard.
+(iv) TheHandicapCommitteeshouldensureasubmittedscoreispostedtoa
+player’sscoringrecordassoonaspossible.
+(v) Ascoresubmittedonanydayaftertheroundwasplayedshouldalso
+includetheplayingconditionscalculation(seeRule5.6),inadditiontothe
+informationrequiredunder(iii)above.
+(SeeAppendixBforsamplescoringrecords.)
+Rule 4.1a Clarifications:
+4.1a/1– When Par on Scorecard Differs From Par Recorded in Golf Club
+Terminal or Other Device Used For Submitting Scores
+TheAuthorizedAssociation,oratthediscretionoftheNationalAssociationthe
+golfclub,isresponsibleforadjudicatingpar.Therefore,insituationswherea
+playerisrequiredtosubmitadjustedholescoresforhandicappurposesandthe
+correctparvaluesforthegolfcourseplayedareunclear,theplayershould
+confirmthecorrectparvaluesbeforesubmittingtheirholescoresforhandicap
+purposes.
+4.1a/2 – Other Information Relating to Score
+TheAuthorizedAssociationmayrequireplayerstosubmitotherinformation
+relatingtothescore,includingbutnotrestrictedtothefollowing:
+l Nameofmarker.
+l Reasonwhyaholeorholeswerenotplayed.
+l Scoretypedesignation,toassistwiththehandicapreviewprocedure(seeRule
+7.1aandAppendixB,Note5).
+
+--- page 47 ---
+Rule 4
+4.1b For Scores Prior to Establishing a Handicap Index
+ScoressubmittedbyaplayertoobtainaninitialHandicapIndexmustbe
+submittedaseither:
+l Hole-by-holescores(stronglyrecommended),or
+l 9-holeor18-holeadjustedgrossscores.
+Forfulldetailsofaplayer’sscoringrecord,refertoAppendixB.
+4.2 Eligibility to Submit a Score
+Anacceptablescoremustbesubmittedbytheplayer,theHandicapCommittee,the
+Committeeinchargeofthecompetitionorbyanyoneelseauthorizedbythe
+player.
+4.3 Time Frame for Submitting a Score
+Aplayershouldsubmittheirscoreassoonaspossibleonthedayofplay,after
+completionoftheirround,andbeforemidnight(localtime).
+Ifaplayerdoesnotsubmittheirscoreonthedayofplay:
+l TheirHandicapIndexwillnotbeupdatedintimeforthenextday(seeRule5.4),
+and
+l Theirscorewillnotbeincludedinthedailyplayingconditionscalculation(PCC)
+(seeRule5.6).
+Whenascoreispostedtotheplayer’sscoringrecordafterthedayofplayandthe
+PCCforthedaytheroundwasplayedhasalreadybeenperformed,thePCC
+adjustmentshouldstillbeappliedtotheplayer’sScoreDifferentialcalculation
+eventhoughtheplayer'sscorewasnotincludedinthePCC.
+Ifascoreissubmittedoutofsequence:
+l Thescoreshouldbeaddedtotheplayer’sscoringrecordinthecorrect
+chronologicalorder.
+l ThepublishedPCCadjustmentforthegolfcourseplayed,onthedaytheround
+wasplayed,shouldbeappliedtotheScoreDifferentialcalculation.
+l Theplayer’sHandicapIndexshouldberecalculated.
+Note:TheHandicapCommitteeshouldinvestigateanyrepeatedoccurrenceofa
+playerfailingtosubmitascoreinatimelymanner(seeRule7.1b).
+47
+
+--- page 48 ---
+Rule 4
+48
+Ifthereisnoevidencethattheplayerhasactedforthepurposeofgainingan
+unfairadvantage,allscoressubmittedintheinterveningperiodshouldstandfor
+handicappurposes.
+4.4 Certification of a Score
+Ascoresubmittedforhandicappurposesmustbemadeavailableforpeerreview
+assoonaspossibleaftercompletionoftheround.Tofacilitatetheprocessof
+peerreview:
+(i) Aplayer,orsomeoneauthorizedbytheplayer,mustsubmittheirscoreas
+soonaspossibleaftercompletionoftheround,and
+(ii) TheHandicapCommitteeshouldensureasubmittedscoreispostedtothe
+player’sscoringrecordassoonaspossible.
+Rule 4.4 Clarifications:
+4.4/1 – Clarification of Meaning of Peer Review as a Method of
+Certification of Scores
+Peerreviewisnormallyconductedbysomeone:
+l Playinginthesamegrouporwhowaspresentduringtheround,and/or
+l Whoisamemberofthesamegolfclubastheplayer.
+Inallcases,itmustbesomeonewho:
+l Hasformedareasonablebasisfromwhichtoprovidesupportforascore
+thathasbeenpostedorchallengetheplayeronanyanomaliesintheposted
+score,or
+l Hasknowledgeoftheplayer’sdemonstratedabilityandcanreasonablyverify
+orchallengetheHandicapIndexissuedtotheplayer.
+Challengesordisputesshouldberaisedwiththeplayerand/orreportedtothe
+HandicapCommitteeforconsideration.
+Tofacilitatetheprocessofpeerreview,playerscoringrecordsmustbe
+accessibletoallothermembersofthegolfclub(seeAppendixB).
+
+--- page 49 ---
+Rule 4
+4.5 Number of Scores Required for Initial Handicap
+Index
+ToobtainaninitialHandicapIndex,aplayermustsubmitacceptablescoresfroma
+minimumof54holes.
+49
+
+--- page 51 ---
+III
+III.HandicapCalculation
+andUpdatinga
+HandicapIndex
+RULES 5-6
+
+--- page 52 ---
+Rule 5
+52
+RULE
+5 HandicapIndexCalculation
+Principle of the Rule:
+Aplayer’sHandicapIndexshouldrepresenttheirdemonstratedabilityand,
+whereappropriate,beresponsivetoscoresthatareinconsistentwiththeir
+demonstratedability.
+Rule5coverstheprocessofcalculatingaHandicapIndexandincorporates
+thesafeguardsneededtohelpensurethataplayer’sHandicapIndex
+remainsreflectiveoftheirabilityandthatequityisretainedforallgolfers.It
+includesmechanismsthat:
+l Takeintoconsiderationtheconditionsinwhicharoundwasplayed.
+l Rememberpreviouslydemonstratedabilitywithinadefinedperiodof
+time.
+l Captheupwardmovementofaplayer’sHandicapIndexwithinadefined
+periodoftime.
+l Applyadditionaladjustmentstoaplayer’sHandicapIndexwhenan
+exceptionalscoreissubmitted.
+5.1 Calculation of a Score Differential
+5.1a For an 18-hole Score
+An18-holeScoreDifferentialiscalculatedasfollowsandroundedtothenearest
+tenth,with.5roundedupwards:
+Score
+Differential = (113÷
+SlopeRating) x (adjustedgrossscore–
+CourseRating–PCCadjustment)
+Note:ThePCCadjustmentrangesfrom-1.0to+3.0(seeRule5.6).
+Incomplete18-holeRound
+Iffewerthan18holeshavebeenplayedbutmorethan9holes,an18-holescore
+isonlyacceptableforhandicappurposesifthereasonfornotcompletingthe
+
+--- page 53 ---
+Rule 5
+roundwasconsideredvalid(seeRule3.2a).
+l Ifthereasonwasconsideredvalid,an18-holeScoreDifferentialiscreated
+usingtheplayer’sexpectedscorefortheholeorholesnotplayed(seeRule
+3.2b).
+l Ifthereasonwasconsideredinvalid,thescoreisnotacceptableforhandicap
+purposes.However,dependingonthecircumstances,theHandicapCommittee
+mayconsiderapplyingapenaltyscore(seeRule7.1b).
+Foran18-holescoretobeacceptableforhandicappurposesoveracoursewhich
+consistsoffewerthan18holes,aCourseRatingandSlopeRatingmustbeissued
+over18designatedholes.Thecalculationofan18-holeScoreDifferentialis
+carriedoutusingthenormalproceduresassetoutwithintheRulesof
+Handicapping.
+5.1b For a 9-hole Score
+A9-holeScoreDifferentialiscalculatedasfollows:
+9-hole
+Score
+Differential
+= (113÷
+9-holeSlopeRating) x
+(9-holeadjustedgrossscore–
+9-holeCourseRating–(0.5xPCC
+adjustment))
+An18-holeScoreDifferentialiscreatedbycombiningthe9-holeScore
+Differentialforthe9holesplayedwiththeplayer’sexpectedscoreover9holes.
+The9-holeScoreDifferentialremainsunroundeduntilafterithasbeencombined
+withtheplayer’sexpectedscore.The18-holeScoreDifferentialisthenrounded
+tothenearesttenth,with.5roundedupwards.
+Iffewerthan9holeshavebeenplayed,thescoreisnotacceptableforhandicap
+purposes.
+Fora9-holescoretobeacceptableforhandicappurposesoveracoursewhich
+consistsoffewerthan9holes,aCourseRatingandSlopeRatingmustbeissued
+over9designatedholes.Thecalculationofa9-holeScoreDifferentialiscarried
+outusingthenormalproceduresassetoutwithintheRulesofHandicapping.
+5.1c Rounding of Minus Score Differentials
+WhenanadjustedgrossscorecalculateslowerthantheCourseRating,thisresults
+intheScoreDifferentialbeinganegativenumber.Wherethisoccurs,roundingis
+madeupwardtowards0.
+53
+
+--- page 54 ---
+Rule 5
+54
+Forexample:
+l WhenaScoreDifferentialiscalculatedas-1.54,itisroundedto-1.5
+l WhenaScoreDifferentialiscalculatedas-1.55,itisroundedto-1.5
+l WhenaScoreDifferentialiscalculatedas-1.56,itisroundedto-1.6
+5.2 Calculation of a Handicap Index
+5.2a For Fewer Than 20 Scores
+AHandicapIndexiscalculatedfromthelowestScoreDifferentialsinthescoring
+record.Ifascoringrecordcontainsfewerthan20ScoreDifferentials,thetable
+belowisusedtodeterminethenumberofScoreDifferentialstobeincludedinthe
+calculationandanyadjustmentthatmayapply.Theresultofthecalculationis
+roundedtothenearesttenth.
+Number of Score
+Differentials in scoring
+record
+Score Differential(s) to be
+used in calculation of
+Handicap Index
+Adjustment
+3 Lowest1 -2.0
+4 Lowest1 -1.0
+5 Lowest1 0
+6 Averageoflowest2 -1.0
+7or8 Averageoflowest2 0
+9to11 Averageoflowest3 0
+12to14 Averageoflowest4 0
+15or16 Averageoflowest5 0
+17or18 Averageoflowest6 0
+19 Averageoflowest7 0
+20 Averageoflowest8 0
+AllocationofanInitialHandicapIndex
+(i) Ifaplayer’sinitialHandicapIndexiscalculatedtobegreaterthanthe
+maximumHandicapIndexof54.0(seeRule5.3),theplayerisallocateda
+HandicapIndexof54.0.
+(ii) Basedonanyadditionalevidenceavailableaboutaplayer’sdemonstrated
+ability,aHandicapCommitteemaymodifyaplayer’sinitialHandicapIndex
+upwardordownward,uptoamaximumof54.0(seeRule7.1a).
+
+--- page 55 ---
+Rule 5
+Rule 5.2a Clarifications:
+5.2a/1 – Modification of a Player’s Initial Handicap Index Due to
+Evidence of Previous Ability
+AplayersubmitsthreescorestoobtainaninitialHandicapIndex,whichresultin
+calculatedScoreDifferentialsof15.3,15.2and16.6.
+ThiswouldresultinaninitialHandicapIndexof:
+Lowest Score
+Differential –
+Adjustment
+=
+Initial
+Handicap Index
+15.2 2 13.2
+TheHandicapCommitteeisawarethattheplayer,whoisrejoiningagolfclub
+aftermanyyearsoutofthegame,hadplayedwellasajuniorgolferand
+maintainedaHandicapIndexofaround8.0.
+Basedontheevidenceavailable,theHandicapCommitteemayadjusttheplayer’s
+calculatedinitialHandicapIndextobetterreflecttheirpreviouslydemonstrated
+ability.
+5.2a/2 – Modification of a Player’s Initial Handicap Index When
+Subsequent Scores Are Significantly Different Than Expected
+AplayersubmitsthreescorestoobtainaninitialHandicapIndex,whichresultin
+calculatedScoreDifferentialsof40.7,42.4and36.1.
+ThiswouldresultinaninitialHandicapIndexof:
+Lowest
+Score
+Differential –
+Adjustment
+=
+Initial
+Handicap Index
+36.1 2 34.1
+Theplayerthengoesontosubmitthreemorescoreswhichresultincalculated
+ScoreDifferentialsof45.9,43.6and45.0.
+Afterthesesixscores,theplayer’sHandicapIndexwouldbe:
+Average of
+Lowest Two
+Score
+Differentials
+–
+Adjustment
+=
+Initial
+Handicap Index
+38.4 1 37.4
+55
+
+--- page 56 ---
+Rule 5
+56
+Inreviewingtheplayer’scalculatedHandicapIndexagainsttheirscores,the
+HandicapCommitteemayconcludeinthiscasethatthe-1adjustmentshouldbe
+removedtoensurethecalculatedHandicapIndexbetterreflectstheplayer’s
+ability.
+5.2b For 20 Scores
+AHandicapIndexiscalculatedfromthelowestScoreDifferentialsinthescoring
+record. Ifascoringrecordcontainsatleast20ScoreDifferentials,theprocedure
+forcalculatingaHandicapIndexis:
+l Averagethelowest8ofthemostrecent20ScoreDifferentials(whichinclude
+anyadjustmentsforexceptionalscoresand/oraCommitteereview)andround
+tothenearesttenth.
+l Computethedifferencebetweentheaverageofthelowest8ScoreDifferentials
+andtheLowHandicapIndex.
+o Ifthedifferenceisgreaterthan3,thesoftcapcalculationisapplied.
+o Ifthedifferenceisgreaterthan5afterapplicationofthesoftcap,thenthe
+hardcapisapplied.
+(SeeRule5.8.)
+5.2c For Plus Handicap Index
+Whenthereare20ScoreDifferentialsinaplayer’sscoringrecordandtheHandicap
+Indexcalculatesasanegativefigure,thisrepresentsaplusHandicapIndex.
+Whenaplayer’sinitialHandicapIndexcalculatesatthelowerendofthehandicap
+rangeforbothmenandwomen,theHandicapCommitteemustfollowany
+proceduresestablishedbytheAuthorizedAssociationbeforeissuingaHandicap
+Indexbelowaspecifiedlevel(seeRule5.2a).
+
+--- page 57 ---
+Rule 5
+Rule 5.2c Clarifications:
+5.2c/1 – Designation of a Plus (+) Handicap Index
+TheRulesofHandicappingcontainanumberofreferencestoa‘PlusHandicap’,
+whichistheterminologytraditionallyusedforagolferwhohasachieveda
+HandicapIndexbetterthanScratch(0.0).
+However,whencalculatinganetscore,thecorrectdenotationofa‘plus’
+handicapisanegative,andthismathematicalcontradictioncanleadtoalackof
+consistencyinthewayplayersdenotetheirHandicapIndexonentryformsand
+howsoftwareproviderscodetheircalculators.
+Inanefforttoachieveconsistencyacrossalljurisdictions,thefollowingguidance
+isprovided:
+l Playerswitha‘PlusHandicap’shouldbeencouragedtoalwaysprefixtheir
+HandicapIndexwitha‘Plus’sign(+).
+l Allotherplayersshouldbeencouragedtorefrainfromusinganyprefix.
+l ThedefaultassumptionforcompetitionorganizersshouldbethataHandicap
+Indexpre-fixedwithaPlus(+)signisaPlusHandicap.AnyHandicapIndex
+pre-fixedwithanegative(-)signshouldbequeried.
+5.3 Maximum Handicap Index
+ThemaximumHandicapIndexthatcanbeissuedtoaplayeris54.0.
+Note:TheCommitteeinchargeofacompetitionmaysetamaximumlimitfor
+entry(seeRule7.2).
+5.4 Frequency of Revision of a Handicap Index Update
+Aplayer’sHandicapIndexshouldbeupdatednolaterthanthedayafterascore
+wassubmitted,orassoonaspossiblethereafter.
+Inasituationwhenanewroundisplayedbeforetheplayer’sHandicapIndexhas
+beenupdated,includingwhenmultipleroundsareplayedonthesameday,itis
+recommendedthattheplayerusestheirexistingHandicapIndex.However,in
+certaincircumstances,theCommitteeinchargeofthecompetition(orthe
+HandicapCommittee)hasthediscretiontodecidewhatPlayingHandicaptheplayer
+shoulduse(seeRule7.2).
+57
+
+--- page 58 ---
+Rule 5
+58
+Rule 5.4 Clarifications:
+5.4/1 – Example Situation When Committee in Charge of a Competition
+May Adjust a Player’s Playing Handicap
+Inasituationwhereaplayerhasperformedexceptionallywellinanauthorized
+formatofplayduringamorningroundandisplayingacompetitionroundlater
+thesameday,astheplayer'sHandicapIndexwillnotbeupdateduntilthenext
+day,theCommitteeinchargeofthecompetitionmaydecidetoadjustthe
+player'sPlayingHandicap.
+TheCommitteeshouldconsideralloftheinformationavailablebeforedeciding
+whethertoadjusttheplayer’sPlayingHandicap,includingwhatimpactthescore
+mayhavehadontheplayer'sHandicapIndexandwhethertheplayerwould
+obtainanyunfairadvantagebecausetheirHandicapIndexhasnotbeenupdated.
+5.4/2 – Golf Club Responsibility to Post Scores As Soon As Possible
+Whereitistheresponsibilityofagolfclubtopostscoresattheendofeachday,
+thismustbedoneassoonaspossibleandpreferablybeforemidnightto
+supporttheRulesofHandicapping.Thisisimportantbecauseit:
+l Ensuresthataplayer’sHandicapIndexisupdatedassoonaspossibleafter
+theroundwasplayed(seeRule5.4).
+l Allowsfortheplayingconditionscalculationtobecarriedout(seeRule5.6).
+l Ensuresthat,whereappropriate,scoresareavailableforverificationbypeers.
+l EnablestheHandicapCommitteetocarryoutitsotherresponsibilities(see
+Rule7.1b).
+FailuretocarryoutthisresponsibilitymaycompromisetheintegrityoftheRules
+ofHandicapping.
+5.5 Ageing of Scores and Lapsing of a Handicap Index
+AscorecontinuestobepartoftheHandicapIndexcalculationaslongasit
+remainswithintheplayer’smostrecent20scoresrecorded,regardlessoftheage
+ofthescore.
+Whereapplicable,a9-holescorewaitingtobecombinedwithanother9-hole
+scorewillberetaineduntilitbecomesolderthanthetwentietholdest18-hole
+scoreinthescoringrecord,afterwhichitisdiscarded.
+
+--- page 59 ---
+Rule 5
+AHandicapIndexonlylapsesifaplayerisnolongeramemberofatleastonegolf
+club.
+Note:Aplayer’sscoringrecordshouldberetainedwhereverpossible.Thiswill
+assistaHandicapCommitteeiftheplayerobtainsaHandicapIndexagaininthe
+future.
+5.6 Playing Conditions Calculation
+Principle of the Rule:
+CourseRatingsarebasedonnormalplayingconditions,butthedifficultyof
+agolfcoursecanvarysubstantiallyfromdaytoday,dueto:
+l Courseconditions,
+l Weatherconditions,and/or
+l Courseset-up.
+Theplayingconditionscalculation(PCC)determineswhetherplaying
+conditionsonthedaydifferedfromnormalconditionstotheextentthatan
+adjustmentisneededtocompensate.Itisadailystatisticalprocedurethat
+comparesthescoressubmittedbyplayersonthedayagainstexpected
+scoringpatterns.
+Thepurposeofthisfeaturewithinthehandicapcalculationistorecognize
+thatanaveragescoresubmittedinharderplayingconditionsmaybebetter
+thanagoodscoresubmittedineasierplayingconditions.Unadjusted,such
+ascoremaybeomittedfromtheHandicapIndexcalculation.
+IfthePCCdeterminesthatacceptablescoressubmittedareinlinewith
+expectedscoringpatterns,thennoadjustmentismade.
+Thecalculatedadjustmentisdependentupon:
+l Whethersignificantlyfewerplayersthananticipatedattainedtheir
+expectedscoreand,consequently,conditionsaredeterminedtobe
+harderthannormal.
+l Whethersignificantlymoreplayersthananticipatedattainedtheir
+expectedscoreand,consequently,conditionsaredeterminedtobeeasier
+thannormal.
+59
+
+--- page 60 ---
+Rule 5
+60
+Theplayingconditionscalculation(PCC):
+l Isgenerallyperformedonlyonceforaday.
+l Considersacceptablescoressubmittedonagolfcourseeachdayandrequires
+atleasteightacceptablescorestodetermineifanadjustmentisrequired.
+l IncludesonlyacceptablescoressubmittedbyplayerswithaHandicapIndexof
+36.0orbelow.
+l Equalszeroiffewerthaneightacceptablescoresaresubmitted.
+l Whereapplicable,doesnotincludescoresthatarescaledupto9-holeor18-
+holescores.
+l Candetermineanadjustmentof-1.0,0.0,+1.0,+2.0or+3.0andisapplied
+inthecalculationofScoreDifferentialsforallplayers.
+Rule 5.6 Clarifications:
+5.6/1 – Procedure for Performing Playing Conditions Calculation
+Theplayingconditionscalculation(PCC)isanautomaticcalculationandcanbe
+summarizedasfollows:
+1. Theexpectedscoreiscalculatedforeacheligibleplayer.
+2. TheexpectedstandarddeviationofScoreDifferentialsatthegolfcourseis
+calculated,incorporatingallapplicableSlopeRatings.
+3. Thenumberofplayerswhoscoredbetterorworsethanexpectedonthe
+dayisestablished.
+4. Theproportionofplayerswhosubmittedascoreequalto,betterthanor
+worsethantheirexpectedscoringrangeisusedtodeterminewhethera
+PCCadjustmentisrequired.
+5. Ifanadjustmentisrequired,adeterminationismadeabouthowmuch
+harderoreasierthegolfcourseplayedthatday.
+6. Basedonthesecalculations,thefinalPCCadjustmentrequiredforplayon
+thatdayisdetermined.
+7. APCCadjustmentisappliedasawholenumber.
+Notes:
+l FortheapplicationofaPCCadjustmentinthecalculationofaScore
+Differential,seeRule5.1a(foran18-holescore)andRule5.1b(fora9-hole
+score).
+l 9-holeacceptablescoresaredoubledforinclusioninthePCCalongwitha
+doubled9-holeCourseRatingandthe9-holeSlopeRating.
+
+--- page 61 ---
+Rule 5
+l ThePCCisappliedtoallacceptablescoresthataresubmittedonadayofplay
+andretrospectivelyforscoresplayedonthatdaybutsubmittedatalater
+date.
+5.6/2 – Circumstances That May Warrant More Than One Playing
+Conditions Calculation on a Single Day
+Rule5.6recommendsthatonlyoneplayingconditionscalculation(PCC)is
+performedfortheday.
+However,theremaybecircumstancesthatwarrantaseparatePCCtobe
+performedforpartofthedayorforacertaincompetition.Forexample,when:
+l Thereisextremevariationinweatherduringtwodistinctpartsoftheday.
+l Themake-upofthefieldinacompetitionbeingplayedonthedayis
+significantlydifferentfromthemake-upoftheplayersparticipatingin
+generalplayroundsonthesameday.
+5.6/3 – How to Perform a Separate Playing Conditions Calculation for
+a Certain Competition and What Adjustment to Apply to General Play
+Rounds Played on the Same Day
+Incircumstanceswhenaseparateplayingconditionscalculation(PCC)is
+performedforacertaincompetition:
+l Onlyscoresfromthoseplayerswhohaveparticipatedinthecompetitionare
+consideredintheseparatePCC.
+l AnycalculatedadjustmentfromtheseparatePCCwillbeappliedonlytothe
+calculationoftheScoreDifferentialsofplayerswhohaveparticipatedinthe
+competition.
+l Forallotherplayerswhohaveplayedatthesamegolfcourseontheday,the
+PCCforthedayisapplied,whichusesalleligiblescoresfortheday
+(includingthescoresoftheplayerswhohaveparticipatedinthe
+competition).
+5.6/4 – Player Plays Multiple Rounds on the Same Course on the
+Same Day and a Separate Playing Conditions Calculation is Performed
+Whenplayingtwoormoreroundsonthesamegolfcourseonthesamedayand
+aseparatePCCisperformedforoneormoreoftherounds,adifferentPCC
+adjustmentmaybeappliedtoeachofaplayer’scalculatedScoreDifferentials.
+5.6/5 – Round Played Away and Score Returned to Home Club
+Whenaplayerreturnsascorebacktotheirhomeclubafterplayingaroundat
+anawaygolfcourse,theplayingconditionscalculation(PCC)forthatgolfcourse
+61
+
+--- page 62 ---
+Rule 5
+62
+on the day the round was played should be retrieved and used to calculate the 
+player’s Score Differential before their Handicap Index is revised.
+5.6/6 – Performing the Playing Conditions Calculation at a Golf Club 
+With 27 Holes
+A golf club has three 9-hole golf courses known as the South, East and West 
+courses. The design and layout of the three courses allows golfers to play (a) 
+only 9 holes on any golf course, or (b) 18 holes in any combination of 9 holes
+(South/South, South/East, South/West, East/East, East/West and West/West).
+The playing conditions calculation (PCC) is performed for any 18-hole golf course 
+that has been issued a Course Rating and Slope Rating.
+Provided all of the criteria set out in Rule 5.6 are satisfied, a PCC is performed 
+every day, for each 18-hole combination.
+5.6/7 – Application of Playing Conditions Calculation When Playing 
+only 9 Holes at a Golf Club with 27 Holes
+A golf club has three 9-hole golf courses known as the South, East and West 
+courses. The design and layout of the three courses allows golfers to play (a) 
+only 9 holes on any golf course, or (b) 18 holes in any combination of 9 holes
+(South/South, South/East, South/West, East/East, East/West and West/West).
+For a player who plays only 9 holes on the South golf course:
+l Theirscorewillbeenteredintothe playingconditionscalculation(PCC) for
+eachoftheSouth/South,South/EastandSouth/West18-holecombinations.
+l Theirscorewillbedoubled,usingthesame9-hole CourseRating andSlope
+Ratingasthe9holesplayed.
+l ProvidedallofthecriteriasetoutinRule5.6aresatisfied,a PCCwillbe
+performedforeach18-holecombination.
+l 50%ofthe PCCadjustmentfortheSouth/South golfcourse isappliedtothe
+calculationoftheplayer’s ScoreDifferential.
+l Ifno PCCisperformedfortheSouth/South golfcourse,no PCCadjustment
+willbeappliedtothecalculationoftheplayer’s ScoreDifferential.Thisis
+evenifa PCCadjustmentisperformedforother18-holecombinations
+involvingtheSouth golfcourse.
+
+--- page 63 ---
+Rule 5
+5.7 Low Handicap Index
+TheLowHandicapIndexrepresentsthedemonstratedabilityofaplayeroverthe
+365-dayperiodprecedingthedayonwhichthemostrecentscoreintheirscoring
+recordwasplayedandprovidesareferencepointagainstwhichthecurrent
+HandicapIndexcanbecompared.
+l ALowHandicapIndexisestablishedonceaplayerhasatleast20acceptable
+scoresintheirscoringrecord.
+l OnceaplayerhasestablishedaLowHandicapIndex,itisre-evaluatedevery
+timeanewacceptablescoreissubmittedandmustbedisplayedintheplayer’s
+scoringrecord.
+l Anewly-determinedLowHandicapIndexisconsideredintheprocessingofthe
+player’snextacceptablescorewheneverthenextroundissubmitted.Aplayer’s
+LowHandicapIndexmaybecomemorethan365daysoldintheperiodbetween
+tworoundsbeingplayed.
+l WhereaHandicapCommittee-appliedadjustmentreducesaplayer’sHandicap
+Index,theadjustedHandicapIndexresetstheLowHandicapIndextothe
+adjustedHandicapIndex,unlessalowerHandicapIndexisstilleligible(SeeRule
+7.1a).
+l WhereaHandicapCommittee-appliedadjustmentincreasesaplayer’sHandicap
+Index,theCommitteeshouldconsiderresettingtheplayer’sLowHandicap
+IndextothesamevalueastheadjustedHandicapIndex.
+63
+
+--- page 64 ---
+Rule 5
+64
+Rule 5.7 Clarifications:
+5.7/1 – Circumstances When a Player’s Low Handicap Index Becomes
+More Than 365 Days Old
+Rule5.7statesthataplayer’sLowHandicapIndexmaybecomemorethan365
+daysoldintheperiodbetweentworoundsbeingplayed.Asaresult,aLow
+HandicapIndexthatismorethan365daysoldmaystillbeconsideredinthe
+calculationofaplayer’sHandicapIndex.
+Forexample:
+Aftersubmittingascoreon1March2025,aplayer’sHandicapIndexcalculates
+at12.3.TheirLowHandicapIndexatthetimeis10.6,establishedon1May
+2024.
+Whentheplayersubmitstheirnextscoreon1June2025,theLowHandicap
+Indexof10.6willstillbeconsideredinthecalculationoftheirupdatedHandicap
+Indexeventhoughitismorethan365daysold.Thisisbecausethe365-day
+timeframeprecedesthedateonwhichthemostrecentscoreontheplayer’s
+scoringrecordwasplayed,whichinthiscaseistheperiodbetween1March
+2025and1March2024.OncetheirupdatedHandicapIndexiscalculated,the
+newLowHandicapIndexwillbefoundwithinthe365-dayperiodpreceding1
+June2025.
+5.7/2 – Circumstance When the Low Handicap Index is the Current
+Handicap Index
+Aftersubmittingascoreon1April2024,aplayertakesabreakfromgolfand
+doesnotsubmitanotherscoreuntil1July2025.Incalculatingtheplayer’s
+updatedHandicapIndex,theplayer’sLowHandicapIndexinthe365days
+preceding1April2024isusedasareferencepoint.
+Theplayerthenplaysanotherroundon1August2025,andthe365-dayperiod
+preceding1July2025isusedtolocatetheplayer’sLowHandicapIndex,butno
+otherscoreshavebeensubmittedduringthattimeframe.Therefore,inthis
+situation,theplayer’scurrentHandicapIndexistheirLowHandicapIndex.
+
+--- page 65 ---
+Rule 5
+5.8 Limit on Upward Movement of a Handicap Index
+Therearetwotriggerpointswithinthecapprocedure:
+(i) Thesoftcap.Thesoftcapistriggeredwhenthedifferencebetweena
+player’snewlycalculatedHandicapIndexandtheirLowHandicapIndexis
+greaterthan3.0strokes.
+WhenacalculatedHandicapIndexincreaseisgreaterthan3.0strokes,the
+valueabove3.0strokesisrestrictedto50%oftheincrease.
+(ii) Thehardcap.Thehardcaptriggerstorestricttheamountbywhicha
+player’sHandicapIndexcanincrease,afterapplicationofthesoftcap,tono
+morethan5.0strokesabovetheirLowHandicapIndex.
+Thereisnolimitontheamountbywhichaplayer’sHandicapIndexcandecrease.
+ThesoftcapandhardcapproceduresstarttotakeeffectonlyaftertheLow
+HandicapIndexhasbeenestablished.
+(SeeDiagram5.8.)
+65
+
+--- page 66 ---
+Rule 5
+66
+5.9 Submission of an Exceptional Score
+Whenanexceptionalscoreispostedtoaplayer’sscoringrecord,theHandicap
+Indexwillbereducedinaccordancewiththefollowingadjustmenttable:
+Number of strokes the Score Differential is lower
+than a player’s Handicap Index in effect when the
+round was played
+Exceptional score reduction
+7.0–9.9 -1.0
+10.0ormore -2.0
+l AnyreductionisbasedonthedifferencebetweentheScoreDifferential
+(unrounded)andtheplayer'sHandicapIndex.
+l Reductionsformultipleexceptionalscoresareappliedcumulatively.
+l Areductionisautomaticallyappliedwithinthecalculationofaplayer’s
+updatedHandicapIndexfollowingthesubmissionofanexceptionalscore.
+l Areductionforanexceptionalscoreisappliedbyadjustingeachofthemost
+recent20ScoreDifferentialsrecordedintheplayer’sscoringrecord,which
+includestheexceptionalscore.Asaresult,theimpactofthereductionwill
+remainafterthenextscoreissubmittedbutwilldiluteovertimeasnewscores
+aresubmitted.
+Wheretherearefewerthan20ScoreDifferentialsinaplayer’sscoringrecordat
+thetimeanexceptionalscoreissubmitted,thereductionisappliedby
+adjustingalloftheScoreDifferentialsrecordedintheplayer'sscoringrecord,
+whichincludestheexceptionalscore.
+l AdditionalhandicapreviewnotificationswillbegeneratedfortheHandicap
+Committee’sconsideration,when:
+o Multipleexceptionalscorereductionsareappliedtoaplayer’sHandicap
+Index.
+o AScoreDifferentialis10.0strokesormorebelowaplayer’sHandicapIndex
+ineffectwhenthatroundwasplayedandanexceptionalscorereductionof
+-2.0istriggered.
+l TheHandicapCommitteeispermittedtooverrideanyadjustmentforan
+exceptionalscoreifitconsidersthattheadjustmentwouldresultinaplayer’s
+HandicapIndexnotbeingafairreflectionoftheirdemonstratedability(see
+Rule7.1a).
+(SeeDiagram5.9.)
+
+--- page 67 ---
+Rule 5
+67
+
+--- page 68 ---
+Rule 6
+68
+RULE
+6
+CourseHandicapand
+PlayingHandicap
+Calculation
+Principle of the Rule:
+TheCourseHandicapcalculationconvertsaHandicapIndextothenumber
+ofstrokesaplayerrequirestoplayanygolfcoursewithaCourseRatingand
+SlopeRating.Thisallowsportabilityofaplayer’sHandicapIndexwherever
+theyplay.ThePlayingHandicapcalculationenablesequityamongstplayers
+ofallhandicaplevelswithindifferentformatsofthegame.APlaying
+Handicapiscalculatedbyapplyingtheappropriatehandicapallowancetoa
+player’sCourseHandicap.Forformatsofplaywhereahandicapallowanceof
+100%isadopted,thePlayingHandicapwillbethesameastheCourse
+Handicap.
+CourseHandicap-Forhandicappurposes,aCourseHandicapisusedto
+determinethenumberofstrokesthataplayerreceives(orgives)onanygolf
+courseandforthecorrectapplicationofnetdoublebogeyandnetpar
+adjustments.
+PlayingHandicap-Forequitypurposes,thePlayingHandicapcalculation
+determinesthenumberofstrokeseachplayergivesorreceives,toensure
+thatallplayerscanenjoyafairandequalgamewhenplayingwithor
+competingagainstoneanother.
+6.1 Course Handicap Calculation
+6.1a For an 18-hole Round
+An18-holeCourseHandicapiscalculatedasfollows:
+Course
+Handicap = Handicap
+Index x (SlopeRating÷
+113) + (CourseRating–
+par)
+
+--- page 69 ---
+Rule 6
+Notes:
+1. Ifan18-holeroundisbeingplayedoverthesame9holesfromthesame
+teesandthereisno18-holeCourseRating,the18-holeCourseHandicapis
+calculatedasfollows:
+Course
+Handicap = Handicap
+Index x (9-holeSlope
+Rating÷113) + (2x9-holeCourseRating
+–2x9-holepar)
+2. Roundingtothenearestwholenumberisthefinalstepofthecalculation.
+6.1b For a 9-hole Round
+A9-holeCourseHandicapiscalculatedasfollows:
+Course
+Handicap =
+(HandicapIndex÷2
+(roundedtothenearest
+tenth))
+x
+(9-hole
+SlopeRating
+÷113)
++
+(9-holeCourse
+Rating–9-hole
+par)
+Roundingtothenearestwholenumberisthefinalstepofthecalculation.
+(SeeAppendixEforguidanceonstrokeindexallocationfor9-holerounds.)
+Rule 6.1b Clarifications:
+6.1b/1 – Use of 9-Hole Course and Slope Ratings in the Calculation of
+a 9-hole Course Handicap
+WhenanAuthorizedAssociationissuesCourseRatingsandSlopeRatingstogolf
+clubs,the18-holeratingsshouldalsobepresentedwithfrontnineandback
+nineCourseRatingsandSlopeRatings.Forexample:
+White Tees (Men) White Tees (Women)
+Course Rating Slope Rating Course Rating Slope Rating
+18-Holes 73.1 132 75.5 138
+Holes 1-9 36.1 132 37.3 135
+Holes 10-18 37.0 131 38.2 141
+Thecalculationofa9-holeCourseHandicapmustusethecorrectCourseRating
+andSlopeRatingforthe9-holegolfcoursebeingplayed.
+69
+
+--- page 70 ---
+Rule 6
+70
+Note:Thecalculated18-holeand9-holeCourseHandicapisroundedtothe
+nearestwholenumber,with.5roundedupwards,forthepurposeof:
+l Applyingadjustmentsformaximumholescore(seeRule3.1)andwhenahole
+isnotplayed(seeRule3.2).
+l Whereapplicable,calculatingaScoreDifferential.
+Otherwise,thefullcalculatedvalueisretainedandroundingoccursonlyafterthe
+PlayingHandicapcalculation.
+6.2 Playing Handicap Calculation
+6.2a Standard Calculation
+APlayingHandicapiscalculatedasfollows:
+PlayingHandicap = CourseHandicap(unrounded) x handicapallowance
+ThecalculatedPlayingHandicapisroundedtothenearestwholenumber,with.5
+roundedupwards.
+Forrecommendedhandicapallowances,seeAppendixC.
+Rule 6.2a Clarifications:
+6.2a/1 – Use of Full Calculated Value of Course Handicap
+Handicapallowancesaredesignedtoprovideequityforplayersofalllevelsof
+abilityineachformatofplay(seeAppendixC)andareappliedtoaplayer’s
+CourseHandicapasthefinalstepinthecalculationoftheirPlayingHandicap.To
+avoidanyundueeffectofdoublerounding,handicapallowancesshouldbe
+appliedtotheunroundedCourseHandicap.
+Approximately25%ofthetime,doubleroundingcanproducePlayingHandicaps
+thataresignificantlydifferentandcounterintuitivetoplayers.Forexample,two
+playerswithaHandicapIndexupto2strokesapartcouldbothreceivethesame
+calculatedPlayingHandicap,seebelow:
+CourseRating=71.0
+SlopeRating=125
+Par=71
+Format=Four-Ballstrokeplay(HandicapAllowance85%)
+
+--- page 71 ---
+Rule 6
+Playing Handicap Calculation (using rounded Course Handicap)
+PlayerA PlayerB
+HandicapIndex 8.6 10.3
+CourseHandicap(Rounded) 10 11
+PlayingHandicap(85%) 9 9
+Thisdoesnotoccurwhenthehandicapallowancesareappliedtotheunrounded
+CourseHandicap(seebelow):
+Playing Handicap Calculation (using unrounded Course Handicap)
+PlayerA PlayerB
+HandicapIndex 8.6 10.3
+CourseHandicap(Unrounded) 9.5132... 11.3938...
+PlayingHandicap(85%) 8 10
+Fortheother75%ofthetime,therewouldbenodifferenceintheresult.
+Inlimitedcircumstances,forexamplewhenaplayerisrequiredtocalculate
+theirownPlayingHandicapandtheydonothaveeasyaccesstotheirunrounded
+CourseHandicap,forpracticalpurposes,thehandicapallowancemaybeapplied
+totheroundedCourseHandicap.
+Note:Wherenohandicapallowanceisappliedoritissetat100%,thePlaying
+HandicapisthesameastheroundedCourseHandicapunlessanadjustmentfor
+multipleteesisrequired.
+6.2b Calculation When Multiple Tees Are Used in a
+Competition
+ForthepurposesofthisRule:
+l Strokeplayreferstogrossscore,netscoreorMaximumScoreformatsof
+play.
+l StablefordandPar/Bogeyformatsofplayareconsideredseparately.
+Whenacompetitionisplayedfromtwoormoresetsoftees(suchasmixed
+genderormixedabilityevents),dependingontheformatofplayandany
+differenceinparbetweentees,additionalstrokesmayneedtobeaddedtothe
+standardcalculationofthePlayingHandicapforequitypurposesandto
+determinefinishingpositions,resultsandprizes.
+71
+
+--- page 72 ---
+Rule 6
+72
+(i) StrokePlayandMatchPlayformats(whereresultsarerecordedasgrossor
+netscores).Aplayercompetingfromasetofteeswithahigherparmust
+receiveadditionalstrokesfortheround,equaltothedifferencebetween
+theparoftheteestheyareplayingandtheteeswiththelowestpar.
+Theseadditionalstrokesareaddedtotheplayer’sPlayingHandicapas
+follows:
+Playing
+Handicap = (CourseHandicapxhandicap
+allowance) + differencein
+pars
+Notes:
+1. Asanalternative,whenthemajorityofthefieldareplayingfromthe
+teeswiththehighestpar,playerscompetingfromasetofteeswitha
+lowerparmaybeallocatedfewerstrokesfortheround,equaltothe
+differencebetweenthepars.
+2. Fortheavoidanceofdoubt,whenthereisnodifferenceinpar,no
+additionalstrokesareneeded.
+(ii) StrokePlayandMatchPlayformats(whereresultsarerecordedrelativeto
+par).Asaplayer’snet(orgross)statusversusparfortheroundis
+compareddirectlyagainstthatofeveryotherplayer,noadditionalstrokes
+areaddedtothestandardcalculationofthePlayingHandicapwhenthepar
+isdifferentbetweentees.
+Thismeansthatwhentwoplayersarecompetingfromdifferentteeswitha
+differentpar,theholeisconsideredhalvedorthescoreremainsevenif
+bothplayersrecordaparonthathole.Thisisbecausethescoreonthe
+holeisrecordedrelativetoparratherthanasthenumberofgrossornet
+scores.
+(iii) Stablefordformats.Asaplayer’stotalnumberofStablefordpointsforthe
+roundiscompareddirectlyagainstthatofeveryotherplayer,noadditional
+strokesareappliedtothestandardcalculationofthePlayingHandicap
+whentheparisdifferentbetweentees.
+(iv) Par/Bogeyformats.Asaplayer’sPar/Bogeyresultfortheroundis
+compareddirectlyagainstthatofeveryotherplayer,noadditionalstrokes
+areappliedtothestandardcalculationofthePlayingHandicapwhenthepar
+isdifferentbetweentees.
+
+--- page 73 ---
+IV
+IV.Administrationofa
+HandicapIndex
+RULE 7
+
+--- page 74 ---
+Rule 7
+74
+RULE
+7 CommitteeActions
+Principle of the Rule:
+TheHandicapCommitteeplaysavitalroleinthesuccessfuladministration
+ofaplayer’sHandicapIndexandisequippedwithtoolstointervenewhen
+thecalculatedHandicapIndexisnolongerreflectiveoftheplayer’s
+demonstratedability.
+Usedappropriately,thesetoolsaredesignedtoensurethatplayersare
+treatedfairlyandconsistentlyfromgolfclubtogolfclub.
+TheCommitteeinchargeofthecompetitionalsoplaysanimportantrolein
+settingappropriateTermsoftheCompetitionforallparticipatingplayers.
+7.1 Handicap Committee
+7.1a Conducting a Handicap Review and Adjusting a
+Handicap Index
+(i) ConductingaHandicapReview.TheHandicapCommitteeshouldconducta
+reviewofaplayer’sHandicapIndexusingtheprocesssetoutinAppendixD.
+l TheHandicapCommitteehasdiscretiontoconductahandicapreviewat
+anytime.However,itisstronglyrecommendedthattheHandicap
+Committeeconductsareviewatleastannually,forallmemberswhohave
+designatedthatgolfclubastheirhomeclub.
+l Ahandicapreviewmayalsobeconductedattherequestoftheplayeror
+anotherplayeratanytime.
+l Beforemakinganyadjustmenttoaplayer’sHandicapIndex,theHandicap
+Committeeshouldcarefullyconsiderallavailableevidence,including:
+o Whethertheplayer’sscoringpotentialhasbeenaffectedbya
+temporaryorpermanentinjury,illnessordisabilitywhichissignificant
+enoughtoimpacttheplayer’sabilitytoplaywithoragainstallother
+playersonafairandequitablebasis.
+o Anyhandicap(s)previouslyheldbytheplayer.
+
+--- page 75 ---
+Rule 7
+o Whethertheplayer’sabilityisrapidlyimprovingordeclining.
+o Whethertheplayer'sperformanceissignificantlydifferentinone
+formatofplaycomparedtoanother,forexamplebetweenorganized
+competitionsandgeneralplay;unauthorizedandauthorizedformatof
+play.
+o Whereithasbeendeterminedthataplayer’sactionsareforthe
+purposeofgaininganunfairadvantage.
+(ii) AdjustingaHandicapIndex.Inconsideringalloftheavailableevidence,the
+HandicapCommitteemustdecidethemostappropriatecourseofactionfor
+anyadjustmenttoaplayer’sHandicapIndex,whichcanbeeither:
+l ResettingtheHandicapIndexbyapplyinganadjustmenttoeachofthe
+mostrecent20ScoreDifferentialsinthescoringrecord,toachievethe
+chosenHandicapIndexthatisdeterminedtobetterreflecttheplayer's
+demonstratedability.
+o ThiswillallowfortheHandicapIndextobeupdatedasnewscoresare
+posted.
+o Iffewerthan20scoresarerecordedonaplayer’sscoringrecordthe
+adjustmentisappliedtoallrecordedScoreDifferentials.
+o TheHandicapCommitteecanremovetheadjustmentatanytimeifthe
+adjustmentisdeterminedtonolongerbewarranted.
+Or
+l FreezingtheHandicapIndexatalevelselectedbytheHandicapCommittee
+foradefinedperiodoftime.
+o Duringthisperiod,aplayer’sHandicapIndexwillnotbeupdatedas
+newscoresarepostedunlesstheHandicapCommitteehasdetermined
+tofreezeonlyagainstupwardmovement.
+o TheHandicapCommitteecanremovethefreezeupontheHandicap
+Indexatanytimeandthescoresintheplayer’sscoringrecordwillbe
+usedtocalculatetheplayer’sHandicapIndex.
+Anyadjustmenttoaplayer’sHandicapIndexresultingfromahandicapreview
+must:
+l Beappliedonlyaftertheplayerhasbeeninformedandhashadanopportunity
+torespondtotheHandicapCommitteeor,whereappropriate,theAuthorized
+Association.Theplayermusthaverecoursetoanappealsprocedure,if
+requested.
+75
+
+--- page 76 ---
+Rule 7
+76
+l Beaminimumof1stroke,upwardordownward.
+l Onlyincreaseaplayer’sHandicapIndexbyupto5.0strokesabovetheplayer’s
+LowHandicapIndex,unlessthereareexceptionalcircumstances.Such
+circumstancescouldincludeaplayerwhohasalong-termillnessorinjury
+preventingthemfromplayinggolfatthelevelpreviouslyattained.
+Rule 7.1a Clarifications:
+7.1a/1 – Resetting a Player’s Handicap Index by Adjusting the Most
+Recent 20 Score Differentials
+Applyinganadjustmenttoeachofthemostrecent20ScoreDifferentialsinthe
+player’sscoringrecordwillensurethattheimpactoftheadjustmentremains
+afterthenextscoreissubmitted,graduallydilutingtheimpactofthe
+adjustmentasmorescoresaresubmitted.
+Asanexample,aplayerhasaHandicapIndexof10.3andtheHandicap
+Committeedecidestoadjustthisto9.3becauserecentscoressuggestthatthe
+playerisrapidlyimproving.
+Usingthisexample,theHandicapCommitteewouldapplya-1adjustmentto
+eachofthemostrecent20ScoreDifferentialsandtheimpactofthisadjustment
+onthefinalcalculationisillustratedinthetablesbelow:
+
+--- page 77 ---
+Rule 7
+77
+
+--- page 78 ---
+Rule 7
+78
+7.1a/2 – Basis of Handicap Committee-Applied Adjustment For a
+Player Impacted by Illness or Injury
+TheHandicapCommitteemayconsideradjustingaplayer’sHandicapIndexif
+theirabilityhasbeenimpactedbyaprolongedperiodofillhealth,injuryor
+temporarydisability.Suchanadjustmentcanonlybemadeafteroneormore
+acceptablescoreshavesubsequentlybeensubmitted.Indeterminingthelevelof
+anyadjustment,theHandicapCommitteeshouldtakeintoconsiderationthe
+scoressubmittedcomparedtotheirpreviousHandicapIndexandthenatureand
+severityoftheplayer'scondition.
+Afteranumberofscoreshavebeensubmittedanditbecomesevidentthatthe
+player'sconditionhascausedapermanentchangetotheirability,itmaybe
+appropriatetodisregardtheplayer’sscoringrecordandallocateaHandicap
+Indexusingonlythescoressubmittedsincetheillness,injuryortemporary
+disabilityoccurred(seeRule5.2a).
+7.1b Posting a Missing Score or Penalty Score
+(i) ReasonforNotSubmittingaScore
+Inasituationwhereaplayerfailstosubmitascorefromanauthorized
+formatofplay,theHandicapCommitteehastheauthoritytodetermine
+whethertheplayer’sreasonfornotsubmittingthescorewasjustifiedand
+takeappropriateaction.
+FailuretosubmitascoreforreasonstheHandicapCommitteemayconsider
+tobejustifiedinclude,butarenotlimitedto,unforeseeneventssuchas
+suddeninjury,illnessoremergency,whichadverselyaffectedtheabilityof
+theplayerovertheremainingholesaftertheeventoccurred.
+Reasonswhichshouldnotbeconsideredjustifiedinclude,butarenot
+limitedto:
+l Forgetfulness
+l Circumstancespreventingthetimelysubmissionofscore,forexample
+accesstoClubhouseorpowercut.
+l Whenoneormoreholeshavenotbeenplayedforavalidreason(see
+Rule3.2).
+l PreventingalowscorefromcausingaHandicapIndextodecrease.
+l PreventingahighscorefromcausingaHandicapIndextoincrease.
+
+--- page 79 ---
+Rule 7
+WhentheHandicapCommitteedeterminesthataplayer’sreasonforfailing
+tosubmittheirscorewasjustified,thescoreshouldnotbepostedfor
+handicappurposes.
+(ii) ScoretobePosted
+WhentheHandicapCommitteedeterminesthataplayer’sreasonforfailing
+tosubmittheirscorewasnotjustified,theymustactasfollows:
+l Whentheplayer’sactualscoreisdiscoverable:
+o Postthescore,provideditmeetsalloftheprovisionssetoutwithin
+theRulesofHandicapping.
+o Iftheroundwasnotcompletedforavalidreasonandthescoremeets
+alloftheotherprovisionssetoutintheRulesofHandicapping,post
+thescore.Theplayer’sexpectedscorewillbeusedfortheholeor
+holesnotplayed(seeRule3.2).
+o IftheHandicapCommitteeconcludesthattheplayerfailedtosubmit
+thescoreforthepurposeofgaininganunfairadvantage(seeRule1.3
+(i)),itshouldconsiderapplyinganadditionalpenaltyscoreappropriate
+forthecircumstances.
+l Iftheplayer’sactualscoreisnotimmediatelydiscoverable:
+o Apenaltyscoreshouldbeapplied.
+o Iftheplayer’sactualscoreissubsequentlydiscovered,theactual
+scoreshouldbepostedtotheplayer’sscoringrecord.TheHandicap
+Committeehasdiscretiontoleavethepenaltyscoreontheplayer’s
+scoringrecordortoremoveit,dependingonthecircumstances.
+Thevalueofanypenaltyscoreappliedtoaplayer’sscoringrecordshouldbe
+appropriateforthecircumstancesand/ortheplayer’sintent.Forexample:
+l Iftheplayerisdeterminedtohaveactedforthepurposeofloweringtheir
+HandicapIndex,thepenaltyscoreshouldbeequaltothehighestScore
+Differentialintheirlast19scores.
+l Iftheplayerisdeterminedtohaveactedforthepurposeofraisingtheir
+HandicapIndex,thepenaltyscoreshouldbeequaltothelowestScore
+Differentialintheirlast19scores.
+l Iftheplayerhasnotsubmittedascoreforanyotherreason,andthescoreis
+notdiscoverable,thepenaltyscoreshouldbeequaltotheirCourseHandicap
+plustheCourseRatingoftheteesplayed,roundedtothenearestwhole
+number.
+79
+
+--- page 80 ---
+Rule 7
+80
+Foraplayerwhorepeatedlyfailstosubmitacceptablescores,theHandicap
+CommitteeortheAuthorizedAssociationshouldconsidereitherwithdrawingtheir
+HandicapIndexortakingotherdisciplinaryaction(forexample,prohibitingthe
+playerfromenteringclubcompetitionsforadefinedperiodoftime).
+(SeeDiagram7.1b.)
+7.1c Withdrawing a Handicap Index
+TheHandicapCommittee,orAuthorizedAssociation,shouldwithdrawtheHandicap
+Indexofaplayerwhodeliberatelyorrepeatedlyfailstocomplywiththeplayer’s
+responsibilitiesundertheRulesofHandicapping(seeAppendixA).
+
+--- page 81 ---
+Rule 7
+Thewithdrawalofaplayer’sHandicapIndexshouldbeappliedonlyafterthe
+playerhasbeeninformedandhashadanopportunitytorespondtotheHandicap
+Committee,AuthorizedAssociation,orotherdisciplinarypanel.
+AplayermustbenotifiedofthelengthoftimetheirHandicapIndexwillbe
+withdrawnandanyadditionalconditions.
+7.1d Reinstating a Handicap Index
+Reinstatementofaplayer’sHandicapIndexwillberequiredafteraplayer’s
+HandicapIndexhasbeenwithdrawnforaperiodoftime.
+TodeterminethelevelofHandicapIndexatwhichtheplayeristobereinstated,
+theHandicapCommitteemaywishtoconsider:
+l ReinstatingtheHandicapIndexatalevelthattheHandicapCommitteefeelsis
+currentlyreflectiveoftheplayer’sdemonstratedability,
+l AllocatingaHandicapIndexasiftheplayerwerenewtothesport,or
+l ReinstatingthelastrecordedHandicapIndex.
+Itisstronglyrecommendedthat,afteraplayer’sHandicapIndexhasbeen
+reinstated,theHandicapCommitteeshouldmonitortheplayer'sHandicapIndex
+closelyoversubsequentroundsand,whererequired,makeappropriate
+adjustments.
+7.2 Committee in Charge of a Competition
+7.2a Terms of the Competition
+TheCommitteeinchargeofacompetitionmaysetentry/eligibilityrequirements
+withintheTermsoftheCompetitionrelevanttoaplayer'sHandicapIndexor
+calculatedPlayingHandicap.Forexample,theCommitteecan:
+l SetamaximumHandicapIndexforentryoruseinthecompetition.
+l SetamaximumPlayingHandicap.
+l ReservetherighttoadjustthePlayingHandicapofanentrantwherethereis
+evidencethattheplayer’sHandicapIndexdoesnotreflecttheirdemonstrated
+ability.
+81
+
+--- page 82 ---
+Rule 7
+82
+ACommitteeinchargeofanelitelevelcompetitionmayalsoconsidersetting
+moredetailedentry/eligibilitycriteria,forexample:
+l Therequirementfortheplayertosubmitacopyofthemostrecent20scores
+intheirscoringrecord,allowingtheCommitteetodeterminewhetherthe
+player’sHandicapIndexreflectstheirdemonstratedability.Thiscouldinvolve
+assessingtheplayer’sperformancein:
+o generalplayrounds;
+o competitionrounds;
+o 9-holerounds;
+o generalplayroundscomparedtocompetitionrounds;
+o 9-holeroundscomparedto18-holerounds;and
+o thenumberofacceptablescorespostedonaregularbasis.
+l Therighttoconsiderperformanceinunauthorizedformatsofplayand/or
+l Useofaplayerranking,orsomeotherindicatorofabilitybasedon
+performancesinothercompetitionsofequalstature.
+Forthepurposeofupdatingaplayer'sHandicapIndexafteracompetitionwhere
+theCommitteehassetmaximumlimits,theplayer'sfull,unrestrictedCourse
+Handicapshouldbeusedforthecalculationoftheiradjustedgrossscore.
+Foreaseofcompetitionadministrationpurposes,theCommitteeinchargeofa
+multi-roundcompetitionplayedduringthesameorconsecutivedaysmust
+determinewithintheTermsoftheCompetitionwhetheraplayer’sHandicapIndex
+willremainunchangedforthedurationofthecompetition.Itisstrongly
+recommendedthattheHandicapIndexremainsunchangedbetweensuchrounds.
+7.2b Other Actions
+TheCommitteeinchargeofacompetitionmayreservetherighttodeterminethat
+whencourseconditionsareexceptionallypoor,thesubmissionofscoresfor
+handicappurposesshouldbesuspended.TheCommitteeshouldobtainapproval
+fromtheappropriateAuthorizedAssociationwhenimplementingsucha
+suspension.
+
+--- page 83 ---
+V
+V.Appendices
+APPENDICES A-G
+
+--- page 84 ---
+84
+Appendix A
+AppendixA:Rightsand
+Responsibilities
+TheintegrityoftheWorldHandicapSystemreliesonallkeystakeholders
+ensuringthattherequirementssetdownwithintheRulesofHandicappingare
+satisfiedandthattheycarryouttheirrespectiveresponsibilities.
+ThekeystakeholderswithintheRulesofHandicappingare:
+l Theplayer
+l ThegolfclubanditsHandicap
+Committee
+l RegionalGolfAssociations*
+l NationalAssociations*
+l Multi-NationalAssociations*
+l TheUSGAandTheR&A
+*CollectivelyknownasAuthorized
+Associations
+Theresponsibilitiesofeachkeystakeholderare:
+1. Player Responsibilities.Inordertocomplywiththerequirementsofthe
+RulesofHandicapping,aplayerisexpectedto:
+(i) ActwithintegritybyfollowingtheRulesofHandicappingandtorefrain
+fromusing,orcircumventing,theRulesofHandicappingforthepurpose
+ofgaininganunfairadvantage.
+(ii) HaveonlyoneHandicapIndexfromasinglescoringrecord,whichis
+managedbytheplayer’shomeclubinaccordancewiththeRulesof
+Handicapping.
+Note:ThisHandicapIndexwillapplyelsewhere,includingatallothergolf
+clubsofwhichtheplayerisamember.
+(iii) Ensureeachgolfclubofwhichtheyareamemberknowsthedetailsof:
+l Allothergolfclubsthattheyareamemberof,and
+l Whichgolfclubthattheyhavedesignatedtobetheirhomeclub.
+
+--- page 85 ---
+Appendix A
+85
+(iv) Ensurethat,priortoplayingaroundinanauthorizedformatofplay,
+they:
+l KnowtheircurrentHandicapIndex,
+l InformtheHandicapCommitteeortheCommitteeinchargeofthe
+competitionofanydiscrepancieswiththeirHandicapIndexand
+providedetailsofanyoutstandingscoresyettobesubmittedor
+postedtotheirscoringrecord,and
+l Knowtheholeswherehandicapstrokesaretobegivenorreceived.
+(v) Attempttomakethebestscorepossibleateachhole.
+(vi) Whereapplicable,ensureallacceptablescoresaresubmittedfor
+handicappurposesinordertoprovidereasonableevidenceoftheir
+demonstratedability.Thisincludesscoresfromoutsidetheplayer’s
+homejurisdiction.Acceptablescoresshouldbesubmitted:
+l Assoonaspossibleaftertheroundiscompletedandbeforemidnight
+onthedayofplay(localtime),and
+l Inthecorrectchronologicalorder.
+(vii) Provideanynewgolfclubwiththefulldetailsoftheirpreviousplaying
+history,HandicapIndexheld,membershipsandanyotherinformation
+relevanttotheirgolfingability.
+(viii) PlaybytheRulesofGolf.
+(ix) Certifythescoresofotherplayers.
+
+--- page 86 ---
+86
+Appendix A
+2. Golf Club/Handicap Committee, Regional Associations, National
+Associations and Multi-National Association Responsibilities.Inorder
+tocomplywiththerequirementsoftheRulesofHandicapping,Handicap
+CommitteesandAuthorizedAssociationsareexpectedto:
+
+--- page 87 ---
+Appendix A
+87
+Notes:
+1. WhereaNationalAssociationadministersandmanagesaplayer’s
+HandicapIndexdirectly,theNationalAssociationassumesthe
+responsibilitiesofagolfclub.
+2. Whereappropriate,thedelegationofresponsibilitiesisdeterminedby
+eithertheMulti-NationalAssociationortheNationalAssociation.
+
+--- page 88 ---
+88
+Appendix A
+World Handicap System Responsibilities Relating to the Golf Course
+An Authorized Association is
+expected to:
+A Golf Club/Handicap Committee
+is expected to:
+1. Ensurethatallfacilitiesapproved
+bytheAuthorizedAssociationfor
+handicappurposeshaveaCourse
+RatingandSlopeRatingforall
+applicablesetsoftees,
+determinedinaccordancewith
+theCourseRatingSystem.
+Ratingsmustalsoincludeall
+temporaryorpermanentcourse
+modificationsadvisedbyaffiliated
+golfclubs/courseowners.
+2. UsetheCourseRatingsoftware
+applicationtocalculateandissue
+allCourseRatingsandSlope
+Ratings.
+3. MaintainrecordsofallCourse
+Ratingsundertakenwithinits
+jurisdiction.
+4. EstablishaCourseRatingReview
+Committee.
+5. Establishaccesstofullytrained
+courseraters(includingteam
+leaders)toconductallrequired
+CourseRatingsandre-ratings.
+6. Determinetheeligibleperiod
+whenpreferredliesmaybein
+operationforacceptablescoresto
+beposted.
+7. Establishthestartandenddates
+ofanyinactiveseasonwithin
+relevantareasofitsjurisdiction.
+1. Haveaverifiablecourse
+measurementforeachsetoftees
+withaCourseRatingoverwhich
+authorizedformatsaretobe
+played.
+2. InformtheAuthorizedAssociation
+ofanysignificantcourse
+alterations,particularlychanges
+tolengthorcoursemarkings,
+thatcouldaffectissuedCourse
+RatingsandSlopeRatings.
+3. Ensurethatallacceptablescores
+areplayedfromteesthathavea
+CourseRatingandSlopeRating,as
+definedwithintheCourseRating
+System.
+4. Maintaintheirgolfcourse(s)ina
+mannerconsistentwiththe
+conditionspresentedwhenthe
+CourseRating(s)wereconducted.
+5. DisplayaCourseHandicapand
+PlayingHandicapadjustment
+tableforeachsetoftees,for
+players’reference.
+6. Ensurethatthepostingofall
+acceptablescoresissuspendedin
+theeventthatcourseconditions
+areexceptionallypoor.
+Priortoimplementing,thegolf
+clubmustfirstobtainapproval
+fromtheappropriateAuthorized
+Association.
+7. Ensurethegolfcourseismarked
+inaccordancewiththeRulesof
+Golf.
+
+--- page 90 ---
+90
+Appendix B
+AppendixB:Player’sScoringRecord
+Threesamplescoringrecordsarepresentedtodemonstratetheinformationthat
+shouldbecontainedwithindifferentversions.
+(i) GeneralVersion.AccessiblebytheHandicapCommitteeandallplayers
+withinagolfclubincountrieswherepeerreviewisrequiredforthe
+certificationofscores.Thisrecordwilldisplaybasicdetailsofthe20most
+recentscores,aswellasthe5scoresmostrecentlyreplacedwithinthe20-
+scoreset.
+
+--- page 91 ---
+Appendix B
+91
+(ii) Condensed Version.Accessiblebythe HandicapCommittee andplayersin
+countrieswhere peerreview isrequiredforthe certificationofscores .This
+recordisthesameastheGeneralVersionbut,givenitswideravailability,it
+omitsreferencetothedaytheroundwasplayedandthe golfcourse played
+fordataprivacyreasons.
+
+--- page 92 ---
+92
+Appendix B
+(iii) Full Version.  For reference by the player to whom the record belongs, the
+HandicapCommittee andthoseinvolvedindisputeresolution,andwhichcan
+beusedtosupportallaspectsoftheWorldHandicapSystem.The scoring
+recordwillcontainfulldetailsofthemostrecent20scores,aswellasthe5
+scoresmostrecentlyreplacedwithinthe20-scoreset.Itwillalsoprovidean
+optiontolinktotheplayer’sfull,backdated scoringrecord history.
+
+--- page 93 ---
+Appendix B
+93
+
+--- page 94 ---
+94
+Appendix B
+Notes:Manydatafieldsmaybeautomatedbythehandicapcomputation
+service.
+1. The home club (recognized for handicap management purposes) can be
+automatically populated from the player’s identification number or
+name.
+2. The current Handicap Index can be automatically populated from the last
+calculated Handicap Index.
+3. Date Submitted – can default to the current day the score is being
+submitted and posted into the scoring record, with a choice to change
+where appropriate.
+4. The course database (held either locally or centrally) may provide
+automatic entries for: State/Country; Course Rating; Slope Rating; par and
+Course Rating minus par calculations.
+5. **If required, score type designation(s) should be determined by the
+Authorized Association and can be used to help identify the format of
+play, where a round was played and other details about the round. This
+is primarily to assist with the Handicap Committee review process but can
+also ensure that the Rules of Handicapping are applied correctly.
+Examples of how scores might be designated include:
+Type of Play: Competition; General play; 9-hole round (N)
+Format of Play: Stroke play; Match play
+Where round was played: Home; Away
+When hole not played: Not Played (X)
+Other details: Incomplete round; Exceptional score; Penalty score
+6. ***Where hole-by-hole score entry is in use, applicable adjustments to
+the gross score can be automatically applied. If hole-by-hole scoring is
+not in use, the adjusted gross score will need to be calculated and
+recorded manually.
+7. The Course Handicap can be automatically calculated using the player’s
+Handicap Index, the Course Rating, the Slope Rating and the par of the tees
+played.
+8. Adjusted gross score(s) can be calculated automatically.
+
+--- page 95 ---
+Appendix B
+95
+9. ****StablefordPointsandPar/Bogeyresultscanbecalculated
+automaticallywherehole-by-holescoreentryisinuse;otherwisethey
+willneedtobemanuallyenteredastotalpoints/result.
+10. Anyselectedend-of-processadjustments,suchasexceptionalscores
+and/oradjustmentsappliedbytheHandicapCommittee,canbe
+automaticallyappliedtocalculatethefinaladjustedHandicapIndex.
+Wherefieldscannotbepopulatedautomatically,theyneedtobepopulated
+manuallywhenenteringscoresintothesystem.
+
+--- page 96 ---
+96
+Appendix C
+AppendixC:HandicapAllowances
+Handicapallowancesaredesignedtoprovideequityindifferentformatsofplay,
+overboth9holesand18holes.
+HandicapallowancesareappliedtotheunroundedCourseHandicapasthefinal
+stepincalculatingaplayer’sPlayingHandicap(seeRule6.1andRule6.2).
+TheNationalAssociationisresponsibleforestablishinghandicapallowances,orit
+candelegatethisresponsibilitytoaRegionalGolfAssociationorgolfclub.
+Thefollowingtablesetsouttherecommendedhandicapallowanceswhich,for
+medium-sizedfield,individualstroke-playnetevents,aredesignedtogiveall
+playersasimilarchanceoffinishinginthetop10%whenplayingwell.Formatch
+playandteamformats,therecommendedhandicapallowancesaredesignedto
+giveeachplayerorteamthesamechanceofwinning.
+
+--- page 97 ---
+Appendix C
+97
+Format of Play Type of Round RecommendedHandicap Allowance
+Strokeplay
+Individual 95%
+IndividualStableford 95%
+IndividualPar/Bogey 95%
+IndividualMaximumScore 95%
+Four-Ball 85%
+Four-BallStableford 85%
+Four-BallPar/Bogey 90%
+MatchPlay
+Individual 100%
+Four-Ball 90%
+Other
+Foursomes 50%ofcombinedteamhandicap
+Greensomes 60%low/40%high
+Pinehurst/Chapman 60%low/40%high
+Best1of4strokeplay 75%
+Best2of4strokeplay 85%
+Best3of4strokeplay 100%
+All4of4strokeplay 100%
+Scramble(4players) 25%low/20%/15%/10%high
+Scramble(3players) 30%low/20%/10%high
+Scramble (2 players)
+Doubles/Better Shot 35%low/15%high
+Totalscoreof2matchplay 100%
+Best1of4Par/Bogey 75%
+Best2of4Par/Bogey 80%
+Best3of4Par/Bogey 90%
+4of4Par/Bogey 100%
+Allowancesmaybeadjustedfordifferentfieldsizesand/orthemake-upofthe
+field(seeClarificationC/1).
+HandicapCompetitions:
+Fororganizedcompetitions,theCommitteeshouldspecifythe handicapallowance
+withintheTermsoftheCompetition.
+
+--- page 98 ---
+98
+Appendix C
+Ingeneral,afterhandicapallowanceshavebeenappliedinstroke-playformats,a
+playerreceivestheirfullPlayingHandicap.
+Ingeneral,afterhandicapallowanceshavebeenappliedinmatch-playformats,
+theplayerwiththelowestPlayingHandicapplaysoffzerostrokesrelativetothe
+otherplayer(s).Theotherplayer(s)receive(s)thedifferencebetweentheirown
+PlayingHandicapandthatoftheplayerwiththelowestPlayingHandicap.
+PlusPlayingHandicaps:
+UnlessotherwisespecifiedbytheCommittee,playerswitha‘plus’Playing
+Handicapgivestrokesbacktothecourse,beginningattheholewithstrokeindex
+18.Forexample,aplayerwithaPlayingHandicapof+2wouldgivestrokesback
+tothecourseattheholeswithstrokeindex18and17.
+Whenhandicapallowancesareapplied,aplayerwithaplusPlayingHandicapmoves
+uptowardszeroincludingrounding.Thisistomaintainthesamerelative
+differencebetweenPlayingHandicaps.
+ExtraHoles:
+Handicapallowancesaredesignedtocreateequityover9or18holes.TheTerms
+oftheCompetitionshouldspecifywherehandicapstrokesshouldbeappliedif
+extraholesarerequiredtodeterminethewinnerorotherfinishingpositions(see
+OfficialGuidetotheRulesofGolf,CommitteeProceduresSection5A(6)).
+
+--- page 99 ---
+Appendix C
+99
+APPENDIX C Clarifications:
+C/1 – Impact of Field on Recommended Handicap Allowance
+Fieldsizesandthemake-upofthefieldhaveanimpactonequityandmaybe
+takenintoconsiderationwhendetermininghandicapallowancesforaspecific
+event,especiallyinindividualstroke-playformats.
+Therecommendedhandicapallowanceforallindividualstroke-playformatsis
+setat95%formedium-sizedfieldnetevents,whichisafieldofbetween30
+and100players.However,forafieldsizeoffewerthan30players,ahandicap
+allowanceof100%couldbeconsidered.Likewise,ifthereisasignificant
+percentageofhigherhandicapplayersinthefield,alowerallowancecouldbe
+considered(forexample,90%insteadof95%).
+Thefollowingtableindicateshowtherecommendedhandicapallowancesin
+individualstroke-playformatscouldbemodifiedbasedonthesizeandmake-
+upofthefield:
+Recommended Handicap Allowances relative to 95%
+FieldMake-up(HandicapRange)
+FieldSize Morelower
+handicapplayers Normaldistribution Morehigher
+handicapplayers
+Small(<30
+players) Higher Higher Same
+Medium(30-100
+players) Higher Same Lower
+Large(>100
+players) Same Same Lower
+Asanalternative,Committeesmayconsideradaptingtheircompetitionsto
+includedivisionsorflights,withdifferenthandicaprangescompetingfor
+differentprizes.
+
+--- page 100 ---
+100
+Appendix C
+C/2 – Examples of How to Allocate Strokes in Handicap Competitions
+When Handicap Allowances Apply
+Playing Handicap
+Player Course
+Handicap
+Singles Individual
+Stroke Play 95%
+Handicap
+Allowance
+Singles Match Play
+100% Handicap
+Allowance
+Four-Ball Match
+Play
+90% Handicap
+Allowance
+A 10 10 10 0
+B 18 17 18 7
+C 27 26 27 15
+D 39 37 39 26
+Example1:Insinglesindividualstroke-playevents,the95% handicapallowance
+isappliedtoeachplayer’s CourseHandicap,whichmeansplayerAreceives10
+strokes,playerBreceives17strokes,playerCreceives26strokesandplayerD
+receives37strokes.
+Example2:InsinglesmatchplaybetweenplayerAandplayerB,wherethe
+handicapallowance is100%,playerAplaysoffzero(0)strokesandplayerB
+receives8strokesinthematch.
+Example3:InFour-Ballmatchplay,playerAwouldplayoffzero(0)strokes,
+playerBwouldreceive7strokes(90%ofthedifferencein CourseHandicap from
+playerA),playerCwouldreceive15strokes(90%of17)andplayerDwould
+receive26strokes(90%of29).
+Example4:InFoursomesmatchplaywhereplayersAandBareTeam1and
+playersCandDareTeam2,Team2wouldreceive19strokes(50%ofthe
+differencebetweeneachTeam’scombined CourseHandicaps).
+Notes:
+1.ThestrokesreceivedinFour-Ballmatchplayremainthesameevenifthe
+lowesthandicapplayerisunabletoplay.
+2.Foreaseofillustration,the handicapallowance hasbeenappliedtothe
+roundedCourseHandicap intheaboveexamples.
+
+--- page 101 ---
+Appendix C
+101
+C/3 – Examples of How to Allocate Strokes in Handicap Competitions
+Involving Plus Handicap Players and When Handicap Allowances
+Apply
+Thefollowingillustrationindicateshowan85%handicapallowanceisappliedto
+twoteamsplayinginaFour-Ballstroke-playcompetitionwithCourseHandicaps
+of+4(playerA),16(playerB),7(playerC)and26(playerD):
+The85%handicapallowanceresultsina17-strokedifferencebetweenpartners
+forTeam1anda16-strokedifferencebetweenpartnersforTeam2.Thisis
+approximately85%ofthedifferencebetweentheCourseHandicaps,and
+maintainsrelativeequity.
+Whenapplyingahandicapallowance,anyreductionwillalwaysresultinaPlaying
+Handicapclosertozero,includingforplayerswithaplusHandicapIndex.
+
+--- page 102 ---
+102
+Appendix C
+Examples:
+Player Course Handicap
+Four-Ball Stroke Play
+Playing Handicap
+85% Handicap Allowance
+Four-Ball Match Play
+Playing Handicap
+90% Handicap Allowance
+A +4 +3 0
+B 16 14 18
+C 7 6 10
+D 26 22 27
+1:InFour-Ballstrokeplaywithahandicapallowanceof85%,playerAgives3
+strokesbacktothecourse,playerBreceives14strokes,playerCreceives6
+strokesandplayerDreceives22strokes.
+2:InFour-Ballmatchplay,playerAplaysoffzero(0)strokes,playerBreceives
+18strokes(90%ofthedifferenceinCourseHandicapsfromPlayerA),playerC
+receives10strokes(90%of11)andplayerDreceives27strokes(90%of30).
+3:InFoursomesmatchplaywhereplayersAandBareTeam1andplayersC
+andDareTeam2,Team2wouldreceive11strokes(50%ofthedifference
+betweentheaggregateofeachTeam’sCourseHandicaps).
+
+--- page 103 ---
+Appendix D
+103
+AppendixD:HandicapReview
+ThehandicapreviewprocessgivesaHandicapCommitteetheabilitytoensurethe
+HandicapIndexofaplayerreflectstheirdemonstratedability.
+Toassistthisprocess,theWorldHandicapSystemsoftwarespecificationssetout
+arangeofrecommendedreports,analysesandnotificationswhichcanbe
+developedwithinthehandicappingsoftwareusedbyHandicapCommitteesto
+administermembers’handicaps.
+Thesetoolswill:
+l Identifyplayerswhoareconsistentlyscoringabove,orbelow,their‘expected’
+scoringrangeorwhereotherabnormalitieswithinaplayer’sscoringrecord
+exist,and
+l MakearecommendedadjustmenttotheHandicapIndexofeachplayer
+identified,uptoamaximumof2strokes.
+ArecommendedadjustmentwillbeappliedonlyatthediscretionoftheHandicap
+Committee,basedonanyotherknowledgeorevidencethattheyhaveaboutthe
+playerandtheirdemonstratedability.
+Thehandicapreviewreportingtoolscompareaplayer’sHandicapIndex,individual
+scoresandscoringpatternsagainstexpectationsusingthefollowing:
+l Theplayer’sexpectedscoreintheirnextround,
+l Theexpectedstandarddeviationoftheplayer’sScoreDifferentials,
+l Theplayer’sexpectedscoringrange.
+Thenumberofabnormalscoresintheplayer’sscoringrecordasapercentageof
+thetotalnumberwillalsobetakenintoaccount.Thelargerthenumberofscores
+inaplayer’sscoringrecord,themorescoresaboveorbelowtheirexpected
+scoringrangearerequiredfortheplayertobeflaggedforahandicapreview.
+Otherinformationthatmayalsobeconsideredduringthehandicapreviewprocess
+include:
+l Theplayer’scurrentLowHandicapIndex.
+l LengthoftimesinceaplayerlastplayedtotheirHandicapIndex.
+l NumberofscoressinceaplayerlastplayedtotheirHandicapIndex.
+
+--- page 104 ---
+104
+Appendix D
+l Number of times and the percentage of the Score Differentials posted during the 
+review period when a player has played to their Handicap Index, or better.
+l The number of Exceptional Score adjustments applied during the review period.
+l The number of Handicap Index calculations in which the Soft Cap or Hard Cap 
+were applied, during the review period.
+l The frequency of a player’s score submissions over the last 12-month cycle, or 
+selected period of time, compared to the previous 12-month cycle, or 
+comparative period(s).
+l The trend of a player’s Handicap Index, such as differences in the level of 
+consistency of the player’s Handicap Index over the past 12–24 months.
+l Comparison of a player’s average Score Differentials across all chosen
+authorized formats of play, the score types of which should be clearly identifiable 
+and appropriately annotated (see Appendix B). For example, competition versus 
+general play, stroke play versus match play, individual versus team formats etc.
+l A player’s indicative potential indicated by the best 40% of the player’s Score 
+Differentials during the review period.
+l Any consecutive sequences of Score Differentials significantly above or below 
+the expected Score Differential distribution for the player’s Handicap Index.
+l Any scores from, or performances known in, non-authorized formats of play.
+l Any other knowledge that the Handicap Committee has relative to the player’s 
+golfing ability. For example, improving play following golf lessons, declining 
+scoring potential due to frequency of playing, ageing, incapacitating injuries or 
+illness, etc.
+l Percentage of acceptable scores submitted at a player’s home club.
+l Percentage of acceptable scores submitted from general play formats.
+l Percentage of acceptable scores from 9-hole rounds.
+l Identifying relevant handicapping trends for Handicap Committee consideration.
+l Information supplied by any other golf club where the player is a member.
+
+--- page 105 ---
+Appendix D
+105
+Notes:
+1. IfaHandicapCommitteeconsidersthatmorethana2-strokeadjustmenttoa
+player’sHandicapIndexisrequired,thisshouldonlybemadeunder
+exceptionalcircumstances.Forexample,foraplayerwhohasanillness,
+injuryortemporarydisabilityimpactingtheirabilitytoplaywithoragainstall
+otherplayersonafairandequitablebasis(seeRule7.1a).
+2. Thehandicapreviewproceduremaybeusedtodetermineanadjustmentof
+greaterthan2strokesbycontinuingtoruntheiterativeprocess.
+3. Whenapplyinganyadjustmenttoaplayer’sHandicapIndex,itisimportant
+thattheCommitteealsoconsidersresettingtheirLowHandicapIndex,toallow
+forfutureupwardmovementoftheirHandicapIndex.
+
+--- page 106 ---
+106
+Appendix E
+AppendixE:StrokeIndex
+Allocation
+TheRulesofGolfstate:“TheCommitteeisresponsibleforpublishingonthe
+scorecardorsomewhereelsethatisvisible(forexample,nearthefirsttee)the
+orderofholesatwhichhandicapstrokesaretobegivenorreceived.”(SeeRules
+ofGolf,CommitteeProcedures,Rule5J(4).)
+Itisrecommendedthatastrokeindexallocationbeappliedover18holes,split
+intosixtriadswitheachholerankedonitsplayingdifficultyrelativetopar.
+AuthorizedAssociationscanprovideareportdetailingthedifficultyfactorthathas
+beenassignedtoeachholederivedfromtheCourseRatingSystem.
+Therecommendedmethodologyandproceduresfordeterminingastrokeindex
+allocationwithinthesixtriadstructure,designedtoaccommodatebothstroke-
+playandmatch-playformats,isasfollows:
+l Applyoddstrokeindexallocationsoverthefrontnineandevenstrokeindex
+allocationsoverthebacknine.If,however,thebacknineissignificantlymore
+difficultthanthefrontnine,asdeterminedbytheCourseRating,theeven
+strokeindexallocationscanbeswitchedtothefrontnineandtheoddstroke
+indexallocationstothebacknine.
+l Spreadstrokeindexallocationsevenlyoverthe18holessothatplayers
+receivingstrokeswillhavetheopportunitytouseahighproportionofthese
+strokesbeforeamatchresulthasbeendecided.
+l Applytheloweststrokeindexhole(1or2)oneachnineinthemiddletriad.If
+noholewithinthemiddletriadisrankedwithinthelowest6holesrelativeto
+par,thenitcanbemovedintoanadjacentholeattheendofthefirsttriador
+thebeginningofthethirdtriadoneachnine.
+l Applythesecondloweststrokeindexhole(3or4)oneachnineineitherthe
+firstorthirdtriad,unlesstheloweststrokeindexholehasbeenallocatedin
+thatsametriad.
+l Ifpossible,avoidlowstrokeindexes(6orless)onconsecutiveholes.
+l Whenaplayerreceivesmorethan18strokes,thesameallocationorderisused
+withstrokeindex1repeatingasstrokeindex19,37and55,withalladditional
+strokesgoingupsequentially.
+TheserecommendedproceduressupporttheguidancecontainedintheRulesof
+Golf,CommitteeProcedures,Rule5J(4).
+
+--- page 107 ---
+Appendix E
+107
+Stroke Index Allocation for 9-Hole Play
+Thestrokesreceivedina9-holeformatofplayonan18-holegolfcourseshould
+betakeninascendingorderfromthepublishedstrokeindexallocationfor18
+holes.Alternatively,theHandicapCommitteemayconsideramendingthestroke
+indexallocationfrom1to9,relativetotheascendingorderofthepublished
+strokeindexallocationfor18holes.
+Forplushandicapplayers,wheretheyarerequiredtogivestrokesbacktothe
+course,thisshouldcommenceontheholewiththehighestpublishedstrokeindex
+allocatedforthe9holesor,iftheHandicapCommitteehasamendedthestroke
+indexallocationfrom1to9,attheholewithstrokeindex9.
+SampleStrokeIndexAllocations
+Example 18-hole stroke index allocation
+Hole 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
+Stroke
+Index 7 15 5 11 1 13 3 17 9 8 16 6 12 2 14 4 18 10
+WhenaCommitteedecidestoamendan18-holestrokeindexallocationtocreate
+a9-holeequivalent:
+Example of an amended front nine 9-hole stroke index allocation
+Hole 1 2 3 4 5 6 7 8 9
+StrokeIndex 4 8 3 6 1 7 2 9 5
+
+--- page 108 ---
+108
+Appendix F
+AppendixF:EstablishingPar
+TheRulesofHandicappingfeatureparasafactorinthecalculationof:
+l CourseHandicap,
+l Netdoublebogey,and
+l Netpar.
+Itisimportantthatanaccurateparbeestablishedforeachholeonagolfcourse
+forbothmenandwomen,andthesevaluesshouldbeprintedalongsideeachhole
+onthescorecard.
+Itisrecommendedthatparbeestablishedforeachholeinaccordancewiththe
+followingholelengths:
+Par Men Women
+3
+Upto260yards
+(240metres)
+Upto220yards
+(200metres)
+4
+240to490yards
+(220to450metres)
+200to420yards
+(180to380metres)
+5
+450to710yards
+(410to650metres)
+370to600yards
+(340to550metres)
+6
+670yardsandup
+(610metresandup)
+570yardsandup
+(520metresandup)
+Note:Theseguidelinesassumeanaltitudelessthan2,000feet/610metresabove
+sealevel.
+Asparreflectsthescoreascratchplayerisexpectedtoscoreonagivenhole,it
+mayalsobeappropriatetotakeintoconsiderationthefollowinginformation
+whenallocatingpar:
+l Theplayingdifficultyofthehole,includinganyeffectivelengthcorrection
+factors,suchaselevationchanges,forcedlay-ups,andprevalentwind.
+l Whereaholelengthfallswithintwoparranges,forexample470yards(men)
+or400yards(women),theparmaybeallocatedas4or5dependingonthe
+difficultyofthehole.
+l Thewaytheholeisdesignedtobeplayed.
+
+--- page 109 ---
+Appendix F
+109
+Whereappropriate,thestandardizationofparacrossteesetsisrecommended.
+Forexample,iftheholelengthsfromallsetsofteesonaspecificholeliewithin
+therecommendedpar5rangeformen,withtheexceptionoftheforwardteeat
+410yards,theforwardteeshouldalsobedesignatedasapar5holeifitcanbe
+determinedthatitwasdesignedtobeplayedasapar5forthemajorityofplayers
+whowillchoosetoplaytheholefromthattee.Additionalconsiderationmayalso
+begiventothesetofteesmostcommonlyplayedbymenandwomenandthe
+mostcommonpar,formenandwomen,acrossallsetsofteesonahole.
+Thestandardizationofparhelpstosimplify:
+l Thecalculationofthenumberofstrokesgivenorreceivedwhenplayersare
+competingfrommultiplesetsoftees.
+l Theconsistentapplicationofnetdoublebogeyandnetpartodeterminea
+player’sadjustedgrossscoreacrossallteesetsonahole.
+
+--- page 110 ---
+110
+Appendix G
+AppendixG:TheGolfCourse,
+CourseRatingandSlopeRating
+Course Measurement, Course Rating and Slope Rating, and Modification
+of Courses
+a. General
+AnAuthorizedAssociationisresponsiblefordeterminingandissuingCourse
+RatingsandSlopeRatingsforthegolfcourseswithinitsjurisdiction(seeDefinition
+ofgolfcourse).ACourseRatingandSlopeRatingcanbeissuedtogolfcourseswith
+aminimumlengthof750yards(685metres)for9holesand1500yards(1370
+metres)for18holes.
+CourseRatingsmustbereviewedperiodicallyandrevisedandreissuedas
+necessary.Newgolfcoursescanchangefrequentlyduringthefirstyearsafter
+constructionandmustbere-ratedwithinfiveyearsoftheinitialratingdate.
+Thereafter,golfcoursesmustbere-ratedatleastonceevery10years.
+b. Course Measurement
+Eachholemustbemeasuredtothenearestyard/metre,foreachsetofteesfrom
+apermanentdistancemarker,inaccordancewiththeproceduresoutlinedinthe
+CourseRatingSystemandonlybyaqualifiedpersonororganization.Authorized
+Associationscanprovideacopyofthemeasurementprocedurestothoseinvolved
+inthemeasurementprocess.
+c. Tee Markers
+Theteemarkersusedtodesignateeachsetofteesonagolfcourseshouldbe
+consistentinname,colourand/ordesignanddistinguishablefromthetee
+markersusedforothersetsoftees.Itisstronglyrecommendedthatthe
+AuthorizedAssociationissuesguidancetogolfclubsastohowtheseavoidany
+associationwithgenderorage.
+d. Display of Ratings and Par
+TheCourseRating,SlopeRatingandparforeachsetofteesmustbereadily
+availablesothatitiseasyforaplayertoconverttheirHandicapIndextoaCourse
+HandicapandPlayingHandicaptosubmitanacceptablescore.
+
+--- page 111 ---
+Appendix G
+111
+e. Course Rating and Slope Rating
+TheCourseRatingandSlopeRatingistheevaluationoftheplayingdifficultyofthe
+courseforthescratchplayerandthebogeyplayerundernormalplaying
+conditions.Theeffectiveplayinglengthisdeterminedfromthemeasurementof
+eachhole,adjustedfortheimpactofroll,wind,elevationchanges,altitude,dog-
+legsandforcedlayups.Inadditiontotheeffectiveplayinglength,thereare10
+obstaclefactorsevaluatedoneachholeforboththescratchplayerandthebogey
+player.Theseare:topography;fairway;greentarget;recoverabilityandrough;
+bunkers;crossingobstacles;lateralobstacles;trees;greensurfaceand
+psychology.TheCourseRatingSystemusestablevalues,adjustmentsand
+formulastocalculateratings.
+TheCourseRatingiscalculatedfromtheeffectiveplayinglengthandobstacle
+factorsfor9or18designatedholes.TheCourseRatingisexpressedinstrokesto
+onedecimalpointandrepresentstheexpectedscoreforascratchplayer.The
+BogeyRatingrepresentstheexpectedscoreforabogeyplayer.Thedifference
+betweentheCourseRatingandtheBogeyRatingisusedinthedeterminationof
+theSlopeRating.AgolfcourseofstandardrelativedifficultyhasaSlopeRatingof
+113.
+Thefrontofateeingarea,asdefinedintheRulesofGolf,shouldnotbeplaced
+morethan10yards(10metres)infrontof,orbehind,therelevantpermanent
+distancemarkeroneachhole.Overan18-holeround,agolfcourseshouldnotbe
+shortened(orlengthened)bymorethan100yards(100metres)fromits
+measuredlength,toensureaccurateapplicationoftheCourseRatingandSlope
+Ratinginthecalculationofplayers’ScoreDifferentials.Theequivalentvaluefora
+9-holeroundis50yards(50metres).
+f. Modification of Courses
+(i) Temporary Changes
+TheHandicapCommitteemustnotifytheAuthorizedAssociationwhen
+temporarychangesarebeingmadetothegolfcoursethatmayaffectthe
+CourseRating.TheAuthorizedAssociationwilldeterminewhetherscores
+madeundersuchconditionsareacceptableforhandicappurposes,and
+whethertheCourseRatingandSlopeRatingshouldbemodifiedtemporarily.
+WhereatemporaryCourseRatingandSlopeRatinghasbeenissued,this
+informationmustbemadeavailabletoplayerspriortothecommencement
+oftheirround.
+
+--- page 112 ---
+112
+Appendix G
+Foran18-holegolfcourse:
+IfapprovedbytheAuthorizedAssociation,theissuanceofatemporary
+CourseRatingandSlopeRatingisdeterminedbytheHandicapCommittee
+and/ortheAuthorizedAssociationfollowingtheproceduresetoutbelow:
+l Locatethenearestsetofratedteesfortheappropriategender.
+l Determinethemeasureddifferencebetweenthesetofteesbeingplayed
+andtheratedsetoftees.
+l Fordifferencesunder100yards(100metres),noadjustmentis
+necessaryandscorescanbesubmittedasusual;otherwise
+l Fordifferencesbetween100and300yards(100and274metres),the
+belowtablecanbeusedtodeterminetheadjustmentsrequiredandissue
+atemporaryCourseRatingandSlopeRating.
+
+--- page 113 ---
+Appendix G
+113
+Usingtheseguidelinesandthetablebelow,findtherangethatincludesthe
+yardagedifference:
+Men’s Rating Adjustment Women’s Rating Adjustment
+Yards
+[Metres]
+Change to
+Course
+Rating
+Change to
+Slope
+Rating
+Yards
+[Metres]
+Change to
+Course
+Rating
+Change to
+Slope
+Rating
+100to120
+[100to110] 0.5 1 100to116
+[100to110] 0.6 1
+121to142
+[111to130] 0.6 1 117to134
+[111to122] 0.7 1
+143to164
+[131to150] 0.7 2 135to152
+[123to139] 0.8 2
+165to186
+[151to170] 0.8 2 153to170
+[140to155] 0.9 2
+187to208
+[171to190] 0.9 2 171to188
+[156to172] 1.0 2
+209to230
+[191to210] 1.0 2 189to206
+[173to188] 1.1 2
+231to252
+[211to230] 1.1 3 207to224
+[189to205] 1.2 2
+253to274
+[231to250] 1.2 3 225to242
+[206to221] 1.3 3
+275to300
+[251to274] 1.3 3 243to260
+[222to238] 1.4 3
+*PleasecontactyourAuthorized
+Associationforanyadjustment
+greaterthan300yards(274metres)
+261to278
+[239to254] 1.5 3
+279to300
+[255to274] 1.6 3
+*PleasecontactyourAuthorized
+Associationforanyadjustment
+greaterthan300yards(274metres)
+
+--- page 114 ---
+114
+Appendix G
+Notes:
+l Anadjustmentmustnotbeappliedthatwouldresultinayardageshorter
+thantheminimumlengthof750yards(685metres)for9holesand1500
+yards(1370metres)for18holes.
+l Theseguidelinesassumeanaltitudelessthan2,000feet/610metres
+abovesealevel.
+l Iftheunratedteesarelongerthantheratedtees,addtheresultingtable
+valuestotheratingsofthenearestsetofteesratedfortheappropriate
+gender.
+l Iftheunratedteesareshorterthantheratedtees,subtracttheresulting
+valuesfromtheratingsofthenearestsetofteesratedforthe
+appropriategender.
+l Fordifferencesabove300yards(274metres),playforthedaywouldbe
+ineligibleforhandicappurposes,unlessotherwisedeterminedbythe
+AuthorizedAssociationinadvanceoftheroundorcompetition.
+Fora9-holegolfcourse:
+IfapprovedbytheAuthorizedAssociation,theissuanceofatemporary
+CourseRatingandSlopeRatingisdeterminedbytheHandicapCommittee
+and/orAuthorizedAssociationfollowingtheproceduresetoutbelow:
+l Locatethenearestsetofratedteesfortheappropriategender.
+l Determinethemeasureddifferencebetweenthesetofteesbeingplayed
+andtheratedsetoftees.
+l Fordifferencesunder50yards(50metres),noadjustmentisnecessary
+andscorescanbereturnedorpostedasusual;otherwise
+l Fordifferencesbetween50and150yards(50and137metres),thetable
+belowcanbeusedtodeterminetheadjustmentandissueatemporary
+CourseRatingandSlopeRating.
+
+--- page 115 ---
+Appendix G
+115
+Usingtheseguidelinesandthetablebelow,findtherangethatincludesthe
+yardagedifference:
+Men’s Rating Adjustment Women’s Rating Adjustment
+Yards
+[Metres]
+Change to
+Course
+Rating
+Change to
+Slope
+Rating
+Yards
+[Metres]
+Change to
+Course
+Rating
+Change to
+Slope
+Rating
+50to76
+[50to69]
+0.3 1
+50to62
+[50to57]
+0.3 1
+77to98
+[70to90]
+0.4 2
+63to80
+[58to73]
+0.4 2
+99to120
+[91to110]
+0.5 2
+81to98
+[74to90]
+0.5 2
+121to142
+[111to130]
+0.6 3
+99to116
+[91to106]
+0.6 2
+143to150
+[131to137]
+0.7 3
+117to134
+[107to122]
+0.7 3
+*PleasecontactyourAuthorized
+Associationforanyadjustment
+greaterthan150yards(137metres)
+135to150
+[123to137]
+0.8 3
+*PleasecontactyourAuthorized
+Associationforanyadjustment
+greaterthan150yards(137metres)
+Note:Ifplayingacombinationofdifferentsetsoftees,acurrentCourse
+RatingandSlopeRatingmustbeavailabletosubmitanacceptablescore.If
+theCommitteeinchargeofacompetitionhasusedacombinationoftees
+foracompetitioncourse,thistemporaryratingproceduremaybeused,but
+thisprocedureisnotasubstituteforaformalorpermanentCourseRating
+andSlopeRating.
+(ii) Permanent Changes
+AgolfclubmustnotifytheAuthorizedAssociationwhenpermanentchanges
+aremadetoagolfcourse.Permanentchangestothegolfcourserequirethe
+AuthorizedAssociationtoreviewthecurrentCourseRatingandSlopeRating
+andtodeterminewhetherare-ratingisnecessary.
+
+--- page 117 ---
+VI
+VI.LocalGuidanceforGolf
+ClubCommittees
+
+--- page 118 ---
+118
+USGAHandicapCommitteeGuide
+TheUSGAHandicapCommitteeGuideisavailableindigitalformatonlyand
+isdesignedasacomplementtotheRulesofHandicappingbook.Theguide
+ismeanttoassisttheHandicapCommitteeataGolfClubinthepractical
+applicationoftheRulesofHandicapping,andprovideguidanceonhowto
+carryoutitsresponsibilitiestoensureallplayershaveanopportunityto
+playorcompeteonafairandequitablebasiswithfellowplayers.Inityou
+willfindinformationandexamplesspecifictoaHandicapCommitteeand
+itsresponsibilitieswithintheUnitedStatesanditsterritories.
+AGolfClubisanorganizationofindividualmembersthatoperatesunder
+bylawswithCommittees(HandicapCommitteerequired)tosupervisegolf
+activitiesandmaintaintheintegrityoftheRulesofHandicapping.Onlya
+playeraffiliatedwithanauthorizedGolfClubcanestablishormaintaina
+HandicapIndex.
+TheclubmustbeaffiliatedwithandauthorizedbytheAlliedGolf
+Association(AGA)initsarea.TheAGAisthebodyunderwhichaGolfClub
+sitsandshouldbeconsultedasneededforsupport.
+PleasefindtheUSGAHandicapCommitteeGuideat
+www.usga.org/rulesofhandicapping
+PleaseNote:ThisCommitteeGuidewillberevisedperiodicallytoalignwith
+variousinitiativesorwherechangestolocalguidanceisnecessaryinbetween
+revisionstotheRulesofHandicapping.
+Local Guidance
+
+--- page 119 ---
+119
+Index
+Rule Page
+Acceptable Score
+-ActiveSeason 2.1 28
+-AuthorizedFormatofPlay 2.1a 30
+-CertificationofScores 4.4 48
+-MinimumNumberofHoles 2.2a/2.2b 35
+-PlayedbyTheRulesofGolf 2.1b 33
+-TemporaryGreensorTees 2.1/3 29
+Active Season 2.1 28
+Adjusted Gross Score
+3.1b 37
+3.1a 36
+3.1 36
+3.1b 37
+3.2 38
+-After  a Handicap Index Has Been Established
+-Before  a Handicap Index Has Been Established
+-Maximum  Hole Score
+-Net  Double Bogey
+-When  a Hole is Not Played
+-When  a Hole is Started But Player Does Not Hole
+Out 3.3 41
+Authorized Association
+-AdjudicatingPar AppendixA 87
+-Jurisdiction 1.3(iv/v) 23
+-Multi-NationalAssociation 1.3(v) 24
+-NationalAssociation 1.3(iv) 23
+-RegionalAssociation 1.3(iii) 23
+-Responsibilities AppendixA 86
+Authorized Format of Play
+-9-holes 2.2b 35
+-18-holes 2.2a 35
+-Four-BallMatchPlay 2.1a 30
+-Four-BallStrokePlay 2.1a 30
+-GeneralPlay 2.1a 30
+-HandicapAllowances AppendixC 96
+-IndividualMatchPlay 2.1a 30
+-IndividualStrokePlay 2.1a 30
+-MaximumScore 2.1a 30
+-OrganizedCompetition 2.1a 30
+-OutsidePlayer’sJurisdiction 2.1a(ii) 30
+Index
+
+--- page 120 ---
+120
+Rule Page
+-Par/Bogey 2.1a 30
+-Stableford 2.1a 30
+-WithinPlayer’sJurisdiction 2.1a(i) 30
+Bogey Player AppendixG 111
+Cap
+-HardCap 5.8(ii) 65
+-LowHandicapIndex 5.7 63
+-SoftCap 5.8(i) 65
+Certification of Score
+-PeerReview 4.4 48
+Course Handicap
+-9-holeCourseHandicap 6.1b 69
+-18-holeCourseHandicap 6.1a 68
+-18-holeCourseHandicapBasedon9-holes
+Played 6.1a 69
+-CourseRating AppendixG 110
+-CourseRatingandPar 6.1 68
+-HandicapAllowance AppendixC 96
+-PlayingHandicap 6.2 70
+-PlusHandicapPlayers AppendixC 98
+-SlopeRating AppendixG 111
+-StrokesGivenBack(PlusHandicapPlayers) AppendixC 98
+-StrokesReceived AppendixE 106
+Course Rating
+-BogeyPlayer AppendixG 111
+-BogeyRating AppendixG 111
+-CourseHandicap 6.1 68
+-EffectivePlayingLength AppendixG 111
+-IssuingaCourseRatingandSlopeRating AppendixG 111
+-MeasuredLengthofTheGolfCourse AppendixG 111
+-Obstacles AppendixG 111
+-ScratchPlayer AppendixG 111
+-SlopeRating AppendixG 111
+Exceptional Score
+-HandicapCommittee 7.1 74
+-HandicapIndexAdjustment 7.1a(ii) 75
+-HandicapReview 7.1a 74
+-Reduction 5.9 66
+Index
+
+--- page 121 ---
+121
+Rule Page
+-ScoreDifferential 5.9 66
+-ScoringRecord AppendixB 93
+-ToEnsureImpactofAdjustmentRemains 5.9 66
+Expected Score
+-WhenOneorMoreHolesNotPlayed 3.2b 39
+-CalculatingaScoreDifferentialUsingan
+ExpectedScore 3.2b/1 40
+-PlayingConditionsCalculationProcedure 5.6/1 60
+-ReasonForNotSubmittingaScoreWasNot
+Justified 7.1b(ii) 79
+Golf Club
+-AdjudicatingPar AppendixA 87
+-HandicapCommittee 1.3(ii) 23
+-HomeClub 1.4b 25
+-MemberofaGolfClub 1.4a 24
+-ResponsibilitytoPostScores 5.4/2 58
+Golf Course
+-CourseMeasurement AppendixG 110
+-CourseRating AppendixG 111
+-DisplayofCourseRatingandPar AppendixG 110
+-Modification AppendixG 111
+-SlopeRating AppendixG 111
+-TeeMarkers AppendixG 110
+-TemporaryChanges AppendixG 111
+Handicap Allowance
+-CourseHandicap 6.1 68
+-ExtraHoles AppendixC 98
+-FormatofPlay AppendixC 97
+-HandicapCompetitions AppendixC 97
+-PlayingHandicap 6.2 70
+-PlusPlayingHandicaps AppendixC 98
+-StrokesReceived/GivenforPlusHandicap
+Players AppendixC/3 101
+Handicap Committee
+-AdjudicatingPar AppendixA 87
+-AdjustingaPlayer’sHandicapIndex 7.1a(ii) 75
+-CommitteeActions 7 74
+-HandicapReview 7.1a 74
+Index
+
+--- page 122 ---
+122
+Rule Page
+-PenaltyScore 7.1b 78
+-ReinstatementofaPlayer’sHandicapIndex 7.1d 81
+-ScoreSubmission 7.2b 82
+-TermsoftheCompetition 7.2a 81
+-WithdrawingaPlayer’sHandicapIndex 7.1c 80
+Handicap Index
+5.5 58
+5.2a 54
+5.1 52
+5 52
+5.2a 54
+5.2b 56
+7 74
+5.2 54
+5.8(ii) 65
+4.5 49
+5.5 58
+5.7 63
+5.3 57
+5.2c 56
+AppendixA 84
+-Ageing  of Scores
+-Adjustment
+-Calculation  of Score Differentials
+-Demonstrated  Ability
+-Fewer  Than 20 Scores
+-For  20 Scores
+-Handicap  Committee Actions
+-Handicap  Index Calculation
+-Hard  Cap
+-Initial  Handicap Index
+-Lapsing  of a Handicap Index
+-Low  Handicap Index
+-Maximum  Handicap Index
+-Plus  Handicap Index
+-Responsibilities  of Stakeholders
+-Soft  Cap 5.8(i) 65
+Handicap Review
+-AdjustingaHandicapIndex 7.1a(ii) 75
+-AttheRequestofthePlayer 7.1a(i) 74
+-FreezingtheHandicapIndex 7.1a(ii) 75
+-HandicapCommittee 7.1 74
+-InjuredPlayer 7.1a/2 78
+-OtherClubstoRequestanAdjustment AppendixD 103
+-ResettingtheHandicapIndex 7.1a(ii) 75
+Hard Cap 5.8(ii)  65
+Home Club
+-DesignatingaHomeClub 1.4b 25
+-HandicapCommittee 7.1 74
+-HandicapIndex AppendixA 86
+-Jurisdiction 1.4b/3 26
+-SingleScoringRecord AppendixA 86
+Inactive Season AppendixA 88
+Index
+
+--- page 123 ---
+123
+Rule Page
+Jurisdiction
+-AuthorizationtoUseRulesofHandicapping 1.2 21
+-AuthorizedAssociation 1.3 22
+-OutsidePlayer’sJurisdiction 2.1a(ii) 30
+-RegisteredMarksoftheWHS 1.2 22
+-WithinPlayer’sJurisdiction 2.1a(i) 30
+Low Handicap Index
+-20AcceptableScores 5.7 63
+-ScoringRecord 5.7 63
+-TimeFrame 5.7/1 64
+Maximum Hole Score
+-AfteraHandicapIndexHasBeenEstablished 3.1b 37
+-BeforeaHandicapIndexHasBeenEstablished 3.1a 36
+-NetDoubleBogey 3.1b 37
+Member
+-JoiningaGolfClub 1.4a 24
+-MemberofMoreThanOneClub 1.4b/3 26
+Net Double Bogey
+-MaximumHoleScore 3.1b 37
+Net Par
+-Hole Not Played 3.2b/2 40
+Par
+-EstablishingPar AppendixF 108
+-HoleLengths AppendixF 108
+-StrokeIndexAllocation AppendixE 106
+Peer Review
+-CertificationofaScore 4.4 48
+-ScoringRecord AppendixB 90
+Penalty Score
+7.1b 79
+7.1b(ii) 79
+7.1b(i) 78
+7.1b(ii) 79
+-Applying  a Penalty Score
+-Gaining  an Unfair Advantage
+-No  Valid Reason for a Score Not Having Been
+Submitted
+-Score  is Discoverable
+-Valid  Reason for a Score Not Having Been
+Submitted 7.1b(i) 78
+Index
+
+--- page 124 ---
+124
+Rule Page
+-9-holeScores 5.1b 53
+-AwayScoreReturnedtoHomeClub 5.6/5 61
+-CalculationofaScoreDifferential 5.1 52
+-DailyPlayingConditionsCalculation 5.6 59
+-EligiblePlayers 5.6/1 60
+-GolfClubwith27Holes 5.6/6 62
+-HandicapIndexCalculation 5.6 59
+-Minimum8AcceptableScores 5.6 60
+-MoreThanOnePCConaSingleDay 5.6/2 61
+-RangeofPCCAdjustments 5.6 60
+-SeparatePCCCalculationsfortheSameDay 5.6/3 61
+-TimeFrameforSubmittingaScore 4.3 47
+Playing Handicap
+-CourseHandicap 6.1 68
+-PlayingHandicapCalculation 6.2 70
+Rules of Golf
+-AcceptableScores 2.1 28
+-CertificationofaScore 4.4 48
+-StrokeIndexAllocation AppendixE 106
+Rules of Handicapping
+-AuthorizationtoUsetheWHS 1.2 21
+Score Differential
+-9-holeScores 5.1b 53
+-18-holeScores 5.1a 52
+-CalculationofaScoreDifferential 5.1 52
+-ExceptionalScore 5.9 66
+Scoring Record
+-HandicapCommittee AppendixB 90
+-HomeClub AppendixB 90
+-InformationRequiredforScoringRecord AppendixB 90
+Index
+Playing Conditions Calculation (PCC)
+Score Type 94Appendix B
+
+--- page 125 ---
+125
+Rule Page
+Scratch Player
+-CourseRating AppendixG 111
+-HandicapIndex 5.2c/1 57
+-SlopeRating AppendixG 111
+Slope Rating
+-BogeyRating AppendixG 111
+-CourseHandicap 6.1 68
+-CourseRating AppendixG 111
+-DisplayofRatings AppendixG 110
+-StrokesReceived 6 68
+-TheGolfCourse AppendixG 110
+Soft Cap 5.8(i) 65
+Stroke Index
+-ApplyingMoreThan18StrokesReceived AppendixE 106
+-CommitteeProcedures AppendixE 106
+-CourseRatingSystem AppendixG 110
+-HandicapStrokes 6 68
+-StrokeIndexAllocation AppendixE 106
+-StrokeIndexAllocationfor9-HolePlay AppendixE 107
+Index
+Submitting a Score
+4.2 47
+3.2 38
+3.3 41
+3.2b 39
+7.1b(ii) 79
+-EligibilitytoSubmitaScore
+-HolenotPlayed
+-HoleStartedButThePlayerDoesNotHoleOut
+-IncompleteRounds
+-NotSubmittingaScore
+-SubmittingHole-by-HoleScore 4.1a(ii) 45
+4.3-TimeFrameforSubmittingaScore
+-TimelySubmission 45
+47
+4
+
+--- page 126 ---
+126
+Notes
+Notes
+
+--- page 127 ---
+127
+Notes
+Notes
+
+--- page 128 ---
+128
+Notes
+Notes
+
+--- page 129 ---
+129
+Notes
+Notes
+
+--- page 130 ---
+130
+Notes
+Notes

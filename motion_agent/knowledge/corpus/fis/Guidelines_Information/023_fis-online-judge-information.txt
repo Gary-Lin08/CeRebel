@@ -1,0 +1,123 @@
+--- page 1 ---
+Online Judges Information
+2025/26 FIS Freestyle Ski Events
+Prepared by: Andrea Rinaldi Konrad X Rotermund
+Race Director - WC Karin Arnold
+Steve Fearing
+October 2025
+
+--- page 2 ---
+Contents
+Slide 3 - Introduction
+Slide 4 - Technology Needs
+Slide 5 - Judges Scoring Interface
+Slide 6 - Expectations
+Slide 7 - General Concepts on Internet and Video
+Slide 8 - Differences in OWG, WSC, WC, COC, FIS Events
+Slide 9 - FAQ
+Slide 10 - Big Event Official Technology Center “OTC’s”
+
+--- page 3 ---
+Welcome:
+FIS Freestyle Ski Judge 
+In this document you will find the basic needed information to help you be successful as an online judge. As we all
+know there are many brands and types of computers available, you should have the confidence that if your home or
+office setup is at or above these minimums you will have the technology needed.
+Your Head Judge at each event will ask you about your technology, internet and setup. Be prepared and have this data
+available.
+As part of your per event payment you receive CHF 125 for each judge day, CHF 25 per judge for technology upgrade
+and CHF 25 per judge day for snacks , the design of this is to have funds available to upgrade your internet speed if
+needed or technology to help you be the best. By knowing your setup your Head Judge can help with the best use of
+these funds.
+Thank you for your commitment to the sport of Freestyle Skiing. We look forward to great events.
+All the Best,
+Andrea, Konrad, Karin and Steve
+
+--- page 4 ---
+Basic Technology Needs:
+Computer/Laptop -
+• Windows Based - i5 or greater chipset with 16gb+ of Memory and 8gb+ of Graphics RAM.
+• Apple Based - any Apple iMac, Mac Mini, MacBook or Mac Pro not older than 2019.
+Monitor -
+• 24” or greater QHD/4k Monitor.  Minimum resolution of 1920x1080.
+• If using a Laptop it should be a 17” Laptop with a QHD resolution set at 1920x1080 or better.
+– Note: on laptop it is best if you have 16gb+ of Graphics RAM.
+Headset -
+• Over the head with dual ear and a mic.  Simplest if it has a mute button.
+Browser -
+• GOOGLE CHROME IS MANDATORY.
+Internet -
+• Basic Internet service of 30mb/s download and 10mb/s upload will suffice.
+
+--- page 5 ---
+Judges Scoring Interface:
+This is the score entry 
+and video interface 
+that allows your 
+scores to go directly 
+to the scoring 
+computer.
+For Each Event you 
+will have a login and 
+password that allows 
+you to reach the 
+interface.  This will 
+come from your Chief 
+of Scoring.
+
+--- page 6 ---
+World Cup Expectations:
+Final Warm-Up Period:
+• Judges may be asked to log on a prior day to test speeds and communications. Head Judge
+will pre-define the exact time and session. Judges will not only confirm login in to the
+interface and work with HJ and Chief of Scoring to make sure all is working, they will provide
+their internet speed test information at this time.
+– https://www.speedtest.net/ - HJ will provide the server of choice for testing.
+Competition Period:
+• Judges are expected to be logged into interface and provided communication interface at
+15mins prior to the start of the first training session of the competition day and then thru the
+competition period. The HJ will provide intraday times for breaks as the day progresses.
+Judges must remain online for 20 minutes after the end of the event.
+
+--- page 7 ---
+General Concepts on Internet and Video:
+Internet -
+• Minimum is 30mb/s Down - 30mb/s Up - Speeds should be tested to a server in the location of the
+event. More can be better, if it is not subdivided in your home among other services. Judges
+should close down as many of internet services as possible in their home. Phones should be in
+Airplane Mode. If using a cable tv based service all tv boxes should be turned off as they are
+constantly looking for data. Other people in your home should be asked to also eliminate Internet
+usage and turn off all connections.
+• Any in home gaming on same service is Prohibited during Judging by you or members of your
+household. Any internet using equipment should be powered done and unplugged if possible.
+• Whenever possible your best connection is via cable directly from your receiving internet hub. Wifi
+should be avoided if possible. Modem reset is suggested for all judging days, this clearing of cache
+packets is very helpful.
+Video -
+• You are provided video at 720p 60fps at all event levels, this is considered optimum delivery 
+stream level.  Any presets that you may have should be geared to this level of video data.
+
+--- page 8 ---
+Different Event Expectations based on Levels:
+• These Guidelines are designed at the World Cup level. At events that are
+lower, COC, FIS, NC level events, will deliver the basics at the same levels
+and interfaces.
+• Some events may have all judges including HJ being online. At these
+events it is important that the HJ has a direct understanding of who is the
+Chief of Scoring and their communications.
+• It should be understood that it is fully possible that Scoring and All judges
+are online for an event. The only processes that must be present are the
+Video Provider and an event communicator to provide live information.
+
+--- page 9 ---
+Official Technology Centers (OTC):
+• At major events - Advanced World Cups, WSC and OWG - Freestyle Ski, Freeski and
+Snowboarding will utilize OTC’s for Timing, Scoring, Judging and Jury review.
+• At these events Judges will be onsite/nearsite or in a hybrid situation of online and
+onsite/nearsite.
+• The OTC will include all technology and video to produce the most accurate and
+fairest result possible. Judges and additional sport specific experts will analyze the
+athlete performances on monitors. These centers are fully integrated with TV
+Production, Timing, Scoring Vendors and Event Production.
+• These OTC’s may or may not be directly located on, at or near the competition
+venue.

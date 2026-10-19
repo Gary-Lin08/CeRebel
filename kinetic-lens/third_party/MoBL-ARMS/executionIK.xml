@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+This source code is part of:
+
+"CEINMS-RT: an open-source framework for the continuous neuro-mechanical model-based control of wearable robots".
+Copyright (C) 2024 Massimo Sartori, Mohamed Irfan Refai, Lucas Avanci Gaudio, Christopher Pablo Cop, Donatella Simonetti, Federica Damonte, David G. Lloyd, Claudio Pizzolato, Guillaume Durandau.
+
+CEINMS-RT is an open-source software. Any changes to this code, should be shared back in the open repository: https://github.com/CEINMS-RT. See license as described here: https://github.com/CEINMS-RT/ceinmsrt-core-cpp/blob/main/LICENSE.
+
+The methodologies and ideas implemented in this code are described in the manuscripts below, which should be cited in all publications making use of this code:
+
+Massimo Sartori, Mohamed Irfan Refai, Lucas Avanci Gaudio, Christopher Pablo Cop, Donatella Simonetti, Federica Damonte, David G. Lloyd, Claudio Pizzolato, Guillaume Durandau., (2024) "CEINMS-RT: an open-source framework for the continuous neuro-mechanical model-based control of wearable robots. TechRxiv. DOI: 10.36227/techrxiv.173397962.28177284/v1"
+-->
+<executionIK xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../XSD/executionIK_ID.xsd">
+	<ik>
+		<ikOption>
+			<numberOfThread>5</numberOfThread>
+			<enforceIKConstraintUse>true</enforceIKConstraintUse>
+			<kalman>
+				<kalmanOption>
+					<dt>0.0075</dt>
+				</kalmanOption>
+			</kalman>
+		</ikOption>
+		<dataFrom>
+			<markers>
+	<!--	fs: 128 Hz fc:10 Hz delay: ~0.027ms		-->
+				<lpFilterMarker>
+					<aCoeff>-1.3229 0.5000</aCoeff>
+					<bCoeff>0.0443 0.0886 0.0443</bCoeff>
+				</lpFilterMarker>
+				<maxError>0.000001</maxError>
+				<markersList>			
+					<marker>
+						<name>R.Ulna</name>
+						<weight>2</weight>
+					</marker>
+					<marker>
+						<name>MC2d</name>
+						<weight>1</weight>
+					</marker>
+					<marker>
+						<name>MC5d</name>
+						<weight>1</weight>
+					</marker>
+					<marker>
+						<name>FAL</name>
+						<weight>1</weight>
+					</marker>
+					<marker>
+						<name>MC2p</name>
+						<weight>1</weight>
+					</marker>
+					<marker>
+						<name>R.Radius</name>
+						<weight>2</weight>
+					</marker>	
+					<marker>
+						<name>MC5p</name>
+						<weight>1</weight>
+					</marker>
+					<marker>
+						<name>FA1</name>
+						<weight>2</weight>
+					</marker>	
+					<marker>
+						<name>FA2</name>
+						<weight>2</weight>
+					</marker>
+				</markersList>
+			</markers>
+		</dataFrom>
+	</ik>
+    <id>
+		<lpFilterGRF>
+<!--	fs: 2048 Hz fc 9 Hz delay: ~0.029ms	-->
+			<aCoeff>-1.9610 0.9617</aCoeff>
+			<bCoeff>0.0001869 0.0003739 0.0001869</bCoeff>
+		</lpFilterGRF>
+    	<plateForceBody> </plateForceBody>
+    </id>
+    <OsimFile>cfg/UpperLimbModel/MOBL_ARMS_41_Scaled.osim</OsimFile>
+    <LabFile>cfg/UMG.xml</LabFile>
+    <TranslateFile>cfg/UpperLimbModel/LeftArm_scaled_Spline.txt</TranslateFile>
+    <ip>10.76.115.143</ip>
+    <port>22222</port>
+	<externalLoadsXml>cfg/UpperLimbModel/ID_loadDefinition.xml</externalLoadsXml>
+	<ikTaskFilename>cfg/UpperLimbModel/InverseKinematics.xml</ikTaskFilename>
+</executionIK>

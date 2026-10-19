@@ -1,0 +1,1804 @@
+--- page 1 ---
+FIS FREESTYLE SKIING 
+JUDGING HANDBOOK 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Edition November 2025
+
+--- page 2 ---
+FIS Freestyle Skiing Judging Handbook   November 2025 
+ Page 2 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+INTERNATIONAL SKI AND SNOWBOARD FEDERATION 
+ 
+Blochstrasse 2, CH- 3653 Oberhofen / Thunersee, Switzerland 
+ 
+Telephone:   +41 (33) 244 61 61 
+Website:  www.fis-ski.com  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Oberhofen, November 2025
+
+--- page 3 ---
+FIS Freestyle Skiing Judging Handbook   November 2025 
+ Page 3 
+‘We, the judges, promise to judge all competitions with complete 
+impartiality; respecting and abiding by the rules and regulations. 
+We promise to officiate at all competitions giving no favour based 
+on nation, gender, competitor’s ranking, or previous 
+performances in this or any other competition. We will judge each 
+run solely on the merit of the observed performance without 
+preconceptions or expectations.’
+
+--- page 4 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 4 
+TABLE OF CONTENTS 
+6000 AERIALS 6 
+6001 DEFINITION 6 
+6002 SCORING 6 
+6002.1 Air: 6 
+6002.2 Form: 6 
+6002.3 Landing: 6 
+6003 SCORING PROCEDURES 6 
+6003.1 5 Judge Format 6 
+6004 JUDGING CRITERIA 7 
+6004.1 Air (20% of the Score) Min. = 0.0 / Max. = 2.0 7 
+6004.2 Form (50% of the Score) Min. = 0.0 / Max. = 5.0 8 
+6004.3 Landing (30% of the Score) Min. = 0.0 / Max. = 3.0 14 
+6100 AERIALS SYNCHRO 19 
+6102  SCORING 19 
+6102.1 Synchro evaluation: 19 
+6102.2  Aerial evaluation (Normal scoring): 19 
+6103  SCORING PROCEDURES 19 
+6103.1  7 Judge Format 19 
+6103.2 5 Judge Format 20 
+6104  JUDGING CRITERIA 20 
+6104.1 Synchronisation (60% of the Score) Min. = 0.0 / Max. 10.0 20 
+6104.2 Aerial evaluation (Normal scoring) (40% of the Score)  Min. 0.0 / Max. 10.0  23 
+6200 MOGULS 24 
+6201 DEFINITION 24
+
+--- page 5 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 5 
+6202 SCORING 24 
+6202.1 Turns: 24 
+6202.2 Air: 24 
+6202.3 Speed: 24 
+6203 SCORING PROCEDURES 24 
+6203.1 7 Judge Format 24 
+6203.2 5 Judge Format 25 
+6204 JUDGING CRITERIA 25 
+6204.1 Turns (60% of the Score)  Min. = 0.1 / Max. = 20.0 25 
+6204.2 Deductions of Turns Points 29 
+6204.5 Tie Breaking Moguls 38 
+6300 DUAL MOGULS 36 
+6301 DEFINITION 38 
+6302 PAIRINGS 38 
+6303 EVENT PROCEDURES 38 
+6304 JUDGING PROCEDURES 38 
+6304.1 Judging Criteria 38 
+6304.2 Judging Formats 38 
+6304.3 Classic Scoring 39 
+6304.4 Direct Comparison Scoring 40 
+6305 SPECIAL PROCEDURES: DUAL MOGULS 42 
+APPENDIX A:  44
+
+--- page 6 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 6 
+6000 AERIALS 
+6001 Definition 
+Aerial competition shall consist of one, or multiple  different acrobatic leaps from a 
+prepared jump(s), stressing take-off, height and distance (referred to as "air"), proper style, 
+execution and precision of movement (referred to as "form") and landing. Refer to ICR 
+4005.2.1 and 4027 concerning competition formats. 
+6002 Scoring 
+The competitor’s acrobatic skiing will be judged on three basic components as follows: 
+6002.1 Air: 
+ Consisting of 20% of the score.  0.0 - 2.0 
+6002.2 Form: 
+ Consisting of 50% of the score.  0.0 - 5.0 
+6002.3 Landing: 
+ Consisting of 30% of the score.  0.0 - 3.0 
+6003 Scoring Procedures 
+6003.1 5 Judge Format 
+ Judges shall independently evaluate the competitor's performance based upon the Air 
+and Form Criteria as stated in JH 6004.1, 6004.2 and the Landing Criteria in 6004.3. The 
+high and low scores of each component will be discarded and the remaining three scores 
+in each component will be added together. 
+6003.1.1 Total Score 
+ The total Judges’ Score is calculated by adding the three counting scores  in each 
+component. This total is then multiplied by the appropriate Degree of Difficulty (DD) factor 
+to determine the total score for each jump. The total will be truncated to two decimal 
+places. 
+ In a two jump Phase, the competitor’s final score for both jumps is determined by adding 
+together the total scores from each jump. 
+ Example: 
+ Judges Scores  
+ Take Off & Air 1.6 1.7 1.9 1.7 1.8 5.2 
+ Form  4.5 4.2 4.3 4.4 4.6 13.2 
+ Landing 2.4 2.3 2.4 2.2 2.5 7.1 
+ 
+ Total Score (Maximum 30 points x Degree of Difficulty) 
+ Total Judges’ Score:      = 25.5 
+ Total Score:     = 25.5 x DD
+
+--- page 7 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 7 
+6004 Judging Criteria 
+6004.1 Air (20% of the Score) Min. = 0.0 / Max. = 2.0 
+Air shall be evaluated based upon the take -off, height and distance of the competitor's 
+jump. Take-off involves an evaluation of how the jump is initiated. Height and distance are 
+a product of speed into the jump and the force of the take-off. Take-off, height and distance 
+shall also be evaluated in relation to the length and steepness of the landing hill. The 
+competitor should not land too short (knoll) or too long (beyond the transition area of the 
+landing hill). 
+Air consists of 20% of the score (maximum 2 points per judge) and will be broken down 
+into two parts: 
+10% Technical Take-Off 
+10% Height and Distance 
+6004.1.1 Technical Take-Off  Min. = 0.0 / Max. = 1.0 
+ Technical take -off refers to the manner in which the competitor initiates the jump by 
+extending the body at the right moment while leaving the kicker. 
+ Take-off is judged from the moment the competitor enters the transition, until the feet 
+leave the kicker. 
+6004.1.1.1 Good Take-Off 0.7 - 1.0 
+ Just before the competitor leaves the kicker the body may be fully extended or may have 
+a slight bend in the waist (boots at the end of the kicker).  The slight bend in the waist is 
+acceptable as long as the athlete straightens out their body within the first quarter of the 
+flip. The actual position in the jump (tuck, twist, spread, etc.) should not begin before the 
+feet have left the kicker. 
+6004.1.1.2 Non-optimal Take-Off 0.4 - 0.6 
+ There are different types of mistake: 
+ The competitor does not pop at the right moment (too early or too late), the form starts too 
+early (twisting on the kicker), i.e. the arms are behind the body; shoulders are pushed 
+backward too much; bent in the knees. 
+ Points are deducted according to the number and severity of these mistakes. 
+6004.1.1.3 Bad Take-Off 0.0 - 0.3 
+ Take-off is completely missed, causing an uncontrolled jump in most cases. 
+6004.1.2 Height and Distance  Min. = 0.0 / Max = 1.0 
+ Height and distance are a product of speed into the jump and the force of the take -off. It 
+shall be evaluated according to the trajectory through the air and the optimum landing 
+point of the kicker (Refer to 6004.1.2.1). 
+6004.1.2.1 Good Height and Distance 0.7 - 1.0 
+ The trajectory through the air begins at an angle that is continuing the curve of the kicker. 
+ i.e.: Small Jumps - about 55° 
+    Medium Jump - about 60° 
+    Large Jumps - about 71°
+
+--- page 8 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 8 
+ The optimum landing point should be the range from 2 m to 4 m, including 1 or 2 m plus 
+or minus adjustments away from the knoll.  
+6004.1.2.2 Non-optimal Height and Distance 0.4 - 0.6 
+ The trajectory through the air is too high or too low. The landing is in the transition area 
+from the knoll to the optimum landing point. 
+6004.1.2.3 Bad Height and Distance 0.0 - 0.3 
+ The jump is landed on the knoll or on the outrun. 
+6004.2 Form (50% of the Score) Min. = 0.0 / Max. = 5.0 
+ Form consists of 50% of the score (maximum 5 points per judge). 
+ Form denotes the position of the body, skis, arms, hands, and/or poles while in the air. It 
+is the manner in which the competitor executes each manoeuvre. Form shall be evaluated 
+based upon competitor ’s precision of performance (i.e. Tightness of body, economy of 
+motion), balance, mechanics, stability (or control) in the air, separation and the timing of 
+the manoeuvre in relation to the apex of the jump. Form is judged from when the 
+competitor’s ski tips start to leave the jump until the competitor touches the snow.  
+ All judges will deduct 0.5 from their score for a violation of the balk rule ICR 
+4022.1.8. 
+6004.2.1 Positions in the Form 
+6004.2.1.1 Planned manoeuvres  
+ If the number of planned manoeuvres is not fulfilled (somersaults, twists, 360 ’s, upright 
+positions) resulting in too many or not enough manoeuvres, the competitor receives DNF.  
+➔Refer to ICR 4120 
+ Example: 
+ Flight Plan: Jump Performed: 
+ Tuck-Tuck Tuck-Tuck-Tuck DNF (ICR 4120) 
+ Full-Double Full Full-Full DNF (ICR 4120) 
+6004.2.1.2 Breakdown of Form deductions 
+ A judge breaks down the form points to the number of manoeuvres (somersaults, 360’s, 
+twists, upright positions), and takes off the percentage accordingly if the form in one, two, 
+three, or more parts is missed completely or partially. 
+ Example: 
+ Flight Plan: Jump Performed:  Value 
+ Lay-Tuck Lay-Tuck  max. 5.0 
+ Lay-Tuck Tuck-Tuck  max. 2.5 
+ Lay-Tuck Tuck-Lay  max. 0.0 
+ Lay-Tuck Lay-Lay  max. 2.5 
+ Twister-Twister Twister-Twister  max. 5.0 
+ Twister-Twister Twister-Spread  max. 2.5 
+6004.2.2 Form score  
+Form is evaluated according to two criteria: 
+Timing and the quality of execution as modified by form breaks.
+
+--- page 9 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 9 
+6004.2.2.1 Timing 
+6004.2.2.1.1 Early Twist/Tuck/Pike Start 
+ 
+No deduction for early initiation will be made provided that (a) the twist does not begin 
+before the head and body are at the 9:00 position.
+
+--- page 10 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 10 
+6004.2.2.1.2 Late conclusion of twists in Double somersaults (late finish) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
++
+
+--- page 11 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 11 
+6004.2.2.1.3 Late conclusion of twists in Triple somersaults (Twist finish) 
+ 
+6004.2.2.2 Form Definition and Form Breaks  
+ The following is a guide to use when assessing form breaks: 
+▪ Minor form breaks deduct up to  25% of possible form points 
+▪ Medium form breaks deduct up to 50% of possible form points 
+▪ Major form breaks deduct up to 100% of possible form points 
+ As in take-off, the body should be extended, not only at take-off, but also prior to landing. 
+The amount of deduction depends on whether the form is bad throughout the whole jump 
+or only in parts of the manoeuvre. 
+If a major form break occurs during a part of the flip, only deduct for the major form break 
+according of the length of the form break. Do not apply additional penalties for minor or 
+medium form breaks for that mistake in other parts of that flip. Please refer to the Detail 
+Deduction Scale (DDS) to identify the severity of the mistake based on the duration and 
+degree of the incorrect body position.
+
+--- page 12 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 12 
+ 
+Jump 
+Form Break / per flip 
+minor medium Major 
+single 0.1 - 1.2 1.3 - 2.5 2.6 - 5.0 
+double 0.1 - 0.6 0.7 - 1.2 1.3 - 2.5 
+triple 0.1 - 0.4 0.5 - 0.8 0.9 - 1.7 
+ 
+ A guideline to differentiate between minor, medium and major form breaks is as follows: 
+ All definitions of form are based on body positions. All positions must be in the layout 
+(straight body, no bending, 0°), or tuck or pike (90° bending at the knees, hip) position. 
+The only exception is the puck position (only allowed for half -in and twisting front flips).  
+When performing the pike position, both hands must touch the legs simultaneously at 
+some point during the movement. 
+ Form break deductions are cumulative. In instances of multiple errors within the same flip, 
+judges should make a distinction between a primary form break and secondary form 
+break.  Once a primary form break is identified, it receives a value according to the DDS 
+schematics.  Each secondary fro m break adds a value of 0.1 to the overall value of the 
+deduction. 
+For Minor and Medium form breaks, the value of deduction depends exclusively on the 
+severity of the mistake (see DDS schematics).   
+For Major form breaks, the value of deduction depends both on the severity of the mistake 
+(see DDS schematics) and the duration of the incorrect body position. The longer the 
+mistake the higher the value of major deduction. 
+Take-off deductions are cumulative. Refer to the take off DDS schematics for full details 
+of deductions. In instances of multiple errors at take-off, judges should make a distinction 
+between a primary form break and a secondary form breaks.  Once a primary form break 
+is identified, it receives a value according to the DDS schematics for Take -off.  Each 
+secondary from break adds a value of 0.1. 
+Position of hands in a Tuck. There are only three acceptable positions of hands in a Tuck:  
+a) Touching the front of the knees 
+b) Touching the shins  
+c) Touching thighs (hamstrings).  
+ 
+Any other hands position, such as touching knees from above, results in a 0.5 deduction. 
+Both hands must touch the body as described above; otherwise, a deduction will be applied. 
+  
+Extension after Tuck on last flip. Athletes must kick out of their tuck to full extension 
+before they reach the horizontal line on the last flip. If an athlete bends their knees after 
+the kick out or if they don’t kick out to full extension when they reach the horizontal line, 
+the deduction will be taken in accordance with the (DDS).   
+1) Pike after 45.  If the error in pike is minor (bend at the waist is less than 45 
+degrees) no deduction will apply. If the bend at the waist is higher than minor (more 
+than 45 degrees) judges should deduct 0.2. 
+ 
+2) Pike before 45 degrees. Deduction will be applied according to the DDS. Example if 
+the pike starts early the amount of pike to landing will be evaluated as the DDS.
+
+--- page 13 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 13 
+Arch during the last flip. An arch during a last flip will only receive a deduction if it exceeds 
+a minor form break. 
+  
+End of rotation for each flip. Each flip must end in a vertical position. If a form break 
+(example: a puck) occurs before reaching vertical, the deduction applies to the preceding 
+flip. In a double flip, for example, a puck before vertical would be deducted from the first flip.  
+  
+Specific circumstances.  
+ 
+• bFT. If the Full twist is not completed before the athlete starts to tuck, the deduction of the 
+form break will apply to the back full. 
+ 
+• bLT. If a back Lay is not finished before the athlete starts to tuck, no deduction for form 
+break will be applied, the only deduction could be related to timing. 
+ 
+6004.2.2.2.1 Points to Assess Form Breaks 
+6004.2.2.2.2 General Body Position (as defined above) 
+Leg Position Ski Position Body Position 
+• Legs apart 
+• Scissoring 
+• Knee bend 
+• Skis splayed 
+• Skis apart (tips 
+or tails) 
+• Pucking 
+• Spiral segmentation 
+• Separation 
+• Arch 
+• Hollow 
+6004.2.2.2.3 Control in Air 
+ Excessive motion to control speed can be pulling and stretching as defined below, and 
+the relative over or under rotation of the flip. Excessive motion can also be exhibited in 
+upright jumps mostly with the arms being used for balance, or to increase or de crease 
+rotational speed and to prevent landing too far forward, backwards or not square to the 
+fall line. 
+ In the case of a Layout  position, flipping speed can be increased by pulling the body 
+inward and bending at the knees and waist and neck, or decreased by stretching the body 
+and the arms parallel to the head, both of which could be form breaks. 
+ NOTE:  
+ In the last flip, once the torso reaches 45 degrees to the horizontal plane, a minor pike 
+(bend at the waist) receives no deduction. During this “preparation for landing” the athlete 
+may have a slight bend at the waist  (but not the knees)  and open the legs (to shoulder 
+width) without being assessed form break deductions.   If the bend at the waist is higher 
+than minor (more than 45 degrees) judges should deduct 0.2.  All other DDS values apply 
+throughout the duration of the flip, i.e. until touchdown.
+
+--- page 14 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 14 
+ 
+ 
+6004.3 Landing (30% of the Score) Min. = 0.0 / Max. = 3.0 
+ A proper landing involves a balanced, stable and controlled body position throughout. The 
+competitor should demonstrate precision and grace with minimal interruption upon contact 
+with the landing surface. Absorption should be made primarily with the knees  and lower 
+body with only a slight bend at the waist. The evaluation of a landing starts immediately 
+when the competitor touches the snow and continues until the competitor has exhibited 
+sufficient skiing control up to the transition from the landing hill to the finish area. 
+Landing consists of 30% of the total score (maximum 3.0 points per judge). 
+Landing consists of two parts 
+1. Landing - body position in relation to the landing hill following preparation for landing, 
+ski snow contact on impact as well as absorption of the body to come back to the 
+neutral body position.  
+2. Exit from the landing following the snow contact, impact and absorption.  
+NOTE:  
+Preparation for landing is considered in Form. 
+6004.3.1 Landing Min. = 0.0 / Max. = 3.0 
+6004.3.1.1 Applicable Ranges for landing 
+3.0  Excellent landing 
+2.6 – 2.9 Good balance with little compression  
+2.1 – 2.5  Light imbalance or hard compression on landing or while skiing away. 
+Momentary touch of hands if in front of body or off to the side in front of 
+toe piece. See note below. 
+1.6 – 2.0  No body contact but hand (s) dragging or touching the snow anywhere 
+behind the toe piece; Hard compression and/or moderate imbalance 
+1.1 – 1.5  Light back slap or punch front with no body-snow contact, back to skis; 
+severe turn to 45 degrees or more relative to the fall line; turn around on 
+landing hill with no fall or touch; severe imbalance
+
+--- page 15 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 15 
+0.6 – 1.0  Landing with immediate body contact; Hard back slap or punch front with 
+snow contact back to skis; severe over or under rotation 
+0.1 – 0.5  Minimal weight on skis ; Sliding on back or side  no return to skis ; 
+Immediate crash 
+0.0  No weight on skis 
+ 
+NOTE:  
+During landing compression, an athlete may inadvertently touch the snow with their hands. 
+This is acceptable and will not receive a deduction if the contact is momentary and occurs 
+in front of the athlete’s toe pieces. Otherwise, if an athlete has any hand contact, the 
+maximum score is 2.0. 
+If an athlete has any body contact, the maximum score is 1.5. 
+An athlete that doesn’t touch can receive a score lower than 2.0 for severe imbalance, 
+skiing sideways, circling or backwards.   
+Landing will be judged from when the athlete makes contact with the snow and will end 
+at the transition from the landing hill to the finish area. Middle of the curve is the LINE. 
+Bad landing does not necessarily mean a deduction in the form score. A Well executed 
+jump will get a n appropriate form score, mistakes on the landing will be reflected in the 
+landing score only. Form deductions must be based on specific mistakes in the execution 
+of the maneuver.
+
+--- page 16 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 16 
+6004.3.1.2 Applicable Ranges for Water Ramp landing 
+3.0 Excellent landing 
+2.6 - 2.9 The centre of mass at touchdown is projected through the centre of the boot, 
+the athlete’s body is slightly (10) leaning forward and hip is bent 10 to 15, 
+hands are above or slightly below shoulders (it doesn’t matter whether hands 
+are in front or to the sides), the skis are 10 - 15 to the water. 
+2.1 - 2.5 The centre of mass at touchdown is projected through the toes or heels of 
+the boots, the athlete’s body is straight or leaning forward up to 45  (short), 
+skis are 0 (flat) – 10 to the water. 
+1.6 - 2.0 Landing on skis, but the athlete’s body is leaning forward (22 - 45 ), twisting 
+is completed, hands are down, knee(s) bent, hips straight, skis are 22  
+(short) to the water. 
+1.1 - 1.5 Landing on skis, but the athlete’s body is leaning forward or backward 22 to 
+45, twisting is short by less than 45, hands are down or stretching up, bent 
+hips, skies are 45 - 90 to the water. 
+0.6 - 1.0 Minimum weight on skis (skis are entering the water at an angle of 45 - 90), 
+the athlete’s body is leaning forward or backward 45 to 90, hands are down 
+or stretching up, bent hips, skis are 90 - 112 to the water. 
+0.1 - 0.5 Minimum weight on skis (skis are entering the water at an angle of 45 - 90), 
+the athlete’s body is leaning forward or backward by about 90  - 135, 
+twisting is short by about 90 , hands are down or stretching up, bent hips, 
+skis are 112 - 135 to the water. 
+0.0 Full fall (135°, over- or under-rotation) with no weight on skis. 
+NOTE: 
+1. Skiers may bend hip about 10 - 15 / slight pike (in a hollow position) to protect their 
+low back.   
+2. Skiers may use the front of the skis (skis to water = 10  - 15) to absorb some of the 
+impact. 
+* See appendix Water Ramp landing criteria drawing 
+6004.3.2 Tie Breaking Aerials 
+ ➔Refer to ICR 4013.4.2
+
+--- page 17 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 17 
+Detail Deduction Scale (DDS) Take off 
+ 
+ 
+Detail Deduction Scale (DDS) Form
+
+--- page 18 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 18 
+Water Ramp landing criteria drawing
+
+--- page 19 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 19 
+6100 AERIALS SYNCHRO 
+The Aerials Synchro competition shall consist of synchronized jumps by pairs of 
+competitors. 
+6102  Scoring  
+The competitors’ acrobatic skiing will be judged with respect to two categories as 
+follows: 
+6102.1 Synchro evaluation: 
+Constitutes 60 % of the Total Score of the jump 
+(Judges # 5,6,7 – if 7 Judges Format, and Judges # 3,4,5 – if 5 Judges Format) 
+6102.2  Aerial evaluation (Normal scoring): 
+Constitutes 40 % of the Total Score of the jump 
+(Judges # 1,2,3,4 – if 7 Judges Format, and Judges # 1,2 – if 5 Judges Format) 
+6103  Scoring Procedures 
+6103.1  7 Judge Format 
+Judges for synchro evaluation shall independently evaluate the two competitors’ 
+synchronicity as defined in JH 6104.  Three scores in each component will be added 
+together.   
+Judges for Aerial evaluation shall independently evaluate each competitor’s performance 
+based upon the Air and Form Criteria as defined in JH 6004.1, 6004.2 and the Landing 
+Criteria in 6004.3. The high and low scores of Aerial evaluation Judges (J1,J2,J3,J4) will 
+be discarded. 
+ 
+6103.1.1 Total Score: 
+The total Judges’ Score is calculated by adding the four Aerial evaluation counting scores 
+dividing them by 2 and then adding the three Synchro evaluation scores in each 
+component, this total then being divided by five and multiplied by three. This Judges’ total 
+score is multiplied by the appropriate Degree of Difficulty (DD) factor to determine the total 
+score for each jump. The total will be truncated to two decimal places. 
+ 
+𝑆𝑐𝑜𝑟𝑒 =
+∑(𝐴𝑒𝑟𝑖𝑎𝑙 𝐸𝑣𝑎𝑙 𝑠𝑐𝑜𝑟𝑒𝑠)
+2 +  ∑(𝑆𝑦𝑛𝑐ℎ𝑟𝑜 𝑠𝑐𝑜𝑟𝑒𝑠)
+5 × 3  
+ 
+ 
+Example: 
+Aerial Evaluation Athlete 
+ #1 
+Aerial Evaluation Athlete 
+#2 
+Synchro Judges 
+Judge 1 Judge 2 Judge 3 Judge 4 Judge 5 Judge 6 Judge 7 
+8.6 9.2 8.2 8.8 7.5 8.0 8.5 
+       
+ 
+(8.6 + 9.2 “+ 8.2 + 8.8) – 2 + 7.5 + 8.0 + 8.5 = 41.4  
+(41.4 -/ 5) x 3 = 24.8 
+ 
+Total Score:  
+Total Judges’ score: 24.8 
+Total Score:  24.8 x DD
+
+--- page 20 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 20 
+* Example: 
+In the case where the performed jump was bFF with DD 3.150,  
+Total Score is 24.8 x 3.150 = 78.12 
+ 
+6103.2 5 Judge Format 
+Judges for synchro evaluation shall independently evaluate the two competitors’ 
+synchronicity as defined in JH 6104.  Three scores in each component will be added 
+together.   
+Judges for Aerial evaluation shall independently evaluate each competitor’s performance 
+based upon the Air and Form Criteria as defined in JH 6004.1, 6004.2 and the Landing 
+Criteria in 6004.3. 
+ 
+6103.2.1 Total Score: 
+The total Judges’ Score is calculated by adding the two Aerial evaluation scores and three 
+Synchro evaluation scores in each component, divided by five and multiplied by three. 
+This Judges’ total score is multiplied by the appropriate Degree of Difficulty (DD) factor to 
+determine the total score for each jump. The total will be truncated to two decimal places. 
+ 
+Total Score Athlete #1 Total Score Athlete #2 Synchro Judges 
+Judge 1 Judge 2 Judge 3 Judge 4 Judge 5 
+8.0 5.2 6.5 6.0 6.5 
+ 
+8.0 + 5.2 + 6.5 + 6.0 + 6.5 = 32.2  
+32.2 / 5 x 3 = 19.3 
+ 
+Total Score: 
+Total Judges’ score: 19.3 
+Total Score:  19.3 x DD 
+* Example: 
+In the case where the performed jump was bdFF with DD 3.525, 
+Total Score is 19.3 x 3.525 = 68.03 
+ 
+6104  Judging Criteria 
+6104.1 Synchronisation (60% of the Score) Min. = 0.0 / Max. 10.0 
+Synchronisation shall be evaluated in terms of five categories.  In each category, the 
+extent to which the two competitors’ performances are synchronized shall be evaluated. 
+Synchro evaluation consists of 60% of score (maximum 10.0 points per judge) and will be 
+broken down into five parts: 
+20% Take-off 
+20% Rotation 
+20% Landing 
+20% Landing Zone 
+20% Exit 
+ 
+Within each category, the Judge shall evaluate the performance and award marks 
+according to the following tariff: 
+ 
+Excellent 2.0 
+Good 1.5 
+Average 1.0 
+Poor 0.5 
+Very poor 0.0
+
+--- page 21 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 21 
+6104.1.1 Take-off Min. = 0.0 / Max. 2.0 
+Technically synchronized Take-off refers to the manner in which the two competitors 
+initiate the jump by extending the body at the same moment while leaving the kicker. 
+Take-off is judged from the moment the competitors enter the transition, until the feet 
+leave the kicker. 
+ 
+6104.1.1.1 Excellent 2.0 
+The extension of body, legs and arm position are perfectly synchronized between the 
+two competitors at the moment of Take-off. 
+ 
+6104.1.1.2 Good 1.5 
+The difference between the two competitors’ take-offs is less than 45 degrees. 
+ 
+6104.1.1.3 Average 1.0 
+The difference between the two competitors’ take-offs is from 45 degree to 90 degrees. 
+ 
+6104.1.1.4 Poor 0.5 
+The difference between the two competitors’ take -offs is from 90 degrees to 135 
+degrees. 
+ 
+6104.1.1.5 Very Poor 0.0 
+The difference between the two competitors’ take-offs is more than 136 degrees. 
+ 
+6104.1.2 Rotation Min. = 0.0 / Max. 2.0 
+Technically synchronized Rotation refers to the extent to which the two competitors 
+rotate and twist in time with each other. 
+ 
+6104.1.2.1 Excellent 2.0 
+The two competitors rotate and/or twist at exactly the same time in the air. 
+ 
+6104.1.2.2 Good 1.5 
+The difference between the two competitors is less than a quarter of 1 st somersault in 
+rotation or twist. 
+ 
+6104.1.2.3 Average 1.0 
+The difference between the two competitors is from quarter to half of 1 st somersault in 
+rotation or twist. 
+ 
+6104.1.2.4  Poor 0.5 
+The difference between the two competitors is from half to the end of 1st somersault in 
+rotation or twist. 
+ 
+6104.1.2.5 Very Poor 0.0 
+The difference between the two competitors is more than one rotation or twist. 
+ 
+6104.1.3 Landing Min. = 0.0 / Max. 2.0 
+Technically synchronized Landing refers to the extent to which the two competitors land 
+at the same time. This is assessed by measuring the vertical separation between the 
+two competitors when the first one lands. 
+ 
+6104.1.3.1 Excellent 2.0 
+The two competitors land exactly at the same time: no measurable vertical separation. 
+ 
+6104.1.3.2 Good 1.5 
+The difference between the two competitors is less than 1m vertical separation.
+
+--- page 22 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 22 
+6104.1.3.3 Average 1.0 
+The difference between the two competitors is from 1.1m to 2m vertical separation. 
+ 
+6104.1.3.4 Poor 0.5 
+The difference between the two competitors is from 2.1m to 3m vertical separation. 
+ 
+6104.1.3.5 Very Poor 0.0 
+ The difference between the two competitors is more than 3.1m vertical separation. 
+ 
+6104.1.4 Landing Zone Min. = 0.0 / Max. 2.0 
+Technically synchronized Landing Zone refers to the extent to which the two competitors 
+land at the same distance from the knoll and in a straight line below their respective 
+kickers. 
+ 
+6104.1.4.1 Excellent 2.0 
+The two competitors land at the same distance or with less than 0.5m difference from 
+the knoll and straight below the kickers. 
+ 
+6104.1.4.2  Good 1.5 
+The difference between the two competitors is from 0.5m to 1m. 
+ 
+6104.1.4.3  Average 1.0 
+The difference between the two competitors is from 1.1m to 2m. 
+ 
+6104.1.4.4  Poor 0.5 
+The difference between the two competitors is from 2.1m to 3m. 
+ 
+6104.1.4.5 Very Poor 0.0 
+The difference between the two competitors is more than 3.1m. 
+ 
+6104.1.5 Exit Min. = 0.0 / Max. 2.0 
+Technically synchronized Exit refers to the extent to which the two competitors’ landings 
+are matched in quality.    
+ 
+6104.1.5.1 Excellent 2.0 
+The two competitors’ quality of landing is within the same category. 
+Example: Both competitors’ landings are Excellent or both competitors’ landings are 
+Imbalanced (see 6004.3). 
+ 
+6104.1.5.2 Good 1.5 
+The two competitors’ quality of landing is within two categories. 
+Example: One competitor’s landing is Good while the other’s is Imbalanced or Hard 
+Compression. 
+ 
+6104.1.5.3 Average 1.0 
+The two competitors’ quality of landing is within three categories. 
+Example: One competitor’s landing is Good while the other’s is Dragging hand(s). 
+ 
+6104.1.5.4 Poor 0.5 
+The two competitors’ quality of landing is within four categories. 
+Example: One competitor’s landing is Good while the other’s is Back slap or Punch from 
+back to skis. 
+ 
+6104.1.5.5 Very Poor 0.0 
+The two competitors’ quality of landing is within five categories. 
+Example: One competitor’s landing is Good while the other’s is No exit.
+
+--- page 23 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 23 
+6104.2 Aerial evaluation (Normal scoring) (40% of the Score)  Min. 0.0 / Max. 10.0 
+Judges for Aerial evaluation shall independently evaluate each competitor’s performance 
+based upon the judging criteria, Air and Form Criteria as stated in JH 6004.1, 6004.2 and 
+the Landing Criteria in 6004.3. 
+ 
+Synchro Aerials criteria drawing
+
+--- page 24 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 24 
+6200 MOGULS 
+6201 Definition 
+ Mogul competition shall consist of one run of free skiing on a steep, heavily moguled 
+course, stressing technical turns, aerial manoeuvres and speed.  
+ Refer to ICR 4204.1 concerning Qualification and Finals.  
+6202 Scoring 
+6202.1 Turns: 
+ Consisting of 60% of the score. ➔ max 60.0 points  
+6202.2 Air: 
+ Consisting of 20% of the score. ➔ max. 20.0 points 
+6202.3 Speed: 
+ Consisting of 20% of the score. ➔ max. 20.0 points 
+For the Speed formula, see ICR 4206.3 
+6203 Scoring Procedures 
+6203.1 7 Judge Format 
+ The Judges will evaluate the competitor’s performance using a split scoring system as 
+follows: 
+6203.1.1 Turn Judges 
+ Five Judges shall independently evaluate the competitor’s performance based upon the 
+criteria as stated in JH 6204.1 (Turns) and 6204.2 (Deductions). The high and low Turns 
+scores and the high and low Deductions scores shall be discarded and the remaining six 
+scores shall be added together to form the combined score for Turns including Deductions 
+(note that Deductions scores are always negative). 
+6203.1.2 Air Judges 
+ Two Judges shall independently evaluate the competitors aerial manoeuvre(s) based 
+upon the criteria as stated in JH 6204.3. The scores will be averaged for a total air score 
+and truncated to two decimal places. 
+ Total Air Score = 10.0 (max) x 2 jumps = 20.0 (max) per run 
+6203.1.3 Time 
+ The speed score shall be calculated according to JH 6204.4. 
+6203.1.4 Total Score 
+ The average of the two air scores is added to the total of the counting turn s/deductions 
+scores to get the competitor’s total Judges’ score. The speed score shall be added to the 
+total Judges’ score to determine the competitor’s complete Moguls score.
+
+--- page 25 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 25 
+6203.2 5 Judge Format 
+The Judges will evaluate the competitor’s performance using a split scoring system as 
+follows: 
+6203.2.1 Turn Judges 
+ Three Judges shall independently evaluate the competitor’s performance based upon the 
+criteria as stated in JH 6204.1  (Turns) and 6204.2 (Deductions) . The three scores shall 
+be added together.  
+ Total Turns Score = 20.0 x 3 judges = max. 60.0 points 
+6203.2.2 Air Judges 
+ Two Judges shall independently evaluate the competitor’s aerial manoeuvre(s) based 
+upon the criteria as stated in JH 6204.3. The scores will be averaged for a total air score 
+and truncated to two decimal places. 
+ Total Air Score = 10.0 (max) x 2 jumps = 20.0 (max). 
+6203.2.3 Time 
+ The speed score shall be calculated according to JH 6204.4. 
+6203.2.4 Total Score 
+ The average of the two air scores is added to the total of the three turn/deduction scores 
+to get the competitor ’s total Judges’ score. The speed score shall be added to the total 
+Judges’ score to determine the competitor’s complete Mogul score.    
+6204 Judging Criteria 
+6204.1 Turns (60% of the Score)  Min. = 0.1 / Max. = 20.0 
+ Turns, in terms of judging criteria, refers to a technical evaluation of how well a competitor 
+turns through the moguls. They refer to rhythmic changes in direction of travel to either 
+side of the fall line, utilizing an aggressive, controlled technique. T he competitor shall be 
+judged from crossing the start line until crossing the finish line.  
+Technical considerations 
+Priorities to evaluate mogul skiing and to develop a ‘Turn Base Score’ are as follows: 
+-  Carving (50%) 
+- Absorption/Extension (25%) 
+- Upper Body (25%) 
+*Fall line: Judging Fall line see JH 6204.2 
+ Full control must be gained after every jump, resulting in controlled turns. It is important 
+to register the direction of the landing. Air is scored until return to control; turns begin 
+scoring when the initial landing direction has been changed, so the changeover between 
+the scoring of airs and turns judges is when the skis change their initial direction into a 
+turn. 
+6204.1.1 Fall Line  
+ Skiing in the fall line is considered the shortest way from the Start to the Finish. To avoid 
+deductions for fall line deviations, the competitor must stay in the selected fall line out of 
+the start gate. Competitors will receive score deductions for fall  line deviations as noted 
+in JH 6204.2 including drifting in  
+Air manoeuvres. Landing on the center of the mogul is a deviation from the fall line.
+
+--- page 26 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 26 
+6204.1.2  Carving 
+6204.1.2.1 General  
+ A pure carved turn is one in which the tail of the ski follows precisely the track made by 
+the ski tip. The upper ski is edged inward at the entrance to the turn, with the competitor’s 
+weight placed well forward on that ski. This manoeuvre flexes the ski into a curve whose 
+radius is determined by the angulation of the ski, by its side cut and by the size of the 
+bending moment acting on the ski.  The other ski needs to move in the same fashion to 
+produce a similar curve with the weight on its outer edge. Reverse camber of the ski (flex) 
+can also be increased by flexion of the edged ski tip into the face of the mogul or rut.  
+ As shown in the figure below, in a purely carved turn there is no skidding/lateral sliding, 
+and the only snow resistance present is the very small gliding friction between ski base, 
+edge and snow. As a result of this minimal level of friction between ski and snow, the 
+speed reduction of the competitor is optimized and fully under the control of the 
+competitor.  
+ Turn radius should reflect the deflection required in relation to the gradient of the slope. 
+Excessive deflection across the hill impacting the face of a mogul is a form break as it 
+results in excessive braking and poor ski line. Turn shape and deflection  should vary 
+according to the spacing between the moguls. 
+6204.1.2.2 Body Position for Carved Turns 
+▪ A properly carved ski requires less effort to work, and gives higher levels of control 
+and stability. 
+▪ The turn is initiated with pressure as the knees and ankles/feet roll the skis onto 
+edge and extension begins.  
+▪ At the middle of the turn (when the ski is edged and the tip is pointing down the fall-
+line) the ski tips contact the face of the mogul. 
+▪ Absorption is used to maintain balance and control pressure in the skis and should 
+match the shape and size of mogul to optimize snow to ski contact. 
+▪ Rotations in the upper legs are minimal, feet remain under the body (shoulders and 
+hips) in both fore-and-aft and lateral planes, and knees remain flexed.  
+▪ Legs should be together. 
+▪ Breaks in balance and separations in position are inefficient turns. 
+▪ Angulation of the lower leg controls the radius of the turn. Timing of the initiation 
+dictates how deep the feet go into the rut. 
+▪ Movements should be symmetrical and equal side to side, specifically: 
+* Timing and placement of pole plants (double pole plant is a deduction) 
+* Arm movements (little movement is preferred but if there is movement it should be 
+equal) 
+▪ Shape of turns: do the turns adjust to the gradient of the slope and the size and 
+disposition of the moguls 
+▪ Position of the feet in relation to the body (do the feet move further outside the 
+body’s midpoint on one turn)
+
+--- page 27 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 27 
+6204.1.2.3 Illustrations / References 
+Illustration of a purely carved turn  
+ 
+ 
+ 
+ 
+Illustration of a skidded turn by contrast; 
+the figure below illustrates a turn that is  
+executed while skidding or sliding 
+laterally. 
+ 
+ The path "swept" by the skis is the result of ploughing the base of the skis through the 
+snow at the face of the mogul. This happens when the competitor turns the skis too sharply 
+into the turn and the ski impacts the face of the mogul on the sidewall and base of the ski, 
+as opposed to the tip of the ski on edge. A skidding ski pivots across the path of the turn.  
+ However, in some cases, a degree of steering or skidding during initiation is unavoidable, 
+but the key is to minimize snow resistance from skidding during the remainder of the turn. 
+This is in order to maintain correct speed control and balance during an accurate carved 
+turn.
+
+--- page 28 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 28 
+Check points 
+ 
+6204.1.3 Absorption and Extension 
+ The competitor should follow the shape of the mogul through absorption from the start 
+until the top of the mogul. Extension starts right after the top of the mogul. Extension also 
+follows the shape of the mogul. Pressure between skis and snow should remain the same 
+during absorption and extension, absorbing as the competitor moves up and extending 
+as the competitor moves down.  Additionally, the competitor should aggressively utilize 
+the moguls to assist initiation of turns, rather than waiting for the moguls. 
+Check Points
+
+--- page 29 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 29 
+6204.1.4 Upper Body 
+ The head should remain still, facing downhill. The chest should also stay straight and 
+natural. Hands stay in front of the body in a natural position. Pole plants should be light 
+and wrist movement goes forward.  
+Check Points 
+ 
+6204.1.5 Mogul ranges 
+Excellent 16.1 – 20.0  
+Good 12.1 – 16.0  
+Adequate   8.1 – 12.0  
+Managing   4.1 –   8.0 
+Poor   0.1 –   4.0 
+6204.1.6 Mogul course 
+ At a course with 11 control gates including start and finish gate (each control gate counts 
+1/10 of the course)  
+6204.2 Deductions of Turns Points 
+ The “Deductions” category is used for all errors 
+6.0 Any complete stop 
+4.1 –5.9 Complete fall without stop or interruption/significant sliding down fall 
+line or across hill to nearly a complete stop 
+2.9 – 4.0 Hard touchdown or front roll without stop or interruption/sliding 
+significantly reducing downhill momentum 
+2.1 – 2.8 Medium touchdown without stop 
+0.1 – 2.0 Light touchdown without interruption, small stumbles, fall line 
+deviations, speed check, double pole plant, shooting 
+ 
+Definitions 
+• Small stumbles,  
+• Fall line deviations  refer to JH 6204.2.1 
+• Speed check  
+• Significant sliding  Sections of course not skied. Skis are perpendicular to 
+the fall line and are typically sliding with no carving action. 
+(max 2.0 points per gate) 
+• Shooting  Sections of course not skied. Skis remain flat and
+
+--- page 30 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 30 
+track straight down the fall line. (max 2.0 points per gate) 
+• Light Touchdown:  Momentary touch with one or both hands. 
+• Medium Touchdown:  Touch with hips or arm(s). 
+• Hard Touchdown:  Back or side slap, or front roll. 
+• Complete fall:  Full body contact, no weight on skis. 
+• Complete Stop:  A complete stop for any reason. 
+Notes 
+1. Competitors lose control and ride the tails of their skis with no turns for 2 full control 
+gates. Competitors may get partial deductions for turning minimally within a section 
+vs making no turns at all in a section (“shooting”) 
+Deduction= 4.0 (2.0 x control gates for shooting) 
+2. Competitors lose their balance after a jump and do a back slap then immediately 
+continue skiing with no fall line break.  
+Deductions = 2.9 – 4.0  
+3. Competitors have a complete fall and slide two control gates then come to a full 
+stop, and then continue skiing.   
+Deductions = (4.1 to 5.9 range) + 4.0 (2.0 x control gates for not skiing) +6.0 
+6204.2.1 Other deductions  
+ Deductions in turns points are for specific errors on the course. 
+ Deductions will also be used for deviations from a fall line as noted below: 
+ Fall line deviations (leaving the 
+fall line) are based on the 
+guidelines of a 1.6 deduction for 
+any complete line deviation. 
+ Other deductions may be taken 
+for factors that caused the line 
+deviation.  
+ Fall line deviations may be more 
+or less than a complete line 
+change and will be scored 
+accordingly. A competitor who 
+returns to a fall line immediately 
+after deviating will NOT receive a deduction for a second line deviation. If the line deviation 
+is more than one line, the competitor may return to either line without further deduction.  
+In the image above, the competitor starts at position 0 and deviates to position 2 and 
+would receive a deduction of 3.2 (1.6 x 2). The athlete may immediately return to position 
+3 or 4 without further deduction. 
+Deductions = 1.2 + 3.2 + 4.0 = 8.4 ➔ 1.2 for stumble + (2 x 1.6 =) 3.2  (for each 
+complete line deviation) + 4.0 (2.0 x2 control gates for not skiing) 
+6204.3 Air (20% of the Score) Min. = 0.0 / Max. = 10.0 (per jump) 
+ The scoring of air is broken into two parts, Form and Difficulty. The manoeuvre will be 
+evaluated for form out of 10.0 with a degree of difficulty multiplier, based on the 
+manoeuvre(s) performed.  
+ 
+6204.3.1 Jump groups 
+ Different jump groups in Moguls are listed below (with examples):
+
+--- page 31 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 31 
+1. Flips (somersault) Inverted flips include all jump somersaults. Only single inverted 
+flips are allowed. 
+2. Loop Include all loop jumps. Only single loops are allowed.  
+3. Straight Rotations (helicopters/360,720). Straight Rotations include all traditional 
+single and multiple rotations (helicopters/360/720…). A straight rotation 
+manoeuvre can also include up to three (3) position. 
+4. Off Axis (D-spin, Cork, Loop Full, Rodeo, Misty, Flat spin, Bio) Off Axis includes all 
+traditional single and multiple off axis manoeuvres (360/720…) 
+5. Upright (Spread Eagle, Kosak, Zudnick, Daffy, Back Scratcher, Mule Kick, Iron 
+Cross, Twister, etc.: Singles - Quints). Upright jumps include all jumps performed 
+in the vertical axis without rotation. These include the traditional upright jumps 
+(twister, spread, daffy etc.). A competitor can perform 1 (single) to 5 (Quint) upright 
+manoeuvres. Any more than 5 will not be counted.  
+* Grab, Two jumps that would otherwise be treated as from the same category 
+shall be permissible if one and not the other includes a grab.
+
+--- page 32 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 32 
+6204.3.2 Form  
+ Priorities to judge form and position of the jumps in mogul skiing are set as follows: 
+First Quality (Take off, Form, Landing) 
+NOTE:  Air in moguls will be judged until the competitor is in full 
+control. 
+Second Air (Height and Distance) 
+Third Fluidity. (Speed check, etc.) 
+Fluidity is the ability of the competitor to maintain the rhythm of 
+turns prior to the jump, including the initiation for take-off. 
+ When judging form for all jump groups (uprights, flips, off-axis, etc.) the primary factor for 
+evaluation is the “Purposeful Motion” utilized by the competitor. 
+ 
+Purposeful motion means:  
+▪ Athleticism displayed 
+▪ Control  
+▪ Balance  
+▪ Continuity of Motion 
+ All jumps, including traditional jumps (such as uprights and vertical axis rotations) and 
+new jumps (such as off -axis rotations), will be evaluated using the Purposeful Motion 
+criteria.   
+ Maximum raw point allotment: 10.0 for form, with DD max. 10.0 / jump. 
+Note: Jumps must receive at least 0.1 form points to receive difficulty multiplier. 
+ The height of the jumps should be related to the weight point of the body (not to the head, 
+or top or body). 
+6204.3.2.1 Axis 
+ Axis will be evaluated as an element of Quality – how the jump was executed and 
+performed.  In order to achieve a maximum point value, the manoeuvre must be performed 
+within the defined axis range (see 6204.3.2.2.1, 6204.3.2.2.2 & 6204.3.2.2.3). If the 
+manoeuvre being attempted is not within the defined axis range, the score shall be 
+reduced proportionate to the variation from the defined axis range as an element of quality 
+(see 6204.3.3 POINT GUIDELINE CATEGORY).  
+ 
+ e.g. if all other components of the jump are excellent the Jump will be scored at the highest 
+end of the defined axis range category. 
+ 
+6204.3.2.2 Determining Proper Axis 
+Axis should always be assessed with relation to the position of the upper body or torso at 
+the apex of the jump.   
+The legs and feet are not a clear indicator of axis as the lower torso can be manipulated 
+into a position not related to the axis of the manoeuvre simply by bending at the knee.  In 
+order to manipulate the direction of the upper body, the athlete must hinge at the waist, 
+altering the axis of the manoeuvre in the process.
+
+--- page 33 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 33 
+6204.3.2.2.1 Proper Axis for Upright and Non-Twisting Inverted Jumps 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6204.3.2.2.2 Proper Axis for Inverted Twisting Jumps 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Score Guidelines 
+Green Zone 
+Jump may achieve 
+maximum points – 
+“excellent” category 
+score. 
+Yellow Zone 
+Jump may achieve a 
+maximum of a “good” 
+category score (8.0). 
+Red Zone 
+Jump should receive a 
+maximum of a “poor” 
+category score. 
+Score Guidelines 
+Green Zone 
+Jump may achieve 
+maximum points – 
+“excellent” category 
+score. 
+Yellow Zone 
+Jump may achieve a 
+maximum of a “good” 
+category score (8.0). 
+Red Zone 
+Jump should receive a 
+maximum of a “poor” 
+category score.
+
+--- page 34 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 34 
+6204.3.2.2.3 Proper Axis for Off Axis Jumps 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6204.3.3 POINT GUIDELINE 
+Excellent Jump 8.1 – 10.0 
+Good Jump  6.1 –   8.0 
+Adequate Jump 4.1 –   6.0 
+Managing Jump 2.1 –   4.0 
+Poor Jump                                 0.1 –   2.0 
+6204.3.4 Full control 
+ Full control must be gained after every jump, resulting in controlled turns. It is important 
+to register the direction in the landing. Air is scored until return to control; turns evaluation 
+continues when the initial landing direction has been changed, so the changeover 
+between judges occurs when the skis make their initial change of direction into a turn. If 
+there is no change of direction after landing, turn judges shall evaluate the competitors’ 
+performance landing until the end of the run.  
+ Note: Straight running the chop; straight shooting happens only after the chop. However, 
+if an athlete lands high on the chop and then leaves the landing zone out of control, it 
+should affect both the base and jump scores. HJ should discuss with judges where chop 
+ends. 
+6204.3.4.1 Falls after Jumps / Deep Landings 
+- The jump is judged up to a controlled landing. 
+- If the landing is very poor or completely missed the jump score is affected.   
+ The jump may only receive a maximum score of 5.0. 
+- Falls and touchdowns also affect the turn score. 
+Score Guidelines 
+Green Zone 
+Jump may achieve 
+maximum points – 
+“excellent” category 
+score. 
+Yellow Zone 
+Jump may achieve a 
+maximum of a  “good” 
+category score (8.0). 
+Red Zone 
+Jump should receive a 
+maximum of a “poor” 
+category score.
+
+--- page 35 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 35 
+6204.3.5 Difficulty 
+ Jumps will be identified by a specific code. This code will identify the basic jump group 
+and additional modifiers that make up the difficulty formula.  
+ The difficulty of the upright manoeuvre will be established in accordance with the Difficulty 
+table, using a ‘Base DD‘, enhanced by the values established for the jump components.  
+6204.3.6 Jump Codes  
+ Moguls jump codes are created by adding individual codes together to form a jump. Each 
+letter code represents a value and these values are added together to calculate the 
+Degree of Difficulty (DD).  
+- The table of jump codes and Degree of Difficulty values is maintained and published on 
+the FIS web site. 
+6204.3.7 Jump Modifiers 
+Jump modifiers, including position, Layout or grab, can be added to permitted jump groups 
+to vary the style of the jump and increase the DD of those jumps. 
+The following codes can be added to the listed jump groups defined in 6204.3.1. 
+Modifier  Code  
+• Position   p  (flips, loops, straight rotations, off-axis)  
+• Grab   G  (flips, loops, straight rotations, off-axis)  
+• Layout position  L  (flips only)  
+Up to a maximum of three positins OR one grab OR a layout position can be added to the 
+permitted jumps. (e.g. bp, bpp, bppp, bG, bL, lG, 7op, 7oG, etc…). 
+Note: Jump modifiers cannot be added to the uprights jump group. 
+  
+6204.3.7.1  Positions  
+A “p” shall be assigned to any permitted jump group where obvious and purposeful actions 
+to create a position, or multiple positions are observed. All jumps in the off -axis category 
+will also be assigned a “p” and will be judged accordingly (e.g. 3op, 7op, 10op, 14op). 
+The position should be assessed in relation to its impact on the performance of the overall 
+jump.  
+If a position involves crossing the skis, a 90 degree symmetrical cross of the skis clearly 
+displayed to the judges will be assessed as the most ideal display of this position.  
+Specific Cases  
+To achieve an excellent score for bp, fp, lp  and 3p the position must be purposeful and 
+clearly displayed to the judges in the ideal position described above, with all other 
+elements of the jump assessed in the excellent range. The quality of the performance of 
+the position in these jumps will have a greater impact on the overall assessment of these 
+jumps than other allowed jumps.  
+In 7op, 10op, 14op, a position is required in the execution of the jump. The position will be 
+assessed in relation to the overall performance of the jump. To achieve in the excellent 
+range a position is required. To achieve in the high excellent range the ideal position 
+should be displayed and all other elements of the jumps should be assessed in the 
+excellent range. 
+In 7op, 10op, 14op with NO position, no greater than the Adequate category, maximum 
+score of 6.0.
+
+--- page 36 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 36 
+6204.3.7.2  Grabs  
+A “G” shall be assigned to any permitted jump group where any attempt by the athlete to 
+grab the ski is deemed to be made.  
+Grabs performed must be identifiable as a Grab and require the athlete to be holding the 
+ski with their hand. A successfully executed grab will be one where the ski is held, 
+presented clearly to the judges, and the judges can see the athletes hand holding the 
+ski.  
+An attempted grab, a completely obscured grab that is not clearly presented to the judges, 
+a grab of the boot or binding, or a completely missed grab will be coded as a grab, but 
+scored no greater than the Adequate category, maximum score of 6.0. In scoring an 
+attempted grab, the quality of the overall jump and quality of the grab attempt will be 
+assessed in determining the final score.  
+Scoring Examples for Grabs:  
+Excellent Category:  
+To score in the Excellent Category, the grab must be held, clearly presented to the judges 
+and the remainder of the skill should be performed in way that would be judged in the 
+Excellent Category.  
+Maximum Good Category:  
+If a grab can be seen as a grab but is held for a short duration or has limited visibility the 
+maximum score for the jump as a whole will be in the Good Category, assuming the jump 
+as a whole, was high quality. (8.0 or less)  
+Maximum Adequate Category:  
+A grab that is not presented clearly to the judges and cannot be verified by the observation 
+of the hand holding the ski, a grab of the boot or binding, or a near miss with purposeful 
+motion will be assessed with a maximum score in the Adequate Category (6.0 or less)  
+Managing Category or lower:  
+A grab attempt that is clearly missed, possibly with the hand a long way from the ski or a 
+flailing hand, affecting significantly the overall impression of the jump, or a jump of 
+overall lower quality with a missed grab, will be assessed with a maximum score in the 
+Managing Category (4.0 or less) 
+ 
+ Note:  
+ 
+At the request of the AIR judges, after reviewing the jump with the help of a side camera 
+(the grab is not well presented to the judges), the score for the jump is MAX Adequate 
+6.0. This should be marked on the AIR steno/score card. The exception is a technical 
+error, such as a problem with the image transfer from the competition, or an error beyond 
+our control. 
+Only HJ can operate the side camera and respond if HJ sees that the AIR judges have 
+incorrectly assessed the jump (for example, when the grab is only touched or completely 
+missed).
+
+--- page 37 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 37 
+6204.3.8 Repeats 
+Every competitor must perform two different jumps in order for two jumps to count. If a 
+jump is repeated, only the first scoring jump of the two will count.   
+Only identically performed jumps will be considered repeated jumps, with the exceptions 
+noted below.  “Two different jumps” are defined as: 
+Inverted Flips:  Allow only one (1) jump in this category per run unless there is a different 
+direction in initiation (front vs back), rotation added (straight over jump vs full twisting), or 
+a grab is added. 
+    Can do  Can’t do 
+First Jump   back full    bL  back full 
+Second Jump  front tuck   bG             back half  
+Loop:  Allow only one (1) jump in this category unless a grab is 
+added. 
+    Can do  Can’t do 
+First Jump   loop pike  loop pike 
+Second Jump  loop with grab             loop with position 
+Off Axis:  Allow the same jump if there is a different secondary axis of 
+rotation by at least 360 degrees, or a grab is added. 
+    Can do   Can’t do 
+First Jump   7op 7op   7op 
+Second Jump  3op 7oG   7op 
+Straight Rotations: If two (2) jumps are done from this category they must differ 
+by 360 degrees or more, or grab is added. 
+    Can do   Can’t do 
+First Jump   360 360   720 with Grab (Mute) 
+Second Jump  720 360 with grab             720 with Grab (Tail) 
+Upright : Must have a different number of moves (i.e. double spread, 
+triple twister), or add a grab. 
+     Can do   Can’t do 
+First Jump   TST      T       DTS 
+Second Jump  TS      S       TTT 
+6204.3.9 Exceptions and Notes: 
+1. When grabs are performed in jumps, all grabs are considered to be the same for 
+purposes of the repeat rule. For example, a 360 mute grab is a repeat of a 360 tail 
+grab. All Grabs are classified as the same manoeuvre : a 720 off axis with 2 grabs 
+is a repeat of another 720 off axis with 2 different grabs.  
+2. When positions are performed in flips, loops, or vertical or off axis rotational 
+manoeuvres, the location of the position within the jump does not change the jump  
+3. Two off -axis jumps are considered to be repeats unless there is a different 
+secondary axis of rotations by at least 360 degrees.  
+4. Positions with grabs or any attempt to grab are considered to be grabs for the 
+purpose of this rule.
+
+--- page 38 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 38 
+6204.4 Speed (20% of the Score) Min. = 0.0 / Max. = 20.0 
+ Speed is simply the amount of time taken to complete the run. Time shall be taken from 
+the moment that the competitor leaves the starting gate until they cross the finish line. The 
+points awarded for speed will be called time points and calculated.  
+➔Refer to ICR 4206.3 
+6204.5 Tie Breaking Moguls 
+ ➔Refer to ICR 4207.3 
+6300 DUAL MOGULS 
+6301 Definition 
+ The Dual Mogul competition shall consist of elimination rounds where pairs of competitors 
+compete against each other. The winner of each round advances to the next round until a 
+final result is achieved. The competition will take place on a steep, heavily moguled 
+course, stressing technical turns, aerial manoeuvres and speed. 
+ 
+6302 Pairings 
+ ➔Refer to ICR 4312 
+6303 Event Procedures 
+ In Dual Mogul Format, each judge shall determine which competitor more fully exhibits the 
+requirements set forth in Rule JH 6204, Judging Criteria for Moguls, and indicate such 
+selection by the Dual Mogul system, corresponding to the course on which such 
+competitor competed. 
+ The winners of each round move on to the next round until the final placing is determined. 
+See JH 6304 for additional event procedures. 
+6304 Judging Procedures 
+6304.1 Judging Criteria 
+ The judging criteria used in the dual mogul elimination format shall be the same as set 
+forth in Rule JH 6204.1 "Turns" and Rule JH 6204.3 "Air". “Speed” is a score based on the 
+competitors’ time difference at the Finish line (see JH 6304.3.4 for classic DM and rule JH 
+6304.4.3 for Direct Comparison DM). 
+6304.2 Judging Formats 
+There are two judging formats, Classic Scoring JH 6304.3 and Direct Comparison 
+Scoring JH 6304.4. 
+6304.2.1 5 Judges Format 
+ A panel of five (5) judges shall administer scores based upon specific duties for each 
+judge as follows: 
+ Classic Direct Comparison 
+TURNS 2 Judges 3 Judges 
+AIR 1 Judge 2 Judges 
+SPEED 1 Judge Data system 
+OVERALL 
+PERFORMANCE 
+1 Judge
+
+--- page 39 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 39 
+Judge J1 J2 J3 J4 J5 Data 
+Classic Turns Turns Air Speed Overall  
+Compare Turns Turns Turns Air Air Speed 
+ Speed is a score based on the competitors’ time difference at the Finish line (see JH 
+6304.3.4 for Classic DM and rule JH 6304.4.3 for Direct Comparison DM). 
+6304.2.2 7 Judges Format 
+ A panel of seven (7) judges shall administer scores based upon specific duties for each 
+judge as follows: 
+ Classic Direct Comparison 
+TURNS 4 Judges 3 Judges 
+AIR 2 Judges 4 Judges 
+SPEED 1 Judge 
+(Turns Tie Break) 
+Data system 
+ 
+Judge J1 J2 J3 J4 J5 J6 J7 Data  
+Classic Turns Turns Turns Turns Air Air Speed*  
+Compare Turns Turns Turns Air A Air A Air B Air B Speed 
+ 
+* Speed is a score based on the competitors’ time difference at the Finish line (see 
+6304.3.4 for Classic DM and 6304.4.3 for Direct C omparison DM). The Turns score 
+delivered by the Speed Judge shall be used only for the purpose of tie breaking within the 
+provisions of Tie-Breaking 7 Judges Dual Mogul Format (ICR 4307.2.2.2). 
+6304.3 Classic Scoring 
+6304.3.1 Each judge will have a total of five possible votes to cast, with possible combinations of  
+5-0, 4-1, 3-2, 2-3, 1-4, or 0-5, for the red course vs. the blue course. This results in 35 or 
+25 possible votes to be cast as follows: 
+  
+7 Judges 5 Judges 
+Turns #1: 5 votes Turns #1 5 votes 
+Turns #2: 5 votes Turns #2 5 votes 
+Turns #3: 5 votes Air 5 votes 
+Turns #4: 5 votes Speed 5 votes 
+Air #1: 5 votes Overall 3 votes Turns, 1 vote Air,  
+1 vote Speed 
+Air #2: 5 votes   
+Speed: 5 votes   
+Total: 35 votes  25 votes 
+ 
+6304.3.2 If both competitors finish and are tied on Speed, each competitor shall be awarded half of 
+the Speed votes, resulting in a score of 2.5-2.5 (7 Judges) or 3-3 (5 Judges).
+
+--- page 40 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 40 
+6304.3.3 The winner of each match will be the competitor who received a simple majority  
+ The result will be written in the protocol and announced immediately.  
+ 
+6304.3.4 Time Differential for Speed (Classic DM) 
+After the time difference between the competitors has been calculated, votes will be 
+awarded as follows: 
+・time difference less than or equal to 0.74 seconds:  3/2 
+・time difference between 0.75 and 1.49 seconds:  4/1 
+・time difference equal to or greater than 1.5 seconds:  5/0 
+ 
+6304.3.5 Tie Breaking - Classic Scoring 
+ 
+6304.3.5.1 Tie Breaking 5 Judge Format 
+No ties are possible in the 5 Judges Dual Mogul Format.   If there is a tie in Speed, the 6 
+votes available for Speed are split evenly as per 6304.3.2, maintaining the total number 
+of votes at 25.  If there is a tie in Air ( or neither competitor jumps), the 6 votes available 
+for Air are not awarded, leaving the remaining number of votes at 19.   If there is a tie for 
+both speed and air, the total number of votes is still 19.   In all cases, an odd number of 
+votes means no tie is possible. 
+6304.3.5.2 Tie Breaking 7 Judge Format 
+➔Refer to ICR 4307.2.2.2 
+6304.4 Direct Comparison Scoring 
+Each competitor, on either the blue course or red course will get a final score from 0 to 
+100 points based upon each judge’s determination of winning score, with Turns scores 
+according to 6304.4.1, Air scores according to 6304.4.2 and the values provided b y the 
+speed points formula (6304.4.3).  
+ The higher score wins. 
+ Turns:  maximum   50 points 
+ Air:   maximum   25 points 
+ Speed:  maximum   25 points 
+ Total:  maximum 100 points 
+ 
+6304.4.1 Turns (50% of the final score) 
+ 
+6304.4.1.1 3 Judges score Turns based upon either the 5 Judges or 7 Judges format. 
+ Each Judge provides a score from 0 to 20 points to each competitor. Scores will be whole 
+numbers and tenths. Judges follow the Moguls criteria and use the range for scoring. 
+ Each Turns Judge must first determine a winner for each pairing. There can be no ties: 
+the competitors’ scores must be different.
+
+--- page 41 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 41 
+6304.4.1.2 Turns Scoring Procedures 
+ The scoring procedure for each judge in each round has 3 steps: 
+ Step 1: Determine a winner on the blue or red course. 
+ Step 2: Give a score to the winner using the Range (JH 6304.4.1.3) 
+ Step 3: Give a lower score to the other competitor based on a difference of the points 
+when comparing the two competitors.  
+ The three (3) Turns scores are averaged and then multiplied by 2.5 to get the total score 
+out of 50 points for each competitor. 
+ 
+6304.4.1.3 Turns Range & Deduction Values 
+ 
+6304.4.1.3.1 Range for Scoring Turns: 
+Excellent 16.1 – 20.0  
+Good 12.1 – 16.0  
+Adequate   8.1 – 12.0  
+Managing   4.1 –   8.0 
+Poor   0.1 –   4.0 
+ 
+6304.4.1.3.2 Deduction Indications: 
+Judges are not required to document and calculate on score card the various deductions 
+that occur for each skier within a dual. 
+However, judges must take the various mistakes and deductions (as indicated in section 
+6204.2 & 6204.2.1) into consideration when determining a turn score for each competitor 
+as indicated in step 2 & 3 of section 6304.4.1.2 listed above. 
+6304.4.2 Air (25% of the final score) 
+Air scoring follows the same criteria as single Moguls competition. Air judges give a score 
+to each independent jump from 0 to 10 points and a Dual Moguls Degree of Difficulties 
+Table is used. Maximum score for Air for each competitor is 2 times 12.5 (for jump 1 and 
+jump 2), giving up to 25 points. 
+ 
+6304.4.2.1 Air Judges Scoring Procedures 
+Depending on the 5 or 7 Judges format, the first group of Air judges scores independently 
+the Blue Top / First Air and the Red Bottom / Second Air. A second group of Air Judges 
+scores Red Top / First Air and Blue Bottom / Second Air.  
+ 
+6304.4.2.2 Air Judges assignment: 5 Judges format 
+J4 scores: Blue Top Air & Red Bottom Air 
+J5 scores: Red Top Air & Blue Bottom Air 
+ 
+6304.4.2.3 Air Judges assignment: 7 Judges format 
+J4 & J5 score: Blue Top Air & Red Bottom Air 
+J6 & J7 score: Red Top Air & Blue Bottom Air 
+ 
+6304.4.2.4 Air Scoring System 
+The score system is the same as the single Moguls format. (JH 6204.3)  
+Each jump is given a score of up to 10 points. The Degree of Difficulty Table (DD) for Dual 
+Moguls is used. The Dual Moguls DD Table is maintained and published on the FIS web
+
+--- page 42 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 42 
+site. In principle, the Single Moguls format DDs are used with a multiplication of 1.25 to 
+get each Jump scored up to 12.50 points from 10.00 points.  
+Each Air Judge shall enter the score for Jump 1 and the score for Jump 2 (0 to 10 points) 
+and the jump code.  
+In the case of 7 Judges format, the average score of each panel (J4 -J5 and J6-J7) will 
+provide the score for each jump (0 to 10 points) before using the jump code. 
+ 
+6304.4.3 Speed (25% of the final score) 
+The Speed score is calculated based upon the difference in time between the runs and 
+then converted into points. After the time difference between the competitors has been 
+determined, Speed points for each competitor will be awarded as follows: 
+Faster competitor gets: 25 speed points 
+The slower competitor gets: 24 .50 speed points minus 0.025 points for every hundredth 
+(1/100) of second time difference, with a minimum score of zero. 
+Formula for slower competitor’s score = 24.50 – (time difference in 1/100ths of a second 
+x 0.025), with all negative results converted to 0.00. 
+ 
+ In case of a Speed tie, both competitors get 25 points. 
+ 
+6304.4.4 Tie Breaking – Direct Comparison Scoring 
+ ➔Refer to ICR 4309.2.3.2 
+ 
+6305 Special Procedures: Dual Moguls 
+ 
+6305.1.1 Number of Aerial Manoeuvres 
+ All courses will be two jump courses for international competitions. The recommended 
+number of aerial manoeuvres shall not restrict the competitor to the stated amount, but 
+represents the number of aerial manoeuvres that will receive an evaluation.  
+6305.1.2 Jumps evaluation for Classic Scoring 
+ Air Judges evaluate jumps based on the scoring criteria from single moguls (Quality, Air 
+and Fluidity), as well as difficulty and variety. Competitors may repeat jumps but judges 
+will consider variety in comparing the two competitors. Variety reflects a different number 
+of manoeuvres and different types of manoeuvres. A competitor who repeats (identically) 
+the same manoeuvre during a run will receive a deduction of two (2) votes per Air Judge; 
+A competitor who performs two different manoeuvres from the same scoring Category will 
+receive a deduction of one (1) vote per Air Judge. Scoring category as defined in 6204.3.8 
+– single moguls repeat rule. 
+6305.1.2.1 Degree of Difficulty evaluation for Classic Scoring 
+As part of the evaluation of jumps in Duals, Air Judges must take into account the Degree 
+of Difficulty of the jumps performed. 
+Possible Examples for factoring Degree of Difficulty into jump scoring: 
+1) Both athletes perform similar difficulty skills at a similar execution: Judge allocates 
+score 3-2 to the better performer. 
+2) Both athletes perform both jumps at a similar execution, but 1 athlete performs one 
+jump of a higher degree of difficulty: Judge allocates score 3-2 to the higher DD 
+performer. 
+3) Both athletes perform both jumps at a similar execution, but 1 athlete performs 
+both jumps at a higher degree of difficulty: Judge allocates score 4-1 to the higher 
+DD performer.
+
+--- page 43 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 43 
+4) One athlete performs both jumps at a good execution but low difficulty, the other 
+athlete performs both jumps at a high degree of difficulty but slightly lower 
+execution: Judge allocates score 3-2 to the higher difficulty performer depending 
+on the difference in quality of execution. 
+5) One athlete performs both jumps at excellent execution but low difficulty, the other 
+athlete performs both jumps at very low-quality execution but very high difficulty: 
+Judge allocates score 3-2 to athlete with excellent execution. 
+6305.1.3 Jump evaluation for Direct Comparison Scoring 
+ If a jump is repeated, only the first scoring jump of two will count. (refer to 6204.3.8) 
+Crossing the centre line (DNF) 
+ 
+A competitor has crossed the centre of the dual mogul course when both feet have 
+completely crossed over the centre line and into the opposing course  
+ 
+See diagram below: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+Direction of  
+Travel 
+Both boots have 
+ crossed the  
+centerline.
+
+--- page 44 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 44 
+Appendix A: 
+General Description of Jump Definitions 
+ 
+1. Basic Jump Definitions 
+ 
+Centre of Balance Is located at the centre of mass, where the three axes intersect. 
+Balance Point Is where the forces on the body are equal to the forces created by the 
+dynamic body actions. 
+Body Segments The body is divided into several sections; the upper body and lower 
+body are two of the major segments. 
+Vertical Axis Runs from the top of the body to the feet, through the balance point. 
+Horizontal Axis Runs from side to side, through the balance point. 
+Lateral Axis Runs from the front of the body to back of the body, through the 
+balance point. 
+Tilted One or more of the axes of rotation are less than 90 degrees to the 
+direction of the rotation. 
+Off Axis The rotation around the primary axis is tilted off of the axis. 
+Direction of Travel The primary direction of travel is in the horizontal plane and through 
+the balance point. There are lateral movements around the body 
+segments during flexion and extension. 
+Plane There are three planes which the body passes through during 
+dynamic movement: the vertical plane, lateral plane and horizontal 
+plane. 
+Flexion decreasing the angle between the joint or body segments. 
+Extension increasing the angle between the joint or body segments. 
+Rotation increasing or decreasing the different angles between the body 
+segments. 
+Degrees of Rotation The number of rotations or part of rotations around an axis expressed 
+in degree of rotation. 
+Primary Axis the body actions to rotation on the first axis. 
+Secondary Axis the body actions to rotation on an additional axis. 
+Grabs With the body action of a flexion, a section or part of the ski is grabbed 
+by the hand or hands. 
+Holds With the body action of a flexion, a section or part of the ski or skis 
+are grabbed by one or more hands and then held for a duration.
+
+--- page 45 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 45 
+2.   Back Flip: One complete rotation in the backwards direction around the horizontal axis. 
+ 
+ Back Tuck: The take-off is initiated both upwards and backwards which starts A primary rotation 
+on the horizontal axis. The upper and lower body then extends. There is a flexion at the waist 
+between the upper body and lower body to the tuck position. The body rotates  backwards a total 
+of 360 Degrees, then the skiers extend and prepares for the landing. 
+ 
+ Back Layout: The take-off is initiated both upwards and backwards which starts a primary rotation 
+on the horizontal axis. The upper and the lower body extends. The body rotates backwards a total 
+of 360 degrees, then the skier flexes and prepares for the landing. 
+ 
+Pike: A body action that starts from an extended position then there is a flexion at the waist, with 
+legs being kept straight. 
+ 
+Free Position: Could also be called the ‘puck’ position which is in -between a layout and a tuck 
+position, mainly seen in off axis rotations. 
+ 
+Half Twist: A 180° rotation of the body around its vertical axis in a "free" position, except in the 
+half out movement the body must be laid out. 
+ 
+Twisting: Rotation around the primary and or the secondary axis. All twists (including multiple 
+twists in one somersault) are performed in a layout position. 
+ 
+Back Full: The take-off is initiated both upwards and backwards which starts a primary rotation on 
+the horizontal axis. An additional axis of rotation on  the vertical axis is initiated with the rotation of 
+the upper body. The upper and lower body then extends straight. There is a full extension at the 
+waist between the upper body and lower body continues on both axes. 
+The body rotates backwards a total of 360 degrees on the primary axis and rotates 360 degrees 
+on the secondary axis, then the skiers extends and prepares for the landing. 
+ 
+ Double Full: The take-off is initiated both upwards and backwards which starts a primary rotation 
+on the horizontal axis. An additional rotation on the vertical axis is initiated with the rotation of the 
+upper body. The upper and lower body then extends straight. There is a full extension at the waist 
+between the upper body and lower body continues on both axes.  
+ The body rotates backwards a total of 360 degrees on the horizontal axis and 720 degrees on the 
+vertical secondary axis, then the skiers extends and prepares for the landing. 
+ 
+3. Front Flip: One complete rotation in the forward direction around the horizontal axis. 
+ 
+ Front Tuck: The takeoff is initiated both upwards and forwards which starts a primary rotation on 
+the horizontal axis. The upper and lower body then flexes. There is a flexion at the waist between 
+the upper body and lower body to the tuck position. The body rotates fo rwards a total of 360 
+degrees, then the skier extends and prepares for the landing. 
+ 
+4. Side Flip: One complete rotation, in the sideways direction around the lateral axis. 
+ Loop: The takeoff is initiated both upwards and sideways which starts a primary rotation in the 
+lateral axis. The upper and lower body then extends either straight on into the free position and 
+rotates. The body rotates a total of 360 degrees, then the skier flexes and prepares for the landing. 
+ 
+ Loop Full: The take-off is initiated both upwards and sideways which starts a primary rotation in 
+the lateral axis. The upper then also starts to rotate on the secondary vertical axis, then extends 
+into the free position. The body rotates a total of 360 degrees in th e lateral axis and 360 degrees 
+in the vertical axis. Then the skier flexes and prepares for the landing.
+
+--- page 46 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 46 
+5. 360: One complete rotation around the vertical axis with a straight body position. 
+ 
+360: The takeoff is initiated both upwards and vertically which starts a primary rotation in the vertical 
+axis. The upper and lower body then fully extends straight and rotates. The body rotates a total of 
+360 degrees, then the skier flexes and prepares for the landing. 
+ 
+720: The takeoff is initiated both upwards and vertically which starts a primary rotation in the vertical 
+axis. The upper and lower body then fully extends straight and rotates. The body rotates a total of 
+720 degrees then the skier flexes and prepares for the landing.  
+ 
+1080: The takeoff is initiated both upwards and vertically which starts a primary rotation in the 
+vertical axis. The upper and lower body then extends and rotates. The body rotates a total of 1080 
+degrees the skier then flexes and prepares for the landing. 
+ 
+6. 3o: The takeoff is initiated both upwards and tilted vertically which starts a primary rotation (off 
+axis) in the vertical axis. The upper body leads and lower body then contracts and follows the 
+rotate. The body rotates a total of 360 degrees, then the skier may extends and then flexes and 
+prepares for the landing. 
+ 
+7o (general): The takeoff is initiated both vertically and upwards or vertically and downwards which 
+starts a tilted primary rotation off of the vertical axis. The upper body rotates in the direction of 
+travel and lower body follows. Then the body flexes into the free p osition and continues to rotate. 
+The body rotates and rolls a total of 720 degrees. The skier then flexes and prepares for the 
+landing. 
+ 
+Cork7: The takeoff is initiated both vertically, upwards and to the side which starts a tilted primary 
+rotation off of the vertical axis. The upper body leads and lower body follows then flexes into the 
+free position and continues to rotate.  The body rotates and rolls a total of 720 degrees. The skier 
+then flexes and prepares for the landing. 
+ 
+Misty 7: It starts with forward rotation on the horizontal/ diagonal axis (where the horizontal axis is 
+primary axis and the vertical axis is secondary axis) there is a full twist and half completed. Look 
+for the rotation so that the head goes down and under while the hips go over the horizon. 
+ 
+Rodeo 7: The takeoff is initiated both vertically, upwards and to the side which starts a tilted primary 
+rotation off of the vertical axis to 180 degrees and moves into the free position (back is facing 
+downhill). The upper body leads and lower body follows then continues to rotate 540 degrees. The 
+skier then flexes and prepares for the landing. 
+ 
+7. Grabs:  
+GRABS (‘G’) shall be assigned to any grabs on ski(s).  
+ 
+Safety: The body in Puck Position, a hand come and holds the same side ski, just under the boot. 
+ 
+Liu Kan: It’s a safety grab with the free leg straight. One hand holds the same side of the ski, just 
+under the boot. At the same time the other leg is straight.  
+ 
+Japan: A hand goes from the back to take the opposite ski by its inside just behind the boot. 
+ 
+Mute: In a cross skis position, a hand takes the opposite ski near the front binding and pulls it up. 
+At the same time the back of the skier is in an extended position. 
+ 
+Tail: In a cross skis position, a hand takes a ski behind the binding and pushes it to the external 
+side.
+
+--- page 47 ---
+FIS International Freestyle Judging Handbook  November 2025  
+Page 47 
+Truck Driver: The body is in a Pike position with legs straight. Both hands pull the two ski tips with 
+one tip in each hand. It’s like the skier has a wheel in one’s hands. 
+ 
+8. Upright Manoeuvres 
+ 
+Spread Eagle: After take-off the outstretched arms and legs are extended out to the sides away 
+from the body. The legs should be spread to form a minimal angle of 90° when viewed from the 
+front. The skis should be parallel to each other (tails and tips equally spread) and 90° to the body. 
+The upper body should remain straight and upright without any noticeable forward bend at the 
+waist. 
+ 
+Zudnik: A Nordic type jump in which the upper body is bent roughly 90° at the waist by bringing 
+the upper body forward and down and the lower body forward and up. The toes rise up towards 
+and in the vicinity of the competitor's chin. The skis should remain close together and parallel and 
+the head remains upright. 
+ 
+Twister: The skis are twisted a minimum of 90° to the fall line. The skis should remain parallel to 
+each other, together and 90° to the body. The hands and arms may move to counter the twisting 
+of the skis. 
+ 
+ Daffy: After take-off, one leg should be brought up and forward while the other leg is simultaneously 
+brought backwards and up, resulting in a 180° split position in which the front ski is parallel to the 
+back ski, skis pointing straight up and down. 
+ 
+ Back Scratcher: The skis’ tails are brought back and up to a minimum angle of 90° to the horizontal 
+when viewed from the side, knees bent, hips forward and a slight backwards counter motion of the 
+upper body (shoulders). Legs must be together and skis parallel.  
+ 
+Mule Kick: The Mule Kick is a Back Scratcher with a 45° twist of the hip to the side. 
+ 
+ Iron Cross: This is a combination of the back scratcher and the tip cross. The skis are crossed in 
+a 90° angle while pointing to the ground at a 90° angle. The manoeuvre is held with the upper body 
+in the neutral position until the skis are extended to the landing hill. 
+ 
+Kosak: A Kosak is a combination of a Spread Eagle and a Zudnik. Arms can be held in different 
+ways; in front, between the skis, at the side, or a competitor may grab the ski tips. Legs are 
+simultaneously raised and spread in front and to the side of the body. Leg s should approach the 
+horizontal level and upper body is brought forward to counter inertial forces of legs being raised. 
+Skis should achieve a vertical position and be symmetrical. 
+ 
+*Multiple Manoeuvres: 
+Any combination of the above manoeuvres. These must exhibit the full requirements of each of the 
+individual manoeuvres included in the combination. 
+For multiple uprights the body must pass through the standard upright position (legs straight and 
+together, skis parallel) before performing the next manoeuvre.

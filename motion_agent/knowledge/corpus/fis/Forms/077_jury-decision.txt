@@ -1,0 +1,34 @@
+--- page 1 ---
+JURY DECISION  
+Competition / Manifestation / Veranstaltung 
+                            Codex
+Competition (Name/Place) 
+Manifestation (Nom/Lieu) 
+Veranstatlung (Name/Ort) 
+Event /Épreuve / Wettkampf Date / Date / Datum 
+MO/DM AE HP SX SS/BA
+Reasons for Jury Decision 
+Motifs de la  
+Gründe des  
+ICR References 
+Références RIS 
+Bezugsquellen IWO 
+Inputs for Jury Decision 
+Motifs de la  
+Gründe des  
+ICR References 
+Références RIS 
+Bezugsquellen IWO 
+DECISION 
+TD/ DT/ TDs Nat Vote 
+Head Judge/ du / des Nat Vote 
+Chief of Competition/ du / des Nat Vote 
+Date and time of submission 
+Date et heure du dépôt 
+Datum und Zeit der Zustellung 
+Date 
+Date 
+Datum 
+Signature of TD 
+Signature de l'auteur de la DT 
+Unterschrift des TD
