@@ -4,9 +4,10 @@
 MoBL-ARMS is a right-arm model (clavicle/scapula/GH complex, 50 Millard muscles).
 It cannot replace Rajagopal full-body IK. Instead we:
 
-1. Build virtual marker trajectories from solved Rajagopal body transforms
-2. Run OpenSim IK on MoBL-ARMS (right), then again on mirrored markers (left)
-3. Append musculotendon path polylines into each motion frame
+1. Build bone-relative marker trajectories from solved Rajagopal bodies
+2. Run MoBL IK (right), then mirrored markers (left)
+3. Keep only arm-line muscles that stay near the solved bones
+4. Merge musculotendon polylines into each motion frame
 
 Soft-fails: on any error the original motion is returned unchanged.
 """
@@ -28,40 +29,29 @@ MOBL_ROOT = Path(__file__).resolve().parents[1] / "third_party" / "MoBL-ARMS"
 MOBL_OSIM = MOBL_ROOT / "MOBL_ARMS_41.osim"
 MOBL_GEOMETRY = MOBL_ROOT / "Geometry"
 
-# Markers present on MoBL_ARMS_41.osim that we can drive from Rajagopal bodies.
-# Values are (raja_body, local_offset_in_body_frame_m).
-RIGHT_MARKER_SOURCES: dict[str, tuple[str, tuple[float, float, float]]] = {
-    "C7": ("torso", (-0.04, 0.18, 0.0)),
-    "R.Clavicle": ("torso", (0.02, 0.14, 0.06)),
-    "R.Shoulder": ("humerus_r", (0.0, 0.0, 0.0)),
-    "R.Bicep": ("humerus_r", (0.02, -0.14, 0.0)),
-    "R.Elbow.Lateral": ("ulna_r", (0.0, 0.0, 0.03)),
-    "R.Elbow.Medial": ("ulna_r", (0.0, 0.0, -0.03)),
-    "R.Forearm": ("radius_r", (0.02, -0.08, 0.0)),
-    "R.Radius": ("radius_r", (0.0, -0.12, 0.02)),
-    "R.Ulna": ("ulna_r", (0.0, -0.14, -0.02)),
-    "Handle": ("hand_r", (0.02, -0.04, 0.0)),
-}
-
-LEFT_BODY_MAP = {
-    "torso": "torso",
-    "humerus_r": "humerus_l",
-    "ulna_r": "ulna_l",
-    "radius_r": "radius_l",
-    "hand_r": "hand_l",
-}
+# Marker names must match MoBL_ARMS_41.osim. Clavicle omitted — no Raja body.
+MARKER_NAMES = (
+    "C7",
+    "R.Shoulder",
+    "R.Bicep",
+    "R.Elbow.Lateral",
+    "R.Elbow.Medial",
+    "R.Forearm",
+    "R.Radius",
+    "R.Ulna",
+    "Handle",
+)
 
 MARKER_WEIGHTS = {
-    "C7": 2.0,
-    "R.Clavicle": 1.0,
-    "R.Shoulder": 8.0,
-    "R.Bicep": 2.0,
-    "R.Elbow.Lateral": 6.0,
-    "R.Elbow.Medial": 6.0,
-    "R.Forearm": 2.0,
-    "R.Radius": 4.0,
-    "R.Ulna": 4.0,
-    "Handle": 5.0,
+    "C7": 1.5,
+    "R.Shoulder": 12.0,
+    "R.Bicep": 4.0,
+    "R.Elbow.Lateral": 10.0,
+    "R.Elbow.Medial": 10.0,
+    "R.Forearm": 4.0,
+    "R.Radius": 7.0,
+    "R.Ulna": 7.0,
+    "Handle": 9.0,
 }
 
 MOBL_MUSCLE_BASES = {
@@ -73,47 +63,118 @@ MOBL_MUSCLE_BASES = {
     "EDCI", "EDM", "EIP", "EPL", "EPB", "FPL", "APL",
 }
 
+# Scapula/thorax origins + finger/thumb tendons — fly without matching bones.
+EXCLUDE_MOBL_MUSCLES = {
+    "LAT1", "LAT2", "LAT3",
+    "TMAJ", "TMIN",
+    "SUBSC", "INFSP", "SUPSP",
+    "PECM2", "PECM3",
+    "FDSL", "FDSR", "FDSM", "FDSI",
+    "FDPL", "FDPR", "FDPM", "FDPI",
+    "EDCL", "EDCR", "EDCM", "EDCI",
+    "EDM", "EIP", "EPL", "EPB", "FPL", "APL",
+}
+
+KEEP_MOBL_MUSCLES = MOBL_MUSCLE_BASES - EXCLUDE_MOBL_MUSCLES
+
+MAX_MEDIAN_BONE_DIST_M = 0.075
+MAX_POINT_BONE_DIST_M = 0.14
+
+ARM_BODIES_R = ("torso", "humerus_r", "ulna_r", "radius_r", "hand_r")
+ARM_BODIES_L = ("torso", "humerus_l", "ulna_l", "radius_l", "hand_l")
+
 
 def available() -> bool:
     return MOBL_OSIM.is_file() and MOBL_GEOMETRY.is_dir()
 
 
-def _quat_rotate(q: list[float] | np.ndarray, v: np.ndarray) -> np.ndarray:
-    """Rotate vector v by quaternion q = [x, y, z, w]."""
+def _body_pq(frame_bodies: dict, name: str) -> tuple[np.ndarray, np.ndarray] | None:
+    b = frame_bodies.get(name)
+    if not b:
+        return None
+    p = np.asarray(b.get("p") or [0, 0, 0], dtype=np.float64)
+    q = np.asarray(b.get("q") or [0, 0, 0, 1], dtype=np.float64)
+    return p, q
+
+
+def _quat_rotate(q: np.ndarray, v: np.ndarray) -> np.ndarray:
     x, y, z, w = [float(c) for c in q]
     qv = np.array([x, y, z], dtype=np.float64)
     t = 2.0 * np.cross(qv, v)
     return v + w * t + np.cross(qv, t)
 
 
-def _body_point(frame_bodies: dict, body: str, local: tuple[float, float, float]) -> np.ndarray | None:
-    b = frame_bodies.get(body)
-    if not b:
-        return None
-    p = np.asarray(b.get("p") or [0, 0, 0], dtype=np.float64)
-    q = b.get("q") or [0, 0, 0, 1]
-    return p + _quat_rotate(q, np.asarray(local, dtype=np.float64))
+def _bone_axis(prox: np.ndarray, dist: np.ndarray) -> tuple[np.ndarray, float]:
+    d = dist - prox
+    length = float(np.linalg.norm(d))
+    if length < 1e-6:
+        return np.array([0.0, -1.0, 0.0]), 0.0
+    return d / length, length
+
+
+def _ortho_frame(axis: np.ndarray, hint: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Return (lateral, anterior) unit vectors given a distal bone axis."""
+    a = axis / max(float(np.linalg.norm(axis)), 1e-12)
+    h = hint - a * float(np.dot(hint, a))
+    if float(np.linalg.norm(h)) < 1e-6:
+        h = np.array([1.0, 0.0, 0.0]) - a * a[0]
+    if float(np.linalg.norm(h)) < 1e-6:
+        h = np.array([0.0, 0.0, 1.0]) - a * a[2]
+    lateral = h / max(float(np.linalg.norm(h)), 1e-12)
+    anterior = np.cross(lateral, a)
+    n = float(np.linalg.norm(anterior))
+    if n < 1e-6:
+        anterior = np.array([0.0, 0.0, 0.0])
+    else:
+        anterior = anterior / n
+    return lateral, anterior
 
 
 def markers_from_raja_frame(frame_bodies: dict, *, side: str) -> dict[str, np.ndarray]:
-    """Build MoBL marker world positions from a Rajagopal body frame."""
-    out: dict[str, np.ndarray] = {}
-    for marker, (body_r, local) in RIGHT_MARKER_SOURCES.items():
-        body = body_r if side == "r" else LEFT_BODY_MAP[body_r]
-        # Mirror local Z for the left arm so lateral/medial stay anatomically sided.
-        loc = local if side == "r" else (local[0], local[1], -local[2])
-        pt = _body_point(frame_bodies, body, loc)
-        if pt is None:
-            continue
-        if side == "l":
-            pt = pt.copy()
-            pt[2] = -pt[2]
-        out[marker] = pt
+    """Bone-relative MoBL markers from Rajagopal body origins (scale-invariant)."""
+    s = "r" if side == "r" else "l"
+    torso = _body_pq(frame_bodies, "torso")
+    hum = _body_pq(frame_bodies, f"humerus_{s}")
+    ulna = _body_pq(frame_bodies, f"ulna_{s}")
+    radius = _body_pq(frame_bodies, f"radius_{s}")
+    hand = _body_pq(frame_bodies, f"hand_{s}")
+    if not all((torso, hum, ulna, radius, hand)):
+        return {}
+
+    torso_p, torso_q = torso
+    hum_p, _ = hum
+    ulna_p, _ = ulna
+    radius_p, _ = radius
+    hand_p, _ = hand
+
+    hum_axis, hum_len = _bone_axis(hum_p, ulna_p)
+    fore_axis, fore_len = _bone_axis(ulna_p, hand_p)
+    # Prefer world +Z as lateral hint on the right, -Z on the left.
+    lat_hint = np.array([0.0, 0.0, 1.0 if s == "r" else -1.0])
+    hum_lat, hum_ant = _ortho_frame(hum_axis, lat_hint)
+    fore_lat, fore_ant = _ortho_frame(fore_axis, lat_hint)
+
+    # Elbow width ~ scaled by humeral length; forearm offsets similarly.
+    elbow_half = max(0.02, 0.12 * hum_len)
+    out = {
+        "C7": torso_p + _quat_rotate(torso_q, np.array([-0.04, 0.18, 0.0])),
+        "R.Shoulder": hum_p - hum_axis * (0.02 * max(hum_len, 0.2)),
+        "R.Bicep": hum_p + hum_axis * (0.45 * hum_len) + hum_ant * 0.02,
+        "R.Elbow.Lateral": ulna_p + hum_lat * elbow_half,
+        "R.Elbow.Medial": ulna_p - hum_lat * elbow_half,
+        "R.Forearm": ulna_p + fore_axis * (0.40 * fore_len) + fore_ant * 0.015,
+        "R.Radius": radius_p + fore_axis * (0.55 * fore_len) + fore_lat * 0.015,
+        "R.Ulna": ulna_p + fore_axis * (0.70 * fore_len) - fore_lat * 0.015,
+        "Handle": hand_p + fore_axis * 0.03,
+    }
+    if side == "l":
+        # Drive the right-handed MoBL model with a sagittal mirror.
+        out = {k: np.array([v[0], v[1], -v[2]], dtype=np.float64) for k, v in out.items()}
     return out
 
 
 def _write_trc(path: Path, times: list[float], targets: list[dict[str, np.ndarray]], fps: float) -> None:
-    names = list(RIGHT_MARKER_SOURCES)
+    names = list(MARKER_NAMES)
     rows = [
         f"PathFileType\t4\t(X/Y/Z)\t{path.name}",
         "DataRate\tCameraRate\tNumFrames\tNumMarkers\tUnits\tOrigDataRate\tOrigDataStartFrame\tOrigNumFrames",
@@ -169,6 +230,35 @@ def _read_mot(path: Path) -> tuple[list[str], np.ndarray, np.ndarray]:
     return labels, times, values
 
 
+def _segment_distances(points: np.ndarray, origins: list[np.ndarray]) -> np.ndarray:
+    if not origins:
+        return np.full(len(points), 1e3)
+    O = np.stack(origins)
+    d = np.linalg.norm(points[:, None, :] - O[None, :, :], axis=-1).min(axis=1)
+    if len(origins) < 2:
+        return d
+    seg_d = np.empty(len(points))
+    for i, p in enumerate(points):
+        best = 1e9
+        for a, b in zip(origins, origins[1:]):
+            ab = b - a
+            denom = float(np.dot(ab, ab))
+            t = 0.0 if denom < 1e-12 else float(np.clip(np.dot(p - a, ab) / denom, 0.0, 1.0))
+            best = min(best, float(np.linalg.norm(p - (a + t * ab))))
+        seg_d[i] = best
+    return np.minimum(d, seg_d)
+
+
+def _body_origins(frame_bodies: dict, names: tuple[str, ...]) -> list[np.ndarray]:
+    out: list[np.ndarray] = []
+    for name in names:
+        b = frame_bodies.get(name)
+        if not b:
+            continue
+        out.append(np.asarray(b.get("p") or [0, 0, 0], dtype=np.float64))
+    return out
+
+
 def _muscle_paths_from_mot(
     model_path: Path,
     mot_path: Path,
@@ -201,6 +291,9 @@ def _muscle_paths_from_mot(
         paths: list[dict[str, Any]] = []
         for mi in range(muscles.getSize()):
             muscle = muscles.get(mi)
+            base = muscle.getName()
+            if base not in KEEP_MOBL_MUSCLES:
+                continue
             pts_set = muscle.getGeometryPath().getPathPointSet()
             points = []
             for pi in range(pts_set.getSize()):
@@ -213,9 +306,42 @@ def _muscle_paths_from_mot(
                     pt[2] = -pt[2]
                 points.append([round(c, 4) for c in pt])
             if len(points) >= 2:
-                paths.append({"name": f"{muscle.getName()}{name_suffix}", "points": points})
+                paths.append({"name": f"{base}{name_suffix}", "points": points})
         per_frame.append(paths)
     return per_frame
+
+
+def _filter_paths_near_bones(
+    paths_per_frame: list[list[dict[str, Any]]],
+    frames: list[dict],
+    *,
+    side: str,
+) -> tuple[list[list[dict[str, Any]]], list[str]]:
+    body_names = ARM_BODIES_R if side == "r" else ARM_BODIES_L
+    sample_idx = list(range(0, len(frames), max(1, len(frames) // 20)))
+    scores: dict[str, list[tuple[float, float]]] = {}
+    for i in sample_idx:
+        origins = _body_origins(frames[i].get("bodies") or {}, body_names)
+        idx = min(i, len(paths_per_frame) - 1)
+        for muscle in paths_per_frame[idx]:
+            pts = np.asarray(muscle.get("points") or [], dtype=np.float64)
+            if len(pts) < 2:
+                continue
+            dist = _segment_distances(pts, origins)
+            scores.setdefault(muscle["name"], []).append((float(np.median(dist)), float(np.max(dist))))
+
+    keep: set[str] = set()
+    dropped: list[str] = []
+    for name, vals in scores.items():
+        med = float(np.mean([v[0] for v in vals]))
+        mx = float(np.mean([v[1] for v in vals]))
+        if med <= MAX_MEDIAN_BONE_DIST_M and mx <= MAX_POINT_BONE_DIST_M:
+            keep.add(name)
+        else:
+            dropped.append(f"{name}(med={med:.3f},max={mx:.3f})")
+
+    filtered = [[m for m in frame_paths if m["name"] in keep] for frame_paths in paths_per_frame]
+    return filtered, sorted(dropped)
 
 
 def enrich_opensim_motion(
@@ -235,6 +361,17 @@ def enrich_opensim_motion(
     if not frames:
         return motion
 
+    for frame in frames:
+        muscles = frame.get("muscles") or []
+        frame["muscles"] = [
+            m
+            for m in muscles
+            if not (
+                (str(m.get("name", "")).endswith("_r") or str(m.get("name", "")).endswith("_l"))
+                and str(m.get("name", ""))[:-2] in MOBL_MUSCLE_BASES
+            )
+        ]
+
     work_dir = Path(work_dir)
     work_dir.mkdir(parents=True, exist_ok=True)
     times = [float(f.get("time", 0.0)) for f in frames]
@@ -247,13 +384,13 @@ def enrich_opensim_motion(
         import opensim as osim  # noqa: F401
 
         osim.ModelVisualizer.addDirToGeometrySearchPaths(str(MOBL_GEOMETRY))
-        # Ensure model loads once (also upgrades XML in-memory).
         _ = osim.Model(str(MOBL_OSIM))
     except Exception:
         LOG.exception("OpenSim failed to load MoBL-ARMS")
         return motion
 
     merged_counts = {"r": 0, "l": 0}
+    dropped_all: list[str] = []
     try:
         for side, suffix, mirror in (("r", "_r", False), ("l", "_l", True)):
             targets = [markers_from_raja_frame(f.get("bodies") or {}, side=side) for f in frames]
@@ -263,42 +400,20 @@ def enrich_opensim_motion(
             trc = work_dir / f"mobl-markers-{side}.trc"
             mot = work_dir / f"mobl-ik-{side}.mot"
             _write_trc(trc, times, targets, fps)
-            # Fresh copy so OpenSim does not mutate the vendored file.
             model_copy = work_dir / f"MOBL_ARMS_41_{side}.osim"
             shutil.copy2(MOBL_OSIM, model_copy)
             _run_mobl_ik(model_copy, trc, mot, times)
             paths = _muscle_paths_from_mot(model_copy, mot, name_suffix=suffix, mirror_z=mirror)
-            if len(paths) != len(frames):
-                # Resample by nearest time if OpenSim dropped frames.
-                LOG.warning(
-                    "MoBL side=%s frame mismatch mot=%d motion=%d — nearest-neighbour stitch",
-                    side,
-                    len(paths),
-                    len(frames),
-                )
+            paths, dropped = _filter_paths_near_bones(paths, frames, side=side)
+            dropped_all.extend(dropped)
             for i, frame in enumerate(frames):
                 idx = min(i, len(paths) - 1)
-                existing = list(frame.get("muscles") or [])
-                existing = [
-                    m
-                    for m in existing
-                    if not (
-                        str(m.get("name", "")).endswith(suffix)
-                        and str(m.get("name", ""))[: -len(suffix)] in MOBL_MUSCLE_BASES
-                    )
-                ]
-                existing.extend(paths[idx])
-                frame["muscles"] = existing
+                frame["muscles"] = list(frame.get("muscles") or []) + paths[idx]
             merged_counts[side] = len(paths[0]) if paths else 0
 
         meta = motion.setdefault("metadata", {})
-        raja_count = int(meta.get("muscleCount") or 0)
-        mobl_total = merged_counts["r"] + merged_counts["l"]
-        # Recount from frame 0 for accuracy.
         if frames and frames[0].get("muscles"):
             meta["muscleCount"] = len(frames[0]["muscles"])
-        else:
-            meta["muscleCount"] = raja_count + mobl_total
         meta["moblArms"] = {
             "enabled": True,
             "model": "MOBL_ARMS_41",
@@ -306,10 +421,12 @@ def enrich_opensim_motion(
             "license": "non-commercial BSD 3-Clause (see kinetic-lens/third_party/MoBL-ARMS/NOTICE)",
             "rightMuscles": merged_counts["r"],
             "leftMuscles": merged_counts["l"],
+            "kept": sorted(KEEP_MOBL_MUSCLES),
+            "excluded": sorted(EXCLUDE_MOBL_MUSCLES),
+            "droppedProximity": dropped_all,
             "note": (
-                "Upper-limb musculotendon paths from MoBL-ARMS driven by Rajagopal "
-                "arm body poses. Shoulder complex (clavicle/scapula) is MoBL-native; "
-                "not a full skeletal graft into Rajagopal."
+                "Arm-line MoBL-ARMS paths only (deltoid/bi/tri/forearm). "
+                "Scapular/thoracic and finger muscles excluded; proximity-filtered."
             ),
         }
         warn = meta.get("warning") or ""
@@ -317,11 +434,14 @@ def enrich_opensim_motion(
         if extra.strip() not in warn:
             meta["warning"] = (warn + extra).strip()
         LOG.info(
-            "MoBL-ARMS enrich ok right=%d left=%d totalMuscles=%s",
+            "MoBL-ARMS enrich ok right=%d left=%d dropped=%d totalMuscles=%s",
             merged_counts["r"],
             merged_counts["l"],
+            len(dropped_all),
             meta.get("muscleCount"),
         )
+        if dropped_all:
+            LOG.info("MoBL proximity drops: %s", dropped_all)
     except Exception:
         LOG.exception("MoBL-ARMS enrich failed — keeping Rajagopal muscles only")
     return motion

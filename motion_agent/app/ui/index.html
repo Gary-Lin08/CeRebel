@@ -1861,6 +1861,9 @@
         meshViewer.controls && meshViewer.controls.dispose();
       } catch (_) { /* ignore */ }
       try {
+        disposeMuscleGroup(meshViewer.muscleGroup);
+      } catch (_) { /* ignore */ }
+      try {
         meshViewer.renderer && meshViewer.renderer.dispose();
       } catch (_) { /* ignore */ }
       try {
@@ -1902,8 +1905,136 @@
     function createMuscleGroup(THREE) {
       const group = new THREE.Group();
       group.name = "opensim-muscles";
-      group.userData.lines = new Map();
+      group.userData.meshes = new Map();
+      group.userData.sharedMaterial = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(0xd96b5c),
+        roughness: 0.42,
+        metalness: 0.02,
+        clearcoat: 0.22,
+        clearcoatRoughness: 0.55,
+        sheen: 0.35,
+        sheenRoughness: 0.65,
+        sheenColor: new THREE.Color(0xffc2b0),
+        transparent: true,
+        opacity: 0.55,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+      });
       return group;
+    }
+
+    function disposeMuscleGroup(group) {
+      if (!group) return;
+      const meshes = (group.userData && group.userData.meshes) || new Map();
+      meshes.forEach((mesh) => {
+        try { mesh.geometry && mesh.geometry.dispose(); } catch (_) { /* ignore */ }
+        if (mesh.parent) mesh.parent.remove(mesh);
+      });
+      meshes.clear();
+      try {
+        group.userData.sharedMaterial && group.userData.sharedMaterial.dispose();
+      } catch (_) { /* ignore */ }
+    }
+
+    function _dedupeMusclePoints(points, minDist) {
+      const out = [];
+      for (let i = 0; i < points.length; i += 1) {
+        const p = points[i] || [0, 0, 0];
+        const x = Number(p[0]) || 0;
+        const y = Number(p[1]) || 0;
+        const z = Number(p[2]) || 0;
+        if (!out.length) {
+          out.push([x, y, z]);
+          continue;
+        }
+        const prev = out[out.length - 1];
+        const dx = x - prev[0];
+        const dy = y - prev[1];
+        const dz = z - prev[2];
+        if (dx * dx + dy * dy + dz * dz >= minDist * minDist) out.push([x, y, z]);
+      }
+      return out;
+    }
+
+    function buildFusiformMuscleGeometry(THREE, points) {
+      const cleaned = _dedupeMusclePoints(points, 0.002);
+      if (cleaned.length < 2) return null;
+      const vectors = cleaned.map((p) => new THREE.Vector3(p[0], p[1], p[2]));
+      if (vectors.length === 2) {
+        // Insert a midpoint so Catmull-Rom has a belly.
+        vectors.splice(1, 0, vectors[0].clone().lerp(vectors[1], 0.5));
+      }
+      const curve = new THREE.CatmullRomCurve3(vectors, false, "centripetal", 0.5);
+      const length = Math.max(curve.getLength(), 0.02);
+      // Visual scale: real MTU paths are thin; fatten for readable fusiform belly.
+      const belly = THREE.MathUtils.clamp(0.010 + length * 0.028, 0.012, 0.024);
+      const tip = belly * 0.22;
+      const tubularSegments = Math.max(16, Math.min(48, (cleaned.length - 1) * 8));
+      const radialSegments = 7;
+
+      let frames;
+      try {
+        frames = curve.computeFrenetFrames(tubularSegments, false);
+      } catch (_) {
+        return null;
+      }
+
+      const ring = radialSegments + 1;
+      const pos = new Float32Array((tubularSegments + 1) * ring * 3);
+      const nrm = new Float32Array((tubularSegments + 1) * ring * 3);
+      const uvs = new Float32Array((tubularSegments + 1) * ring * 2);
+      const idx = [];
+      const p = new THREE.Vector3();
+      const normal = new THREE.Vector3();
+
+      for (let i = 0; i <= tubularSegments; i += 1) {
+        const u = i / tubularSegments;
+        // Fusiform belly: thick mid-belly, tapered tendons at both ends.
+        const bellyShape = Math.pow(Math.sin(Math.PI * u), 1.25);
+        const radius = tip + (belly - tip) * bellyShape;
+        curve.getPointAt(u, p);
+        const N = frames.normals[i];
+        const B = frames.binormals[i];
+        for (let j = 0; j <= radialSegments; j += 1) {
+          const v = j / radialSegments;
+          const angle = v * Math.PI * 2;
+          const cos = -Math.cos(angle);
+          const sin = Math.sin(angle);
+          normal.set(
+            cos * N.x + sin * B.x,
+            cos * N.y + sin * B.y,
+            cos * N.z + sin * B.z
+          ).normalize();
+          const vi = (i * ring + j) * 3;
+          pos[vi] = p.x + radius * normal.x;
+          pos[vi + 1] = p.y + radius * normal.y;
+          pos[vi + 2] = p.z + radius * normal.z;
+          nrm[vi] = normal.x;
+          nrm[vi + 1] = normal.y;
+          nrm[vi + 2] = normal.z;
+          const ui = (i * ring + j) * 2;
+          uvs[ui] = u;
+          uvs[ui + 1] = v;
+        }
+      }
+
+      for (let i = 0; i < tubularSegments; i += 1) {
+        for (let j = 0; j < radialSegments; j += 1) {
+          const a = i * ring + j;
+          const b = (i + 1) * ring + j;
+          const c = (i + 1) * ring + (j + 1);
+          const d = i * ring + (j + 1);
+          idx.push(a, b, d, b, c, d);
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      geometry.setAttribute("normal", new THREE.BufferAttribute(nrm, 3));
+      geometry.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
+      geometry.setIndex(idx);
+      geometry.computeBoundingSphere();
+      return geometry;
     }
 
     function applyMuscleFrame(group, frame, THREE) {
@@ -1914,43 +2045,38 @@
         return;
       }
       group.visible = true;
-      const lines = group.userData.lines || new Map();
-      group.userData.lines = lines;
+      const meshes = group.userData.meshes || new Map();
+      group.userData.meshes = meshes;
+      const material = group.userData.sharedMaterial;
+      const seen = new Set();
+
       muscles.forEach((muscle) => {
         const pts = muscle.points || [];
         if (!muscle.name || pts.length < 2) return;
-        const positions = new Float32Array(pts.length * 3);
-        for (let i = 0; i < pts.length; i += 1) {
-          const p = pts[i] || [0, 0, 0];
-          positions[i * 3] = p[0];
-          positions[i * 3 + 1] = p[1];
-          positions[i * 3 + 2] = p[2];
-        }
-        let line = lines.get(muscle.name);
-        if (!line) {
-          const geometry = new THREE.BufferGeometry();
-          geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-          const material = new THREE.LineBasicMaterial({
-            color: 0xe07a6a,
-            transparent: true,
-            opacity: 0.78,
-            depthWrite: false,
-          });
-          line = new THREE.Line(geometry, material);
-          line.name = muscle.name;
-          line.frustumCulled = false;
-          group.add(line);
-          lines.set(muscle.name, line);
+        seen.add(muscle.name);
+        const geometry = buildFusiformMuscleGeometry(THREE, pts);
+        if (!geometry) return;
+        let mesh = meshes.get(muscle.name);
+        if (!mesh) {
+          mesh = new THREE.Mesh(geometry, material);
+          mesh.name = muscle.name;
+          mesh.frustumCulled = false;
+          mesh.castShadow = false;
+          mesh.receiveShadow = false;
+          group.add(mesh);
+          meshes.set(muscle.name, mesh);
           return;
         }
-        const attr = line.geometry.getAttribute("position");
-        if (!attr || attr.count !== pts.length) {
-          line.geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-        } else {
-          attr.array.set(positions);
-          attr.needsUpdate = true;
-        }
-        line.geometry.computeBoundingSphere();
+        const prev = mesh.geometry;
+        mesh.geometry = geometry;
+        if (prev) prev.dispose();
+      });
+
+      meshes.forEach((mesh, name) => {
+        if (seen.has(name)) return;
+        if (mesh.geometry) mesh.geometry.dispose();
+        if (mesh.parent) mesh.parent.remove(mesh);
+        meshes.delete(name);
       });
     }
 
@@ -2063,6 +2189,7 @@
         renderer,
         controls,
         material: boneMaterial,
+        muscleGroup,
         onResize,
         setPlaying: (v) => { playing = !!v; },
       };
@@ -2323,6 +2450,7 @@
       if (!sportSkeleton) return;
       try { cancelAnimationFrame(sportSkeleton.raf); } catch (_) { /* ignore */ }
       try { sportSkeleton.removeResize && sportSkeleton.removeResize(); } catch (_) { /* ignore */ }
+      try { disposeMuscleGroup(sportSkeleton.muscleGroup); } catch (_) { /* ignore */ }
       try { sportSkeleton.renderer && sportSkeleton.renderer.dispose(); } catch (_) { /* ignore */ }
       const canvas = sportSkeleton.renderer && sportSkeleton.renderer.domElement;
       if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
@@ -2477,6 +2605,7 @@
         key,
         raf: 0,
         renderer,
+        muscleGroup,
         setFocus,
         removeResize: () => window.removeEventListener("resize", onResize),
       };
