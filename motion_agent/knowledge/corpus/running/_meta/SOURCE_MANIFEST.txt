@@ -1,0 +1,22 @@
+# running Sport Pack — Source Manifest
+# Authority: A+ federation | A clinical consensus | B+ reviews | B NGB coaching | C community (excluded from findings)
+# Retrieved for pack build: 2026-10-21
+
+id,category,title,publisher,url,format,authority,download_by_script,notes
+world_athletics_coaching,coaching,World Athletics Coaching Education (public resources),World Athletics,https://worldathletics.org/development/coaches,web,B,yes,Summarized technique frameworks; not verbatim manual paste.
+usatf_coaching,coaching,USA Track & Field coaching resources,USA Track & Field,https://www.usatf.org/coaches,web,B,yes,High-level running development; summarized.
+rrca_guidelines,coaching,Road Runners Club of America coach guidelines,RRCA,https://www.rrca.org/,web,B,yes,Community coaching standards; summarized.
+acsm_physical_activity,clinical,ACSM Physical Activity Guidelines,American College of Sports Medicine,https://www.acsm.org/education-resources/trending-topics-resources/physical-activity-guidelines,web,A,yes,Health and activity framing; not gait prescription.
+nhs_running_tips,clinical,NHS / public health running guidance,NHS (UK),https://www.nhs.uk/live-well/exercise/running-and-aerobic-exercises/,web,A,yes,General safety; summarized.
+heiderscheit_2011_step_rate,biomechanics,Effects of step rate manipulation on joint mechanics during running,Heiderscheit et al. / Med Sci Sports Exerc,https://pubmed.ncbi.nlm.nih.gov/21364480/,journal,B+,yes,Step rate ±5–10% loading themes; cite PMID.
+nielsen_2012_running_kinematics,biomechanics,Running injury and kinematics review themes,Nielsen et al. / BJSM-related corpus,https://pubmed.ncbi.nlm.nih.gov/,journal,B+,yes,Use specific open PMC articles in research_notes.
+pmc_running_systematic,biomechanics,Systematic reviews on running gait and injury risk factors,PubMed Central,https://pmc.ncbi.nlm.nih.gov/,html/pdf,B+,yes,Association language only; no diagnosis from video.
+gait_posture_running,biomechanics,Gait & Posture open articles on running kinematics,Elsevier / open mirrors,https://www.sciencedirect.com/journal/gait-and-posture,web,B+,yes,Cite individual OA papers when used.
+british_journal_sports_medicine,biomechanics,BJSM running-related reviews,British Journal of Sports Medicine,https://bjsm.bmj.com/,web,B+,yes,Summaries with URLs in research_notes.
+trendelenburg_clinical,clinical,Pelvic drop / hip abductor weakness clinical themes,Clinical orthopaedic literature via PubMed,https://pubmed.ncbi.nlm.nih.gov/,journal,A/B+,yes,Association not video diagnosis.
+neuromuscular_valgus_training,clinical,Neuromuscular training and knee valgus summaries,PMC reviews,https://pmc.ncbi.nlm.nih.gov/,journal,B+,yes,Adapt language to straight-line running context.
+opensim_body_tracking,method,OpenSim musculoskeletal modeling,OpenSim / SimTK,https://simtk.org/projects/opensim,software,B,n/a,Coordinate mapping reference; not coaching authority.
+ce_rebel_running_pack,product,CeRebel running pack architecture and phase map,CeRebel internal,internal: motion_agent/knowledge/corpus/running/,internal,B,n/a,Body-first findings; RunningPack detector TBD.
+
+# License note for commercial RAG corpus
+# Summaries only. Do not paste full copyrighted coaching manuals. Prefer PubMed/PMC open access and federation public pages with retrieved_at.

@@ -1,0 +1,177 @@
+# Freestyle — Coaching Cues (body-first)
+
+Pair with Findings/001_common_faults.txt by finding_id. Language is English primary; avoid guaranteed outcomes.
+Authority: B coaching consensus unless noted.
+
+---
+
+## Catch and pull cues
+
+cue_id: cue_elbow_leads
+linked_findings: fault_dropped_elbow, fault_pause_at_catch
+phase: swim_phase_catch
+text_en: "Set your elbow high before you pull — feel water on your forearm, not just your palm."
+body_focus: pulling elbow, forearm orientation proxy
+duration_hint: use for 4–8 stroke cycles then video check
+
+cue_id: cue_paddle_forearm
+linked_findings: fault_dropped_elbow, fault_sculling_outside
+phase: swim_phase_catch, swim_phase_pull
+text_en: "Imagine your forearm is a paddle attached at the elbow — don't break the wrist down first."
+body_focus: wrist-elbow ordering
+
+cue_id: cue_pull_pocket
+linked_findings: fault_wide_pull, fault_sculling_outside
+phase: swim_phase_pull
+text_en: "Pull in your pocket — elbow brushes your ribs on the way back."
+body_focus: lateral wrist path
+
+cue_id: cue_push_to_thigh
+linked_findings: fault_short_push, fault_upward_exit
+phase: swim_phase_push
+text_en: "Push all the way to your thigh before you exit — finish the stroke."
+body_focus: E_EXIT timing vs hip
+
+cue_id: cue_continuous_catch
+linked_findings: fault_pause_at_catch
+phase: swim_phase_catch
+text_en: "No dead spot — connect entry straight into the catch."
+body_focus: wrist speed continuity
+
+## Entry and alignment cues
+
+cue_id: cue_shoulder_width_entry
+linked_findings: fault_crossover_entry
+phase: swim_phase_entry
+text_en: "Enter in front of your shoulder, not your nose."
+body_focus: lateral entry position
+
+cue_id: cue_fingers_first
+linked_findings: fault_flat_hand_entry
+phase: swim_phase_entry
+text_en: "Spear the water fingers first — quiet entry."
+body_focus: hand orientation when visible
+
+cue_id: cue_long_neutral_spine
+linked_findings: fault_snaking_hips, fault_overreach_entry
+phase: swim_phase_entry, swim_phase_body_roll
+text_en: "Stay long from head to heels — reach forward without twisting."
+body_focus: pelvis-shoulder alignment
+
+## Recovery cues
+
+cue_id: cue_relaxed_recovery
+linked_findings: fault_low_elbow_recovery
+phase: swim_phase_recovery
+text_en: "Relax the recovery arm — elbow high, hand loose."
+body_focus: elbow-wrist height in recovery
+
+cue_id: cue_exit_thumb_hip
+linked_findings: fault_wide_exit
+phase: swim_phase_push
+text_en: "Thumb exits at your hip — stay tight to the body."
+body_focus: exit lateral position
+
+## Breathing cues
+
+cue_id: cue_one_goggle
+linked_findings: fault_excessive_head_lift
+phase: swim_phase_breathe
+text_en: "One goggle stays in the water when you breathe."
+body_focus: head yaw vs vertical lift
+
+cue_id: cue_breathe_early
+linked_findings: fault_late_breath_timing
+phase: swim_phase_breathe
+text_en: "Start turning your head as the recovery arm passes your face."
+body_focus: breath timing vs E_PULL_PEAK
+
+cue_id: cue_bubble_bubble_breathe
+linked_findings: fault_hold_breath_tension
+phase: swim_phase_breathe
+text_en: "Bubble-bubble-breathe — steady exhale underwater."
+body_focus: stroke rhythm regularity
+
+cue_id: cue_bilateral_balance
+linked_findings: fault_asymmetric_cycle_timing
+phase: full_cycle
+text_en: "Breathe both sides in practice — balance the rhythm."
+body_focus: L/R cycle period
+
+## Rotation and kick cues
+
+cue_id: cue_roll_to_breathe
+linked_findings: fault_flat_swim, fault_excessive_head_lift
+phase: swim_phase_body_roll
+text_en: "Roll your hips with your shoulders — breathe into the roll."
+body_focus: shoulder tilt amplitude
+
+cue_id: cue_hip_whip_kick
+linked_findings: fault_bicycle_kick
+phase: swim_phase_kick
+text_en: "Kick from the hip — knees soft, ankles floppy like a whip."
+body_focus: knee flexion amplitude
+
+cue_id: cue_narrow_feet
+linked_findings: fault_wide_kick, fault_snaking_hips
+phase: swim_phase_kick
+text_en: "Keep kicks small and inside your body shadow."
+body_focus: ankle lateral separation
+
+cue_id: cue_kick_steady
+linked_findings: fault_surface_kick_splash
+phase: swim_phase_kick
+text_en: "Kick in the water, not on top of it — steady rhythm."
+body_focus: ankle depth proxy
+
+## Tempo and rhythm cues
+
+cue_id: cue_metronome_stroke
+linked_findings: fault_asymmetric_cycle_timing, fault_double_peaked_pull
+phase: full_cycle
+text_en: "Same beat every stroke — enter, catch, pull, finish."
+body_focus: cycle period stability
+
+cue_id: cue_slower_to_learn
+linked_findings: fault_pause_at_catch, fault_dropped_elbow
+phase: full_cycle
+text_en: "Slow the hands to learn the catch — speed comes after shape."
+body_focus: reduce SPM temporarily
+audience: youth, beginners
+
+## Shoulder-friendly language (non-medical)
+
+cue_id: cue_stop_if_pinch
+linked_findings: any shoulder-load pattern flags
+phase: any
+text_en: "If you feel pinching or sharp pain in the shoulder, stop and tell your coach — don't push through."
+body_focus: safety
+authority: A disclaimer tier — not a mechanics cue alone
+
+---
+
+## Cue delivery notes for CeRebel briefs
+
+- Prefer **one cue per finding** in automated briefs to avoid overload.
+- Match cue to detected phase window when timing data exists.
+- For open_water_sighting metadata, deprioritize head-lift cues during tagged sighting strokes.
+
+## V2 additions
+
+cue_id: cue_smooth_head_return
+linked_findings: fault_early_breath_drop, fault_excessive_head_lift
+phase: swim_phase_breathe
+text_en: "Return the head smooth — cheek to water, then eyes down."
+body_focus: head pitch after E_BREATHE
+
+cue_id: cue_quiet_exit_twist
+linked_findings: fault_thumb_first_exit_extreme, fault_wide_exit
+phase: swim_phase_push
+text_en: "Finish long — soft exit, no corkscrew elbow."
+body_focus: E_EXIT forearm orientation
+
+cue_id: cue_wake_up_hips
+linked_findings: fault_dead_hip_kick, fault_bicycle_kick
+phase: swim_phase_kick
+text_en: "Wake up the hips — small constant flutter from the hinges."
+body_focus: ankle oscillation / hip drive

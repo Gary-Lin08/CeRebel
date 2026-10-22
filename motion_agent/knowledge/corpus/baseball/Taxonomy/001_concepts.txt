@@ -1,0 +1,137 @@
+# Baseball Pitching — Concept Taxonomy (v1, UI-aligned)
+
+## Primary concepts
+
+concept_id: baseball_pitching
+label_en: Baseball pitching (overhand)
+definition: Cyclical throwing motion from rubber toward catcher; CeRebel analyzes body keypoints without ball track.
+synonyms_en: pitching, pitch delivery, windup delivery
+synonyms_zh: 棒球投球, 投手动作
+authority: B
+
+concept_id: pitch_phase_model_v1
+label_en: Six-phase UI pitch model
+definition: set → lift → stride → landing → release → follow; matches sport_analysis._baseball_window.
+authority: ProductLogic
+
+## UI phase concepts (exact ids)
+
+concept_id: phase_set
+label_en: Set
+label_zh: 预备
+ontology: baseball:phase_set
+body_focus: balance on rubber, minimal COM drift
+
+concept_id: phase_lift
+label_en: Leg lift
+label_zh: 抬腿
+ontology: baseball:phase_lift
+body_focus: drive knee lift, gather
+
+concept_id: phase_stride
+label_en: Stride
+label_zh: 跨步
+ontology: baseball:phase_stride
+body_focus: lead leg toward plate, separation window opens
+
+concept_id: phase_landing
+label_en: Landing
+label_zh: 前脚着地
+ontology: baseball:phase_landing
+body_focus: lead foot contact, bracing, separation at landing
+
+concept_id: phase_release
+label_en: Release
+label_zh: 出手
+ontology: baseball:phase_release
+body_focus: throwing-hand speed peak (release proxy)
+
+concept_id: phase_follow
+label_en: Follow-through
+label_zh: 随挥
+ontology: baseball:phase_follow
+body_focus: deceleration, arm across body
+
+## Measurement series (analysis board)
+
+concept_id: series_stride
+signal: lead–trail ankle AP separation (cm)
+phases: stride, landing
+
+concept_id: series_back_knee
+signal: knee_angle_trail (°)
+phases: stride, landing
+
+concept_id: series_front_knee
+signal: knee_angle_lead (°)
+phases: landing, release
+
+concept_id: series_separation
+signal: lumbar_rotation relative to start (°)
+phases: landing, release
+
+concept_id: series_throwing_hand
+signal: ||v(trail_wrist)|| (m/s)
+phases: release, follow
+
+## Finding concepts (stable ids)
+
+concept_id: finding_back_leg_soft
+code_alias: back-leg
+phases: stride, landing
+
+concept_id: finding_separation_low
+code_alias: separation
+phases: landing
+
+concept_id: finding_front_knee_collapse
+code_alias: front-knee
+phases: landing, release
+
+concept_id: finding_stride_short
+concept_id: finding_stride_long
+concept_id: finding_mer_insufficient
+concept_id: finding_glove_flyout
+concept_id: finding_head_pull
+concept_id: finding_pelvis_drift
+concept_id: finding_trunk_late_rotate
+concept_id: finding_arm_path_wide
+concept_id: finding_set_rush
+concept_id: finding_sport_mismatch_golf
+
+## Checkpoint concepts
+
+concept_id: cp_stride_adult_band
+concept_id: cp_stride_youth_band
+concept_id: cp_back_leg_drive
+concept_id: cp_separation_landing
+concept_id: cp_front_knee_brace
+concept_id: cp_mer_band
+concept_id: cp_trunk_sequence
+concept_id: cp_balance_set
+concept_id: cp_glove_side_stable
+concept_id: cp_head_stack
+concept_id: cp_pelvis_drift
+concept_id: cp_arm_path_efficiency
+
+## Workload concepts (youth)
+
+concept_id: pitch_smart_limits
+sources: mlb_pitch_smart, little_league_pitch_counts, baseball_canada_pitch_counts
+authority: A+ / B
+
+## Evidence concepts
+
+concept_id: evidence_pmc9950989
+label: Clinician's Guide to Baseball Pitching Biomechanics
+authority: A
+
+concept_id: evidence_obp_poi
+label: OpenBiomechanics POI dictionary
+authority: B+ (research NC-SA — not shipped data)
+
+## Out of scope v1
+
+concept_id: NOT_ball_release_3d
+concept_id: NOT_pitch_type
+concept_id: NOT_strike_zone

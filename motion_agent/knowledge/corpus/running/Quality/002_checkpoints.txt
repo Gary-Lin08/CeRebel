@@ -1,0 +1,50 @@
+# Running Gait — Quality Checkpoints
+
+Each checkpoint references phase_id(s), a measurable signal (series_id), a rule summary, failure finding_id,
+and evidence authority level. Thresholds are product heuristics for noisy monocular capture — not clinical cutoffs.
+
+| checkpoint_id | phase(s) | series/signal | rule (summary) | fail→finding_id | evidence | audience |
+|---------------|----------|---------------|----------------|-----------------|----------|----------|
+| cp_contact_under_com_adult | contact, loading | overstride_proxy | foot not markedly ahead of pelvis at E_IC (adult band) | overstride | B+ | adult |
+| cp_contact_under_com_youth | contact, loading | overstride_proxy | widened tolerance vs adult; flag only extreme reach | overstride | B+ | youth |
+| cp_cadence_with_reach | clip-level | cadence + overstride | cadence < ~155 spm AND overstride proxy fail | low_cadence_overstride | B+ | adult |
+| cp_vertical_oscillation | flight, midstance | vertical_oscillation | pelvis range per cycle above band vs clip self-baseline or cohort heuristic | excessive_bounce | B+ | adult |
+| cp_trunk_stack_neutral | midstance | trunk_lean | trunk too upright or leaning back at midstance (sagittal) | trunk_lean_back | B+ | adult |
+| cp_trunk_fwd_excess | propulsion | trunk_lean | excessive flexion from hip not ankle lean | trunk_lean_excess_fwd | B | adult |
+| cp_pelvis_level | midstance | hip_drop | pelvis obliquity > conservative threshold (~5–8° proxy) | hip_drop | A/B+ | adult |
+| cp_crossover | contact | crossover_proxy | foot crosses midline toward contralateral side | crossover_gait | B+ | adult |
+| cp_knee_valgus_visible | loading, midstance | knee frontal angle | inward knee angle visible on frontal/oblique capture | knee_valgus_load | B+ | adult |
+| cp_ankle_compliance | contact, loading | ankle_dorsiflexion | very low dorsiflexion / stiff-looking land (heuristic) | stiff_ankle_landing | B | adult |
+| cp_arm_symmetry | swing, flight | arm_swing_range | \|ROM_L - ROM_R\| above band | arm_swing_asymmetry | B | adult |
+| cp_trunk_rotation_band | propulsion, swing | trunk_rotation | yaw amplitude above band for pace context | excessive_trunk_rotation | B+ | adult |
+| cp_swing_clearance | swing, flight | knee_flex_swing | low knee lift; feet scrape path (scissor) | scissor_kick | B | adult |
+| cp_stride_time_symmetry | clip-level | stride_time L/R | \|T_L - T_R\| / mean > ~8–10% sustained | stride_asymmetry | B+ | adult |
+| cp_stride_time_symmetry_youth | clip-level | stride_time L/R | widened asymmetry band U14 | stride_asymmetry | B+ | youth |
+
+## Notes on measurement
+
+**overstride_proxy**: horizontal distance from pelvis center to ankle at E_IC, normalized by leg length estimate
+(hip–ankle segment) when scale unknown — use ratio not absolute cm in product copy.
+
+**cadence**: steps per minute from bilateral ic events; require ≥4 ic events for stable estimate.
+
+**vertical_oscillation**: peak-to-peak pelvis vertical displacement per stride; self-baseline preferred when
+athlete has ≥6 cycles in clip.
+
+**hip_drop**: difference in hip height stance vs swing side at midstance; frontal camera preferred.
+
+**crossover_proxy**: ankle x-position medial to contralateral hip landmark; rear-view camera preferred.
+
+## Checkpoint pass semantics
+
+v1 does not sum checkpoints into a 0–100 score. Coach UX may show “focus area” = highest-severity failed
+checkpoint with matching finding card.
+
+## Evidence citations (summary)
+
+- Step rate and joint loading: Heiderscheit et al., *Med Sci Sports Exerc* 2011 (B+).
+- Braking and foot strike position themes: systematic reviews on running kinematics (B+).
+- Hip drop and pelvic stability: clinical and biomechanical literature on frontal plane control (A/B+).
+- Arm swing asymmetry: coaching and biomechanics reviews on economy (B).
+
+Full URLs in `_meta/SOURCE_MANIFEST.txt` and `_meta/research_notes.txt`.

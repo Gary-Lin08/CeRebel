@@ -1,0 +1,159 @@
+# Snowboarding — Training and Practice Structure
+# Authority: B (instructor / NGB progression patterns); not a substitute for on-snow certification
+# Audience tags: youth | adult | team_clinic | recreational
+
+================================================================================
+PURPOSE
+================================================================================
+
+This file describes how to organize practice sessions that align with CeRebel phase models and finding cards.
+It supports coaches, school teams, and recreational riders building repeatable reps for video analysis.
+It does not prescribe competition periodization for FIS calendars — see fis/ for event rules.
+
+================================================================================
+SESSION TEMPLATE — RECREATIONAL HALF DAY (2–3 hours on snow)
+================================================================================
+
+Block 1 — Warm-up and mobility (15 min, flat or gentle green)
+- Boot walk, ankle circles, squat holds (drill_wall_squat_boots).
+- One slow traverse each direction focusing on checkpoint_athletic_flex_traverse.
+- Safety: spacing on cat tracks; never block lift lines.
+
+Block 2 — Skill theme: alpine linked turns (45–60 min)
+- Theme example: "quiet upper body" (fault_shoulder_leads_turn).
+- Progression: garland speed bleed → j-turn lead press → 6 linked turns on green.
+- Video: one follow-cam clip per rider for CeRebel review (optional).
+- Rest: 5 min hydration each 30 min cold exposure.
+
+Block 3 — Skill theme: air basics (30–45 min, park or small jump per ability)
+- Prerequisites: helmet, terrain park etiquette, coach sign-off for jump features.
+- Ladder: compress_extend_flat → absorb_roller → straight_air_shape (Coaching/002_drills).
+- Stop ladder on stiff landing finding or rider fatigue.
+
+Block 4 — Free ride / integration (30 min)
+- Apply morning theme on easy blue; no new skills introduced.
+- Debrief: one cue per rider from automated or coach observation.
+
+Youth modification:
+- Shorter park block; emphasize speed control and landing absorption over air time.
+- Adult-to-youth ratio per resort policy (often 1:6 beginner, tighter for park).
+
+================================================================================
+SESSION TEMPLATE — TEAM CLINIC (8–12 athletes, 3 hours)
+================================================================================
+
+Station rotation (15 min × 3 stations × 2 rounds = 90 min core)
+
+Station A — Alpine initiation (coach at fall line view)
+- drill_j_turn_lead_press
+- drill_hip_lead_cone
+- Metrics: fault_no_lead_load, fault_shoulder_leads_turn
+
+Station B — Turn shape and completion (coach at side view)
+- drill_railroad_tracks
+- drill_straight_glide_reset
+- Metrics: fault_upright_skid, fault_stuck_in_turn
+
+Station C — Jump fundamentals (jump coach + park flagger)
+- drill_compress_extend_flat
+- drill_absorb_roller
+- drill_two_foot_stick (flat) before any kicker
+- Metrics: fault_no_preload, fault_stiff_leg_landing
+
+Full-group debrief (20 min):
+- Show one anonymized clip; map visible phase scrub bar to athlete experience.
+- Assign one homework cue + one drill from Coaching/ for next session.
+
+Equipment check (10 min at start):
+- Helmets for park; bindings visually inspected; riders confirm leash policy where required.
+
+================================================================================
+PROGRESSION LADDER — ALPINE (skill levels, not ages)
+================================================================================
+
+Level 1 — Wedge / sideslip control
+- Phases emphasized: traverse, completion
+- Findings often: fault_locked_legs_traverse, fault_rushed_entry (low severity)
+- Avoid: aggressive apex lean cues
+
+Level 2 — Basic linked skidded turns
+- Phases: full alpine chain at low speed
+- Findings: fault_upright_skid (learning), fault_shoulder_leads_turn
+
+Level 3 — Dynamic skidded turns on blue terrain
+- Phases: transition quality gains weight
+- Findings: fault_hoppy_transition, fault_straight_leg_apex
+
+Level 4 — Carving introduction (optional track)
+- Requires appropriate terrain; still body-proxy only in product
+- Findings: fault_no_lead_load, fault_head_misaligned
+
+Level 5 — Small park / rollers (parallel track with alpine)
+- Introduce family=air_jump on rollers before kickers
+
+================================================================================
+PROGRESSION LADDER — AIR / PARK
+================================================================================
+
+Step 0 — Flat ground mechanics (off-feature)
+- preload, extension, landing absorption dry patterns
+
+Step 1 — Rollers and berms without leave-ground intent
+
+Step 2 — Ollie on flat and small pop
+
+Step 3 — Straight air small kicker (Coaching drill_straight_air_shape)
+
+Step 4 — Grab introduction with RGB confirmation (not automated v1)
+
+Step 5 — Spin entry only with dedicated spin coach and feature progression
+
+Do not advance steps while fault_stiff_leg_landing or fault_one_foot_landing persists at current step.
+
+================================================================================
+DRYLAND / PRE-SEASON (optional, 30–45 min gym)
+================================================================================
+
+- Squat and lunge patterns for eccentric strength (general S&C, B — not sport-specific load prescription).
+- Balance board or bosu: quiet stance proxy for fault_arm_flail_traverse.
+- Video review classroom: phase IDs without on-snow risk.
+
+Youth: emphasize play-based balance; avoid maximal plyometric volume.
+
+================================================================================
+INTEGRATION WITH CeRebel PRODUCT
+================================================================================
+
+Recommended clip capture for analysis:
+- Alpine: side view, full turn, 60 fps when possible, 3–5 linked turns per clip.
+- Air: follow-cam showing approach, takeoff, landing; include 0.5 s recover post-land.
+- Metadata: family tag, stance if known, terrain difficulty, switch=true when applicable.
+
+Coach workflow:
+1. Rank findings by severity and phase alignment.
+2. Assign one cue (Coaching/001) and one drill (Coaching/002) per priority fault.
+3. Re-shoot after 20–40 min deliberate practice block.
+
+For FIS rule questions (course inspection, helmet standards, SBX testing protocol), use agent RAG over fis/ —
+not this Training file.
+
+================================================================================
+SAFETY AND SUPERVISION MINIMUMS
+================================================================================
+
+- Match terrain to ability; follow resort signage and park feature size labels.
+- Never practice inverted aerials without qualified progression environment.
+- Head injury protocol: stop riding after significant head impact; seek medical evaluation.
+- Group management: stop above rider, never below on narrow trails.
+
+See Docs/002_DISCLAIMER.txt for full safe-use language.
+
+================================================================================
+SAMPLE WEEK — IN-SEASON REC TEAM (adult, 3 on-snow days)
+================================================================================
+
+Day 1: Alpine theme — transitions (drill_silent_transition, drill_straight_glide_reset)
+Day 2: Air theme — preload and absorption ladder only
+Day 3: Integration free ride + one video review evening (indoor)
+
+Adjust volume for cold, altitude, and fatigue. Skip park day if stiff landing faults cluster in prior session.

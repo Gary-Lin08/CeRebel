@@ -1,0 +1,193 @@
+# Running Gait Biomechanics — Overview (evidence-aware summary)
+
+This document summarizes **open-access and widely cited research themes** for CeRebel body-first coaching.
+It does not prescribe individual medical treatment or guarantee injury prevention. Numeric values are
+**cohort ranges** from literature — not universal targets for every runner.
+
+Authority key: A+ federation/clinical consensus | A peer-reviewed clinical | B+ strong reviews |
+B coaching consensus | ProductLogic internal measurement definitions.
+
+---
+
+## 1. Stride cycle and phases (ProductLogic + B+)
+
+Running differs from walking by a **flight phase** when neither foot supports body weight. One stride cycle
+for a leg spans initial contact through loading, midstance, propulsion, toe-off, swing, and flight until the
+next contact on that leg.
+
+CeRebel maps phases to contact proxies from ankle kinematics (see Phases/001). Force-plate initial contact
+and video-based proxies can differ by tens of milliseconds — product copy must say **contact proxy**.
+
+---
+
+## 2. Cadence and stride length (B+)
+
+**Cadence** (steps per minute, spm) and **stride length** trade off at a given speed. Many recreational
+runners self-select cadences below elite distance runners, but wide healthy variation exists.
+
+Heiderscheit et al. (2011) manipulated step rate ±5–10% at constant speed and reported changes in hip and
+knee joint work and loading metrics — supporting that **increasing step rate can reduce some peak loading
+variables** without changing speed in controlled lab conditions. Authority: **B+**. This is not proof that
+every runner should increase cadence; abrupt changes can alter tissue stress elsewhere.
+
+Coaching implication (B): when overreaching is visible **and** cadence is low for context, consider gradual
+turnover cues rather than isolated “foot strike” changes.
+
+**Youth**: children often use higher step rates and shorter strides relative to height; adult cadence bands
+should not be applied to U12 without widened tolerances (authority B+, developmental gait literature themes).
+
+---
+
+## 3. Overstriding and braking (B+)
+
+**Overstriding** describes foot contact occurring noticeably **ahead** of the body’s center of mass (often
+estimated via pelvis or hip position in sagittal view). Biomechanics literature associates this pattern with
+**greater braking impulse** and vertical impact peaks in some cohorts — authority **B+** (multiple kinematic
+studies and reviews; not causal injury proof in all populations).
+
+CeRebel uses **overstride_proxy**: horizontal foot–pelvis relation at contact proxy, normalized when possible
+by leg segment length. Monocular scale error limits absolute centimeter claims.
+
+Foot-strike label (rearfoot vs midfoot) is **not** reliably determined from side-view 2D alone when ankle
+rotation is occluded — avoid diagnostic foot-strike coaching from low-confidence pose.
+
+---
+
+## 4. Vertical oscillation and running economy (B+)
+
+**Vertical oscillation** is the vertical displacement of the center of mass or pelvis each stride. Excessive
+bounce may increase energy cost in some runners (authority **B+** for economy relationships; individual
+optima vary by speed and anatomy).
+
+Product approach: flag high oscillation relative to **self-baseline** across strides in the same clip when
+possible, rather than a single universal centimeter norm.
+
+---
+
+## 5. Trunk posture and lean (B+ / B)
+
+Distance runners often display **slight forward lean** from the ankle with a relatively stable trunk segment
+during midstance. Excessive upright trunk or apparent **leaning back** at contact can coincide with overreach
+and braking in coaching analysis (B+ themes in form reviews; B for cue language).
+
+**Hunching** forward from the waist (flexed thoracic posture) is a separate pattern from ankle-driven lean;
+address with posture cues and mobility work in supervised settings (B coaching).
+
+---
+
+## 6. Hip drop and frontal-plane control (A/B+)
+
+**Pelvis obliquity** during stance — swing-side hip appearing lower — is discussed in clinical and
+biomechanical literature in relation to hip abductor function and iliotibial band **symptoms** in some
+studies. Authority **A/B+** for association themes; **not** a diagnosis from video alone.
+
+Measurement: best with rear or frontal camera; sagittal-only capture downgrades confidence for hip_drop findings.
+
+**Knee valgus** (dynamic knee inward motion) during loading appears in ACL and overuse **risk factor**
+research for cutting sports; in straight-line running, visible valgus may still matter for load distribution
+(B+). Product uses conservative visible proxy only when frontal/oblique camera supports it.
+
+---
+
+## 7. Crossover gait (B+)
+
+Feet landing **crossing the midline** (narrow base or “cross-over”) appear in some injured or fatigued
+runners in clinical observational reports (B/B+). Rear-view capture improves detection. May relate to hip
+stability and trail-leg path — coaching focuses on hip width and foot placement under hip, not aggressive
+manual foot forcing on treadmill.
+
+---
+
+## 8. Arm swing and trunk rotation (B+ / B)
+
+Arm swing counterbalances leg rotation and may reduce **torsional load** on the trunk. Asymmetric arm carriage
+can reflect compensation for leg injury history, handheld items, or habit (B coaching). Bilateral ROM comparison
+from shoulder landmarks is a product heuristic — not a full joint moment analysis.
+
+**Trunk rotation** in the transverse plane is normal; excessive amplitude relative to pace may correlate with
+inefficiency in some coaching frameworks (B). Do not pathologize moderate rotation in sprinting vs distance.
+
+---
+
+## 9. Stance compliance: knee and ankle (B+)
+
+During **loading**, knee flexion increases to absorb impact. Very **stiff** landing appearance (minimal knee
+flexion, stiff ankle) may increase impact peaks in some lab studies (B+). Conversely, excessive sinking without
+propulsion may indicate fatigue or strength limits (B coaching).
+
+Ankle **dorsiflexion** at contact varies with strike pattern and shoe heel drop — 2D pose error is large;
+stiff_ankle_landing finding ships at lower confidence unless clear in high-FPS sagittal video.
+
+---
+
+## 10. Asymmetry (B+)
+
+Left–right differences in **contact time**, stride length proxy, or joint ROM are common. Persistent large
+asymmetry may warrant coach review and clinical screening if pain present (A clinical consensus for pain,
+not for angle alone). Youth growth may produce temporary asymmetry (B+ developmental themes).
+
+Product threshold: stride time asymmetry roughly **>8–10%** sustained across multiple cycles triggers
+stride_asymmetry finding (conservative heuristic, authority B+).
+
+---
+
+## 11. OpenSim / body model coordinate glossary (ProductLogic)
+
+Series IDs used across Quality and Findings:
+
+| series_id | Typical coordinate / computation |
+|-----------|----------------------------------|
+| knee_flex_stance | knee flexion angle, stance leg |
+| knee_flex_swing | swing leg knee flexion for clearance |
+| trunk_lean | angle of thorax vs vertical in sagittal plane |
+| hip_drop | difference in hip landmark height L vs R at midstance |
+| trunk_rotation | thorax yaw relative to pelvis |
+| arm_swing_range | max–min shoulder flexion/extension per cycle |
+| overstride_proxy | ankle–pelvis horizontal offset at E_IC / leg length |
+| vertical_oscillation | peak–peak pelvis vertical position per cycle |
+| cadence | 60 / mean stride period from ic events |
+
+Joint torques, ground reaction forces, and muscle activations are **not** computed in v1 body-only pipeline.
+
+---
+
+## 12. Limitations of monocular body tracking (ProductLogic)
+
+- Scale and depth ambiguity affect stride length and overstride absolute values.
+- Frontal-plane knee and hip metrics require appropriate camera angle.
+- Fatigue within clip is not inferred unless cadence or ROM drift is modeled.
+- Footwear, surface (treadmill vs road), and speed strongly change kinematics — context metadata recommended.
+
+---
+
+## 13. Suggested sources (see SOURCE_MANIFEST)
+
+- Heiderscheit et al., 2011 — step rate and joint loading (PubMed / MSSE).
+- Nielsen et al., 2012 — habituation and running kinematics themes (B+).
+- Systematic reviews on running-related injury risk factors — use for association language only (A/B+).
+- World Athletics coaching education public materials — general technique frameworks (B).
+- ACSM and NHS physical activity guidelines — health framing, not form prescription (A).
+
+URLs and retrieval dates: `_meta/SOURCE_MANIFEST.txt`, `_meta/research_notes.txt`.
+
+---
+
+## 14. Run-likeness and sport mismatch (ProductLogic)
+
+Future RunningPack detector expects **periodic bilateral ankle signals** and flight intervals. Golf swing,
+baseball pitch, and tennis stroke patterns should not match run_likeness — pack refuses or falls back to
+general human motion. KB does not embed golf or pitch mechanics.
+
+---
+
+## 15. Adult vs youth norm summary table (reference bands, not prescriptions)
+
+| Variable | Adult recreational themes | Youth themes | Authority |
+|----------|---------------------------|--------------|-----------|
+| Cadence at easy jog | Often ~155–180 spm wide spread | Often higher spm, shorter stride | B+ |
+| Overstride proxy | Flag extreme reach ahead of pelvis | Widen tolerance U14 | B+ |
+| Vertical oscillation | Self-baseline compare preferred | Lower absolute amplitude common | B+ |
+| Hip drop proxy | Conservative >~5–8° when visible | Same logic, lower confidence | A/B+ |
+| Stride time asymmetry | >~8–10% sustained | Widen band U14 | B+ |
+
+Never present this table as medical clearance to train.

@@ -1,0 +1,199 @@
+# Boxing Shadowboxing — Checkpoint Catalog
+# Format: checkpoint_id | phase | stance | body signal | pass heuristic | fail → finding | authority
+
+================================================================================
+STANCE / BASE
+================================================================================
+
+checkpoint_stance_width
+  phase: stance
+  stance: orthodox, southpaw
+  signal: medial-lateral ankle separation normalized by shoulder width
+  pass: athletic base — roughly shoulder-width to slightly wider; rear heel light but not fully crossed over lead
+  fail_low: ankles closer than ~0.65× shoulder width with unstable sway → fault_narrow_stance
+  fail_cross: lead foot crosses past rear midline during prep → fault_feet_crossed
+  authority: B (coaching consensus)
+  youth: slightly wider base may pass if knees soft and guard stable
+
+checkpoint_knee_flex_ready
+  phase: stance, guard
+  stance: orthodox, southpaw
+  signal: average knee flexion angle
+  pass: visible soft flex — not locked straight, not deep squat
+  fail: knees locked straight with upright rigid posture → fault_stiff_legs
+  authority: B
+
+checkpoint_weight_centered
+  phase: stance
+  stance: orthodox, southpaw
+  signal: COM horizontal position between ankle markers
+  pass: COM within central third of base; slight lead bias OK for orthodox jab setups
+  fail: COM over lead toe with rear heel high before any step → fault_over_lead_weight
+  authority: B
+
+================================================================================
+GUARD
+================================================================================
+
+checkpoint_hands_high
+  phase: guard, recovery
+  stance: orthodox, southpaw
+  signal: wrist height vs chin and sternum proxies
+  pass: both wrists at or above sternum; lead hand near cheek line in front view when visible
+  fail: either wrist below navel proxy between cycles → fault_hands_drop
+  authority: B
+
+checkpoint_elbows_in
+  phase: guard
+  stance: orthodox, southpaw
+  signal: elbow abduction angle from trunk in frontal/oblique view
+  pass: elbows within body silhouette — not flared wide like a T
+  fail: elbows markedly abducted with open ribs → fault_elbows_flared
+  authority: B
+
+checkpoint_chin_down
+  phase: guard, extension
+  stance: orthodox, southpaw
+  signal: head pitch proxy (chin toward sternum)
+  pass: slight tuck — not staring at ceiling during extension
+  fail: head tilted up exposing neck line during strike peak → fault_chin_up
+  authority: B+ (safety coaching consensus)
+
+================================================================================
+PREP / WEIGHT TRANSFER
+================================================================================
+
+checkpoint_hip_before_hand
+  phase: prep
+  stance: orthodox, southpaw
+  signal: timing of pelvis yaw rate vs striking wrist speed onset (rear hand and hooks)
+  pass: hip rotation or weight shift begins within ~80 ms (frame-adjusted) of hand leave guard on power punches
+  fail: E_EXTENSION_PEAK with no pelvis yaw and no weight shift on cross/hook → fault_arm_only_punch
+  authority: B+
+
+checkpoint_jab_step_optional
+  phase: prep, footwork
+  stance: orthodox, southpaw
+  signal: lead foot advance before lead wrist peak on jab
+  pass: either in-place jab with small weight shift OR step lands before or at extension peak (style-dependent)
+  fail: large lean without foot adjustment losing base → fault_reaching_jab
+  authority: B
+
+checkpoint_shoulder_relax
+  phase: prep
+  stance: orthodox, southpaw
+  signal: lead shoulder elevation vs guard (hunching)
+  pass: shoulders not pinned to ears before strike
+  fail: exaggerated shrug before extension → fault_tense_shoulders
+  authority: B
+
+================================================================================
+EXTENSION / STRIKE
+================================================================================
+
+checkpoint_elbow_track_straight
+  phase: extension
+  strike_type: jab, cross
+  signal: elbow path relative to wrist — frontal/oblique
+  pass: elbow travels roughly with wrist; no large lateral chicken-wing at full extension
+  fail: elbow flares outward past trunk line at peak → fault_elbow_flare_straight
+  authority: B
+
+checkpoint_hook_elbow_angle
+  phase: extension
+  strike_type: hook
+  signal: elbow flexion at E_EXTENSION_PEAK
+  pass: bent elbow hook shape — not fully extended slap
+  fail: hook thrown with near-straight arm → fault_hook_arm_extended
+  authority: B
+
+checkpoint_uppercut_path
+  phase: extension
+  strike_type: uppercut
+  signal: wrist vertical rise from loaded hips
+  pass: hand rises from hip/knee line with bent elbow; shoulder not fully internally rotated into neck
+  fail: arm-only upward swing without knee/hip extension hint → fault_arm_only_uppercut
+  authority: B+
+
+checkpoint_non_striking_hand_home
+  phase: extension
+  stance: orthodox, southpaw
+  signal: non-striking wrist remains in guard zone during single-shot focus reps
+  pass: rear hand stays at cheek when jab extends (beginner model); advanced may slip rear hand slightly — flag low severity only if guard opens toward target
+  fail: rear hand drops to waist during jab peak → fault_rear_hand_drop_on_jab
+  authority: B
+
+================================================================================
+RECOIL / RECOVERY
+================================================================================
+
+checkpoint_recoil_speed
+  phase: recoil
+  stance: orthodox, southpaw
+  signal: time from E_EXTENSION_PEAK to wrist back inside guard band
+  pass: retraction within ~300 ms at 60 fps for beginner shadow (scale with fps)
+  fail: hand lingers extended >500 ms before return → fault_slow_recoil
+  authority: B
+
+checkpoint_pull_not_push_return
+  phase: recoil
+  signal: elbow flexion increases as wrist speed toward guard
+  pass: hand draws back along compact path
+  fail: wide looping return path past ear → fault_wide_recoil
+  authority: B
+
+checkpoint_guard_reset_between
+  phase: recovery
+  signal: E_GUARD_STABLE achieved before next E_PREP_START in combo drills
+  pass: at least 2 frames stable guard between distinct peaks in beginner combos
+  fail: next punch starts from waist level without reset → fault_combo_without_guard
+  authority: B
+
+================================================================================
+FOOTWORK
+================================================================================
+
+checkpoint_step_size_control
+  phase: footwork
+  signal: lead ankle displacement per step
+  pass: short adjusting steps — not lunging walk
+  fail: step length > ~1.2× shoulder width with rear foot drag → fault_overstep
+  authority: B
+
+checkpoint_pivot_rear_heel
+  phase: footwork, prep (cross/hook)
+  signal: rear foot rotation on cross (orthodox)
+  pass: rear heel lifts or pivots allowing hip turn on power straight
+  fail: planted flat rear foot with forced trunk twist only → fault_flat_rear_foot_cross
+  authority: B+
+
+================================================================================
+DEFENSE (SHADOW)
+================================================================================
+
+checkpoint_slip_without_hands_drop
+  phase: extension (slip variant)
+  signal: E_SLIP_PEAK with wrist heights
+  pass: hands remain at guard while head displaces laterally
+  fail: both hands drop during slip → fault_hands_drop_on_slip
+  authority: B
+
+checkpoint_roll_spine_flex
+  phase: prep, extension (roll variant)
+  signal: trunk flexion with lateral head offset
+  pass: knees flex; roll is curved not stiff waist bend only
+  fail: legs straight with excessive neck flexion only → fault_stiff_roll
+  authority: B
+
+================================================================================
+CAPTURE / METADATA
+================================================================================
+
+checkpoint_stance_tag_match
+  phase: all
+  signal: lead hand consistency with stance metadata
+  pass: orthodox → left wrist leads jab cycles when identifiable
+  fail: metadata mismatch → suppress handed findings; flag product warning only
+  authority: ProductLogic
+
+All checkpoints: prefer **unclear** over fail when camera angle invalidates signal (see Docs/001_ARCHITECTURE).

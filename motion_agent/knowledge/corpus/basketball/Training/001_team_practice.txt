@@ -1,0 +1,115 @@
+# Basketball Team Practice — Shooting Development (jump shot + free throw)
+# Authority: B (NGB/coaching structure) + B+ (motor learning). Summaries, not verbatim manuals.
+
+================================================================================
+PRACTICE DESIGN GOALS
+================================================================================
+
+1. **High-quality repetitions** with clear body focus (one checkpoint per block).
+2. **Separate jump shot and FT blocks** — different rhythm, different fatigue.
+3. **Film-friendly stations** for CeRebel capture (side + front angles when possible).
+4. **Youth-appropriate volume** — form and FT volume can exceed game-speed jump volume.
+
+================================================================================
+SAMPLE 90-MINUTE PRACTICE (HIGH SCHOOL VARSITY — ADULT BAND)
+================================================================================
+
+| block | time | focus | body checkpoint |
+|-------|------|-------|-----------------|
+| dynamic warm-up | 12 min | ankle/hip mobility, landing prep | soft two-foot hops |
+| form shooting | 15 min | set → release → hold | elbow under wrist plane |
+| FT routine | 10 min | same movie every rep | setup stillness + hold |
+| catch-and-shoot | 15 min | dip-rise-set timing | COM rise before release |
+| off-movement screens | 12 min | land balanced | symmetric landing flex |
+| competitive FT | 8 min | pressure routine | no rush in setup |
+| cool-down | 8 min | stretch, review film | — |
+
+Adjust total jump-shot attempts based on weekly game load; no single universal cap in this doc — follow school S&C policy.
+
+================================================================================
+YOUTH PRACTICE (12U EXAMPLE — SHORTENED)
+================================================================================
+
+| block | time | focus |
+|-------|------|-------|
+| warm-up | 10 min | movement games, no max hops |
+| form close to basket | 15 min | one-hand finish, guide hand open |
+| FT intro | 8 min | 4-step routine, hold finish |
+| spot shooting (no contest) | 12 min | feet paint, soft land |
+| small-sided games | 20 min | shooting optional, not tracked here |
+
+Emphasis: balance, routine, fun — avoid competitive "make X or run" during growth years without coach oversight.
+
+================================================================================
+STATION ROTATIONS (4 STATIONS × 4 MIN)
+================================================================================
+
+Station A — Form line (no jump): one-hand form finish drill, 8 reps each side.
+Station B — Dip-rise no shot: metronome dips, body-only.
+Station C — Free throw routine: breath + hold, 5 reps.
+Station D — Partner elbow check: set holds, verbal feedback.
+
+Film one rotation per athlete per week for CeRebel review (optional product workflow).
+
+================================================================================
+JUMP SHOT PROGRESSION (SKILL LADDER)
+================================================================================
+
+1. Set point and finish hold (no jump, no rim).
+2. Dip-rise with arm path (no ball).
+3. Form shot close to basket, 1-hand emphasis.
+4. Spot jump shot, open stance, no defense.
+5. Catch-and-shoot with passer; add light closeout.
+6. Game-speed reps with landing stick cue.
+
+Regression: if landing faults persist, return to Station B + landing mat work (Coaching/002 drill_landing_stick).
+
+================================================================================
+FREE THROW TEAM PROTOCOL
+================================================================================
+
+- Athletes document **personal routine step count** (e.g., bounce ×3, breath, set).
+- Team rule: no shot until setup stillness ≥1 s (coach whistle optional).
+- Track **body routine compliance** in film review, not just makes.
+- Under pressure: simulate timeout FTs with same routine — avoid shortening setup (fault_rushed_free_throw).
+
+Research note: routine consistency associates with lower variability in some FT kinematic studies (B+); not a guarantee of percentage.
+
+================================================================================
+PRE-GAME SHOOTING (20 MIN CAP TEMPLATE)
+================================================================================
+
+1. 5 min form close
+2. 5 min game spots (3–5 makes per spot, quality > quantity)
+3. 5 min FT with full routine
+4. 5 min one game-speed movement shot
+
+Avoid introducing new mechanics on game day; CeRebel clips should compare to prior practice baselines.
+
+================================================================================
+LOAD MANAGEMENT REMINDERS
+================================================================================
+
+- Jump shooting volume adds to daily jump load with rebounding and defense drills.
+- Communicate with S&C when athletes report knee/ ankle soreness — reduce contested jump reps.
+- This pack does not prescribe medical rest; refer to athletic trainer.
+
+================================================================================
+CAPTURE TIPS FOR COACHES USING CEREBEL
+================================================================================
+
+- Jump shot: film from **front** for elbow/guide hand; **side** for trunk and dip depth.
+- Free throw: front angle at line; include full routine in clip.
+- Clip length: routine start through landing or FT hold (see Phases/001).
+- Label session `variant=jump` or `variant=ft` for correct checkpoints.
+
+================================================================================
+SOURCES
+================================================================================
+
+USA Basketball youth development curriculum (summarized, B).
+FIBA Mini Basketball resource themes (B).
+Motor learning distributed practice reviews (B+).
+Team practice structures from open coaching education (B).
+
+See _meta/SOURCE_MANIFEST.txt for URLs and retrieval dates.

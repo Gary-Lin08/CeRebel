@@ -1,0 +1,204 @@
+# Boxing Sport Pack — Concept relations
+
+## Phase ordering (punch chain)
+
+relation: precedes
+from: B_GUARD
+to: B_PREP
+
+relation: precedes
+from: B_PREP
+to: B_EXTEND
+
+relation: precedes
+from: B_EXTEND
+to: B_RETRACT
+
+relation: precedes
+from: B_RETRACT
+to: B_RESET
+
+relation: precedes
+from: B_RESET
+to: B_GUARD
+
+## Footwork overlay (optional between guards)
+
+relation: precedes
+from: F_PLANT
+to: F_STEP
+
+relation: precedes
+from: F_STEP
+to: F_PIVOT
+
+relation: optional_between
+from: F_STEP
+to: punch_chain
+note: Footwork may occur before B_PREP on same clip.
+
+## Concept → phase mapping
+
+relation: maps_to
+from: concept guard_boxing
+to: phase B_GUARD
+
+relation: maps_to
+from: concept phase_extension
+to: phase B_EXTEND
+
+relation: maps_to
+from: concept phase_retraction
+to: phase B_RETRACT
+
+relation: maps_to
+from: concept footwork_step_in
+to: phase F_STEP
+
+relation: maps_to
+from: concept footwork_step_out
+to: phase F_STEP
+
+relation: maps_to
+from: concept footwork_pivot
+to: phase F_PIVOT
+
+## Punch type → phase chain
+
+relation: uses_chain
+from: punch_jab
+to: punch_phase_chain
+
+relation: uses_chain
+from: punch_cross
+to: punch_phase_chain
+
+relation: uses_chain
+from: shadowboxing
+to: punch_phase_chain
+
+## Finding → phase anchoring
+
+relation: anchored_in
+from: fault_guard_low_hands
+to: B_GUARD
+
+relation: anchored_in
+from: fault_jab_rear_hand_drop
+to: B_EXTEND
+
+relation: anchored_in
+from: fault_jab_no_retract
+to: B_RETRACT
+
+relation: anchored_in
+from: fault_jab_elbow_flare
+to: B_EXTEND
+
+relation: anchored_in
+from: fault_cross_no_hip
+to: B_PREP
+
+relation: anchored_in
+from: fault_cross_all_arm
+to: B_EXTEND
+
+relation: anchored_in
+from: fault_cross_no_retract
+to: B_RETRACT
+
+relation: anchored_in
+from: fault_stance_narrow
+to: B_GUARD
+
+relation: anchored_in
+from: fault_stance_weight_back
+to: B_GUARD
+
+relation: anchored_in
+from: fault_footwork_crossed
+to: F_STEP
+
+relation: anchored_in
+from: fault_footwork_heel_lift
+to: F_PIVOT
+
+relation: anchored_in
+from: fault_balance_sway
+to: F_STEP
+
+relation: anchored_in
+from: fault_posture_chin_up
+to: B_GUARD
+
+relation: anchored_in
+from: fault_shadow_rushed_reset
+to: B_RESET
+
+## Quality dimension → checkpoint
+
+relation: measured_by
+from: quality_guard_discipline
+to: checkpoint cp_guard_hands_high
+
+relation: measured_by
+from: quality_guard_discipline
+to: checkpoint cp_jab_rear_hand_home
+
+relation: measured_by
+from: quality_hip_drive
+to: checkpoint cp_cross_hip_drive
+
+relation: measured_by
+from: quality_base_balance
+to: checkpoint cp_com_over_base
+
+relation: measured_by
+from: quality_base_balance
+to: checkpoint cp_stance_base
+
+## Concept synonym expansion for retrieval
+
+relation: synonym_of
+from: hands up
+to: guard_boxing
+
+relation: synonym_of
+from: snap back
+to: phase_retraction
+
+relation: synonym_of
+from: shadow boxing
+to: shadowboxing
+
+relation: synonym_of
+from: lazy rear hand
+to: fault_dropped_rear_hand
+
+relation: synonym_of
+from: no hip rotation
+to: fault_all_arm_punch
+
+## Stance style → hand labels
+
+relation: defines_lead_hand
+from: stance_orthodox
+to: body_lead_wrist
+note: Left lead for default orthodox copy.
+
+relation: defines_lead_hand
+from: stance_southpaw
+to: body_rear_wrist
+note: Product mirrors; taxonomy keeps lead = jab side concept.
+
+## Evidence placeholders (build fills source ids)
+
+relation: supported_by
+from: quality_hip_drive
+to: source ngb_boxing_fundamentals_open
+authority: B+
+
+relation: supported_by
+from: youth_shadowboxing
+to: source youth_pa_guidelines_summary
+authority: B

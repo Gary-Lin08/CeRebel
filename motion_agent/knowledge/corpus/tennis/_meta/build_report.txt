@@ -1,0 +1,79 @@
+# Tennis Sport Pack — build report
+# Build agent run: 2026-10-21
+# Spec: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+## Summary
+
+Built complete English RAG corpus for sport_id=tennis. Body-first coaching for serve and groundstroke phases.
+No brain_plan or research_notes existed at build start; created _meta brain_plan and research_notes from spec
+and open-source tennis coaching/biomechanics themes. Registry TennisPack module not created (out of build scope).
+
+## Files written (indexed — under corpus/tennis/, excluding _meta)
+
+| path | role | approx_lines |
+|------|------|--------------|
+| Docs/001_ARCHITECTURE.txt | product architecture | 120 |
+| Docs/002_DISCLAIMER.txt | safety and limits | 65 |
+| Schema/001_ontology.txt | entity model | 95 |
+| Taxonomy/001_concepts.txt | concepts + synonyms | 110 |
+| Taxonomy/002_relations.txt | phase/finding relations | 95 |
+| Phases/001_phase_model.txt | serve + groundstroke phases | 130 |
+| Quality/001_quality_definition.txt | quality dimensions | 75 |
+| Quality/002_checkpoints.txt | checkpoint catalog | 95 |
+| Findings/001_common_faults.txt | 10 finding cards | 145 |
+| Coaching/001_cues.txt | feel cues | 85 |
+| Coaching/002_drills.txt | short drills | 115 |
+| Biomechanics/001_overview.txt | literature summary | 95 |
+| Training/001_team_practice.txt | practice + youth context | 95 |
+
+Total indexed .txt files: 13
+
+## Files written (_meta — excluded from RAG index)
+
+| path | role |
+|------|------|
+| _meta/pack_readme.txt | updated status complete |
+| _meta/SOURCE_MANIFEST.txt | sources and authority |
+| _meta/brain_plan.txt | ontology + phase + finding map |
+| _meta/research_notes.txt | researched facts with URLs |
+| _meta/review_report.txt | audit pass |
+| _meta/build_report.txt | this file |
+
+## Finding IDs shipped
+
+fault_serve_knee_lock
+fault_serve_toss_arm_drift
+fault_serve_shoulder_tilt_flat
+fault_serve_excessive_arch
+fault_serve_poor_decel
+fault_double_fault_rhythm_rush
+fault_groundstroke_all_arm
+fault_groundstroke_late_unit_turn
+fault_groundstroke_upright_recovery
+fault_groundstroke_wide_stance_stuck
+
+## Phase event IDs shipped
+
+Serve: S_READY, S_TOSS_RISE, S_TROPHY_LOAD, S_RACKET_DROP, S_DRIVE_UP, S_CONTACT_PROXY, S_DECEL
+Groundstroke: G_SPLIT, G_UNIT_TURN, G_LOAD, G_FORWARD_SWING, G_CONTACT_PROXY, G_FOLLOW, G_RECOVERY
+
+## Follow-ups (engineering)
+
+1. Implement TennisPack in motion_agent/sports/packs/ with serve vs groundstroke detect.
+2. Wire resolve_pack_session coach briefs to finding ranking.
+3. Optional PMC PDF ingest for specific review DOIs listed in SOURCE_MANIFEST.
+4. Extend ontology for volley/overhead when clips validated.
+
+## Index rebuild note
+
+Run knowledge index rebuild (default corpus path) after deploy so new tennis chunks enter local RAG.
+
+---
+## v2 depth pass — 2026-10-23
+
+Expanded Findings/001_common_faults.txt to 32 canonical fault_* cards (serve, FH/BH, shared GS, volley, split/recovery).
+Migrated fault_double_fault_rhythm_rush → fault_serve_rhythm_rush (legacy_id retained).
+Rewrote Coaching/001_cues.txt and Coaching/002_drills.txt for full fault coverage.
+Phases/001_phase_model.txt: added detector_events / fault_links per phase + V_* volley chain.
+Taxonomy/002_relations.txt: volley precedes + new fault anchors.
+Review: APPROVED_V2.

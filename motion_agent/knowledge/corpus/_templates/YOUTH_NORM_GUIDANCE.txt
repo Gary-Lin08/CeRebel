@@ -1,0 +1,40 @@
+# Youth vs adult coaching norms (cross-pack guidance)
+
+Use with `youth_note:` on finding cards and Quality checkpoints.
+Do NOT invent clinical cutoffs; prefer relative / prior-clip comparisons for youth.
+
+## Principles
+
+1. Prefer athlete-vs-self baselines over pro templates for ages under ~16.
+2. Down-weight absolute ROM depth faults (deep knee bend, full hip turn, extreme
+   shoulder turn) unless the athlete’s own prior clips show they can do it safely.
+3. Up-weight balance, rhythm, recovery, and load-sharing faults (stiff landing,
+   rushed tempo, arm-only patterns).
+4. Never frame findings as injury diagnosis. Youth soft-tissue and growth-plate
+   language belongs only in Docs/002_DISCLAIMER.txt referral copy.
+5. Pitch / throw sports: pitch-count and rest messaging is coaching policy (NGB
+   themes), not a medical prescription from video.
+
+## Per-sport emphasis (product v2)
+
+| Sport | Youth emphasis | Down-weight |
+|-------|----------------|-------------|
+| golf | tempo, posture hold, soft trail knee | elite shoulder-turn degrees |
+| baseball | stride balance, glove side, rest/count awareness | MER angle absolutes |
+| tennis | serve rhythm, split-step, recovery | trophy depth vs pros |
+| basketball | landing education, free-throw routine | dip depth vs NBA |
+| running | cadence relative to height, hip level | absolute overstride cm |
+| soccer | plant stability, approach rhythm | elite hip-speed norms |
+| swimming | continuous catch, breath timing | race-pace kick volume |
+| weightlifting | brace and path under light load | depth under fatigue |
+| yoga | balance foot placement, long spine | forcing heel-to-floor |
+| boxing (shadow) | guard + chin, reset between punches | power-shot volume |
+| volleyball | landing stiffness, approach rhythm | jump-height vs elite |
+| snowboarding | soft ankles, helmet/wrist framing | park progression pressure |
+| human | hinge vs squat pattern, single-leg quiet | “perfect” posture angles |
+
+## Card field
+
+```text
+youth_note: Compare to athlete prior clips; do not flag shallow knee bend alone under age 14.
+```

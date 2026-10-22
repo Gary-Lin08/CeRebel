@@ -1,0 +1,159 @@
+# General Human Motion — Drills (30–90 s) — v2
+
+Sport-agnostic, bodyweight-first. Stop if pain. Each drill maps targets: fault_*.
+
+---
+
+drill_id: drill_forward_head_wall
+targets: fault_forward_head
+duration: 45 s
+description: Heels/hips/upper back lightly on wall; slide head back without lifting chin; hold 5 s / release 5 s.
+
+drill_id: drill_stack_breath_squat
+targets: fault_posture_stack_break
+duration: 60 s
+description: Hand on sternum and pelvis; slow squat 3 s down/up 4–6 reps keeping rib–pelvis unit.
+
+drill_id: drill_exhale_reach
+targets: fault_ribcage_flare_anterior, fault_overhead_arch_lumbar
+duration: 45 s
+description: Exhale fully, reach arms forward without ribs flaring; 6–8 reps.
+
+drill_id: drill_pelvis_clock
+targets: fault_pelvis_anterior_tilt_excess
+duration: 60 s
+description: Soft knees; rock pelvis A/P; find neutral; hold 10 s × 3.
+
+drill_id: drill_single_leg_level
+targets: fault_lateral_pelvis_drop, fault_single_leg_balance_wobble
+duration: 45 s
+description: Single-leg stand 10 s each side; pelvis level; wall finger touch OK.
+
+drill_id: drill_mini_squat_knee_track
+targets: fault_knee_valgus_visible
+duration: 60 s
+description: Light miniband above knees optional; ½ squat 8 reps pushing knees out over toes.
+
+drill_id: drill_hip_hinge_stick
+targets: fault_stiff_spine_no_hip_hinge, fault_knee_dominant_hinge
+duration: 90 s
+description: Dowel along spine; hinge hips back keeping contacts; 6 slow reps.
+
+drill_id: drill_flamingo_focus
+targets: fault_single_leg_balance_wobble, fault_base_of_support_narrow
+duration: 60 s
+description: Barefoot 15 s each leg, eyes forward; quiet sway.
+
+drill_id: drill_step_pause_load
+targets: fault_insufficient_weight_shift
+duration: 45 s
+description: Step forward, pause 2 s with ~70% on front foot; alternate 4 each.
+
+drill_id: drill_corridor_march
+targets: fault_excessive_lateral_lean, fault_gait_trunk_lean
+duration: 45 s
+description: March between two markers without leaning into them; 30 s continuous.
+
+drill_id: drill_shoulder_roll_reset
+targets: fault_shoulder_height_asymmetry, fault_rounded_shoulders
+duration: 45 s
+description: Slow shoulder rolls backward 8 reps; pause at lowest even hang.
+
+drill_id: drill_mirror_reaches
+targets: fault_limb_rom_asymmetry, fault_reach_shoulder_hike
+duration: 60 s
+description: Alternate arm raises to same height 6 per side facing mirror.
+
+drill_id: drill_counted_prep_squat
+targets: fault_rushed_prep, fault_squat_depth_shallow
+duration: 60 s
+description: 3-count eccentric, pause, 1-count up; 5 bodyweight reps.
+
+drill_id: drill_stick_landing
+targets: fault_incomplete_recover
+duration: 45 s
+description: Small hop, land soft, hold stack 3 s; 4 reps.
+
+drill_id: drill_cross_crawl_slow
+targets: fault_arms_fight_torso
+duration: 60 s
+description: Slow opposite elbow-to-knee march; 20 s each pattern side.
+
+drill_id: drill_wall_angels
+targets: fault_rounded_shoulders, fault_thoracic_extension_excess
+duration: 45 s
+description: Back to wall; slide arms in angel pattern keeping ribs soft; 6 reps.
+
+drill_id: drill_seated_wall_reach
+targets: fault_thoracic_extension_excess, fault_reach_shoulder_hike
+duration: 45 s
+description: Seated against wall; reach arms up without cranking upper back; 8 reps.
+
+drill_id: drill_box_squat_target
+targets: fault_squat_depth_shallow, fault_trunk_collapse_squat
+duration: 60 s
+description: Sit to box/target depth then stand; 6 controlled reps.
+
+drill_id: drill_squat_tripod
+targets: fault_heels_rise_squat
+duration: 60 s
+description: Wall-assisted squat holds emphasizing foot tripod; 3 × 10 s.
+
+drill_id: drill_goblet_shape
+targets: fault_trunk_collapse_squat, fault_hip_shift_lateral_squat
+duration: 60 s
+description: Hands at chest as counterweight; 6 slow squats keeping chest proud and hips centered.
+
+drill_id: drill_reach_melt
+targets: fault_reach_shoulder_hike
+duration: 45 s
+description: Wall slides melting shoulder away from ear; 8 reaches.
+
+drill_id: drill_deadbug_reach
+targets: fault_overhead_arch_lumbar, fault_ribcage_flare_anterior
+duration: 60 s
+description: Dead-bug with opposite arm reach keeping ribs down; 6/side.
+
+drill_id: drill_gait_corridor_walk
+targets: fault_gait_trunk_lean, fault_excessive_lateral_lean
+duration: 60 s
+description: Walk corridor path with tall stack; 40–60 s continuous.
+
+drill_id: drill_gait_longer_step
+targets: fault_gait_short_step
+duration: 60 s
+description: Line walks with slightly longer heel-to-toe steps; quiet feet.
+
+drill_id: drill_squat_hip_center
+targets: fault_hip_shift_lateral_squat
+duration: 60 s
+description: Mirror squat focusing hips centered between feet; 6 reps.
+
+drill_id: drill_hinge_not_squat
+targets: fault_knee_dominant_hinge, fault_stiff_spine_no_hip_hinge
+duration: 90 s
+description: Soft-knee dowel hinge emphasizing hips back before knee bend; 6–8 reps.
+
+drill_id: drill_scap_pushup_plus
+targets: fault_scapular_wing_proxy, fault_rounded_shoulders
+duration: 45 s
+description: Incline or wall push-up plus holds 5 s × 6; glue scapula.
+
+drill_id: drill_bos_widen
+targets: fault_base_of_support_narrow, fault_single_leg_balance_wobble
+duration: 45 s
+description: Stance-width reset marches at hip width; 30–45 s.
+
+drill_id: drill_combo_stack_review
+targets: fault_posture_stack_break, fault_forward_head
+duration: 90 s
+description: 30 s wall head glide + 30 s stacked breath squat + 30 s single-leg level each side.
+
+---
+
+## Team / PE notes
+
+- Film before/after one drill only when testing change.
+- Youth: shorten balance durations; skip band if uncomfortable.
+
+Cross-references: Findings/001_common_faults.txt, Docs/002_DISCLAIMER.txt

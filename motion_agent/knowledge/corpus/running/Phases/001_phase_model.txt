@@ -1,0 +1,128 @@
+# Running Gait — Phase Model (body-first, OpenSim-friendly) — v2
+
+## Scope
+
+Applies to **steady-state distance running** (jog through marathon pace) on level surfaces. One **stride cycle**
+is defined per stance leg from initial contact (contact proxy) on that leg until the next contact on the same leg.
+Sprint-maximal mechanics and walk–run transitions may blur `flight` phase boundaries — widen UI windows when
+cadence exceeds ~200 spm or speed is very low.
+
+Convention: **stance leg** = leg accepting weight after E_IC; **swing leg** = contralateral limb.
+Findings may tag `side=left|right`; phases below are described for a generic stance leg.
+
+## Phase list (7 phases)
+
+| phase_id   | label_en    | start_event | end_event   | body narrative |
+|------------|-------------|-------------|-------------|----------------|
+| contact    | Touchdown   | E_IC        | E_IC + n1   | Foot meets ground; ankle begins dorsiflexion; knee flexion initiates |
+| loading    | Loading     | end(contact)| E_LOAD_END  | Shock absorption; peak knee flexion approaching |
+| midstance  | Mid-stance  | E_LOAD_END  | E_PROP_START | COM over foot; single-leg balance; pelvis level ideally stable |
+| propulsion | Propulsion  | E_PROP_START| E_TO        | Hip/knee/ankle extension; body accelerates upward/forward |
+| toe_off    | Toe-off     | E_TO        | E_TO + n2   | Stance foot leaves ground; ankle plantarflexion peak |
+| swing      | Swing       | end(toe_off)| E_SWING_MID | Thigh advances; knee flexes to clear ground |
+| flight     | Flight      | E_SWING_MID | E_NEXT_IC   | Late swing / descent; both feet airborne in true running |
+
+n1, n2 are small fixed frame buffers (e.g., 2–4 frames at 30 fps) for UI smoothing; RAG links use phase_id only.
+
+---
+
+## Phase blocks (detector_events + fault_links)
+
+### phase_id: contact
+start_end: E_IC → E_IC + n1
+body_signals: Stance ankle height local min; foot vs pelvis sagittal offset; early knee flexion onset.
+detector_events: E_IC
+fault_links: fault_overstride, fault_low_cadence_overstride, fault_rearfoot_reach_proxy, fault_forefoot_early_load, fault_stiff_ankle_landing, fault_insufficient_knee_flex_stance, fault_crossover_gait, fault_narrow_stance_base, fault_trunk_lean_back, fault_contact_time_asymmetry, fault_fatigue_cadence_drop, fault_stride_asymmetry
+youth_note: Higher natural cadence; shorter absolute contact duration — avoid adult timing templates on U12.
+
+### phase_id: loading
+start_end: end(contact) → E_LOAD_END
+body_signals: Rising knee flexion; ankle dorsiflexion increase; frontal knee alignment if camera allows.
+detector_events: E_IC, E_LOAD_END
+fault_links: fault_overstride, fault_knee_valgus_load, fault_stiff_ankle_landing, fault_insufficient_knee_flex_stance, fault_early_heel_rise, fault_crossover_gait, fault_contact_time_asymmetry
+youth_note: Mild frontal-plane wobble common; raise severity thresholds.
+
+### phase_id: midstance
+start_end: E_LOAD_END → E_PROP_START
+body_signals: COM over stance foot; pelvis obliquity peak; trunk lean vs vertical; head stack.
+detector_events: E_LOAD_END, E_PROP_START
+fault_links: fault_hip_drop, fault_excessive_bounce, fault_trunk_lean_back, fault_trunk_lean_excess_fwd, fault_knee_valgus_load, fault_early_heel_rise, fault_narrow_stance_base, fault_shoulder_hike_run, fault_forward_head_run, fault_fatigue_hip_drop_rise
+youth_note: Smaller vertical oscillation common — do not over-score bounce.
+
+### phase_id: propulsion
+start_end: E_PROP_START → E_TO
+body_signals: Knee/hip extension dominant; trunk orientation; arm drive opposing swing.
+detector_events: E_PROP_START, E_TO
+fault_links: fault_hip_extension_deficit, fault_trunk_lean_excess_fwd, fault_excessive_trunk_rotation, fault_pelvis_rotation_excess, fault_short_arm_drive, fault_push_off_asymmetry, fault_shoulder_hike_run, fault_forward_head_run
+youth_note: Hip extension ROM may be smaller; coach quality over adult angles.
+
+### phase_id: toe_off
+start_end: E_TO → E_TO + n2
+body_signals: Peak ankle plantarflexion / upward ankle velocity; hip extension peak proxy.
+detector_events: E_TO
+fault_links: fault_hip_extension_deficit, fault_push_off_asymmetry, fault_early_heel_rise
+youth_note: Earlier relative toe-off timing possible at high cadence.
+
+### phase_id: swing
+start_end: end(toe_off) → E_SWING_MID
+body_signals: Swing knee flexion for clearance; arm swing ROM and path; trunk yaw.
+detector_events: E_TO, E_SWING_MID
+fault_links: fault_scissor_kick, fault_arm_swing_asymmetry, fault_arm_crossing_midline, fault_short_arm_drive, fault_excessive_trunk_rotation, fault_pelvis_rotation_excess
+youth_note: Lower absolute knee lift acceptable if clearance safe.
+
+### phase_id: flight
+start_end: E_SWING_MID → E_NEXT_IC
+body_signals: Both ankles elevated (true run); pelvis vertical range; late swing foot placement prep.
+detector_events: E_SWING_MID, E_NEXT_IC
+fault_links: fault_excessive_bounce, fault_scissor_kick, fault_arm_swing_asymmetry, fault_arm_crossing_midline, fault_stride_asymmetry
+youth_note: Flight may be brief; walk-jog clips downgrade flight-dependent findings.
+
+---
+
+## Event definitions (computable proxies)
+
+### E_IC (initial contact proxy)
+- Stance-leg ankle vertical velocity minimal within stride window, OR local max of foot speed toward ground.
+- Fallback: earliest frame where ankle height within ε of local minimum before rising.
+- Not identical to force-plate IC without instrumented treadmill.
+
+### E_LOAD_END
+- Maximum knee flexion on stance between E_IC and E_TO.
+- Fallback: E_IC + 15% stance duration if knee noisy.
+
+### E_PROP_START
+- First frame after E_LOAD_END where knee flexion velocity becomes extension-dominant.
+- Fallback: E_LOAD_END + 5% stance duration.
+
+### E_TO (toe-off proxy)
+- Maximum stance-ankle upward velocity or peak knee extension angular velocity before foot leaves ground.
+- Fallback: E_IC + 60% stance duration (adult jogging band).
+
+### E_SWING_MID
+- Maximum knee flexion on swing leg OR midpoint E_TO → E_NEXT_IC.
+- Fallback: halfway between E_TO and E_NEXT_IC.
+
+### E_NEXT_IC
+- Next E_IC on the **same** leg — closes stride for cadence and asymmetry.
+
+### Stance vs flight
+- Running: both ankles elevated simultaneously → flight meaningful.
+- Walking: no true flight → downgrade flight findings.
+
+## Phase precedence
+
+contact → loading → midstance → propulsion → toe_off → swing → flight → (next contact)
+
+## Treadmill vs overground
+
+Overstride proxy must use pelvis–foot relation in camera frame, not absolute ground distance.
+
+## UI scrub bar labels
+
+`contact`, `loading`, `midstance`, `propulsion`, `toe_off`, `swing`, `flight`
+
+## Cross-references
+
+- Findings/001_common_faults.txt
+- Quality/002_checkpoints.txt
+- Biomechanics/001_overview.txt

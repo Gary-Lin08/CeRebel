@@ -1,0 +1,71 @@
+# Snowboarding — Quality Definition (body-first)
+
+## What “quality” means in CeRebel
+
+For this pack, **riding quality** is not competition score, race time, or style points. It is the degree to which
+visible body mechanics align with patterns associated in open literature and reputable instructor progressions with:
+
+1. **Stable athletic posture** — flexed ankles/knees/hips with controlled trunk alignment during traverse and turn
+   completion, without chronic collapse or rigid lockout visible in pose data.
+2. **Clear turn or air sequencing** — recognizable phase order (alpine: init → steer → apex → transition; air:
+   preload → takeoff → absorb) with timing that supports control rather than rushed edge changes or late extension.
+3. **Balanced loading** — lead/trail leg contributions appropriate to the motion family; gross asymmetry flagged when
+   confidence is sufficient, not as moral judgment of “bad style.”
+4. **Controlled landings (air family)** — visible flexion absorption and re-centering without prolonged stiff-legged
+   impact posture in the landing window.
+
+Future product scores may combine checkpoint pass rate, phase detector confidence, capture quality flags, and
+stance metadata — not a single “pro rider” template match.
+
+## Dimensions
+
+| dimension_id        | plain label                 | primary phases (alpine)     | primary phases (air)   |
+|---------------------|-----------------------------|-----------------------------|-------------------------|
+| athletic_stance     | Athletic ready stance       | traverse, completion        | approach, recover       |
+| turn_rhythm         | Turn rhythm & initiation    | anticipation, initiation    | —                       |
+| edge_control_proxy  | Steering & edge engagement  | steering, apex              | —                       |
+| transition_clean    | Smooth edge transition      | transition, completion      | —                       |
+| upper_quiet         | Upper body discipline       | initiation, steering        | approach, flight        |
+| preload_timing      | Preload-to-pop timing       | —                           | preload, takeoff        |
+| takeoff_symmetry    | Symmetric takeoff drive     | —                           | takeoff                 |
+| landing_absorption  | Landing flexion & balance   | —                           | landing, recover        |
+| speed_control       | Speed management proxy      | traverse, apex              | approach                |
+
+Each dimension maps to checkpoints in `002_checkpoints.txt`. A clip can be “high landing_absorption, moderate
+transition_clean” — product copy should present dimension breakdowns, not one opaque grade.
+
+## Evidence basis
+
+- Biomechanics and sports-science summaries of snowboarding and related board-sport landing mechanics (B+):
+  flexion absorption, COM path in turns, estimated load sensitivity to stiff landings.
+- Instructor progression consensus (B): stacked alignment, progressive flexion, eyes toward exit, quiet arms in turns.
+- Federation safety culture (A+ pointers): helmet and venue rules live in FIS docs — referenced, not duplicated as norms.
+
+## Youth vs adult quality framing
+
+**Youth (approx. ≤13–14):** prioritize speed control, balanced stance, and soft landings over aggressive lean angles,
+large preload, or spin entry. Terrain park features should match skill per resort/NGO policy — not encoded as degrees.
+
+**Adult / post-puberty:** same dimensions; allow greater lean and air time without labeling “excessive” unless paired
+with landing faults or loss of completion stability.
+
+Never instruct youth to copy elite competition cork rotations or maximum-flex preload without qualified supervision.
+
+## Capture quality gates
+
+Downgrade or suppress findings when:
+
+- Camera is head-on to rider during alpine turn (lean proxy unreliable).
+- Frame rate < 30 fps for jump landing (misses E_LAND_CONTACT timing).
+- Lower body occluded by snow, feature, or other athletes.
+- Clip tagged `family=air_jump` but no airborne COM rise detected (variant mismatch).
+- Stance unknown and asymmetry finding depends on lead/trail labeling.
+
+## Relationship to findings
+
+Checkpoints **pass / fail / unclear** at phase windows. Findings fire when checkpoints fail with sufficient confidence
+or when fault-specific rules in Findings/001 trigger. This document states the positive model; faults live in Findings.
+
+## Disclaimer pointer
+
+All quality language is coaching support, not medical clearance or terrain authorization. See Docs/002_DISCLAIMER.txt.

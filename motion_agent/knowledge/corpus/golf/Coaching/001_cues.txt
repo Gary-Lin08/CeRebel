@@ -1,0 +1,244 @@
+# Golf Sport Pack — Feel cues (body-first)
+
+Cues pair to finding IDs in Findings/001_common_faults.txt. Athlete-facing language; practice without ball or club is valid when noted.
+**Disclaimer:** Coaching cues are not medical advice. Athletes with pain should stop and consult a qualified clinician.
+
+---
+
+## cue_fault_early_extension
+**finding_id:** fault_early_extension
+**phases:** downswing, impact
+**feel:** Belt buckle stays away from the ball — turn your hips without standing up to peek.
+**coach_note:** DTL camera essential; compare spine angle address vs impact proxy.
+**authority:** B
+
+## cue_fault_early_extension_thrust
+**finding_id:** fault_early_extension_thrust
+**phases:** downswing, impact
+**feel:** Turn the belt buckle to the flag — don't shove the hips at the ball.
+**coach_note:** Face-on + DTL; separate thrust from intentional stack patterns.
+**authority:** B
+
+## cue_fault_over_the_top_transition
+**finding_id:** fault_over_the_top_transition
+**phases:** transition, downswing
+**feel:** Lead hip bumps toward the target before your chest faces the flag.
+**coach_note:** Distinguish from slide — rotation must accompany bump.
+**authority:** B
+
+## cue_fault_cast_from_top
+**finding_id:** fault_cast_from_top
+**phases:** transition, downswing
+**feel:** Trail elbow stays bent longer — hands fall with gravity, not thrown at the ball.
+**coach_note:** Slow-motion review at top→hip height window.
+**authority:** B
+
+## cue_fault_hanging_back
+**finding_id:** fault_hanging_back
+**phases:** downswing, impact
+**feel:** Push the ground with your trail foot until your lead side wins the tug-of-war.
+**coach_note:** Pair with finish hold on lead foot drill.
+**authority:** B
+
+## cue_fault_weight_shift_late
+**finding_id:** fault_weight_shift_late
+**phases:** impact, follow_through
+**feel:** Lead foot presses as you start down — not after the hit.
+**coach_note:** Compare lead ankle load timing vs impact proxy.
+**authority:** B
+
+## cue_fault_sway_not_turn
+**finding_id:** fault_sway_not_turn
+**phases:** backswing, transition
+**feel:** Turn your back pocket away from the target — hips rotate, not slide off the tee.
+**coach_note:** Face-on view; head should stay in narrow vertical band.
+**authority:** B
+
+## cue_fault_slide_excessive
+**finding_id:** fault_slide_excessive
+**phases:** downswing, impact
+**feel:** Rotate into a firm lead leg — don’t surf sideways toward the target.
+**coach_note:** Often co-occurs with fault_hanging_back on opposite reps — track trend.
+**authority:** B
+
+## cue_fault_head_lateral_sway
+**finding_id:** fault_head_lateral_sway
+**phases:** takeaway, backswing, downswing
+**feel:** Keep your head in a quiet box — turn under a still chin.
+**coach_note:** Face-on; do not freeze neck rigidly.
+**authority:** B
+
+## cue_fault_short_arm_swing
+**finding_id:** fault_short_arm_swing
+**phases:** backswing
+**feel:** Lead shoulder travels under your chin — width comes from turn, not lifting elbows.
+**coach_note:** Youth may have shorter turn by design; use self-comparison.
+**authority:** B
+
+## cue_fault_incomplete_shoulder_turn
+**finding_id:** fault_incomplete_shoulder_turn
+**phases:** backswing, transition
+**feel:** Finish the turn — trail knee loads before you start down.
+**coach_note:** Baseline vs athlete warm-up, not elite degree targets.
+**authority:** B
+
+## cue_fault_wrist_only_takeaway
+**finding_id:** fault_wrist_only_takeaway
+**phases:** takeaway
+**feel:** Chest and club handle move together — no flipping the wrists first.
+**coach_note:** First 12 inches of motion is the coaching window.
+**authority:** B
+
+## cue_fault_takeaway_steep_lift
+**finding_id:** fault_takeaway_steep_lift
+**phases:** takeaway
+**feel:** Push the handle low and wide first — then let it rise with the turn.
+**coach_note:** Stop reps at knee height before full swings.
+**authority:** B
+
+## cue_fault_takeaway_inside_roll
+**finding_id:** fault_takeaway_inside_roll
+**phases:** takeaway
+**feel:** Glove logo faces the ball longer — chest turns, hands stay in front.
+**coach_note:** DTL check lead arm ahead of trail hip at hip-high.
+**authority:** B
+
+## cue_fault_tempo_hitch_at_top
+**finding_id:** fault_tempo_hitch_at_top
+**phases:** transition
+**feel:** One smooth breath from top to hit — no pause at the sky.
+**coach_note:** Metronome 3:1 helps; avoid forcing longer backswing.
+**authority:** B
+
+## cue_fault_tempo_rush_downswing
+**finding_id:** fault_tempo_rush_downswing
+**phases:** transition, downswing
+**feel:** Count three going back, one coming through — don't fire from the top.
+**coach_note:** Pair with pump drill if cast co-occurs.
+**authority:** B
+
+## cue_fault_fall_back_finish
+**finding_id:** fault_fall_back_finish
+**phases:** follow_through
+**feel:** Finish on your lead leg like a statue facing the target.
+**coach_note:** Trail foot toe touch only; heel up is fine on driver.
+**authority:** B
+
+## cue_fault_chicken_wing_stop
+**finding_id:** fault_chicken_wing_stop
+**phases:** follow_through
+**feel:** Arms reach toward the target together, then wrap — don’t pull the lead elbow back early.
+**coach_note:** Check for hanging back on prior phase.
+**authority:** B
+
+## cue_fault_flying_trail_elbow
+**finding_id:** fault_flying_trail_elbow
+**phases:** transition, downswing
+**feel:** Trail elbow soft near your shirt seam as you start down.
+**coach_note:** Towel-under-arm optional for feel only.
+**authority:** B
+
+## cue_fault_lead_arm_collapse_top
+**finding_id:** fault_lead_arm_collapse_top
+**phases:** backswing, transition
+**feel:** Soft-straight lead arm — width from turn, not from bending the elbow.
+**coach_note:** Never force hyperextension; mobility limits OK.
+**authority:** B
+
+## cue_fault_setup_locked_legs
+**finding_id:** fault_setup_locked_legs
+**phases:** address
+**feel:** Athletic knees — soft enough to bounce, stable enough to push.
+**coach_note:** Seniors: flex within comfort; no deep squat cue.
+**authority:** B
+
+## cue_fault_setup_spine_too_upright
+**finding_id:** fault_setup_spine_too_upright
+**phases:** address
+**feel:** Hinge from the hips — butt back, chest over the ball space.
+**coach_note:** DTL spine inclination vs vertical.
+**authority:** B
+
+## cue_fault_setup_narrow_stance
+**finding_id:** fault_setup_narrow_stance
+**phases:** address
+**feel:** Feet under the outsides of your shoulders — athletic, not feet together.
+**coach_note:** Chips may use narrower stance intentionally.
+**authority:** B
+
+## cue_fault_setup_weight_heels
+**finding_id:** fault_setup_weight_heels
+**phases:** address
+**feel:** Balls of the feet and heels share the load — ready athletic stance.
+**coach_note:** Mid-foot bounce before first swing.
+**authority:** B
+
+## cue_fault_reverse_pivot
+**finding_id:** fault_reverse_pivot
+**phases:** backswing, transition
+**feel:** Load the trail leg like a coiled spring — don't lean into the target going back.
+**coach_note:** Face-on pressure / ankle load proxy.
+**authority:** B
+
+## cue_fault_impact_lead_knee_lock
+**finding_id:** fault_impact_lead_knee_lock
+**phases:** downswing, impact
+**feel:** Brace the lead leg soft-firm — catch yourself, don't lock like a stick.
+**coach_note:** Contrast with front-knee collapse patterns from other sports language — golf wants athletic brace.
+**authority:** B
+
+## cue_fault_abrupt_deceleration
+**finding_id:** fault_abrupt_deceleration
+**phases:** follow_through
+**feel:** Let the swing paint a full rainbow around your body — no emergency brake at the ball.
+**coach_note:** Smooth wrist speed decay on graph review.
+**authority:** B
+
+## cue_fault_incomplete_hip_clearance
+**finding_id:** fault_incomplete_hip_clearance
+**phases:** impact, follow_through
+**feel:** Clear the lead hip behind you — make room for the arms to pass.
+**coach_note:** Pair with slide vs rotate gate drill.
+**authority:** B
+
+## cue_fault_chip_stand_up
+**finding_id:** fault_chip_stand_up
+**phases:** address, downswing, impact
+**feel:** Stay in your chip posture — chest over the ball space until after the hit.
+**coach_note:** Short swing length; posture window only.
+**authority:** B
+
+## cue_fault_chip_trail_weight
+**finding_id:** fault_chip_trail_weight
+**phases:** address, impact, follow_through
+**feel:** Lean slightly into the lead side before you chip — stay there through the finish.
+**coach_note:** ~60% lead pressure feel; not force-plate truth.
+**authority:** B
+
+---
+
+## Positive cues (no fault id)
+
+### cue_balanced_setup
+**phases:** address
+**feel:** Weight in the middle of your feet — toes and heels both feel the ground.
+**authority:** B
+
+### cue_full_finish_hold
+**phases:** follow_through
+**feel:** Hold your finish until the club stops moving — count “one-one-thousand.”
+**authority:** B
+
+### cue_tempo_continuous
+**phases:** address through follow_through
+**feel:** Backswing and downswing share one heartbeat — no second wind-up at the top.
+**authority:** B
+
+---
+
+## Youth scaling
+
+Use one cue per rep. Prefer balance, tempo, and finish holds over “snap” or maximum turn cues.
+Reference Training/001 for session length and multi-sport recovery.
+
+Sources: PGA/LPGA instructor education (B); Findings/001 linkage (product); biomechanics themes summarized (B+).

@@ -1,0 +1,218 @@
+# Weightlifting — Feel Cues
+# Cross-linked to fault_* ids in Findings/001_common_faults.txt
+# authority: B unless noted
+
+================================================================================
+GLOBAL BRACE & SETUP (lift_variant=all)
+================================================================================
+
+cue_brace_360
+  text: "Big breath into belly and sides — brace like someone is about to poke your stomach."
+  phases: setup
+  faults: (general setup quality)
+  authority: B
+
+cue_tripod_foot
+  text: "Three points of pressure: big toe, little toe, heel — don’t roll to the toes."
+  phases: setup, bottom, lockout
+  faults: fault_squat_heel_lift, fault_dl_bar_forward
+  authority: B
+
+cue_midfoot_balance
+  text: "Balance over the middle of your foot — not toes, not heels only."
+  phases: setup, descent, pull
+  faults: fault_squat_forward_lean_excess, fault_dl_bar_forward
+  authority: B
+
+================================================================================
+SQUAT CUES
+================================================================================
+
+cue_squat_sit_between_heels
+  text: "Sit between your heels — knees open where your toes point."
+  phases: descent, bottom
+  faults: fault_squat_knee_valgus
+  authority: B
+
+cue_squat_chest_hips_together
+  text: "Chest and hips drop together — no dive with the shoulders first."
+  phases: descent
+  faults: fault_squat_good_morning
+  authority: B+
+
+cue_squat_spread_floor
+  text: "Screw your feet into the floor — spread the floor without moving your feet."
+  phases: ascent, bottom
+  faults: fault_squat_knee_valgus, fault_squat_asymmetric_hip
+  authority: B
+
+cue_squat_drive_floor
+  text: "Drive the floor away on the way up — hips and chest rise as one unit."
+  phases: ascent
+  faults: fault_squat_good_morning, fault_squat_forward_lean_excess
+  authority: B
+
+cue_squat_pause_bottom
+  text: "Own the bottom — no bounce; change direction under control."
+  phases: bottom
+  faults: fault_squat_bounce_bottom
+  authority: B
+
+cue_squat_lockout_glutes
+  text: "Stand tall — finish with glutes, not a back bend."
+  phases: lockout
+  faults: fault_squat_incomplete_lockout
+  authority: B
+
+================================================================================
+DEADLIFT CUES
+================================================================================
+
+cue_dl_wedge
+  text: "Pull yourself into the bar — lats tight, chest proud, hips where you can push."
+  phases: setup
+  faults: fault_dl_setup_too_squatty, fault_dl_rounding_pull
+  authority: B
+
+cue_dl_push_floor
+  text: "Push the floor away — don’t yank with your back first."
+  phases: pull
+  faults: fault_dl_hips_shoot, fault_dl_rounding_pull
+  authority: B+
+
+cue_dl_drag_bar
+  text: "Keep the bar close — drag it up your legs like zipping a coat."
+  phases: pull, transition
+  faults: fault_dl_bar_forward
+  authority: B
+
+cue_dl_hips_shoulders_sync
+  text: "Hips and shoulders rise together until the bar passes your knees."
+  phases: pull
+  faults: fault_dl_hips_shoot
+  authority: B+
+
+cue_dl_finish_hips
+  text: "Finish by squeezing glutes — stand tall, ribs stacked over pelvis."
+  phases: lockout
+  faults: fault_dl_hyperextend_lockout, fault_dl_soft_lockout_knees
+  authority: B+
+
+cue_dl_one_piece
+  text: "One continuous pull — no hitch, no re-bend at the knee."
+  phases: pull, transition
+  faults: fault_dl_hitched_pull
+  authority: B
+
+================================================================================
+OVERHEAD PRESS CUES
+================================================================================
+
+cue_ohp_quiet_legs
+  text: "Legs like concrete — all motion from shoulders and elbows."
+  phases: setup, press
+  faults: fault_ohp_leg_drive
+  authority: B
+
+cue_ohp_vertical_line
+  text: "Press straight up — slightly back to clear your face, not around it."
+  phases: press
+  faults: fault_ohp_forward_loop
+  authority: B
+
+cue_ohp_ribs_down
+  text: "Ribs down, glutes tight — no leaning back to cheat the weight up."
+  phases: press, lockout
+  faults: fault_ohp_excessive_leanback
+  authority: B
+
+cue_ohp_elbows_under
+  text: "Elbows slightly in front of the bar — forearms vertical at the bottom."
+  phases: setup, press
+  faults: fault_ohp_elbow_flare
+  authority: B
+
+cue_ohp_head_through
+  text: "Move your head back, then through the window at the top — bar stays on line."
+  phases: press, lockout
+  faults: fault_ohp_forward_loop
+  authority: B
+
+cue_ohp_lock_punch
+  text: "Punch the ceiling — lock elbows without shrugging into your ears."
+  phases: lockout
+  faults: fault_ohp_incomplete_lockout, fault_ohp_shrug_lockout
+  authority: B
+
+cue_ohp_even_drive
+  text: "Both hands reach the ceiling at the same time."
+  phases: press, lockout
+  faults: fault_ohp_asymmetric_press
+  authority: B
+
+================================================================================
+YOUTH-SAFE VARIANTS (audience=youth)
+================================================================================
+
+cue_youth_technique_first
+  text: "Light weight, same positions — perfect reps beat heavy reps."
+  phases: all
+  authority: A (supervision consensus)
+
+cue_youth_no_max
+  text: "Leave reps in the tank — stop while form still looks crisp."
+  phases: all
+  authority: A
+
+================================================================================
+ANTI-CUES (avoid in product copy)
+================================================================================
+
+- Do not cue "push through pain" or "fix your disc."
+- Do not promise PR weights from a cue alone.
+- Do not compare youth to elite powerlifting depth in absolute terms.
+
+================================================================================
+V2 NEW FAULT CUES
+================================================================================
+cue_pelvis_quiet_bottom
+  text: "Stop where the belt buckle stays quiet — no tuck under."
+  phases: bottom
+  faults: fault_squat_butt_wink
+  authority: B+
+
+cue_hips_knees_together
+  text: "Break hips and knees together — sit between the heels."
+  phases: descent
+  faults: fault_squat_early_knee_slide
+  authority: B
+
+cue_elbows_under_bar
+  text: "Drive elbows under the bar — wrists stacked."
+  phases: setup
+  faults: fault_squat_elbow_flare_bar
+  authority: B
+
+cue_shoulders_level_dl
+  text: "Pack both armpits — shoulders level like a shelf."
+  phases: lockout
+  faults: fault_dl_uneven_shoulder
+  authority: B
+
+cue_arms_as_ropes
+  text: "Long arms like ropes — hips and legs lift."
+  phases: pull
+  faults: fault_dl_arms_pulling
+  authority: B
+
+cue_head_through_window
+  text: "Bar past hairline, then head through the window."
+  phases: lockout
+  faults: fault_ohp_head_through_late
+  authority: B
+
+cue_ribs_zip_press
+  text: "Zip the ribs down — quiet belt as you press."
+  phases: press, lockout
+  faults: fault_ohp_rib_flare
+  authority: B+

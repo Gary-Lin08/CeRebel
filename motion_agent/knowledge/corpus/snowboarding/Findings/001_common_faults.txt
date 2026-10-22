@@ -1,0 +1,343 @@
+# Snowboarding — Common Faults (finding cards)
+# Canonical v2. Alpine turn + park jump body cues. Helmet/wrist-guard framing in Docs/002_DISCLAIMER.txt.
+# Body-first — board edge pressure inferred from pose proxies only.
+
+---
+
+finding_id: fault_locked_legs_traverse
+headline_en: Locked legs while traversing — limited shock absorption and turn readiness
+phases: traverse
+body_signal: Knee flexion near extension sustained ≥12 frames while COM speed > threshold; minimal ankle/knee flexion variance.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Athletic ready — soft knees, ankles loose like shock absorbers."
+drill: 60–90s soft-ankle traverse: pulse ankles/knees every 15 m on green (drill_soft_ankle_traverse).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_arm_flail_traverse
+headline_en: Excessive arm swing during traverse — balance compensation visible
+phases: traverse
+body_signal: Wrist speed > 1.5× COM speed sustained; shoulder abduction large with no turn init yet.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Quiet hands — ride like you're holding a cup of hot chocolate level."
+drill: 45s quiet-hands: fingertips on hip pockets for 2 turns, then release (drill_quiet_hands_pockets).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_rushed_entry
+headline_en: Rushed entry into turn — speed spike before initiation
+phases: traverse, anticipation
+body_signal: COM speed increase >25% in 0.3 s before E_TURN_INIT without controlled line change.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Control speed before shape — finish the traverse calm."
+drill: 90s garland speed-bleed on gentle blue; 5 reps (drill_garland_speed_bleed).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_no_lead_load
+headline_en: Weak lead-leg loading into turn initiation
+phases: anticipation, initiation
+body_signal: Lead-knee flexion change < trail-knee through E_EDGE_ENGAGE; COM remains centered without angulation proxy.
+why_it_matters: Many turns begin with pressure management on lead foot (B+). Body-only proxy cannot confirm edge pressure without board sensors.
+feel_cue: "Start the turn from the front binding — press the lead foot."
+drill: 60s J-turn lead press both directions (drill_j_turn_lead_press).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_shoulder_leads_turn
+headline_en: Shoulders rotate before lower body — upper body leads turn
+phases: initiation, steering
+body_signal: Peak shoulder yaw rate >100 ms before pelvis yaw; arms open toward inside early.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Belt buckle points down the hill — hips lead, chest quiet."
+drill: 60s hip-lead cone turns with coach 'hips' call (drill_hip_lead_cone).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_collapsed_torso
+headline_en: Collapsed torso — chest dropped instead of athletic hip hinge
+phases: anticipation, preload
+body_signal: Excessive thoracic flexion with hips not hinging; chest dropped vs athletic posture.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Long spine — fold at hips and knees, not at the low back."
+drill: 45s wall-squat boots on flat staging (drill_wall_squat_boots).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_upright_skid
+headline_en: Upright skidded turn — little angulation through apex
+phases: steering, apex
+body_signal: Minimal knee/ankle angulation toward hill at apex with high skid yaw.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Tilt with the whole body — knees into the hill, not just ankles."
+drill: 90s railroad-track edge feel on gentle green (drill_railroad_tracks).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_straight_leg_apex
+headline_en: Straight legs at turn apex — poor absorption
+phases: apex
+body_signal: Knee flexion near extension at E_APEX while COM speed high.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Legs like suspension — absorb bumps at the strongest part of the turn."
+drill: 60s apex flex count aloud for 6 turns (drill_apex_flex_count).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_head_misaligned
+headline_en: Head not looking toward turn exit
+phases: steering, apex
+body_signal: Head yaw opposite turn exit through steering/apex.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Look where you want to go — chin over lead shoulder toward exit."
+drill: 60s exit-marker look drills (drill_exit_marker_look).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_hoppy_transition
+headline_en: Hoppy edge change instead of rolling transition
+phases: transition
+body_signal: COM vertical spike at edge change with both ankles plantarflexing.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Smooth edge change — roll ankles, don't hop unless you mean to."
+drill: 60s roll-not-hop edge changes on green (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_stuck_in_turn
+headline_en: Stuck on old edge past turn completion
+phases: completion
+body_signal: Edge engagement persists past completion; pelvis remains angulated after board flattens.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Let the turn go — stand centered as the board flattens."
+drill: 60s release-old-edge completion drills (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_off_balance_approach
+headline_en: Off-balance approach into park feature
+phases: approach
+body_signal: Lateral COM offset or shoulder tilt on approach toward feature.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Shoulders level, hips centered — ride straight to the feature."
+drill: 45s centered approach rehearsals to a marker (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_no_preload
+headline_en: Missing preload compression before takeoff
+phases: preload
+body_signal: Minimal knee/hip flexion increase before E_TAKEOFF.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Down then up — compress boots before you pop."
+drill: 60s down-then-up preload pops on flats (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_overcollapsed_preload
+headline_en: Over-collapsed preload — sitting on the tail
+phases: preload
+body_signal: Excessive hip/knee flexion with chest collapse and aft COM before takeoff.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Athletic squat — hips back slightly, chest still proud."
+drill: 45s athletic squat preload holds — mid-foot pressure (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_weak_extension_takeoff
+headline_en: Weak leg extension through takeoff
+phases: takeoff
+body_signal: Knee/hip extension incomplete at E_TAKEOFF; arm lift dominates.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Push the snow away — full leg extension through the lip."
+drill: 60s full-extension pop through lip proxy on flats (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_stiff_leg_landing
+headline_en: Stiff-leg landing — poor shock absorption
+phases: landing
+body_signal: Knee flexion increase < threshold from air to E_LAND_STABLE.
+why_it_matters: Soft landings reduce peak load proxies in progressions (B+ summarized) — education not diagnosis; helmet/wrist framing in disclaimer.
+feel_cue: "Land soft — knees bend on contact, not after you stumble."
+drill: 60s soft-knee stick landings dryland then small feature with coach (see Coaching/002_drills.txt).
+severity_default: high
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_one_foot_landing
+headline_en: One-foot dominant landing
+phases: landing
+body_signal: Knee flexion L vs R asymmetric at landing; COM over one boot.
+why_it_matters: Two-foot catch is standard early park teaching (B); gear framing applies.
+feel_cue: "Two-foot catch — equal knees, equal pressure."
+drill: 60s two-foot catch stick landings (see Coaching/002_drills.txt).
+severity_default: high
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_landing_backseat
+headline_en: Backseat landing — COM aft of mid-boot
+phases: landing, recover
+body_signal: Pelvis projects behind mid-boot at E_LAND; hands trail hips.
+why_it_matters: Aft landings precede buttslides and loss of control (B); helmet/wrist safety framing applies.
+feel_cue: "Hands forward — hips over the board, not over the tail."
+drill: 60s hands-forward landing sticks; helmet/wrist-guard reminder (see Coaching/002_drills.txt).
+severity_default: high
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_loose_trunk_air
+headline_en: Loose trunk in the air — no held shape
+phases: flight
+body_signal: Large trunk pitch/yaw variance in flight without held shape.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Pick a shape — slight tuck or straight body — and hold it."
+drill: 45s held-shape pop jumps dryland (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_asymmetric_arm_preload
+headline_en: Asymmetric arm wind-up in preload
+phases: preload
+body_signal: One arm wind-up markedly larger than other in preload.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Symmetrical wind-up — both arms mirror each other."
+drill: 45s symmetrical arm wind-up pops (see Coaching/002_drills.txt).
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_backseat_traverse
+headline_en: COM sits in the backseat while traversing
+phases: traverse
+body_signal: Pelvis projects clearly behind mid-boot proxy for ≥12 frames at steady traverse speed.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Pressure over the front foot — shin on tongue, chest over bindings."
+drill: 60–90s front-foot pressure traverse with ankle bounce every 10 m.
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_edge_change_late
+headline_en: Edge change arrives late after the fall line
+phases: initiation, steering
+body_signal: Pelvis/knee angulation toward new turn side peaks after COM crosses fall-line proxy.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Commit early — new edge before you face straight downhill."
+drill: 90s early-edge garland to full turn on green.
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_counter_rotate_excess
+headline_en: Excessive counter-rotation fights the turn
+phases: steering, apex
+body_signal: Shoulder yaw opposite pelvis through apex with large magnitude.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Quiet upper body — let the board turn under a calm torso."
+drill: 60s linked turns with soft fist at sternum.
+severity_default: low
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_hands_behind_hips_air
+headline_en: Hands trail behind hips in the air
+phases: air, landing
+body_signal: Both wrists remain posterior to pelvis through air window.
+why_it_matters: Hands-behind often accompanies backseat landings (coaching / helmet+wrist-guard framing — see disclaimer).
+feel_cue: "Reach for the landing — hands forward of hips."
+drill: 45s dryland pop jumps reaching hands forward; 8 reps.
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_spotting_look_down
+headline_en: Rider looks down at the board through takeoff
+phases: approach, takeoff
+body_signal: Head pitch down increases through E_TAKEOFF; gaze toward boots.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Eyes to the landing — chin level, then pop."
+drill: 45s eyes-to-cone beyond takeoff; pop in place 6×.
+severity_default: low
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_asymmetric_knee_apex
+headline_en: Inside knee collapses at turn apex
+phases: apex, steering
+body_signal: Lead/inside knee medial drift relative to ankle at apex.
+why_it_matters: Visible knee collapse is coached as edge-pressure mismanagement; not ligament diagnosis.
+feel_cue: "Stack knee over toes — press the shin, don't fold inward."
+drill: 60s slow J-turns stacking knee over boot; both directions.
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_early_unweight_hop
+headline_en: Early hop unweights before the edge engages
+phases: initiation
+body_signal: COM vertical rise spike before E_EDGE_ENGAGE with both ankles plantarflexing.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Roll the edge first — hop only after the new edge bites."
+drill: 60s press-then-pop linked turns; no hop first 4.
+severity_default: low
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.
+---
+
+finding_id: fault_rigid_ankles_landing
+headline_en: Ankles stay rigid on park landing
+phases: landing
+body_signal: Ankle dorsiflexion change < threshold from air to E_LAND_STABLE.
+why_it_matters: Instructor/coaching consensus (B/B+): form and control framing — not individual injury prediction. See Docs/002_DISCLAIMER (helmet/wrist).
+feel_cue: "Land through the boot — ankles soft, then knees."
+drill: 60s dryland stick landings focusing ankle flex first; 10 reps.
+severity_default: medium
+sources: PSIA-AASI-style instructor literature summarized (B); turn/park mechanics reviews (B+)
+
+# Severity: high — stiff/one-foot/backseat landings; medium — traverse balance, edge timing; low — look-down, early hop.
+# Youth: slower features; helmet language with disclaimer.
+youth_note: Soft ankles; keep helmet/wrist safety framing; no park pressure cues.

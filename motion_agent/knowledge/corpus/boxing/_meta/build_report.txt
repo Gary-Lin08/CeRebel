@@ -1,0 +1,99 @@
+# Boxing Sport Pack — Build Report (gap-fill / inventory)
+generated_at: 2026-10-21T03:46:00+08:00
+sport_id: boxing
+scope: technique and shadowboxing form only (non-contact; no harm-oriented coaching)
+build_agent: corpus_builder_gap_fill
+index_scope: exclude _meta/build_report.txt from RAG per SPORT_PACK_KB_SPEC
+
+================================================================================
+BUILD SUMMARY
+================================================================================
+
+status: v1 content present; gap-fill pass on Biomechanics/001, Training/001, build inventory
+total_pack_files: 19
+language_primary: English
+authority_band: B / B+ summaries — Docs/002_DISCLAIMER.txt
+
+Directories with substantive bodies:
+  Docs/, Phases/, Quality/, Findings/, Coaching/, Biomechanics/, Training/, Schema/, Taxonomy/, _meta/
+
+================================================================================
+ALL FILES (LINE COUNTS)
+================================================================================
+
+| lines | path |
+|------:|------|
+|   206 | Biomechanics/001_overview.txt |
+|   127 | Coaching/001_cues.txt |
+|   182 | Coaching/002_drills.txt |
+|   144 | Docs/001_ARCHITECTURE.txt |
+|    81 | Docs/002_DISCLAIMER.txt |
+|   275 | Findings/001_common_faults.txt |
+|   144 | Phases/001_phase_model.txt |
+|    71 | Quality/001_quality_definition.txt |
+|   199 | Quality/002_checkpoints.txt |
+|   131 | Schema/001_ontology.txt |
+|   135 | Taxonomy/001_concepts.txt |
+|   204 | Taxonomy/002_relations.txt |
+|   220 | Training/001_team_practice.txt |
+|    34 | _meta/SOURCE_MANIFEST.txt |
+|   249 | _meta/brain_plan.txt |
+|    77 | _meta/build_report.txt |
+|     8 | _meta/pack_readme.txt |
+|   220 | _meta/research_notes.txt |
+|   276 | _meta/review_report.txt |
+
+total_lines_all_files: 2833 (includes this report; recount after further edits)
+
+================================================================================
+GAP-FILL ACTIONS (THIS PASS)
+================================================================================
+
+Biomechanics/001_overview.txt (206 lines)
+  - Added jab/cross shadow biomechanics (§11–12), brain-plan series table (§13), non-harm boundary (§14).
+
+Training/001_team_practice.txt (220 lines)
+  - Added solo shadowboxing practice blocks S1–S6, session presets, solo safety (§10–12).
+  - Finding cross-links use Findings/001 ids (fault_hands_drop, fault_rear_hand_drop_on_jab, etc.).
+
+_meta/research_notes.txt (220 lines)
+  - Already present; not overwritten.
+
+_meta/build_report.txt
+  - Regenerated file inventory with line counts.
+
+================================================================================
+ACCEPTANCE CHECKLIST (brain_plan v0.1)
+================================================================================
+
+[x] Phase model: guard → prep → extension → recoil → recovery + footwork (Phases/001)
+[x] 10+ finding cards with cue + drill paths (Findings/001, Coaching/)
+[x] No opponent / bag tracking dependency (Docs/001)
+[x] Youth vs adult language bands (Training/, Biomechanics/)
+[x] Explicit non-contact, non-harm scope (Docs/002, Biomechanics/ §14)
+[ ] Ingest chunk count (engineering follow-up)
+[ ] SOURCE_MANIFEST URL retrieval dates complete (34 lines — extend as needed)
+
+pack_version: 1.0.0-shadow-v1
+
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+build_agent: corpus_v2_consistency_upgrade
+sports_batch: basketball, boxing, snowboarding, weightlifting, swimming, yoga
+
+Actions:
+- Migrated Findings/001_common_faults.txt to canonical `---` + finding_id: fault_* cards
+  with headline_en, phases, body_signal, why_it_matters, feel_cue, drill, severity_default, sources
+- Findings count now: 27
+- Ensured Coaching cues/drills cite fault_* (cues≈23, drills≈17)
+- Confirmed Taxonomy/002_relations.txt rows ≥15 (count≈16)
+- Added Phases V2 PHASE LINK INDEX with detector_events + fault_links
+- Rewrote _meta/review_report.txt (stale missing-DISCLAIMER claims corrected)
+- Appended this build_report section
+
+Sport-specific notes:
+- Shadow-only; added hip rotation / guard-chin / compact prep findings; no contact.
+build_status: v2_upgrade_complete
+VERDICT_REF: APPROVED_V2

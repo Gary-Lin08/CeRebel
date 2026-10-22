@@ -1,0 +1,44 @@
+# Yoga — Concept and pose relations (v1)
+
+# Phase order (hold)
+relation: concept_asana → has_phase → arrival → entry → hold_early → hold_anchor → hold_late → exit
+
+# Phase order (flow)
+relation: concept_vinyasa → has_phase → flow_init → weight_transfer → peak_load → decel → flow_arrival
+
+# Pose family membership
+relation: pose_down_dog → family → inversion_prep
+relation: pose_plank → family → arm_support
+relation: pose_chaturanga_low → family → arm_support
+relation: pose_warrior_1 → family → standing_lunge
+relation: pose_warrior_2 → family → standing_lunge
+relation: pose_tree → family → standing_balance
+relation: pose_bridge → family → supine_extension
+relation: pose_cobra → family → prone_backbend
+relation: pose_up_dog → family → prone_backbend
+relation: pose_forward_fold_standing → family → standing_flexion
+relation: pose_seated_forward_fold → family → seated_flexion
+
+# Typical counterposes
+relation: pose_cobra → counterposed_by → pose_child
+relation: pose_up_dog → counterposed_by → pose_down_dog
+relation: pose_chair → counterposed_by → pose_forward_fold_standing
+
+# Sun Salutation A edges (directed)
+relation: pose_upward_salute → flows_to → pose_forward_fold_standing
+relation: pose_forward_fold_standing → flows_to → pose_low_lunge
+relation: pose_low_lunge → flows_to → pose_plank
+relation: pose_plank → flows_to → pose_chaturanga_low
+relation: pose_chaturanga_low → flows_to → pose_up_dog
+relation: pose_up_dog → flows_to → pose_down_dog
+
+# Finding affinity (sample)
+relation: fault_dog_lumbar_sag → affects_pose → pose_down_dog
+relation: fault_plank_hip_sag → affects_pose → pose_plank, pose_chaturanga_low
+relation: fault_warrior_knee_collapse → affects_pose → pose_warrior_2
+relation: fault_tree_foot_on_knee → affects_pose → pose_tree
+
+# Quality dimension mapping
+relation: checkpoint_dog_spine_length → evaluates → stack_neutral
+relation: checkpoint_plank_sagittal_line → evaluates → core_line
+relation: checkpoint_tree_pelvis_level → evaluates → balance_stability

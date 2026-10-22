@@ -1,0 +1,85 @@
+# Weightlifting — Quality Definition (body-first)
+
+## What “quality” means in CeRebel
+
+For this pack, **lifting quality** is not the weight on the bar. It is the degree to which visible body mechanics
+align with patterns associated in open literature and reputable coaching with:
+
+1. **Stable setup** — balanced base, intentional brace before moving (setup phase).
+2. **Coordinated sequence** — hips, knees, and trunk move in roles appropriate to the lift (squat vs hinge vs press).
+3. **Controlled bottom / pull** — no abrupt collapse or uncontrolled segment ordering visible in pose data.
+4. **Symmetric finish** — lockout without obvious lateral shift or one-sided collapse when both sides are visible.
+5. **Repeatability** — similar event ordering across reps in a set (when comparing clips).
+
+Quality scores in product code (future) should combine checkpoint pass rate, phase confidence, capture angle, and
+`lift_variant` — not a single template copied from elite powerlifters.
+
+## Dimensions by lift
+
+### Squat (lift_variant=squat)
+
+| dimension_id       | plain label              | primary phases        |
+|--------------------|--------------------------|------------------------|
+| base_balance       | Foot balance & stance    | setup, bottom, lockout |
+| descent_control    | Eccentric control        | descent, bottom        |
+| depth_appropriate  | ROM for intent           | bottom                 |
+| knee_tracking      | Knee vs foot alignment   | descent, ascent        |
+| trunk_coupling     | Chest–hip timing         | descent, ascent        |
+| lockout_completion | Full hip/knee extension  | lockout                |
+
+### Deadlift (lift_variant=deadlift)
+
+| dimension_id       | plain label              | primary phases        |
+|--------------------|--------------------------|------------------------|
+| hinge_pattern      | Hip-dominant load        | setup, pull            |
+| bar_close_proxy    | Hands over mid-foot      | setup, pull            |
+| lumbar_stability   | Trunk rigidity in pull   | pull, transition       |
+| knee_hip_sync      | Shoulders & hips rise    | pull                   |
+| lockout_hip        | Glute lockout not lean   | lockout                |
+
+### Overhead press (lift_variant=ohp)
+
+| dimension_id       | plain label              | primary phases        |
+|--------------------|--------------------------|------------------------|
+| strict_lower       | Quiet legs               | setup, press           |
+| bar_path_vertical  | Wrist path near vertical | press, lockout         |
+| rib_stack          | Trunk not over-lean      | press                  |
+| lockout_support    | Shoulder/elbow finish    | lockout                |
+| head_room          | Clearance without crunch | lockout                |
+
+Each dimension maps to checkpoints in `002_checkpoints.txt`. A rep can be “strong hinge_pattern, weak lumbar_stability”
+— product copy should show dimension breakdown, not one grade.
+
+## Evidence basis
+
+- NSCA and ACSM position stands on resistance training (A): health, supervision, progression.
+- Systematic reviews of squat and deadlift kinematics/kinetics (B+): joint moments, trunk angle, stance effects.
+- Coaching consensus (B): bracing, foot pressure, “spread the floor,” “ribs down” — translated to body signals.
+
+## Youth vs adult quality framing
+
+**Youth:** prioritize learning positions with light load, full supervision, and conservative depth. Smaller femur/torso
+ratios change apparent trunk angle — do not label “good morning squat” without context.
+
+**Adult:** same dimensions; allow competition-depth squats and heavier apparent trunk lean when checkpoints for knee
+tracking and lockout still pass.
+
+Never instruct max testing from a single app session.
+
+## Capture quality gates
+
+Downgrade or suppress findings when:
+
+- Camera purely frontal for knee valgus or sagittal trunk (need 45° or side view).
+- Feet or hands occluded by plates/rack.
+- Frame rate < 30 fps on fast deadlift pull.
+- `lift_variant` mismatch (push press labeled strict OHP).
+
+## Relationship to findings
+
+Checkpoints pass/fail/unclear at phase windows. Findings fire when rules in Findings/001 trigger with confidence.
+This document states the positive model; faults are named there.
+
+## Disclaimer pointer
+
+Coaching support only — not medical clearance. See Docs/002_DISCLAIMER.txt.

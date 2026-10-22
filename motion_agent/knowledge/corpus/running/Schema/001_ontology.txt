@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "running": "https://example.org/running-kb/ontology/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "label": "skos:prefLabel",
+    "source": {"@id": "prov:wasDerivedFrom", "@type": "@id"}
+  },
+  "@graph": [
+    {"@id": "running:RunningEntity", "@type": "rdfs:Class", "label": {"en": "Running KB entity", "zh-cn": "跑步知识库实体"}},
+    {"@id": "running:Runner", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "schema:Person"}, "label": {"en": "Runner", "zh-cn": "跑者"}},
+    {"@id": "running:StrideCycle", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:RunningEntity"}, "label": {"en": "Stride cycle", "zh-cn": "步态周期"}},
+    {"@id": "running:GaitPhase", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:RunningEntity"}, "label": {"en": "Gait phase", "zh-cn": "步态阶段"}},
+    {"@id": "running:GaitEvent", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:RunningEntity"}, "label": {"en": "Gait event", "zh-cn": "步态事件"}},
+    {"@id": "running:MeasurementDefinition", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:RunningEntity"}},
+    {"@id": "running:JointAngle", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:MeasurementDefinition"}},
+    {"@id": "running:SegmentSpeed", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:MeasurementDefinition"}},
+    {"@id": "running:ClipMetric", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:MeasurementDefinition"}, "label": {"en": "Clip-level metric", "zh-cn": "片段级指标"}},
+    {"@id": "running:BiomechObservation", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:RunningEntity"}},
+    {"@id": "running:CoachingConcept", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:RunningEntity"}},
+    {"@id": "running:Finding", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:CoachingConcept"}, "label": {"en": "Gait finding", "zh-cn": "跑姿问题"}},
+    {"@id": "running:Checkpoint", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:RunningEntity"}},
+    {"@id": "running:Evidence", "@type": "rdfs:Class"},
+    {"@id": "running:ResearchFinding", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:Evidence"}},
+    {"@id": "running:CoachingConsensus", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:Evidence"}},
+    {"@id": "running:FederationGuideline", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "running:Evidence"}},
+
+    {"@id": "running:phase_contact", "@type": "running:GaitPhase", "label": {"en": "Touchdown", "zh-cn": "着地"}},
+    {"@id": "running:phase_loading", "@type": "running:GaitPhase", "label": {"en": "Loading", "zh-cn": "缓冲"}},
+    {"@id": "running:phase_midstance", "@type": "running:GaitPhase", "label": {"en": "Mid-stance", "zh-cn": "支撑中期"}},
+    {"@id": "running:phase_propulsion", "@type": "running:GaitPhase", "label": {"en": "Propulsion", "zh-cn": "蹬伸"}},
+    {"@id": "running:phase_toe_off", "@type": "running:GaitPhase", "label": {"en": "Toe-off", "zh-cn": "离地"}},
+    {"@id": "running:phase_swing", "@type": "running:GaitPhase", "label": {"en": "Swing", "zh-cn": "摆动"}},
+    {"@id": "running:phase_flight", "@type": "running:GaitPhase", "label": {"en": "Flight", "zh-cn": "腾空"}},
+
+    {"@id": "running:event_ic", "@type": "running:GaitEvent", "label": {"en": "Initial contact proxy", "zh-cn": "着地（估计）"}},
+    {"@id": "running:event_to", "@type": "running:GaitEvent", "label": {"en": "Toe-off proxy", "zh-cn": "离地（估计）"}},
+    {"@id": "running:event_midstance", "@type": "running:GaitEvent", "label": {"en": "Mid-stance knee flex peak", "zh-cn": "支撑中期"}},
+
+    {"@id": "running:series_cadence", "@type": "running:ClipMetric", "label": {"en": "Cadence", "zh-cn": "步频"}},
+    {"@id": "running:series_overstride", "@type": "running:MeasurementDefinition", "label": {"en": "Overstride proxy", "zh-cn": "过大步幅代理"}},
+    {"@id": "running:series_vertical_oscillation", "@type": "running:MeasurementDefinition", "label": {"en": "Vertical oscillation", "zh-cn": "垂直振幅"}},
+    {"@id": "running:series_trunk_lean", "@type": "running:JointAngle", "label": {"en": "Trunk lean", "zh-cn": "躯干前倾"}},
+    {"@id": "running:series_hip_drop", "@type": "running:JointAngle", "label": {"en": "Pelvis obliquity", "zh-cn": "骨盆倾斜"}},
+    {"@id": "running:series_knee_flex_stance", "@type": "running:JointAngle", "label": {"en": "Stance knee flexion", "zh-cn": "支撑膝屈曲"}},
+    {"@id": "running:series_arm_swing", "@type": "running:MeasurementDefinition", "label": {"en": "Arm swing range", "zh-cn": "摆臂幅度"}},
+
+    {"@id": "running:authorityLevel", "@type": "rdf:Property"},
+    {"@id": "running:ageBand", "@type": "rdf:Property"},
+    {"@id": "running:legSide", "@type": "rdf:Property"},
+    {"@id": "running:precedes", "@type": "rdf:Property"},
+    {"@id": "running:occursIn", "@type": "rdf:Property"},
+    {"@id": "running:measuredOn", "@type": "rdf:Property"},
+    {"@id": "running:failTriggers", "@type": "rdf:Property"}
+  ]
+}

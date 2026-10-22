@@ -1,0 +1,42 @@
+# Basketball Shooting — Concept Relations
+# Format: subject | relation | object | note
+
+jump_shot | has_variant | variant_jump | ontology
+free_throw | has_variant | variant_ft | ontology
+jump_shot | includes_phase | dip | sequential
+jump_shot | includes_phase | drive | sequential
+jump_shot | includes_phase | follow | includes landing
+free_throw | excludes_phase | drive | no explosive jump
+free_throw | emphasizes | routine | consistency
+setup | precedes | dip | jump shot only
+dip | precedes | drive | jump shot
+drive | precedes | transfer | jump shot
+transfer | precedes | set | both variants
+set | precedes | release | both variants
+release | precedes | follow | both variants
+leg_drive | supports | release | kinetic chain B+
+dip | enables | com_rise | countermovement
+guide_hand | should_not_cause | release | off-hand quiet
+shooting_hand | primary_at | release | wrist speed peak
+soft_landing | evaluated_at | follow | jump only
+fault_arm_only_shot | occurs_in | drive | finding map
+fault_arm_only_shot | occurs_in | transfer | finding map
+fault_flyaway_elbow | occurs_in | set | finding map
+fault_guide_hand_push | occurs_in | release | finding map
+fault_stiff_landing | occurs_in | follow | finding map
+fault_rushed_free_throw | occurs_in | setup | ft only
+checkpoint_com_rise_before_release | guards_against | fault_arm_only_shot | quality
+checkpoint_soft_landing_flex | guards_against | fault_stiff_landing | quality
+cue_ground_to_sky | addresses | fault_arm_only_shot | coaching
+cue_guide_shelf | addresses | fault_guide_hand_push | coaching
+drill_dip_rise_no_shot | addresses | fault_no_load | coaching
+drill_ft_breath_routine | addresses | fault_rushed_free_throw | coaching
+form_shooting | appropriate_for | youth_shooting | training
+catch_and_shoot | requires | dip | often quick dip
+contested_shot | may_increase | asymmetric_load | context not fault alone
+film_angle_front | best_for | elbow_in | capture
+film_angle_side | best_for | dip | capture
+make_miss | not_inferred_from | kinetic_chain | product scope
+E_RELEASE | aligns_with | wrist_speed_peak | detector
+E_DIP_MIN | aligns_with | dip | detector
+E_LAND | aligns_with | soft_landing | detector

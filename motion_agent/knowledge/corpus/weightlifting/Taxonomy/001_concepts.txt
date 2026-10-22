@@ -1,0 +1,341 @@
+# Weightlifting (Barbell Squat / Hinge / Press) — Concept Taxonomy (v0.1)
+# Aligns: _meta/brain_plan.txt, Schema/001_ontology.txt, SPORT_PACK_KB_SPEC
+
+## Primary concepts
+
+concept_id: barbell_strength_form
+label_en: Barbell strength form (squat, hinge, press)
+definition: Body-first analysis of squat, deadlift-style hinge, and press patterns using reconstructed joints; no bar mass or bar tracking required.
+synonyms_en: weight training form, barbell technique, SBD form
+synonyms_zh: 杠铃力量训练, 深蹲硬拉推举技术
+parent: weightlifting
+authority: ProductLogic
+
+concept_id: safety_first_coaching
+label_en: Safety-first coaching gate
+definition: Pain, injury, and environment checks run before form findings; product refuses drill prescription when safety gates fail.
+synonyms_en: pain stop, red flag screening
+related_phases: all
+authority: A
+
+concept_id: lift_family_squat
+label_en: Squat lift family
+definition: Bilateral knee-dominant pattern with bar on upper back; phase chain sq_setup → sq_rerack.
+synonyms_en: back squat, barbell squat
+synonyms_zh: 杠铃深蹲, 背蹲
+authority: B+
+
+concept_id: lift_family_hinge
+label_en: Hinge / deadlift family
+definition: Hip-dominant pull from floor with neutral spine intent; phase chain dl_setup → dl_reset.
+synonyms_en: deadlift, conventional pull, RDL (variant)
+synonyms_zh: 硬拉, 髋铰链
+authority: B+
+
+concept_id: lift_family_press
+label_en: Press family
+definition: Vertical or horizontal barbell press; OHP default phase chain pr_setup → pr_rerack; bench shares IDs with floor-start note.
+synonyms_en: overhead press, bench press, strict press
+synonyms_zh: 推举, 卧推, 站姿推举
+authority: B+
+
+concept_id: spinal_neutrality_proxy
+label_en: Spinal neutrality (posture proxy)
+definition: Visible lumbar extension/bending trends under load; not diagnostic of tissue injury; used for squat and hinge findings.
+synonyms_en: neutral spine cue, braced trunk
+related_series: series_lumbar_extension, series_lumbar_bending, series_trunk_lean_proxy
+authority: B+
+
+concept_id: bracing
+label_en: Trunk bracing
+definition: Pre-movement stiffening of trunk before descent or pull; sq_brace, dl_brace phases.
+synonyms_en: 360° brace, Valsalva (coach context only — not medical)
+related_phases: sq_brace, dl_brace, pr_setup
+authority: B+
+
+## Squat phase concepts (align wlift:phase_sq_*)
+
+concept_id: phase_sq_setup
+label_en: Squat setup
+start_event: clip_start_or_stillness
+end_event: E_SQ_BRACE_START
+body_focus: stance width, bar position proxy, foot tripod
+
+concept_id: phase_sq_brace
+label_en: Squat brace
+start_event: E_SQ_BRACE_START
+end_event: E_SQ_DESCENT_START
+body_focus: ribcage over pelvis, minimal knee flex
+
+concept_id: phase_sq_descent
+label_en: Squat descent
+start_event: E_SQ_DESCENT_START
+end_event: E_SQ_BOTTOM
+body_focus: controlled knee/hip flex, heel contact
+
+concept_id: phase_sq_bottom
+label_en: Squat bottom
+start_event: E_SQ_BOTTOM
+end_event: E_SQ_ASCENT_START
+body_focus: turnaround, depth proxy via knee flex
+
+concept_id: phase_sq_ascent
+label_en: Squat ascent
+start_event: E_SQ_ASCENT_START
+end_event: E_SQ_LOCKOUT
+body_focus: hip and chest rise together, knee tracking
+
+concept_id: phase_sq_lockout
+label_en: Squat lockout
+start_event: E_SQ_LOCKOUT
+end_event: E_SQ_RERACK_START
+body_focus: full knee/hip extension, stable trunk
+
+concept_id: phase_sq_rerack
+label_en: Squat rerack
+start_event: E_SQ_RERACK_START
+end_event: clip_end_or_stillness
+body_focus: controlled walk-back to rack if visible
+
+## Hinge phase concepts (align wlift:phase_dl_*)
+
+concept_id: phase_dl_setup
+label_en: Deadlift setup
+start_event: clip_start_or_stillness
+end_event: E_DL_BRACE_START
+body_focus: shin-over-bar proxy, hip height, grip hang
+
+concept_id: phase_dl_brace
+label_en: Deadlift brace
+start_event: E_DL_BRACE_START
+end_event: E_DL_BREAK
+body_focus: lats long, neutral lumbar intent
+
+concept_id: phase_dl_break
+label_en: Break from floor
+start_event: E_DL_BREAK
+end_event: E_DL_KNEE_PASS
+body_focus: shoulders and hips rise together; no hip shoot
+
+concept_id: phase_dl_knee_pass
+label_en: Knee pass
+start_event: E_DL_KNEE_PASS
+end_event: E_DL_LOCKOUT
+body_focus: leg drive, bar/hands pass knee height proxy
+
+concept_id: phase_dl_lockout
+label_en: Deadlift lockout
+start_event: E_DL_LOCKOUT
+end_event: E_DL_LOWER_START
+body_focus: hip extension, avoid hyperextension
+
+concept_id: phase_dl_lower
+label_en: Deadlift lowering
+start_event: E_DL_LOWER_START
+end_event: E_DL_RESET
+body_focus: controlled eccentric if present in clip
+
+concept_id: phase_dl_reset
+label_en: Deadlift reset
+start_event: E_DL_RESET
+end_event: next_rep_or_clip_end
+body_focus: return to setup between reps
+
+## Press phase concepts (align wlift:phase_pr_*)
+
+concept_id: phase_pr_setup
+label_en: Press setup
+start_event: clip_start
+end_event: E_PR_UNRACK
+body_focus: grip width, wrist stack, feet planted
+
+concept_id: phase_pr_unrack
+label_en: Unrack
+start_event: E_PR_UNRACK
+end_event: E_PR_ECCENTRIC_START
+body_focus: clear rack, stable starting position
+
+concept_id: phase_pr_eccentric
+label_en: Press eccentric
+start_event: E_PR_ECCENTRIC_START
+end_event: E_PR_DRIVE_START
+body_focus: bar path to chin/chest band; elbows under wrists proxy
+
+concept_id: phase_pr_drive
+label_en: Press drive
+start_event: E_PR_DRIVE_START
+end_event: E_PR_LOCKOUT
+body_focus: leg drive (OHP), rib-pelvis stack, vertical hand path proxy
+
+concept_id: phase_pr_lockout
+label_en: Press lockout
+start_event: E_PR_LOCKOUT
+end_event: E_PR_RERACK_START
+body_focus: elbow extension, bar over mid-foot proxy
+
+concept_id: phase_pr_rerack
+label_en: Press rerack
+start_event: E_PR_RERACK_START
+end_event: clip_end
+body_focus: safe return to hooks
+
+## Event concepts
+
+concept_id: event_sq_bottom
+label_en: Squat bottom event
+definition: Frame of maximum mean knee flexion in rep window.
+detector: E_SQ_BOTTOM
+synonyms_en: turnaround, hole
+
+concept_id: event_sq_lockout
+label_en: Squat lockout event
+definition: Pelvis vertical height peak after bottom.
+detector: E_SQ_LOCKOUT
+
+concept_id: event_dl_break_floor
+label_en: Deadlift break floor
+definition: Onset of upward hand/wrist vertical velocity after setup stillness.
+detector: E_DL_BREAK
+
+concept_id: event_dl_lockout
+label_en: Deadlift lockout event
+definition: Hip extension complete; pelvis height peak or min hip flexion post-pull.
+detector: E_DL_LOCKOUT
+
+concept_id: event_pr_drive_peak
+label_en: Press drive peak
+definition: Maximum upward hand vertical velocity during concentric.
+detector: E_PR_DRIVE_PEAK
+
+## Measurement series concepts
+
+concept_id: series_knee_flex_bilateral
+label_en: Bilateral knee flexion
+opensim_coords: knee_angle_l, knee_angle_r
+unit: deg
+authority: ProductLogic
+
+concept_id: series_lumbar_extension
+label_en: Lumbar extension
+opensim_coords: lumbar_extension
+unit: deg
+authority: ProductLogic
+
+concept_id: series_trunk_lean_proxy
+label_en: Trunk forward lean proxy
+definition: Torso orientation relative to vertical from pelvis to torso body.
+unit: deg
+authority: ProductLogic
+
+concept_id: series_knee_valgus_proxy
+label_en: Knee valgus proxy
+definition: Medial knee drift or hip_adduction/knee adduction proxy under load; monocular uncertainty high.
+unit: deg_or_cm
+authority: B+
+
+## Safety finding concepts (priority)
+
+concept_id: finding_safety_pain_stop
+label_en: Stop — pain reported
+definition: Non-kinematic gate; blocks form drills.
+severity: critical
+authority: A
+
+concept_id: finding_safety_environment_unknown
+label_en: Confirm spotters and safety setup
+definition: Near-max context without stated pins/spotter; informational safety prompt.
+severity: high
+authority: B+
+
+## Form finding concepts (stable slugs — see brain_plan section 7)
+
+concept_id: finding_sq_good_morning
+label_en: Good-morning squat (hips rise first)
+primary_phases: phase_sq_ascent
+series: series_pelvis_height, series_trunk_lean_proxy
+authority: B+
+
+concept_id: finding_dl_lumbar_flexion
+label_en: Lumbar flexion under pull
+primary_phases: phase_dl_break, phase_dl_knee_pass
+series: series_lumbar_extension
+authority: A (load concern) B+ (IK threshold)
+
+concept_id: finding_sq_knee_valgus
+label_en: Knee valgus on ascent
+primary_phases: phase_sq_ascent
+series: series_knee_valgus_proxy
+authority: A (risk literature) B+ (threshold)
+
+concept_id: finding_dl_hips_shoot
+label_en: Hips shoot up before bar moves
+primary_phases: phase_dl_break
+series: series_hip_flex_bilateral, series_pelvis_height
+authority: B+
+
+concept_id: finding_pr_excessive_arch
+label_en: Excessive arch on press
+primary_phases: phase_pr_drive, phase_pr_lockout
+series: series_lumbar_extension, series_pelvis_tilt
+authority: B+
+
+concept_id: finding_sq_heel_rise
+label_en: Heel rise at bottom
+primary_phases: phase_sq_bottom
+series: ankle/calcn height (future)
+authority: B+
+
+concept_id: finding_sq_bounce_bottom
+label_en: Bounce at bottom
+primary_phases: phase_sq_bottom
+series: series_knee_flex_bilateral velocity
+authority: B+
+
+concept_id: finding_dl_hyperextension_lockout
+label_en: Hyperextension at lockout
+primary_phases: phase_dl_lockout
+series: series_lumbar_extension
+authority: B+
+
+concept_id: finding_pr_incomplete_lockout
+label_en: Incomplete lockout
+primary_phases: phase_pr_lockout
+series: series_elbow_flex_bilateral
+authority: B+
+
+concept_id: finding_pr_elbow_flare
+label_en: Elbow flare on press
+primary_phases: phase_pr_drive
+series: arm_add_l, arm_add_r
+authority: B
+
+concept_id: finding_sq_depth_shallow
+label_en: Squat depth informational
+primary_phases: phase_sq_bottom
+series: series_knee_flex_bilateral
+severity: info
+authority: B+
+
+concept_id: finding_lift_bilateral_asymmetry
+label_en: Bilateral asymmetry
+primary_phases: phase_sq_ascent, phase_dl_lockout
+series: series_asymmetry_knee
+authority: B+
+
+concept_id: finding_sq_rush_descent
+label_en: Descent before brace set
+primary_phases: phase_sq_brace, phase_sq_descent
+series: series_knee_flex_bilateral timing
+authority: B+
+
+## Audience bands
+
+concept_id: audience_youth
+label_en: Youth lifter
+definition: Emphasis on supervision, submaximal loads, no 1RM testing in product KB.
+authority: A+
+
+concept_id: audience_adult
+label_en: Adult lifter
+definition: Standard coaching heuristics with conservative IK thresholds.
+authority: B+

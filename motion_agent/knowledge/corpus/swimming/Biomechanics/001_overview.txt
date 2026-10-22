@@ -1,0 +1,169 @@
+# Freestyle Biomechanics — Overview (open literature summary)
+
+This document summarizes **relationships** reported in open-access reviews and kinematic studies of front crawl.
+It does not prescribe universal angle targets. Authority: B+ unless noted. Retrieved context: 2026-10-21 pack build.
+
+## Scope and method
+
+Freestyle propulsion arises from **hand/forearm drag and lift** (depending on model), **body orientation**, and
+**kick contributions** that vary by distance and skill. Most pool studies use video, underwater cameras, force
+paddles, or CFD; CeRebel uses **visible body kinematics** only — findings are proxies, not lab measurements.
+
+Key open-source review themes (representative categories):
+- Front crawl kinematics across skill levels (entry, catch, pull, recovery timing).
+- Shoulder complex loading and stroke mechanics (clinical reviews — careful language).
+- Propulsive vs resistive phases of the arm stroke.
+- Role of trunk rotation in reach length and pull depth.
+
+See `_meta/SOURCE_MANIFEST.txt` for URL-level citations.
+
+---
+
+## Kinematic chain in freestyle
+
+Unlike land kinetic chains with ground reaction forces, swimmers create propulsion by **action on the water** while
+minimizing drag. A useful coaching chain model:
+
+1. **Body line and roll** set up reach and reduce frontal area.
+2. **Entry and extension** place the hand in a position to initiate force without crossing midline excessively.
+3. **Catch (EVF)** increases effective surface area oriented to move water backward relative to the swimmer.
+4. **Pull and push** accelerate the hand along a path largely under the shoulder; exit near the hip completes the stroke.
+5. **Kick** stabilizes hips and adds propulsion especially at sprint rates; at distance, kick amplitude often decreases.
+
+Proximal-to-distal timing appears in literature as **hip/trunk rotation preceding peak hand force**, though exact
+phase lags vary by swimmer morphology and stroke rate.
+
+---
+
+## Entry and catch
+
+Studies across skill levels often report differences in:
+
+- **Entry position** relative to shoulder and head.
+- **Time from entry to maximum hand velocity** — shorter in elites at same rate in some cohorts.
+- **Elbow flexion** developing during early underwater phase.
+
+The coaching construct **early vertical forearm (EVF)** aligns with observations that higher skilled swimmers
+orient the forearm to press backward sooner, with the elbow flexed and often visually **above the wrist** in
+side view. Exact elbow angles in degrees vary widely; product uses ordinal proxies (elbow above wrist) not
+clinical goniometry.
+
+**Dropped elbow** patterns associate with:
+- Reduced propulsive impulse in some experimental summaries.
+- Increased shoulder abduction/internal rotation moments in modeling papers — interpret as load discussion, not diagnosis.
+
+---
+
+## Pull and push
+
+Mid-pull typically shows **peak hand speed** and substantial trunk rotation toward the pulling side. Pull path
+curvature in 3D studies often passes under the swimmer's center of mass projection; wide pulls are associated with
+less efficient force orientation in coaching biomechanics texts.
+
+Push phase (finish) contributes non-trivial impulse in some force paddle studies — exiting early may truncate
+propulsion. Elbow extension timing interacts with stroke rate: higher rates may shorten push duration while
+maintaining impulse via higher acceleration.
+
+---
+
+## Recovery
+
+Recovery style varies:
+- **High-elbow recovery** common in distance and technical coaching — reduces swing width and setup for clean entry.
+- **Straighter recovery** seen in some sprinters — tradeoffs in shoulder mobility and drag are debated in coaching literature.
+
+Body tracking from side view can classify recovery height qualitatively; front view helps detect crossover setup.
+
+---
+
+## Kick mechanics
+
+Flutter kick:
+- Originate from **hip flexion/extension** with relatively **straight knee** at cruise speeds in many texts.
+- **Six-beat** kick (six kicks per full arm cycle) common in middle-distance competitive models.
+- **Two-beat** kick reduces energy cost in some distance swimmers but demands strong catch/pull.
+
+Kick contributes **stabilization** (hip roll control) even when propulsive fraction is modest. Excessive knee flexion
+(bicycle kick) increases drag in beginner cohort descriptions.
+
+---
+
+## Breathing mechanics
+
+Breathing introduces **transient asymmetry**:
+- Head rotation reduces need for vertical lift; vertical lift increases drag in pool swimming models.
+- Breathing every 2 vs 3 strokes shifts timing asymmetry; bilateral training is a common balance strategy (coaching B).
+
+Biomechanics studies note **torsion** on the spine during breath — usually manageable in healthy swimmers; pain
+requires clinical evaluation (disclaimer).
+
+---
+
+## Body roll and drag
+
+Roll amplitude interacts with:
+- **Reach length** per stroke (often measured as distance per stroke in pool studies).
+- **Shoulder clearance** during recovery.
+- **Kick coupling** — flat swimming (low roll) may correlate with shorter reach in learning swimmers.
+
+Over-rotation may correlate with **crossover entry** and snaking hips — product flags co-occurrence patterns.
+
+Drag components (form drag, wave drag) dominate at surface speeds; small postural deviations (head lift, wide legs)
+have outsized drag effects in fluid dynamics summaries — qualitative coaching importance, hard to quantify from 2D pose alone.
+
+---
+
+## Skill level and stroke rate / length tradeoff
+
+Elite sprinters vs distance swimmers exhibit different **stroke rate (SPM)** and **stroke length** combinations:
+- Sprinters: higher rate, shorter length per cycle sometimes, stronger kick.
+- Distance: moderate rate, longer length, economized kick.
+
+Youth swimmers often show **higher stroke rates and shorter lengths** while learning — quality definitions must not
+apply elite templates blindly (see Quality/001_quality_definition.txt youth axis).
+
+---
+
+## Measurement limitations vs research grade
+
+Research studies may use:
+- Underwater multi-camera systems
+- Force transducers on hand paddles
+- Electromyography
+
+CeRebel approximates:
+- Wrist/elbow/shoulder trajectories
+- Cycle timing from peaks
+- Roll from shoulder line tilt
+
+Do not equate app findings with research instrumentation. Confidence flags in Phases/001_phase_model.txt apply.
+
+---
+
+## Injury and load (non-diagnostic summary)
+
+Open clinical literature discusses **shoulder overuse** in swimmers with multifactorial causes: volume, dry-land
+strength, technique patterns, and anatomy. Technique findings such as dropped elbow and overreach are discussed as
+**modifiable factors** in some reviews — not sole causes.
+
+Product rules:
+- Never diagnose impingement or rotator cuff pathology from video.
+- Escalate pain language to disclaimer and human coach/clinician.
+
+---
+
+## Freestyle vs other strokes (glossary pointer)
+
+Backstroke shares roll and catch concepts but supine orientation changes camera requirements.
+Breaststroke and butterfly have distinct kick and recovery constraints — not v1 automated findings.
+Turns and starts involve wall forces — out of v1 cycle model.
+
+---
+
+## Key takeaways for RAG answers
+
+1. Prefer **phase-linked** explanations (entry vs catch vs pull).
+2. Cite **EVF and body line** as coaching constructs supported by broad literature themes, not single magic angles.
+3. Acknowledge **2D pose limits** for underwater forearm orientation.
+4. Separate **youth learning** from **elite performance** models.
+5. Pair any load discussion with Docs/002_DISCLAIMER.txt.

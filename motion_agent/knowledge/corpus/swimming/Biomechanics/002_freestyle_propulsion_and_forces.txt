@@ -1,0 +1,130 @@
+# Freestyle — Propulsion, Drag, and Force Proxies (summary)
+
+Authority: B+ open reviews and textbook-level biomechanics summaries. Not for medical or performance guarantees.
+English RAG reference for chat grounded in body-visible proxies.
+
+---
+
+## Propulsive vs resistive phases (conceptual)
+
+Swimmers move when **propulsive impulses** exceed **drag and inertial losses**. In arm-dominated models of steady freestyle:
+
+| Phase (coaching) | Typical role in models | Body-visible proxy |
+|------------------|------------------------|--------------------|
+| Entry / glide | Can be resistive if hand pushes forward too long | Forward hand velocity before catch |
+| Catch | Transition; build effective surface area | Elbow flexion, wrist depth |
+| Pull | Main propulsive impulse in many studies | Wrist speed peak, trunk rotation |
+| Push | Completing impulse; elbow extension | Hand path past hip |
+| Recovery | Usually resistive above water | Arm height, width |
+
+Exact force curves require instrumentation; CeRebel uses **speed and path proxies** only.
+
+---
+
+## Hand/forearm orientation (lift and drag debates)
+
+Hydrodynamic models treat the hand/forearm as a **foil** generating lift and drag depending on angle of attack.
+Coaching simplification: **press backward on the water** with a vertical or inward-rotated forearm early.
+
+Research notes:
+- Angle of attack changes through the pull; no single static angle defines elite swimmers.
+- 2D side video **cannot** recover true 3D pitch reliably when submerged.
+
+Product language: "forearm vertical proxy" or "elbow above wrist" instead of stating degrees.
+
+---
+
+## Trunk rotation and impulse
+
+Trunk rotation contributes to:
+- Lengthening reach at entry (roll toward recovering side).
+- Positioning pulling shoulder for internal rotation and adduction during pull.
+- Timing kick beats relative to arm phases.
+
+Kinematic studies report **peak trunk roll** near mid-pull on the pulling side in many cohorts; phase lag varies.
+Flat swimming (low roll) may reduce reach and alter pull depth — coaching correlation, individual exceptions exist.
+
+---
+
+## Kick propulsion fraction
+
+Reported kick contributions to total propulsion vary widely by:
+- Swimming speed (higher at sprint).
+- Kick pattern (2-beat vs 6-beat).
+- Skill level and ankle flexibility.
+
+Even when kick propulsion fraction is modest at distance pace, kick ** stabilizes hip position** and supports roll rhythm.
+Bicycle kick increases **form drag** in many beginner descriptions — flagged as efficiency fault, not moral judgment.
+
+---
+
+## Stroke rate, stroke length, and speed
+
+Pool performance approximates:
+
+speed ≈ stroke_rate × stroke_length
+
+Body video can estimate **stroke rate** from cycle periods. **Stroke length** needs distance per cycle — requires
+pool length markers, known speed, or external timing. Do not invent SWOLF without lap data.
+
+Coaching implication: technique fixes may increase length first for learners; sprinters may prioritize rate and power
+after technique baseline.
+
+---
+
+## Asymmetry and breathing side
+
+Breathing every 2 strokes to one side introduces **persistent asymmetry** in roll and pull timing. Many programs
+use bilateral breathing in training to balance neuromuscular patterns. Asymmetry findings in CeRebel compare L/R
+peaks and periods — not always faults if athlete races with fixed breathing pattern.
+
+---
+
+## Starts, turns, underwater (out of v1)
+
+Streamline off walls and underwater dolphin phases produce large impulses not modeled in arm-cycle v1.
+Training docs may reference them; automated phases exclude push-off unless metadata trims glide.
+
+---
+
+## Open water differences
+
+Waves, sighting, and wetsuit buoyancy alter:
+- Head lift frequency (sighting strokes).
+- Roll amplitude (stability in chop).
+- Kick duty cycle (navigation and drafting).
+
+Apply open_water confidence flags before strict head-line faults.
+
+---
+
+## Youth biomechanics notes
+
+Children and adolescents differ in:
+- Limb segment ratios affecting reach and pull radius.
+- Motor learning stage — catch may appear late while kick-dominant swimming persists.
+- Training volume tolerance — see Training/002_youth_development.txt.
+
+Avoid adult elite templates for youth tier scoring.
+
+---
+
+## Practical RAG answer template
+
+When users ask "why is my pull weak?" without force data:
+
+1. Ask/clarify camera angle and cycle count (if chat context allows).
+2. Reference phase model: entry → catch EVF proxy → pull peak → push finish.
+3. Link visible faults (dropped elbow, short push, wide path) to **coaching cues**, not Newtons of force.
+4. Note that **pull buoy**, paddles, and bands change mechanics — outside plain stroke video.
+5. Include disclaimer for shoulder pain.
+
+---
+
+## Representative source categories (not verbatim)
+
+- PubMed Central reviews on swimming shoulder and freestyle kinematics.
+- World Aquatics / national federation coach education summaries (skill progressions).
+- Open access sports biomechanics journals on front crawl hand path and propulsion timing.
+
+Full URLs and authority tags: `_meta/SOURCE_MANIFEST.txt`.

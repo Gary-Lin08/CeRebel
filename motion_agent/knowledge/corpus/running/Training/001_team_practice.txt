@@ -1,0 +1,129 @@
+# Running — Team Practice and Group Film Sessions
+
+Body-first capture for teams (cross-country, track distance, running clubs) without GPS or timing gates.
+Summarizes reputable coaching practice patterns (authority B); verify league rules and medical staff policies locally.
+
+---
+
+## 1. Session goals for motion analysis
+
+- **Consistency**: film easy pace first — form changes at race pace.
+- **Repeatability**: 6–10 strides in frame, stable camera, athlete in plain clothing when possible.
+- **Context tag**: treadmill vs track vs road; shoe type; fatigue state (warm-up vs post-workout).
+
+CeRebel briefs prioritize one or two findings per athlete per session — avoid overwhelming youth teams with
+twelve simultaneous cues.
+
+---
+
+## 2. Warm-up structure (before filming)
+
+Typical 10–15 minute movement prep (B coaching consensus):
+
+1. Easy jog 5–8 minutes — do not film first minute (settling rhythm).
+2. Dynamic mobility: leg swings (front/back, lateral), hip circles, ankle pumps.
+3. Strides (4–6 × 15–20 s accelerations at ~mile effort) with walk-back recovery — optional second film clip
+   at stride pace for comparison.
+
+Youth: shorten strides count; emphasize play-based mobility for U12.
+
+---
+
+## 3. Camera setup for teams
+
+**Side view (preferred for overstride and trunk lean)**:
+- Camera perpendicular to path, hip height, 3–5 m from lane.
+- Capture full body head to feet; avoid cropping feet at contact.
+
+**Rear view (hip drop and crossover)**:
+- Centered behind athlete; narrow track lane helps.
+
+**Treadmill**:
+- Side mount outside belt; note belt speed in session log.
+- Overstride interpretation uses pelvis–foot relation in image (see Phases/001).
+
+Multiple athletes: queue one at a time; keep background static for pose stability.
+
+---
+
+## 4. Using phase scrub in a team setting
+
+Coach workflow (product UX target):
+
+1. Review **clip-level** cadence and asymmetry flags first.
+2. Scrub to **contact** and **midstance** for the highest-severity finding.
+3. Assign **one** cue + **one** 30–90 s drill from Coaching/ for homework.
+4. Re-film after 2–3 weeks at same pace and camera angle — compare qualitatively.
+
+Avoid public call-outs of medical language; use performance and balance framing.
+
+---
+
+## 5. Drill families aligned to findings (see Coaching/002_drills.txt)
+
+| Team need | Drill family | Finding links |
+|-----------|--------------|---------------|
+| Turnover | Metronome jog, quick-feet in place | low_cadence_overstride |
+| Foot under body | Ankle glides, “feet under hips” skips | overstride |
+| Posture | Tall posture run, lean-from-ankle cues | trunk_lean_back |
+| Hip stability | Band walks, single-leg balance | hip_drop, crossover_gait |
+| Arms | Arm drive symmetry, “cheek to cheek” | arm_swing_asymmetry |
+| Bounce control | “Quiet upper body” easy runs | excessive_bounce |
+
+Keep drill volume low during competition weeks — skill work fits base phases better.
+
+---
+
+## 6. Weekly load and form work (pointers only)
+
+Training volume and intensity are **coach- and clinician-governed**. This pack does not set mileage.
+
+General pattern (B):
+
+- **Base phase**: 1 short form-focused segment per easy run (e.g., 4 × 30 s cadence cue).
+- **Competition phase**: maintain one maintenance drill weekly; avoid large mechanical changes pre-race.
+- **Return from time off**: rebuild volume before aggressive cadence changes.
+
+Youth: follow school/club policies on consecutive hard days; form film is educational, not load prescription.
+
+Masters: longer contact times and reduced elasticity are common — widen asymmetry and cadence heuristics in
+interpretation (document audience when product supports).
+
+---
+
+## 7. Partner and squad exercises
+
+- **Mirror runs**: pairs side-by-side at easy pace — coach observes synchrony (not a product feature; film one runner).
+- **Lane line drill**: run on painted line without crossing — rear camera checks crossover_gait (external focus B).
+- **Hill repeats** (moderate grade): natural forward lean and knee drive; film downhill easy portion separately —
+  mechanics differ from flats.
+
+---
+
+## 8. Indoor / winter constraints
+
+Treadmill sessions useful for consistent camera placement; remind athletes that belt pull may alter foot
+position relative to ground. Alternate with overground film when weather allows.
+
+---
+
+## 9. Safety and inclusion
+
+- Stop session for pain, dizziness, or asthma symptoms — standard first aid and staff protocols.
+- Para-athletes and prosthetic limbs require individualized coaching; default checkpoints may not apply —
+  human review mandatory.
+
+---
+
+## 10. Parent communication (youth clubs)
+
+Share Docs/002_DISCLAIMER short copy. Emphasize: app findings are **coaching observations**, not medical
+screening replacing pre-participation physicals where required by state or federation.
+
+---
+
+## Cross-references
+
+- Coaching/001_cues.txt, Coaching/002_drills.txt
+- Findings/001_common_faults.txt
+- Biomechanics/001_overview.txt — evidence bands for cadence and loading language

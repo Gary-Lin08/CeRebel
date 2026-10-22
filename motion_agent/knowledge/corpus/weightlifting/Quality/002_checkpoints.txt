@@ -1,0 +1,211 @@
+# Weightlifting — Checkpoints (body-measurable)
+# Format: checkpoint_id | lift_variant | phases | signal | pass (qualitative) | fail hint | authority
+
+================================================================================
+SQUAT CHECKPOINTS
+================================================================================
+
+cp_squat_setup_feet_stable
+  lift_variant: squat
+  phases: setup
+  signal: lateral velocity of ankle midpoint; distance between ankles vs clip start
+  pass: feet remain planted; ankle drift below threshold for 0.3 s before E_ECC_START
+  fail: visible step or stagger during brace
+  authority: B (coaching consensus)
+
+cp_squat_descent_control
+  lift_variant: squat
+  phases: descent
+  signal: d(knee_angle_avg)/dt magnitude vs d(hip_y)/dt
+  pass: smooth monotonic knee flex increase without sudden pelvis drop spikes
+  fail: abrupt “collapse” frame cluster at start of descent
+  authority: B+
+
+cp_squat_knee_tracking
+  lift_variant: squat
+  phases: descent, bottom, ascent
+  signal: knee center vs foot center in frontal/oblique view (2D projection)
+  pass: knees track over mid-foot without sustained inward drift relative to toes
+  fail: sustained medial knee displacement vs foot (valgus tendency) — flag capture angle
+  authority: B+ (knee loading literature); confidence reduced frontal-only
+
+cp_squat_trunk_hip_coupling
+  lift_variant: squat
+  phases: descent, bottom
+  signal: thorax angle vs femur angle timing; chest drop before hip flexion increase
+  pass: chest and hips lower together without extreme isolated chest pitch early
+  fail: chest pitches forward while hips remain high (good-morning pattern proxy)
+  maps_to_finding: fault_squat_good_morning
+  authority: B+
+
+cp_squat_depth_intent
+  lift_variant: squat
+  phases: bottom
+  signal: hip_y relative to knee_y; knee flexion magnitude
+  pass: hip crease at or below knee line proxy for “training depth” intent (user/coach setting)
+  fail: shallow stop with high hip_y vs knee_y when user tagged “depth focus”
+  notes: NOT competition depth without bar/box; qualitative only
+  authority: B
+
+cp_squat_ascent_knee_rebound
+  lift_variant: squat
+  phases: ascent
+  signal: knee flexion re-increases after E_ASCENT_START
+  pass: knees extend through ascent without large mid-rep flexion bounce
+  fail: “dive bomb” rebound visible as knee re-flex >10° mid-ascent
+  maps_to_finding: fault_squat_bounce_bottom
+  authority: B
+
+cp_squat_lockout_hip_knee
+  lift_variant: squat
+  phases: lockout
+  signal: knee_angle_avg, hip extension vs setup standing
+  pass: near-full extension both knees; pelvis not laterally tilted > threshold vs setup
+  fail: incomplete knee extension or obvious lateral hip hike
+  authority: B
+
+================================================================================
+DEADLIFT CHECKPOINTS
+================================================================================
+
+cp_dl_setup_hinge
+  lift_variant: deadlift
+  phases: setup
+  signal: hip angle flexed; shoulders over or slightly ahead of mid-foot proxy; shins near vertical
+  pass: recognizable hinge with hands below shoulder height at start
+  fail: squat-style setup with knees far forward and hips low without hip hinge
+  authority: B
+
+cp_dl_bar_close
+  lift_variant: deadlift
+  phases: setup, pull
+  signal: horizontal distance wrist midpoint to ankle midpoint (sagittal)
+  pass: wrists stay within moderate forward distance of mid-foot through first pull
+  fail: bar “drifts” forward as large wrist–ankle separation increase
+  maps_to_finding: fault_dl_bar_forward
+  authority: B+
+
+cp_dl_hip_shoulder_sync
+  lift_variant: deadlift
+  phases: pull
+  signal: vertical velocity correlation hip center vs shoulder center
+  pass: shoulders and hips rise together in first third of pull
+  fail: hips shoot up while shoulders lag (stripper pull proxy)
+  maps_to_finding: fault_dl_hips_shoot
+  authority: B+
+
+cp_dl_lumbar_flexion_rate
+  lift_variant: deadlift
+  phases: pull, transition
+  signal: thorax–pelvis angle change rate (lumbar proxy)
+  pass: gradual trunk angle change; no sudden lumbar rounding spike under load appearance
+  fail: rapid thorax pitch increase early in pull
+  maps_to_finding: fault_dl_rounding_pull
+  authority: B+ (not pathology — technique load framing)
+
+cp_dl_knee_extension_timing
+  lift_variant: deadlift
+  phases: transition
+  signal: knee extension vs hip extension timing after E_KNEE_PASS
+  pass: legs drive through as hips complete lockout
+  fail: soft knees at lockout with hips extended only
+  authority: B
+
+cp_dl_lockout_glute
+  lift_variant: deadlift
+  phases: lockout
+  signal: hip extension; excessive lumbar hyperextension proxy (thorax beyond vertical)
+  pass: upright finish driven by hips; ribs not flared extreme
+  fail: lockout achieved mainly by leaning back with rib flare
+  maps_to_finding: fault_dl_hyperextend_lockout
+  authority: B+
+
+================================================================================
+OHP CHECKPOINTS
+================================================================================
+
+cp_ohp_strict_knees
+  lift_variant: ohp
+  phases: setup, press
+  signal: knee_angle_avg range during press
+  pass: knee flex change < 5–8° (scale-normalized) through press
+  fail: visible dip-and-drive (push press) when strict variant selected
+  maps_to_finding: fault_ohp_leg_drive
+  authority: B
+
+cp_ohp_bar_path
+  lift_variant: ohp
+  phases: press
+  signal: wrist midpoint path vs vertical line through mid-foot
+  pass: wrists travel near vertical with minimal forward loop
+  fail: large forward wrist displacement then back overhead (looping path)
+  maps_to_finding: fault_ohp_forward_loop
+  authority: B+
+
+cp_ohp_rib_lean
+  lift_variant: ohp
+  phases: press
+  signal: thorax angle backward; lumbar extension proxy
+  pass: trunk lean modest; press driven by shoulder flexion
+  fail: exaggerated layback before bar clears head
+  maps_to_finding: fault_ohp_excessive_leanback
+  authority: B
+
+cp_ohp_elbow_position
+  lift_variant: ohp
+  phases: press
+  signal: elbow height relative to wrist at press start (frontal/oblique)
+  pass: elbows under or slightly in front of bar proxy at start
+  fail: elbows flare wide with wrists inside (poor stack) when visible
+  maps_to_finding: fault_ohp_elbow_flare
+  authority: B
+
+cp_ohp_lockout_stack
+  lift_variant: ohp
+  phases: lockout
+  signal: shoulder flexion; elbow extension; wrist over shoulder–hip line proxy
+  pass: full elbow extension; wrists balanced over base
+  fail: lockout with arms not vertical relative to torso lean
+  authority: B
+
+cp_ohp_head_clearance
+  lift_variant: ohp
+  phases: press, lockout
+  signal: head translation forward (“chin tuck”) vs bar path
+  pass: head moves slightly back then through without cervical crunch proxy
+  fail: excessive forward head before lockout (capture noise possible)
+  authority: C → do not auto-fault; coach note only
+
+================================================================================
+CROSS-CUTTING
+================================================================================
+
+cp_capture_sagittal_ok
+  lift_variant: all
+  phases: all
+  signal: metadata camera_angle
+  pass: side or 45° oblique documented
+  fail: pure frontal for trunk-dominant faults — suppress lumbar and good-morning findings
+
+cp_bilateral_symmetry
+  lift_variant: squat, deadlift, ohp
+  phases: lockout
+  signal: hip height L vs R; shoulder height L vs R
+  pass: side-to-side difference below threshold
+  fail: persistent unilateral hike — may indicate mobility or load shift (non-diagnostic)
+  authority: B
+
+cp_youth_load_context
+  lift_variant: all
+  phases: all
+  signal: audience=youth tag
+  pass: checkpoints evaluated with wider tolerances; no max-effort language
+  fail: N/A — policy gate for copy
+
+================================================================================
+CHECKPOINT → UI COPY
+================================================================================
+
+- pass: “Visible pattern matches [dimension] for this rep.”
+- fail: link to finding id when maps_to_finding set
+- unclear: “Camera angle limits this check — try side view.”

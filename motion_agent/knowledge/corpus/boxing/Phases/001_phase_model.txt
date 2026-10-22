@@ -1,0 +1,181 @@
+# Boxing Shadowboxing — Phase Model (v1)
+# Scope: non-contact shadow strikes and basic defensive shapes
+# Aligns: body-only OpenSim / pose keypoints; no target or opponent required
+# Stable phase IDs — do not rename without migration note in pack_readme
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Eight phases describe one **strike cycle** from guard through return to guard. Continuous shadowboxing is a
+sequence of cycles separated by optional **footwork** micro-segments. Defensive-only reps (slip, roll) reuse
+prep → extension labels with hand-speed gates disabled.
+
+Handedness / stance convention (orthodox, athlete at ~45° to camera when possible):
+- Lead hand = jab hand (left for orthodox); rear hand = cross hand (right for orthodox).
+- Southpaw: mirror all lead/rear joint names and hip rotation sign.
+
+================================================================================
+PHASE TABLE
+================================================================================
+
+| phase_id   | label_en           | start event        | end event          |
+|------------|--------------------|--------------------|--------------------|
+| stance     | Stance / base      | clip_start or prev E_GUARD_RETURN | E_PREP_START |
+| guard      | Guard position     | E_GUARD_STABLE     | E_PREP_START       |
+| prep       | Prep / chamber     | E_PREP_START       | E_EXTENSION_START  |
+| extension  | Extension / strike | E_EXTENSION_START  | E_EXTENSION_PEAK   |
+| drive      | Drive-through      | E_EXTENSION_PEAK   | E_RECOIL_START     |
+| recoil     | Recoil / retract   | E_RECOIL_START     | E_GUARD_RETURN     |
+| recovery   | Guard recovery     | E_GUARD_RETURN     | E_GUARD_STABLE     |
+| footwork   | Step / pivot       | E_STEP_START       | E_STEP_LAND          |
+
+Notes:
+- `stance` and `guard` may collapse in UI scrub bar to “base” when wrists remain in guard band entire clip.
+- `drive` is short for jabs; hooks and crosses may show longer trunk rotation through drive.
+- `footwork` is optional between cycles; not every rep includes a step phase.
+
+================================================================================
+EVENT DEFINITIONS (body-only)
+================================================================================
+
+E_GUARD_STABLE
+  Definition: both wrists above pelvis height proxy and below chin proxy; ||v(wrist)|| below threshold for ≥6 frames.
+  Fallback: first frame of clip if athlete already in guard.
+  Detector use: trim idle time; anchor between combinations.
+
+E_PREP_START
+  Definition: striking-side wrist speed exceeds 10% of later peak AND wrist height changes > guard band OR
+  same-side pelvis yaw rate exceeds threshold (hip leads hand in skilled shadow).
+  Fallback: manual segment start for combo clips.
+  Coaching term: “first move” — small step, weight shift, or hand leave guard.
+
+E_EXTENSION_START
+  Definition: elbow extension rate positive on striking arm; wrist moving toward extension axis (jab: forward;
+  hook: lateral arc proxy).
+  Proxy: d(elbow_angle)/dt < -threshold (extension) for 2 consecutive frames.
+
+E_EXTENSION_PEAK
+  Definition: argmax ||v(striking_wrist)|| in [E_PREP_START, E_RECOIL_START or +500ms window].
+  Primary timing anchor for all punch types in pose-only pipelines.
+  Note: NOT impact timing; no bag or opponent contact assumed.
+
+E_RECOIL_START
+  Definition: first frame after E_EXTENSION_PEAK where ||v(striking_wrist)|| drops below 50% of peak OR elbow
+  flexion rate positive (hand retracts).
+  Coaching term: “bring it home” — critical for shadow defense habit.
+
+E_GUARD_RETURN
+  Definition: striking-side wrist re-enters guard height band within lateral tolerance of lead/rear guard slot.
+  Proxy: wrist_y in [guard_min, guard_max] AND distance to opposite wrist < guard_width threshold.
+
+E_STEP_START (footwork)
+  Definition: lead ankle horizontal velocity exceeds threshold while rear foot not yet lifted (step forward/back).
+  Used for shadow movement drills between combos.
+
+E_STEP_LAND
+  Definition: lead ankle vertical velocity zero-crossing after E_STEP_START; foot height local minimum in step window.
+
+E_SLIP_PEAK (defense variant)
+  Definition: lateral displacement of head proxy local maximum with both wrists above waist and low extension peak.
+  Maps to prep→extension phases in defensive clips only.
+
+E_ROTATION_PEAK (cross/hook helper)
+  Definition: max pelvis or thorax yaw velocity in [E_PREP_START, E_EXTENSION_PEAK].
+  Used for sequencing findings, not separate UI phase.
+
+================================================================================
+DETECTOR EVENT MAP (future sport_analysis)
+================================================================================
+
+| product_event_id     | maps_to            | priority |
+|----------------------|--------------------|----------|
+| punch_peak_wrist     | E_EXTENSION_PEAK   | P0       |
+| guard_return         | E_GUARD_RETURN     | P0       |
+| prep_onset           | E_PREP_START       | P1       |
+| hip_rotation_peak    | E_ROTATION_PEAK    | P1       |
+| step_contact         | E_STEP_LAND        | P2       |
+| slip_head_peak       | E_SLIP_PEAK        | P2       |
+
+Phase scrub bar (UI): stance | prep | extension | recoil | recovery
+Optional footwork chip between cycles when E_STEP_START detected.
+
+================================================================================
+TIMING RELATIONSHIPS (qualitative, B+ literature)
+================================================================================
+
+Typical skilled shadow jab-cross (not prescriptive):
+- Hip/pelvis rotation or weight shift begins at or slightly before lead hand acceleration.
+- Rear-hand cross peak often follows lead-hand recoil or overlaps in advanced “double-up” styles — product should
+  not penalize all overlap if guard returns between peaks.
+- Recoil completes before next E_PREP_START in beginner teaching progressions; advanced flow may blend cycles.
+
+Youth: shorter extension, smaller trunk rotation, hands return to guard higher/slower — use youth checkpoints in
+Quality/002.
+
+================================================================================
+CLIP TRIMMING GUIDANCE
+================================================================================
+
+- Prefer clips 3–15 s containing 2–8 clear strike cycles or one footwork + combo block.
+- Camera: 30–45° off frontal shows elbow path and hip turn better than pure front or pure side.
+- Exclude clips with heavy bag contact (different phase semantics) unless tagged out-of-pack.
+
+================================================================================
+STRIKE TYPE METADATA (orthogonal to phase IDs)
+================================================================================
+
+| strike_type | lead/rear | extension axis (coaching)        |
+|-------------|-----------|-----------------------------------|
+| jab         | lead      | straight from guard; minimal wind |
+| cross       | rear      | straight with rear hip drive      |
+| hook        | either    | horizontal arc, elbow ~90°      |
+| uppercut    | either    | vertical arc from loaded hips     |
+| slip        | n/a       | head lateral, hands in guard      |
+| roll        | n/a       | trunk flexion + lateral head      |
+| step        | n/a       | footwork only between guards      |
+
+================================================================================
+VERSION
+================================================================================
+
+phase_model_version: 1.0.0
+pack_build: 2026-10-21
+migration: initial release — shadowboxing form only
+
+## V2 PHASE LINK INDEX (auto)
+
+# detector_events + fault_links per phase for OpenSim/body detectors
+
+phase_id: drive
+detector_events: E_EXTENSION_PEAK, E_RECOIL_START
+fault_links: fault_elbow_flare_straight, fault_incomplete_hip_rotation
+
+phase_id: extension
+detector_events: E_EXTENSION_START, E_EXTENSION_PEAK, E_SLIP_PEAK
+fault_links: fault_hands_drop, fault_arm_only_punch, fault_elbow_flare_straight, fault_hook_arm_extended, fault_chin_up, fault_rear_hand_drop_on_jab, fault_flat_rear_foot_cross, fault_arm_only_uppercut, fault_hands_drop_on_slip, fault_stiff_roll, fault_lateral_leak_punch, fault_incomplete_hip_rotation, fault_telegraph_windup, fault_shoulder_line_opens
+
+phase_id: footwork
+detector_events: E_STEP_START, E_STEP_LAND
+fault_links: fault_feet_crossed, fault_reaching_jab, fault_overstep
+
+phase_id: guard
+detector_events: E_GUARD_STABLE, E_PREP_START
+fault_links: fault_hands_drop, fault_stiff_legs, fault_elbows_flared, fault_chin_up, fault_guard_chin_gap
+
+phase_id: prep
+detector_events: E_PREP_START, E_EXTENSION_START, E_ROTATION_PEAK
+fault_links: fault_arm_only_punch, fault_feet_crossed, fault_reaching_jab, fault_tense_shoulders, fault_flat_rear_foot_cross, fault_combo_without_guard, fault_arm_only_uppercut, fault_stiff_roll, fault_lateral_leak_punch, fault_double_load_same_side, fault_incomplete_hip_rotation, fault_telegraph_windup, fault_shoulder_line_opens
+
+phase_id: recoil
+detector_events: E_RECOIL_START, E_GUARD_RETURN
+fault_links: fault_slow_recoil, fault_wide_recoil
+
+phase_id: recovery
+detector_events: E_GUARD_RETURN, E_GUARD_STABLE
+fault_links: fault_hands_drop, fault_slow_recoil, fault_combo_without_guard, fault_double_load_same_side, fault_guard_chin_gap
+
+phase_id: stance
+detector_events: E_GUARD_STABLE
+fault_links: fault_feet_crossed, fault_narrow_stance, fault_stiff_legs, fault_over_lead_weight
+

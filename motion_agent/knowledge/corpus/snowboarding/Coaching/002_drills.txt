@@ -1,0 +1,326 @@
+# Snowboarding — Drills
+# Linked to finding_id; duration 30–90 s unless noted; authority B coaching unless noted
+
+================================================================================
+DRILL FORMAT
+================================================================================
+
+Each drill lists: drill_id, finding_id, family, terrain, steps, safety, progression.
+
+================================================================================
+drill_soft_ankle_traverse
+================================================================================
+drill_id: drill_soft_ankle_traverse
+finding_id: fault_locked_legs_traverse
+family: alpine_turn
+terrain: Green / gentle blue, wide open
+duration: 60–90 s active riding per repetition; 3 reps
+steps:
+  1. Traverse fall line at moderate speed with visibly flexed knees.
+  2. Every 15 m, pulse ankles/knees through 3 small flex-extension cycles without stopping.
+  3. Resume traverse; note quieter ride over micro-terrain.
+safety: Clear uphill visibility; buddy stop above on crowded days.
+progression: Remove pulse; maintain flex through linked turns.
+
+================================================================================
+drill_quiet_hands_pockets
+================================================================================
+drill_id: drill_quiet_hands_pockets
+finding_id: fault_arm_flail_traverse
+family: alpine_turn
+terrain: Green
+duration: 45 s (3–4 turns)
+steps:
+  1. Light fingertips on front hip pockets for two complete turns.
+  2. Release arms to neutral for two turns; compare shoulder rotation in video.
+safety: Do not tuck hands inside pockets if balance is uncertain — use light touch only.
+
+================================================================================
+drill_garland_speed_bleed
+================================================================================
+drill_id: drill_garland_speed_bleed
+finding_id: fault_rushed_entry
+family: alpine_turn
+terrain: Gentle blue
+duration: 90 s
+steps:
+  1. Traverse across hill; initiate turn uphill until speed drops noticeably.
+  2. Complete turn back to fall line without straight-lining.
+  3. Repeat 5 garlands before attempting full linked turns down slope.
+progression: Shorten uphill segment as control improves.
+
+================================================================================
+drill_j_turn_lead_press
+================================================================================
+drill_id: drill_j_turn_lead_press
+finding_id: fault_no_lead_load
+family: alpine_turn
+terrain: Flat to green pitch
+duration: 60 s
+steps:
+  1. From slow traverse, press lead foot to start J-turn until board nearly points uphill.
+  2. Stop; switch sides. 4 each direction.
+stance: Call out lead foot explicitly for regular/goofy groups.
+
+================================================================================
+drill_hip_lead_cone
+================================================================================
+drill_id: drill_hip_lead_cone
+finding_id: fault_shoulder_leads_turn
+family: alpine_turn
+terrain: Green with visual marker (cone, tree)
+duration: 60 s
+steps:
+  1. Place marker at turn exit; rider looks at marker only after hips initiate turn.
+  2. Coach verbal "hips" at initiation for 6 turns.
+progression: Remove verbal cue; review video for shoulder lead timing.
+
+================================================================================
+drill_wall_squat_boots
+================================================================================
+drill_id: drill_wall_squat_boots
+finding_id: fault_collapsed_torso
+family: both
+terrain: Flat staging area (not on lift ramp)
+duration: 45 s (8 slow reps)
+steps:
+  1. Boots on, board unstrapped or one foot strapped per resort policy.
+  2. Squat with back/skis against lodge wall or imaginary wall — knees forward, chest tall.
+safety: Flat ground only; not on cat tracks or slopes.
+
+================================================================================
+drill_railroad_tracks
+================================================================================
+drill_id: drill_railroad_tracks
+finding_id: fault_upright_skid
+family: alpine_turn
+terrain: Very gentle green
+duration: 90 s
+steps:
+  1. Attempt matched edge tracks in short-radius turns — focus on tilt sensation.
+  2. If skidding persists, reduce turn size and speed.
+youth: Primary learning drill; not a "fail" environment.
+
+================================================================================
+drill_apex_flex_count
+================================================================================
+drill_id: drill_apex_flex_count
+finding_id: fault_straight_leg_apex
+family: alpine_turn
+terrain: Green / easy blue
+duration: 60 s
+steps:
+  1. Rider counts "flex" aloud at each apex for 6 turns.
+  2. Review clip: knee angle proxy should deepen at count frame.
+
+================================================================================
+drill_exit_marker_look
+================================================================================
+drill_id: drill_exit_marker_look
+finding_id: fault_head_misaligned
+family: alpine_turn
+terrain: Green with markers
+duration: 45 s
+steps:
+  1. Before initiating turn, point at exit marker with eyes.
+  2. Maintain visual lock through apex when safe (avoid fixed stare on crowded runs).
+
+================================================================================
+drill_silent_transition
+================================================================================
+drill_id: drill_silent_transition
+finding_id: fault_hoppy_transition
+family: alpine_turn
+terrain: Green
+duration: 60 s
+steps:
+  1. Linked short turns emphasizing quiet edge changes — coach listens for skid spikes.
+  2. Penalize self if COM hop visible in follow-cam video.
+
+================================================================================
+drill_straight_glide_reset
+================================================================================
+drill_id: drill_straight_glide_reset
+finding_id: fault_stuck_in_turn
+family: alpine_turn
+terrain: Green
+duration: 90 s
+steps:
+  1. Complete turn, glide straight 1–2 s on flat board, then next turn.
+  2. Repeat 5 cycles per run segment.
+
+================================================================================
+drill_roller_balance
+================================================================================
+drill_id: drill_roller_balance
+finding_id: fault_off_balance_approach
+family: air_jump
+terrain: Small rollers, no jump
+duration: 60 s
+steps:
+  1. Ride rollers at moderate speed keeping shoulders level.
+  2. No preload beyond normal absorption — focus on COM over feet.
+
+================================================================================
+drill_compress_extend_flat
+================================================================================
+drill_id: drill_compress_extend_flat
+finding_id: fault_no_preload
+family: air_jump
+terrain: Flat section
+duration: 45 s
+steps:
+  1. Three compress-extend cycles without leaving snow.
+  2. Fourth rep adds small pop; board may leave snow slightly.
+  3. Repeat 5 sets.
+
+================================================================================
+drill_athletic_squat_hold
+================================================================================
+drill_id: drill_athletic_squat_hold
+finding_id: fault_overcollapsed_preload
+family: air_jump
+terrain: Flat staging
+duration: 30 s (5 holds × 4 s)
+steps:
+  1. Hold athletic squat — chest up, knees over toes proxy.
+  2. Partner or self-check: can you see boot top without head diving?
+
+================================================================================
+drill_boot_vertical_jump
+================================================================================
+drill_id: drill_boot_vertical_jump
+finding_id: fault_weak_extension_takeoff
+family: air_jump
+terrain: Flat, clear area
+duration: 45 s
+steps:
+  1. Submax vertical jumps in boots (board off if beginner).
+  2. Emphasize full extension at top — no early flex.
+safety: Clear landing area; not on ice.
+
+================================================================================
+drill_absorb_roller
+================================================================================
+drill_id: drill_absorb_roller
+finding_id: fault_stiff_leg_landing
+family: air_jump
+terrain: Rollers / small bumps
+duration: 60 s
+steps:
+  1. Ride rollers without jumping — maximize knee flex on backside of roller.
+  2. 6 repetitions focusing on "quiet" lower body.
+
+================================================================================
+drill_two_foot_stick
+================================================================================
+drill_id: drill_two_foot_stick
+finding_id: fault_one_foot_landing
+family: air_jump
+terrain: Flat snow or gym mat off-snow
+duration: 45 s
+steps:
+  1. Hop from low step (12–20 cm) to flat landing on both feet.
+  2. Hold 2 s without stepping out.
+off_snow_variant: Use mat jumps in dryland sessions.
+
+================================================================================
+drill_hands_forward_land
+================================================================================
+drill_id: drill_hands_forward_land
+finding_id: fault_landing_backseat
+family: air_jump
+terrain: Small jump or ollie
+duration: 60 s
+steps:
+  1. On landing, consciously reach hands toward nose of board (without breaking balance).
+  2. 4 jumps focusing on forward stack.
+
+================================================================================
+drill_straight_air_shape
+================================================================================
+drill_id: drill_straight_air_shape
+finding_id: fault_loose_trunk_air
+family: air_jump
+terrain: Small kicker per skill
+duration: 90 s (4 jumps)
+steps:
+  1. Straight air only — pick neutral body shape at takeoff and hold through flight.
+  2. No grab required; video review trunk stability.
+
+================================================================================
+drill_symmetric_windup
+================================================================================
+drill_id: drill_symmetric_windup
+finding_id: fault_asymmetric_arm_preload
+family: air_jump
+terrain: Flat approach to small jump
+duration: 60 s
+steps:
+  1. Approach with light clasped hands or mirrored arm swing for 3 jumps.
+  2. Compare unintended rotation in follow-cam.
+
+================================================================================
+TEAM / CLINIC BLOCKS (see also Training/001)
+================================================================================
+
+drill_id: drill_station_rotation_clinic
+findings: multiple alpine faults
+duration: 15 min station rotation
+steps: Groups rotate through garland, j-turn, railroad tracks stations with coach at each.
+
+drill_id: drill_jump_progression_ladder
+findings: air faults
+duration: 20 min supervised
+steps: Flat compress → roller absorb → small straight air; stop ladder on any stiff landing finding.
+
+================================================================================
+V2 NEW FAULT DRILLS
+================================================================================
+drill_id: drill_front_foot_traverse
+finding_id: fault_backseat_traverse
+duration: 60–90 s
+steps:
+  1. Gentle traverse emphasizing front-foot pressure and ankle bounce every 10 m.
+
+drill_id: drill_early_edge_garland
+finding_id: fault_edge_change_late
+duration: 90 s
+steps:
+  1. Garland to full turn initiating new edge while still across the hill.
+
+drill_id: drill_sternum_fist_turns
+finding_id: fault_counter_rotate_excess
+duration: 60 s
+steps:
+  1. Linked turns with soft fist at sternum; quiet shoulders.
+
+drill_id: drill_hands_forward_pop
+finding_id: fault_hands_behind_hips_air
+duration: 45 s dryland
+steps:
+  1. Pop jumps reaching hands forward to soft stick; 8 reps.
+
+drill_id: drill_eyes_lip_cone
+finding_id: fault_spotting_look_down
+duration: 45 s
+steps:
+  1. Eyes on cone beyond takeoff; pop in place 6×.
+
+drill_id: drill_knee_stack_jturn
+finding_id: fault_asymmetric_knee_apex
+duration: 60 s
+steps:
+  1. Slow J-turns stacking knee over boot; both directions.
+
+drill_id: drill_press_then_pop
+finding_id: fault_early_unweight_hop
+duration: 60 s
+steps:
+  1. Linked turns: press edge first; hop only if coach allows after edge bite.
+
+drill_id: drill_ankle_first_stick
+finding_id: fault_rigid_ankles_landing
+duration: 60 s dryland
+steps:
+  1. 10–15 cm hop landings focusing ankle flex before knees; 10 reps.

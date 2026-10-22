@@ -1,0 +1,158 @@
+# Snowboarding Sport Pack — Architecture (CeRebel)
+
+## Purpose
+
+This pack supplies retrieval-grounded knowledge for **body-first snowboarding coaching** in CeRebel.
+The product reconstructs human motion from video (2D/3D body keypoints, SMPL-X / OpenSim pipelines) and
+explains what the rider’s body is doing across recognizable phases on snow. Board edge angle, snow contact,
+and feature geometry are optional enrichments — not prerequisites for coaching briefs or chat answers.
+
+Primary motion scope (v1 corpus):
+
+1. **Alpine linked turns** — traverse, initiation, edge engagement, steering, transition, and re-centering
+   (resort carving and basic turn mechanics visible from side or oblique camera).
+2. **Basic air mechanics** — approach, preload, takeoff, flight, landing absorption, and recovery (ollie-style
+   jumps, small kickers, park jump landings where the full body is visible).
+3. **Competition vocabulary cross-links** — FIS discipline terms (halfpipe, slopestyle, snowboard cross, parallel
+   giant slalom) appear in taxonomy and disclaimers; automated phase detectors for judged runs are future work.
+
+Out of scope for automated body-only findings (may appear as glossary or rules RAG via `fis/`):
+
+- Exact board edge angle without board tracking or known board model.
+- Grab name classification without RGB confirmation (see corpus `snowboard_aerial_vocab.txt`).
+- Gate-by-gate race line in snowboard cross when the rider is occluded by features or other athletes.
+- Official judging scores, trick DD tables, and quota math (retrieve from FIS packs, do not infer from pose).
+
+## Design principles
+
+1. **Body-measurable claims only** for automated findings: joint angles, segment speeds, COM height and velocity,
+   trunk lean, knee/hip flexion timing, shoulder line vs pelvis, ankle/knee symmetry — never require board sensors.
+2. **Stance-aware naming**: regular vs goofy sets lead/trail legs and “frontside/backside” rotation language;
+   product copy mirrors `snowboard_flip_conventions.txt` for aerial rotation (intrinsic somersault vs world Euler).
+3. **Evidence layering**: open biomechanics and sports-science reviews (B+) inform load and sequencing relationships;
+   national governing body and instructor progressions (B) inform training structure; cues and drills are coaching
+   advice (B), always paired with disclaimer docs.
+4. **Phase-first retrieval**: faults, checkpoints, and cues index to stable `phase_id` values in
+   `Phases/001_phase_model.txt` so the motion pipeline can attach findings to time windows.
+5. **Motion-family fork**: `family=alpine_turn` vs `family=air_jump` share ontology slots but use different phase
+   chains (documented in one phase file with variant tags, same pattern as basketball jump vs free throw).
+
+## Directory roles (this pack)
+
+| Path | Role |
+|------|------|
+| Docs/ | Product architecture, disclaimers, pack-level policies |
+| Phases/ | Canonical phase models + detector event mapping (alpine + air) |
+| Quality/ | What “good” means in body terms; checkpoint catalog |
+| Findings/ | Fault library (finding cards) |
+| Coaching/ | Cues and drills linked to findings |
+| Biomechanics/ | Open-literature summaries of snowboarding mechanics and load |
+| Training/ | Lesson structure, progressions, team/clinic practice patterns |
+| _meta/ | Manifests, build reports — excluded from chunk index |
+
+Related corpus (not under this folder): `knowledge/corpus/fis/` (rules, judging handbooks, venue specs),
+`snowboard_aerial_vocab.txt`, `snowboard_flip_conventions.txt`.
+
+## Motion pipeline integration (planned)
+
+### Input contract
+
+- Session adapter produces a `MotionSequence`: joint positions over time, FPS/dt, duration.
+- Required joints for snowboard-likeness scoring (future): pelvis/COM, both knees, both hips, both ankles,
+  shoulders, head, both wrists (for grab hints only with RGB).
+- Stance metadata: `regular` | `goofy` | `unknown` — when unknown, findings use symmetric language and lower
+  confidence on lead/trail-specific cues.
+
+### Snowboard-likeness gate (conservative, planned)
+
+Before enabling full product findings, a **soft** snowboard-likeness score may use:
+
+- **Lateral COM path** with periodic turning (alpine): horizontal COM velocity direction changes over 2–6 s windows.
+- **Vertical COM burst** (air): rapid rise then fall with knee flexion spike at landing.
+- **Trunk flexion range** consistent with riding (moderate hip/knee flex, not gait-only walking).
+
+Score alone does not authorize medical advice; it gates sport-mode selection and reduces false positives from
+skateboarding-on-flat or generic jumping jacks.
+
+### Phase detection (v1 heuristic alignment)
+
+Until dedicated event detectors ship, align narrative phases to computable proxies (details in Phases/001):
+
+| Event ID (alpine) | Proxy signal | Notes |
+|-------------------|--------------|-------|
+| E_TRAVERSE_STABLE | low knee flexion rate; COM speed steady | Setup window |
+| E_TURN_INIT | lead knee flexion increase + COM path curvature increase | Initiation |
+| E_EDGE_APEX | local max lateral lean proxy (shoulder–pelvis offset) | Apex |
+| E_TRANSITION | lead/trail knee flexion crossover; lean sign change | Edge change |
+
+| Event ID (air) | Proxy signal | Notes |
+|----------------|--------------|-------|
+| E_PRELOAD_MIN | local max knee/hip flex before takeoff | Load |
+| E_TAKEOFF | argmax vertical velocity of COM | Takeoff anchor |
+| E_AIR_PEAK | local max COM height | Apex |
+| E_LAND | local min COM height after peak + knee flex spike | Landing |
+
+Aerial rotation classification must use intrinsic somersault tools per product prompts — not pelvis_tilt alone.
+
+### Coach brief generation (planned)
+
+`build_coach_briefs(..., sport="snowboarding")` will consume:
+
+- Phase windows and `family` tag when available.
+- Top finding cards ranked by severity × confidence × phase alignment.
+- One feel cue + one short drill per prioritized finding (from Coaching/).
+
+Registry status: snowboarding chat/RAG mode is active in `motion_agent/llm/prompts.py`; dedicated sport pack
+detectors remain **planned** — this corpus is RAG-ready ahead of code.
+
+## RAG chunking guidance
+
+- English primary text; short definitional sentences for embedding.
+- Repeat stable finding IDs (`fault_*`) in Findings and cross-link in Coaching.
+- Include `authority_level` in chunk metadata at ingest time (A+ for FIS term pointers, B+ for biomech).
+- Tag chunks with `family=alpine_turn|air_jump` where mechanics differ.
+- Do not index `_meta/build_report.txt` as coaching truth — ops only.
+- For rulebook questions, prefer retrieving `fis/` sources via `search_knowledge_base` filters.
+
+## Evidence types (snowboarding pack)
+
+| evidence_type | Example content | Default authority |
+|---------------|-----------------|-------------------|
+| BiomechRelationship | Flexion-extension sequencing in turn absorption | B+ |
+| LoadConcern | Landing knee flexion and estimated GRF (model-dependent) | B+ / internal |
+| CoachingAdvice | Cues, drills, lesson progressions | B |
+| FederationGuideline | FIS event definitions, safety equipment expectations | A+ |
+| ProductLogic | Detector mapping, flip convention pointers | Internal B |
+
+## Youth vs adult
+
+Young riders use shorter limbs, lower mass, and often softer snow — absolute edge angles and jump sizes differ.
+**Progression** emphasizes balance, speed control, and landing absorption before spin load or large kickers.
+Avoid prescribing elite-competition air time or rotation counts for children; separate youth checkpoints in Quality/002.
+
+## Terrain and equipment caveats
+
+Stance width, boot flex, board length, and binding angles change visible posture. Automated findings describe
+**patterns relative to the rider’s own baseline across reps**, not a single “tournament stance” template.
+
+## Internationalization
+
+v1 corpus is English for RAG. Localized instructor copy may be layered later; phase IDs and finding slugs stay stable.
+
+## Versioning
+
+Pack status: **content build 2026-10-21** (see `_meta/build_report.txt`).
+Breaking changes to phase IDs or finding slugs require migration notes in `_meta/pack_readme.txt`.
+
+## Related code paths
+
+- `motion_agent/llm/prompts.py` — SNOWBOARD_SYSTEM_PROMPT, knowledge source globs (`fis/`, `snowboard_*.txt`).
+- `motion_agent/llm/agent.py` — SNOWBOARD_KB_SOURCES.
+- Future: `motion_agent/sports/packs/snowboarding.py` — pack registration and likeness heuristics.
+
+## Next engineering milestones
+
+1. Labeled alpine turn and small-jump clip suite → phase event validation on snow and dryland.
+2. Stance inference helper (regular/goofy) from approach segment.
+3. Coupled RGB + pose for grab naming (optional channel, not v1 findings).
+4. SBX start and pump-track extensions as sibling phase forks.

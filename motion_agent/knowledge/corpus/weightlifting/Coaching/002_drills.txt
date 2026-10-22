@@ -1,0 +1,215 @@
+# Weightlifting — Drills (30–90s blocks)
+# Each drill links to fault_* ids; equipment assumes standard gym
+
+================================================================================
+SQUAT DRILLS
+================================================================================
+
+drill_goblet_wall_squat
+  duration: 60s
+  faults: fault_squat_forward_lean_excess, fault_squat_good_morning
+  setup: Hold light dumbbell or kettlebell at chest; stand facing wall, toes 4–6 inches from wall.
+  action: 3–5 slow squats without knees or nose touching wall; focus chest-up hip hinge balance.
+  feel: Elbows inside knees optional; stay balanced mid-foot.
+  authority: B
+
+drill_pause_squat_bottom
+  duration: 90s
+  faults: fault_squat_bounce_bottom
+  setup: Empty bar or light load; safety pins or spotter if needed.
+  action: 3 reps with 2-second pause at bottom; no bounce out of hole.
+  feel: Tension stays on — "meet the bottom."
+  authority: B
+
+drill_band_knee_spread
+  duration: 45s
+  faults: fault_squat_knee_valgus
+  setup: Mini-band above knees; bodyweight squat stance.
+  action: 8–10 reps pushing knees out against band.
+  feel: "Spread the floor."
+  authority: B
+
+drill_heel_elevated_ankle_prep
+  duration: 60s
+  faults: fault_squat_heel_lift
+  setup: Small plates under heels or slant board.
+  action: 8 bodyweight squats full ROM; then 5 flat-foot reps if comfortable.
+  feel: Tripod foot on flat reps.
+  authority: B
+
+drill_single_leg_box_balance
+  duration: 90s
+  faults: fault_squat_asymmetric_hip
+  setup: Box or bench knee height.
+  action: 3 controlled sit-to-stand each leg; then 3 bilateral squats noting even pressure.
+  feel: Even drive both feet.
+  authority: B
+
+drill_tempo_321_squat
+  duration: 90s
+  faults: fault_squat_descent_control (checkpoint), fault_squat_good_morning
+  setup: Light load or bodyweight.
+  action: 3 reps: 3s down, 2s pause, 1s up — chest and hips move together.
+  feel: No rush at the top of descent.
+  authority: B+
+
+================================================================================
+DEADLIFT DRILLS
+================================================================================
+
+drill_wall_hip_hinge
+  duration: 60s
+  faults: fault_dl_setup_too_squatty, fault_dl_hips_shoot
+  setup: Stand facing away from wall, feet hip-width, small step from wall.
+  action: 10 hip hinges until hips lightly touch wall; then 3 setup positions at imaginary bar.
+  feel: Hips back, shins more vertical than squat.
+  authority: B
+
+drill_segment_pause_knee
+  duration: 90s
+  faults: fault_dl_rounding_pull, fault_dl_hitched_pull
+  setup: Light load; blocks optional.
+  action: 3 deadlifts pause 2s at knee — chest proud, lats on.
+  feel: One continuous tension after pause.
+  authority: B+
+
+drill_romanian_to_knee
+  duration: 90s
+  faults: fault_dl_hips_shoot, fault_dl_bar_forward
+  setup: Light barbell or dumbbells.
+  action: 3 RDLs to knee height feeling hamstring load; then 3 block pulls emphasizing bar close.
+  feel: Hips move back, bar skims legs.
+  authority: B+
+
+drill_lat_activation_setup
+  duration: 45s
+  faults: fault_dl_rounding_pull
+  setup: Empty bar at setup; no pull required.
+  action: 5 setup breaths: "protect armpits," chest tall, pull slack without changing hip height.
+  feel: Upper back stays long.
+  authority: B
+
+drill_lockout_glute_squeeze
+  duration: 45s
+  faults: fault_dl_hyperextend_lockout, fault_dl_soft_lockout_knees
+  setup: Light top-range deadlift or hip thrust familiarity.
+  action: 5 lockouts: squeeze glutes, knees straight, no lean-back.
+  feel: "Stand tall, ribs down."
+  authority: B
+
+drill_deficit_tempo_pull
+  duration: 90s
+  faults: fault_dl_bar_forward, fault_dl_hitched_pull
+  setup: 1–2 inch deficit, moderate-light load.
+  action: 3 reps, 3 seconds floor to knee then normal speed to lockout.
+  feel: Bar stays over mid-foot.
+  authority: B+
+
+================================================================================
+OHP DRILLS
+================================================================================
+
+drill_seated_strict_press
+  duration: 60s
+  faults: fault_ohp_leg_drive
+  setup: Bench with back support; light dumbbells or empty bar.
+  action: 6–8 strict presses — legs frozen.
+  feel: All force from shoulders.
+  authority: B
+
+drill_half_kneeling_single_arm
+  duration: 60s
+  faults: fault_ohp_forward_loop, fault_ohp_excessive_leanback
+  setup: Half-kneeling, light dumbbell.
+  action: 5 presses each arm; ribs down, vertical path.
+  feel: Press up, not back.
+  authority: B
+
+drill_wall_back_press
+  duration: 60s
+  faults: fault_ohp_excessive_leanback
+  setup: Light bar or PVC; stand with glutes and upper back lightly touching wall.
+  action: 5 presses without losing wall contact at ribs.
+  feel: Vertical trunk.
+  authority: B
+
+drill_z_press
+  duration: 90s
+  faults: fault_ohp_forward_loop, fault_ohp_elbow_flare
+  setup: Seated floor, legs extended; empty bar.
+  action: 5 strict presses — forces vertical path.
+  feel: Elbows under wrists.
+  authority: B+
+
+drill_overhead_hold
+  duration: 60s
+  faults: fault_ohp_shrug_lockout, fault_ohp_incomplete_lockout
+  setup: Light load at lockout or press to lockout.
+  action: 3×10s holds — long neck, full elbow extension.
+  feel: Shoulders away from ears.
+  authority: B
+
+drill_grip_width_setup
+  duration: 45s
+  faults: fault_ohp_elbow_flare
+  setup: Empty bar at front rack.
+  action: 5 setup reps: adjust grip so forearms vertical at collarbone; no press needed.
+  feel: Elbows slightly in front of bar.
+  authority: B
+
+================================================================================
+COMBO WARM-UP (Training link)
+================================================================================
+
+drill_barbell_complex_empty
+  duration: 90s
+  faults: (general movement prep)
+  action: 5 RDL + 5 front squat grip + 5 strict press empty bar — flow not for load.
+  note: Use for team warm-up; not max effort.
+  authority: B
+
+================================================================================
+DRILL SELECTION (product logic hint)
+================================================================================
+
+- Pick one drill per prioritized finding in coach briefs.
+- Prefer bodyweight or empty bar when capture shows near-max attempt with fault.
+- Tag `audience=youth` drills with no max-effort language.
+
+================================================================================
+V2 NEW FAULT DRILLS
+================================================================================
+drill_high_box_no_tuck
+  duration: 60 s
+  faults: fault_squat_butt_wink
+  steps: High-box squat pauses stopping before pelvis tuck; 5 slow reps.
+
+drill_wall_hip_knee_tempo
+  duration: 45 s
+  faults: fault_squat_early_knee_slide
+  steps: 3 s descent facing wall at toe distance; hips and knees together.
+
+drill_empty_bar_elbow_set
+  duration: 60 s
+  faults: fault_squat_elbow_flare_bar
+  steps: Empty-bar rack holds focusing elbows under bar; 3 breath holds.
+
+drill_rdl_shoulder_check
+  duration: 90 s
+  faults: fault_dl_uneven_shoulder
+  steps: Light RDL pause at lockout checking shoulder line; 6 reps.
+
+drill_midshin_arms_long
+  duration: 60 s
+  faults: fault_dl_arms_pulling
+  steps: Pause DL at mid-shin confirming long arms; finish light.
+
+drill_stick_head_through
+  duration: 75 s
+  faults: fault_ohp_head_through_late
+  steps: Stick/light press pause above crown then head through; 6 reps.
+
+drill_deadbug_then_press
+  duration: 60 s
+  faults: fault_ohp_rib_flare
+  steps: Dead-bug then 5 light presses keeping ribs quiet.

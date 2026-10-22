@@ -1,0 +1,143 @@
+# CeRebel Running KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: running (distance / fitness gait)
+# Aligns: SPORT_PACK_KB_SPEC.txt
+# Product: body-first OpenSim coaching; NO GPS / foot pod required
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for **running gait** from monocular or multi-view body
+capture. Analysis emphasizes repeatable stride mechanics visible on the skeleton:
+contact timing, trunk posture, hip/pelvis level, knee flexion in stance, arm swing,
+and left–right asymmetry.
+
+Out of scope v1:
+- Medical diagnosis of stress fracture, plantar fasciitis, or IT band syndrome from video
+- Prescriptive cadence targets without age/context disclaimer
+- Sprint block starts and maximal-acceleration first 10 m (different phase model)
+
+Build agent writes Findings/Coaching bodies from this map.
+
+================================================================================
+2. PRODUCT CONSTRAINTS
+================================================================================
+
+- Measurable claims tie to reconstructed body: joint angles, segment speeds, timing.
+- Phase scrub bar uses seven phase IDs below (stable contract for future RunningPack).
+- Each finding maps to: phase window, series_id, feel cue, 30–90s drill.
+- Youth vs adult: cadence and stride length norms differ; tag ageBand on checkpoints.
+- Authority A/A+ for injury-prevention consensus summaries; B+ for biomechanics reviews;
+  B for coaching cues; no C in automated thresholds.
+
+================================================================================
+3. PHASE MODEL (ONE STRIDE CYCLE)
+================================================================================
+
+Phase IDs (exact — for Phases/001_phase_model.txt):
+
+| id            | label_en        | role |
+|---------------|-----------------|------|
+| contact       | Touchdown       | Lead foot accepts weight; deceleration begins |
+| loading       | Loading         | Knee/hip flexion increases; shock absorption |
+| midstance     | Mid-stance      | COM over base of support; single-leg balance |
+| propulsion    | Propulsion      | Ankle/knee/hip extension; push toward toe-off |
+| toe_off       | Toe-off         | Foot leaves ground; stance ends |
+| swing         | Swing           | Thigh advances; knee flexes; foot clears ground |
+| flight        | Flight / descent| Both feet airborne (running) or late swing prep |
+
+Event definitions (body-only):
+
+- ic_event: local minimum of lead-ankle vertical velocity OR max downward foot speed
+  toward ground in stride window (contact proxy; not force-plate IC).
+- midstance_event: frame of max knee flexion on stance leg between ic and toe_off.
+- toe_off_event: local max of stance-ankle upward velocity or knee extension velocity peak
+  before swing ankle overtakes stance side.
+- next_ic_event: following ic on same leg (defines stride period for cadence).
+
+Handedness / leg side: findings may tag `side=left|right|bilateral`. Default clip analysis
+reports dominant asymmetry (higher severity side).
+
+================================================================================
+4. MEASUREMENT SURFACE (FUTURE CODE ↔ KB)
+================================================================================
+
+| series_id           | signal                              | unit   | primary phases      |
+|---------------------|-------------------------------------|--------|---------------------|
+| cadence             | 60 / mean stride period (both feet) | spm    | clip-level          |
+| stride_time         | ic → next ic same leg               | s      | clip-level          |
+| vertical_oscillation| pelvis COM vertical range per cycle | cm     | midstance, flight   |
+| trunk_lean          | torso angle vs vertical (sagittal)  | °      | midstance, propulsion |
+| overstride_proxy    | horizontal foot–pelvis at ic        | ratio  | contact, loading    |
+| knee_flex_stance    | knee_angle stance leg at midstance  | °      | midstance           |
+| hip_drop            | pelvis obliquity (stance vs swing)  | °      | midstance           |
+| arm_swing_range     | shoulder flexion ROM per cycle      | °      | swing, flight       |
+| trunk_rotation      | thorax yaw amplitude per stride     | °      | propulsion, swing   |
+| crossover_proxy     | foot medial to contralateral ASIS  | bool/° | contact             |
+
+================================================================================
+5. EVIDENCE-BANDED NORMS (NOT MEDICAL PRESCRIPTION)
+================================================================================
+
+ADULT recreational / distance (authority mostly B+ / A for injury themes):
+
+- Cadence: cohort means often ~160–180 steps/min at easy pace; wide inter-individual
+  spread. Heiderscheit et al. (2011) show +10% step rate can reduce peak hip/knee
+  loading at same speed (B+). Product flags "low cadence" only below ~155 spm sustained
+  WITH overstride proxy — not cadence alone.
+- Overstride: foot landing markedly ahead of pelvis at contact associated in literature
+  with higher braking impulse and injury risk themes (B+); express as qualitative +
+  proxy metric, not cm prescription without scale calibration.
+- Vertical oscillation: excessive bounce wastes energy; flag top quartile vs self-baseline
+  when multi-stride clip available (B coaching).
+- Trunk lean: slight forward lean from ankle common in distance running; excessive upright
+  or leaning back at contact flagged (B+).
+- Hip drop > ~5–8° pelvis obliquity in stance linked to glute med weakness themes (A/B+);
+  conservative threshold for noisy 2D.
+
+YOUTH (middle school / HS cross-country):
+
+- Higher cadence and shorter stride length typical; do NOT apply adult overstride thresholds.
+- Growth-related asymmetry may be transient; down-weight asymmetry severity U14 unless
+  large magnitude or pain language (safety redirect).
+
+================================================================================
+6. QUALITY MODEL & CHECKPOINTS (see Quality/002)
+================================================================================
+
+Dimensions: (1) contact & stride length, (2) posture & core, (3) hip/pelvis stability,
+(4) arm swing & trunk rotation, (5) rhythm & repeatability.
+
+Checkpoint table populated in Quality/002_checkpoints.txt with fail→finding_id links.
+
+================================================================================
+7. FINDING CATALOG (12 STABLE IDs)
+================================================================================
+
+| finding_id              | headline (short)              | primary_phases        |
+|-------------------------|-------------------------------|------------------------|
+| overstride              | Foot lands too far ahead      | contact, loading       |
+| low_cadence_overstride  | Slow steps with long reach    | contact, clip-level    |
+| excessive_bounce        | Too much vertical bounce      | flight, midstance      |
+| trunk_lean_back         | Torso too upright or back     | contact, midstance     |
+| trunk_lean_excess_fwd   | Hunched forward from waist    | midstance, propulsion  |
+| hip_drop                | Pelvis drops on stance side   | midstance              |
+| crossover_gait          | Foot crosses midline          | contact, loading       |
+| knee_valgus_load        | Knee caves inward on landing  | loading, midstance     |
+| stiff_ankle_landing     | Low ankle dorsiflexion at IC  | contact, loading       |
+| arm_swing_asymmetry     | Arms uneven range or timing   | swing, flight          |
+| excessive_trunk_rotation| Torso twists too much         | propulsion, swing      |
+| scissor_kick            | Low knee lift; feet too close | swing, flight          |
+| stride_asymmetry        | Left/right timing or ROM gap  | clip-level             |
+
+================================================================================
+8. BUILD ORDER & ACCEPTANCE
+================================================================================
+
+- Every finding_id has Findings card + cue + drill
+- Phase ids exactly: contact, loading, midstance, propulsion, toe_off, swing, flight
+- No GPS/HR dependency; disclaim force-plate-only metrics
+- Youth/adult separation in Biomechanics/001 and youth checkpoint rows
+- SOURCE_MANIFEST + research_notes + review_report + build_report in _meta/
+
+End brain_plan v0.1

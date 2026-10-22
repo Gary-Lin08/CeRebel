@@ -1,0 +1,110 @@
+# Freestyle — Team Practice Structure (coaching context)
+
+Authority: B NGB and club coaching conventions; summarized for RAG — verify live programs locally.
+Not a substitute for certified coach planning or medical training advice.
+
+---
+
+## Session architecture (typical 60–90 min pool practice)
+
+Most age-group and masters programs organize work into:
+
+1. **Warm-up (10–15 min)** — easy swim, drill progression, activation. Purpose: tissue prep and skill priming, not max effort.
+2. **Technique block (15–25 min)** — low to moderate intensity drills linked to weekly theme (catch, breathing, kick).
+3. **Main set (20–40 min)** — aerobic, threshold, or sprint work with technique hold points.
+4. **Cool-down (5–10 min)** — easy swim, optional stretch on deck per team policy.
+
+CeRebel video clips often come from **technique block** or **main set** sub-intervals — note fatigue effects on findings.
+
+---
+
+## Weekly theme rotation (example mesocycle)
+
+| Week focus | Technique emphasis | Sample drill linkage |
+|------------|------------------|----------------------|
+| Catch / EVF | elbow path, continuous catch | drill_fist_drill, drill_sculling_front |
+| Body line | crossover, snaking | drill_catch_up, drill_single_arm_freestyle |
+| Breathing | rotation, bilateral timing | drill_bilateral_breathing, drill_6_kick_switch |
+| Kick | hip-driven, narrow | drill_vertical_kick, drill_side_kick |
+| Race skills | turns, finishes (glossary) | drill_finish_touch_thigh |
+
+Rotate themes rather than stacking all faults in one session.
+
+---
+
+## Set examples (moderate volume)
+
+### Technique-heavy (distance group)
+
+- 400 swim easy
+- 8 × 50 drill/swim by 25 (drill in Coaching/002_drills.txt)
+- 5 × 200 freestyle @ moderate hold stroke count
+- 200 easy
+
+### Sprint-oriented
+
+- 300 swim
+- 6 × 25 build drill → swim
+- 8 × 50 @ threshold with focus on push finish
+- 4 × 25 sprint kick
+- 200 easy
+
+### Masters short practice (45 min)
+
+- 200 warm-up
+- 4 × 50 technique focus (one finding from video review)
+- 10 × 100 aerobic intervals
+- 100 cool-down
+
+Adjust distances for pool length (25 yd vs 25 m vs 50 m).
+
+---
+
+## Integrating video review
+
+1. Capture **side view** during technique block before fatigue (cycles cleaner).
+2. Optional second clip from **main set** mid-set to compare fault emergence under load.
+3. Coach selects **one finding + one cue + one drill** for homework (align with Coaching/ files).
+4. Re-shoot after 2–3 sessions — track repeatability axis in Quality/001_quality_definition.txt.
+
+---
+
+## Dry-land relationship (high level)
+
+Dry-land strength and mobility programs support swimming but are **not** analyzed by this pack.
+Open literature links scapular control and thoracic mobility to shoulder comfort — refer athletes to qualified
+S&C coaches; no prescriptive exercises in this corpus beyond generic stop-if-pain language.
+
+---
+
+## Equipment policies
+
+Pull buoys, paddles, fins, bands, and snorkels change stroke mechanics. When reviewing video:
+- Tag `equipment=none` for plain stroke analysis when possible.
+- If paddles/fins used, downgrade automated catch/pull finding confidence in product metadata.
+
+---
+
+## Open water training add-ons
+
+- Sighting sets (drill_open_water_sighting)
+- Drafting practice (no body findings)
+- Wetsuit sessions alter body line — note in metadata
+
+---
+
+## Communication with athletes
+
+Use plain language from Coaching/001_cues.txt; avoid jargon ("EVF") with beginners unless explaining briefly.
+Pair automated briefs with coach observation of breathing comfort and effort level.
+
+---
+
+## Load monitoring (non-medical)
+
+Coaches track:
+- Weekly distance and intensity distribution
+- RPE and mood
+- Shoulder complaints — any pain stops technique progression until evaluated
+
+This pack does not compute training load from video alone.

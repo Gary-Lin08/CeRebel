@@ -1,0 +1,64 @@
+# Human (General Motion) Sport Pack — Review Report (Review Agent)
+Generated: 2026-10-23
+Corpus path: motion_agent/knowledge/corpus/human/
+Product: CeRebel body-first coaching — HumanMotionPack id=general (fallback)
+Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt (v2 depth)
+
+================================================================================
+1. CORPUS STATE REVIEWED
+================================================================================
+
+Content build complete at review time:
+
+  Docs/001_ARCHITECTURE.txt, Docs/002_DISCLAIMER.txt
+  Schema/001_ontology.txt
+  Taxonomy/001_concepts.txt, Taxonomy/002_relations.txt (≥15 relations; fault_* edges)
+  Phases/001_phase_model.txt (7 phases with detector_events + fault_links)
+  Quality/001_quality_definition.txt, Quality/002_checkpoints.txt
+  Findings/001_common_faults.txt (28 finding cards, canonical fault_* shape)
+  Coaching/001_cues.txt (≥20 cues citing fault_*), Coaching/002_drills.txt (≥15 drills with targets:)
+  Biomechanics/001_overview.txt
+  Training/001_team_practice.txt
+  _meta/pack_readme.txt, brain_plan.txt, SOURCE_MANIFEST.txt, research_notes.txt, build_report.txt
+
+Product code state:
+  - HumanMotionPack live as fallback in motion_agent/sports/packs/human.py.
+  - Automated checkpoint engine for general findings may still be partial — briefs may use instant human_posture.
+
+================================================================================
+2. SAFETY — MEDICAL / INJURY LANGUAGE
+================================================================================
+
+  [S-1] PASS — No individual medical diagnosis from video; association language only.
+  [S-2] PASS — Disclaimer + stop-if-pain on drills.
+  [S-3] PASS — Youth notes on asymmetry, gait step length, phase wobble.
+  [S-4] PASS — Scapular wing card explicitly non-diagnostic for nerve injury.
+
+================================================================================
+3. ACCURACY / EVIDENCE
+================================================================================
+
+  [E-1] PASS — Posture, hinge, valgus, balance themes cited at B+/A association level.
+  [E-2] PASS — Per-card sources present (fixed prior weak sourcing).
+  [E-3] WARN — Scapular wing and knee valgus need camera-plane confidence flags in product.
+  [E-4] PASS — No C sources for finding cards; no copyrighted manual paste.
+
+================================================================================
+4. SPEC COMPLIANCE (v2)
+================================================================================
+
+  [C-1] PASS — Required layout; DISCLAIMER + SOURCE_MANIFEST exist.
+  [C-2] PASS — 28 cards with body_signal, feel_cue, drill, severity_default, sources.
+  [C-3] PASS — Bare ids migrated to fault_* with legacy_id.
+  [C-4] PASS — 7 phases with detector_events + fault_links.
+  [C-5] PASS — Coaching/taxonomy depth targets met; sport-agnostic scope preserved.
+
+================================================================================
+5. MIGRATION NOTES
+================================================================================
+
+  - forward_head → fault_forward_head (and all prior bare ids) with legacy_id.
+  - Expanded ~15 → 28: rounded shoulders, thoracic ext, squat depth/heels/trunk/hip shift,
+    reach hike, OH lumbar arch, gait lean/step, knee-dominant hinge, scap wing proxy, narrow BOS.
+
+VERDICT: APPROVED_V2 — 28 fault_* general-motion cards with full fields, phase fault_links, and coaching/taxonomy meet SPORT_PACK_KB_SPEC v2.

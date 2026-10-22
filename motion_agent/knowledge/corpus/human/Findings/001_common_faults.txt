@@ -1,0 +1,375 @@
+# General Human Motion — Common Faults (finding cards) — v2
+
+Authority: B / B+ summarized open literature; not diagnostic. See Docs/002_DISCLAIMER.txt.
+Corpus pack id: human. IDs use fault_<snake_case>; legacy_id keeps prior bare slugs.
+
+Sport-agnostic: posture, hinge, squat-ish, single-leg, reach, gait basics, shoulder asymmetry.
+
+---
+
+finding_id: fault_forward_head
+legacy_id: forward_head
+headline_en: Head sits too far in front of your stack
+phases: setup, recover
+body_signal: Head landmark (ear/nose proxy) anterior to shoulder–pelvis line in sagittal view at setup or after action.
+why_it_matters: Sustained forward head posture is common with desk/phone habits and may increase neck and upper-back muscle effort in some populations (B+). Tendency only — not cervical diagnosis.
+feel_cue: "Pull the crown of your head up and slightly back — eyes level."
+drill: 45 s wall chin glide (drill_forward_head_wall).
+severity_default: low
+sources: Postural alignment education; PMC neck posture reviews summarized (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_posture_stack_break
+legacy_id: posture_stack_break
+headline_en: Head, ribs, and pelvis lose their stack under movement
+phases: load, action
+body_signal: Stack alignment proxy fails cp_stack_neutral during load/action while setup was acceptable, OR continuous failure across setup and action.
+why_it_matters: Loss of axial organization can reduce power transfer and increase compensatory motion elsewhere (B+). Not a “weak core” diagnosis.
+feel_cue: "Ribs down, pelvis neutral — move as one cylinder before you add speed."
+drill: 60 s stacked breath squat (drill_stack_breath_squat).
+severity_default: medium
+sources: Trunk–pelvis coordination literature; fundamental strength coaching (B/B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_ribcage_flare_anterior
+legacy_id: ribcage_flare_anterior
+headline_en: Rib cage flares open ahead of the pelvis
+phases: load, action
+body_signal: Rib cage angle proxy shows excessive anterior flare relative to pelvis at max load (cp_rib_flare_load).
+why_it_matters: Excessive rib flare can accompany lumbar extension strategy instead of hip motion (B). Coach hip and breath without fear-based spine language.
+feel_cue: "Soft ribs down — exhale before you load."
+drill: 45 s exhale reach (drill_exhale_reach).
+severity_default: medium
+sources: Coaching education on breathing and bracing (B)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_pelvis_anterior_tilt_excess
+legacy_id: pelvis_anterior_tilt_excess
+headline_en: Pelvis tipped too far forward at the waist
+phases: setup, load
+body_signal: Anterior pelvic tilt proxy exceeds sagittal band at setup or bottom of load (series_pelvis_tilt).
+why_it_matters: Excessive APT alone is not pathology; in dynamic tasks it may pair with rib flare and limited hip flexion (B+). Coaching awareness only.
+feel_cue: "Level the belt line — tiny tuck if you feel arched."
+drill: 60 s pelvis clock (drill_pelvis_clock).
+severity_default: low
+sources: Lumbopelvic kinematics reviews summarized; APTA education themes (A/B high level) (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_lateral_pelvis_drop
+legacy_id: lateral_pelvis_drop
+headline_en: One side of the pelvis drops during support
+phases: load, action
+body_signal: Frontal pelvis obliquity exceeds band at single-leg load (stance hip lower than swing side).
+why_it_matters: Visible pelvic drop during single-leg tasks discussed with hip stabilizer endurance (A/B+). Association with pain is population-specific — no diagnosis from video.
+feel_cue: "Level hips — imagine a tray of water on your pelvis."
+drill: 45 s single-leg stand level hips (drill_single_leg_level).
+severity_default: medium
+sources: Trendelenburg and running hip-drop themes via PubMed summaries (A/B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_knee_valgus_visible
+legacy_id: knee_valgus_visible
+headline_en: Knees collapse inward on load
+phases: load, action
+body_signal: At max knee flexion, knee landmark medial to hip–ankle line in frontal/oblique view (cp_knee_valgus_load). Do not fire from pure sagittal.
+why_it_matters: Dynamic knee valgus studied as load-distribution variable in jump/land and squat (B+). Not guaranteed injury prevention claim.
+feel_cue: "Knees over shoelaces — push the floor apart."
+drill: 60 s mini squat band push (drill_mini_squat_knee_track).
+severity_default: medium
+sources: Neuromuscular training reviews (PMC); ACL prevention literature themes (B+)
+confidence_note: Requires frontal or oblique camera.
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_stiff_spine_no_hip_hinge
+legacy_id: stiff_spine_no_hip_hinge
+headline_en: Bending comes from the back instead of the hips
+phases: prep, load
+body_signal: Lumbar flexion proxy increases while hip flexion share stays low during forward bend, squat, or reach prep (cp_hip_hinge_absent).
+why_it_matters: Hip-dominant patterns distribute flexion across hips rather than concentrating motion in thoracolumbar spine in many coached lifts (B+). Anatomy varies.
+feel_cue: "Hips back, chest follows — like closing a car door with your butt."
+drill: 90 s hip hinge stick (drill_hip_hinge_stick).
+severity_default: medium
+sources: NSCA hinge education; deadlift/squat kinematics summaries (B/B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_single_leg_balance_wobble
+legacy_id: single_leg_balance_wobble
+headline_en: Excessive sway on one leg
+phases: load
+body_signal: Lateral COM or pelvis sway path exceeds band during single-leg support (cp_com_sway_single_leg).
+why_it_matters: Increased sway reflects postural control challenge — fatigue, skill, or environment (B+). Not a neurological test replacement.
+feel_cue: "Grow tall — press big toe and heel into floor."
+drill: 60 s flamingo focus (drill_flamingo_focus).
+severity_default: medium
+sources: Postural control reviews (PMC) (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_insufficient_weight_shift
+legacy_id: insufficient_weight_shift
+headline_en: Weight never fully commits over the working leg
+phases: prep, load
+body_signal: COM horizontal position remains between feet or over trailing foot when action expects support over lead leg (cp_weight_shift_insufficient).
+why_it_matters: Incomplete weight transfer can limit force production in throws, steps, and swings (B). Common in beginners.
+feel_cue: "Load the front foot before you go."
+drill: 45 s step and pause (drill_step_pause_load).
+severity_default: medium
+sources: Fundamental coaching progressions (B)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_excessive_lateral_lean
+legacy_id: excessive_lateral_lean
+headline_en: Whole body leans sideways during the move
+phases: load, action
+body_signal: Trunk lean angle in frontal plane exceeds band vs vertical (cp_lateral_lean_excess).
+why_it_matters: Lateral lean can be strategy in some sports; in generic tasks may indicate avoidance or frontal-plane control limits (B). Context uncertain in general pack.
+feel_cue: "Stay between two panes of glass — tall and centered."
+drill: 45 s narrow corridor march (drill_corridor_march).
+severity_default: low
+sources: Frontal-plane control coaching (B)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_shoulder_height_asymmetry
+legacy_id: shoulder_height_asymmetry
+headline_en: One shoulder sits noticeably higher
+phases: setup
+body_signal: Vertical shoulder landmark difference exceeds band at setup (cp_shoulder_height_asym).
+why_it_matters: Mild asymmetry is common; sustained difference may reflect habit, scoliosis, or prior injury — video cannot distinguish (B).
+feel_cue: "Melt both shoulders toward the floor equally."
+drill: 45 s shoulder roll reset (drill_shoulder_roll_reset).
+severity_default: low
+sources: Postural observation education (B)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_limb_rom_asymmetry
+legacy_id: limb_rom_asymmetry
+headline_en: One arm or leg moves through a smaller range
+phases: action
+body_signal: Peak ROM wrist/ankle or knee flexion differs L/R beyond band in bilateral task (cp_limb_rom_asym).
+why_it_matters: ROM asymmetry may reflect dominance, guarding, or prior injury (B+). Follow pain rules; not automatic medical referral.
+feel_cue: "Match the other side — same height, same reach."
+drill: 60 s mirror reaches (drill_mirror_reaches).
+severity_default: low
+sources: Bilateral asymmetry in motor control literature (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_rushed_prep
+legacy_id: rushed_prep
+headline_en: Movement starts before the body is organized
+phases: prep
+body_signal: Prep phase duration below ratio vs action (cp_prep_duration_short); abrupt velocity rise without stack stabilization.
+why_it_matters: Shortened preparation can reduce control at action peak (B coaching). Common when chasing speed on film.
+feel_cue: "Pause at the bottom — then go."
+drill: 60 s counted prep squat (drill_counted_prep_squat).
+severity_default: low
+sources: Motor learning pacing themes (B)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_incomplete_recover
+legacy_id: incomplete_recover
+headline_en: Finish is cut off or body collapses after the effort
+phases: recover, reset
+body_signal: Stack variance remains high through recover; E_RECOVER_END not reached OR visible collapse at knees/trunk (cp_recover_incomplete).
+why_it_matters: Recovery is where breathing and tissue stress normalize between reps (B). Truncated clips may false-trigger — lower confidence on short recover windows.
+feel_cue: "Land soft, stand tall before the next rep."
+drill: 45 s stick the landing (drill_stick_landing).
+severity_default: medium
+sources: Plyometric landing coaching (B); postural recovery themes (B)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_arms_fight_torso
+legacy_id: arms_fight_torso
+headline_en: Arms and torso rotate against each other
+phases: prep, action
+body_signal: Thorax yaw relative to pelvis exceeds band while arms drive opposite rotation (cp_arms_torso_conflict).
+why_it_matters: Efficient throwing/striking/running use counter-rotation; fighting means wasted motion (B+ segment coupling).
+feel_cue: "Ribs and pelvis talk — turn together, then whip the arm."
+drill: 60 s cross crawl slow (drill_cross_crawl_slow).
+severity_default: medium
+sources: Trunk–arm coordination biomechanics (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_rounded_shoulders
+headline_en: Shoulders roll forward at rest or under load
+phases: setup, load
+body_signal: Acromion landmark anterior relative to ear–hip line; upper back flexed appearance at setup (cp_rounded_shoulders).
+why_it_matters: Rounded shoulder posture may accompany forward head and limited overhead reach (B). Video tendency only.
+feel_cue: "Open the chest gently — shoulder blades slide into back pockets."
+drill: 45 s wall angel slides (drill_wall_angels).
+severity_default: low
+sources: Scapular posture education summaries (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_thoracic_extension_excess
+headline_en: Upper back arches excessively under overhead or load
+phases: load, action
+body_signal: Thoracic extension proxy exceeds band with rib flare while reaching or loading overhead (cp_t_spine_ext_excess).
+why_it_matters: Excess thoracic extension can substitute for shoulder flexion ROM (B). Coach stack, not fear language.
+feel_cue: "Long tall spine — reach without cranking the upper back."
+drill: 45 s seated wall reach with ribs soft (drill_seated_wall_reach).
+severity_default: low
+sources: Overhead mobility coaching (B); thoracic kinematics summaries (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_squat_depth_shallow
+headline_en: Squat stops high without clear depth intent
+phases: prep, load
+body_signal: Peak hip/knee flexion below task band for squat-ish pattern (cp_squat_depth_shallow); thighs remain well above parallel without mobility note.
+why_it_matters: Shallow depth may be intentional; when task expects deeper load, limited depth reduces training stimulus (B). Not a mobility diagnosis.
+feel_cue: "Sit the hips down and back to your target depth."
+drill: 60 s box-target sit-to-stand (drill_box_squat_target).
+severity_default: low
+sources: Squat depth coaching consensus (B); kinematics reviews (B+)
+confidence_note: Requires squat intent or clear squat-ish pattern.
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_heels_rise_squat
+headline_en: Heels lift off the floor in the squat
+phases: load
+body_signal: Heel landmark rises while knees flex in squat-ish load (cp_heels_rise_squat).
+why_it_matters: Heel rise may reflect ankle dorsiflexion limits or balance strategy (B). Coaching: elevate heels deliberately or improve mobility — not medical claim.
+feel_cue: "Keep the whole foot glued — big toe, little toe, heel."
+drill: 60 s wall squat foot-tripod holds (drill_squat_tripod).
+severity_default: medium
+sources: Ankle dorsiflexion and squat mechanics summaries (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_trunk_collapse_squat
+headline_en: Trunk folds forward excessively in the squat
+phases: load, action
+body_signal: Trunk lean vs shin or vertical exceeds squat band at depth; chest drops toward thighs early (cp_trunk_collapse_squat).
+why_it_matters: Excessive fold may shift load and limit hip depth quality (B). Distinguish from intentional low-bar patterns when tagged.
+feel_cue: "Chest proud, hips sit back — don't fold like a lawn chair."
+drill: 60 s goblet-hold bodyweight squat (hands at chest) (drill_goblet_shape).
+severity_default: medium
+sources: Squat trunk kinematics coaching (B/B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_reach_shoulder_hike
+headline_en: Shoulder hikes toward the ear on a reach
+phases: prep, action
+body_signal: Reaching-side shoulder elevates toward ear while wrist rises (cp_reach_shoulder_hike).
+why_it_matters: Hiking may reduce true shoulder flexion contribution and raise neck tension (B). Common in overhead reaches.
+feel_cue: "Reach long from the ribs — keep the shoulder away from the ear."
+drill: 45 s wall slide reaches with melt-shoulder cue (drill_reach_melt).
+severity_default: low
+sources: Scapular elevation coaching (B); shoulder kinematics summaries (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_overhead_arch_lumbar
+headline_en: Low back arches hard to get arms overhead
+phases: load, action
+body_signal: Lumbar extension proxy rises as arms elevate; ribs flare; pelvis tips anterior (cp_oh_lumbar_arch).
+why_it_matters: Lumbar substitution for shoulder/thoracic ROM is a common coaching observation (B+). Not a spine diagnosis.
+feel_cue: "Ribs down, then reach — don't dump into the low back."
+drill: 60 s dead-bug reach progressions (drill_deadbug_reach).
+severity_default: medium
+sources: Overhead press/reach coaching education (B+); bracing themes (B)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_gait_trunk_lean
+headline_en: Trunk leans sideways or back during simple walking
+phases: load, action
+body_signal: In gait-basic clips, trunk frontal or sagittal lean exceeds walk band across multiple steps (cp_gait_trunk_lean).
+why_it_matters: Visible lean in casual gait may reflect habit, fatigue, or load avoidance (B). Sport packs take precedence when matched.
+feel_cue: "Walk tall between panes of glass — eyes on the horizon."
+drill: 60 s corridor walk with tall stack cue (drill_gait_corridor_walk).
+severity_default: low
+sources: Observational gait education (B); posture in gait summaries (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_gait_short_step
+headline_en: Steps stay very short without task reason
+phases: load, action
+body_signal: Step length proxy below band for height/speed context across ≥4 steps (cp_gait_short_step).
+why_it_matters: Abbreviated steps may be caution, fatigue, or habit (B). Not a fall-risk clinical score from video.
+feel_cue: "Let the legs swing a little longer — roll from heel to toe."
+drill: 60 s line walks with slightly longer steps (drill_gait_longer_step).
+severity_default: low
+sources: Spatial gait parameter education (B+)
+youth_note: Young children naturally take shorter absolute steps — scale by height.
+
+---
+
+finding_id: fault_hip_shift_lateral_squat
+headline_en: Hips shift to one side in the squat
+phases: load
+body_signal: Pelvis translates laterally toward one knee at depth beyond band (cp_hip_shift_squat).
+why_it_matters: Lateral hip shift may reflect asymmetry, mobility, or habit (B+). Coach even hip track — not diagnosis.
+feel_cue: "Sit between your feet — hips stay centered over the base."
+drill: 60 s mirror squat with hip-center cue (drill_squat_hip_center).
+severity_default: medium
+sources: Squat asymmetry coaching (B); bilateral load distribution themes (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_knee_dominant_hinge
+headline_en: Hinge pattern turns into a knee-forward squat
+phases: prep, load
+body_signal: During intended hinge, knees translate forward excessively while hip flexion share stays low (cp_knee_dom_hinge).
+why_it_matters: Knee-dominant substitution reduces hip loading in hinge tasks (B). Useful for coaching pattern clarity.
+feel_cue: "Push the hips back first — shins quieter, butt toward the wall."
+drill: 90 s dowel hinge with soft knees (drill_hinge_not_squat).
+severity_default: medium
+sources: Hinge vs squat discrimination coaching (B/B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_scapular_wing_proxy
+headline_en: Shoulder blade appears to wing off the rib cage
+phases: setup, action
+body_signal: Medial scapular border prominence increases during arm raise or push (cp_scap_wing_proxy). Visual proxy only.
+why_it_matters: Apparent winging may reflect control, fatigue, or anatomy (B). Video cannot diagnose nerve injury — refer if sudden/painful.
+feel_cue: "Glue the shoulder blade flat — reach long without popping the blade."
+drill: 45 s wall push-up plus holds (drill_scap_pushup_plus).
+severity_default: low
+sources: Scapular dyskinesis observation education (B+ clinical observation themes — non-diagnostic)
+confidence_note: Needs clear rear/oblique view of scapula.
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+finding_id: fault_base_of_support_narrow
+headline_en: Feet stand or land too close together for the task
+phases: setup, load
+body_signal: Mediolateral foot spacing below task band at setup or during load (cp_bos_narrow).
+why_it_matters: Narrow base can increase sway and challenge frontal control (B+). Some sports use narrow stance intentionally — check context.
+feel_cue: "Widen to hip-width rails under each hip."
+drill: 45 s stance-width reset marches (drill_bos_widen).
+severity_default: low
+sources: Base of support and balance education (B+)
+youth_note: Pattern quality (hinge vs squat, quiet single-leg) over perfect posture angles.
+---
+
+# Finding index (28 cards)
+
+fault_forward_head | fault_posture_stack_break | fault_ribcage_flare_anterior | fault_pelvis_anterior_tilt_excess |
+fault_lateral_pelvis_drop | fault_knee_valgus_visible | fault_stiff_spine_no_hip_hinge | fault_single_leg_balance_wobble |
+fault_insufficient_weight_shift | fault_excessive_lateral_lean | fault_shoulder_height_asymmetry | fault_limb_rom_asymmetry |
+fault_rushed_prep | fault_incomplete_recover | fault_arms_fight_torso | fault_rounded_shoulders |
+fault_thoracic_extension_excess | fault_squat_depth_shallow | fault_heels_rise_squat | fault_trunk_collapse_squat |
+fault_reach_shoulder_hike | fault_overhead_arch_lumbar | fault_gait_trunk_lean | fault_gait_short_step |
+fault_hip_shift_lateral_squat | fault_knee_dominant_hinge | fault_scapular_wing_proxy | fault_base_of_support_narrow
+
+Cross-link: Coaching/001_cues.txt, Coaching/002_drills.txt, Phases/001_phase_model.txt

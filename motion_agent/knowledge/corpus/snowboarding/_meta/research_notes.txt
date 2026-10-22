@@ -1,0 +1,120 @@
+# Snowboarding pack — research notes (search agent)
+# Retrieved: 2026-10-21 | Summaries for RAG; verify live URLs before ingest or rule citations
+
+## Instructor progressions — CASI QuickRide (B, national NGB)
+
+Canadian Association of Snowboard Instructors (CASI) publishes the **QuickRide System** as its beginner
+methodology: five phases with explicit goals and tactic menus.
+
+| Phase | Student goal (summary) | Key movement themes |
+|-------|------------------------|---------------------|
+| 1 BASICS | Equipment comfort; one-foot mobility | Neutral stance, skating, climb/descend |
+| 2 SLIDING | Comfort while board is sliding | Push-push-glide, straight runs, J-turns |
+| 3 CONTROL | Speed and direction with both feet attached | Sideslip, pendulum, power pendulum |
+| 4 TURNING | Edge changes in the fall line | Static rotation, garland/chicken turns, beginner turns |
+| 5 FLOW | Safe mountain exploration | Linked novice turns, traverse + flexion, speed = shape + size + slope |
+
+Presentation framework: **S.A.F.E.** — Static (feel/visualize on flat), Active (first attempts with terrain
+management), Free (mileage and mistakes with feedback), Experimentation (vary terrain/movements).
+
+Public surfaces: https://casi-acms.com/quickride/ (marketing overview); CASI Reference Guide PDF and Level 1/2
+Course Guides on members.casi-acms.com/documents/ (direct PDF URLs, no login observed 2026-10-21). CADS adaptive
+manual (cads.ski) restates QuickRide tables for inclusive instruction — useful cross-check, not a separate progression.
+
+Beyond novice (Reference Guide ch. 6): **Skill Development Model** across three **Teaching Realms** — Piste,
+Off-Piste, Freestyle — with level-specific outcomes (L2: sliding turns, carving intro, terrain adaptation, switch,
+flatland, basic jumps; L3–L4: advanced turns, freeride, expert carving/freestyle). Appendices include physics/biomechanics
+and anatomy/movement glossaries — summarize for Biomechanics/001, do not paste long excerpts.
+
+Authority **B** for lesson structure and tactic names; **not A+** (not competition rules).
+
+## Instructor progressions — PSIA-AASI / AASI (B, national NGB)
+
+American Association of Snowboard Instructors (PSIA-AASI) frames teaching with the **Learning Connection** (people,
+teaching, technical skills) and **Snowboarding Fundamentals** (six board-performance controls):
+
+1. CM-to-base relationship along the board (fore/aft pressure).
+2. CM-to-base relationship across the board (toe/heel pressure).
+3. Magnitude of board/surface pressure.
+4. Board tilt via inclination + angulation.
+5. Board pivot via flexion/extension and rotation.
+6. Board twist (torsional flex) via flexion/extension and rotation.
+
+Public PDF: Learning Connection & Discipline-Specific Fundamentals (thesnowpros.org/wp-content/uploads/2024/12/…).
+
+**American Teaching System (STS)** defines rider **zones**: Beginner/Novice, Intermediate, Advanced — aligned to
+certification levels (L1 → beginner/novice on green/easiest blue + XS–S park; L2 → through intermediate blues;
+L3 → advanced/expert terrain). National Standards PDF (2025-10 update) and Snowboarding Technical Skills Performance
+Guide v2.0 (2022-11-07) are publicly hosted on thesnowpros.org.
+
+Beginner/novice **teaching progression** (from Assessment Guide I + regional templates + Adaptive Snowboard Guide excerpts):
+equipment and stance → skating/walking → gliding and stopping → sideslip/garland → linked turns. Common micro-progression
+for new turns: **static → sideslip/garland → edge change in motion** (PSIA-NW progression template).
+
+Chapter 7 of the **Snowboard Technical Manual** (STS beginner/novice zone detail) is **member-primary-discipline digital
+access or paid print** — cite via Performance Guide and Assessment Guide summaries only until licensed ingest.
+
+Authority **B**; certification standards **A+** within PSIA-AASI’s own assessment system (not FIS competition law).
+
+## Biomechanics — open literature (B+ / A for injury epidemiology)
+
+No golf-style **open-access systematic review** dedicated to recreational snowboard **technique** biomechanics was
+identified in this search. Useful peer-reviewed threads:
+
+**Carved turns / lower extremity loading (B+)**
+- Klous et al. 2014 (PMC4181787): 3D inverse dynamics on carved ski vs snowboard turn; snowboard steering-leg **joint
+  moments consistently greater** than skiing; force directions differ by phase — product must not collapse “load” to a
+  single scalar cue.
+- Back et al. 2013 (IJBSBT open PDF): carving **transition phase** — CM displacement and ankle/knee/hip angles vary by
+  event within turn; min ankle/knee angles often at mid-transition event.
+- Krüger et al. 2012 (PubMed): field IMU + force plates + OpenSim inverse dynamics for full runs — method reference for
+  future sensor fusion; validity caveats for inter-individual norms.
+
+**Freestyle / air (B+)**
+- Jiang et al. 2025 Applied Sciences (MDPI): Snowboard Big Air takeoff — difficulty scales with propulsion, joint
+  kinematics, rotational energy; **CC BY 4.0** (verify on article page at ingest). Elite national-team sample — do not
+  apply trick-difficulty benchmarks to beginner lessons.
+
+**Injury / impact biomechanics (A / B+)**
+- Russell et al. 2013 BJSM review (doi 10.1136/bjsports-2013-093019): injury patterns differ **elite vs recreational**
+  (elite: higher severity, more lower extremity; recreational: more upper extremity/wrist). Biomechanical prevention
+  literature thin for elite lower extremity — findings must stay non-diagnostic.
+- Patton et al. 2020 MLTJ narrative review (open on ejcrim/mltj): head injury epidemiology and helmet/impact mechanics
+  in ski/snowboard — administrative/engineering context, not turn coaching norms.
+
+**Riding EMG / kinematics (B, smaller journals)**
+- IJBSBT 2016 riding-motion paper: muscle activation asymmetry in turn phases — exploratory, not normative prescription.
+
+Product rule: describe **relationships and phase-relative trends** (flexion timing, COM path, asymmetry) — avoid
+single “ideal” edge or knee angles unless replicated across studies and skill level.
+
+## Cross-pack: FIS / competition (A+ rules, separate corpus)
+
+Competition rules, judging vocabulary, and ICR excerpts live under `motion_agent/knowledge/corpus/fis/` (ingested FIS
+snowboard/freestyle tree). This snowboarding **body-first pack** links taxonomy terms to FIS glossary but does not
+duplicate quota/judging PDFs here — retrieve via FIS RAG when user asks about competition format.
+
+## Body tracking feasibility (B, internal)
+
+Side or oblique hill camera (CeRebel default):
+- Visible: knee/hip flexion cycles through turn, trunk inclination proxy, shoulder–pelvis separation (twist), COM vertical
+  motion, landing knee flexion on small jumps.
+- Weak without board track: exact edge angle, fore/aft pressure distribution, sidecut radius.
+- Stance: tag regular/goofy for lead/trail leg language (`snowboard_flip_conventions.txt` elsewhere).
+- Beginner phases (skating, sideslip): large upper-body rotation and one-foot phases may violate single-turn phase model —
+  pack should tag `experience=first_day` vs `linked_turns`.
+
+## Youth and adaptive (B)
+
+CASI Appendix 1 (children) and CADS QuickRide adaptations: slower progression, equipment checks, inclusion — summarize in
+Training/001 with age-appropriate volume caps; no numeric “lesson hours” as medical limits.
+
+## URLs recorded in SOURCE_MANIFEST.txt
+
+Primary instructor: https://casi-acms.com/quickride/ , https://members.casi-acms.com/documents/Ref_Guide.pdf ,
+https://thesnowpros.org/wp-content/uploads/2024/12/PSIA-AASI_LearningConnection_and_Discipline-Specific_Fundamentals_Edits_Updated_Structure_2023.pdf ,
+https://thesnowpros.org/wp-content/uploads/2025/10/AASI_Snowboard_Standards0224_updated_100325_v3.pdf ,
+https://thesnowpros.org/wp-content/uploads/2025/01/SB_snowboard_performance_PG-nov2022.pdf
+
+Primary biomechanics: https://pmc.ncbi.nlm.nih.gov/articles/PMC4181787/ ,
+https://doi.org/10.1136/bjsports-2013-093019 , https://www.mdpi.com/2076-3417/15/12/6618

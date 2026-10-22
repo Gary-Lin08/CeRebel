@@ -1,0 +1,63 @@
+# Soccer Kick — Quality Definition (body terms)
+
+## What “quality” means in CeRebel (v1)
+
+Quality is **not** a single score on a 0–100 scale in this pack version. Instead, coaching UX presents
+**checkpoints passed or failed** within the kick phase model, each tied to a visible body signal. A technically
+“good” kick in match play may still fail a checkpoint if the camera angle hides the plant foot — confidence
+metadata should accompany any automated message.
+
+## Dimensions
+
+### 1. Approach control
+- Athlete arrives at plant with manageable COM speed and balanced arm action.
+- Failure modes: rushed last step, excessive lateral drift, loss of trunk posture before plant.
+
+### 2. Plant foot strategy
+- Plant location and orientation support hip opening toward target (within visible camera limits).
+- Support leg stiffness adequate through the strike window without excessive knee collapse.
+- Failure modes: plant too close/far, plant pointing away from target (closed hip proxy), soft plant knee.
+
+### 3. Kinetic chain timing
+- Pelvis and trunk rotation precede or coincide with kicking-foot acceleration; not “all arm/leg” with frozen hips.
+- Failure modes: upper body leaning back early, hips stay square through cocking.
+
+### 4. Cocking and strike mechanics
+- Kicking leg draws back with hip extension and knee flexion appropriate to intent (power vs pass).
+- Forward trunk lean at strike proxy supports ball direction discussed in coaching literature (without ball track).
+- Failure modes: minimal backswing, upright trunk at peak foot speed, kicking knee never extends through window.
+
+### 5. Follow-through and recovery
+- Kicking leg crosses body or opens per style; athlete does not “stop” at fake contact.
+- Plant-side stability: hop or controlled release without collapse inward.
+- Failure modes: abbreviated follow-through, immediate loss of balance on plant side.
+
+### 6. Repeatability (session-level, future)
+- Variance of E_KICK_PEAK timing relative to E_PLANT_SET across reps in one session.
+- High variance suggests fatigue or inconsistent approach — flag for coach review, not automatic fault.
+
+## Age bands
+
+| band | typical ages | quality emphasis |
+|------|--------------|------------------|
+| youth | ~U8–U12 | Balance, plant consistency, fun/low load; avoid max-effort power cues |
+| teen | ~U13–U17 | Progressive power; respect growth-related hamstring/groin load |
+| adult | 18+ | Full checkpoint set with literature-backed bands where available |
+
+Youth checkpoints use wider tolerance bands (see Quality/002_checkpoints.txt).
+
+## Relationship to findings
+
+Each checkpoint `fail_triggers` one or more finding IDs in `Findings/001_common_faults.txt`. Passing all
+checkpoints does **not** imply injury-free mechanics — only that visible heuristics were satisfied.
+
+## Evidence use
+
+Checkpoint thresholds cite authority levels (A+, A, B+, B) in 002_checkpoints.txt. Thresholds marked B+ are
+**conservative coaching heuristics** for monocular pose, not clinical diagnostic cutoffs.
+
+## Out of scope for quality v1
+
+- Ball launch angle, spin rate, shot speed.
+- Tactical decision quality (pass choice, defensive pressure).
+- Goalkeeper save probability.

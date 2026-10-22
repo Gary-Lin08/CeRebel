@@ -1,0 +1,323 @@
+# Tennis Sport Pack — Concept taxonomy
+
+## Stroke families
+
+concept_id: stroke_serve
+label: Tennis serve
+synonyms: service motion, first serve, second serve, kick serve, flat serve, trophy pose, platform serve, pinpoint serve
+stroke_family: serve
+phase_chain: S_READY through S_DECEL
+notes: Body-first — leg load, trunk tilt, shoulder elevation, wrist speed peak; no ball required.
+
+concept_id: stroke_forehand
+label: Forehand groundstroke
+synonyms: forehand, FH, topspin forehand, open stance forehand, semi-open forehand, inside-out forehand
+stroke_family: groundstroke
+phase_chain: G_SPLIT through G_RECOVERY
+dominant_side: racket-side arm drives G_FORWARD_SWING (RH default).
+
+concept_id: stroke_backhand_one_hand
+label: One-handed backhand
+synonyms: 1H backhand, single-handed backhand, one hander
+stroke_family: groundstroke
+phase_chain: G_* with lead-arm emphasis in G_FORWARD_SWING
+
+concept_id: stroke_backhand_two_hand
+label: Two-handed backhand
+synonyms: 2H backhand, double-handed backhand, two hander
+stroke_family: groundstroke
+phase_chain: G_* with dual-arm unit in G_LOAD and G_FORWARD_SWING
+
+concept_id: stroke_backhand
+label: Backhand groundstroke (generic)
+synonyms: backhand, BH, slice backhand, topspin backhand
+stroke_family: groundstroke
+variants: stroke_backhand_one_hand, stroke_backhand_two_hand
+
+## Phase concepts (serve)
+
+concept_id: phase_s_ready
+label: Serve ready stance
+maps_to: S_READY
+
+concept_id: phase_s_toss_rise
+label: Toss arm rise
+synonyms: ball toss preparation, guide arm up
+maps_to: S_TOSS_RISE
+
+concept_id: phase_trophy_pose
+label: Trophy pose (serve loading)
+synonyms: loaded position, racket arm up, elbow high, shoulder tilt, pre-throw position
+maps_to: S_TROPHY_LOAD
+
+concept_id: phase_racket_drop
+label: Racket drop / scratch position
+synonyms: loop, backscratch, elbow drop behind back, lag
+maps_to: S_RACKET_DROP
+
+concept_id: phase_s_drive_up
+label: Serve leg drive upward
+synonyms: explode up, push off, extension into contact
+maps_to: S_DRIVE_UP
+
+concept_id: phase_s_contact_proxy
+label: Serve contact window (body proxy)
+synonyms: impact proxy, peak serve wrist speed
+maps_to: S_CONTACT_PROXY
+
+concept_id: phase_s_decel
+label: Serve follow-through and landing
+synonyms: deceleration, pronation finish, landing after serve
+maps_to: S_DECEL
+
+## Phase concepts (groundstroke — forehand & backhand)
+
+concept_id: phase_split_step
+label: Split step
+synonyms: hop, ready position, athletic stance, pre-load bounce
+maps_to: G_SPLIT
+
+concept_id: phase_unit_turn
+label: Unit turn / shoulder turn
+synonyms: coil, backswing turn, preparation turn, hip and shoulder turn
+maps_to: G_UNIT_TURN
+
+concept_id: phase_g_load
+label: Groundstroke load
+synonyms: weight on back foot, knee bend, loading phase
+maps_to: G_LOAD
+
+concept_id: phase_g_forward_swing
+label: Forward swing
+synonyms: acceleration phase, swing to the ball corridor
+maps_to: G_FORWARD_SWING
+
+concept_id: phase_g_contact_proxy
+label: Groundstroke contact window (body proxy)
+synonyms: impact proxy, peak groundstroke wrist speed
+maps_to: G_CONTACT_PROXY
+
+concept_id: phase_follow_through
+label: Follow-through and deceleration
+synonyms: finish, follow through, across body finish, wrap finish
+maps_to: G_FOLLOW, S_DECEL
+
+concept_id: phase_g_recovery
+label: Groundstroke recovery
+synonyms: recover to ready, reset feet
+maps_to: G_RECOVERY
+
+## Cross-cutting biomechanics
+
+concept_id: phase_kinetic_chain
+label: Kinetic chain
+synonyms: segment sequencing, proximal to distal, leg drive, ground up, power transfer
+stroke_family: both
+authority: B+ biomechanics theme
+
+concept_id: body_racket_side_wrist
+label: Racket-side wrist
+synonyms: hitting hand wrist, dominant hand wrist (context-dependent)
+measure: speed peak, height at peak, path smoothness
+
+concept_id: body_toss_arm
+label: Non-racket arm (toss arm on serve)
+synonyms: guide arm, left arm on right-handed serve
+measure: elevation, lateral drift, timing before S_CONTACT_PROXY
+
+concept_id: body_trunk_rotation
+label: Trunk rotation
+synonyms: hip rotation, shoulder rotation, separation, uncoiling
+measure: yaw rate proxy, pelvis-to-shoulder timing before contact proxy
+
+concept_id: body_knee_flexion
+label: Knee flexion
+synonyms: knee bend, loaded legs, athletic bend
+measure: trend during S_TROPHY_LOAD and G_LOAD
+
+concept_id: body_hip_shoulder_separation
+label: Hip-shoulder separation
+synonyms: coil, X-factor, trunk separation
+measure: angle proxy during G_UNIT_TURN and G_LOAD
+
+## Quality dimensions
+
+concept_id: quality_rhythm
+label: Serve rhythm and tempo
+synonyms: timing, continuous motion, no pause at trophy, fluid serve
+stroke_family: serve
+
+concept_id: quality_balance
+label: Dynamic balance
+synonyms: stable landing, controlled deceleration, center of mass over base
+stroke_family: both
+
+concept_id: quality_leg_drive
+label: Leg drive
+synonyms: push off back foot, knee bend, explode up, use legs not just arm
+stroke_family: serve
+also: G_LOAD on groundstrokes
+
+## Audience
+
+concept_id: audience_youth
+label: Youth player
+synonyms: junior, 10 and under, ROGY, Hot Shots, red ball, orange ball, green ball
+audience: youth
+authority: B training
+notes: Do not apply adult elite angle norms as pass/fail.
+
+concept_id: audience_adult
+label: Adult player
+synonyms: recreational adult, club player
+audience: adult
+
+concept_id: audience_all
+label: All players
+audience: all
+
+## Finding concepts (fault slugs — headlines in Findings/)
+
+concept_id: fault_serve_knee_lock
+label: Straight legs on serve load
+maps_to: S_TROPHY_LOAD
+audience: all
+
+concept_id: fault_serve_toss_arm_drift
+label: Toss arm drifts wide
+maps_to: S_TOSS_RISE, S_TROPHY_LOAD
+audience: all
+
+concept_id: fault_serve_shoulder_tilt_flat
+label: Flat shoulder line at trophy
+maps_to: S_TROPHY_LOAD
+audience: all
+
+concept_id: fault_serve_elbow_low
+label: Low elbow in serve coil
+maps_to: S_TROPHY_LOAD, S_RACKET_DROP
+audience: all
+
+concept_id: fault_serve_poor_leg_sync
+label: Leg drive late vs arm
+maps_to: S_DRIVE_UP
+audience: adult
+
+concept_id: fault_serve_poor_decel
+label: Abrupt stop after serve
+maps_to: S_DECEL
+audience: all
+
+concept_id: fault_serve_excessive_arch
+label: Excessive arch in serve drive
+maps_to: S_DRIVE_UP
+audience: adult
+
+concept_id: fault_serve_landing_imbalance
+label: Unstable serve landing
+maps_to: S_DECEL
+audience: all
+
+concept_id: fault_serve_rhythm_rush
+label: Rushed serve tempo
+maps_to: S_READY through S_CONTACT_PROXY
+audience: all
+alias: fault_double_fault_rhythm_rush
+
+concept_id: fault_serve_short_finish_youth
+label: Short serve finish (youth context)
+maps_to: S_DECEL
+audience: youth
+
+concept_id: fault_forehand_late_unit_turn
+label: Late unit turn on forehand
+maps_to: G_UNIT_TURN
+audience: all
+
+concept_id: fault_forehand_all_arm
+label: Arm-dominant forehand
+maps_to: G_FORWARD_SWING
+audience: all
+
+concept_id: fault_forehand_flying_elbow
+label: Flying elbow on forehand
+maps_to: G_LOAD, G_FORWARD_SWING
+audience: all
+
+concept_id: fault_forehand_open_no_load
+label: Open stance without load
+maps_to: G_LOAD
+audience: adult
+
+concept_id: fault_forehand_over_rotate_finish
+label: Over-rotation on forehand finish
+maps_to: G_FOLLOW
+audience: all
+
+concept_id: fault_backhand1_dropped_shoulder
+label: Dropped shoulder on one-hand backhand
+maps_to: G_LOAD, G_FORWARD_SWING
+audience: all
+
+concept_id: fault_backhand1_reaching
+label: Reaching on one-hand backhand
+maps_to: G_FORWARD_SWING, G_CONTACT_PROXY
+audience: all
+
+concept_id: fault_backhand1_late_prep
+label: Late prep on one-hand backhand
+maps_to: G_UNIT_TURN
+audience: all
+
+concept_id: fault_backhand2_bottom_hand_only
+label: Bottom-hand-only two-hand backhand
+maps_to: G_FORWARD_SWING
+audience: all
+
+concept_id: fault_backhand2_tight_shoulders_youth
+label: Tight shoulders on youth two-hand backhand
+maps_to: G_LOAD
+audience: youth
+
+concept_id: fault_groundstroke_all_arm
+label: Arm-dominant groundstroke (shared)
+maps_to: G_FORWARD_SWING
+audience: all
+alias: fault_forehand_all_arm
+
+concept_id: fault_groundstroke_late_unit_turn
+label: Late unit turn (shared)
+maps_to: G_UNIT_TURN
+audience: all
+alias: fault_forehand_late_unit_turn
+
+concept_id: fault_groundstroke_upright_recovery
+label: Upright recovery without finish
+maps_to: G_FOLLOW, G_RECOVERY
+audience: all
+
+concept_id: fault_groundstroke_wide_stance_stuck
+label: Wide stance without load or transfer
+maps_to: G_LOAD
+audience: all
+
+concept_id: fault_all_arm
+label: Arm-dominant swing (umbrella)
+synonyms: no body, all arm, punching the ball, stiff trunk
+links: fault_groundstroke_all_arm, fault_serve_knee_lock, fault_forehand_all_arm
+
+## Glossary (non-finding)
+
+concept_id: let_serve
+label: Let (rules)
+synonyms: net cord serve, replay serve
+authority: A+ ITF; not body-detected
+
+concept_id: foot_fault
+label: Foot fault (rules)
+synonyms: foot on line, baseline violation on serve
+authority: A+ ITF; requires court calibration
+
+concept_id: requires_ball_track
+label: Requires ball or racket object track
+value: false for all v1 coaching findings

@@ -1,10 +1,34 @@
 subject,predicate,object,evidence_type,source_hint
-golf:attack_angle,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
+golf:attack_angle,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary (body-only product does not measure)
 golf:dynamic_loft,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
 golf:club_path,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
 golf:face_angle,golf:measuredAt,golf:impact,MeasurementDefinition,TrackMan vocabulary
-golf:backswing,golf:precedes,golf:downswing,ResearchFinding,Bourgain et al. 2022
+golf:address,golf:precedes,golf:takeaway,ResearchFinding,CeRebel phase model
+golf:takeaway,golf:precedes,golf:backswing,ResearchFinding,CeRebel phase model
+golf:backswing,golf:precedes,golf:transition,ResearchFinding,Bourgain et al. 2022 / CeRebel
+golf:transition,golf:precedes,golf:downswing,ResearchFinding,Bourgain et al. 2022
 golf:downswing,golf:precedes,golf:impact,ResearchFinding,Bourgain et al. 2022
 golf:impact,golf:precedes,golf:follow_through,ResearchFinding,Bourgain et al. 2022
 golf:ground_reaction_force,golf:associatedWith,golf:club_speed,ResearchFinding,Watson et al. 2026
 golf:centre_of_pressure,golf:associatedWith,golf:club_speed,ResearchFinding,Watson et al. 2026
+fault_early_extension,occurs_in,golf:downswing,FindingLink,Findings/001
+fault_early_extension,occurs_in,golf:impact,FindingLink,Findings/001
+fault_early_extension_thrust,occurs_in,golf:downswing,FindingLink,Findings/001
+fault_over_the_top_transition,occurs_in,golf:transition,FindingLink,Findings/001
+fault_cast_from_top,occurs_in,golf:transition,FindingLink,Findings/001
+fault_hanging_back,occurs_in,golf:impact,FindingLink,Findings/001
+fault_sway_not_turn,occurs_in,golf:backswing,FindingLink,Findings/001
+fault_slide_excessive,occurs_in,golf:downswing,FindingLink,Findings/001
+fault_wrist_only_takeaway,occurs_in,golf:takeaway,FindingLink,Findings/001
+fault_tempo_hitch_at_top,occurs_in,golf:transition,FindingLink,Findings/001
+fault_chicken_wing_stop,occurs_in,golf:follow_through,FindingLink,Findings/001
+fault_setup_locked_legs,occurs_in,golf:address,FindingLink,Findings/001
+fault_reverse_pivot,occurs_in,golf:backswing,FindingLink,Findings/001
+fault_chip_stand_up,occurs_in,golf:impact,FindingLink,Findings/001 short-game
+cue_fault_early_extension,addresses,fault_early_extension,CoachingLink,Coaching/001
+drill_wall_spine_tilt,remediates,fault_early_extension,CoachingLink,Coaching/002
+drill_step_through_shadow,remediates,fault_over_the_top_transition,CoachingLink,Coaching/002
+drill_metronome_3_to_1,remediates,fault_tempo_hitch_at_top,CoachingLink,Coaching/002
+drill_chip_posture_hold,remediates,fault_chip_stand_up,CoachingLink,Coaching/002
+golf:impact_proxy,detected_by,E_IMPACT_PROXY,DetectorEvent,peak trail wrist speed
+golf:transition_top,detected_by,E_TOP,DetectorEvent,trail wrist speed valley

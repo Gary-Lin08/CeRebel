@@ -1,0 +1,169 @@
+# Golf Full Swing KB — Coaching Research Notes (Search Agent)
+# Product: CeRebel body-first coaching (no ball/club tracking required for v1 findings)
+# Generated: 2026-10-21
+# Purpose: factual seeds for phase model, feel cues, drills, fault language — each claim carries public URL in SOURCE_MANIFEST COACHING SOURCES.
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Related corpus: Biomechanics/001_*.txt, Biomechanics/002_*.txt (CC BY 4.0 reviews); Docs/001_ARCHITECTURE.txt (CoachingAdvice = authority B)
+
+================================================================================
+0. SCOPE — BODY-FIRST vs LAUNCH-MONITOR METRICS
+================================================================================
+
+CeRebel golf mode analyzes **visible body motion** (pelvis, thorax, shoulders, arms, head) from monocular or multi-view pose. It does NOT require:
+  - ball flight, clubhead speed, face angle, path, or impact frame alignment.
+
+Coaching content below is filtered for **observable proxies**:
+  - Segment rotation timing (pelvis → ribcage/torso → lead arm → hands/club proxy).
+  - Weight / pressure shift cues that correlate with hip translation and knee flex (not force-plate Newtons).
+  - Posture maintenance (spine angle, early extension) visible as hip thrust toward ball or head rise.
+  - Peak lead-wrist speed as a **contact-window proxy** when club is not tracked (same pattern as other sport packs).
+
+Do NOT present coaching drills as medical treatment or injury diagnosis. GRF/CoP numbers from literature are **context**, not user-facing targets without validated sensors.
+
+================================================================================
+1. CONSENSUS — “BODY-FIRST” FULL SWING (RECONCILE IN Phases/ + brain_plan)
+================================================================================
+
+1A. Proximal-to-distal kinematic sequence (research + TPI public summaries)
+  Downswing peak rotational speeds ideally order: pelvis → torso/thorax → arm → hand/club.
+  Transition is **staggered**: lower body reverses toward target while upper body may still be completing backswing (stretch-shorten / eccentric preload).
+  Sources:
+    - TPI, “The Linear Kinematic Sequence” — https://www.mytpi.com/articles/biomechanics/the-linear-kinematic-sequence
+    - TPI, transition timing article — https://www.mytpi.com/en/articles/biomechanics/should-all-the-body-parts-reach-the-top-of-backswing-at-the-same-time
+    - Zheng et al., Sports Biomechanics 2010 (elite PDS across partial/full swings) — https://doi.org/10.1080/14763141.2010.535842
+  CeRebel note: Method choice for “pelvis peak” vs “torso peak” affects measured order (Bourgain 2022 review; Philippot 2019 component study). Product copy = **qualitative sequence**, not lab peak timestamps from 2D pose.
+
+1B. Ground / feet as rotation drivers (PGA + TPI public instruction)
+  Recreational coaching consensus (not one-size style):
+    - **Anterior–posterior (AP) shear** under feet: lead foot pushes toward target/toes; trail foot pulls toward heel — creates rotation without “spinning” hips early.
+    - **Lead-leg frictional push** toward ball early in downswing helps maintain forward flexion / reduce early extension (Blackburn, Titleist/TPI ecosystem).
+    - Vertical push often peaks later; timing of force application matters for power transmission (Greg Rose, Titleist instruction video summary).
+  Sources:
+    - PGA.com, AP force exercise progression — https://www.pga.com/story/increase-your-swing-speed-with-these-3-exercises
+    - GOLF.com / Mark Blackburn AP force summary — https://golf.com/instruction/driving/use-ground-create-power-explained-play-smart/
+    - TPI, rotary stool / AP force article — https://www.mytpi.com/articles/swing/how-a-rotary-stool-became-our-favorite-tool-for-helping-golfers-use-the-ground
+    - Titleist, kinematic sequence + step drill (Mark Blackburn) — https://www.titleist.com/videos/instruction/power-and-kinematic-sequence
+
+1C. Coil / separation (upper vs lower body at top)
+  Coaching shorthand: upper body turns more than pelvis at top; hips still turn (not frozen). PGA “Power Up” public article cites ~90° shoulders vs ~45° hips as **instructional archetype**, not a universal elite 3D norm.
+  Source: https://www.pga.com/story/power-up-your-golf-swing
+  CeRebel: Prefer **relative** shoulder–pelvis opening from pose, not absolute degree targets.
+
+1D. Transition trigger — lower body leads (PGA / LPGA public)
+  Common cue family: small **lead-hip bump** toward target to start downswing before arms dominate.
+  Sources:
+    - PGA.com, Cathy Kim trigger — https://www.pga.com/story/use-this-trigger-from-pga-coach-cathy-kim-to-start-the-downswing
+    - PGA.com, hip turn posture — https://www.pga.com/story/getting-hip-to-a-good-swing
+    - LPGA ecosystem (Women’s Golf / LPGA pro instruction summaries referencing same bump cue)
+
+================================================================================
+2. PHASE-ALIGNED COACHING CUES (FEEL LANGUAGE → BODY OBSERVABLES)
+================================================================================
+
+Address / setup
+  - Hips “back” to counterbalance forward spine tilt; maintain spine angle through swing (PGA hip-turn article).
+  - Balanced 50/50 weight feel; avoid preset sway off ball (PGA power article weight-transfer section).
+
+Backswing
+  - Trail hip moves up and back; load inner trail heel + lead forefoot (PGA AP-force article, rotational jump setup).
+  - Arms and club move, but pelvis still rotates — “coil” not arm-only lift.
+
+Top / transition (highest coaching density for body-first)
+  - **“Bump”** lead hip slightly lateral toward target, then rotate (Kim / PGA).
+  - **“Stuff lead toes into shoe”** / frictional push toward ball before vertical push (Blackburn, Titleist ecosystem).
+  - **Do not** start down with arms only; **do not** stand up (hips toward ball) or hang back on trail foot (PGA hip article).
+  - Pelvis reverses first; shoulders still finishing backswing briefly (TPI transition article).
+
+Downswing
+  - Trail foot pulls back, lead foot pushes forward (AP pairing) — GOLF.com Blackburn summary.
+  - Post into lead side; pelvis clears while chest stays “down” (posture cues).
+  - Sequence feel: hips → torso → arms → club (Titleist kinematic sequence video).
+
+Impact / through
+  - Weight favoring lead side; balanced finish (PGA 90/10 finish archetype).
+  - Full rotation to target-facing finish without loss of balance.
+
+================================================================================
+3. DRILLS CATALOG (BODY-FIRST — NO BALL REQUIRED FOR PRACTICE)
+================================================================================
+
+Screening / mobility-stability (TPI public)
+  - **Pelvic Rotation Test**: five-iron posture, arms crossed; rotate belt line only; diagnose mobility vs stability by stabilizing thorax for athlete.
+    URL: https://www.mytpi.com/en/articles/screening/the-pelvic-rotation-test
+  CeRebel mapping: poor independent pelvis rotation → flag “sequencing / separation” coaching bucket, not a diagnosis.
+
+Ground-force / sequence drills
+  - **Rotational jump → hockey chop → squat swing** progression (PGA.com AP-force story).
+  - **Rotary stool** or partner push on lead calf to increase lead-leg AP push (TPI stool article).
+  - **Rolling chair push** from trail heel (TPI via GOLF.com ground-power article) — teaches heel vs toe push.
+  - **Upside-down club whoosh** — grip near hosel; body learns proximal-to-distal speed without “hit” impulse (Titleist kinematic sequence video).
+  - **Step drill**: feet together; step lead foot toward target as arms reach top; brace and unwind (Titleist / Blackburn).
+  - **Jackson 5 / hip bump**: pure lateral pelvis shift ~4–6 in early transition without rotation-only sway (Golf Smart Academy — https://www.golfsmartacademy.com/golf-instruction/jackson-5-drill1/ ; summarize only).
+
+Timing / transition drills
+  - **Two-second hold at top**, then initiate with lead hip (LPGA instructor Taylor Babcock, public YouTube lesson — summarize; do not mirror transcript).
+  - **Reactive lead-calf push** (TPI seminar example with pro golfer — concept: external cue for AP force).
+
+Coil / pivot (qualitative)
+  - **Feet-together practice swings** then step (step drill above).
+  - **Club across hips** lateral bump only, head stable (Jackson 5 family).
+
+================================================================================
+4. COMMON FAULTS — BODY-VISIBLE PATTERNS (COACHING LANGUAGE)
+================================================================================
+
+Early extension
+  - Hips thrust toward ball; spine angle lost; often linked in coaching literature to insufficient lead-leg AP / frictional push (TPI stool article; Blackburn cues).
+  CeRebel proxy: pelvis–knee line moves closer to ball vs address; head may rise.
+
+Over-the-top / arm-driven downswing
+  - Downswing starts with shoulders/arms; lower body late (Kim PGA article).
+  CeRebel proxy: lead arm/hand peak speed early vs pelvis rotation; upper torso dominates first half of downswing.
+
+Sway / slide vs bump
+  - Backswing lateral sway off ball vs downswing **short** lateral bump then rotation (PGA hip article; Jackson 5 drill intent).
+  CeRebel proxy: pelvis center displacement relative to ankle midline.
+
+Early hip spin / hang back
+  - Hips rotate before weight shifts lead; hitter stays on trail foot (PGA “backing up” description).
+  CeRebel proxy: trail-side vertical alignment persists past mid-downswing.
+
+Loss of kinematic sequence
+  - Arms or club “peak” before torso/pelvis in speed proxies (Titleist sequence video teaching point).
+  CeRebel: compare ordered peaks of pelvis azimuth rate, shoulder line rate, lead wrist speed (detector TBD).
+
+================================================================================
+5. PEER-REVIEWED ANCHORS (USE FOR FINDINGS, NOT VERBATIM COACHING)
+================================================================================
+
+  - Bourgain et al., Sports 2022 — kinematics methods, X-factor, sequence heterogeneity (in corpus, CC BY 4.0).
+  - GRF/CoP systematic review 2026 — skill and club speed associations (in corpus, CC BY 4.0).
+  - Zheng et al., 2010 — proximal-to-distal timing across skill levels.
+  - Philippot et al., 2019 — angular velocity component strongly affects reported sequence (https://doi.org/10.5277/abb-01318-2019-02).
+  - Joyce et al., 2010 — 3D X-factor / trunk measurement methodology (method reference).
+
+Product rule: ResearchFinding (B+) may support “efficient swings often show staggered transition” but must not override individual variation or cite single paper as “correct swing.”
+
+================================================================================
+6. SUGGESTED CeRebel EVENT MAP (PROVISIONAL — ALIGN WITH golf pack detector)
+================================================================================
+
+  E_ADDRESS       — stable pelvis height; minimal motion
+  E_TAKEAWAY      — pelvis begins rotation away from target
+  E_TOP           — max shoulder turn vs pelvis OR min hand speed turning to down (heuristic)
+  E_TRANSITION    — pelvis yaw rate sign change toward target (body-first anchor)
+  E_PELVIS_PEAK   — max pelvis rotation rate proxy (downswing)
+  E_TORSO_PEAK    — max thorax/shoulder girdle rotation rate after pelvis (sequence check)
+  E_WRIST_PEAK    — max lead wrist speed → impact window proxy
+  E_FINISH        — deceleration; lead foot weighted; facing target
+
+Coaching retrieval should prefer **phase-tagged** chunks: transition drills → E_TRANSITION; AP force → E_TRANSITION + E_PELVIS_PEAK.
+
+================================================================================
+7. LICENSING REMINDER FOR PACK BUILD
+================================================================================
+
+  - PGA.com / LPGA.com / GOLF.com / Titleist.com / mytpi.com: copyrighted web/video. KB = short paraphrase + URL + retrieved_at; no long paste.
+  - Penn State GTRC educational pages: link/reference for GRF definitions (https://golf.psu.edu/biomechanics-of-golf/...).
+  - Carolinas PGA PDF (Scott Lynn GRF presentation): PGA section educational PDF; summarize concepts; verify chapter redistribution policy before mirroring PDF in product.
+  - Peer-reviewed OA papers already in Biomechanics/ folder: follow CC BY attribution in chunks.

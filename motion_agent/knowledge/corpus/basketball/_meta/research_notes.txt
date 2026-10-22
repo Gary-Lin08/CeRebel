@@ -1,0 +1,216 @@
+# Basketball Shooting KB — Research Notes (Search Agent)
+# Product: CeRebel body-first coaching (no ball tracking required)
+# Generated: 2026-10-21
+# Purpose: factual seeds for phases, youth norms, biomechanics relationships — build agent cites URLs from SOURCE_MANIFEST.
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+0. LICENSING POSTURE (READ FIRST)
+================================================================================
+
+Commercial RAG rule (spec): **summarize with attribution and URLs**; do not paste long verbatim
+excerpts from copyrighted coach manuals or paid books.
+
+| Source class                         | Typical license / terms                          | Product use                          |
+|--------------------------------------|--------------------------------------------------|--------------------------------------|
+| FIBA OBR + WABC PDFs                 | © FIBA; free educational download                | Summaries + glossary; verify FIBA terms before bundling PDFs |
+| USA Basketball Youth Guidebook PDF   | All rights reserved; permission for reproduction | Summaries only; link to USAB CDN     |
+| NBA / USA Youth Guidelines PDFs      | Joint NBA–USA Basketball public guidelines       | Summarize age tables; record retrieval date |
+| MDPI / Frontiers open access         | CC BY 4.0 (verify per article)                   | Short summaries + full citation OK   |
+| PMC free-to-read (non CC-BY)         | Publisher copyright; PMC accessibility           | Short summaries + citation; check each record |
+| Taylor & Francis (Okazaki 2015)      | Subscription / © publisher                       | Abstract-level synthesis only unless licensed |
+| CC BY-NC-ND (e.g. Podmenik 2021)     | Non-commercial, no derivatives                   | Do not redistribute figures/tables; paraphrase facts only in commercial product |
+
+================================================================================
+1. FIBA / WABC COACHING (AUTHORITY B — FEDERATION COACH EDUCATION)
+================================================================================
+
+Hub: WABC Coaches Education Platform
+  URL: https://wabc.fiba.com/
+  Content: Coaches Manual, Start Coaching, Level 1–3 curricula, clinics, teaching videos.
+
+Document index (English PDFs):
+  URL: https://about.fiba.basketball/en/wabc-documents
+
+WABC Coaches Manual (general introduction, rules primer, coach role, holistic development):
+  URL: https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaches-manual-eng.pdf
+  Notes: Rooted in FIBA “Basketball for Young Players”; Level 1–3 coach education structure; emphasizes
+  coach-athlete relationship, learning styles, safeguarding youth.
+
+WABC Mini-Basketball Coaches Manual (ages ~5–12):
+  URL: https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-manual-mini-basketball-eng.pdf
+  Shooting-relevant themes:
+  - Ages 5–7: exploration over analytical technique; lower rings (6–8 ft), size 3/5 balls; “throw high” cues
+    before formal “lock and snap” / “high elbow”.
+  - Ages 8–9: motor abilities still dominate; shooting introduced in fun, contested and uncontested games.
+  - Ages 10–12: more analytical feedback but **no single perfect technique**; defenders early in learning
+    preferred over isolated form-only drilling.
+  - Rejects assumption of one ideal technique; successful elites show individual styles.
+
+WABC Level 1 Coaches Course Manual (club-level juniors):
+  URL: https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-level-manuals-level-1-eng.pdf
+  Shooting-relevant themes (Offensive basketball skills §2.7):
+  - Feedback timing: immediate feedback after attempts; praise correct process even on misses.
+  - Cue words: e.g. “high elbow”, “elbow above the eye”, “lock and snap” for arm/wrist form.
+  - Controlled success/failure: define good shot **process** vs outcome for youth confidence.
+  - Work–rest: follow intensive drills with lower load (e.g. free throws).
+  - Zone defence not recommended under ~15 in many federations — supports man-to-man skill development.
+
+WABC Coaching Development Project (2025 video series):
+  URL: https://about.fiba.basketball/en/wabc-coaching-development-project
+  Includes modules on developing shooters and 3-point utilization (coaching demonstrations + game footage).
+
+FIBA Official Basketball Rules 2024 (glossary / legal shooting definitions only for product):
+  PDF: https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2024-v10a.pdf
+  Hub: https://refereeing.fiba.basketball/en/rules
+  Relevant articles for ontology: act of shooting (Art. 15), goal value (Art. 16), shot clock (Art. 29).
+  Body-first pack does **not** adjudicate goaltending or foot faults without calibrated court model.
+
+================================================================================
+2. USA BASKETBALL / NBA PUBLIC MATERIALS (AUTHORITY B / B+ FOR YOUTH LOAD)
+================================================================================
+
+USA Basketball Youth Development Guidebook (full Player Development Curriculum PDF):
+  URL: https://cdn1.sportngin.com/attachments/document/0095/3630/200.30_16.3.24_USA_BASKETBALL_YOUTH_DEVELOPMENT_GUIDEBOOK.pdf
+  Hub: https://www.usab.com/play/the-usa-basketball-coaching-guide-for-all-levels/usa-basketball-youth-development-guidebook
+  Structure: Introductory → Foundational → Advanced → Performance levels; LTAD-aligned; life skills;
+  teaching techniques; progressive coaching method (mastery-of-skills, not age-only buckets).
+  Copyright: all rights reserved — summarize, do not reproduce long passages.
+
+Player Development Curriculum introduction (web, free):
+  URL: https://www.usab.com/play/the-usa-basketball-coaching-guide-for-all-levels/usa-basketball-player-development-curriculum-introduction
+  Key ideas: four curriculum levels; practice/training vs competition ratios; Balyi & Way LTAD stages;
+  scientific age recommendations paired with skill mastery gates.
+
+Youth Basketball Guidelines hub (participation limits + rules & standards):
+  URL: https://youthguidelines.nba.com/  (mirrored: https://www.usab.com/youthguidelines)
+  NBA announcement summary: https://www.nba.com/news/nba-usa-basketball-youth-basektball-rules
+
+Age 9–11 Rules & Standards PDF (equipment + shooting development rationale):
+  URL: https://dt5602vnjxv0c.cloudfront.net/portals/54978/docs/9%2011%20rules%20and%20standardspdf.pdf
+  Highlights for **youth shooting norms** (not adult 10 ft / 3PT targets):
+  - Ball: size 6 (28.5 in) boys and girls.
+  - Basket: **9 ft** when possible — proper form and success rate.
+  - **No 3-point scoring** (arc may exist but all FGs = 2 pts) — shoot from developmentally appropriate range.
+  - Free throw line: **14 ft** (not 15 ft) for form development.
+  - Equal playing time periods 1–3; player-to-player defence only; no double-team crowding.
+
+Grades 9–12 Rules & Standards PDF:
+  URL: https://ak-static.cms.nba.com/wp-content/uploads/sites/79/2018/04/Grades-9th-12th-Rules-and-Standards.pdf
+  Adult-adjacent: 10 ft rim, 3PT scoring, 24 s shot clock when available.
+
+Participation / rest tables (all segments on hub):
+  - Example ages 9–11: max ~5 h/week organized basketball; 2 rest days/week; 9–12 h sleep recommended.
+  - Overscheduling and burnout called out explicitly — relevant to jump-shooting volume in Training/ docs.
+
+Coach License Program (process, not full curriculum PDF):
+  URL: https://www.usab.com/coaching/coach-license
+  Notes: SafeSport + background screen; progressive coaching principles referenced in code of conduct.
+  Paid “Coaching Guide for All Levels” book ($) — **not** a free PDF; do not ingest as open corpus.
+
+================================================================================
+3. JUMP SHOT BIOMECHANICS — REVIEWS & PRIMARY STUDIES (AUTHORITY B+)
+================================================================================
+
+3A. Systematic review — youth jump shot performance (OPEN ACCESS, CC BY 4.0)
+  França et al., Int J Environ Res Public Health, 2021.
+  DOI: https://doi.org/10.3390/ijerph18063283
+  PMC: https://pmc.ncbi.nlm.nih.gov/articles/PMC8005190/
+  PDF: https://www.mdpi.com/2060-4601/18/6/3283/pdf
+  Sample: 12 studies, players 10–19, organized youth basketball (excludes NBA/Euroleague-only samples).
+  Game-related modifiers emphasized:
+  (i) distance to basket, (ii) fatigue, (iii) defender presence, (iv) visual information / quiet eye.
+  Kinematic themes (youth):
+  - Longer distance → often **lower release angle**, **higher release velocity**, greater shoulder/elbow
+    angular velocities; more horizontal COM displacement in some cohorts.
+  - Fatigue (~80% HRmax): **shooting percentage** drops for 2PT/3PT in some protocols; kinematic effects mixed.
+  - Defender: **faster shot execution**, longer jump/flight times; contested gaze fixations shorter in some groups.
+  - Practical implication repeated: train shooting under **game-like** constraints, not only static form.
+
+3B. Narrative / systematic review — jump shot components (PAYWALLED)
+  Okazaki, Rodacki & Satern, Sports Biomechanics, 2015.
+  DOI: https://doi.org/10.1080/14763141.2015.1052541
+  Abstract structure (use for phase taxonomy seeds, verify against licensed full text if ingesting quotes):
+  - Section A: variables affecting **ball trajectory** (release height, angle, velocity; entry angle themes).
+  - Section B: **phases of the jump shot** (prep/load, jump, release — align to CeRebel setup/load/drive/release/follow).
+  - Section C: additional modifiers (skill level, distance, fatigue, vision).
+  License: Taylor & Francis — subscription; product uses paraphrased relationships only.
+
+3C. Made vs missed jump shots — male recreational players (OPEN ACCESS, CC BY 4.0)
+  Cabarkapa et al., Biomechanics (MDPI), 2022.
+  DOI: https://doi.org/10.3390/biomechanics2030028
+  PDF: https://mdpi-res.com/d_attachment/biomechanics/biomechanics-02-00028/article_deploy/biomechanics-02-00028.pdf
+  Methods: force plate + 2D video; preparatory vs release phases.
+  Findings (group level, not prescriptive for individuals):
+  - 2PT makes: higher **elbow position** relative to stature in preparatory phase.
+  - 3PT makes: more **erect torso** in prep, greater **release angle**, higher vertical jump at release,
+    higher max trajectory height — alongside elbow placement themes.
+
+3D. Youth U16/U18 2PT vs 3PT catch-and-shoot kinematics (PMC full text — check license block)
+  Vencúrik et al., kinematic analysis European youth nationals (2017 cohort).
+  PMC: https://pmc.ncbi.nlm.nih.gov/articles/PMC7908352/
+  Notes: 3D inertial suit + smart ball; catch-and-shoot after cut (game-like).
+  - Males show larger vertical COM displacement on 2PT vs females; entry angle higher on successful 3PT attempts.
+  - 3PT performed with higher “shooting speed” (ball contact time proxy) vs 2PT in most categories.
+  Data not openly redistributed — cite published statistics only.
+
+3E. Distance effects — elite youth (CC BY-NC-ND 3.0 — commercial: paraphrase only)
+  Podmenik et al., J Hum Kinet, 2021.
+  PMC: https://pmc.ncbi.nlm.nih.gov/articles/PMC8120969/
+  Longer distance → greater shoulder-axis rotation in transverse plane; landing deviation patterns change.
+
+3F. Jump-shot “dip” and accuracy (OPEN ACCESS, CC BY — Frontiers)
+  Penner, Front Psychol, 2021.
+  PMC: https://pmc.ncbi.nlm.nih.gov/articles/PMC8273237/
+  Defines “dip” as lowering ball below shooting pocket before set point; experimental evidence that dip can
+  **increase accuracy** vs no-dip in studied elite cohort — counters “dip is too slow” coaching dogma.
+  Product maps dip to **load phase** knee/elbow flexion, not ball height (no ball track required).
+
+3G. U18 skill level — 2PT jump shot vs free throw (OPEN ACCESS, CC BY 4.0)
+  Comparative Analysis, MDPI / PMC 2024.
+  PMC: https://pmc.ncbi.nlm.nih.gov/articles/PMC11677033/
+  Higher-level U18 males: faster release times and better entry angles on FT; higher 2PT success vs lower level.
+  Emphasizes **entry angle** and release timing — product uses body proxies only unless ball track added later.
+
+3H. Open-access jump-shot kinematics (Serbian journal PDF, CC BY-NC-ND)
+  Fu Phys Ed Sport / University of Niš repository article on elite male jump shot release parameters.
+  URL: https://casopisi.junis.ni.ac.rs/index.php/FUPhysEdSport/article/download/3908/3222
+  Use: supplementary release-time / entry-angle context; respect NC-ND in commercial corpus.
+
+================================================================================
+4. CE REBEL PHASE / BODY-TRACKING IMPLICATIONS
+================================================================================
+
+Reconcile literature phases with pack phase IDs (brain_plan §3):
+  setup → load (dip) → drive (jump) → release → follow → landing → recover
+
+Detector anchors (body-only):
+  - Release proxy: peak ||v(shooting_wrist)|| (not ball release).
+  - Load: knee flexion minimum before drive.
+  - Game context findings (defender, fatigue, distance) inform **Training/** constraints and disclaimers,
+    not automatic fault thresholds from a single clip without context labels.
+
+Youth vs adult separation (mandatory in product copy):
+  - USA/FIBA youth materials: lower rim, closer FT line, no 3PT scoring bands — do not apply adult 3PT mechanics
+    cues to ages 9–11.
+  - Biomechanics numbers in reviews (release angles, °/s joint speeds) mostly from adolescent/elite lab cohorts —
+    qualitative relationships only in Findings/ (leg drive before arm, variability across styles).
+
+Inter-individual variability:
+  - FIBA mini manual + Okazaki lineage: multiple successful shooting styles; avoid single “model shooter” angles.
+  - One-motion vs two-motion, dip vs no-dip: style tags in taxonomy; faults flag **repeatability/timing**, not
+    aesthetic match to one NBA form.
+
+================================================================================
+5. URL INDEX (CANONICAL — DETAIL IN SOURCE_MANIFEST.txt)
+================================================================================
+
+FIBA WABC: https://wabc.fiba.com/
+FIBA WABC docs: https://about.fiba.basketball/en/wabc-documents
+FIBA OBR 2024: https://refereeing.fiba.basketball/en/rules
+USA Basketball guidebook PDF: https://cdn1.sportngin.com/attachments/document/0095/3630/200.30_16.3.24_USA_BASKETBALL_YOUTH_DEVELOPMENT_GUIDEBOOK.pdf
+Youth guidelines: https://youthguidelines.nba.com/
+Youth 9–11 PDF: https://dt5602vnjxv0c.cloudfront.net/portals/54978/docs/9%2011%20rules%20and%20standardspdf.pdf
+França 2021 review: https://doi.org/10.3390/ijerph18063283
+Okazaki 2015 review: https://doi.org/10.1080/14763141.2015.1052541
+Cabarkapa 2022: https://doi.org/10.3390/biomechanics2030028

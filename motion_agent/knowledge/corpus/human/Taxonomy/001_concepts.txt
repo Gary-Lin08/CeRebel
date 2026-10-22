@@ -1,0 +1,125 @@
+# General Human Motion — Concept Taxonomy (v1)
+
+Corpus pack id: human. Product pack id: general.
+
+## Primary concepts
+
+concept_id: general_human_motion
+label_en: General human motion coaching
+definition: Sport-agnostic body-first analysis of posture, balance, and limb–torso coordination from reconstructed motion.
+synonyms_en: human motion, body mechanics, movement quality, general coaching
+synonyms_zh: 人体动作, 通用姿态, 身体协调
+parent: human
+authority: B
+
+concept_id: posture_stack
+label_en: Posture stack (head–rib–pelvis)
+definition: Vertical alignment relationship among head, thorax, and pelvis in standing and dynamic tasks; coached as stacked segments not rigid military posture.
+synonyms_en: neutral spine stack, rib cage over pelvis, head over shoulders, axial alignment
+related_findings: posture_stack_break, forward_head, ribcage_flare_anterior, pelvis_anterior_tilt_excess
+related_series: series_stack_alignment, series_head_forward, series_pelvis_tilt
+authority: B+
+
+concept_id: head_forward_posture
+label_en: Forward head posture (proxy)
+definition: Head landmark anterior to shoulder–pelvis line in sagittal view; common desk and phone habit; product uses proxy not cervical diagnosis.
+synonyms_en: text neck (colloquial), head poke, cranial protraction
+related_findings: forward_head
+authority: B+
+
+concept_id: ribcage_position
+label_en: Rib cage position
+definition: Thorax orientation relative to pelvis; excessive anterior flare or collapse affects stack and breathing access in movement.
+synonyms_en: flared ribs, open ribs, sunken chest
+related_findings: ribcage_flare_anterior, posture_stack_break
+authority: B
+
+concept_id: pelvis_orientation
+label_en: Pelvis orientation
+definition: Anterior/posterior tilt and levelness of pelvis relative to femurs and trunk; visible in sagittal and frontal views when landmarks stable.
+synonyms_en: APT, posterior tilt, pelvic level, hip hike
+related_findings: pelvis_anterior_tilt_excess, lateral_pelvis_drop, posture_stack_break
+authority: B+
+
+concept_id: balance_and_weight_shift
+label_en: Balance and weight shift
+definition: Control of center of mass over base of support during prep, single-leg tasks, and recovery.
+synonyms_en: weight transfer, COM control, stability
+related_findings: single_leg_balance_wobble, insufficient_weight_shift, excessive_lateral_lean
+related_series: series_com_sway
+authority: B+
+
+concept_id: limb_torso_coordination
+label_en: Limb–torso coordination
+definition: Timing and path of arms and legs relative to trunk rotation and stack; arms should not fight pelvis during many athletic prep patterns.
+synonyms_en: dissociation, segment coupling, kinetic chain (coaching term)
+related_findings: arms_fight_torso, stiff_spine_no_hip_hinge, rushed_prep
+authority: B+
+
+concept_id: hip_hinge_pattern
+label_en: Hip hinge pattern
+definition: Primary flexion at hip with relative lumbar stability when bending, squatting, or preparing to jump; distinguished from spine-only rounding.
+synonyms_en: butt back, hip dominant bend, deadlift pattern (generic)
+related_findings: stiff_spine_no_hip_hinge
+authority: B+
+
+concept_id: knee_alignment_frontal
+label_en: Frontal knee alignment (proxy)
+definition: Knee position relative to hip and ankle in frontal/oblique view; inward collapse flagged conservatively without pathology label.
+synonyms_en: knee valgus, knees cave in, dynamic valgus
+related_findings: knee_valgus_visible
+related_series: series_knee_valgus
+authority: B+
+
+concept_id: movement_phases_generic
+label_en: Prep–action–recover phases
+definition: Coarse phase model from setup through reset applicable across activities before sport-specific segmentation.
+synonyms_en: eccentric-concentric, wind-up, follow-through, recovery
+related_phases: setup, prep, load, action, follow_through, recover, reset
+authority: B
+
+concept_id: bilateral_symmetry
+label_en: Bilateral symmetry
+definition: Left–right comparison of shoulder height, limb ROM, and step width; asymmetry may be normal within bands.
+synonyms_en: L-R balance, side-to-side evenness
+related_findings: shoulder_height_asymmetry, limb_rom_asymmetry
+related_series: series_shoulder_height, series_limb_rom_asym
+authority: B
+
+concept_id: capture_quality_general
+label_en: General motion capture quality
+definition: Confidence in pose estimation for stack and balance claims; depends on FPS, occlusion, and camera plane.
+synonyms_en: film quality, landmark confidence
+parent: general_human_motion
+authority: ProductLogic
+
+concept_id: opensim_measurement_policy
+label_en: OpenSim measurement policy
+definition: When motion tools available, prefer tool-reported angles and COM; distinguish observation, measurement, inference per sibling corpus file.
+synonyms_en: GEM-X tools, get_motion_state, joint trajectory
+external_ref: motion_agent/knowledge/corpus/opensim_motion_tools.txt
+authority: B
+
+## Audience concepts
+
+concept_id: youth_movement_screen
+label_en: Youth movement screening context
+definition: Wider symmetry and stack tolerances for growing athletes; avoid adult static posture dogma on U12.
+audience: youth
+authority: B+
+
+concept_id: adult_fitness_movement
+label_en: Adult fitness movement context
+definition: Recreational training and PE adults; standard checkpoint bands in Quality/002.
+audience: adult
+authority: B
+
+## Synonym expansion for RAG
+
+When users ask about “posture,” expand to: posture_stack, head_forward_posture, ribcage_position, pelvis_orientation.
+When users ask about “balance,” expand to: balance_and_weight_shift, single_leg_balance_wobble, series_com_sway.
+When users ask about “coordination,” expand to: limb_torso_coordination, movement_phases_generic, rushed_prep, incomplete_recover.
+
+## Authority note
+
+No concept at authority C is used for automated checkpoint failure in this pack.

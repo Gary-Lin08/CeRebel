@@ -1,0 +1,66 @@
+# Swimming Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel swimming content summarizes **open coaching literature, biomechanics reviews, and federation learn-to-swim
+guidance**. It is **not** a substitute for licensed medical care, physical therapy diagnosis, or return-to-swim
+protocols after injury.
+
+- Shoulder, neck, or lower-back pain during or after swimming requires evaluation by a qualified clinician — do
+  not rely on an app finding to increase volume or ignore symptoms.
+- Youth swimmers differ in maturity, stroke learning stage, and tolerance for volume; follow club and NGB
+  progression guidelines rather than copying elite training distances.
+
+## Not a lifeguard or safety system
+
+This product does **not** detect drowning, hypoxia, cardiac events, or pool rule violations. Always swim with
+appropriate supervision, lifeguard coverage, and venue safety rules.
+
+## Body tracking limitations
+
+Pool video and 2D pose estimation can mis-estimate:
+
+- Hand and forearm orientation underwater (refraction, bubbles, turbidity).
+- Elbow angle when the arm passes beneath the trunk or is merged with the torso silhouette.
+- Kick depth and knee flexion when the body roll hides the legs behind the torso.
+- Head position during breathing when water splash occludes the face.
+
+Findings describe **visible tendencies** from the captured angle, not instrumented tether tests or force plates.
+Confidence should be reduced for front-only cameras, low frame rate, or open-water sighting patterns.
+
+## No guaranteed performance outcomes
+
+Stroke cues may support efficient patterns discussed in research, but **speed, endurance, and injury outcomes**
+depend on training history, sleep, nutrition, cumulative volume, pool conditions, and individual anatomy.
+Do not promise time drops from a single drill or cue.
+
+## Biomechanical “norms”
+
+Open literature reports **ranges and group averages** across skill levels. Limb length, flexibility, and breathing
+side preferences change appearance. This pack avoids universal degree targets; it describes relationships
+(e.g., early vertical forearm after entry) with source attribution.
+
+## Coaching relationship
+
+Automated briefs support coaches and athletes who already have a training plan. They do not replace in-person
+coaching for breath control, flip turns, racing starts, or beginner water safety skills.
+
+## Emergency
+
+For acute injury, drowning risk, or medical emergency in aquatic venues, follow venue emergency procedures and
+seek immediate professional help.
+
+## Product behavior
+
+- The system may **refuse** to analyze clips that appear to be dry-land sports mislabeled as swimming.
+- Absence of a finding is not proof of safe mechanics or appropriate training load.
+- Beta sport status may limit auto-select; knowledge retrieval can still answer stroke questions with disclaimer.
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` with authority levels. Federation coaching frameworks change;
+retrieval dates matter. When in doubt, cite the live official source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Coaching tips from motion analysis — not medical advice. Stop if you feel pain. Swim only in supervised, safe conditions.”

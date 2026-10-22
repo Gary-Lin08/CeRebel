@@ -1,0 +1,96 @@
+# General Human Motion — Quality Checkpoints
+
+Each checkpoint references phase_id(s), a measurable signal (series_id), a rule summary, failure finding_id,
+and evidence authority level. Thresholds are product heuristics for noisy monocular capture — not clinical cutoffs.
+
+| checkpoint_id | phase(s) | series/signal | rule (summary) | fail→finding_id | evidence | audience |
+|---------------|----------|---------------|----------------|-----------------|----------|----------|
+| cp_stack_neutral_setup | setup, reset | stack_alignment | head–shoulder–pelvis proxy within neutral band at ready | posture_stack_break | B+ | adult |
+| cp_stack_neutral_setup_youth | setup | stack_alignment | widened band; flag only gross loss of stack | posture_stack_break | B+ | youth |
+| cp_forward_head_setup | setup, recover | head_forward | head landmark markedly anterior to shoulder–pelvis line (sagittal) | forward_head | B+ | adult |
+| cp_rib_flare_load | load, action | ribcage_angle | excessive anterior rib angle vs pelvis under load | ribcage_flare_anterior | B | adult |
+| cp_pelvis_apt_setup | setup, load | pelvis_tilt | anterior tilt proxy above conservative sagittal band | pelvis_anterior_tilt_excess | B+ | adult |
+| cp_pelvis_level_frontal | setup, load | pelvis_obliquity | stance-side drop or hip hike beyond band (frontal) | lateral_pelvis_drop | A/B+ | adult |
+| cp_knee_valgus_load | load, action | knee_valgus | knee medial to hip–ankle line at max flexion (frontal) | knee_valgus_visible | B+ | adult |
+| cp_hip_hinge_absent | prep, load | hip_vs_lumbar_flex | lumbar flexion dominates without hip flexion share | stiff_spine_no_hip_hinge | B+ | adult |
+| cp_com_sway_single_leg | load | com_sway | lateral COM path exceeds band during single-leg support | single_leg_balance_wobble | B+ | adult |
+| cp_weight_shift_insufficient | prep, load | com_over_base | COM not over intended support foot before action peak | insufficient_weight_shift | B | adult |
+| cp_lateral_lean_excess | load, action | trunk_lean_frontal | whole-body lean > conservative ° vs vertical | excessive_lateral_lean | B | adult |
+| cp_shoulder_height_asym | setup | shoulder_height | \|L−R shoulder height\| above band | shoulder_height_asymmetry | B | adult |
+| cp_shoulder_height_asym_youth | setup | shoulder_height | widened band U14 | shoulder_height_asymmetry | B | youth |
+| cp_limb_rom_asym | action | limb_rom | \|ROM_L − ROM_R\| at peak > band for bilateral task | limb_rom_asymmetry | B | adult |
+| cp_prep_duration_short | prep | prep_action_ratio | prep window < ~25% of prep+action duration (heuristic) | rushed_prep | B | adult |
+| cp_recover_incomplete | recover | stack_variance | stack variance stays high vs setup; no E_RECOVER_END | incomplete_recover | B | adult |
+| cp_arms_torso_conflict | prep, action | thorax_pelvis_yaw | arm swing drives excessive counter-yaw vs pelvis | arms_fight_torso | B+ | adult |
+
+## Notes on measurement
+
+**stack_alignment**: composite of sagittal head offset and frontal shoulder–hip line deviation; prefer OpenSim
+pelvis and neck angles when tools available (see opensim_motion_tools.txt).
+
+**head_forward**: ear or nose proxy anterior to acromion–hip midline; requires approximate sagittal camera.
+
+**knee_valgus**: frontal/oblique camera only; side view must not trigger this checkpoint (product should gate).
+
+**com_sway**: pelvis or model COM lateral displacement normalized by foot width estimate.
+
+**prep_action_ratio**: time from E_PREP_START to E_PREP_END divided by time to E_ACTION_PEAK.
+
+**limb_rom**: peak wrist or ankle path range during action phase for symmetric tasks (jump prep, arm raise).
+
+## Checkpoint pass semantics
+
+v1 does not sum checkpoints into a 0–100 score. Coach UX may show “focus area” = highest-severity failed
+checkpoint with matching finding card. HumanMotionPack may show instant posture brief when no checkpoint fails.
+
+## Evidence citations (summary)
+
+- Postural control and COM sway: PMC reviews on balance (B+).
+- Trunk–pelvis coordination: Gait & Posture open-access themes (B+).
+- Knee valgus in squatting: neuromuscular training literature (B+); non-diagnostic in general pack.
+- Coaching stack cues: NSCA/ACE education level (B).
+
+Full URLs in `_meta/SOURCE_MANIFEST.txt` and `_meta/research_notes.txt`.
+
+## Phase alignment matrix (coaching UX)
+
+| phase_id | primary checkpoints often evaluated |
+|----------|-------------------------------------|
+| setup | cp_stack_neutral_setup, cp_forward_head_setup, cp_pelvis_apt_setup, cp_shoulder_height_asym |
+| prep | cp_prep_duration_short, cp_hip_hinge_absent, cp_weight_shift_insufficient |
+| load | cp_knee_valgus_load, cp_com_sway_single_leg, cp_rib_flare_load, cp_pelvis_level_frontal |
+| action | cp_knee_valgus_load, cp_lateral_lean_excess, cp_limb_rom_asym, cp_stack_neutral (under load) |
+| follow_through | (inherits action failures if decel messy — no separate row v1) |
+| recover | cp_recover_incomplete, cp_forward_head_setup |
+| reset | cp_stack_neutral_setup |
+
+## Youth checkpoint overrides
+
+When `audience=youth` on session metadata:
+- Use cp_stack_neutral_setup_youth instead of cp_stack_neutral_setup.
+- Use cp_shoulder_height_asym_youth instead of cp_shoulder_height_asym.
+- Do not apply adult forward-head shaming copy; still fire forward_head when gross proxy fails.
+
+## OpenSim tool precedence
+
+When session has valid OpenSim states (see opensim_motion_tools.txt):
+- pelvis_tilt, knee_valgus, and COM series may be read from tool trajectories at E_PREP_END and E_ACTION_PEAK.
+- If tool series conflicts with noisy 2D pose by > agreed tolerance, prefer tool for brief text with uncertainty note.
+
+## Confidence down-ranking rules (product logic)
+
+Down-rank or suppress checkpoint failure when:
+- Camera labeled sagittal-only and checkpoint requires frontal (knee valgus, shoulder asymmetry, lateral lean).
+- Clip duration < 1.5 s or fewer than one detectable prep peak.
+- Recover phase truncated at clip end — suppress cp_recover_incomplete unless collapse visible in action.
+
+## Severity ordering suggestion (non-normative)
+
+For multi-fail clips, suggested coach priority when severities tie:
+1. knee_valgus_visible (if frontal confidence high)
+2. posture_stack_break under load
+3. single_leg_balance_wobble
+4. rushed_prep
+5. forward_head at setup only
+
+KB documents priority for UX design; medical risk ranking is explicitly out of scope.

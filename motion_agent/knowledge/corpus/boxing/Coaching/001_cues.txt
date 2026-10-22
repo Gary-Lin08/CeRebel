@@ -1,0 +1,153 @@
+# Boxing Shadowboxing — Feel Cues
+# Linked to fault_* IDs and phases. Authority mostly B (coaching); pair with Docs/002_DISCLAIMER.
+
+## Global cues (stance + guard)
+
+cue_cheek_guard
+  phases: guard, recovery
+  text_en: "Hands at your cheeks — protect the money, not your hips."
+  maps_findings: fault_hands_drop, fault_rear_hand_drop_on_jab, fault_elbows_flared
+  authority: B
+
+cue_soft_knees
+  phases: stance, footwork
+  text_en: "Bounce-ready legs — you are on springs, not stilts."
+  maps_findings: fault_stiff_legs, fault_narrow_stance
+  authority: B
+
+cue_railroad_feet
+  phases: stance, footwork, prep
+  text_en: "Feet on two rails — never cross the tracks."
+  maps_findings: fault_feet_crossed, fault_overstep
+  authority: B
+
+cue_exhale_punch
+  phases: extension, drive
+  text_en: "Punch on the exhale — tight core, loose shoulders."
+  maps_findings: fault_tense_shoulders, fault_arm_only_punch
+  authority: B
+
+## Jab cues
+
+cue_jab_stinger
+  phases: prep, extension
+  text_en: "Jab is a bee sting — straight out, straight back, no wind-up."
+  maps_findings: fault_reaching_jab, fault_slow_recoil, fault_elbow_flare_straight
+  authority: B
+
+cue_step_or_shift
+  phases: prep, footwork
+  text_en: "Distance from the floor — step small or shift weight, don't dive with your head."
+  maps_findings: fault_reaching_jab, fault_over_lead_weight
+  authority: B
+
+## Cross and power hand cues
+
+cue_floor_to_fist
+  phases: prep, extension
+  text_en: "Push the ground, turn the hip, then the fist — floor first."
+  maps_findings: fault_arm_only_punch, fault_flat_rear_foot_cross, fault_lateral_leak_punch
+  authority: B+ summary language
+
+cue_heavy_rear_heel
+  phases: prep, extension
+  text_en: "Back heel is a hinge — open it so the hip can speak."
+  maps_findings: fault_flat_rear_foot_cross
+  authority: B
+
+cue_tunnel_elbow
+  phases: extension
+  text_en: "Elbow in the tunnel — knuckles lead, elbow follows."
+  maps_findings: fault_elbow_flare_straight
+  authority: B
+
+## Hook and uppercut cues
+
+cue_hook_corner
+  phases: extension
+  text_en: "Hook around the corner — bent arm, shoulder turns the door."
+  maps_findings: fault_hook_arm_extended, fault_arm_only_punch
+  authority: B
+
+cue_uppercut_elevator
+  phases: prep, extension
+  text_en: "Uppercut rides the elevator from the knees — not a wave from the shoulder."
+  maps_findings: fault_arm_only_uppercut
+  authority: B
+
+## Recoil and combo cues
+
+cue_home_faster
+  phases: recoil, recovery
+  text_en: "Out fast, home faster — guard is home plate."
+  maps_findings: fault_slow_recoil, fault_wide_recoil, fault_combo_without_guard
+  authority: B
+
+cue_one_two_hotel
+  phases: recovery, prep
+  text_en: "Jab-cross visits the guard hotel between floors."
+  maps_findings: fault_combo_without_guard, fault_hands_drop
+  authority: B
+
+## Head and defense cues (shadow)
+
+cue_eyes_under_brow
+  phases: guard, extension
+  text_en: "Chin tucked — see the room from under your eyebrows."
+  maps_findings: fault_chin_up
+  authority: B+
+
+cue_wipers_guard
+  phases: extension (slip, roll)
+  text_en: "Head moves, hands stay — wipers on the glass, guard on the wheel."
+  maps_findings: fault_hands_drop_on_slip, fault_stiff_roll
+  authority: B
+
+## Youth-safe cue variants
+
+cue_youth_turtle_guard
+  phases: guard
+  text_en: "Shell up — elbows soft, hands by your cheeks, small steps only."
+  audience: youth
+  maps_findings: fault_hands_drop, fault_elbows_flared
+  authority: B
+
+cue_youth_slow_movie
+  phases: prep, extension, recoil
+  text_en: "Slow movie punches — see each part, then speed up only when coach says."
+  audience: youth
+  maps_findings: fault_combo_without_guard, fault_arm_only_punch
+  authority: B
+
+cue_youth_no_windmill
+  phases: extension
+  text_en: "No windmills — short hooks, short uppercuts, hands come home."
+  audience: youth
+  maps_findings: fault_hook_arm_extended, fault_wide_recoil
+  authority: B
+
+## V2 additions (hip rotation / guard-chin / compact prep)
+
+cue_belt_to_target
+  phases: prep, extension, drive
+  text_en: "Turn the belt buckle to the target — heel kisses up with the fist."
+  maps_findings: fault_incomplete_hip_rotation, fault_flat_rear_foot_cross, fault_arm_only_punch
+  authority: B+
+
+cue_nest_chin_guard
+  phases: guard, recovery
+  text_en: "Nest the chin — rear fist under cheekbone, eyes under brows."
+  maps_findings: fault_guard_chin_gap, fault_chin_up, fault_hands_drop
+  authority: B
+
+cue_pocket_not_windup
+  phases: prep, extension
+  text_en: "Short load from the pocket — no windmill behind the ear."
+  maps_findings: fault_telegraph_windup, fault_hook_arm_extended
+  authority: B
+
+cue_quiet_lead_shoulder
+  phases: prep, extension
+  text_en: "Jab from a closed door — quiet lead shoulder, rear hand home."
+  maps_findings: fault_shoulder_line_opens, fault_rear_hand_drop_on_jab
+  authority: B

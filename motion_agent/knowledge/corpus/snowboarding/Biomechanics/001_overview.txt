@@ -1,0 +1,154 @@
+# Snowboarding Biomechanics — Overview (open-literature summary)
+# Authority: B+ where cited as reviews/kinematics; not prescriptive medicine
+# Product: body-first pose/OpenSim; board forces estimated unless instrumented
+
+================================================================================
+SCOPE
+================================================================================
+
+This document summarizes biomechanical relationships useful for CeRebel snowboarding coaching:
+linked turning on snow, basic jump takeoff and landing, and aerial rotation measurement conventions.
+It does not replace instrumented studies with on-snow force plates or binding load cells.
+
+Cross-reference product files:
+- snowboard_flip_conventions.txt — frontflip/backflip and intrinsic somersault
+- snowboard_aerial_vocab.txt — frontside/backside vs flip axis language
+
+================================================================================
+COORDINATE FRAMES AND MEASUREMENT
+================================================================================
+
+World frame (OpenSim ground, Y-up):
+- COM trajectory, horizontal speed, and vertical velocity for takeoff/landing events.
+- root_euler_continuous_deg and root_cumulative_rotation_deg for total rotation extent in flips and spins.
+
+Rider-intrinsic frame:
+- intrinsic_somersault_* for somersault direction (positive ≈ backflip direction per product convention).
+- Do not classify front vs back flip from world Euler X sign alone when the rider reorients in air.
+
+Pose-only limitations:
+- "Edge angle" and true board normal are not observed without board model or dual-camera calibration.
+- Shoulder–pelvis lateral offset proxies angulation, not edge degrees.
+- Estimated GRF from inverse dynamics are model-dependent, especially during impact and off-axis landings.
+
+================================================================================
+STANCE AND SEGMENT COUPLING
+================================================================================
+
+Regular and goofy stances reverse lead/trail limb roles but not basic joint coupling:
+- Turn initiation commonly involves lead-limb flexion and COM path curvature in the frontal plane (relative to fall line).
+- Upper-body counter-rotation can decouple shoulder line from pelvis line to manage balance and view; advanced riders use
+  larger counter-rotation amplitudes than beginners (skill-dependent, B coaching observation).
+
+Ankle–knee–hip chain:
+- Athletic flexion distributes load along the chain; locked knees reduce available range for absorption and unweighting
+  (general lower-limb mechanics, B+).
+- Boot stiffness constrains ankle motion — visible pose may under-estimate ankle contribution.
+
+================================================================================
+TURNING MECHANICS (ALPINE / FREERIDE BASICS)
+================================================================================
+
+Center of mass path:
+- In linked turns, COM traces a sinusoidal or curved path across the slope; turn radius relates to speed and edge control
+  (conceptual mechanics, B+ alpine sport science summaries).
+
+Pressure and edge control (conceptual — board not tracked):
+- Riders modulate pressure along board length through fore-aft weight shift and lateral angulation.
+- Skidded turns dissipate energy via friction; carved turns (when achieved) bend turn shape with cleaner COM path — product
+  flags upright skid proxies, not carve certification.
+
+Rotational dynamics:
+- Yaw rotation about vertical axis changes heading; roll (bank) relates to inclination into turn.
+- Excessive early upper-body yaw can precede skidding when lower body has not established edge engagement (coaching
+  kinematics, B).
+
+Estimated loading:
+- Centripetal acceleration scales with speed²/radius; faster tight turns increase lateral demand on lower limbs in
+  simplified models (physics B+). Do not quote numeric G without validated speed and radius.
+
+================================================================================
+JUMP TAKEOFF (AIR FAMILY)
+================================================================================
+
+Countermovement pattern:
+- Preload (eccentric knee/hip flexion) followed by concentric extension resembles countermovement jumps on firm surfaces
+  (extensive jump literature, B+). Snow adds compliance and binding/bottom interaction not captured in lab CMJ alone.
+
+Timing:
+- Extension should peak near takeoff event proxy (max COM vertical velocity). Late or incomplete extension reduces COM
+  velocity at lip contact (training observations, B+ analogies).
+
+Arm role:
+- Arms contribute to angular momentum in spins; for straight airs, asymmetric arm motion can induce unwanted rotation
+  (B).
+
+================================================================================
+LANDING MECHANICS
+================================================================================
+
+Impact absorption:
+- Successful landings show rapid knee and hip flexion after contact, increasing time over which COM decelerates
+  (impulse–momentum relationship, B+).
+- Stiff-legged landings shorten absorption time and increase peak estimated forces in simulation (B+ — model sensitive).
+
+Symmetry:
+- Bilateral flexion sharing load reduces single-limb demand in models; one-foot dominance increases estimated knee moments
+  on loaded side (B+ caution, not clinical diagnosis).
+
+Back-seat posture:
+- COM posterior to ankle proxy increases quadriceps demand and reduces forward control in simplified models (B coaching +
+  B+ squat/landing mechanics analogies).
+
+Snow compliance:
+- Soft snow increases penetration and contact duration; ice reduces compliance — same pose fault may produce different
+  estimated loads; product should not compare landings across conditions without metadata.
+
+================================================================================
+AERIAL ROTATION AND OFF-AXIS TRICKS
+================================================================================
+
+Multi-axis rotation:
+- Cork and off-axis tricks combine somersault and twist components; single-axis knee/hip metrics insufficient for trick
+  naming (product uses intrinsic tools + RGB).
+
+Grab phase:
+- Trunk flexion for indy/mute/etc. changes inertia distribution; not classified from pose alone without RGB.
+
+================================================================================
+FATIGUE AND SESSION LOAD
+================================================================================
+
+Repeated jumps and hard landings accumulate mechanical load (B+ training science). Pose-based products can count
+landing stiffness faults per session as a **coaching load awareness** metric, not a medical training load score.
+
+Youth:
+- Growth plates and skill acquisition prioritize volume control on jumps (NGO guidance, A/B) — separate youth severity in
+  Quality checkpoints.
+
+================================================================================
+RELATION TO FIS COMPETITION BIOMECHANICS
+================================================================================
+
+Judged events (halfpipe, slopestyle, big air) score amplitude, difficulty, and execution — not directly inferable from
+body pose without official judging inputs. SBX and alpine racing add gate timing and line constraints (see fis/ RAG).
+
+Equipment rules (helmets, bindings) are A+ federation content — retrieve from fis/, do not restate numeric homologation
+here.
+
+================================================================================
+SUGGESTED OPEN RESEARCH THEMES (for SOURCE_MANIFEST expansion)
+================================================================================
+
+- Snowboarding injury epidemiology reviews (A/B) — context only, not individual risk scoring.
+- Kinematics of snowboard landings from park features (B+).
+- Muscle activation in turn initiation (B+ laboratory studies with instrumented boots).
+- Comparison of skidded vs carved turn kinetics where available (B+).
+
+Build agent note: future Biomechanics/002 may ingest specific open-access PDFs with URLs in SOURCE_MANIFEST.
+
+================================================================================
+DISCLAIMER
+================================================================================
+
+Relationships above support coaching language and detector design. They are not medical advice. See Docs/002_DISCLAIMER.txt.

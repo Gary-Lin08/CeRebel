@@ -1,0 +1,38 @@
+# Basketball Shooting — Concept Taxonomy (RAG expansion)
+# Format: concept_id | prefLabel_en | aliases | notes
+
+jump_shot | Jump shot | pull-up, catch-and-shoot, J, rising shot | variant=jump; includes off-dribble rise when airborne
+free_throw | Free throw | FT, foul shot, charity stripe | variant=ft; no landing phase
+set_point | Set point | pocket, load point, forehead position | wrist/elbow height window before release
+release | Release | let-off, shot peak | proxy: shooting wrist speed peak
+follow_through | Follow-through | gooseneck, hold finish | post-release arm position
+dip | Dip / load | sit, load, countermovement | eccentric knee flex before jump shot
+leg_drive | Leg drive | explode up, use legs | knee/hip extension phase
+guide_hand | Guide hand | off hand, balance hand | should stay quiet at release
+shooting_hand | Shooting hand | dominant hand, release hand | trail side for standard R-hand shooter
+base | Stance / base | footing, platform | setup and landing
+soft_landing | Soft landing | stick landing, absorb | knee flex on contact
+routine | Free throw routine | pre-shot ritual | timing and stillness before FT
+catch_and_shoot | Catch and shoot | spot up, C&S | jump shot subtype; timing from catch
+one_motion | One-motion shot | seamless dip to release | style tag; thresholds TBD
+two_motion | Two-motion shot | set then rise | style tag; set pause visible
+elbow_in | Elbow alignment | elbow under ball | maps fault_flyaway_elbow inverse
+arc | Shot arc | trajectory | NOT body-measured without ball — glossary only
+make_miss | Make or miss | outcome | out of scope for body-first findings
+contested_shot | Contested shot | closeout, hand up | context tag; trunk lean expected
+form_shooting | Form shooting | technique reps close to basket | training mode
+rotation_shooting | Spot shooting | station shooting | training mode
+youth_shooting | Youth shooting | age-appropriate form | audience=youth checkpoints
+landing_balance | Landing balance | symmetric landing | follow phase quality
+kinetic_chain | Kinetic chain | sequential extension | biomechanics concept
+wrist_speed_peak | Wrist speed peak | release proxy | E_RELEASE event
+com_rise | Center of mass rise | vertical jump | pelvis/hip proxy
+asymmetric_load | Asymmetric load | one-leg dip | dip/landing faults
+arm_dominant | Arm-dominant shot | arm-only, upper-body shot | fault_arm_only_shot
+push_shot | Push shot | flat push | low set + short extension pattern
+chicken_wing | Chicken wing | early arm drop | fault_chicken_wing_finish
+valgus_hint | Knee valgus hint | knees in | visible only frontal; low confidence oblique
+film_angle_front | Front camera angle | frontal view | best for elbow/guide hand
+film_angle_side | Side camera angle | sagittal view | best for dip and trunk
+open_shot | Open shot | no defense | preferred for baseline comparison
+fatigue_state | Fatigued shooting | late-game legs | may mimic arm-dominant pattern

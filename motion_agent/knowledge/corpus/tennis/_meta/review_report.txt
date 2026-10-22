@@ -1,0 +1,49 @@
+# Tennis pack — review report (audit)
+# Review date: 2026-10-23 (v2 depth pass)
+
+## Accuracy
+
+PASS:
+- Phase model uses CONTACT_PROXY (wrist speed peak) consistently — aligned with body-first product constraint.
+- Serve, groundstroke, and volley chains include detector_events and fault_links per phase.
+- Biomechanics language avoids numeric “ideal angles” as clinical advice.
+- ITF rule concepts (let, foot fault) remain non-detectable without calibration — correct scope boundary.
+
+## Safety
+
+PASS:
+- Docs/002_DISCLAIMER.txt covers medical, youth volume, and tracking limits (unchanged / not weakened).
+- Load/injury language framed as awareness, not diagnosis, across expanded fault cards.
+- fault_serve_excessive_arch retains pain → clinician referral in cue coach_note.
+- Youth cards (fault_serve_short_finish_youth, fault_backhand2_tight_shoulders_youth) use mobility-safe cues.
+
+## Product alignment
+
+PASS:
+- No dependency on ball or racket tracking in findings.
+- Volley and split/recovery skill lines added as body-only proxies.
+- Finding IDs stable `fault_*`; legacy alias fault_double_fault_rhythm_rush → fault_serve_rhythm_rush.
+
+## Evidence authority
+
+PASS:
+- Findings cite B/B+ (and A themes summarized for core control); no C-tier product findings.
+- SOURCE_MANIFEST remains authoritative index for URLs.
+
+## Completeness vs SPORT_PACK_KB_SPEC (v2)
+
+PASS:
+- Finding cards: 32 (≥25) with canonical field set.
+- Coaching cues: one block per fault_* (≥20).
+- Drills: most fault_* have a linked drill (≥15).
+- Taxonomy relations: ≫15 rows including volley chain.
+- Phase model: 7 serve + 7 groundstroke + 5 volley with detector_events / fault_links.
+
+## Gaps (non-blocking)
+
+- Detector code TennisPack still engineering follow-up.
+- Two-handed backhand wrist proxy remains secondary to lead-arm speed in future detector notes.
+
+## Sign-off
+
+VERDICT: APPROVED_V2 — Tennis pack meets v2 depth with 32 canonical fault cards across serve, groundstroke, and net/movement skill lines.

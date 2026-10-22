@@ -1,0 +1,96 @@
+# Tennis Sport Pack — Team practice and training context
+
+Educational summaries for coaches and captains. **Not** a replacement for certified coaching curricula or medical
+return-to-play plans. Body-first focus aligns with CeRebel clips of serve and groundstroke mechanics.
+
+---
+
+## Practice block structure (adult recreational / high school)
+
+Typical 90-minute court session split (B coaching convention):
+
+1. **Dynamic warm-up (10 min):** Movement prep — lateral shuffles, leg swings, shoulder circles. No static-only stretching as sole warm-up.
+2. **Activation (10 min):** Split-step hops, shadow groundstrokes, slow serve shadows emphasizing S_TROPHY_LOAD → S_DECEL.
+3. **Technical theme (25 min):** One body theme per day — e.g., leg drive on serve, unit turn on forehand — tied to finding IDs.
+4. **Live ball / rally (30 min):** Apply theme in cooperative rally; video one rep per athlete for CeRebel review if allowed.
+5. **Conditioning or games (10 min):** Low-impact footwork patterns; avoid maximal serve volume when fatigued.
+6. **Cool-down (5 min):** Easy movement, hydration.
+
+**Load note:** High serve repetition when athletes show fault_serve_poor_decel or arm-dominant serve patterns increases
+shoulder demand in coaching literature — rotate themes and monitor complaint of pain (refer to clinician).
+
+---
+
+## Youth practice (10U / red-orange-green)
+
+**audience=youth**
+
+- Shorter blocks (45–60 min) with frequent water and skill games.
+- Court and ball scaling per USTA red/orange/green or Tennis Australia Hot Shots — smaller court reduces running load,
+  lower compression ball slows rally for technical learning.
+- Serve introduction via **throwing progressions** and abbreviated motion before full trophy-loop serve (see
+  drill_youth_serve_throw_progression in Coaching/002_drills.txt).
+- Avoid adult-style second-serve repetition drills for pre-pubescent athletes in one session; volume caps are coach
+  judgment informed by NGB resources, not this pack alone.
+
+**Sources:** usta_national_campus_youth (B); tennis_australia_hot_shots (B).
+
+---
+
+## Team captain / clinic workflow with CeRebel
+
+1. Capture side-view serve or forehand during practice — consistent camera height at hip to chest level.
+2. Trim clip to one stroke (S_READY through S_DECEL or G_SPLIT through G_RECOVERY if visible).
+3. Review top finding cards; assign one cue + one 60s drill from Coaching/ for next practice station.
+4. Re-shoot after two weeks to compare **same athlete** knee load and decel smoothness — not pro templates.
+
+---
+
+## Serve volume awareness (non-prescriptive)
+
+Competitive players accumulate high serve counts in match and practice. Federation and sport-science materials recommend:
+- Structured rest between hard serving days for developing athletes.
+- Technique emphasis when introducing new motion changes — avoid simultaneous volume spikes.
+
+This pack does **not** publish numeric serve caps (unlike baseball pitch counts); refer to national governing body
+periodization for juniors and team schedule design.
+
+**Sources:** ITF junior development articles (B+); PMC overuse reviews (A themes).
+
+---
+
+## Doubles vs singles footwork (body-only)
+
+Doubles emphasizes ready position and split-step at net; singles emphasizes lateral recovery after G_RECOVERY.
+Phase model G_SPLIT and G_RECOVERY checkpoints apply to both; net volley phases are future pack extension.
+
+---
+
+## Indoor / outdoor adjustments
+
+Slippery indoor courts: wider base at G_LOAD may be adaptive — fault_groundstroke_wide_stance_stuck distinguishes
+wide **without** knee flex from purposeful stability. Hot outdoor: fatigue shows as fault_double_fault_rhythm_rush;
+coach may shorten sessions.
+
+---
+
+## Inclusive coaching notes
+
+- Left-handed players mirror all sided cues in Coaching/001_cues.txt.
+- Athletes with mobility limits may use abbreviated backswings while still passing deceleration_control checks.
+- Wheelchair tennis uses different phase timing — not covered in v1 ontology; do not apply standing checkpoints.
+
+---
+
+## Sample station cards (copy for clipboard)
+
+**Station A — Serve legs:** 3×60s drill_fault_serve_knee_lock; video one rep.
+**Station B — Forehand turn:** 3×45s drill_fault_groundstroke_late_unit_turn; cue “fence first.”
+**Station C — Finish:** 3×60s drill_fault_serve_poor_decel OR drill_fault_groundstroke_upright_recovery alternating.
+
+---
+
+## Disclaimer
+
+Training advice is coaching education. Pain, growth-plate sensitivity in youth, and return from injury require qualified
+supervision. See Docs/002_DISCLAIMER.txt and SOURCE_MANIFEST youth sources for live policy checks.

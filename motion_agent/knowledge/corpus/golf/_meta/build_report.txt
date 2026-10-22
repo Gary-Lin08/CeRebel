@@ -1,105 +1,66 @@
-{
-  "generated_at": "2026-09-20T15:30:27.424275+00:00",
-  "chunks": 1050,
-  "concepts": 26,
-  "relations": 9,
-  "documents": [
-    {
-      "id": "randa_rules_2023_pdf",
-      "status": "ok",
-      "path": "01_rules/2023_Rules_of_Golf.pdf",
-      "pages": 260,
-      "empty_pages": 0,
-      "chunks": 372,
-      "sha256": "09bf0ca97f02049f252a50b4946f2c2f532e69af501eed89ee6cbe49e630c255"
-    },
-    {
-      "id": "randa_clarifications_2026_07",
-      "status": "ok",
-      "path": "01_rules/2026-07-01_Additional_Clarifications.pdf",
-      "pages": 13,
-      "empty_pages": 0,
-      "chunks": 25,
-      "sha256": "7c6e3df9c7527f3e7626969e535fe141844af3a34a586a843d4598b4754f83ee"
-    },
-    {
-      "id": "usga_local_rules_2023",
-      "status": "ok",
-      "path": "01_rules/USGA_Local_Rules_and_Terms_2023.pdf",
-      "pages": 1,
-      "empty_pages": 0,
-      "chunks": 5,
-      "sha256": "1614a697425b7175e58a16b11e17e6bf598ed08451ca57e805deb29731144c3b"
-    },
-    {
-      "id": "usga_15_rules_poster",
-      "status": "ok",
-      "path": "01_rules/USGA_15_Rules_Poster_2023.pdf",
-      "pages": 1,
-      "empty_pages": 0,
-      "chunks": 3,
-      "sha256": "fe174258b42bcead74a289777b973b5693ec35ae327a1a88d8646943e46e6dd8"
-    },
-    {
-      "id": "usga_handicap_2024",
-      "status": "ok",
-      "path": "02_handicap/2024_Rules_of_Handicapping_USGA.pdf",
-      "pages": 130,
-      "empty_pages": 5,
-      "chunks": 135,
-      "sha256": "4b7335c3ee19a51b103afca42d7ed725e00ddec199c98ed0b1ac7e888a27df70"
-    },
-    {
-      "id": "usga_equipment_rules",
-      "status": "ok",
-      "path": "03_equipment/Equipment_Rules.pdf",
-      "pages": 99,
-      "empty_pages": 0,
-      "chunks": 141,
-      "sha256": "513947dbd2b8e609ba2785da812a690d9e9300f797e15cc2e355ba2473dd8d83"
-    },
-    {
-      "id": "usga_conforming_golf_balls",
-      "status": "ok",
-      "path": "03_equipment/Conforming_Golf_Balls_CURRENT.pdf",
-      "pages": 94,
-      "empty_pages": 0,
-      "chunks": 188,
-      "sha256": "11f58b6817a00b6ec5ba5d85cebc9304a947311290618af0021a25d15e7fbb37"
-    },
-    {
-      "id": "biomech_kinematics_2022",
-      "status": "ok",
-      "path": "04_biomechanics_open_access/Golf_Swing_Biomechanics_Systematic_Review_2022.pdf",
-      "pages": 27,
-      "empty_pages": 0,
-      "chunks": 84,
-      "sha256": "43d86a43ed552e01dc36f2c061d0b9b6a479c534053b4089dbeba7177c5d30ea"
-    },
-    {
-      "id": "biomech_grf_cop_2026",
-      "status": "ok",
-      "path": "04_biomechanics_open_access/GRF_CoP_Golf_Systematic_Review_2026.pdf",
-      "pages": 22,
-      "empty_pages": 0,
-      "chunks": 56,
-      "sha256": "def72887115f52bf8224166cc4f82ca3d0fdb8122daeba12955d55c2412d9a68"
-    },
-    {
-      "id": "internal_ecosystem_research_zh",
-      "status": "ok",
-      "chunks": 15,
-      "sha256": "1767b4e315898bc1b5738fb40bb5b787daab59c0db1bda42b706d923487cf628"
-    },
-    {
-      "id": "internal_bilingual_taxonomy",
-      "status": "ok",
-      "chunks": 26,
-      "sha256": "2723681eb1e0aa3328e54c457c5918922aa27af1859d8568a407e8672a2b52a2"
-    }
-  ],
-  "outputs": [
-    "generated_corpus/chunks.jsonl",
-    "generated_corpus/golf_kb.sqlite"
-  ]
-}
+# build_report — golf (Sport Pack + legacy)
+
+Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt	1681 lines	73619 bytes
+Biomechanics/001_overview.txt	56 lines	3471 bytes
+Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt	1537 lines	112601 bytes
+Coaching/001_cues.txt	125 lines	4641 bytes
+Coaching/002_drills.txt	139 lines	5338 bytes
+Docs/001_ARCHITECTURE.txt	64 lines	2560 bytes
+Docs/002_DISCLAIMER.txt	38 lines	2497 bytes
+Docs/002_ecosystem_research_zh.txt	365 lines	37020 bytes
+Equipment/001_Conforming_Golf_Balls_CURRENT.txt	5499 lines	225945 bytes
+Equipment/002_Equipment_Rules.txt	3760 lines	171191 bytes
+Findings/001_common_faults.txt	172 lines	10695 bytes
+Handicap/001_2024_Rules_of_Handicapping_USGA.txt	3514 lines	133497 bytes
+Phases/001_phase_model.txt	112 lines	5730 bytes
+Quality/001_quality_definition.txt	105 lines	5974 bytes
+Quality/002_checkpoints.txt	114 lines	4626 bytes
+Rules/001_2023_Rules_of_Golf.txt	8207 lines	414248 bytes
+Rules/002_2026-07-01_Additional_Clarifications.txt	605 lines	31512 bytes
+Rules/003_USGA_15_Rules_Poster_2023.txt	180 lines	4777 bytes
+Rules/004_USGA_Local_Rules_and_Terms_2023.txt	87 lines	4891 bytes
+Schema/001_golf-ontology.txt	48 lines	3648 bytes
+Schema/001_ontology.txt	50 lines	3720 bytes
+Taxonomy/001_concepts.txt	27 lines	4536 bytes
+Taxonomy/002_relations.txt	10 lines	833 bytes
+Training/001_team_practice.txt	123 lines	5746 bytes
+_meta/README.txt	49 lines	1975 bytes
+_meta/SOURCE_MANIFEST.txt	56 lines	14308 bytes
+_meta/brain_plan.txt	361 lines	23804 bytes
+_meta/download_report.txt	9 lines	995 bytes
+_meta/ingest_manifest.txt	15 lines	686 bytes
+_meta/pack_readme.txt	80 lines	3186 bytes
+_meta/research_notes.txt	169 lines	12553 bytes
+_meta/research_notes_coaching.txt	169 lines	12553 bytes
+_meta/review_report.txt	324 lines	17492 bytes
+_meta/review_report_sport_pack.txt	324 lines	17492 bytes
+
+================================================================================
+APPEND — v2 depth upgrade 2026-10-23
+Agent: BUILD (sport pack v2)
+Scope: Findings + Coaching + Taxonomy relations + Phases detector/fault links + review rewrite
+
+## Written / updated
+Findings/001_common_faults.txt     30 canonical fault_* cards (kept 13, added 17)
+Coaching/001_cues.txt              30 fault cues + positive cues
+Coaching/002_drills.txt            18+ drills with targets: fault_*
+Taxonomy/002_relations.txt         thickened ≥15 rows (phase + finding + coaching)
+Phases/001_phase_model.txt         detector_events + fault_links per phase
+_meta/review_report.txt            rewritten; VERDICT APPROVED_V2
+
+## New finding ids
+fault_early_extension_thrust, fault_weight_shift_late, fault_head_lateral_sway,
+fault_incomplete_shoulder_turn, fault_takeaway_steep_lift, fault_takeaway_inside_roll,
+fault_tempo_rush_downswing, fault_flying_trail_elbow, fault_lead_arm_collapse_top,
+fault_setup_spine_too_upright, fault_setup_narrow_stance, fault_setup_weight_heels,
+fault_reverse_pivot, fault_impact_lead_knee_lock, fault_incomplete_hip_clearance,
+fault_chip_stand_up, fault_chip_trail_weight
+
+## Depth check targets
+findings ≥25: 30
+cues cite fault_*: yes
+drills cite fault_*: yes
+relations ≥15: yes
+phase detector_events + fault_links: yes
+
+BUILD_STATUS: complete_v2

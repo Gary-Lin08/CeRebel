@@ -1,0 +1,112 @@
+# Tennis Sport Pack — Biomechanics overview (open literature summary)
+
+Summarized for CeRebel RAG from peer-reviewed reviews and federation sport-science materials.
+**Not prescriptive medicine.** Reported relationships describe population trends with large individual variation.
+
+Authority mix: B+ biomechanics reviews; A themes for overuse epidemiology; B coaching application.
+
+---
+
+## Serve: segment sequencing
+
+Reviews of tennis serve biomechanics commonly describe energy transfer from lower body to upper body in proximal-to-distal
+order: leg extension and force production against the ground, pelvis and trunk rotation, upper arm motion, forearm and
+wrist action near the overhead hit window. Elite servers show diverse trophy poses and timing; research emphasizes
+**coordination and repeatability** more than a single joint-angle template.
+
+**Body-visible implications for CeRebel:**
+- Leg contribution should precede peak racket-side wrist speed (S_DRIVE_UP before S_CONTACT_PROXY).
+- Trunk tilt and rotation are visible on side/rear cameras; internal shoulder rotation is less reliable from one view.
+- Non-racket arm motion contributes to balance and timing even when ball toss is not tracked.
+
+**Sources:** PMC-indexed serve biomechanics review articles (search: tennis serve kinematics kinetics); ITF Coaching and
+Sport Science Review (https://www.itftennis.com/en/about-us/governance/coaching-and-sport-science/).
+
+---
+
+## Serve: ground reaction forces and stability
+
+Open studies report substantial vertical and horizontal ground reaction forces during the serve, with shift toward the
+front foot into the follow-through. Platform vs pinpoint stance styles alter footwork timing but both require organized
+load before drive. Product does not measure force plates; **proxy** uses knee flexion/extension and ankle rise timing.
+
+**Camera note:** Without force data, avoid claiming “insufficient push” — use qualitative leg_contribution dimension.
+
+---
+
+## Serve: shoulder and elbow kinetics (awareness only)
+
+Kinetic analyses show high shoulder and elbow loads at the competitive serve, especially with high volume. Epidemiology
+links repetitive overhead activity to shoulder and elbow overuse conditions in tennis populations — multifactorial
+(volume, technique, strength, recovery). **A single video clip cannot assess cumulative load or diagnose pathology.**
+
+CeRebel may flag harsh deceleration or arm-dominant sequencing as **coaching and awareness** cues, not injury forecasts.
+
+**Sources:** PMC tennis injury reviews; clinical consensus on gradual return to serve after pain (seek clinician).
+
+---
+
+## Groundstroke: trunk rotation and racket speed
+
+Forehand and backhand studies report contributions from hip and trunk rotation to racket head speed. Open-stance forehands
+increase trunk rotation demand compared with closed stance in some analyses; two-handed backhands involve coupled arm
+actions with different shoulder loading patterns than one-handed backhands.
+
+**Body-visible implications:**
+- Unit turn (G_UNIT_TURN) should precede peak forward wrist speed for coordinated strokes in coaching models.
+- “All-arm” swings show arm speed without preceding trunk yaw on side view — maps to fault_groundstroke_all_arm.
+
+**Sources:** Open-access tennis groundstroke biomechanics papers (B+); USTA/LTA technique frameworks (B).
+
+---
+
+## Youth vs adult biomechanics
+
+Junior players use scaled courts and balls (red/orange/green) with lower absolute forces and smaller segment amplitudes.
+Growth and coordination limit copying adult professional kinematics. Training emphasis: throwing-like serve progressions,
+wide base balance, and volume control per NGB guidelines — not maximizing wrist speed in isolation.
+
+**Sources:** USTA red ball progression; Tennis Australia Hot Shots; ITF junior competition context (A+ rules, B training).
+
+---
+
+## Measurement limits with pose estimation
+
+Joint angles from monocular video inherit error especially for:
+- Shoulder internal/external rotation when arm is overhead.
+- Wrist pronation/supination without racket marker.
+- Pelvis twist when clothing is loose.
+
+CeRebel findings should downgrade confidence when key joints are occluded or FPS < 30.
+
+**Method reference:** OpenSim / musculoskeletal modeling literature (B) for future inverse kinematics pipelines.
+
+---
+
+## Relationship to phase model
+
+| Biomech theme | Phase anchor |
+|---------------|--------------|
+| Leg drive | S_TROPHY_LOAD, S_DRIVE_UP, G_LOAD |
+| Trunk rotation timing | G_UNIT_TURN, G_FORWARD_SWING |
+| Contact timing proxy | S_CONTACT_PROXY, G_CONTACT_PROXY |
+| Deceleration | S_DECEL, G_FOLLOW |
+
+---
+
+## What we deliberately omit
+
+- Exact degree norms for elbow flexion at trophy pose (too variable; risk of false precision).
+- Ball spin mechanics (requires ball or racket sensor).
+- String-bed impact physics.
+
+---
+
+## Key open URLs (manifest IDs)
+
+- pmc_tennis_serve_biomech — PubMed Central review articles
+- itf_coaching_review — ITF sport science hub
+- usta_player_development — coaching frameworks
+- pmc_tennis_overuse — injury epidemiology themes
+
+Retrieved 2026-10-21. Re-verify before citing rule or clinical claims in user-facing legal copy.

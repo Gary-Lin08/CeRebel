@@ -1,0 +1,111 @@
+# Baseball Sport Pack — Build Report
+Agent: BUILD
+Date: 2026-10-21
+Corpus root: motion_agent/knowledge/corpus/baseball/
+Followed: _meta/brain_plan.txt, _meta/research_notes.txt, SPORT_PACK_KB_SPEC.txt
+
+## Summary
+
+Complete English RAG corpus for body-first overhand pitching. Six UI phases align with
+motion_agent/motion/sport_analysis.py `_baseball_window`. Finding IDs align with in-code
+back-leg, separation, front-knee plus brain_plan catalog. SOURCE_MANIFEST populated by
+Search agent (45+ sources); build agent did not duplicate manifest rows.
+
+## Content files (indexed paths)
+
+| file | lines |
+|------|------:|
+| Docs/001_ARCHITECTURE.txt | 130 |
+| Docs/002_DISCLAIMER.txt | 65 |
+| Schema/001_ontology.txt | 75 |
+| Taxonomy/001_concepts.txt | 137 |
+| Taxonomy/002_relations.txt | 66 |
+| Phases/001_phase_model.txt | 190 |
+| Quality/001_quality_definition.txt | 132 |
+| Quality/002_checkpoints.txt | 171 |
+| Findings/001_common_faults.txt | 244 |
+| Coaching/001_cues.txt | 185 |
+| Coaching/002_drills.txt | 211 |
+| Biomechanics/001_overview.txt | 171 |
+| Training/001_team_practice.txt | 191 |
+
+Total indexed content lines (approx): 2068
+
+## Meta files (exclude from RAG index)
+
+| file | lines | note |
+|------|------:|------|
+| _meta/pack_readme.txt | 8 | status updated |
+| _meta/SOURCE_MANIFEST.txt | 52 | search agent |
+| _meta/brain_plan.txt | 294 | ontology map |
+| _meta/research_notes.txt | 255 | URLs + norms |
+| _meta/review_report.txt | 234 | audit placeholder |
+| _meta/build_report.txt | (this file) | |
+
+## Alignment checks
+
+- Phase IDs set, lift, stride, landing, release, follow — Phases/001, Taxonomy, Schema JSON-LD
+- Release proxy = trail wrist speed peak — Architecture, Phases, Biomechanics
+- Golf sport mismatch documented — Findings sport-mismatch-golf, Schema SportMismatchGolf
+- Youth vs adult stride bands — Quality/002 cp_stride_*_band
+- Code alias map — Findings/001 (back-leg-soft ↔ back-leg, etc.)
+
+## Gaps / next build
+
+- Expand Docs/002_DISCLAIMER if product legal wants longer UI copy block
+- mer-insufficient, glove-flyout, trunk-late-rotate checkpoints marked future until coords validated
+- Optional: ingest PMC9950989 summary chunk file under Biomechanics/ (not required for v1)
+
+## Primary external URLs cited in body text
+
+- https://pmc.ncbi.nlm.nih.gov/articles/PMC9950989/ (clinician pitching guide)
+- https://www.baseball.ca/pitching-mechanics
+- https://www.mlb.com/pitch-smart/pitching-guidelines
+- https://www.baseball.ca/en/programs/development/pitch-count-guidelines
+- https://github.com/drivelineresearch/openbiomechanics/blob/main/baseball_pitching/README.md (OBP events, research-only)
+
+BUILD_STATUS: complete
+
+================================================================================
+APPEND — v2 depth upgrade 2026-10-23
+Agent: BUILD (sport pack v2)
+Scope: Findings migration + expansion, Coaching fault_* links, Taxonomy, Phases, review rewrite
+
+## Written / updated
+Findings/001_common_faults.txt     28 canonical fault_* cards (13 migrated + 15 new)
+Coaching/001_cues.txt              fault_* finding_ids; expanded cues
+Coaching/002_drills.txt            targets: fault_*; new drive/lift/stack drills
+Taxonomy/002_relations.txt         ≥15 rows; legacy_of kebab → fault_*
+Phases/001_phase_model.txt         detector_events + fault_links per phase
+_meta/review_report.txt            rewritten; VERDICT APPROVED_V2
+
+## Migrated ids (legacy_id retained)
+back-leg-soft → fault_back_leg_soft
+separation-low → fault_separation_low
+front-knee-collapse → fault_front_knee_collapse
+stride-short → fault_stride_short
+stride-long → fault_stride_long
+mer-insufficient → fault_mer_insufficient
+glove-flyout → fault_glove_flyout
+head-pull → fault_head_pull
+pelvis-drift → fault_pelvis_drift
+trunk-late-rotate → fault_trunk_late_rotate
+arm-path-wide → fault_arm_path_wide
+set-rush → fault_set_rush
+sport-mismatch-golf → fault_sport_mismatch_golf
+
+## New finding ids
+fault_early_trunk_rotation, fault_closed_stride_landing, fault_open_stride_landing,
+fault_soft_drive_leg_balance, fault_arm_drag_late, fault_arm_path_inverted_w,
+fault_glove_side_collapse, fault_posture_lean_back, fault_posture_collapse_forward,
+fault_tempo_rush_delivery, fault_finish_fall_off, fault_incomplete_deceleration,
+fault_lead_foot_closed_toe, fault_arm_slot_inconsistent, fault_youth_pitch_count_awareness
+
+## Depth check targets
+findings ≥25: 28
+cues cite fault_*: yes
+drills cite fault_*: yes
+relations ≥15: yes
+phase detector_events + fault_links: yes
+
+BUILD_STATUS: complete_v2

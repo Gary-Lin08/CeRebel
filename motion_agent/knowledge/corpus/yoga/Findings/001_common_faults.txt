@@ -1,0 +1,403 @@
+# Yoga — Common Faults (finding cards)
+# Canonical v2. Body-first alignment; not medical diagnosis. See Docs/002_DISCLAIMER.txt.
+# Pose catalog: Taxonomy/003_common_poses_set.txt.
+
+---
+
+finding_id: fault_dog_lumbar_sag
+headline_en: Lower back dips in Downward-Facing Dog
+phases: hold_anchor
+body_signal: Lumbar extension proxy increases; hips below shoulder–ankle line in sagittal view; rib cage may flare posteriorly. (pose context: pose_down_dog).
+why_it_matters: Excess lumbar extension can shift load away from shoulder girdle and hamstring lengthening pattern; population coaching — not individual diagnosis.
+feel_cue: "Long spine first; heels toward the floor only if they go without losing length."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Cramer et al. yoga LBP reviews (B+); Iyengar-style alignment (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_dog_rounded_spine
+headline_en: Upper back rounds with little hip hinge in Down Dog
+phases: hold_anchor
+body_signal: Thoracic flexion dominant; hips not posterior; shoulder angle closed. (pose context: pose_down_dog).
+why_it_matters: Shoulders and wrists may carry more load when hips do not sit back; common beginner pattern when hamstrings are tight.
+feel_cue: "Long spine first; heels toward the floor only if they go without losing length."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Yoga biomechanics shoulder load summaries (B+); coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_dog_shoulder_elevation
+headline_en: Shoulders shrug toward ears in Down Dog
+phases: hold_anchor, hold_early
+body_signal: Reduced ear-to-shoulder distance; scapular elevation proxy. (pose context: pose_down_dog).
+why_it_matters: Elevated scapulae can increase upper trapezius dominance and reduce upward rotation space for shoulder flexion.
+feel_cue: "Push the mat forward with your hands; shoulder blades slide toward your hips."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Plank/shoulder girdle EMG reviews (B+); PT yoga shoulder articles (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_dog_narrow_base
+headline_en: Hands too narrow in Down Dog
+phases: entry, hold_early
+body_signal: Wrist separation << shoulder width; elbows bow outward. (pose context: pose_down_dog).
+why_it_matters: Narrow base can increase elbow and wrist stress and limit serratus engagement cues.
+feel_cue: "Hands shoulder-width; outer edges of hands parallel to mat edge."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: low
+sources: Coaching alignment (B); push-up hand position analog (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_dog_locked_knees
+headline_en: Knees locked with rounded spine in Down Dog
+phases: hold_anchor
+body_signal: Knee flexion near full extension combined with posterior pelvic tilt and spinal flexion proxy. (pose context: pose_down_dog).
+why_it_matters: Locking knees does not automatically improve hamstring length and may accompany poor hip hinge sequencing.
+feel_cue: "Bend knees enough that your back can lengthen like a hammock tied high."
+drill: 75s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: low
+sources: Flexibility sequencing coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_plank_hip_sag
+headline_en: Hips drop in Plank or Chaturanga
+phases: hold_anchor, peak_load
+body_signal: Hip marker below ear–shoulder–ankle line in sagittal view; lumbar extension may increase. (pose context: pose_plank, pose_chaturanga_low).
+why_it_matters: Sagging trunk increases lumbar extension moment in front-supported postures in biomechanical models.
+feel_cue: "One line from crown to heels — hips neither drip nor pike."
+drill: 90s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: McGill / core stability popular summaries (B); plank kinematics (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_plank_hip_pike
+headline_en: Hips pike too high in Plank
+phases: hold_anchor
+body_signal: Hips elevated above shoulder–ankle line; body forms inverted V. (pose context: pose_plank).
+why_it_matters: Pike reduces core demand and changes shoulder load; common fatigue or fear pattern.
+feel_cue: "One line from crown to heels — hips neither drip nor pike."
+drill: 90s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: low
+sources: Plank coaching progressions (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_plank_shoulder_forward
+headline_en: Shoulders drift forward of wrists in Plank
+phases: hold_anchor
+body_signal: Shoulder joint anterior to wrist in side view; scapulae may wing. (pose context: pose_plank).
+why_it_matters: Stacked shoulders over wrists is standard plank teaching for sustainable holds.
+feel_cue: "Shoulders over wrists; chest broad, not collapsed between arms."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Shoulder load in plank reviews (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_plank_neck_crunch
+headline_en: Neck cranes or collapses in Plank
+phases: hold_anchor
+body_signal: Cervical extension or flexion extreme; ear not stacked with spine proxy. (pose context: pose_plank).
+why_it_matters: Neutral gaze supports cervical comfort cues in coaching.
+feel_cue: "Eyes to mat edge; back of neck long."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: low
+sources: Coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_chaturanga_elbow_flare
+headline_en: Elbows flare wide in Chaturanga
+phases: peak_load
+body_signal: Elbows abduct markedly away from ribs during lower. (pose context: pose_chaturanga_low).
+why_it_matters: Elbows-in path is common chaturanga teaching for shoulder-friendly mechanics (coaching — not diagnosis).
+feel_cue: "Elbows skim your ribs — upper arms about 45 degrees from your sides."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Yoga asana alignment summaries (B); push-up analog (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_chaturanga_shoulder_drop
+headline_en: Shoulders drop below elbows in Chaturanga
+phases: peak_load
+body_signal: Shoulder height falls below elbow line at lowest point; chest collapses. (pose context: pose_chaturanga_low).
+why_it_matters: Stopping above shoulder-drop is a widespread safety coaching rule in vinyasa schools.
+feel_cue: "Shoulders over wrists; chest broad, not collapsed between arms."
+drill: 90s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: high
+sources: Yoga teacher training safety themes (B); shoulder load summaries (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_warrior_knee_collapse
+headline_en: Front knee caves inward in Warrior
+phases: hold_anchor
+body_signal: Front knee medial to second toe / ankle line in frontal view. (pose context: pose_warrior_1, pose_warrior_2).
+why_it_matters: Knee tracking over mid-foot is standard warrior coaching; not ACL prediction.
+feel_cue: "Front knee points over second toe; widen stance if knee dives forward."
+drill: 75s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Yoga alignment (B); frontal knee tracking education (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_warrior_knee_past_toes
+headline_en: Front knee travels far past toes
+phases: hold_anchor
+body_signal: Knee projects well beyond toes with heel lift or extreme ankle dorsiflexion. (pose context: pose_warrior_1, pose_warrior_2).
+why_it_matters: Coaching often widens stance rather than forcing shin vertical — style varies; flag extreme patterns.
+feel_cue: "Front knee points over second toe; widen stance if knee dives forward."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: low
+sources: Warrior alignment coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_warrior_arm_drop
+headline_en: Arms drop or sag in Warrior II
+phases: hold_anchor
+body_signal: Wrist height falls; shoulders hike or arms lose horizontal reach. (pose context: pose_warrior_2).
+why_it_matters: Active arm lines are part of warrior energy cues in many schools.
+feel_cue: "Arms reach to opposite walls; energy through fingertips, shoulders down."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: low
+sources: Coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_w1_hip_open
+headline_en: Back hip stays open in Warrior I
+phases: hold_anchor
+body_signal: Back hip externally rotated with pelvis not facing forward; front knee may collapse. (pose context: pose_warrior_1).
+why_it_matters: Hip square is a common W1 cue; modify to crescent if pinching — not diagnosis.
+feel_cue: "Turn back foot in enough that both hip bones feel forward without pinching."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: low
+sources: Alignment coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_tree_foot_on_knee
+headline_en: Tree foot presses on the standing knee joint
+phases: entry, hold_anchor
+body_signal: Raised foot contacts medial knee joint line of standing leg. (pose context: pose_tree).
+why_it_matters: Safety coaching rule: foot on calf or inner thigh — never on the knee joint.
+feel_cue: "Place foot on calf or inner thigh — never on the knee joint."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: high
+sources: Yoga safety teaching consensus (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_tree_hip_jut
+headline_en: Standing hip juts out in Tree
+phases: hold_anchor
+body_signal: Standing hip lateral to ankle; pelvis tilts toward standing side. (pose context: pose_tree).
+why_it_matters: Level hips support balance and reduce standing-leg collapse cues.
+feel_cue: "Level your hips like a bowl of water — don’t spill to the standing side."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Balance alignment coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_balance_hip_drop
+headline_en: Hip drops on standing leg in balance poses
+phases: hold_anchor
+body_signal: Pelvis drop on standing side; COM shifts off foot tripod. (pose context: pose_tree).
+why_it_matters: Level pelvis is a common balance correction.
+feel_cue: "Level your hips like a bowl of water — don’t spill to the standing side."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Balance coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_locked_knee_balance
+headline_en: Standing knee locks hard in balance
+phases: hold_anchor
+body_signal: Standing knee hyperextension proxy with rigid leg. (pose context: pose_tree).
+why_it_matters: Soft micro-bend is often coached for joint comfort and control.
+feel_cue: "Standing knee soft — not locked."
+drill: 45s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_forward_fold_spine_round
+headline_en: Spine rounds excessively in forward fold
+phases: hold_anchor
+body_signal: Thoracic/lumbar flexion dominant with little hip hinge; hands reach by spinal flex. (pose context: pose_forward_fold).
+why_it_matters: Hip-hinge first is preferred in many schools; rounding may be intentional in some styles — flag extreme beginner patterns.
+feel_cue: "Fold from hip creases; back long like a table tilting forward."
+drill: 90s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Forward fold biomechanics summaries (B+); coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_chair_collapse_forward
+headline_en: Chair pose collapses chest forward
+phases: hold_anchor
+body_signal: Thorax pitches forward with hips shifting back excessively; arms may drop. (pose context: pose_chair).
+why_it_matters: Upright chair with hip hinge is common teaching for sustainable holds.
+feel_cue: "Sit back as if to a high stool; knees track over ankles."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Chair pose coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_chair_knee_collapse
+headline_en: Knees cave in Chair
+phases: hold_anchor
+body_signal: Knees medial to feet in frontal view during chair. (pose context: pose_chair).
+why_it_matters: Knees track over toes is standard chair cue — not diagnosis.
+feel_cue: "Sit back as if to a high stool; knees track over ankles."
+drill: 45s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Coaching (B); knee tracking education (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_bridge_knee_splay
+headline_en: Knees splay wide in Bridge
+phases: hold_anchor
+body_signal: Knees fall outward wider than feet; feet may turn out. (pose context: pose_bridge).
+why_it_matters: Knees tracking over ankles/toes is common bridge cue.
+feel_cue: "Knees hip-width; press feet down evenly."
+drill: 45s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: low
+sources: Coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_bridge_neck_crunch
+headline_en: Neck compresses in Bridge
+phases: hold_anchor
+body_signal: Cervical flexion extreme with weight on neck rather than shoulders. (pose context: pose_bridge).
+why_it_matters: Shoulder support with neck long is standard bridge safety coaching.
+feel_cue: "Root and lengthen — find the long line."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: high
+sources: Yoga bridge safety themes (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_backbend_lumbar_dominant
+headline_en: Backbend dumps into low back
+phases: hold_anchor
+body_signal: Lumbar extension dominates; thoracic extension minimal; ribs flare. (pose context: pose_up_dog, pose_bridge).
+why_it_matters: Distribute bend through thoracic spine is common cue — not spine diagnosis.
+feel_cue: "Lift from upper back; keep lower back spacious."
+drill: 75s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Backbend biomechanics summaries (B+); coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_backbend_neck_hyperextension
+headline_en: Neck cranked in backbend
+phases: hold_anchor
+body_signal: Cervical extension extreme with jaw lifted; shoulders not supporting. (pose context: pose_up_dog).
+why_it_matters: Long neck / gaze options are safety coaching themes in backbends.
+feel_cue: "Neck follows spine — gaze forward, not at ceiling."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: high
+sources: Yoga safety teaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_updog_shoulder_forward
+headline_en: Shoulders shrug forward in Up Dog
+phases: hold_anchor
+body_signal: Shoulders anterior and elevated; elbows soft or locked with collapsed chest. (pose context: pose_up_dog).
+why_it_matters: Open chest with shoulders down/back is common up-dog cue.
+feel_cue: "Root and lengthen — find the long line."
+drill: 60s alignment drill with breath (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Coaching (B); shoulder load summaries (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_seated_slump
+headline_en: Seated pose collapses into a slump
+phases: hold_anchor
+body_signal: Posterior pelvic tilt with thoracic flexion; head forward. (pose context: pose_seated_forward, pose_easy_seat).
+why_it_matters: Sit on sit bones with long spine is foundational seated coaching.
+feel_cue: "Root sit bones; lift crown — spine like a staff."
+drill: 90s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: low
+sources: Coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_triangle_knee_hyperextend
+headline_en: Front knee locks in Triangle
+phases: hold_anchor
+body_signal: Front knee hyperextension proxy with weight dumped into joint. (pose context: pose_triangle).
+why_it_matters: Micro-bend is often coached for comfort — not diagnosis.
+feel_cue: "Front leg strong with a micro-bend; rotate outer hip back."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Triangle alignment coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_hold_wandering
+headline_en: Body drifts during the hold
+phases: hold_late
+body_signal: COM horizontal drift or shoulder angle trend vs E_HOLD_ANCHOR over ≥2 s. (pose context: *).
+why_it_matters: Drift reduces reproducibility of alignment feedback and may indicate fatigue or balance challenge.
+feel_cue: "Pick one gaze point; return there when you wobble."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: low
+sources: Motor learning focus of attention (B+); coaching (B)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_flow_uncontrolled_drop
+headline_en: Uncontrolled drop into pose during flow
+phases: peak_load, decel
+body_signal: High joint velocity into lowest point without deceleration phase. (pose context: pose_chaturanga_low, pose_plank).
+why_it_matters: Rapid loading in vinyasa transitions is discussed in yoga injury surveys; coaching emphasizes control.
+feel_cue: "Move as if through honey — control beats depth."
+drill: 90s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Yoga injury survey literature (B+); S&C eccentric training (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_upward_salute_rib_flare
+headline_en: Ribs flare with arms overhead in Upward Salute
+phases: hold_anchor
+body_signal: Rib cage anterior displacement; lumbar extension increases with shoulder flexion. (pose context: pose_upward_salute, pose_chair).
+why_it_matters: Rib flare pattern can reduce core integration in overhead arm poses.
+feel_cue: "Arms rise; lower ribs knit in — avoid leaning back."
+drill: 45s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: low
+sources: Core and overhead mobility coaching (B); breathing/bracing summaries (B+)
+youth_note: Long spine and balance foot placement; never force heel-to-floor.
+---
+
+finding_id: fault_child_compressed_neck
+headline_en: Neck compressed in Child's Pose with arms extended
+phases: hold_anchor
+body_signal: Cervical flexion extreme with forehead not supported; shoulders high. (pose context: pose_child).
+why_it_matters: Shoulder tightness can pull neck; props modify load — coaching suggestion.
+feel_cue: "Forehead supported; knees wide enough for easy breath."
+drill: 60s: Practice with breath awareness (see Coaching/002_drills.txt).
+severity_default: low
+sources: Restorative yoga prop use (B)
+
+# Severity priority: high — tree foot-on-knee, chaturanga shoulder-drop, backbend neck; medium — dog lumbar sag, warrior knee, plank sag; low — hold wandering.
+# Youth: prioritize tree foot-on-knee and locked-knee balance. Pregnancy/osteoporosis: referral messaging only.
+youth_note: Long spine and balance foot placement; never force heel-to-floor.

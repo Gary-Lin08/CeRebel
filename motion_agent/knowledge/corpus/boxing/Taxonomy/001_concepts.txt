@@ -1,0 +1,135 @@
+# Boxing Sport Pack — Concept taxonomy
+# Scope: stance, guard, jab, cross, footwork, shadowboxing form — technique only
+
+## Core concepts (with synonyms for RAG)
+
+concept_id: punch_jab
+label: Jab
+synonyms: lead hand straight, front hand punch, 1, stiff jab, probing jab (form only)
+punch_type: jab
+striking_hand: lead
+notes: Body-first uses lead wrist speed peak and retraction — not target or impact.
+
+concept_id: punch_cross
+label: Cross (straight rear hand)
+synonyms: straight right (orthodox), rear hand straight, 2, back hand punch
+punch_type: cross
+striking_hand: rear
+notes: Hip/trunk rotation before/at extension proxy; not power targeting language.
+
+concept_id: stance_orthodox
+label: Orthodox stance
+synonyms: right-handed stance, left foot forward, left lead
+stance: orthodox
+
+concept_id: stance_southpaw
+label: Southpaw stance
+synonyms: left-handed stance, right foot forward, right lead
+stance: southpaw
+
+concept_id: guard_boxing
+label: Boxing guard
+synonyms: hands up, high guard, on-guard, defensive posture, protect chin (posture cue)
+maps_to: B_GUARD
+notes: Coaching posture only — not sparring tactics or counter-punching.
+
+concept_id: shadowboxing
+label: Shadowboxing
+synonyms: shadow boxing, air work, form rounds, solo boxing, mirror work
+motion_family: SHADOW_ROUND
+notes: Solo repetition of stance, footwork, jab, cross, reset — no opponent.
+
+concept_id: footwork_step_in
+label: Step in
+synonyms: advance, forward step, closing distance (form), push step
+maps_to: F_STEP
+notes: Balance and base width — not closing on an opponent.
+
+concept_id: footwork_step_out
+label: Step out
+synonyms: retreat step, pull back, create space (form)
+maps_to: F_STEP
+
+concept_id: footwork_pivot
+label: Pivot
+synonyms: rear foot pivot, ball of foot turn, hip turn setup
+maps_to: F_PIVOT
+links: fault_footwork_heel_lift
+
+concept_id: phase_extension
+label: Punch extension
+synonyms: reach, snap, full extension, straight punch out
+maps_to: B_EXTEND
+
+concept_id: phase_retraction
+label: Retraction / bring hand back
+synonyms: recoil, snap back, return to guard, hand home
+maps_to: B_RETRACT
+links: fault_jab_no_retract, fault_cross_no_retract
+
+concept_id: quality_hip_drive
+label: Hip drive on cross
+synonyms: rotate hips, sit down on punch, trunk rotation, torque from core
+maps_to: B_PREP, B_EXTEND
+authority: B+ coaching theme
+
+concept_id: quality_guard_discipline
+label: Guard discipline
+synonyms: keep rear hand up, don't drop hands, protect on jab
+maps_to: B_GUARD, B_EXTEND
+links: fault_jab_rear_hand_drop, fault_guard_low_hands
+
+concept_id: quality_base_balance
+label: Base and balance
+synonyms: stay balanced, don't fall in, stable platform, athletic base
+maps_to: B_GUARD, F_PLANT, F_STEP
+links: fault_balance_sway, fault_stance_narrow
+
+concept_id: fault_dropped_rear_hand
+label: Rear hand drops
+synonyms: lazy rear hand, right hand down on jab (orthodox), open guard
+links: fault_jab_rear_hand_drop
+
+concept_id: fault_all_arm_punch
+label: Arm-only punch
+synonyms: no hip, punching with arm only, stiff cross, no rotation
+links: fault_cross_all_arm, fault_cross_no_hip
+
+concept_id: body_lead_wrist
+label: Lead wrist
+synonyms: jab hand, front hand wrist, left wrist (orthodox)
+measure: speed peak at B_EXTEND, path straightness proxy
+
+concept_id: body_rear_wrist
+label: Rear wrist
+synonyms: cross hand, back hand wrist, right wrist (orthodox)
+measure: speed peak at B_EXTEND, height during opponent-less jab phase
+
+concept_id: body_hip_rotation
+label: Hip / pelvis rotation
+synonyms: hip turn, core rotation, trunk twist
+measure: yaw rate proxy B_PREP → B_EXTEND
+
+concept_id: body_stance_width
+label: Stance width
+synonyms: foot spacing, base width, shoulder-width stance
+measure: ankle separation normalized to stature
+
+concept_id: youth_shadowboxing
+label: Youth non-contact boxing fitness
+synonyms: kids boxing fitness, youth form, non-contact striking fitness
+audience: youth
+authority: B
+notes: Form and movement quality; no competition fight prep in product KB.
+
+## Glossary (non-finding, disambiguation only)
+
+concept_id: glossary_sparring
+label: Sparring (out of product scope)
+synonyms: live training, partner work
+notes: Not coached in this pack; technique KB is solo/shadow form.
+
+concept_id: glossary_knockout
+label: Knockout (out of product scope)
+synonyms: KO, finish
+notes: Exclude from coaching retrieval; safety redirect only in disclaimer docs.

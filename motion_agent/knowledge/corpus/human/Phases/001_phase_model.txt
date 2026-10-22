@@ -1,0 +1,128 @@
+# General Human Motion — Phase Model (body-first, OpenSim-friendly) — v2
+
+## Scope
+
+Sport-agnostic clips: standing transitions, steps, reaches, squats, lunges, jump prep, throw prep,
+and mixed locomotor skills when no dedicated sport pack owns the activity. One **movement rep** from
+ready posture through preparation, main action, and return toward neutral.
+
+Convention: **primary side** = limb/segment with highest speed during action; findings may tag
+`side=left|right|bilateral`.
+
+When continuous cyclic motion matches a sport pack (e.g. running), sport pack takes precedence;
+human findings still apply to stack/symmetry as fallback.
+
+## Phase list (7 phases)
+
+| phase_id       | label_en         | start_event    | end_event      | body narrative |
+|----------------|------------------|----------------|----------------|----------------|
+| setup          | Setup / Ready    | E_SETUP        | E_PREP_START   | Ready posture; weight distributed; stack organized |
+| prep           | Preparation      | E_PREP_START   | E_PREP_END     | Eccentric loading, wind-up, weight shift |
+| load           | Load / Transfer  | E_PREP_END     | E_ACTION_START | Force acceptance; COM over base |
+| action         | Action           | E_ACTION_START | E_ACTION_PEAK  | Main effort; peak segment speeds |
+| follow_through | Follow-through   | E_ACTION_PEAK  | E_FOLLOW_END   | Deceleration; limb finish path |
+| recover        | Recovery         | E_FOLLOW_END   | E_RECOVER_END  | Return toward stack; breath reset |
+| reset          | Reset            | E_RECOVER_END  | E_NEXT_SETUP   | Ready for next rep or clip end |
+
+---
+
+## Phase blocks (detector_events + fault_links)
+
+### phase_id: setup
+start_end: E_SETUP → E_PREP_START
+body_signals: Stack alignment; head vs shoulder; shoulder height L/R; base of support width; pelvis tilt.
+detector_events: E_SETUP, E_PREP_START
+fault_links: fault_forward_head, fault_shoulder_height_asymmetry, fault_rounded_shoulders, fault_pelvis_anterior_tilt_excess, fault_base_of_support_narrow, fault_scapular_wing_proxy
+youth_note: Mild asymmetry common during growth — down-weight severity.
+
+### phase_id: prep
+start_end: E_PREP_START → E_PREP_END
+body_signals: Hip hinge vs spine bend; prep duration; weight shift onset; arm–torso coupling start.
+detector_events: E_PREP_START, E_PREP_END
+fault_links: fault_stiff_spine_no_hip_hinge, fault_knee_dominant_hinge, fault_rushed_prep, fault_insufficient_weight_shift, fault_arms_fight_torso, fault_squat_depth_shallow, fault_reach_shoulder_hike
+youth_note: Shorter prep acceptable; emphasize organization over adult timing ratios.
+
+### phase_id: load
+start_end: E_PREP_END → E_ACTION_START
+body_signals: Knee tracking; pelvis level; COM sway; rib flare; squat depth/heels/trunk; BOS.
+detector_events: E_PREP_END, E_ACTION_START
+fault_links: fault_posture_stack_break, fault_ribcage_flare_anterior, fault_lateral_pelvis_drop, fault_knee_valgus_visible, fault_single_leg_balance_wobble, fault_excessive_lateral_lean, fault_heels_rise_squat, fault_trunk_collapse_squat, fault_hip_shift_lateral_squat, fault_overhead_arch_lumbar, fault_gait_trunk_lean, fault_gait_short_step, fault_base_of_support_narrow
+youth_note: Frontal wobble more common; raise valgus/drop thresholds.
+
+### phase_id: action
+start_end: E_ACTION_START → E_ACTION_PEAK
+body_signals: Peak wrist/ankle or joint extension speed; stack under effort; limb ROM L/R; reach path.
+detector_events: E_ACTION_START, E_ACTION_PEAK
+fault_links: fault_posture_stack_break, fault_knee_valgus_visible, fault_arms_fight_torso, fault_limb_rom_asymmetry, fault_reach_shoulder_hike, fault_thoracic_extension_excess, fault_overhead_arch_lumbar, fault_scapular_wing_proxy, fault_gait_trunk_lean, fault_gait_short_step
+youth_note: Peak speeds lower; use self-baseline when possible.
+
+### phase_id: follow_through
+start_end: E_ACTION_PEAK → E_FOLLOW_END
+body_signals: Primary segment deceleration; soft knees; continued stack.
+detector_events: E_ACTION_PEAK, E_FOLLOW_END
+fault_links: fault_incomplete_recover, fault_arms_fight_torso
+youth_note: Abrupt stops common in playful clips — lower severity.
+
+### phase_id: recover
+start_end: E_FOLLOW_END → E_RECOVER_END
+body_signals: Stack variance returns toward setup; head re-stack; COM settle.
+detector_events: E_FOLLOW_END, E_RECOVER_END
+fault_links: fault_incomplete_recover, fault_forward_head
+youth_note: Truncated recover windows common — confidence down-weight.
+
+### phase_id: reset
+start_end: E_RECOVER_END → E_NEXT_SETUP
+body_signals: Quasi-static ready; minimal sway; shoulder evenness.
+detector_events: E_RECOVER_END, E_NEXT_SETUP
+fault_links: fault_incomplete_recover, fault_shoulder_height_asymmetry, fault_base_of_support_narrow
+youth_note: Quick reset between playful reps expected.
+
+---
+
+## Event definitions (computable proxies)
+
+### E_SETUP
+- Pelvis speed below threshold ≥0.2 s, OR clip start if quasi-static. Fallback: frame 0.
+
+### E_PREP_START
+- Sustained increase in knee/hip flexion velocity OR backward COM velocity OR arm retraction threshold.
+- Fallback: E_SETUP + 5% clip duration.
+
+### E_PREP_END
+- Max eccentric flexion at primary joint OR local min COM forward velocity before action.
+- Fallback: E_PREP_START + 30% of prep-to-action window.
+
+### E_ACTION_START
+- Primary segment velocity exceeds prep 90th percentile after E_PREP_END.
+- Fallback: E_PREP_END + 1 frame.
+
+### E_ACTION_PEAK
+- Max resultant wrist/ankle speed OR max hip/knee extension angular velocity.
+- Fallback: E_ACTION_START + 40% of action-to-follow window.
+
+### E_FOLLOW_END
+- Primary segment speed < 30% of action peak for ≥0.15 s.
+- Fallback: E_ACTION_PEAK + 25% remaining clip.
+
+### E_RECOVER_END
+- Stack proxy variance returns below setup-band OR pelvis speed minimal.
+- Fallback: clip end − 10% duration.
+
+### E_NEXT_SETUP
+- Next E_SETUP for multi-rep; else clip end.
+
+## Phase precedence
+
+setup → prep → load → action → follow_through → recover → reset → (next setup)
+
+## Multi-view confidence
+
+- Frontal/oblique: stack, knee valgus, shoulder height, scapular wing proxy.
+- Sagittal: forward head, hip hinge, lumbar arch, squat trunk fold.
+- Low confidence: truncated recover — downgrade recover/reset findings.
+
+## Cross-references
+
+- Findings/001_common_faults.txt
+- Quality/002_checkpoints.txt
+- Taxonomy/002_relations.txt

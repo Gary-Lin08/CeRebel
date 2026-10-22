@@ -1,0 +1,160 @@
+# General Human Motion — Feel Cues (by finding_id) — v2
+
+Coaching advice authority B unless noted. Pair with Docs/002_DISCLAIMER.
+Corpus pack id: human; product pack id: general.
+
+---
+
+cue_id: cue_crown_up
+finding_id: fault_forward_head
+text_en: "Crown up, chin gently back — eyes on the horizon."
+alt_en: "Slide head back on the shelf without lifting your nose."
+
+cue_id: cue_one_cylinder
+finding_id: fault_posture_stack_break
+text_en: "One tall cylinder — head, ribs, pelvis move together."
+alt_en: "Zip ribs to pelvis before you add speed."
+
+cue_id: cue_soft_ribs
+finding_id: fault_ribcage_flare_anterior
+text_en: "Soft ribs down on the exhale."
+alt_en: "Knit ribs without rounding shoulders."
+
+cue_id: cue_level_belt_human
+finding_id: fault_pelvis_anterior_tilt_excess
+text_en: "Level your belt — find neutral pelvis."
+alt_en: "Tiny posterior tuck if you feel arched."
+
+cue_id: cue_tray_hips
+finding_id: fault_lateral_pelvis_drop
+text_en: "Level hips like balancing a tray."
+alt_en: "Press through stance foot to lift pelvis."
+
+cue_id: cue_knees_over_toes
+finding_id: fault_knee_valgus_visible
+text_en: "Knees track over toes — push floor apart."
+alt_en: "Show kneecaps to the second toe."
+
+cue_id: cue_hips_back_hinge
+finding_id: fault_stiff_spine_no_hip_hinge
+text_en: "Hips back, spine long — hinge, don't collapse."
+alt_en: "Butt to the wall behind you."
+
+cue_id: cue_tripod_tall
+finding_id: fault_single_leg_balance_wobble
+text_en: "Grow tall through the crown; quiet wobble."
+alt_en: "Tripod foot — big toe, little toe, heel."
+
+cue_id: cue_load_front
+finding_id: fault_insufficient_weight_shift
+text_en: "Load the front foot completely before you move."
+alt_en: "Commit — don't hang in the middle."
+
+cue_id: cue_panes_of_glass
+finding_id: fault_excessive_lateral_lean
+text_en: "Stay between two panes of glass."
+alt_en: "Center your ribs over both feet."
+
+cue_id: cue_melt_shoulders
+finding_id: fault_shoulder_height_asymmetry
+text_en: "Melt both shoulders toward the floor."
+alt_en: "Even collarbones — breathe wide."
+
+cue_id: cue_match_sides
+finding_id: fault_limb_rom_asymmetry
+text_en: "Match the other side — same height, same reach."
+alt_en: "Slow mirror check each rep."
+
+cue_id: cue_pause_bottom
+finding_id: fault_rushed_prep
+text_en: "Pause at the bottom — then go."
+alt_en: "Count 1-2-3 down, explode on 4."
+
+cue_id: cue_finish_tall
+finding_id: fault_incomplete_recover
+text_en: "Finish tall — breathe, then reset."
+alt_en: "Stick the landing — hold stack 2 seconds."
+
+cue_id: cue_ribs_pelvis_sync
+finding_id: fault_arms_fight_torso
+text_en: "Pelvis and ribs turn together, then whip the arm."
+alt_en: "Relax the free arm until trunk leads."
+
+cue_id: cue_blades_in_pockets
+finding_id: fault_rounded_shoulders
+text_en: "Open the chest gently — shoulder blades slide into back pockets."
+alt_en: "Broad collarbones without flaring ribs."
+
+cue_id: cue_long_reach_no_crank
+finding_id: fault_thoracic_extension_excess
+text_en: "Long tall spine — reach without cranking the upper back."
+alt_en: "Reach from the armpits, not by arching."
+
+cue_id: cue_sit_to_depth
+finding_id: fault_squat_depth_shallow
+text_en: "Sit the hips down and back to your target depth."
+alt_en: "Touch the box, then stand."
+
+cue_id: cue_feet_glued
+finding_id: fault_heels_rise_squat
+text_en: "Keep the whole foot glued — big toe, little toe, heel."
+alt_en: "Don't tip onto the toes."
+
+cue_id: cue_chest_proud_squat
+finding_id: fault_trunk_collapse_squat
+text_en: "Chest proud, hips sit back — don't fold like a lawn chair."
+alt_en: "Keep the shirt logo readable."
+
+cue_id: cue_reach_from_ribs
+finding_id: fault_reach_shoulder_hike
+text_en: "Reach long from the ribs — keep the shoulder away from the ear."
+alt_en: "Melt the trap, then reach."
+
+cue_id: cue_ribs_then_reach
+finding_id: fault_overhead_arch_lumbar
+text_en: "Ribs down, then reach — don't dump into the low back."
+alt_en: "Exhale, soft ribs, then arms up."
+
+cue_id: cue_walk_tall
+finding_id: fault_gait_trunk_lean
+text_en: "Walk tall between panes of glass — eyes on the horizon."
+alt_en: "Stack over each step."
+
+cue_id: cue_longer_steps
+finding_id: fault_gait_short_step
+text_en: "Let the legs swing a little longer — roll from heel to toe."
+alt_en: "Quiet longer steps, not a shuffle."
+
+cue_id: cue_hips_centered
+finding_id: fault_hip_shift_lateral_squat
+text_en: "Sit between your feet — hips stay centered over the base."
+alt_en: "Don't slide to one knee."
+
+cue_id: cue_hips_first_hinge
+finding_id: fault_knee_dominant_hinge
+text_en: "Push the hips back first — shins quieter, butt toward the wall."
+alt_en: "Hinge is a bow, not a squat."
+
+cue_id: cue_glue_blade
+finding_id: fault_scapular_wing_proxy
+text_en: "Glue the shoulder blade flat — reach long without popping the blade."
+alt_en: "Press the blade into the rib cage."
+
+cue_id: cue_widen_rails
+finding_id: fault_base_of_support_narrow
+text_en: "Widen to hip-width rails under each hip."
+alt_en: "Give each foot its own lane."
+
+---
+
+## Generic instant brief
+
+When no finding_id fires:
+Primary: "Watch head–rib–pelvis stack and whether arms fight the torso."
+Alternate: "Does weight shift cleanly before the fast part?"
+
+## Cue delivery
+
+- One cue at a time in automated briefs.
+- Prefer external focus for beginners.
+- Pair load-related cues with pain stop rule from Docs/002.

@@ -6,6 +6,7 @@ the labeled traces; the same payload is what the model is allowed to cite.
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -38,6 +39,27 @@ def build_sport_analysis(
     if hand == "auto":
         hand = "right"
     lead, trail = ("left", "right") if hand == "right" else ("right", "left")
+
+    # Do not invent a pitch board on a golf capture (product trust).
+    if key == "baseball":
+        try:
+            from motion_agent.app.product_session import session_looks_like_golf
+            from motion_agent.storage.motion_store import default_data_dir
+
+            data_dir = default_data_dir()
+            session_dir = Path(data_dir) / "sessions" / str(seq.video_id)
+            if session_dir.is_dir():
+                is_golf, conf, _ = session_looks_like_golf(
+                    session_dir, video_id=seq.video_id, data_dir=Path(data_dir)
+                )
+                if is_golf:
+                    return tool_error(
+                        "SPORT_MISMATCH",
+                        "This capture looks like a golf swing, not a baseball pitch "
+                        f"(confidence {conf:.2f}).",
+                    )
+        except Exception:
+            pass
 
     if key == "golf":
         window, phases, impact_time, phase_note = _golf_window(
@@ -89,6 +111,12 @@ def build_sport_analysis(
     findings, highlights = _compose_report(
         key, built, phases, impact_time, lead, trail
     )
+    try:
+        from motion_agent.knowledge.fault_index import enrich_findings
+
+        findings = enrich_findings(key, findings)
+    except Exception:
+        pass
 
     return {
         "error": False,
@@ -547,10 +575,15 @@ def _finding(
     group: dict[str, str] | None = None,
     goal: dict[str, Any] | None = None,
     strength: bool = False,
+    headline: str | None = None,
+    plain: str | None = None,
+    severity: float = 0.0,
 ) -> dict[str, Any]:
     return {
         "id": fid,
         "title": title,
+        "headline": headline or title,
+        "plain": plain or detail,
         "detail": detail,
         "series": series,
         "start_time": round(start, 4),
@@ -564,6 +597,7 @@ def _finding(
         "group": group,
         "goal": goal,
         "strength": strength,
+        "severity": float(severity),
         "focus": None,
     }
 
@@ -615,6 +649,12 @@ def _golf_report(
             findings.append(_finding(
                 fid="trail-knee",
                 title="Trail knee straightens",
+                headline="Your back knee locks too early",
+                plain=(
+                    f"On the way to the top, your back ({trail_name.lower()}) knee straightens "
+                    f"instead of staying soft ({a[1]:.0f}° → {b[1]:.0f}°). "
+                    "That stands you up and steals hip turn."
+                ),
                 detail=(
                     f"{trail_name}-knee flexion drops from about {a[1]:.0f}° to {b[1]:.0f}° "
                     "in the backswing, limiting hip turn."
@@ -623,12 +663,13 @@ def _golf_report(
                 start=address[1],
                 end=top[1],
                 metric_value=f"{a[1]:.0f}° → {b[1]:.0f}°",
-                caption="trail knee flex, address to top",
-                why="A trail knee that straightens early stands the pelvis up and shortens the turn into the ball.",
-                cue="Keep the trail knee soft. Feel it stay bent as the club reaches the top.",
+                caption="back-knee bend, address → top",
+                why="When the back knee locks, the hips stop turning and the arms have to invent the swing.",
+                cue="Keep a soft back knee to the top — like sitting slightly into that hip.",
                 drill="Feet-together backswings. Make ten slow backswings keeping the trail knee flexed, then one full swing.",
                 check=f"Trail knee flex at the top stays near {a[1]:.0f}° instead of falling to {b[1]:.0f}°.",
                 accent="#c4a6ff",
+                severity=40 + min(drop, 30),
                 group={
                     "id": "hip-rotators",
                     "label": f"{trail_name} piriformis · glute medius",
@@ -649,6 +690,12 @@ def _golf_report(
             findings.append(_finding(
                 fid="lead-arm",
                 title="Lead arm bends",
+                headline="Your front arm collapses at the top",
+                plain=(
+                    f"At the top of the backswing your front ({lead_name.lower()}) arm bends a lot "
+                    f"(about {e1[1]:.0f}°, vs ~{e0[1]:.0f}° at address). "
+                    "That shortens the swing arc, so the club has less room to build speed."
+                ),
                 detail=(
                     f"{lead_name}-elbow flexion reaches about {e1[1]:.0f}° at the top, "
                     f"from {e0[1]:.0f}° at address, shortening the arc."
@@ -657,12 +704,13 @@ def _golf_report(
                 start=top[0],
                 end=max(top[1], top[0] + 0.04),
                 metric_value=f"{e1[1]:.0f}°",
-                caption="lead elbow flex at the top",
+                caption="front-arm bend at the top",
                 why="A bent lead arm narrows the swing radius, so the clubhead has less time to build speed.",
-                cue="Reach the lead arm long. Feel the lead shoulder stay connected to the chest.",
+                cue="At the top, keep the front arm long — stretch it away from your head, not chicken-winged in.",
                 drill="Pump drill. Pause at the top with the lead arm extended, pump down halfway twice, then swing through. Eight reps.",
                 check=f"Lead elbow flex at the top stays under {max(e0[1] + 10, 30):.0f}° instead of {e1[1]:.0f}°.",
                 accent="#8fd0ff",
+                severity=35 + min(max(e1[1] - 30, 0), 40),
                 goal={"value": round(e0[1], 1), "label": "address flex"},
             ))
         else:
@@ -677,6 +725,12 @@ def _golf_report(
             findings.append(_finding(
                 fid="separation",
                 title="Hips and shoulders turn together",
+                headline="Hips and chest are turning as one block",
+                plain=(
+                    f"At the top there’s almost no twist between your hips and chest "
+                    f"(only about {abs(s1[1]):.0f}° of separation). "
+                    "Without that stretch, the arms have to create all the speed."
+                ),
                 detail=(
                     f"At the top, hip–shoulder separation is only about {s1[1]:.0f}° "
                     "from address."
@@ -685,12 +739,13 @@ def _golf_report(
                 start=top[0],
                 end=max(top[1], top[0] + 0.04),
                 metric_value=f"{s1[1]:.0f}°",
-                caption="hip–shoulder separation at the top",
+                caption="hip–shoulder twist at the top",
                 why="The stretch between a turned pelvis and a closed chest is what stores the downswing. With little of it, the arms have to make the speed.",
-                cue="Let the belt buckle turn while the chest still faces the side.",
+                cue="Turn the belt buckle first; keep the chest facing the side a beat longer.",
                 drill="Hip-lead half swings. Start the pelvis, hold the shoulders for one beat, then swing. Ten reps.",
                 check=f"Separation at the top grows past {abs(s1[1]):.0f}°.",
                 accent="#ffb84d",
+                severity=45 + max(0, 20 - abs(s1[1])),
             ))
         else:
             highlights.append(
@@ -701,23 +756,31 @@ def _golf_report(
     d0 = _at(drift, impact_t)
     d1 = _at(drift, min(t1, impact_t + 0.28))
     if drift and d0 and d1 and (d1[1] - d0[1]) >= 3.5:
+        drift_cm = d1[1] - d0[1]
         findings.append(_finding(
             fid="early-extension",
             title="Early extension",
+            headline="You're standing up through the ball",
+            plain=(
+                f"Right after impact your hips thrust toward the ball "
+                f"(about {drift_cm:.0f} cm of pelvis drift). "
+                "That pops you out of posture and sends the club up and out instead of through the shot."
+            ),
             detail=(
-                f"The pelvis moves about {d1[1] - d0[1]:.0f} cm farther from address "
+                f"The pelvis moves about {drift_cm:.0f} cm farther from address "
                 "between impact and the follow-through, losing spine angle."
             ),
             series="pelvis-drift",
             start=impact_t,
             end=min(t1, follow[1]),
-            metric_value=f"{d1[1] - d0[1]:.0f} cm",
-            caption="pelvis drift after impact",
+            metric_value=f"{drift_cm:.0f} cm",
+            caption="hips drifting toward the ball after impact",
             why="Standing up through impact sends the club out and up instead of down the target line.",
-            cue="Stay in the posture you had at address. Feel the trail hip stay back as the arms pass.",
+            cue="Through the ball, keep the same spine tilt you had at address — trail hip stays back.",
             drill="Chair drill. Set a chair just behind the hips and make ten swings without touching it.",
-            check=f"Pelvis drift from impact to follow stays near {d0[1]:.0f} cm instead of adding {d1[1] - d0[1]:.0f} cm.",
+            check=f"Pelvis drift from impact to follow stays near {d0[1]:.0f} cm instead of adding {drift_cm:.0f} cm.",
             accent="#ff8fbf",
+            severity=55 + min(drift_cm * 2.5, 35),
             group={
                 "id": "hip-extensors",
                 "label": "Glute max · hamstrings",
@@ -736,6 +799,8 @@ def _golf_report(
 
     if len(findings) < 2:
         findings.extend(_fallback_readings(traces, t0, t1, lead, trail, accents=("#c4a6ff", "#8fd0ff", "#ffb84d")))
+    # Biggest fix first — not whatever rule fired first in code order.
+    findings.sort(key=lambda note: float(note.get("severity") or 0.0), reverse=True)
     return _stamp_focus(findings[:4], lead, trail), highlights[:4]
 
 

@@ -1,0 +1,150 @@
+# Snowboarding Sport Pack — Build Report
+# Build agent: content pass
+# Generated: 2026-10-21
+# Spec: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+SUMMARY
+================================================================================
+
+Status: CONTENT BUILD COMPLETE (requested directories)
+Sport ID: snowboarding
+Product: CeRebel body-first coaching + RAG peer to fis/ and snowboard_*.txt vocab files
+Language: English (primary RAG)
+Indexing: all paths below except this file and _meta/ per ingest policy
+
+Files written this build (build agent): 11 content files + this report
+Parallel corpus (_meta brain/search/review, Schema, Taxonomy): present in tree — see VALIDATION
+Finding cards: 20 (fault_* slugs in Findings/001)
+Coaching cues: 20 fault-linked + 3 global cues
+Drills: 18 fault-linked + 2 clinic blocks
+Checkpoints: 22 catalog entries in Quality/002
+Phase families: alpine_turn (7 phases), air_jump (6 phases)
+
+================================================================================
+FILES WRITTEN
+================================================================================
+
+Docs/
+  001_ARCHITECTURE.txt       — pack purpose, pipeline integration, RAG guidance
+  002_DISCLAIMER.txt         — medical/safety/tracking limitations
+
+Phases/
+  001_phase_model.txt        — events, phase tables, detector map, capture angles
+
+Quality/
+  001_quality_definition.txt — quality dimensions, youth/adult, capture gates
+  002_checkpoints.txt        — checkpoint catalog with fail→finding links
+
+Findings/
+  001_common_faults.txt      — full finding cards (id, signal, cue, drill, sources)
+
+Coaching/
+  001_cues.txt               — feel cues indexed by fault_*
+  002_drills.txt             — on-snow and dryland drills 30–90 s
+
+Biomechanics/
+  001_overview.txt           — open-literature mechanics summary (B+ framed)
+
+Training/
+  001_team_practice.txt      — session templates, progressions, clinic rotation
+
+_meta/
+  build_report.txt           — this file
+  pack_readme.txt            — updated status (content build 2026-10-21)
+
+================================================================================
+OTHER PACK FILES (not authored in this build pass)
+================================================================================
+
+Schema/001_ontology.txt          — present (brain agent)
+Taxonomy/001_concepts.txt        — present (brain agent)
+Taxonomy/002_relations.txt       — present (brain agent)
+_meta/SOURCE_MANIFEST.txt         — present (search agent)
+_meta/brain_plan.txt              — present (brain agent)
+_meta/research_notes.txt          — present (search agent)
+_meta/review_report.txt           — present (review agent)
+
+This build pass focused on Docs, Phases, Quality, Findings, Coaching, Biomechanics,
+Training, and build_report per product content contract.
+
+================================================================================
+CROSS-CORPUS DEPENDENCIES
+================================================================================
+
+- knowledge/corpus/fis/ — rules, judging, SBX guidelines (A+ RAG)
+- knowledge/corpus/snowboard_aerial_vocab.txt
+- knowledge/corpus/snowboard_flip_conventions.txt
+- motion_agent/llm/prompts.py — SNOWBOARD_SYSTEM_PROMPT, source globs
+
+================================================================================
+RAG CHUNKING NOTES (for ingest)
+================================================================================
+
+Suggested metadata tags:
+  sport=snowboarding
+  authority_level=B|B+ (per section headers)
+  family=alpine_turn|air_jump
+  finding_id=fault_* where applicable
+
+Stable IDs (do not rename without migration):
+  Phase IDs: traverse, anticipation, initiation, steering, apex, transition, completion;
+             approach, preload, takeoff, flight, landing, recover
+  Finding prefix: fault_
+
+Exclude from coaching index:
+  _meta/build_report.txt (ops)
+
+================================================================================
+VALIDATION CHECKLIST
+================================================================================
+
+[x] Disclaimer present in Docs/002
+[x] Phase model 5–8 phases per family (7 alpine, 6 air)
+[x] Each major fault has cue + drill cross-links
+[x] Youth/adult called out in Quality and Training
+[x] No fabricated degree norms as medical prescription
+[x] Flip/aerial measurement defers to snowboard_flip_conventions.txt
+[x] Review report file on disk (_meta/review_report.txt)
+[x] SOURCE_MANIFEST on disk
+[x] Schema/Taxonomy on disk
+[ ] Ingest chunk counts after index rebuild — pending ops
+
+================================================================================
+LINE COUNT ESTIMATE (approximate)
+================================================================================
+
+Docs:              ~280 lines
+Phases:            ~175 lines
+Quality:           ~230 lines
+Findings:          ~340 lines
+Coaching:          ~320 lines
+Biomechanics:      ~175 lines
+Training:          ~200 lines
+Total content:     ~1,720 lines English prose + structured fields
+
+gap_fill_verified: 2026-10-21 — Coaching/002, Biomechanics/001, Training/001, build_report present; helmet/fall safety in Docs/002; passes check_pack_completeness.py
+
+End of build report.
+
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+build_agent: corpus_v2_consistency_upgrade
+sports_batch: basketball, boxing, snowboarding, weightlifting, swimming, yoga
+
+Actions:
+- Migrated Findings/001_common_faults.txt to canonical `---` + finding_id: fault_* cards
+  with headline_en, phases, body_signal, why_it_matters, feel_cue, drill, severity_default, sources
+- Findings count now: 28
+- Ensured Coaching cues/drills cite fault_* (cues≈29, drills≈30)
+- Confirmed Taxonomy/002_relations.txt rows ≥15 (count≈17)
+- Added Phases V2 PHASE LINK INDEX with detector_events + fault_links
+- Rewrote _meta/review_report.txt (stale missing-DISCLAIMER claims corrected)
+- Appended this build_report section
+
+Sport-specific notes:
+- Alpine + park body cues; helmet/wrist framing preserved; +8 findings to 28.
+build_status: v2_upgrade_complete
+VERDICT_REF: APPROVED_V2

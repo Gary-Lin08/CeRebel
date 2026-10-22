@@ -1,0 +1,108 @@
+# Golf Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel golf content summarizes **open-access biomechanics reviews, public coaching articles, and governing-body rules
+where indexed separately**. It is **not** a substitute for licensed medical care, physical therapy, or individualized
+return-to-play protocols after back, hip, knee, elbow, or wrist injury related to golf.
+
+- Acute pain, numbness, locking, swelling, or pain that worsens with rotation or weight shift require evaluation by a
+  qualified clinician — do not use an app finding to justify continuing high-volume full swings.
+- Long-form biomechanics extracts in this corpus discuss injury epidemiology and spinal loading in research populations;
+  those statistics **do not** diagnose your condition or prescribe load limits.
+- Youth and junior golfers differ in bone maturity, coordination, and weekly tolerance; follow your national governing
+  body (NGB), school athletic staff, and club professional for training volume and equipment fitting.
+
+## Not a substitute for qualified coaching
+
+Automated briefs support athletes and coaches who already have technical supervision. They do not replace in-person
+instruction for grip, setup, course management, or rules decisions. Rules and handicap material in this pack is reference
+only — verify current R&A / USGA publications before competition.
+
+## Body-first product scope (no launch monitor required)
+
+This Sport Pack is designed for **body motion** analysis from video (pose / OpenSim-style reconstruction):
+
+- **Impact window** in product copy means an **impact_proxy** aligned to peak lead-hand speed toward the target (or a
+  documented fallback), not verified club–ball contact.
+- Findings and checkpoints do **not** require ball flight, clubhead speed, face angle, attack angle, or path tracks.
+- When those metrics appear in glossary or research summaries, they are **context only**, not user-facing pass/fail targets
+  unless externally measured and explicitly tagged.
+
+## Monocular and estimated kinetics limitations
+
+Single-camera 2D pose and depth-from-video pipelines can mis-estimate:
+
+- Pelvis and thorax rotation when the camera is oblique to the target line (down-the-line preferred for turn fidelity).
+- Spine flexion (“posture”) when clothing is loose or the athlete wears a cap that occludes the neck.
+- Lateral sway and weight shift when scale or floor plane is uncertain.
+- **Estimated ground reaction force (GRF)** and centre-of-pressure (CoP) trends derived from motion — these are **not**
+  force-plate measurements. Literature magnitudes (Newtons, multiples of body weight) must not be shown as personal targets
+  without validated sensors.
+
+Findings describe **visible tendencies** with confidence downgrades when joints are occluded, frame rate is low, or the
+clip is heavily cropped.
+
+## Biomechanical “norms” and population bands
+
+Published studies report **group averages and ranges** with heterogeneous methods (especially X-factor and kinematic
+sequence definitions). Stature, mobility, age, sex, and swing style all change appearance. This pack avoids presenting
+arbitrary degree targets as universal medical rules.
+
+- **Adult** cohort statistics from systematic reviews must not be applied to **youth** coaching copy.
+- Youth sections emphasize balance, rotation quality, and NGB-appropriate volume — not maximizing ground force or clubhead
+  speed language copied from elite male driver studies.
+
+See Biomechanics/001_overview.txt for evidence-banded summaries; full open-access review text remains in
+Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt and
+Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt (CC BY 4.0 — attribution preserved in ingest).
+
+## Ground interaction and power cues
+
+Coaching text may describe qualitative weight shift, hip bump, and “use the ground” timing. Effective force use in research
+is often about **timing and coordination**, not raw magnitude alone. Do not promise distance gains, handicap improvement,
+ or injury prevention from a single drill or one analyzed swing.
+
+## Outdoor play, footwear, and surface
+
+Range mats, wet grass, slope, and spike type change traction and perceived ground interaction. The product cannot see
+footwear or lie quality. Coaches should manage cumulative full-swing volume on hard mats especially for juniors and
+players with prior lower-back or hip discomfort.
+
+## Heat, hydration, and fatigue
+
+Dehydration and end-of-session fatigue alter balance and rotation timing. One analyzed clip may not represent typical form
+for that athlete on that day.
+
+## Rules, equipment, and licensing
+
+Verbatim rules, handicap, and equipment list extracts are official publications. Commercial redistribution may require
+separate rights review — see _meta/SOURCE_MANIFEST.txt. Live rules hubs supersede frozen PDF text for adjudication.
+
+## Emergency
+
+For acute injury on the range or course, follow venue emergency procedures and seek immediate medical attention when needed.
+
+## Product behavior
+
+- Golf pack features may be gated until detector validation completes — absence of a flagged finding is not proof of safe
+  mechanics.
+- The system may refuse to analyze clips that appear to be another sport when another pack detector is confident elsewhere.
+
+## Authority and updates
+
+When `_meta/SOURCE_MANIFEST.txt` is present, it lists sources with authority levels (A+ rules, B+ peer-reviewed summaries,
+B public coaching). Coaching curricula change; retrieval dates matter. When in doubt, cite the live official source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Coaching tips from body motion analysis — not medical advice. Stop if you feel pain. Follow your coach and junior load
+guidelines.”
+
+## Cross-references
+
+- Docs/001_ARCHITECTURE.txt — corpus layers and evidence types
+- Biomechanics/001_overview.txt — evidence-banded kinematics and GRF themes (summary only)
+- Coaching/001_cues.txt, Findings/001_common_faults.txt — footers should link to this file
+- Training/001_team_practice.txt — junior volume and filming guidance
+- _meta/brain_plan.txt — product constraints (impact_proxy, youth/adult separation)

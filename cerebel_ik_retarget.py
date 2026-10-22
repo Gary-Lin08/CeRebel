@@ -249,6 +249,181 @@ def unwrap_coordinates(frames: list[dict], names: Iterable[str]) -> None:
             coords[name] = round(float(values[t]), 8)
 
 
+def _quat_angle(q0: np.ndarray, q1: np.ndarray) -> float:
+    """Geodesic angle between xyzw quaternions (hemisphere-aware), radians."""
+    a = np.asarray(q0, dtype=np.float64)
+    b = np.asarray(q1, dtype=np.float64)
+    na = float(np.linalg.norm(a))
+    nb = float(np.linalg.norm(b))
+    if na < 1e-10 or nb < 1e-10:
+        return 0.0
+    a = a / na
+    b = b / nb
+    if float(np.dot(a, b)) < 0.0:
+        b = -b
+    # relative rotation angle from quaternion dot product
+    dot = float(np.clip(np.abs(np.dot(a, b)), 0.0, 1.0))
+    return float(2.0 * math.acos(dot))
+
+
+def _closest_euler_zxy(q_xyzw: np.ndarray, reference: np.ndarray) -> np.ndarray:
+    """OpenSim pelvis convention R = Rz(tilt)·Rx(list)·Ry(rot) → scipy intrinsic ZXY."""
+    try:
+        from scipy.spatial.transform import Rotation as Rot
+    except ImportError as exc:  # pragma: no cover
+        raise RuntimeError("scipy is required for pelvis orientation repair") from exc
+
+    euler = np.asarray(Rot.from_quat(q_xyzw).as_euler("ZXY"), dtype=np.float64)
+    ref = np.asarray(reference, dtype=np.float64)
+    out = euler.copy()
+    for axis in range(3):
+        candidates = out[axis] + np.array([-2, -1, 0, 1, 2], dtype=np.float64) * (2.0 * math.pi)
+        out[axis] = float(candidates[int(np.argmin(np.abs(candidates - ref[axis])))])
+    return out
+
+
+def _soma_pelvis_rotations(pose3d: dict | None, n_frames: int):
+    """Build per-frame pelvis orientations from pose3d hip/shoulder landmarks."""
+    if not pose3d:
+        return None
+    try:
+        from scipy.spatial.transform import Rotation as Rot
+    except ImportError:
+        return None
+    frames = pose3d.get("frames") or []
+    if len(frames) < n_frames:
+        return None
+    out = []
+    for i in range(n_frames):
+        world = np.asarray(frames[i].get("world") or [], dtype=np.float64)
+        if world.ndim != 2 or world.shape[0] < 25:
+            return None
+        right = world[24] - world[23]
+        rn = float(np.linalg.norm(right))
+        right = np.array([0.0, 0.0, 1.0]) if rn < 1e-6 else right / rn
+        up = 0.5 * (world[11] + world[12]) - 0.5 * (world[23] + world[24])
+        un = float(np.linalg.norm(up))
+        up = np.array([0.0, 1.0, 0.0]) if un < 1e-6 else up / un
+        fwd = np.cross(up, right)
+        fn = float(np.linalg.norm(fwd))
+        fwd = np.array([1.0, 0.0, 0.0]) if fn < 1e-6 else fwd / fn
+        up = np.cross(right, fwd)
+        up = up / max(float(np.linalg.norm(up)), 1e-12)
+        mat = np.column_stack([fwd, up, right])
+        if float(np.linalg.det(mat)) < 0.0:
+            right = -right
+            mat = np.column_stack([fwd, up, right])
+        out.append(Rot.from_matrix(mat))
+    for i in range(1, len(out)):
+        if float(np.dot(out[i].as_quat(), out[i - 1].as_quat())) < 0.0:
+            out[i] = Rot.from_quat(-out[i].as_quat())
+    return out
+
+
+def repair_pelvis_orientation_jumps(
+    frames: list[dict],
+    *,
+    max_step_rad: float = 0.5,
+    pose3d: dict | None = None,
+) -> dict:
+    """Remove abrupt mid-sagittal pelvis flips from OpenSim IK Euler singularities.
+
+    Rajagopal ``ground_pelvis`` uses ZXY Euler angles (tilt/list/rotation). Near
+    gimbal configurations IK can jump into an inverted basin (~1 rad in one frame)
+    while the rest of the body (head/feet) stays upright — other joints absorb the
+    discontinuity. ``np.unwrap`` cannot fix that because the pelvis quaternion
+    itself jumps.
+
+    Strategy:
+    1. When the pelvis step exceeds ``max_step_rad``, enter guided mode.
+    2. While guided, replace **only** the pelvis orientation (quaternion + Euler
+       coordinates) with a SOMA-aligned continuous series (or a fixed correction
+       of the IK pelvis quat when SOMA is unavailable).
+    3. Do **not** rotate other bodies/muscles. The IK already placed them for the
+       post-jump basin; left-multiplying a world correction about the pelvis folds
+       the whole skeleton downward.
+    """
+    if not frames or "pelvis" not in (frames[0].get("bodies") or {}):
+        return {"repaired_jumps": 0, "max_step_rad": max_step_rad}
+
+    try:
+        from scipy.spatial.transform import Rotation as Rot
+    except ImportError:
+        return {"repaired_jumps": 0, "error": "scipy missing", "max_step_rad": max_step_rad}
+
+    n = len(frames)
+    ik_rots = []
+    for frame in frames:
+        q = np.asarray(frame["bodies"]["pelvis"]["q"], dtype=np.float64)
+        q = q / max(float(np.linalg.norm(q)), 1e-8)
+        ik_rots.append(Rot.from_quat(q))
+
+    for i in range(1, n):
+        if float(np.dot(ik_rots[i].as_quat(), ik_rots[i - 1].as_quat())) < 0.0:
+            ik_rots[i] = Rot.from_quat(-ik_rots[i].as_quat())
+
+    soma_rots = _soma_pelvis_rotations(pose3d, n)
+    repaired = 0
+    guided = False
+    r_align = None  # maps SOMA pelvis → continuous output basin
+    r_corr = Rot.identity()  # fallback when SOMA unavailable
+    out_rots: list = []
+    prev_euler = None
+
+    for i in range(n):
+        if i == 0:
+            candidate = ik_rots[i]
+        elif guided and r_align is not None and soma_rots is not None:
+            candidate = r_align * soma_rots[i]
+        elif guided:
+            candidate = r_corr * ik_rots[i]
+        else:
+            candidate = ik_rots[i]
+
+        if i > 0 and not guided:
+            step = float((out_rots[i - 1].inv() * candidate).magnitude())
+            if step > float(max_step_rad):
+                repaired += 1
+                guided = True
+                if soma_rots is not None:
+                    # Anchor so the first guided frame continues from the last good pose.
+                    r_align = out_rots[i - 1] * soma_rots[i - 1].inv()
+                    candidate = r_align * soma_rots[i]
+                else:
+                    r_corr = out_rots[i - 1] * ik_rots[i].inv()
+                    candidate = r_corr * ik_rots[i]
+
+        # Leave guided mode only when raw IK re-enters the guided basin.
+        if guided and i > 0 and float((candidate.inv() * ik_rots[i]).magnitude()) < 0.3:
+            guided = False
+            r_align = None
+            r_corr = Rot.identity()
+            candidate = ik_rots[i]
+
+        out_rots.append(candidate)
+
+        q_out = candidate.as_quat()
+        q_out = q_out / max(float(np.linalg.norm(q_out)), 1e-8)
+        if prev_euler is None:
+            prev_euler = np.asarray(Rot.from_quat(q_out).as_euler("ZXY"), dtype=np.float64)
+        else:
+            prev_euler = _closest_euler_zxy(q_out, prev_euler)
+
+        coords = frames[i].setdefault("coordinates", {})
+        coords["pelvis_tilt"] = round(float(prev_euler[0]), 8)
+        coords["pelvis_list"] = round(float(prev_euler[1]), 8)
+        coords["pelvis_rotation"] = round(float(prev_euler[2]), 8)
+
+        # Pelvis orientation only — never move other bodies/muscles.
+        frames[i]["bodies"]["pelvis"]["q"] = [round(float(v), 8) for v in q_out]
+
+    return {
+        "repaired_jumps": repaired,
+        "max_step_rad": float(max_step_rad),
+        "used_soma_guide": bool(soma_rots is not None),
+    }
+
+
 def soma_yup_to_opensim(points: np.ndarray) -> np.ndarray:
     """Map SOMA77-normalized joints to OpenSim ground (+Y up, +X forward, +Z right).
 

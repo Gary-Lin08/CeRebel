@@ -1,0 +1,267 @@
+# Tennis Sport Pack — Feel cues (body-first)
+
+Cues pair to finding IDs in Findings/001_common_faults.txt. Language is athlete-facing; no ball required for practice.
+
+---
+
+## cue_fault_serve_knee_lock
+**finding_id:** fault_serve_knee_lock
+**phases:** S_TROPHY_LOAD, S_DRIVE_UP
+**feel:** Ground feels heavy under both feet — push the floor away before the racket goes up.
+**coach_note:** Look for knee angle change side view; youth use smaller squat amplitude.
+**authority:** B
+
+## cue_fault_serve_toss_arm_drift
+**finding_id:** fault_serve_toss_arm_drift
+**phases:** S_TOSS_RISE, S_TROPHY_LOAD
+**feel:** Non-racket arm travels on a narrow vertical track in front of your chest.
+**coach_note:** Drift is wrist lateral offset, not toss accuracy.
+**authority:** B
+
+## cue_fault_serve_shoulder_tilt_flat
+**finding_id:** fault_serve_shoulder_tilt_flat
+**phases:** S_TROPHY_LOAD
+**feel:** Racket-side shoulder climbs like you’re reaching for a shelf above your head — lead shoulder stays lower.
+**coach_note:** Avoid cueing extreme shrug; elevation with elbow bent is enough for most juniors.
+**authority:** B
+
+## cue_fault_serve_elbow_low
+**finding_id:** fault_serve_elbow_low
+**phases:** S_TROPHY_LOAD, S_RACKET_DROP
+**feel:** Elbow up like a waiter’s tray before the racket drops behind the back.
+**coach_note:** Side view best; frontal foreshortening can hide elbow height.
+**authority:** B
+
+## cue_fault_serve_poor_leg_sync
+**finding_id:** fault_serve_poor_leg_sync
+**phases:** S_DRIVE_UP
+**feel:** Legs fire first — the racket rides the push up.
+**coach_note:** Adult sequencing cue; youth emphasize visible bend before upward swing.
+**authority:** B+
+
+## cue_fault_serve_excessive_arch
+**finding_id:** fault_serve_excessive_arch
+**phases:** S_DRIVE_UP
+**feel:** Ribs stay over hips while you reach up — grow tall instead of bending backward.
+**coach_note:** If athlete reports back pain, stop and refer to clinician per disclaimer.
+**authority:** B
+
+## cue_fault_serve_poor_decel
+**finding_id:** fault_serve_poor_decel
+**phases:** S_DECEL
+**feel:** After the hit, let the racket travel to the opposite hip pocket on a long exhale.
+**coach_note:** Emphasize smooth wrist speed decay on video review.
+**authority:** B
+
+## cue_fault_serve_landing_imbalance
+**finding_id:** fault_serve_landing_imbalance
+**phases:** S_DECEL
+**feel:** Soft front-foot stick into the court — then recover.
+**coach_note:** Flag lateral fall or stuck rear foot; not a medical landing diagnosis.
+**authority:** B
+
+## cue_fault_serve_rhythm_rush
+**finding_id:** fault_serve_rhythm_rush
+**legacy_id:** fault_double_fault_rhythm_rush
+**phases:** S_READY through S_CONTACT_PROXY
+**feel:** Three quiet counts: bounce, set, fire — no sprint from ready to hit.
+**coach_note:** Second-serve mental pressure often shows as rushed body; routine cue helps.
+**authority:** B
+
+## cue_fault_serve_short_finish_youth
+**finding_id:** fault_serve_short_finish_youth
+**phases:** S_DECEL
+**feel:** Finish long and soft to the opposite pocket — no slam-stop.
+**coach_note:** Youth volume-aware; stop on shoulder discomfort.
+**authority:** B
+
+## cue_fault_serve_abbreviated_drop
+**finding_id:** fault_serve_abbreviated_drop
+**phases:** S_RACKET_DROP
+**feel:** Light scratch behind the back before the throw up.
+**coach_note:** Some abbreviated serves are stylistic — compare to athlete baseline.
+**authority:** B
+
+## cue_fault_forehand_late_unit_turn
+**finding_id:** fault_forehand_late_unit_turn
+**phases:** G_UNIT_TURN
+**feel:** Complete the shoulder turn until the non-racket hand sees the side fence, then swing.
+**coach_note:** On fast incoming balls, shorten backswing instead of skipping turn.
+**authority:** B
+
+## cue_fault_forehand_all_arm
+**finding_id:** fault_forehand_all_arm
+**phases:** G_UNIT_TURN, G_FORWARD_SWING
+**feel:** Back points at the target longer — hand waits on the hip until the chest starts forward.
+**coach_note:** Pair with open-stance load cues when feet are already open.
+**authority:** B
+
+## cue_fault_forehand_flying_elbow
+**finding_id:** fault_forehand_flying_elbow
+**phases:** G_LOAD, G_FORWARD_SWING
+**feel:** Elbow soft in the pocket — extend through the hit, don’t lift early.
+**coach_note:** Towel-under-armpit drill for external feedback.
+**authority:** B
+
+## cue_fault_forehand_open_no_load
+**finding_id:** fault_forehand_open_no_load
+**phases:** G_LOAD
+**feel:** Wide base but soft knees — weight sinks into the outside leg before rotation.
+**coach_note:** Fix load not width first on hard courts.
+**authority:** B
+
+## cue_fault_forehand_over_rotate_finish
+**finding_id:** fault_forehand_over_rotate_finish
+**phases:** G_FOLLOW
+**feel:** Belt buckle to the side fence — stop the spin, then recover.
+**coach_note:** Distinguish from a healthy wrap with balanced feet.
+**authority:** B
+
+## cue_fault_forehand_upright_recovery
+**finding_id:** fault_forehand_upright_recovery
+**phases:** G_FOLLOW, G_RECOVERY
+**feel:** Finish with belt buckle still sideways; head stays level until the arm wraps.
+**coach_note:** One-second finish hold in practice builds habit.
+**authority:** B
+
+## cue_fault_backhand1_dropped_shoulder
+**finding_id:** fault_backhand1_dropped_shoulder
+**phases:** G_LOAD, G_FORWARD_SWING
+**feel:** Front shoulder stays high — chin near the front shoulder through contact.
+**coach_note:** Side camera preferred for shoulder height.
+**authority:** B
+
+## cue_fault_backhand1_reaching
+**finding_id:** fault_backhand1_reaching
+**phases:** G_FORWARD_SWING, G_CONTACT_PROXY
+**feel:** Rotate the chest past the path — don’t stab with a straight arm.
+**coach_note:** Closed-stance constraint drill forces rotation.
+**authority:** B
+
+## cue_fault_backhand1_late_prep
+**finding_id:** fault_backhand1_late_prep
+**phases:** G_UNIT_TURN
+**feel:** Racket tip to the back fence as you turn — early take-back.
+**coach_note:** Shorten swing on pace; don’t skip prep entirely.
+**authority:** B
+
+## cue_fault_backhand2_bottom_hand_only
+**finding_id:** fault_backhand2_bottom_hand_only
+**phases:** G_FORWARD_SWING
+**feel:** Top hand pushes the face through — both hands finish together.
+**coach_note:** Top-hand-only shadows then recombine hands.
+**authority:** B
+
+## cue_fault_backhand2_tight_shoulders_youth
+**finding_id:** fault_backhand2_tight_shoulders_youth
+**phases:** G_LOAD, G_UNIT_TURN
+**feel:** Turn so your back sees the side fence a little — stay soft in the shoulders.
+**coach_note:** No forced end-range stretch for juniors.
+**authority:** B
+
+## cue_fault_backhand_wide_stance_stuck
+**finding_id:** fault_backhand_wide_stance_stuck
+**phases:** G_LOAD
+**feel:** Wide is fine — bend and push the ground to start the swing.
+**coach_note:** Applies to 1H and 2H patterns.
+**authority:** B
+
+## cue_fault_groundstroke_all_arm
+**finding_id:** fault_groundstroke_all_arm
+**phases:** G_UNIT_TURN, G_FORWARD_SWING
+**feel:** Back points at the target longer — hand waits until the chest starts forward.
+**coach_note:** Shared FH/BH detector id; mirror stroke-specific cues.
+**authority:** B
+
+## cue_fault_groundstroke_late_unit_turn
+**finding_id:** fault_groundstroke_late_unit_turn
+**phases:** G_UNIT_TURN
+**feel:** Complete the turn to the fence before the hand goes forward.
+**coach_note:** Shared alias of late-prep pattern.
+**authority:** B
+
+## cue_fault_groundstroke_upright_recovery
+**finding_id:** fault_groundstroke_upright_recovery
+**phases:** G_FOLLOW, G_RECOVERY
+**feel:** Hold finish one second — then recover.
+**coach_note:** Shared FH/BH recovery id.
+**authority:** B
+
+## cue_fault_groundstroke_wide_stance_stuck
+**finding_id:** fault_groundstroke_wide_stance_stuck
+**phases:** G_LOAD
+**feel:** Wide feet, soft knees — sit outside, then rotate.
+**coach_note:** Shared load-fault id.
+**authority:** B
+
+## cue_fault_volley_arm_stab
+**finding_id:** fault_volley_arm_stab
+**phases:** V_FORWARD_BLOCK, V_CONTACT_PROXY
+**feel:** Chest behind the strings — short punch, not a swing.
+**coach_note:** Limit hand travel to ~15 cm in drill.
+**authority:** B
+
+## cue_fault_volley_feet_stuck
+**finding_id:** fault_volley_feet_stuck
+**phases:** V_SPLIT, V_FORWARD_BLOCK
+**feel:** Split, then step to the path — feet first, hands second.
+**coach_note:** Body-only; no ball needed for step-in habit.
+**authority:** B
+
+## cue_fault_split_step_late
+**finding_id:** fault_split_step_late
+**phases:** G_SPLIT, V_SPLIT
+**feel:** Light hop as the opponent swings — land soft, then move.
+**coach_note:** Clap-timed drills train timing without a ball.
+**authority:** B
+
+## cue_fault_recovery_slow_recenter
+**finding_id:** fault_recovery_slow_recenter
+**phases:** G_RECOVERY, V_RECOVERY
+**feel:** Finish, then beat your shadow back to the middle — small quick steps.
+**coach_note:** Use a center floor mark for objective recenter.
+**authority:** B
+
+## cue_fault_unit_turn_incomplete_open
+**finding_id:** fault_unit_turn_incomplete_open
+**phases:** G_UNIT_TURN, G_LOAD
+**feel:** Even open, turn your chest to the side fence first.
+**coach_note:** Distinct from open-no-load (which has turn but no knee flex).
+**authority:** B
+
+---
+
+## Global cues (no single fault)
+
+### cue_general_split_ready
+**phases:** G_SPLIT, V_SPLIT
+**feel:** Light hop lands on toes — feet live, knees soft, racket center.
+**authority:** B
+
+### cue_general_serve_routine
+**phases:** S_READY
+**feel:** Same bounce count and breath every time — body waits for your signal, not the scoreboard.
+**authority:** B
+
+### cue_general_decel_care
+**phases:** S_DECEL, G_FOLLOW
+**feel:** Long finish protects the shoulder — slow is strong on the way down.
+**authority:** B+ awareness / B coaching
+
+### cue_general_net_block
+**phases:** V_READY, V_FORWARD_BLOCK
+**feel:** Soft hands, firm body — meet the ball early in the court.
+**authority:** B
+
+---
+
+## Youth scaling (audience=youth)
+
+- Shorten verbal cues; use “sit, up, finish” for serve instead of three-beat adult routine.
+- Trophy elevation cues should not reference professional toss height; emphasize smooth arm paths.
+- Prefer fault_serve_short_finish_youth and fault_backhand2_tight_shoulders_youth over adult load depth cues.
+- Sources: USTA red ball / 10U frameworks (B); Tennis Australia Hot Shots (B).
+
+## Disclaimer pointer
+
+All cues are coaching suggestions, not medical treatment. See Docs/002_DISCLAIMER.txt.

@@ -1,0 +1,414 @@
+# Baseball Pitching — Common Faults (Finding Cards)
+
+Stable `fault_*` IDs align with `sport_analysis._baseball_report` where noted.
+Legacy kebab slugs retained via `legacy_id` for RAG search. Body-first; not medical diagnosis.
+See Docs/002_DISCLAIMER.txt. Youth pitch-count messaging is coaching/load awareness only.
+
+---
+
+finding_id: fault_back_leg_soft
+legacy_id: back-leg-soft
+headline_en: Back leg stays bent through stride into landing
+phases: stride, landing
+body_signal: Series back-knee (knee_angle_trail): flex still high at landing (e.g. >25°) with extension Δ <8° from stride start to landing.
+why_it_matters: Drive leg push may be incomplete before front foot lands; hip speed into trunk can be reduced in efficient sequencing models (B+).
+feel_cue: "Push the rubber away — back leg straightens before the front foot lands."
+drill: Rocker drill — landing position, rock back, drive and throw half effort ×10 (45–60s); see Coaching/002_drills.txt drill_rocker_drive_leg.
+severity_default: high
+sources: pmc_clinician_pitching_guide (A); code back-leg rule (B+)
+youth_note: Absolute knee angles differ by age; prefer extension delta vs adult lock targets.
+
+---
+
+finding_id: fault_separation_low
+legacy_id: separation-low
+headline_en: Hips and shoulders turn together at landing
+phases: landing
+body_signal: Series separation (lumbar_rotation proxy): |sep| < 25° at landing (conservative monocular threshold).
+why_it_matters: Reduced hip–shoulder separation window; trunk may not store elastic stretch before arm acceleration in lab descriptions (A/B+).
+feel_cue: "Belt buckle turns to the plate while the chest still faces the side."
+drill: Hip-lead throws — narrow stance, hips first, shoulders closed one beat, half-effort throw ×10 (drill_flat_ground_separation).
+severity_default: high
+sources: pmc_clinician_pitching_guide; fortenbaugh_pitching_biomech (A/B+)
+confidence_note: Separation is lumbar_rotation proxy — not lab marker hip-shoulder separation.
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_front_knee_collapse
+legacy_id: front-knee-collapse
+headline_en: Front knee gives after landing
+phases: landing, release
+body_signal: Series front-knee: flex increases ≥8° from landing to release_t.
+why_it_matters: Soft front-side block; energy may not transfer efficiently up the chain in coaching biomechanics summaries (B+).
+feel_cue: "Land and stop — front thigh catches you, then push back through the ground."
+drill: Stride-and-brace — land, hold knee still two counts, throw half effort ×10 (drill_braced_landing_holds).
+severity_default: high
+sources: pmc_clinician_pitching_guide (lead knee at FC ~45° cohort mean — not individual prescription) (B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_stride_short
+legacy_id: stride-short
+headline_en: Stride looks short relative to height band
+phases: stride, landing
+body_signal: Stride series / height ratio below band: adult <0.70, youth <0.55 (see Quality/002 checkpoints).
+why_it_matters: Less forward momentum and separation time; may correlate with upright arm-dominant patterns (B coaching).
+feel_cue: "Reach toward the catcher, not straight up."
+drill: drill_stride_line — 45–60s
+severity_default: medium
+sources: pmc_clinician_pitching_guide (~85% height cited in clinical guide summary); baseball_canada_pitching_mechanics (B+)
+youth_note: Youth band lower (0.55); do not apply adult 0.70–0.95 when age unknown — use relative language.
+
+---
+
+finding_id: fault_stride_long
+legacy_id: stride-long
+headline_en: Stride overreaches relative to height band
+phases: stride, landing
+body_signal: Stride / height ratio above band: adult >0.95, youth >0.85.
+why_it_matters: Landing instability and timing disruption in coaching observation (B).
+feel_cue: "Stride like you’re hopping a small puddle — quick and athletic."
+drill: drill_rocker_step_rhythm — 60s
+severity_default: medium
+sources: B+ cohort stride literature (summarized PMC9950989)
+youth_note: Youth upper band 0.85; soft-land focus over reach.
+
+---
+
+finding_id: fault_mer_insufficient
+legacy_id: mer-insufficient
+headline_en: Arm lay-back limited — short arm path into release
+phases: lift, release
+body_signal: Trail shoulder external rotation below age band (future series); qualitative “short arm path” in 2D side view.
+why_it_matters: MER varies by age; youth lower MER normal (pmc_youth_mechanics_sr). Do NOT use adult 170° as youth target.
+feel_cue: "Long smooth arm circle — no stop behind the hip."
+drill: drill_wall_drill_arm_path — 45s
+severity_default: medium
+sources: pmc_clinician_pitching_guide; pmc_youth_mechanics_sr (A adult norms, B+ youth)
+youth_note: Lower MER expected; cue smoothness not adult lay-back angles.
+
+---
+
+finding_id: fault_glove_flyout
+legacy_id: glove-flyout
+headline_en: Glove side pulls off early
+phases: stride, release
+body_signal: Lead wrist speed peak before trunk rotation peak (planned heuristic); glove arm leaves target line early on side view.
+why_it_matters: Early glove-side energy can pull trunk/head offline; command variability in coaching experience (B).
+feel_cue: "Glove points at target until front foot lands."
+drill: drill_glove_lead_target — 45s
+severity_default: medium
+sources: driveline_cueing_model (summarized); baseball_canada_pitching_mechanics (B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_head_pull
+legacy_id: head-pull
+headline_en: Head pulls to glove side at release
+phases: release, follow
+body_signal: Head lateral offset vs trunk before/at release (future series); visible chin leave target line in 2D.
+why_it_matters: Direction and timing compensation (B coaching).
+feel_cue: "Keep your head still enough to ‘smell’ the glove until the hand goes forward."
+drill: drill_glove_lead_target — 45s
+severity_default: low
+sources: baseball_canada_pitching_mechanics (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_pelvis_drift
+legacy_id: pelvis-drift
+headline_en: Hips drift toward the plate without rotation
+phases: stride, landing
+body_signal: Pelvis AP translation toward plate without lumbar_rotation increase (planned).
+why_it_matters: “Floating” toward plate vs rotating — separation-low may co-occur (B+ focus catalog).
+feel_cue: "Stay closed longer — rotate under, don’t float at the plate."
+drill: drill_flat_ground_separation — 60s
+severity_default: medium
+sources: driveline_assessment_programming (hip opening themes, summarized) (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_trunk_late_rotate
+legacy_id: trunk-late-rotate
+headline_en: Trunk opens late relative to arm acceleration
+phases: landing, release
+body_signal: Trunk rotation peak after throwing-hand speed peak (planned cp_trunk_sequence).
+why_it_matters: Reverse sequencing vs proximal-to-distal ideal in literature (A kinematic sequence).
+feel_cue: "Let the body turn first, hand fires last."
+drill: drill_one_knee_throws — timing feel only, 60s, submax
+severity_default: high
+sources: fortenbaugh_pitching_biomech; driveline_interpret_biomech_reports (A/B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_arm_path_wide
+legacy_id: arm-path-wide
+headline_en: Arm path loops wide of the body line
+phases: stride, release
+body_signal: Trail wrist lateral deviation from sagittal plane (heuristic / future).
+why_it_matters: Timing and consistency; not inherently “wrong” for all styles (B).
+feel_cue: "One smooth circle with the hand — no pause behind you."
+drill: drill_wall_drill_arm_path — 45s
+severity_default: low
+sources: pmc_arm_slot_hs_pro (slot variability) (B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_set_rush
+legacy_id: set-rush
+headline_en: Rushed setup — no pause before leg lift
+phases: set, lift
+body_signal: Early COM motion; set phase duration minimal vs athlete baseline.
+why_it_matters: Rhythm and balance before stride (B).
+feel_cue: "Lift the leg, pause one heartbeat, then deliver."
+drill: drill_rocker_step_rhythm — 60s
+severity_default: low
+sources: baseball_canada_pitching_mechanics (B)
+youth_note: Shorter pause OK for stretch delivery; avoid robotic full windup if game style differs.
+
+---
+
+finding_id: fault_sport_mismatch_golf
+legacy_id: sport-mismatch-golf
+headline_en: Capture resembles golf swing, not pitch
+phases: n/a
+body_signal: BaseballPack golf guard; pitch_likeness insufficient.
+why_it_matters: Consumer trust — refuse wrong-sport coaching.
+feel_cue: "n/a — recapture side-view pitch."
+drill: n/a — recapture only
+severity_default: high
+sources: ce_rebel_pitch_score; Schema baseball:SportMismatchGolf (ProductLogic)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_early_trunk_rotation
+headline_en: Trunk opens early — chest faces plate before front foot lands
+phases: stride, landing
+body_signal: Trunk/shoulder yaw toward plate rises before landing_event; separation window collapses early; often co-occurs with glove flyout.
+why_it_matters: Early opening reduces separation storage in sequencing models (A/B+); command and timing variability in coaching (B).
+feel_cue: "Show your numbers to the catcher until the front foot hits."
+drill: drill_flat_ground_separation — 60s; glove stays on target line.
+severity_default: high
+sources: pmc_clinician_pitching_guide; fortenbaugh_pitching_biomech (A/B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_closed_stride_landing
+headline_en: Lead foot lands closed — toes point toward third (RHP)
+phases: landing
+body_signal: Lead foot yaw closed relative to plate line on side/slight face-on; pelvis blocked from rotating; stride may look short AP.
+why_it_matters: Closed landing can block hip rotation and force arm compensation in coaching models (B).
+feel_cue: "Land the front foot pointing at the catcher — open the gate."
+drill: drill_stride_line with toe-target marks — 45s
+severity_default: medium
+sources: baseball_canada_pitching_mechanics (B); pmc_clinician_pitching_guide themes (B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_open_stride_landing
+headline_en: Lead foot lands open — toes flare toward first (RHP)
+phases: landing
+body_signal: Lead foot yaw excessively open toward first-base side; early pelvis open; may co-occur with early trunk rotation.
+why_it_matters: Excessively open landing can dump separation early (B coaching).
+feel_cue: "Land on a railroad track to home — don’t open the toes to the dugout."
+drill: drill_stride_line — 45–60s
+severity_default: medium
+sources: baseball_canada_pitching_mechanics (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_soft_drive_leg_balance
+headline_en: Soft drive-leg balance at leg lift
+phases: set, lift
+body_signal: Trail ankle/knee sway large during lift; COM drifts plate-side or toward first before stride; lift hold unstable vs baseline.
+why_it_matters: Unstable gather reduces rhythm into stride (B); often precedes set-rush or short stride.
+feel_cue: "Balance on a quiet post — lift, settle, then go."
+drill: drill_lift_balance_holds — 45s
+severity_default: medium
+sources: baseball_canada_pitching_mechanics (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_arm_drag_late
+headline_en: Arm drags late — hand trails after trunk has opened
+phases: landing, release
+body_signal: Trail wrist speed peak delayed after trunk rotation peak; elbow appears behind hip line late; “dragging” visual on side view.
+why_it_matters: Distal lag beyond efficient whip timing in sequencing summaries (A/B+); opposite extreme of early arm fire.
+feel_cue: "Hand stays up and connected — don’t leave the ball behind your hip forever."
+drill: drill_towel_drill_extension — 60s submax
+severity_default: medium
+sources: fortenbaugh_pitching_biomech; driveline_sequencing themes summarized (A/B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_arm_path_inverted_w
+headline_en: Inverted-W arm path — elbows spike before hands in cocking
+phases: lift, stride
+body_signal: Both elbows elevate while wrists lag low (qualitative side/slight rear view); trail elbow flares early before hand rise.
+why_it_matters: Coaching catalogs flag inverted-W as a timing/path pattern some programs monitor (B); not an injury diagnosis from video.
+feel_cue: "Hands lead the elbows up — soft elbows, long circle."
+drill: drill_wall_drill_arm_path slow-motion circles — 45s
+severity_default: medium
+sources: Open coaching path catalogs (B); pmc arm-slot variability context (B+)
+youth_note: Cue path smoothness; never imply tissue risk from this pattern alone.
+
+---
+
+finding_id: fault_glove_side_collapse
+headline_en: Glove arm collapses into the body too early
+phases: stride, landing, release
+body_signal: Lead elbow flexes sharply and glove pulls to midsection before landing; lead shoulder dumps; differs from stable target-point then tuck.
+why_it_matters: Early collapse can pull trunk offline similarly to glove flyout (B); timing cue for glove-side discipline.
+feel_cue: "Point the glove, then fold it to your chest as you turn — not before the foot lands."
+drill: drill_glove_lead_target — 45s
+severity_default: medium
+sources: baseball_canada_pitching_mechanics; driveline_cueing_model summarized (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_posture_lean_back
+headline_en: Posture leans back — chest faces sky into release
+phases: stride, landing, release
+body_signal: Trunk extension / head behind pelvis increases into release; trail shoulder may drop; “leaning away” from plate on side view.
+why_it_matters: Extreme lean-back can disrupt timing and direction in coaching observation (B); load framing only — not spinal diagnosis.
+feel_cue: "Stay stacked — head over belt buckle as you drive."
+drill: drill_stack_posture_holds — 45s walk-throughs
+severity_default: medium
+sources: pmc_clinician_pitching_guide posture themes (B+); Baseball Canada (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_posture_collapse_forward
+headline_en: Posture collapses forward — chest dives toward plate early
+phases: landing, release
+body_signal: Trunk flexion increases sharply at/before landing; head drops toward plate; may co-occur with front-knee collapse.
+why_it_matters: Early dive can dump energy and disrupt arm path timing (B coaching).
+feel_cue: "Stay tall through the front leg — chest follows the turn, doesn’t dive first."
+drill: drill_braced_landing_holds + tall-chest cue — 45s
+severity_default: medium
+sources: baseball_canada_pitching_mechanics (B); pmc_clinician_pitching_guide (B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_tempo_rush_delivery
+headline_en: Rushed delivery tempo — lift-to-release window collapses
+phases: lift, stride, landing
+body_signal: Lift+stride duration much shorter than athlete baseline; minimal gather; early COM rush into landing.
+why_it_matters: Compressed tempo often co-occurs with early trunk open and command scatter (B).
+feel_cue: "Slow the gather — quick the finish, not the whole delivery."
+drill: drill_rocker_step_rhythm with metronome — 60s
+severity_default: medium
+sources: baseball_canada_pitching_mechanics (B)
+youth_note: Prefer rhythm over radar; one cue per rep.
+
+---
+
+finding_id: fault_finish_fall_off
+headline_en: Finish falls off toward first or third
+phases: follow
+body_signal: After release peak, COM drifts laterally; trail foot cannot stabilize; athlete cannot hold fielding-ready pose 1–2 s.
+why_it_matters: Incomplete balance through deceleration in coaching models (B); fielding-readiness cue.
+feel_cue: "Finish balanced enough to field a line drive back at you."
+drill: drill_balance_finish_hold — 60s
+severity_default: low
+sources: baseball_canada_pitching_mechanics (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_incomplete_deceleration
+headline_en: Incomplete deceleration — arm stalls without wrapping across body
+phases: follow
+body_signal: Trail wrist speed drops abruptly without arm path continuing across trunk; trunk stays upright; no “buttons to dirt” finish feel.
+why_it_matters: Smooth deceleration patterns are emphasized in clinical pitching reviews as load-distribution coaching themes (A/B+ awareness) — not injury prediction from a single clip.
+feel_cue: "Finish with chest toward the ground, arm loose across the body."
+drill: drill_follow_through_checkpoint — 60s
+severity_default: medium
+sources: pmc_pitch_count_clinical; Fortenbaugh review deceleration themes (A/B+)
+youth_note: Emphasize easy finishes; never max-effort decelerations as a drill goal.
+
+---
+
+finding_id: fault_lead_foot_closed_toe
+headline_en: Lead toe points closed at plant despite stride length OK
+phases: landing
+body_signal: Lead foot plant yaw closed while stride length within band; differs from whole-foot closed stride pattern when AP length is adequate.
+why_it_matters: Toe-closed plant can still block hip clearance in coaching observation (B).
+feel_cue: "Point the shoelaces at the catcher’s mitt on plant."
+drill: drill_stride_line with toe tape target — 45s
+severity_default: low
+sources: baseball_canada_pitching_mechanics (B)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_arm_slot_inconsistent
+headline_en: Arm slot inconsistent pitch to pitch
+phases: release
+body_signal: Trail wrist height / elbow flexion at release_t varies widely across reps in same session vs athlete baseline.
+why_it_matters: Slot variability may reflect timing or fatigue in coaching observation (B); not a single “correct” slot for all pitchers.
+feel_cue: "Same window every pitch — find your slot and repeat it."
+drill: drill_mirror_side_view — 45s self-check + 8 submax throws matching slot.
+severity_default: low
+sources: pmc_arm_slot_hs_pro (variability) (B+)
+youth_note: Emphasize stride balance and rest/count awareness; avoid absolute MER cutoffs from video.
+---
+
+finding_id: fault_youth_pitch_count_awareness
+headline_en: Youth pitch-count / rest awareness messaging (coaching)
+phases: n/a
+body_signal: Session metadata or coach input indicates high recent pitch volume relative to age-band Pitch Smart / league tables — not a kinematic detector finding.
+why_it_matters: Population load-management education (MLB Pitch Smart, Little League, Baseball Canada) associates cumulative volume with overuse risk in youth populations — coaching awareness only, not individual medical diagnosis or prescription to stop.
+feel_cue: "Know your pitch count and rest days — quality reps beat empty volume."
+drill: drill_pitch_smart_rest_day — 30s education block + mobility if rest required.
+severity_default: medium
+sources: mlb_pitch_smart; little_league_pitch_counts; baseball_canada_pitch_counts (A/B)
+youth_note: Primary audience U9–U18; adults use league workload plans. Never invent medical stop/play orders from video alone.
+confidence_note: Requires pitch-count or schedule context; suppress when metadata absent.
+
+---
+
+## Legacy alias map (KB ↔ code)
+
+| finding_id (canonical)   | legacy_id           | code fid   |
+|--------------------------|---------------------|------------|
+| fault_back_leg_soft      | back-leg-soft       | back-leg   |
+| fault_separation_low     | separation-low      | separation |
+| fault_front_knee_collapse| front-knee-collapse | front-knee |
+| fault_stride_short       | stride-short        | —          |
+| fault_stride_long        | stride-long         | —          |
+| fault_mer_insufficient   | mer-insufficient    | —          |
+| fault_glove_flyout       | glove-flyout        | —          |
+| fault_head_pull          | head-pull           | —          |
+| fault_pelvis_drift       | pelvis-drift        | —          |
+| fault_trunk_late_rotate  | trunk-late-rotate   | —          |
+| fault_arm_path_wide      | arm-path-wide       | —          |
+| fault_set_rush           | set-rush            | —          |
+| fault_sport_mismatch_golf| sport-mismatch-golf | golf guard |
+
+---
+
+## Severity defaults (summary)
+
+| finding_id                    | severity |
+|-------------------------------|----------|
+| fault_back_leg_soft           | high     |
+| fault_separation_low          | high     |
+| fault_front_knee_collapse     | high     |
+| fault_early_trunk_rotation    | high     |
+| fault_trunk_late_rotate       | high     |
+| fault_sport_mismatch_golf     | high     |
+| fault_stride_short/long       | medium   |
+| fault_set_rush                | low      |
+| fault_head_pull               | low      |
+
+Down-rank all when capture quality poor.
+
+---
+
+## Index by UI phase
+
+set/lift: fault_set_rush, fault_soft_drive_leg_balance, fault_tempo_rush_delivery, fault_mer_insufficient
+stride: fault_stride_short, fault_stride_long, fault_pelvis_drift, fault_glove_flyout, fault_back_leg_soft, fault_early_trunk_rotation, fault_arm_path_inverted_w, fault_posture_lean_back
+landing: fault_separation_low, fault_front_knee_collapse, fault_back_leg_soft, fault_stride_short/long, fault_closed_stride_landing, fault_open_stride_landing, fault_lead_foot_closed_toe, fault_glove_side_collapse, fault_posture_collapse_forward
+release: fault_trunk_late_rotate, fault_head_pull, fault_arm_path_wide, fault_mer_insufficient, fault_front_knee_collapse, fault_arm_drag_late, fault_arm_slot_inconsistent, fault_posture_lean_back
+follow: fault_head_pull, fault_arm_path_wide, fault_finish_fall_off, fault_incomplete_deceleration
+n/a: fault_sport_mismatch_golf, fault_youth_pitch_count_awareness

@@ -1,0 +1,74 @@
+# Snowboarding Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel snowboarding content summarizes **open coaching literature, biomechanics reviews, instructor
+progressions, and federation safety expectations**. It is **not** a substitute for licensed medical care,
+physical therapy diagnosis, or individualized return-to-sport protocols after concussion, ACL/MCL injury,
+wrist fracture, or spinal trauma.
+
+- Head impacts, loss of consciousness, neck pain, or persistent dizziness after a fall require immediate
+  medical evaluation — do not rely on an app finding to resume riding.
+- Knee pain, swelling, or giving-way during turns or landings warrants in-person assessment.
+- Youth and adolescent riders have distinct growth, strength, and cognitive risk profiles; follow resort,
+  school, and national governing body age rules for terrain access and competition.
+
+## Not avalanche, mountain safety, or patrol authority
+
+This pack does not replace avalanche education, backcountry travel protocols, or ski patrol instructions.
+Terrain choice, binding DIN settings, helmet use, and course inspection remain the responsibility of the rider,
+coach, and venue officials.
+
+## Not a judging or scoring system
+
+FIS and WSPL judging criteria, degree-of-difficulty tables, and race results are **not** computed from body
+pose alone. For official wording, use retrieved passages from `knowledge/corpus/fis/` — do not invent rule text.
+
+## Body tracking limitations on snow
+
+Single-camera 2D pose estimation can mis-estimate:
+
+- Knee and hip flexion when the rider is foreshortened up-slope or down-slope.
+- Trunk lean and “edge angle” proxies when the board is edge-on to the camera.
+- Arm position during grabs and spins when wrists overlap the torso or are occluded by jacket bulk.
+- Landing knee valgus when snow spray, other riders, or low frame rate blur the lower body.
+
+Findings describe **visible tendencies** with stated confidence — not laboratory force-plate truth. OpenSim
+inverse dynamics produce **estimated** ground reaction forces; treat them as model-dependent, especially during
+hard landings and off-axis rotations.
+
+## Aerial rotation and flip language
+
+Frontflip vs backflip and spin direction must follow product conventions in `snowboard_flip_conventions.txt`
+and `snowboard_aerial_vocab.txt`. World-frame Euler angles alone are insufficient for trick naming in 360°
+and off-axis (cork) maneuvers.
+
+## No guaranteed performance outcomes
+
+Equipment tuning, snow conditions, fatigue, fear, and practice volume dominate progression. Automated cues may
+support movement patterns discussed in coaching literature but **do not promise** faster times, higher scores,
+or injury prevention for any individual.
+
+## Biomechanical “norms”
+
+Published studies report **ranges across skill levels, stances, and terrain**. Stance width, binding angles, and
+board stiffness change appearance. This pack avoids arbitrary degree targets as universal rules, especially for youth.
+
+## Landing load
+
+Repeated stiff-legged landings or large extension landings can increase stress on knees and spine (clinical and
+biomechanical consensus). Automated landing findings are **coaching hints**, not clinical diagnosis.
+
+## Coaching relationship
+
+Automated briefs support certified instructors, coaches, and riders who already have a lesson plan. They do not
+replace on-snow supervision, beginner lift etiquette training, or professional instruction for first-day riders.
+
+## Emergency
+
+For acute injury on hill, follow resort emergency procedures and seek immediate medical attention when needed.
+
+## Product behavior
+
+The motion agent may run in `snowboarding` prompt mode with RAG over this pack plus FIS corpora. Retrieved text
+does not override this disclaimer or local law. Users remain responsible for decisions on snow.

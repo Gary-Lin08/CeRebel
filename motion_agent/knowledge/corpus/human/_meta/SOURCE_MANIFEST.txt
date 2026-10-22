@@ -1,0 +1,23 @@
+# human Sport Pack — Source Manifest
+# Authority: A+ federation | A clinical consensus | B+ reviews | B NGB coaching | C community (excluded from findings)
+# Retrieved for pack build: 2026-10-21
+# Corpus pack id: human | Product pack id: general
+
+id,category,title,publisher,url,format,authority,download_by_script,notes
+opensim_motion_tools,method,OpenSim / GEM-X motion pipeline notes (sibling root corpus),CeRebel internal,motion_agent/knowledge/corpus/opensim_motion_tools.txt,internal,B,n/a,Cross-link: coordinate system Y-up X-forward Z-right; SMPL-X naming; measurement vs inference policy. Not coaching authority.
+acsm_physical_activity,clinical,ACSM Physical Activity Guidelines,American College of Sports Medicine,https://www.acsm.org/education-resources/trending-topics-resources/physical-activity-guidelines,web,A,yes,General activity safety framing; not posture prescription.
+nhs_exercise_guidance,clinical,NHS exercise and movement guidance,NHS (UK),https://www.nhs.uk/live-well/exercise/,web,A,yes,Public health movement themes; summarized.
+who_physical_activity,clinical,WHO physical activity fact sheets,WHO,https://www.who.int/news-room/fact-sheets/detail/physical-activity,web,A+,yes,Population activity guidance; not clinical rehab.
+apta_movement_system,clinical,APTA movement system approach themes,American Physical Therapy Association,https://www.apta.org/,web,A,yes,Posture and movement quality language at high level; no diagnosis from video.
+sahrmann_movement_impairment,clinical,Movement impairment syndromes literature themes (summarized),Peer-reviewed PT literature via PubMed,https://pubmed.ncbi.nlm.nih.gov/?term=movement+impairment+posture,web,A/B+,yes,Association language only; product avoids syndrome labels as diagnosis.
+pmc_postural_control,biomechanics,Postural control and balance reviews,PubMed Central,https://pmc.ncbi.nlm.nih.gov/?term=postural+control+balance,html/pdf,B+,yes,COM and sway themes for balance findings.
+pmc_trunk_pelvis_kinematics,biomechanics,Trunk and pelvis coordination in locomotion and sport,PMC / Gait & Posture open access,https://pmc.ncbi.nlm.nih.gov/?term=trunk+pelvis+coordination,html/pdf,B+,yes,Stack and segment coupling; cite individual OA papers in research_notes.
+nsca_foundations,coaching,NSCA foundations of fitness coaching (public summaries),NSCA,https://www.nsca.com/,web,B,yes,General coaching cues; summarized not verbatim.
+ace_posture_basics,coaching,ACE posture and movement basics (public education),ACE,https://www.acefitness.org/,web,B,yes,Feel cues at education level; authority B.
+opensim_simtk,method,OpenSim musculoskeletal modeling,OpenSim / SimTK,https://simtk.org/projects/opensim,software,B,n/a,Model coordinates; pair with opensim_motion_tools.txt.
+ce_rebel_human_pack,product,CeRebel human/general pack architecture,CeRebel internal,internal: motion_agent/knowledge/corpus/human/,internal,B,n/a,Fallback pack HumanMotionPack id=general.
+ce_rebel_human_code,product,HumanMotionPack detector and briefs,CeRebel internal,internal: motion_agent/sports/packs/human.py,internal,B,n/a,Live fallback; sport packs take precedence when matched.
+
+# License note for commercial RAG corpus
+# Summaries only. Do not paste full copyrighted manuals. Prefer PubMed/PMC open access and public health pages with retrieved_at.
+# opensim_motion_tools.txt lives at corpus root alongside human/ — ingest may attach sport=human + corpus_root_tools=true metadata.

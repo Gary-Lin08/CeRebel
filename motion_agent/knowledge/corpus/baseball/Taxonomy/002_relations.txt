@@ -1,0 +1,84 @@
+# Baseball Pitching — Concept Relations (v2)
+
+## Phase precedence (UI model)
+
+precedes: phase_set → phase_lift
+precedes: phase_lift → phase_stride
+precedes: phase_stride → phase_landing
+precedes: phase_landing → phase_release
+precedes: phase_release → phase_follow
+
+## Events
+
+detected_by: phase_release → event_release_peak_wrist (argmax trail wrist speed)
+detected_by: phase_landing → event_lead_foot_contact (ankle decel heuristic)
+
+## Finding phase windows
+
+occurs_in: fault_back_leg_soft → phase_stride, phase_landing
+occurs_in: fault_separation_low → phase_landing
+occurs_in: fault_front_knee_collapse → phase_landing, phase_release
+occurs_in: fault_set_rush → phase_set, phase_lift
+occurs_in: fault_early_trunk_rotation → phase_stride, phase_landing
+occurs_in: fault_glove_flyout → phase_stride, phase_release
+occurs_in: fault_arm_path_inverted_w → phase_lift, phase_stride
+occurs_in: fault_incomplete_deceleration → phase_follow
+occurs_in: fault_youth_pitch_count_awareness → session_metadata
+
+## Checkpoint fail triggers
+
+failTriggers: cp_back_leg_drive → fault_back_leg_soft
+failTriggers: cp_separation_landing → fault_separation_low
+failTriggers: cp_front_knee_brace → fault_front_knee_collapse
+failTriggers: cp_stride_adult_band → fault_stride_short, fault_stride_long
+failTriggers: cp_stride_youth_band → fault_stride_short, fault_stride_long
+failTriggers: cp_balance_set → fault_set_rush
+failTriggers: cp_glove_side_stable → fault_glove_flyout
+failTriggers: cp_head_stack → fault_head_pull
+failTriggers: cp_pelvis_drift → fault_pelvis_drift
+failTriggers: cp_trunk_sequence → fault_trunk_late_rotate
+failTriggers: cp_arm_path_efficiency → fault_arm_path_wide
+
+## Series measured on phases
+
+measuredOn: series_stride → phase_stride, phase_landing
+measuredOn: series_back_knee → phase_stride, phase_landing
+measuredOn: series_front_knee → phase_landing, phase_release
+measuredOn: series_separation → phase_landing, phase_release
+measuredOn: series_throwing_hand → phase_release, phase_follow
+
+## Coaching links
+
+addresses: cue_stay_closed_longer → fault_separation_low, fault_pelvis_drift, fault_early_trunk_rotation
+addresses: cue_brace_front_leg → fault_front_knee_collapse
+addresses: cue_stride_to_target → fault_stride_short, fault_stride_long
+addresses: cue_pause_at_top → fault_set_rush, fault_tempo_rush_delivery
+addresses: cue_smell_the_glove → fault_head_pull, fault_glove_flyout
+addresses: cue_pitch_count_aware → fault_youth_pitch_count_awareness
+addresses: cue_push_rubber_away → fault_back_leg_soft
+
+remediates: drill_stride_line → fault_stride_short, fault_stride_long, fault_closed_stride_landing
+remediates: drill_braced_landing_holds → fault_front_knee_collapse
+remediates: drill_glove_lead_target → fault_glove_flyout, fault_head_pull, fault_glove_side_collapse
+remediates: drill_rocker_step_rhythm → fault_set_rush, fault_stride_long, fault_tempo_rush_delivery
+remediates: drill_pitch_smart_rest_day → fault_youth_pitch_count_awareness
+remediates: drill_follow_through_checkpoint → fault_incomplete_deceleration, fault_finish_fall_off
+
+## Legacy aliases
+
+legacy_of: back-leg-soft → fault_back_leg_soft
+legacy_of: separation-low → fault_separation_low
+legacy_of: front-knee-collapse → fault_front_knee_collapse
+legacy_of: sport-mismatch-golf → fault_sport_mismatch_golf
+
+## Product guards
+
+blockedBySport: baseball_pitching → golf_swing when fault_sport_mismatch_golf
+supports: pitch_likeness_heuristic → phase_release event
+
+## Ontology crosswalk
+
+maps_to: phase_set → ASMI_wind_up (partial)
+maps_to: phase_stride+landing → ASMI_stride_and_early_cocking (partial)
+maps_to: phase_release → ASMI_acceleration
+maps_to: phase_follow → ASMI_deceleration_follow_through

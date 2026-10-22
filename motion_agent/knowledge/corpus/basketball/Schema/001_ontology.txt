@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "basketball": "https://example.org/basketball-kb/ontology/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "label": "skos:prefLabel",
+    "source": {"@id": "prov:wasDerivedFrom", "@type": "@id"},
+    "validFrom": {"@id": "schema:validFrom", "@type": "xsd:date"},
+    "validThrough": {"@id": "schema:validThrough", "@type": "xsd:date"}
+  },
+  "@graph": [
+    {"@id": "basketball:BasketballEntity", "@type": "rdfs:Class", "label": {"en": "Basketball KB entity", "zh-cn": "篮球知识库实体"}},
+    {"@id": "basketball:Shooter", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "schema:Person"}, "label": {"en": "Shooter", "zh-cn": "投篮者"}},
+    {"@id": "basketball:ShotAttempt", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:BasketballEntity"}, "label": {"en": "Shot attempt", "zh-cn": "一次投篮动作"}},
+    {"@id": "basketball:ShotVariant", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:BasketballEntity"}, "label": {"en": "Shot variant", "zh-cn": "投篮类型"}},
+    {"@id": "basketball:variant_jump", "@type": "basketball:ShotVariant", "label": {"en": "Jump shot", "zh-cn": "跳投"}},
+    {"@id": "basketball:variant_ft", "@type": "basketball:ShotVariant", "label": {"en": "Free throw", "zh-cn": "罚球"}},
+    {"@id": "basketball:ShotPhase", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:BasketballEntity"}, "label": {"en": "Shot phase", "zh-cn": "投篮阶段"}},
+    {"@id": "basketball:ShotEvent", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:BasketballEntity"}, "label": {"en": "Shot event", "zh-cn": "投篮事件"}},
+    {"@id": "basketball:MeasurementDefinition", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:BasketballEntity"}},
+    {"@id": "basketball:JointAngle", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:MeasurementDefinition"}},
+    {"@id": "basketball:SegmentSpeed", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:MeasurementDefinition"}},
+    {"@id": "basketball:CoachingConcept", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:BasketballEntity"}},
+    {"@id": "basketball:Finding", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:CoachingConcept"}, "label": {"en": "Mechanics finding", "zh-cn": "动作问题"}},
+    {"@id": "basketball:Checkpoint", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:BasketballEntity"}, "label": {"en": "Quality checkpoint", "zh-cn": "质量检查点"}},
+    {"@id": "basketball:Cue", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:CoachingConcept"}},
+    {"@id": "basketball:Drill", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:CoachingConcept"}},
+    {"@id": "basketball:Evidence", "@type": "rdfs:Class"},
+    {"@id": "basketball:ResearchFinding", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "basketball:Evidence"}},
+
+    {"@id": "basketball:phase_setup", "@type": "basketball:ShotPhase", "label": {"en": "Setup", "zh-cn": "预备"}},
+    {"@id": "basketball:phase_dip", "@type": "basketball:ShotPhase", "label": {"en": "Load / dip", "zh-cn": "下沉加载"}},
+    {"@id": "basketball:phase_drive", "@type": "basketball:ShotPhase", "label": {"en": "Leg drive", "zh-cn": "蹬伸起跳"}},
+    {"@id": "basketball:phase_transfer", "@type": "basketball:ShotPhase", "label": {"en": "Transfer", "zh-cn": "力量传递"}},
+    {"@id": "basketball:phase_set", "@type": "basketball:ShotPhase", "label": {"en": "Set point", "zh-cn": "出手点"}},
+    {"@id": "basketball:phase_release", "@type": "basketball:ShotPhase", "label": {"en": "Release", "zh-cn": "出手"}},
+    {"@id": "basketball:phase_follow", "@type": "basketball:ShotPhase", "label": {"en": "Follow / land", "zh-cn": "跟随/落地"}},
+
+    {"@id": "basketball:event_release_peak_wrist", "@type": "basketball:ShotEvent", "label": {"en": "Shooting wrist speed peak", "zh-cn": "投篮手腕速度峰值"}},
+    {"@id": "basketball:event_dip_min", "@type": "basketball:ShotEvent", "label": {"en": "Minimum knee flexion in dip", "zh-cn": "下沉最低膝屈"}},
+    {"@id": "basketball:event_com_peak", "@type": "basketball:ShotEvent", "label": {"en": "COM height peak", "zh-cn": "重心最高点"}},
+    {"@id": "basketball:event_land", "@type": "basketball:ShotEvent", "label": {"en": "Landing contact", "zh-cn": "落地"}},
+    {"@id": "basketball:event_set_start", "@type": "basketball:ShotEvent", "label": {"en": "Set point start", "zh-cn": "举球定点开始"}},
+
+    {"@id": "basketball:series_shooting_wrist_speed", "@type": "basketball:SegmentSpeed", "label": {"en": "Shooting wrist speed", "zh-cn": "投篮手腕速度"}},
+    {"@id": "basketball:series_knee_flex", "@type": "basketball:JointAngle", "label": {"en": "Knee flexion", "zh-cn": "膝屈曲"}},
+    {"@id": "basketball:series_elbow_flex", "@type": "basketball:JointAngle", "label": {"en": "Shooting elbow flexion", "zh-cn": "投篮肘屈曲"}},
+    {"@id": "basketball:series_com_height", "@type": "basketball:MeasurementDefinition", "label": {"en": "COM vertical position", "zh-cn": "重心高度"}},
+
+    {"@id": "basketball:shotVariant", "@type": "rdf:Property", "schema:rangeIncludes": {"@id": "basketball:ShotVariant"}},
+    {"@id": "basketball:precedes", "@type": "rdf:Property"},
+    {"@id": "basketball:occursIn", "@type": "rdf:Property"},
+    {"@id": "basketball:failTriggers", "@type": "rdf:Property"},
+    {"@id": "basketball:mapsFinding", "@type": "rdf:Property"}
+  ]
+}

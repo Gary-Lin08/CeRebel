@@ -1,0 +1,255 @@
+# Baseball Pitching KB — Research Notes (Search Agent)
+# Product: CeRebel body-first coaching (no ball tracking required)
+# Generated: 2026-10-21
+# Purpose: factual seeds for phase model, norms (careful), faults, drills — each claim must carry source URL in build artifacts.
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+0. DEMO & DATA LICENSING (READ FIRST)
+================================================================================
+
+Product demo video (commercial OK):
+  Title: Gant Windup.webm
+  URL: https://commons.wikimedia.org/wiki/File:Gant_Windup.webm
+  Direct file: https://upload.wikimedia.org/wikipedia/commons/5/52/Gant_Windup.webm
+  License: CC0 1.0 Universal (public domain dedication)
+  Use: UI/marketing demo of distinctive wind-up timing; not a biomechanical norm reference.
+  Note: John Gant’s delivery includes an extra “false step” in wind-up only (not stretch).
+
+OpenBiomechanics Project (OBP) — NOT for commercial corpus redistribution:
+  URL: https://www.openbiomechanics.org/
+  Data/docs license: CC BY-NC-SA 4.0 (see LICENSE-DATA.md)
+  Code license: MIT (separate)
+  Use in CeRebel: internal research, norm exploration, detector calibration against published POI
+    variable definitions ONLY if legal/compliance approves; do NOT bundle OBP CSV/C3D in shipped
+    product or treat as freely redistributable coaching content.
+  Additional exclusion: employees/contractors/shareholders of pro sports orgs or financial-analysis
+    firms need paid license per OBP terms.
+  Dataset v1 pitching: 411 fastball trials, 100 athletes; POI CSV in-repo; C3D via GitHub release
+    `dataset-v1`.
+
+Driveline blog content:
+  Public educational articles; copyrighted site content. Summarize with links; no long verbatim paste.
+
+PMC / journal articles:
+  Many are free to read on PMC but NOT CC-BY (often © Sage/Elsevier). Product KB = short summaries
+  + citation + URL; verify “Copyright and License information” on each PMC record before reuse.
+
+================================================================================
+1. CONSENSUS PHASE MODELS (RECONCILE IN brain_plan / Phases/)
+================================================================================
+
+1A. ASMI / clinical six-phase model (primary for body tracking events)
+  Source: Diffendaffer et al., Sports Health 2023 (PMC9950989); lineage Fleisig/ASMI.
+  Phases and boundary events:
+    - Wind-up: first motion → peak lead-knee height (leg lift).
+    - Stride: peak knee height → lead foot contact (first contact with ground).
+    - Arm cocking: foot contact → maximum shoulder external rotation (MER / “layback”).
+    - Arm acceleration: MER → ball release.
+    - Arm deceleration: ball release → end of rapid arm slowdown.
+    - Follow-through: until motion stops / fielding posture.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC9950989/
+
+1B. OBP processing events (align detectors when force data unavailable)
+  Source: OBP baseball_pitching README (GitHub).
+  Named events in full-signal tables:
+    foot contact (~10% bodyweight on lead leg),
+    foot plant (~100% bodyweight),
+    maximum external rotation,
+    ball release,
+    maximum internal rotation.
+  URL: https://github.com/drivelineresearch/openbiomechanics/blob/main/baseball_pitching/README.md
+  Note: “Foot contact” ≠ “foot plant” in lab nomenclature; Driveline assessments also distinguish
+    foot contact vs foot plant (PMC-adjacent coaching: Driveline assessment blog).
+
+1C. Driveline 12-subphase sequencing model (coaching granularity, overlaps allowed)
+  Source: “Sequencing the 95 MPH Delivery” (Driveline blog, 2014).
+  Lower half: Loading → Striding → Rotation → Blocking
+  Trunk: Rotation → Stabilization → Flexion
+  Arm: Separation → Pickup → Disconnection → Driveline → Recovery
+  Reference still frames cited: balance point, stride foot contact, MER, release, MIR.
+  URL: https://drivelinebaseball.com/blogs/blog/sequencing-the-95-mph-delivery
+
+1D. Baseball Canada coaching phases (youth NGB, qualitative)
+  Grip → Stance → Wind-up / Set → Gather → Stride → Landing & Release → Follow-through
+  URL: https://www.baseball.ca/pitching-mechanics
+
+================================================================================
+2. KINEMATIC NORMS & KEY NUMBERS (ADULT / LAB — NOT PRESCRIPTIVE MEDICAL TARGETS)
+================================================================================
+
+Treat as population references from 3D mocap literature; monocular body tracking will have
+ wider tolerance bands. Separate youth vs adult in product copy.
+
+At lead foot contact (Diffendaffer / ASMI clinical guide, PMC9950989):
+  - Stride length ≈ 85% of body height (distance hind ankle at max knee → lead ankle at contact).
+  - Lead foot: slightly closed position and closed toe angle (RHP toward 3B side / closed).
+  - Lead knee flexion ≈ 45°.
+  - Pelvis rotated open toward plate ≈ 35°; shoulders still roughly parallel to target line
+    (hip-shoulder separation / “closed upper body”).
+  - Throwing elbow flexion ≈ 90°.
+  - Shoulder abduction ≈ 90°, horizontal abduction ≈ 20°, external rotation ≈ 45°.
+  Fault links: open lead foot → increased anterior shoulder & medial elbow force; late arm often
+    with short stride; excessive horizontal abduction at contact → anterior capsule stress concern.
+
+Arm cocking → MER:
+  - Peak shoulder external rotation ≈ 170° (performance benefit but excessive MER linked to
+    impingement risk and elevated elbow varus torque in literature cited therein).
+
+Arm acceleration → ball release:
+  - Peak elbow extension angular velocity up to ~2700°/s; shoulder IR velocity up to ~7500°/s
+    (lab reports; not measurable directly in CeRebel MVP).
+  - At release: shoulder abduction ~90°; elbow flexion ~25°; trunk flexed toward target ~35°;
+    contralateral trunk tilt ~20° (glove-side lean).
+  - Lead knee flexion ~30° at release (extends from ~45° at contact); insufficient lead-knee
+    extension linked to lower ball velocity in cited studies.
+
+Follow-through:
+  - Elbow rebounds to ~45° flexion; fielding-ready posture.
+
+Japanese vs American pro comparison (Oi et al., PMC6512154, CC BY-NC-ND 4.0):
+  - Illustrates population/style variance: stride length, shoulder abduction at release, knee
+    flexion after release differ between cohorts; normalize by body size when comparing.
+
+OBP POI distribution (research norms — CC BY-NC-SA, research use only):
+  - 411 FF trials; median pitch speed 85.3 mph (69.5–94.4); mostly college.
+  - POI fields include: stride_length (% height), hip-shoulder separation at foot plant,
+    MER, elbow/shoulder angles at foot plant and release, timing_peak_torso_to_peak_pelvis_rot_velo,
+    peak segment angular velocities, elbow varus moment, energy flow metrics.
+  - Use for internal percentile bands, not consumer-facing “medical thresholds” without validation.
+  URLs: https://github.com/drivelineresearch/openbiomechanics/blob/main/DATASHEET.md
+        https://github.com/drivelineresearch/openbiomechanics/blob/main/baseball_pitching/README.md
+
+================================================================================
+3. KINETIC CHAIN & SEQUENCING (PERFORMANCE / LOAD FRAMING)
+================================================================================
+
+Proximal-to-distal sequencing (clinical consensus):
+  From foot contact through release: lead knee extension → pelvis rotation → upper trunk rotation
+  → elbow extension → shoulder internal rotation (Diffendaffer PMC9950989).
+  Improper pelvis/trunk timing = common kinetic-chain flaw; core/hip mobility and strength interventions.
+
+Driveline kinematic sequencing preference (coaching + lab reports):
+  Peak angular velocities ideally ordered ground-up: Pelvis → Torso → Elbow → Shoulder.
+  Pelvis-to-torso peak timing delta correlates with velocity in their internal database
+  (example ~0.039 s cited as “pretty good” in blog; not universal constant).
+  URL: https://drivelinebaseball.com/blogs/blog/interpret-biomechanics-reports
+
+Whole-body assessment emphasis:
+  “There’s More to Assess than the Arm” (PMC11698006) — lower extremity and trunk drive upper
+  extremity kinetics; clinical exam should include kinetic chain, not isolated arm care.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC11698006/
+
+Return-to-sport / analysis methods review (PMC8811517):
+  Phases: wind-up, stride, arm cocking, acceleration, deceleration, follow-through.
+  KPIs: shoulder/elbow torque, rotation, kinetic chain (trunk timing, hip-shoulder separation),
+  stride characteristics; gold standard = marker-based 3D mocap; wearables/markerless emerging.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC8811517/
+
+Mechanics–injury relationships (review, PMC5435152):
+  Velocity and fatigue as injury predictors; mechanics modulate shoulder/elbow torque; ties to
+  Pitch Smart workload tables; hip-shoulder separation and hand-on-top themes in qualitative efficiency work.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC5435152/
+
+Deceleration-phase elbow varus moment (PMC6446515, CC BY-NC-ND 4.0):
+  Non-trivial varus moment can persist after max internal rotation during deceleration (~half of
+  peak acceleration phase for some pitchers); consider deceleration in arm-care framing (not diagnosis).
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC6446515/
+
+================================================================================
+4. COMMON FAULTS → BODY SIGNALS → CORRECTIVE IDEAS (FOR Findings/ COACHING)
+================================================================================
+
+| Fault (headline) | Phase | Visible / measurable signal | Why it matters (careful wording) | Drill / intervention ideas | Primary sources |
+|------------------|-------|-----------------------------|----------------------------------|----------------------------|-----------------|
+| Open lead foot at landing | Stride / FC | Foot lands open to arm-side; pelvis opens early | Associated with altered pelvic rotation & higher shoulder/elbow loads in mocap studies | Line on mound; land 4–14" closed; closed toe; hip ROM/strength if cannot comply | PMC9950989 |
+| Short stride / late arm | Stride / FC | Stride < expected; low ER at foot contact | Late arm linked to higher elbow/shoulder stress; less time for arm to set | Increase stride if hip abduction ROM allows; hand separation timing drills | PMC9950989 |
+| Poor hip-shoulder separation timing | Cocking | Trunk rotates with pelvis; low separation at FC | Reduces energy transfer; timing flaw common | Med ball throws; half-kneel throws; separation-focused constraint drills | PMC9950989, Driveline sequencing blog |
+| Excessive contralateral trunk lean at release | Acceleration | Glove-side lean ↑ | Elbow varus moment increases ~4 Nm per 10° in cited study | Trunk control exercises; adjust tilt not “arm slot” in isolation | Solomito 2015 via PMC9950989 refs |
+| Insufficient lead knee extension | Acceleration | Lead knee stays flexed BR | Lower velocity in cited biomechanics studies | Fix foot plant stability first; quad strength; step-down tests | PMC9950989 |
+| Early trunk / uphill tilt at FC | Cocking | Lead shoulder high; abduction >90° | Linked to excessive shoulder abduction at cocking | Level trunk at FC; thoracic mobility | PMC9950989 |
+| Leading with elbow (horizontal adduction + flexion at MER) | Cocking | Elbow leads body at layback | Seen with reduced effort, fatigue, weakness | Full-chain strengthening; gradual intent progression | PMC9950989 |
+| Early extension / rear hip leak | Loading/stride | COM drifts forward; rear foot not anchored | Limits glute-driven pelvis rotation (Driveline case example) | Drop steps, plyo constraint drills, “spread the floor” cue | Driveline assessment blog |
+| Deceleration stress | Decel | Rapid elbow flexion rebound; continued varus loading | Additional load after release in subset of pitchers | Eccentric rotator cuff / decel drills (clinical guide lists examples) | PMC9950989, PMC6446515 |
+
+Baseball Canada qualitative faults (youth coaching):
+  - Guiding ball to plate (dart throw) vs free arm path.
+  - Stiff locked front leg at landing (avoid).
+  - Dragging pivot foot on follow-through.
+  - Head pulling off line during stride.
+  Drills: Drop step pivot gather; movement toward plate (hand break timing); balanced landing;
+  long toss; two-knee / one-knee partner toss; lead arm barrier drill.
+  URL: https://www.baseball.ca/pitching-mechanics
+
+Driveline constraint / PlyoCare drill families (environment > verbose cueing):
+  Reverse throws (always first), pivot picks, scap retraction, roll-ins, step backs, drop steps,
+  janitors, rockers, walking windups; submax intent; wall throws to reduce partner anxiety.
+  URLs: https://drivelinebaseball.com/blogs/blog/plyo-velocity-weighted-balls-replication
+        https://drivelinebaseball.com/blogs/blog/different-model-cueing-pitching-mechanics
+        https://drivelinebaseball.com/blogs/blog/pitching-assessments-changing-mechanics
+
+================================================================================
+5. WORKLOAD & YOUTH (SEPARATE FROM MECHANICS FINDINGS)
+================================================================================
+
+Pitch Smart (MLB / USA Baseball):
+  Age-based daily pitch limits and required rest days; avoid multiple games same day; limit
+  months pitching per year; delay breaking pitches until ~13; avoid pitcher+catcher same game.
+  URLs: https://www.mlb.com/pitch-smart/pitching-guidelines
+        https://www.usabaseball.com/play/pitch-smart/
+
+Empirical compliance study (PMC8581780, CC BY-NC-ND 4.0):
+  Many youth behaviors violate Pitch Smart; reinforces need for workload messaging in app disclaimers.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC8581780/
+
+Baseball Canada pitch count guidelines (Canadian NGB):
+  URL: https://www.baseball.ca/en/programs/development/pitch-count-guidelines
+
+Little League official pitching rules:
+  URL: https://www.littleleague.org/university/articles/pitch-counts/
+
+ASMI youth position statement:
+  URL: https://asmi.org/asmi-position-statement-for-youth-baseball-pitchers/
+
+Youth mechanics systematic review (PMC5857730):
+  MER in youth reported ~166–178° range in reviewed studies (do not apply adult 170° as single target).
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC5857730/
+
+================================================================================
+6. REHAB / RETURN-TO-THROW CONTEXT (CLINICAL — NOT APP PRESCRIPTION)
+================================================================================
+
+ASMI Interval Throwing Program Phase I (PDF):
+  Whole-body energy transfer emphasis; graduated distances; crow-hop vs flat-foot throwing;
+  pain rules; strengthening after throwing; fatigue increases re-injury risk.
+  URL: https://asmi.org/wp-content/uploads/Interval_Throwing_Program_for_Baseball_Pitchers-2019.pdf
+
+Wearable mocap protocol (PMC7528752, CC BY-NC-ND 4.0):
+  Sensor placement, real-time checks, exclude non-pitch throws — relevant if CeRebel integrates wearables later.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC7528752/
+
+================================================================================
+7. SUGGESTED CeRebel DETECTOR EVENT MAP (PROVISIONAL)
+================================================================================
+
+Map monocular body phases to ASMI six-phase model:
+  PEAK_KNEE_LIFT     → end wind-up
+  FOOT_CONTACT       → start arm cocking (OBP: 10% BW; video: first flat-foot / max forward stride foot)
+  MAX_SHOULDER_ER    → MER (proxy: throwing elbow behind body, forearm lag peak)
+  RELEASE            → ball release proxy (trail wrist peak speed / hand forward extremum) — existing pitch_score
+  MAX_INTERNAL_ROT   → post-release arm wrap
+  MOTION_END         → follow-through settle
+
+Validate against OBP timing fields only in non-commercial research setting.
+
+================================================================================
+8. GAPS FOR BUILD AGENT
+================================================================================
+
+- Download and normalize none of OBP into Docs/ until license review for commercial product.
+- Prefer PMC9950989 + Baseball Canada + Pitch Smart for consumer-facing finding cards.
+- Driveline: sequencing concepts yes; proprietary HTKC paid course content no.
+- Need Docs/002_DISCLAIMER.txt emphasizing not medical advice, not workload prescriber.
+- Arm slot / MER thresholds highly style-dependent; use percentile language not “correct angle.”
+
+# End research_notes.txt

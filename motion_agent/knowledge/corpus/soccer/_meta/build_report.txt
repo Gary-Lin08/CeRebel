@@ -1,0 +1,108 @@
+# Soccer Sport Pack — Build Report
+# Agent: BUILD | Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Generated: 2026-10-21
+
+## Summary
+
+Built body-first soccer kicking knowledge base (v0.1) with substantial English prose for RAG indexing.
+_meta/ excluded from chunk index per product contract. Primary build pass: Docs, Phases, Quality, Findings,
+Coaching, Biomechanics, Training + this report. Schema/, Taxonomy/, and other _meta/ agent files may exist
+from parallel pack pipeline steps — see filesystem listing below.
+
+## Files written
+
+| path | role | approx_lines |
+|------|------|--------------|
+| Docs/001_ARCHITECTURE.txt | Pack purpose, pipeline integration, capture guidance | 95 |
+| Docs/002_DISCLAIMER.txt | Medical/safety, tracking limits, UI disclaimer | 55 |
+| Phases/001_phase_model.txt | 7 phases, 5 events, detector mapping | 95 |
+| Quality/001_quality_definition.txt | Six quality dimensions, age bands | 55 |
+| Quality/002_checkpoints.txt | 16+ checkpoint rules with fail→finding map | 75 |
+| Findings/001_common_faults.txt | 14 finding cards (full spec shape) | 220 |
+| Coaching/001_cues.txt | Cues by finding_id + global principles | 85 |
+| Coaching/002_drills.txt | 14 drills 30–90s + team warm-up block | 95 |
+| Biomechanics/001_overview.txt | Chain, terms, literature summaries, limits | 145 |
+| Training/001_team_practice.txt | Session structure, progressions, team capture | 115 |
+| _meta/build_report.txt | This file | — |
+
+## Other pack files on disk (not authored in this BUILD pass)
+
+| path | note |
+|------|------|
+| Schema/001_ontology.txt | JSON-LD ontology stub |
+| Taxonomy/001_concepts.txt, 002_relations.txt | Concept/relation stubs |
+| _meta/brain_plan.txt, research_notes.txt, review_report.txt | Agent pipeline artifacts |
+| _meta/pack_readme.txt | Updated to v0.1 built |
+
+## Content metrics (estimate)
+
+- Finding IDs: 14 stable slugs
+- Phase IDs: setup, approach, plant, cocking, strike, follow, recovery
+- Event IDs: E_KICK_PEAK, E_PLANT_SET, E_APPROACH_END, E_APPROACH_START, E_FOLLOW_END
+- Checkpoints: 16 primary + 3 youth modifier rows
+- Authority levels used in prose: A+, A, B+, B (no C in thresholds)
+
+## Spec compliance checklist
+
+- [x] Docs/001_ARCHITECTURE.txt
+- [x] Docs/002_DISCLAIMER.txt
+- [x] Phases/001_phase_model.txt (5–8 phases)
+- [x] Quality/001_quality_definition.txt
+- [x] Quality/002_checkpoints.txt
+- [x] Findings/001_common_faults.txt (finding card shape)
+- [x] Coaching/001_cues.txt
+- [x] Coaching/002_drills.txt
+- [x] Biomechanics/001_overview.txt
+- [x] Training/001_team_practice.txt
+- [x] _meta/build_report.txt
+- [x] Schema/001_ontology.txt (on disk)
+- [x] Taxonomy/001_concepts.txt, 002_relations.txt (on disk)
+- [x] _meta/brain_plan.txt, research_notes.txt, review_report.txt (on disk)
+- [ ] _meta/SOURCE_MANIFEST.txt (still missing per review_report)
+
+## Product constraints verified
+
+- Body-first: no ball tracking required for claims
+- No invented medical angle norms as prescriptions
+- Youth vs adult called out in Quality, Biomechanics, Training
+- Sources cited at B/B+ level in finding cards; URLs deferred to future SOURCE_MANIFEST
+
+## Suggested next build steps
+
+1. Add Schema + Taxonomy aligned to phase and finding slugs
+2. Populate SOURCE_MANIFEST with FIFA/UEFA/PMC URLs and retrieved_at
+3. Implement SoccerPack detector + kick_likeness in motion_agent/sports/packs/
+4. Update _meta/pack_readme.txt status to v0.1 built
+
+## Indexing note
+
+Plain .txt ready for chunker; stable slugs enable cross-file retrieval (finding_id, phase_id, checkpoint_id).
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+
+Agent: build (v2 depth upgrade)
+Sport ID: soccer
+
+Changes:
+  Findings/001_common_faults.txt — canonical format; 14→28 cards; kebab→fault_* with legacy_id
+  Coaching/001_cues.txt — 28 cue blocks citing fault_*
+  Coaching/002_drills.txt — 28 drills with targets: fault_*
+  Phases/001_phase_model.txt — 7 phases with detector_events + fault_links
+  Taxonomy/002_relations.txt — fault_* edges + legacy sameAs
+  _meta/review_report.txt — rewritten; VERDICT APPROVED_V2
+
+Finding count: 28
+Migration: kebab-case → fault_snake_case (e.g. plant-foot-closes-hip→fault_plant_foot_closes_hip)
+New themes: approach gather, plant toe/heel, hip late open, NK arm, follow cross, ankle lock,
+  side-foot windup, weak-foot mismatch, volley trunk/plant, early hip adduction, closed shoulders
+
+Acceptance (v2):
+  [x] ≥25 finding cards full fields
+  [x] ≥20 cues / ≥15 drills citing fault_*
+  [x] ≥15 taxonomy relations
+  [x] 5–8 phases with detector_events + fault_links
+  [x] review ends VERDICT: APPROVED_V2
+
+End v2 append

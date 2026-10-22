@@ -1,0 +1,102 @@
+# Golf Sport Pack — build report (body-first)
+
+Build agent: sport_pack_gap_fill (coaching layer + final gap-fill)
+Generated: 2026-10-21
+Spec: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+Brain plan: _meta/brain_plan.txt v0.1
+
+Scope: Additive Sport Pack under motion_agent/knowledge/corpus/golf/. **Preserved unchanged:**
+Rules/, Handicap/, Equipment/, Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt,
+Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt, legacy Schema/001_golf-ontology.txt,
+Taxonomy/, Docs/001_ARCHITECTURE.txt, Docs/002_ecosystem_research_zh.txt, primary-source ingest artifacts in _meta/.
+
+---
+
+## Build phases completed
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| 1. Coaching folders (Phases, Quality, Findings, Coaching, Training) | complete | Prior gap-fill run |
+| 2. Schema/001_ontology.txt + Taxonomy | present | Extended from golf-ontology |
+| 3. Docs/002_DISCLAIMER.txt | **complete (this run)** | Coaching not medical; body-first; youth; monocular/GRF limits |
+| 4. Biomechanics/001_overview.txt | **complete (this run)** | RAG summary; cites SOURCE_MANIFEST URLs; reviews untouched |
+| 5. _meta/research_notes.txt, review_report.txt | present | Copied from research_notes_coaching.txt / review_report_sport_pack.txt |
+| 6. _meta/build_report.txt | **updated (this run)** | Sport Pack addition ledger appended |
+
+---
+
+## Directories (Sport Pack)
+
+| Directory | Status |
+|-----------|--------|
+| Phases/ | created (prior) |
+| Quality/ | created (prior) |
+| Findings/ | created (prior) |
+| Coaching/ | created (prior) |
+| Training/ | created (prior) |
+| Docs/ | extended |
+| Biomechanics/ | extended (overview layer) |
+
+---
+
+## Files written / updated (indexed — under corpus/golf/, excluding _meta)
+
+| Path | Approx. lines | Purpose |
+|------|---------------|---------|
+| Phases/001_phase_model.txt | 120+ | Seven-phase chain; impact_proxy |
+| Quality/001_quality_definition.txt | 95+ | Body-first quality dimensions |
+| Quality/002_checkpoints.txt | 85+ | Checkpoints with fail→finding links |
+| Findings/001_common_faults.txt | 200+ | Finding cards (SPORT_PACK shape) |
+| Coaching/001_cues.txt | 95+ | Feel cues per finding_id |
+| Coaching/002_drills.txt | 120+ | 30–90 s drills |
+| Training/001_team_practice.txt | 130+ | Team stations, youth load awareness |
+| Schema/001_ontology.txt | — | Sport Pack ontology superset |
+| **Docs/002_DISCLAIMER.txt** | **95+** | **Safety, youth, body-first limits (this run)** |
+| **Biomechanics/001_overview.txt** | **175+** | **B+ summaries Watson 2026 + Bourgain 2022 (this run)** |
+
+**Not modified (explicit):** Rules/001–004, Handicap/001, Equipment/001–002,
+Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt,
+Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt.
+
+---
+
+## Files written / updated (_meta — excluded from RAG index)
+
+| Path | Status |
+|------|--------|
+| brain_plan.txt | present (BRAIN agent) |
+| SOURCE_MANIFEST.txt | present (coaching rows appended) |
+| research_notes_coaching.txt | present |
+| research_notes.txt | present (canonical copy) |
+| review_report_sport_pack.txt | present |
+| review_report.txt | present (canonical copy) |
+| build_report_sport_pack.txt | this file |
+| build_report.txt | updated with Sport Pack ledger |
+| pack_readme.txt, README.txt, ingest_manifest.txt, download_report.txt | legacy preserved |
+
+---
+
+## Detector / product alignment
+
+- Phase ids: address, takeaway, backswing, transition, downswing, impact_proxy, finish (brain_plan §4)
+- Handedness: lead/trail per golf_biomechanics_conventions.txt
+- Disclaimer referenced from Coaching/ and Findings/ footers → Docs/002_DISCLAIMER.txt
+
+---
+
+## Verification
+
+- No deletions under golf/
+- No renames of Biomechanics systematic review extract filenames
+- Biomechanics/001_overview.txt is summary-only; no replacement of full CC BY ingest text
+- Youth/adult separation documented in overview + disclaimer
+- Authority: B+ for review summaries; A+ rules/equipment unchanged
+
+---
+
+## Indexing
+
+Exclude `_meta/` from vector index per product policy. New Docs/002_DISCLAIMER.txt and Biomechanics/001_overview.txt
+intended for RAG alongside existing coaching layer and Biomechanics full reviews.
+
+Build status: **complete** for brain_plan gap-fill items (disclaimer, biomech overview, meta reports).

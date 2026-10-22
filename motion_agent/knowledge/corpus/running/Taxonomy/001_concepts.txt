@@ -1,0 +1,154 @@
+# Running Gait — Concept Taxonomy (v1)
+
+## Primary concepts
+
+concept_id: distance_running
+label_en: Distance running gait
+definition: Cyclical locomotion with aerial phase; body-first analysis uses periodic ankle and trunk signals without GPS.
+synonyms_en: jogging, fitness running, endurance running, easy run form
+synonyms_zh: 跑步, 慢跑, 长跑姿态
+parent: running
+authority: B
+
+concept_id: stride_cycle
+label_en: Stride cycle
+definition: Period from initial contact on one leg to next contact on the same leg; foundation for phase model.
+synonyms_en: gait cycle, step cycle, running stride
+related_phases: contact through flight
+authority: B+
+
+concept_id: cadence
+label_en: Cadence (step rate)
+definition: Steps per minute; computed from contact event timing on both feet.
+synonyms_en: step rate, spm, steps per minute, turnover
+related_series: series_cadence
+authority: B+
+
+concept_id: overstriding
+label_en: Overstriding
+definition: Foot landing noticeably ahead of body center at contact; associated with increased braking in literature.
+synonyms_en: reaching with the foot, landing in front, heel strike far ahead
+related_findings: overstride, low_cadence_overstride
+authority: B+
+
+concept_id: vertical_oscillation
+label_en: Vertical oscillation
+definition: Up-down displacement of pelvis or COM each stride; excessive bounce may waste energy.
+synonyms_en: bounce, vertical displacement, bobbing
+related_findings: excessive_bounce
+authority: B+
+
+concept_id: hip_drop
+label_en: Hip drop (pelvis obliquity)
+definition: Stance-side pelvis drops relative to swing side during single-leg support.
+synonyms_en: Trendelenburg gait pattern, pelvic drop, hip sag
+related_findings: hip_drop
+authority: A/B+
+
+concept_id: trunk_posture_running
+label_en: Running trunk posture
+definition: Sagittal alignment of thorax relative to vertical; forward lean from ankle vs hunch differ in coaching.
+synonyms_en: posture, lean, torso angle
+related_findings: trunk_lean_back, trunk_lean_excess_fwd
+authority: B+
+
+concept_id: arm_swing_running
+label_en: Running arm swing
+definition: Shoulder-driven counter-rotation to balance leg motion; asymmetry visible in ROM or timing.
+synonyms_en: arm carriage, arm drive
+related_findings: arm_swing_asymmetry
+authority: B
+
+concept_id: crossover_gait_running
+label_en: Crossover gait
+definition: Foot lands medial to body midline, sometimes crossing toward opposite side.
+synonyms_en: cross-over, line cross, narrow base
+related_findings: crossover_gait
+authority: B+
+
+concept_id: knee_valgus_running
+label_en: Knee valgus on landing (visible proxy)
+definition: Knee moves inward relative to hip–ankle line in frontal view during loading; product uses conservative proxy.
+synonyms_en: knee collapse, dynamic valgus, knees in
+related_findings: knee_valgus_load
+authority: B+
+
+## Phase concepts (align to running:phase_*)
+
+concept_id: phase_contact
+label_en: Touchdown
+start_event: E_IC
+body_focus: foot placement, ankle compliance, initial knee flexion
+
+concept_id: phase_loading
+label_en: Loading
+body_focus: shock absorption, increasing knee flexion, hip stability
+
+concept_id: phase_midstance
+label_en: Mid-stance
+body_focus: single-leg balance, pelvis level, trunk stack
+
+concept_id: phase_propulsion
+label_en: Propulsion
+body_focus: hip/knee/ankle extension, forward drive
+
+concept_id: phase_toe_off
+label_en: Toe-off
+body_focus: ankle plantarflexion, transition to swing
+
+concept_id: phase_swing
+label_en: Swing
+body_focus: knee lift, foot clearance, arm counter-swing
+
+concept_id: phase_flight
+label_en: Flight
+body_focus: aerial phase, late swing descent, minimal double-support in true running
+
+## Finding concepts (stable slugs)
+
+concept_id: finding_overstride
+finding_id: overstride
+headline_en: Foot lands too far ahead
+primary_phases: contact, loading
+
+concept_id: finding_low_cadence_overstride
+finding_id: low_cadence_overstride
+headline_en: Slow turnover with long reach
+primary_phases: contact, clip-level
+
+concept_id: finding_excessive_bounce
+finding_id: excessive_bounce
+headline_en: Too much vertical bounce
+primary_phases: flight, midstance
+
+concept_id: finding_hip_drop
+finding_id: hip_drop
+headline_en: Pelvis drops on stance side
+primary_phases: midstance
+
+concept_id: finding_crossover_gait
+finding_id: crossover_gait
+headline_en: Foot crosses toward midline
+primary_phases: contact, loading
+
+concept_id: finding_stride_asymmetry
+finding_id: stride_asymmetry
+headline_en: Left and right strides differ
+primary_phases: clip-level
+
+## Capture concepts
+
+concept_id: capture_sagittal_running
+label_en: Sagittal-side running capture
+definition: Camera perpendicular to direction of travel; best for overstride and trunk lean proxies.
+authority: ProductLogic
+
+concept_id: capture_rear_running
+label_en: Rear running capture
+definition: Camera behind athlete; best for crossover and hip drop.
+authority: ProductLogic
+
+concept_id: treadmill_running_capture
+label_en: Treadmill capture
+definition: Belt motion affects ground reference; interpret overstride relative to pelvis in image plane.
+authority: ProductLogic

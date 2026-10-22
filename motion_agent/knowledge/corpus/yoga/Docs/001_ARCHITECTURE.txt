@@ -1,0 +1,145 @@
+# Yoga / Mobility Sport Pack — Architecture (CeRebel)
+
+## Purpose
+
+This pack supplies retrieval-grounded knowledge for **body-first yoga and mat-mobility coaching** in CeRebel.
+The product reconstructs human motion from video (2D/3D body keypoints) and explains what the practitioner’s body
+is doing across recognizable **entry, hold, transition, and exit** windows for common asanas and short flow segments.
+
+No props tracking, block placement, or instructor voice alignment is required. Mat boundary and wall distance are
+optional context only.
+
+Primary motion scope (v1):
+- **Static holds** (15–90 s clips or trimmed hold windows): alignment, joint stacking, breath-linked stillness.
+- **Slow transitions** between two named poses (e.g., Down Dog → Plank → Low Cobra).
+- **Standing balance** (Tree, Warrior III prep) from single-camera frontal or 45° capture.
+- **Floor poses** (Child’s, Bridge, Seated Forward Fold) when hips and spine remain visible.
+
+Out of scope for automated findings (glossary or future packs only):
+- Pranayama-only sessions without visible skeletal motion.
+- Acro yoga, partner assists, aerial silks, wall rope systems.
+- Advanced arm balances (Crow, Handstand) until dedicated detector validation — taxonomy lists them; findings v1
+  focus on common beginner–intermediate poses in `Taxonomy/003_common_poses_set.txt`.
+- Spiritual, medical, or diagnostic claims about organs, chakras, or disease treatment.
+
+## Design principles
+
+1. **Body-measurable claims only** for automated findings: joint angles, segment alignment, center-of-mass drift,
+   shoulder–hip–ankle stacking proxies, knee–ankle–hip line in sagittal/frontal views, hold stillness (velocity norms).
+2. **Evidence layering**: peer-reviewed yoga and clinical exercise summaries (B+), ACSM / NHS / Yoga Alliance
+   scope-of-practice framing (B), established Iyengar / Krishnamacharya-lineage **coaching cues** as coaching advice
+   (B), always paired with disclaimer docs — not as medical prescription.
+3. **No fabricated degree targets**: hypermobility and limb-length differences change appearance; ranges are qualitative
+   or attributed to published summaries with **youth vs adult** and **pregnancy / acute injury** separation in disclaimers.
+4. **Pose-first retrieval**: faults, checkpoints, and cues index to `pose_id` and `Phases/001_phase_model.txt` event IDs.
+5. **Hold vs flow fork**: `mode=hold` uses stable-window phases; `mode=flow` uses transition chain events.
+
+## Directory roles (this pack)
+
+| Path | Role |
+|------|------|
+| Docs/ | Product architecture, disclaimers, safe-use policies |
+| Phases/ | Canonical phase model + detector event mapping (hold and flow) |
+| Quality/ | What “good” means in body terms; checkpoint catalog |
+| Findings/ | Fault library (finding cards) linked to poses and phases |
+| Coaching/ | Feel cues and short drills linked to findings |
+| Biomechanics/ | Open-literature summaries: spine, shoulder, knee load in yoga |
+| Training/ | Session structure, progressions, common class patterns |
+| Taxonomy/ | Common poses set, synonyms (Sanskrit / English), relations |
+| _meta/ | Manifests, build reports — excluded from chunk index |
+
+Schema and extended ontology may ship in a later build; v1 RAG anchors on Taxonomy pose IDs and phase event IDs.
+
+## Common poses set (v1 coaching scope)
+
+See `Taxonomy/003_common_poses_set.txt` for the canonical list (~24 asanas) with `pose_id`, English name, family
+(standing, kneeling, supine, prone, seated, inversion-prep), and typical `mode` (hold | flow_node).
+
+## Motion pipeline integration (planned)
+
+### Input contract
+
+- Session adapter produces a `MotionSequence`: joint positions over time, FPS/dt, duration.
+- User or classifier selects `pose_id` (or top-3 hypothesis from coarse pose classifier).
+- Required joints for hold-likeness: shoulders, elbows, wrists, hips, knees, ankles, pelvis; neck optional for
+  cervical extension faults.
+
+### Hold-likeness gate (conservative, planned)
+
+Before enabling full product findings:
+- **Velocity quiet**: median ||v(key joints)|| below threshold for ≥2 s.
+- **Pose hypothesis confidence**: template or classifier score for named pose.
+- **Capture stability**: camera not panning rapidly.
+
+Gate does not authorize medical advice; it prevents sport-mode false positives on walking or general stretching.
+
+### Phase detection (v1 heuristic alignment)
+
+| Event ID | Proxy signal | Notes |
+|----------|--------------|-------|
+| E_CLIP_START | first frame | |
+| E_ENTRY_END | joint speed drops below hold threshold for ≥12 frames | Start of hold analysis |
+| E_HOLD_ANCHOR | argmin COM drift in hold window | Best alignment snapshot |
+| E_HOLD_MID | temporal center between E_ENTRY_END and E_EXIT_START | |
+| E_DRIFT_ONSET | shoulder or hip angle drift > threshold vs anchor | Optional finding trigger |
+| E_EXIT_START | joint speed rises sustained | End hold scoring |
+| E_ARRIVAL (flow) | speed min after transition peak | New pose registered |
+
+Future detectors: lumbar flexion proxy from hip–shoulder line, knee valgus in Warrior II, scapular elevation in Down Dog.
+
+### Coach brief generation (planned)
+
+`build_coach_briefs(..., sport="yoga")` will consume:
+- Pose ID and phase windows (hold anchor preferred for alignment findings).
+- Top finding cards ranked by severity × confidence × visibility.
+- One feel cue + one short drill per prioritized finding (from Coaching/).
+
+Registry status: yoga remains **coming_soon** until hold-window validation; corpus is RAG-ready ahead of code.
+
+## RAG chunking guidance
+
+- English primary text; include Sanskrit names once per concept then English for embedding recall.
+- Repeat stable finding IDs (`fault_*`) in Findings and cross-link in Coaching.
+- Tag chunks with `pose_id`, `mode=hold|flow`, `authority_level` at ingest (from SOURCE_MANIFEST).
+- Do not index `_meta/build_report.txt` as coaching truth — ops only.
+
+## Evidence types (yoga pack)
+
+| evidence_type | Example content | Default authority |
+|---------------|-----------------|-------------------|
+| ResearchFinding | Yoga for low back pain systematic reviews | B+ |
+| BiomechRelationship | Knee flexion and patellofemoral load in lunges | B+ |
+| CoachingAdvice | Stacking, micro-bend, prop alternatives | B |
+| ScopeGuideline | Yoga Alliance / NHS exercise framing | B |
+| ProductLogic | Detector mapping, hold gates | Internal B |
+
+## Youth vs adult
+
+Children and teens differ in balance, femoral anteversion appearance, and hypermobility prevalence. **Hold duration**
+and **depth targets** should be age-appropriate; never merge youth and adult flexibility tables without an age tag.
+
+## Pregnancy, osteoporosis, glaucoma, hypertension
+
+High-risk condition modifiers are **disclaimer and coach-referral** only — automated findings must not contradict
+clinician restrictions. See Docs/002_DISCLAIMER.txt.
+
+## Internationalization
+
+v1 corpus is English for RAG. Sanskrit pose names appear as aliases in Taxonomy.
+
+## Versioning
+
+Pack status: **content build 2026-10-21** (see `_meta/build_report.txt`).
+Breaking changes to `pose_id` or finding slugs require migration notes in pack_readme.
+
+## Related code paths
+
+- `motion_agent/sports/registry.py` — yoga catalog entry (coming_soon).
+- Future: `motion_agent/sports/packs/yoga.py` — pack registration and hold-likeness heuristic.
+
+## Next engineering milestones
+
+1. Labeled hold clips for Down Dog, Warrior II, Tree, Plank → phase event validation.
+2. Pose classifier or user-selected pose_id with confidence downgrade when mismatch.
+3. Flow segment detector (Sun Salutation A subset).
+4. Optional prop-aware UI without automated prop tracking.

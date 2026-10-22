@@ -1,0 +1,191 @@
+# Baseball Team Practice — Pitching Development (body-first alignment)
+
+Practice plans integrate CeRebel phase checkpoints, Pitch Smart workload rules, and short drills from
+Coaching/002_drills.txt. Adjust for age, season phase, and games schedule.
+
+Sources: MLB Pitch Smart (mlb_pitch_smart), Baseball Canada development (baseball_canada_pitch_counts),
+Little League pitching rules (little_league_pitch_counts). Authority: A+ for counts when league specified; B for structure.
+
+Disclaimer: Docs/002_DISCLAIMER.txt — coaches enforce official limits; app does not count pitches in game automatically v1.
+
+---
+
+## Practice design principles
+
+1. **Warm-up before max intent** — general mobility, band work, progressive long toss per org policy.
+2. **One mechanical theme per day** — e.g., separation OR decel, not five cues at once.
+3. **Volume before velocity** — youth development prioritizes repeatable mechanics at submax effort until counts allow.
+4. **Capture for feedback** — one side-view phone clip per bullpen for CeRebel review; avoid filming only release frame.
+5. **Rest days sacred** — after threshold pitch counts, no live-arm bullpens; use drill_pitch_smart_rest_day.
+
+---
+
+## Sample 90-minute youth practice (12–14U, non-game day)
+
+### Block A — Activation (15 min)
+- Dynamic warm-up: legs, hips, T-spine rotation.
+- Band external rotation and scap retractions — light, not fatiguing.
+- 10 progressive toss pairs at 30–60 ft (org-specific cap).
+
+### Block B — Skill theme: separation (20 min)
+- Teach checkpoint cp_separation_window.
+- drill_flat_ground_separation — 10 walk-throughs.
+- drill_stride_line — 5 min no-throw, then 8 throws at 50% from flat ground.
+- Optional: record one clip for CeRebel.
+
+### Block C — Bullpen (25 min)
+- Structured pitch count well below game max (example: 15–25 pitches at mixed intensity — coach sets exact number per Pitch Smart table for age).
+- One cue only: cue_stay_closed_longer.
+- 3 pitches filmed side view mid-block for feedback.
+
+### Block D — Defense integration (20 min)
+- Pitcher fielding practice (PFP): bunts, come-backers — 10 min.
+- Maintains fault_posture_collapse_finish awareness via cue_fielding_ready.
+
+### Block E — Cool down (10 min)
+- Jog, static stretch brief, hydration.
+- Log pitch count in team book / app external to CeRebel.
+
+---
+
+## Sample 60-minute high school practice (in-season, starter day -2)
+
+### Block A (10 min) — Recovery mobility
+- Lower body and posterior shoulder — no heavy lifting same day if game approaching.
+
+### Block B (15 min) — One checkpoint review
+- Review prior CeRebel clip: cp_decel_across_body or cp_firm_front_side based on last session findings.
+- drill_follow_through_checkpoint OR drill_braced_landing_holds — 45–60 s blocks, 3 rounds.
+
+### Block C (25 min) — Controlled bullpen
+- 20–30 pitches, 70–80% intent, mix fastball only unless arm care plan allows off-speed.
+- Avoid radar max chasing on short rest.
+
+### Block D (10 min) — Charting / mental routine
+- Target zones without ball track in app — external charting by catcher/coach.
+
+---
+
+## Pre-game bullpen (all ages)
+
+Duration: 10–15 min, pitch count per coach (often 15–25 warm-up pitches).
+- Progression: wrist flicks short distance → half distance → mound at increasing intent last 5 pitches.
+- Film optional; do not delay game for analysis.
+- Youth: strictly within same-day combined pitch limits including game pitches.
+
+---
+
+## Post-outing recovery (Pitch Smart aligned)
+
+After outing, look up rest days required for pitches thrown (live table on Pitch Smart site).
+
+General pattern (summarized — verify live table):
+- More pitches thrown → more calendar days before next pitching appearance.
+- **No** same-day max bullpen after max game outing for youth.
+
+Activities during rest:
+- Lower-body strength, mobility, hitting if not restricted by league.
+- Zero full-effort mound work.
+
+CeRebel: use drill_pitch_smart_rest_day as educational micro-block.
+
+---
+
+## Baseball Canada development themes (summarized)
+
+- Long-term athlete development: delay single-sport specialization early ages.
+- Pitch count guidelines aligned with rest and multi-sport participation.
+- Emphasis on fun, skill acquisition, and coach education over early velocity contests.
+
+URL: https://www.baseball.ca/en/programs/development/pitch-count-guidelines
+
+Product: tag chunks audience=youth region=CA when citing Canadian tables.
+
+---
+
+## Little League / USA competition context
+
+Official pitch count rules enforced in sanctioned games (Little League hub).
+Travel teams may adopt MLB Pitch Smart recommendations even when not mandated — document which policy applies in session metadata `league_policy_id`.
+
+---
+
+## Using CeRebel in team settings
+
+### Filming protocol
+- Side view, full body, 60 fps if available.
+- Include windup through follow-through (minimum 16 frames for pitch_likeness).
+- Consistent distance; avoid zoom changes mid-clip.
+
+### Feedback loop
+1. Upload clip → identify top 1–2 findings.
+2. Assign one cue + one drill for next practice block B.
+3. Re-film after 2–3 practices — compare repeatability axis in Quality/001_quality_definition.txt.
+
+### Privacy
+- Obtain parent/athlete consent for video analysis per org policy.
+
+---
+
+## Station rotation (large roster, 16 players)
+
+Station 1 (4 pitchers): drill_stride_line no-throw
+Station 2 (4 pitchers): flat ground throws with separation cue
+Station 3 (4 pitchers): bullpen 8 pitches each rotating
+Station 4 (4 players): fielding / rest
+
+Rotate every 12 minutes; total live throws per athlete stays within daily development cap.
+
+---
+
+## Red flags — stop throwing segment
+
+- Reported elbow/shoulder pain during practice.
+- Visible fatigue: release timing SD spikes in multi-clip session (future feature).
+- Athlete unable to complete deceleration without pain.
+
+Action: remove from mound work; refer to medical professional; do not override with mechanics cues.
+
+---
+
+## Season periodization (high level)
+
+Early season: mechanics themes, moderate volume.
+Mid season: maintain checkpoints, monitor cumulative counts.
+Late season / playoffs: reduce new mechanical experiments; prioritize rest and familiar cues.
+
+Not individualized medical periodization — coaches adapt.
+
+---
+
+## Equipment-minimal practices
+
+No mound required for:
+- drill_stride_line
+- drill_rocker_step_rhythm
+- drill_flat_ground_separation
+- mirror side view review
+
+Useful for cold weather markets aligned with Baseball Canada indoor development.
+
+---
+
+## Integration table
+
+| Practice block | Phase emphasis | Sample drill | Checkpoint |
+|----------------|----------------|--------------|------------|
+| Separation day | stride/plant | drill_stride_line | cp_separation_window |
+| Front side day | plant | drill_braced_landing_holds | cp_firm_front_side |
+| Decel day | follow-through | drill_follow_through_checkpoint | cp_decel_across_body |
+| Rhythm day | windup | drill_rocker_step_rhythm | cp_balance_leg_lift |
+| Rest day | n/a | drill_pitch_smart_rest_day | workload |
+
+---
+
+## Sources
+
+- https://www.mlb.com/pitch-smart/pitching-guidelines
+- https://www.baseball.ca/en/programs/development/pitch-count-guidelines
+- https://www.littleleague.org/university/articles/pitch-counts/
+- https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3445080/
+- Coaching/002_drills.txt, Quality/002_checkpoints.txt

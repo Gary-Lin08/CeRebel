@@ -1,0 +1,317 @@
+# Yoga — Checkpoint Catalog
+# Format: checkpoint_id | pose_id / family | phase | body signal | pass heuristic | fail → finding | authority
+
+================================================================================
+GLOBAL — ALL HOLDS
+================================================================================
+
+checkpoint_hold_stillness
+  phase: hold_anchor, hold_late
+  pose: *
+  signal: rolling std of pelvis position (horizontal)
+  pass: drift rate below threshold for ≥2 s after E_ENTRY_END
+  fail: sustained drift → fault_hold_wandering
+  authority: B (motor control / practice quality)
+  youth: larger sway band in balance poses
+
+checkpoint_bilateral_shoulder_level
+  phase: hold_anchor
+  pose: standing_balance, standing (arms out)
+  signal: height difference L vs R shoulder markers
+  pass: difference within normalized band
+  fail: standing-side shoulder hike → fault_shrugged_shoulders (context: Tree, Warrior II)
+  authority: B
+
+================================================================================
+pose_down_dog — INVERSION PREP
+================================================================================
+
+checkpoint_dog_spine_length
+  phase: hold_anchor
+  pose: pose_down_dog
+  signal: hip flexion with moderate knee bend; spine relatively long vs rounded thoracic hump only
+  pass: visible hip hinge; not excessive lumbar hyperextension with ribs flaring rearward
+  fail: extreme lumbar arch with hips dropped → fault_dog_lumbar_sag
+  fail: severe upper back rounding only with no hip hinge → fault_dog_rounded_spine
+  authority: B+ / B
+  note: heels off floor is NOT fail
+
+checkpoint_dog_shoulder_depression
+  phase: hold_anchor
+  pose: pose_down_dog
+  signal: shoulders away from ears; scapular upward rotation proxy
+  pass: ear–shoulder distance not collapsed
+  fail: shoulders shrugged toward ears → fault_dog_shoulder_elevation
+  authority: B
+
+checkpoint_dog_knee_microbend
+  phase: hold_anchor
+  pose: pose_down_dog
+  signal: knee flexion present when hamstring limited (qualitative)
+  pass: slight knee bend acceptable with long spine coaching goal
+  fail: locked knees with posterior pelvic tuck and rounded back → fault_dog_locked_knees (low severity alone)
+  authority: B
+
+checkpoint_dog_hand_shoulder_width
+  phase: entry, hold_early
+  pose: pose_down_dog
+  signal: wrist separation vs shoulder width
+  pass: roughly shoulder-width to slightly wider
+  fail: extremely narrow hands with elbow bowing → fault_dog_narrow_base
+  authority: B
+
+================================================================================
+pose_plank — ARM SUPPORT
+================================================================================
+
+checkpoint_plank_sagittal_line
+  phase: hold_anchor
+  pose: pose_plank
+  signal: ear–shoulder–hip–ankle deviation from straight line (side view)
+  pass: line within tolerance; slight natural lumbar curve OK
+  fail: hip below line → fault_plank_hip_sag
+  fail: hips piked high → fault_plank_hip_pike
+  authority: B+ (plank EMG / kinematics summaries)
+
+checkpoint_plank_shoulder_over_wrist
+  phase: hold_anchor
+  pose: pose_plank
+  signal: shoulder vertical over wrist (sagittal)
+  pass: approximate stacking when camera angle valid
+  fail: shoulders well forward of wrists → fault_plank_shoulder_forward
+  authority: B
+
+checkpoint_plank_neck_neutral
+  phase: hold_anchor
+  pose: pose_plank
+  signal: head extension vs spine line
+  pass: gaze down; neck near line
+  fail: head dropped or craned up → fault_plank_neck_crunch
+  authority: B
+
+================================================================================
+pose_chaturanga_low — PEAK LOAD
+================================================================================
+
+checkpoint_chaturanga_elbow_angle
+  phase: hold_anchor, peak_load
+  pose: pose_chaturanga_low
+  signal: elbow flexion near 90°; elbows not flared extreme
+  pass: upper arm roughly 45° from torso (coaching band, camera dependent)
+  fail: elbows splay wide → fault_chaturanga_elbow_flare
+  fail: shoulders below elbow height proxy → fault_chaturanga_shoulder_drop
+  authority: B+ / B (shoulder load warnings in yoga PT literature)
+
+checkpoint_chaturanga_body_line
+  phase: peak_load
+  pose: pose_chaturanga_low
+  signal: same as plank line
+  fail: hip sag during lowering → fault_plank_hip_sag (shared)
+  authority: B+
+
+================================================================================
+pose_warrior_2 — STANDING LUNGE
+================================================================================
+
+checkpoint_w2_front_knee_track
+  phase: hold_anchor
+  pose: pose_warrior_2
+  signal: front knee flexion; knee over ankle in frontal view
+  pass: knee points same direction as toes; not collapsed inward
+  fail: knee valgus proxy → fault_warrior_knee_collapse
+  fail: knee far forward of ankle with short stance → fault_warrior_knee_past_toes (severity modulated by stance length)
+  authority: B+ (lunge PFJ load); B coaching
+
+checkpoint_w2_arms_shoulder_height
+  phase: hold_anchor
+  pose: pose_warrior_2
+  signal: abducted arm angle vs horizontal
+  pass: arms near horizontal; shoulders relaxed
+  fail: arms drooping with shrug → fault_warrior_arm_drop
+  authority: B
+
+checkpoint_w2_hip_level
+  phase: hold_anchor
+  pose: pose_warrior_2
+  signal: pelvis tilt frontal
+  pass: relatively level hips for open hip pose
+  fail: rear hip hitched → fault_balance_hip_drop
+  authority: B
+
+================================================================================
+pose_warrior_1 — STANDING LUNGE
+================================================================================
+
+checkpoint_w1_hip_square_proxy
+  phase: hold_anchor
+  pose: pose_warrior_1
+  signal: pelvis facing vs front foot (45° camera helps)
+  pass: moderate square toward front; anatomical variation noted in architecture
+  fail: extreme open pelvis with torque complaint cue only → fault_w1_hip_open (low severity, coaching)
+  authority: B
+
+checkpoint_w1_back_heel
+  phase: hold_anchor
+  pose: pose_warrior_1
+  signal: rear foot angle and heel down proxy
+  pass: heel down or lifted variant flagged as style — not auto-fail
+  fail: n/a unless user selects strict Iyengar mode (future)
+  authority: B
+
+================================================================================
+pose_tree — BALANCE
+================================================================================
+
+checkpoint_tree_pelvis_level
+  phase: hold_anchor, hold_late
+  pose: pose_tree
+  signal: frontal pelvis tilt
+  pass: hips level within sway band
+  fail: standing hip pushed out → fault_tree_hip_jut
+  authority: B
+
+checkpoint_tree_foot_placement
+  phase: hold_early
+  pose: pose_tree
+  signal: lifted foot height on leg (visual)
+  pass: foot on inner calf or thigh above knee
+  fail: foot on knee joint line → fault_tree_foot_on_knee (safety coaching, high severity messaging)
+  authority: B (widely taught safety rule)
+
+checkpoint_tree_standing_knee
+  phase: hold_anchor
+  pose: pose_tree
+  signal: standing knee hyperextension
+  pass: micro-bend visible
+  fail: locked knee with sway → fault_locked_knee_balance
+  authority: B+
+
+================================================================================
+pose_chair — LOADED FLEXION
+================================================================================
+
+checkpoint_chair_knee_track
+  phase: hold_anchor
+  pose: pose_chair
+  signal: knee valgus in frontal view
+  pass: knees align over feet
+  fail: knees knock inward → fault_chair_knee_collapse
+  authority: B+
+
+checkpoint_chair_torso_angle
+  phase: hold_anchor
+  pose: pose_chair
+  signal: trunk lean vs vertical
+  pass: chest somewhat upright; weight in heels cue
+  fail: excessive forward fold with load → fault_chair_collapse_forward
+  authority: B
+
+================================================================================
+pose_bridge — SUPINE
+================================================================================
+
+checkpoint_bridge_knee_width
+  phase: hold_anchor
+  pose: pose_bridge
+  signal: knee separation vs hip width
+  pass: knees hip-width; feet parallel
+  fail: knees splay wide → fault_bridge_knee_splay
+  authority: B
+
+checkpoint_bridge_lumbar_drive
+  phase: hold_anchor
+  pose: pose_bridge
+  signal: extension distributed thoracic vs lumbar only
+  pass: lift without maximal cervical crunch
+  fail: chin tuck extreme with lumbar only hinge → fault_bridge_neck_crunch
+  authority: B
+
+================================================================================
+pose_cobra / pose_up_dog — BACKBEND
+================================================================================
+
+checkpoint_cobra_pelvis_contact
+  phase: hold_anchor
+  pose: pose_cobra
+  signal: pelvis low; arms bent for beginner cobra
+  pass: extension thoracic biased
+  fail: full arm straight with lumbar dump → fault_backbend_lumbar_dominant
+  authority: B+
+
+checkpoint_updog_shoulder_stack
+  phase: hold_anchor
+  pose: pose_up_dog
+  signal: shoulders over wrists
+  pass: open chest; legs active
+  fail: shoulders far forward → fault_updog_shoulder_forward
+  authority: B
+
+checkpoint_backbend_neck
+  phase: hold_anchor
+  pose: pose_cobra, pose_up_dog
+  signal: cervical hyperextension
+  pass: gaze forward or slightly up without neck pinch
+  fail: head thrown back → fault_backbend_neck_hyperextension
+  authority: B / clinical caution B+
+
+================================================================================
+pose_forward_fold_standing / pose_seated_forward_fold
+================================================================================
+
+checkpoint_forward_fold_hip_hinge
+  phase: hold_anchor
+  pose: pose_forward_fold_standing, pose_seated_forward_fold
+  signal: hip flexion vs lumbar flexion dominance
+  pass: fold initiates at hips; micro-bend knees standing OK
+  fail: rounded lumbar with straight hips → fault_forward_fold_spine_round
+  authority: B+ (flexion load); osteoporosis user flag → coaching only
+
+checkpoint_seated_sit_bones
+  phase: hold_anchor
+  pose: pose_seated_forward_fold
+  signal: pelvis anterior tilt proxy (sitting on sit bones)
+  pass: long spine before depth
+  fail: posterior pelvic tuck with slump → fault_seated_slump
+  authority: B
+
+================================================================================
+pose_triangle
+================================================================================
+
+checkpoint_triangle_side_bend
+  phase: hold_anchor
+  pose: pose_triangle
+  signal: lateral flexion at hip vs collapse into front knee
+  pass: front leg long or micro-bent; both sides of torso long
+  fail: weight dumped into front knee joint → fault_triangle_knee_hyperextend
+  authority: B
+
+================================================================================
+FLOW — TRANSITIONS
+================================================================================
+
+checkpoint_flow_controlled_lower
+  phase: peak_load, decel
+  pose: flow (chaturanga path)
+  signal: wrist speed and elbow flexion rate
+  pass: deceleration visible before E_ARRIVAL
+  fail: sudden drop → fault_flow_uncontrolled_drop
+  authority: B
+
+checkpoint_dog_to_plank_shift
+  phase: weight_transfer
+  pose: flow
+  signal: pelvis moves forward with stable hands
+  pass: controlled shift
+  fail: hips lead with sag → fault_plank_hip_sag (transition context)
+  authority: B
+
+================================================================================
+SEVERITY NOTES (product logic, internal)
+================================================================================
+
+High messaging priority: fault_tree_foot_on_knee, fault_chaturanga_shoulder_drop, fault_backbend_neck_hyperextension
+Medium: fault_dog_lumbar_sag, fault_warrior_knee_collapse, fault_plank_hip_sag
+Low: fault_dog_locked_knees, fault_w1_hip_open (anatomical variation)
+
+Youth: up-weight balance and foot placement; down-weight depth in forward fold.

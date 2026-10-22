@@ -1,0 +1,156 @@
+# General Human Motion Biomechanics — Overview (evidence-aware summary)
+
+This document summarizes **open-access and widely cited research themes** for CeRebel body-first general coaching.
+It does not prescribe individual medical treatment or guarantee injury prevention. Numeric values are
+**cohort ranges or qualitative heuristics** — not universal targets for every person.
+
+Authority key: A+ public health / WHO | A peer-reviewed clinical | B+ strong reviews |
+B coaching consensus | ProductLogic internal measurement definitions.
+
+Corpus pack id: **human**. Product pack id: **general**. Measurement policy sibling:
+`motion_agent/knowledge/corpus/opensim_motion_tools.txt`.
+
+---
+
+## 1. Posture stack and segment coordination (B+)
+
+Human movement quality in coaching contexts often references an **axial stack**: head balanced over thorax,
+ribs organized over pelvis, pelvis over base of support. Biomechanically this is not rigid “straight spine”
+but **controlled alignment** that limits unnecessary shear and compensatory motion when transferring force
+between lower and upper body.
+
+Trunk–pelvis **coordination** (phase locking, counter-rotation) appears across walking, running, throwing,
+and striking. Literature in *Gait & Posture* and related journals describes coupling between pelvis rotation
+and thorax rotation with activity-dependent phase lags — authority **B+**. CeRebel general pack uses coarse
+phases (prep → action → recover) rather than activity-specific coupling angles.
+
+**Product implication**: stack findings (`posture_stack_break`, `forward_head`) describe **visible organization**,
+not clinical postural syndrome labels.
+
+---
+
+## 2. Forward head and upper quarter kinematics (B+)
+
+Forward head posture (FHP) in sagittal plane is common in sedentary populations. Studies associate increased
+**neck extensor moment** and altered scapular mechanics with sustained forward head positions in laboratory
+setups — authority **B+** (multiple EMG/kinematic studies; effect sizes vary). Video pose estimation provides
+**proxy angles only**; cervical diagnosis requires clinical exam.
+
+Youth: growing athletes may show different neck–trunk proportions; avoid adult FHP thresholds on U12 without
+widened bands (developmental themes, authority B+).
+
+---
+
+## 3. Pelvis orientation and lumbopelvic rhythm (B+)
+
+**Anterior pelvic tilt** (APT) and **posterior pelvic tilt** describe pelvis orientation relative to femurs and
+trunk. APT alone is not disease; it interacts with lumbar curvature and hip flexion range during squat and
+hinge tasks. Lumbopelvic rhythm during forward bend ideally shares flexion between **hip and lumbar spine**;
+excessive lumbar share is coached as “spine-dominant” pattern — authority **B+** in movement screening
+literature (summarized, not Sahrmann syndrome diagnosis in product).
+
+OpenSim pipelines may report pelvis tilt angles in radians or degrees — cite as **measurement** when tools run;
+otherwise 2D proxy with lower confidence per opensim_motion_tools.txt policy.
+
+---
+
+## 4. Postural control, COM, and balance (B+)
+
+**Center of mass (COM)** trajectory relative to **base of support (BOS)** underpins balance. Quiet standing
+shows small anteroposterior and mediolateral sway; single-leg tasks increase sway path length. Reviews on
+postural control in *Sports Medicine* and PMC corpora summarize age-related sway increases — authority **B+**.
+
+CeRebel uses pelvis or model COM **lateral sway** proxies for `single_leg_balance_wobble`. This is not a
+clinical balance test (e.g., BESS scoring replacement).
+
+---
+
+## 5. Frontal-plane knee alignment (B+)
+
+**Dynamic knee valgus** (knee medial to hip–ankle line during flexion) is studied heavily in jump-landing and
+squat tasks regarding **knee loading distribution**. Neuromuscular training programs can reduce valgus in
+some cohorts — authority **B+** (ACL prevention meta-analyses themes). Straight-line walking and generic
+clips show smaller valgus excursions; product gates finding on frontal/oblique capture confidence.
+
+**Youth**: valgus may appear during growth and skill acquisition; coach alignment without fear language.
+
+---
+
+## 6. Hip hinge vs lumbar flexion (B+)
+
+Hip-dominant flexion (**hip hinge**) shifts moment demand toward hip extensors; lumbar-flexion-dominant
+patterns concentrate flexion in spine segments. NSCA and peer-reviewed lifting biomechanics describe hinge
+as fundamental for picks and swings — authority **B/B+**. Individual hamstring flexibility and anthropometry
+alter visible shape; no single “correct” back angle for all.
+
+Finding `stiff_spine_no_hip_hinge` uses **pattern heuristics** (hip flexion share vs lumbar) not diagnosis of
+flexion intolerance.
+
+---
+
+## 7. Bilateral asymmetry (B+)
+
+Left–right differences in shoulder height, limb ROM, and force production are **normal within bands**.
+Athletes show limb dominance; asymmetry beyond habitual band may reflect guarding or prior injury — association
+with injury is inconsistent in literature — authority **B+** for variability themes, **not** diagnostic from video.
+
+Product compares **within-clip** left vs right ROM at action peak for symmetric tasks only.
+
+---
+
+## 8. Movement phases and timing (B)
+
+Motor learning literature emphasizes **preparation**, **execution**, and **feedback** phases. CeRebel maps these
+to setup/prep/load/action/follow_through/recover/reset for sport-agnostic coaching. Abrupt starts (`rushed_prep`)
+reduce time to organize stack — coaching consensus **B**, supported by skill acquisition themes.
+
+---
+
+## 9. OpenSim and monocular inverse dynamics (B, method)
+
+OpenSim musculoskeletal models estimate joint angles, moments, and muscle activations from kinematics with
+assumed dynamics. **Ground reaction forces** from monocular pipelines are **estimated**, not force-plate truth
+(opensim_motion_tools.txt). General pack coaching should not cite peak knee moment numbers from low-confidence
+ID unless uncertainty is disclosed.
+
+Authority **B** for method; coaching claims remain B/B+ from human movement literature.
+
+---
+
+## 10. Youth vs adult summary table (qualitative)
+
+| Topic | Youth (U14 themes) | Adult |
+|-------|-------------------|-------|
+| Stack | More variability; avoid rigid posture dogma | Standard checkpoints with desk-work FHP common |
+| Knee valgus | Widen bands; skill learning | Frontal camera gated finding |
+| Balance sway | Higher normal sway; shorter drill times | Standard sway bands |
+| Asymmetry | Widen shoulder/ROM bands | Standard bands |
+| Evidence | Developmental motor control B+ | General population B+ |
+
+---
+
+## 11. What this pack does NOT claim
+
+- No diagnosis of scoliosis, leg length discrepancy, or nerve compression from pose.
+- No optimal “neutral spine” angle as medical prescription.
+- No replacement for clinical balance or concussion assessment.
+- No sport-specific technique optima (defer to sport packs).
+
+---
+
+## 12. Suggested reading hubs (URLs in SOURCE_MANIFEST)
+
+- PubMed: postural control, trunk pelvis coordination, dynamic knee valgus neuromuscular training.
+- WHO / ACSM: physical activity safety framing.
+- APTA / NSCA public education: movement quality vocabulary at high level.
+
+Detailed retrieved notes: `_meta/research_notes.txt`.
+
+---
+
+## Cross-references
+
+- Phases/001_phase_model.txt — event proxies
+- Findings/001_common_faults.txt — user-facing cards
+- Quality/001_quality_definition.txt — five quality dimensions
+- Docs/002_DISCLAIMER.txt — safe use

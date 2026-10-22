@@ -1,0 +1,206 @@
+# tennis Sport Pack — Research Notes (search agent)
+# Product: CeRebel body-first coaching (OpenSim / visible joints; NO ball tracking)
+# Retrieved: 2026-10-21
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+0. SCOPE & EVIDENCE USE
+================================================================================
+
+- Findings must be measurable on the body: pelvis/torso rotation, shoulder/elbow/wrist
+  angles, knee flexion, split step, lunge depth, head stability, segment timing.
+- Do NOT productize: ball speed, spin, landing in/out, toss placement, net clearance,
+  foot-fault legality (requires court lines), racket string tension.
+- Pooled kinematic degrees from meta-analyses are research aggregates across mixed
+  methods and skill levels—not clinical “correct angles” for users.
+- Separate youth (Red/Orange/Green, shorter rackets) from adult full-court mechanics.
+
+================================================================================
+1. FEDERATION RULES (BODY-RELEVANT EXCERPTS ONLY)
+================================================================================
+
+Authority A+ | License: © ITF Limited (2026 Rules PDF)
+URL: https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf
+Hub: https://www.itftennis.com/en/about-us/governance/rules-and-regulations/
+
+Facts useful for phase labeling (not automated officiating):
+- Rule 16–17: Service begins when server releases ball (hand) then strikes it before
+  it hits the ground; server alternates deuce/ad sides each game.
+- Rule 18 Foot fault: during service motion, server shall not touch baseline or court
+  with foot; shall not touch area outside sideline with foot. Body-first cue: load leg
+  and drive leg stay behind/toe line until contact (visible in side/rear camera).
+- Rule 29 Continuous play: pace of play between points (training context only).
+- Appendix VIII (10-and-under): mandated slower balls and shorter courts for sanctioned
+  10U competition; yellow ball not permitted in those events.
+
+USTA US play context A+ | License: © USTA (Friend at Court 2024)
+URL: https://www.usta.com/content/dam/usta/2024-pdfs/friend-at-court.pdf
+- Contains ITF Rules of Tennis plus USTA regulations and “The Code” (player conduct).
+- Product: cite ITF for global stroke rules; USTA for US organizational context only.
+
+================================================================================
+2. YOUTH SCALING (MOVEMENT ENVIRONMENT, NOT ADULT SERVE PEAKS)
+================================================================================
+
+Authority B | ITF Play and Stay / Tennis10s
+URL: https://www.itftennis.com/en/growing-the-game/itf-tennis-play-and-stay/
+
+- Red (Stage 3): ~75% slower ball; court length 10.97–12.80 m, width 4.27–6.10 m;
+  net 0.800–0.838 m; ages up to ~8; rackets up to ~58 cm.
+- Orange (Stage 2): ~50% slower; court 17.68–18.29 m × 6.10–8.23 m; net up to 0.914 m;
+  ages ~8–10.
+- Green (Stage 1): ~25% slower; full-size court; advanced 9–10; longer rackets.
+- Body-first implication: same joint categories (split, rotate, swing) but smaller
+  amplitude, lower absolute speeds; do not apply adult serve kinetic-chain peak timing
+  to Red/Orange without youth-specific sources.
+
+ITF Red Ball Tennis pilot (participation formats) B
+URL: https://www.itftennis.com/media/17241/world-tennis_red-ball-tennis_global-pilot_aug26_eng_11.pdf
+- Entry formats may use under-arm serve, service-box courts, first-to-10 scoring.
+- Coaching pack should treat under-arm serve as distinct phase model from overhead serve.
+
+USTA Net Generation sample curriculum B | © USTA
+URL: https://www.usta.com/content/dam/usta/content-fragments/tennis-service-center/assets/pdfs/Net-Generation-Practice-Plan-Red.pdf
+- Progression modules: meet ball/racket, forehand/backhand introduction, rally, serve
+  intro—competency-based for ages 5–18. Full manuals require Net Generation registration;
+  Safe Play for Resource Library bulk download.
+
+================================================================================
+3. SERVE — PHASE MODEL & KINETIC CHAIN (BODY)
+================================================================================
+
+Authority A (clinical framework) | Kovacs & Ellenbecker 2011, Sports Health (PMC)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC3445225/
+DOI: https://doi.org/10.1177/1941738111414175
+
+Three phases, eight stages (visible body events for detectors):
+  Preparation: (1) start, (2) release (ball hand), (3) loading, (4) cocking
+  Acceleration: (5) acceleration, (6) contact
+  Follow-through: (7) deceleration, (8) finish
+
+Body-first facts:
+- Effective serve uses synchronous lower-body (quads, hamstrings, hip rotators) then
+  trunk then upper limb—whole-chain evaluation matters, not isolated arm cues.
+- Loading stage: leg drive correlates with service velocity; common foot positions
+  “foot-up” vs “foot-back” during loading (both used at elite level).
+- Acceleration: rear shoulder and pelvis tilt store energy; rapid reversal of lumbar
+  rotation accompanies racket acceleration before impact.
+- Inverse relationship between spin and speed at elite level (do not infer spin from
+  body pose alone without ball data).
+
+Authority B+ | Jacquier-Bret et al. 2024 meta-analysis (PMC, CC BY 4.0)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC11260724/
+DOI: https://doi.org/10.3389/fspor.2024.1432030
+
+Key points of interest (KPOI) for 3D/video body analysis:
+- Trophy position: among most-studied—trunk inclination ~25.0° ± 7.1 (pooled);
+  front-knee flexion ~64.5° ± 9.7 (pooled). High between-study method variance.
+- Racket low point: shoulder lateral rotation ~130.1° ± 26.5 commonly reported.
+- Ball impact: shoulder elevation ~110.7° ± 16.9; elbow flexion ~30.1° ± 15.9 (pooled).
+- Many joints not consistently measured across studies—product should prefer relative
+  timing and symmetry over absolute angle targets.
+
+Authority B+ | Lambrich & Muehlbauer 2023 scoping review (PMC, CC BY 4.0)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC10434869/
+DOI: https://doi.org/10.1371/journal.pone.0290320
+
+- 23 studies (229 players, ages 18–62): kinetic, kinematic, EMG comparisons of serve
+  and groundstroke types/directions/stances show inconsistent significant effects.
+- Heterogeneity drivers: age, sex, skill (rec/intermediate/advanced), force plate vs
+  insoles, mocap vs video vs IMU. Product findings should tag skill band or avoid numbers.
+- Research gaps: limited EMG for serve stance; limited kinetic work on groundstroke types.
+
+================================================================================
+4. FOREHAND & GROUNDSTROKES (BODY)
+================================================================================
+
+Authority B+ | Reid, Elliott, Crespo 2013 forehand review (PMC, JSSM)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC3761830/
+Also: https://jssm.org/vol12/n2/2/v12n2-2text.php
+
+Body-first consensus from reviewed literature:
+- Primary racket-speed contributors: axial rotation of pelvis and trunk; shoulder
+  horizontal adduction and internal rotation; grip style modulates swing plane and speed.
+- End-point consistency: elbow/wrist angular positions at impact relatively stable across
+  swings; path to impact may vary (supports variable practice for advanced players).
+- Novice vs elite practice: blocked practice helps early skill; random/game-like practice
+  benefits after baseline proficiency (pedagogy—not a joint angle).
+- Scaled courts/balls increase successful forehand contacts and engagement in children
+  (Farrow & Reid cited within review)—supports youth/adult separation.
+
+Authority B+ | Landlinger et al. 2010 forehand timing (PMC)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC3761808/
+
+- Elite vs high-performance: later peak pelvis and trunk angular velocities before
+  impact (~18 ms and ~15 ms differences reported) linked to higher shoulder/racket
+  horizontal speeds (tendency, not prescription).
+- Stance: open, closed, square, semi-open categories affect foot/hip alignment; elite
+  match-play stance ratios vary by surface and player (limited sample case studies in
+  Reid review).
+
+Lambrich 2023 (above): groundstroke biomechanics comparisons similarly method-sensitive;
+  open vs closed vs neutral stance kinematics not unified across studies.
+
+================================================================================
+5. ITF / USTA COACHING RESOURCES (PUBLIC vs GATED)
+================================================================================
+
+ITF Coaching hub B
+URL: https://www.itftennis.com/en/growing-the-game/coaching/
+- World Tennis coach education: courses, conferences, online learning, publications.
+- Coaching & Sport Science Review: 3 issues/year, free PDF download (EN/ES/FR)—topics
+  include biomechanics, drills, tactics, psychology.
+  Journal: https://itfcoachingreview.com/index.php/journal
+
+ITF Academy B | Platform terms apply
+URL: https://www.itf-academy.com/
+- Official ITF e-learning + library (videos, research papers). Free registration for
+  many coach course resources; not licensed for bulk republication of course media.
+
+USTA Player Development Learning Series B (public landing)
+URL: https://www.playerdevelopment.usta.com/news/usta_player_development_learning_series/
+- Webinars with PDFs on S&C philosophy, mental skills, coaching philosophy, return-to-play
+  safety themes (2020). Summarize; link for updates.
+
+USTA Resource Library / Coaching app B — GATED
+URLs: https://www.usta.com/en/home/coach-organize/tennis-tool-center/resource-library.html
+      https://coachcare.usta.com/ (Coaching app help)
+- Full coach curriculum, lesson plans, and assessments require Safe Play + (for coaches)
+  certification and paid Coaching package. Use for taxonomy alignment only unless
+  entitlement obtained.
+
+================================================================================
+6. SUGGESTED PHASE EVENTS FOR BODY TRACKING (DRAFT — BRAIN AGENT TO FINALIZE)
+================================================================================
+
+Overhead serve (align to Kovacs 8-stage where possible):
+  START → BALL_RELEASE → LOAD_PEAK → TROPHY / COCKING → FORWARD_SWING →
+  ARM_CONTACT_EST (proxy: max shoulder internal rotation / elbow extension peak) →
+  DECEL → FINISH
+
+Forehand:
+  SPLIT / UNIT_TURN → BACKSWING_PEAK → FORWARD_SWING → IMPACT_PROXY → RECOVERY
+
+Backhand (two-hand vs one-hand): separate phase models later; insufficient unified
+  review coverage in this pass.
+
+Footwork between shots:
+  Reid review notes ~70% of elite groundstrokes involve ~3–4 m movement (notation data)—
+  product can cue “small adjustment steps” vs “deep lunge” from pelvis displacement.
+
+================================================================================
+7. GAPS & NEXT SEARCH PASS
+================================================================================
+
+- One-handed vs two-handed backhand: need dedicated open review (not scoping-only).
+- Volley and overhead smash: limited in cited reviews; ITF CSS Review article search.
+- Wheelchair tennis: ITF rules appendix + CSS Review wheelchair articles (2024 issue).
+- EMG-driven cues: not visible on standard video skeleton—avoid in v1 findings.
+- JSAMS 2024 biophysical serve scoping review: confirm OA license before PDF ingest.
+  URL: https://www.jsams.org/article/S1440-2440(23)00460-7/fulltext
+
+================================================================================
+8. SOURCE INDEX (matches SOURCE_MANIFEST.txt)
+================================================================================
+
+See _meta/SOURCE_MANIFEST.txt for id, authority, license/redistribution notes per URL.

@@ -1,0 +1,86 @@
+{
+  "@context": {
+    "human": "https://example.org/human-kb/ontology/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "label": "skos:prefLabel",
+    "source": {"@id": "prov:wasDerivedFrom", "@type": "@id"},
+    "opensimTools": {"@id": "human:opensimMotionToolsCorpus", "@type": "@id"}
+  },
+  "@graph": [
+    {"@id": "human:opensimMotionToolsCorpus", "@type": "prov:Entity", "label": {"en": "opensim_motion_tools.txt (corpus root)"}, "rdfs:seeAlso": "motion_agent/knowledge/corpus/opensim_motion_tools.txt"},
+    {"@id": "human:HumanKBEntity", "@type": "rdfs:Class", "label": {"en": "Human general motion KB entity", "zh-cn": "通用人体动作知识库实体"}},
+    {"@id": "human:Mover", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "schema:Person"}, "label": {"en": "Mover (general)", "zh-cn": "运动者"}},
+    {"@id": "human:MovementRep", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:HumanKBEntity"}, "label": {"en": "Movement repetition", "zh-cn": "动作重复"}},
+    {"@id": "human:MotionPhase", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:HumanKBEntity"}, "label": {"en": "Motion phase", "zh-cn": "动作阶段"}},
+    {"@id": "human:MotionEvent", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:HumanKBEntity"}, "label": {"en": "Motion event", "zh-cn": "动作事件"}},
+    {"@id": "human:MeasurementDefinition", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:HumanKBEntity"}},
+    {"@id": "human:JointAngle", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:MeasurementDefinition"}},
+    {"@id": "human:SegmentSpeed", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:MeasurementDefinition"}},
+    {"@id": "human:ClipMetric", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:MeasurementDefinition"}, "label": {"en": "Clip-level metric", "zh-cn": "片段级指标"}},
+    {"@id": "human:PostureStackProxy", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:MeasurementDefinition"}, "label": {"en": "Head-rib-pelvis stack proxy", "zh-cn": "头-肋-骨盆对线代理"}},
+    {"@id": "human:BiomechObservation", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:HumanKBEntity"}},
+    {"@id": "human:CoachingConcept", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:HumanKBEntity"}},
+    {"@id": "human:Finding", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:CoachingConcept"}, "label": {"en": "Posture/coordination finding", "zh-cn": "姿态协调问题"}},
+    {"@id": "human:Checkpoint", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:HumanKBEntity"}},
+    {"@id": "human:Evidence", "@type": "rdfs:Class"},
+    {"@id": "human:ResearchFinding", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:Evidence"}},
+    {"@id": "human:CoachingConsensus", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "human:Evidence"}},
+
+    {"@id": "human:phase_setup", "@type": "human:MotionPhase", "label": {"en": "Setup / Ready", "zh-cn": "准备站位"}},
+    {"@id": "human:phase_prep", "@type": "human:MotionPhase", "label": {"en": "Preparation", "zh-cn": "预备"}},
+    {"@id": "human:phase_load", "@type": "human:MotionPhase", "label": {"en": "Load / Transfer", "zh-cn": "加载"}},
+    {"@id": "human:phase_action", "@type": "human:MotionPhase", "label": {"en": "Action", "zh-cn": "发力"}},
+    {"@id": "human:phase_follow_through", "@type": "human:MotionPhase", "label": {"en": "Follow-through", "zh-cn": "跟随"}},
+    {"@id": "human:phase_recover", "@type": "human:MotionPhase", "label": {"en": "Recovery", "zh-cn": "恢复"}},
+    {"@id": "human:phase_reset", "@type": "human:MotionPhase", "label": {"en": "Reset", "zh-cn": "复位"}},
+
+    {"@id": "human:event_setup", "@type": "human:MotionEvent", "label": {"en": "Setup stable", "zh-cn": "稳定起始"}},
+    {"@id": "human:event_prep_end", "@type": "human:MotionEvent", "label": {"en": "End of preparation", "zh-cn": "预备结束"}},
+    {"@id": "human:event_action_peak", "@type": "human:MotionEvent", "label": {"en": "Action peak speed", "zh-cn": "动作峰值速度"}},
+
+    {"@id": "human:series_stack_alignment", "@type": "human:PostureStackProxy", "label": {"en": "Stack alignment", "zh-cn": "对线"}},
+    {"@id": "human:series_head_forward", "@type": "human:JointAngle", "label": {"en": "Forward head proxy", "zh-cn": "头前位代理"}},
+    {"@id": "human:series_pelvis_tilt", "@type": "human:JointAngle", "label": {"en": "Pelvis tilt proxy", "zh-cn": "骨盆倾斜"}},
+    {"@id": "human:series_com_sway", "@type": "human:ClipMetric", "label": {"en": "COM lateral sway", "zh-cn": "重心侧向摇晃"}},
+    {"@id": "human:series_knee_valgus", "@type": "human:JointAngle", "label": {"en": "Knee valgus proxy", "zh-cn": "膝内扣代理"}},
+    {"@id": "human:series_shoulder_height", "@type": "human:MeasurementDefinition", "label": {"en": "Shoulder height asymmetry", "zh-cn": "肩高不对称"}},
+    {"@id": "human:series_limb_rom_asym", "@type": "human:ClipMetric", "label": {"en": "Limb ROM asymmetry", "zh-cn": "肢体活动度不对称"}},
+
+    {"@id": "human:authorityLevel", "@type": "rdf:Property"},
+    {"@id": "human:ageBand", "@type": "rdf:Property"},
+    {"@id": "human:bodySide", "@type": "rdf:Property"},
+    {"@id": "human:precedes", "@type": "rdf:Property"},
+    {"@id": "human:occursIn", "@type": "rdf:Property"},
+    {"@id": "human:measuredOn", "@type": "rdf:Property"},
+    {"@id": "human:failTriggers", "@type": "rdf:Property"},
+    {"@id": "human:derivedFromTools", "@type": "rdf:Property", "rdfs:comment": "When true, prefer OpenSim tool series per opensim_motion_tools.txt"},
+
+    {"@id": "human:finding_forward_head", "@type": "human:Finding", "label": {"en": "Forward head proxy"}},
+    {"@id": "human:finding_posture_stack_break", "@type": "human:Finding", "label": {"en": "Stack break under load"}},
+    {"@id": "human:finding_knee_valgus_visible", "@type": "human:Finding", "label": {"en": "Knee valgus visible"}},
+    {"@id": "human:finding_rushed_prep", "@type": "human:Finding", "label": {"en": "Rushed preparation"}},
+
+    {"@id": "human:checkpoint_stack_setup", "@type": "human:Checkpoint", "label": {"en": "Stack neutral at setup"}},
+    {"@id": "human:checkpoint_knee_valgus_load", "@type": "human:Checkpoint", "label": {"en": "Knee tracking at load"}},
+
+    {"@id": "human:phase_setup", "human:precedes": {"@id": "human:phase_prep"}},
+    {"@id": "human:phase_prep", "human:precedes": {"@id": "human:phase_load"}},
+    {"@id": "human:phase_load", "human:precedes": {"@id": "human:phase_action"}},
+    {"@id": "human:phase_action", "human:precedes": {"@id": "human:phase_follow_through"}},
+    {"@id": "human:phase_follow_through", "human:precedes": {"@id": "human:phase_recover"}},
+    {"@id": "human:phase_recover", "human:precedes": {"@id": "human:phase_reset"}},
+
+    {"@id": "human:finding_forward_head", "human:occursIn": {"@id": "human:phase_setup"}},
+    {"@id": "human:finding_knee_valgus_visible", "human:occursIn": {"@id": "human:phase_load"}},
+    {"@id": "human:series_stack_alignment", "human:measuredOn": {"@id": "human:phase_setup"}},
+    {"@id": "human:checkpoint_stack_setup", "human:failTriggers": {"@id": "human:finding_posture_stack_break"}},
+    {"@id": "human:checkpoint_knee_valgus_load", "human:failTriggers": {"@id": "human:finding_knee_valgus_visible"}},
+
+    {"@id": "human:HumanKBEntity", "rdfs:comment": "Corpus pack id human; product registry pack id general"}
+  ]
+}

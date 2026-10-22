@@ -1,0 +1,75 @@
+# CeRebel Basketball Shooting KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: basketball (jump shot + free throw v1)
+# Aligns: SPORT_PACK_KB_SPEC.txt, future motion_agent/sports/packs/basketball.py
+# Product: body-first pose/OpenSim coaching; NO ball tracking required.
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for jump shot and free throw mechanics. Layups/dunks out of scope v1.
+
+Build agent wrote full Findings/Coaching bodies from this map.
+
+================================================================================
+2. PHASE IDS (STABLE)
+================================================================================
+
+setup | dip | drive | transfer | set | release | follow
+
+FT UI collapses dip/drive; events still use E_FT_BEND and E_FT_HOLD_END.
+
+Primary anchor: E_RELEASE = argmax ||v(shooting_wrist)||.
+
+================================================================================
+3. FAULT MAP (PRIORITY)
+================================================================================
+
+P0: fault_arm_only_shot, fault_guide_hand_push, fault_short_arm_release
+P1: fault_flyaway_elbow, fault_stiff_landing, fault_asymmetric_landing, fault_rushed_free_throw
+P2: fault_no_load, fault_excessive_dip, fault_chicken_wing_finish, fault_head_jerk_release
+
+Each maps to checkpoint fail rows in Quality/002.
+
+================================================================================
+4. MEASUREMENT SURFACE (PLANNED CODE)
+================================================================================
+
+| series_id              | signal                    | phases           |
+|------------------------|---------------------------|------------------|
+| shooting_wrist_speed   | ||v(trail_wrist)||         | release, follow  |
+| knee_flex_avg          | mean knee angles          | dip, drive, follow |
+| com_height             | pelvis y                  | drive, transfer  |
+| elbow_flex_shoot       | shooting elbow            | set, release     |
+| off_hand_wrist_speed   | ||v(lead_wrist)||          | release          |
+
+================================================================================
+5. SHOT VARIANT TAGS
+================================================================================
+
+variant=jump → dip, drive, landing checkpoints active
+variant=ft → routine + quiet legs; suppress landing faults
+
+================================================================================
+6. BUILD OUTPUTS (FILE MAP)
+================================================================================
+
+Docs/001_ARCHITECTURE.txt
+Docs/002_DISCLAIMER.txt
+Schema/001_ontology.txt
+Taxonomy/001_concepts.txt
+Taxonomy/002_relations.txt
+Phases/001_phase_model.txt
+Quality/001_quality_definition.txt
+Quality/002_checkpoints.txt
+Findings/001_common_faults.txt
+Coaching/001_cues.txt
+Coaching/002_drills.txt
+Biomechanics/001_overview.txt
+Training/001_team_practice.txt
+
+================================================================================
+7. REGISTRY STATUS
+================================================================================
+
+motion_agent/sports/registry.py lists basketball as coming_soon until shot_score + pack class land.

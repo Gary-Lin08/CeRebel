@@ -1,0 +1,167 @@
+# Basketball Shooting — Phase Model (v1)
+# Scope: jump shot (variant=jump) and free throw (variant=ft)
+# Aligns: body-only OpenSim / pose keypoints; no ball required
+# Stable phase IDs — do not rename without migration note in pack_readme
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Seven phases cover one complete shooting motion from stance through finish.
+Jump shot and free throw share phases setup → set → release → follow; jump adds
+dip, drive, and landing; free throw replaces dip/drive with optional quiet knee
+flex (ft_load) and skips airborne landing.
+
+Handedness convention (facing camera, square to basket):
+- R-hand shooter: trail = shooting side (right wrist, right elbow, right ankle lead on step).
+- L-hand shooter: mirror all joint names.
+
+================================================================================
+PHASE TABLE
+================================================================================
+
+| phase_id   | label_en        | variant   | start event              | end event                |
+|------------|-----------------|-----------|--------------------------|--------------------------|
+| setup      | Setup / routine | jump, ft  | clip_start               | E_DIP_START or E_FT_BEND |
+| dip        | Load / dip      | jump      | E_DIP_START              | E_DIP_MIN                |
+| drive      | Leg drive / jump| jump      | E_DIP_MIN                | E_COM_PEAK               |
+| transfer   | Upward transfer | jump, ft  | E_DIP_MIN (ft) or E_COM_RISE (jump) | E_SET_START |
+| set        | Set point       | jump, ft  | E_SET_START              | E_RELEASE                |
+| release    | Release         | jump, ft  | E_RELEASE - 3 frames     | E_RELEASE + 5 frames     |
+| follow     | Follow / land   | jump, ft  | end(release)             | E_LAND+stable or E_FT_HOLD_END |
+
+Free throw mapping:
+- Skip `dip` and `drive` as active phases; optional micro-phase `ft_load` collapses into setup→transfer when
+  knee flex < 5° (straight-leg FT style).
+- `follow` ends at E_FT_HOLD_END (wrist speed below threshold for ≥200 ms), not landing.
+
+================================================================================
+EVENT DEFINITIONS (body-only)
+================================================================================
+
+E_SETUP_STABLE
+  Definition: rolling std of pelvis position < threshold for ≥8 frames at clip start.
+  Fallback: first frame of clip.
+  Detector use: trim pre-motion dead time.
+
+E_DIP_START (jump only)
+  Definition: shooting-side or average knee flexion begins decreasing after setup (eccentric load).
+  Proxy: d(knee_angle)/dt < -threshold for 3 consecutive frames.
+  Fallback: setup_end + 5% of window span.
+
+E_DIP_MIN (jump only)
+  Definition: local minimum of knee flexion (max flexion angle) before E_COM_RISE.
+  Proxy: argmin knee_angle in [E_DIP_START, E_COM_PEAK].
+  Notes: small dips (<10° change) may indicate catch-and-shoot with minimal load — flag low confidence.
+
+E_COM_RISE (jump only)
+  Definition: vertical velocity of pelvis (or mid-hip) exceeds positive threshold.
+  Proxy: v_y(pelvis) > 0.05 m/s (scale-normalized in product code).
+
+E_COM_PEAK (jump only)
+  Definition: local maximum pelvis height before release.
+  Proxy: argmax hip_y in [E_DIP_MIN, E_RELEASE].
+
+E_FT_BEND (free throw only)
+  Definition: optional knee flexion during routine before upward motion; may coincide with E_SETUP_STABLE end.
+  Proxy: same as E_DIP_MIN but without subsequent COM rise above jump threshold.
+
+E_SET_START
+  Definition: shooting wrist height enters upper quartile of its range in [E_DIP_MIN or E_FT_BEND, E_RELEASE].
+  Proxy: wrist_y crosses 75th percentile of wrist_y in pre-release window.
+  Coaching term: “set point” — ball would sit near forehead/chin for many styles; we only see wrist path.
+
+E_RELEASE
+  Definition: argmax ||v(shooting_wrist)|| in analysis window.
+  Primary timing anchor for all shot types.
+  Note: NOT official ball release without ball track; wrist speed peak is standard proxy in pose-only pipelines.
+
+E_LAND (jump only)
+  Definition: first frame after E_RELEASE where shooting-side ankle vertical velocity ≈ 0 and foot height near
+  minimum in landing window.
+  Proxy: zero-crossing of v_y(ankle_shooting) after E_COM_PEAK.
+  Fallback: E_RELEASE + 40% of remaining clip.
+
+E_LAND_STABLE (jump only)
+  Definition: E_LAND + frames until knee flexion change rate < threshold (settled stance).
+  Used for landing balance findings.
+
+E_FT_HOLD_END (free throw only)
+  Definition: time when ||v(shooting_wrist)|| stays below 15% of E_RELEASE peak for ≥200 ms after release.
+  Marks end of follow-through hold.
+
+================================================================================
+DETECTOR EVENT MAP (future sport_analysis)
+================================================================================
+
+| product_event_id     | maps_to        | priority |
+|----------------------|----------------|----------|
+| release_peak_wrist   | E_RELEASE      | P0       |
+| set_point_wrist      | E_SET_START    | P1       |
+| jump_takeoff         | E_COM_RISE     | P1       |
+| landing_contact      | E_LAND         | P2       |
+| dip_bottom           | E_DIP_MIN      | P2       |
+
+Phase scrub bar (UI): setup | dip | drive | transfer | set | release | follow
+FT UI: setup | transfer | set | release | follow  (collapse dip/drive labels)
+
+================================================================================
+TIMING RELATIONSHIPS (qualitative, B+ literature)
+================================================================================
+
+Typical skilled jump shot (not prescriptive):
+- Leg extension and COM rise begin before or concurrent with rapid shooting-elbow extension.
+- Wrist speed peak (E_RELEASE) occurs near or after COM peak for many catch-and-shoot styles.
+- Free throw: minimal COM displacement; E_RELEASE often after quiet knee re-extension.
+
+Youth: longer setup, smaller dip amplitude, lower COM rise — use age-tagged checkpoints in Quality/002.
+
+================================================================================
+CLIP TRIMMING GUIDANCE
+================================================================================
+
+Ideal clip: includes full setup routine through landing (jump) or 1 s hold (FT).
+Minimum: 0.5 s before E_DIP_START through E_LAND_STABLE or E_FT_HOLD_END.
+If clip starts late, setup phase may be empty — reduce confidence on balance/stance findings.
+
+================================================================================
+CROSS-REFERENCES
+================================================================================
+
+Findings: fault_* → primary phase column
+Quality: checkpoint_* → evaluated phase
+Coaching: cue_* / drill_* → phase focus
+Biomechanics: joint sequence narrative
+
+## V2 PHASE LINK INDEX (auto)
+
+# detector_events + fault_links per phase for OpenSim/body detectors
+
+phase_id: dip
+detector_events: E_DIP_START, E_DIP_MIN
+fault_links: fault_no_load, fault_excessive_dip, fault_asymmetric_dip, fault_catch_shoot_late_pivot, fault_catch_shoot_hop_back, fault_inside_pivot_collapse
+
+phase_id: drive
+detector_events: E_DIP_MIN, E_COM_RISE, E_COM_PEAK
+fault_links: fault_arm_only_shot, fault_excessive_dip, fault_lateral_leak, fault_over_wide_base, fault_lean_back_release
+
+phase_id: follow
+detector_events: E_LAND, E_LAND_STABLE, E_FT_HOLD_END
+fault_links: fault_narrow_base, fault_stiff_landing, fault_asymmetric_landing, fault_chicken_wing_finish, fault_landing_forward_lunge
+
+phase_id: release
+detector_events: E_RELEASE
+fault_links: fault_flyaway_elbow, fault_guide_hand_push, fault_short_arm_release, fault_wrist_only_release, fault_head_jerk_release, fault_ft_rhythm_break, fault_ft_early_arm, fault_set_behind_head, fault_lean_back_release, fault_offhand_thumb_over
+
+phase_id: set
+detector_events: E_SET_START, E_RELEASE
+fault_links: fault_flyaway_elbow, fault_low_set_point, fault_guide_hand_push, fault_ft_early_arm, fault_set_behind_head, fault_offhand_thumb_over
+
+phase_id: setup
+detector_events: E_SETUP_STABLE, E_FT_BEND
+fault_links: fault_collapsed_setup, fault_narrow_base, fault_rushed_free_throw, fault_feet_misaligned, fault_over_wide_base, fault_ft_rhythm_break, fault_catch_shoot_late_pivot, fault_catch_shoot_hop_back, fault_inside_pivot_collapse
+
+phase_id: transfer
+detector_events: E_COM_RISE, E_SET_START
+fault_links: fault_arm_only_shot, fault_ft_rhythm_break, fault_ft_early_arm, fault_lean_back_release
+

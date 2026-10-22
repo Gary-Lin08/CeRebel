@@ -1,0 +1,132 @@
+# Baseball Pitching — Quality Definition (body-first)
+
+## What “quality” means in CeRebel
+
+Quality is **not** a single score like radar velocity or strike percentage. For this pack, a **quality pitch
+delivery** (movement quality) means:
+
+1. **Stable setup and rhythm** — controlled wind-up without rushing or postural sway that steals separation time.
+2. **Timed lower-to-upper sequence** — pelvis/trunk rotation accelerates after lead leg begins accepting force;
+   throwing arm peaks after the front side firms.
+3. **Efficient arm path visible from body** — smooth circular path without obvious collapse of throwing-side
+   posture at release; deceleration crosses the body rather than stopping short (“chicken wing”).
+4. **Repeatable phase windows** — consecutive pitches show similar timing from foot plant proxy to release
+   proxy (when multi-pitch sessions exist).
+5. **Workload-aware training context** — for youth, quality includes adhering to pitch-count and rest guidance
+   regardless of how “clean” one rep looks.
+
+Quality findings are **coaching and load-management signals**, not medical grades.
+
+Authority mix: B+ biomechanics relationships, B coaching consensus, A/A+ for youth volume policies.
+
+---
+
+## Dimensions of quality (orthogonal axes)
+
+### axis_timing
+Definition: Proximal-to-distal ordering — stride/plant → trunk → arm → wrist peak.
+High quality: trunk peak rotation near plant/acceleration; release after front leg begins blocking.
+Low quality: trunk rotates early; arm drags or pushes without lower-body anchor.
+
+Measurable proxies:
+- Time(E_RELEASE) - time(E_STRIDE_PEAK) within athlete’s typical band.
+- Trunk yaw peak after lead ankle speed peak.
+
+### axis_posture
+Definition: Head/spine/pelvis organization through delivery.
+High quality: head stays between feet through release; finish flexion is smooth, not collapsed sideways.
+Low quality: head pulls glove-side early; excessive lean away from plate at finish.
+
+Measurable proxies:
+- Lateral head displacement relative to pelvis pre-release.
+- Shoulder line tilt at release (2D proxy only).
+
+### axis_stride_direction
+Definition: Lead leg travels toward home plate area, not across body.
+High quality: ankle path forward; plant allows hip rotation open.
+Low quality: stride lands closed, blocking hip rotation; short/overlong stride for athlete size.
+
+Measurable proxies:
+- Lead ankle forward vs lateral displacement ratio.
+- Stride length normalized by athlete height estimate (if available) or pelvis-ankle distance at plant.
+
+### axis_arm_action
+Definition: Throwing arm path and deceleration.
+High quality: arm accelerates through release; follow-through finishes low across opposite thigh zone.
+Low quality: low slot from collapsed shoulder; elbow stays bent beside body after release.
+
+Measurable proxies:
+- Elbow extension rate pre-release.
+- Elbow flexion angle 200–400 ms post-release.
+
+### axis_repeatability
+Definition: Consistency across reps in session.
+High quality: release timing SD low; phase durations stable.
+Low quality: high variance — may indicate fatigue, pain avoidance, or inconsistent cues.
+
+Requires multi-pitch session metadata.
+
+### axis_workload_youth
+Definition: Pitch volume and rest comply with league/NGB tables.
+High quality: pitches within daily max; required rest observed.
+Low quality: exceeded counts — flag regardless of mechanics.
+Audience: youth only; source Pitch Smart / Baseball Canada / Little League.
+
+---
+
+## Quality tiers (product language)
+
+tier_excellent:
+- No medium/high findings in timing, posture, stride, or arm axes.
+- Checkpoints cp_balance_leg_lift, cp_firm_front_side, cp_decel_across_body pass.
+- Optional: pitch_likeness >= 0.8 when detector enabled.
+
+tier_good:
+- At most one medium finding; no high severity timing or decel faults.
+- Checkpoints mostly pass with one soft fail.
+
+tier_needs_work:
+- Multiple medium findings OR one high severity fault (early trunk, chicken wing with high confidence).
+
+tier_insufficient_data:
+- Occluded joints, short clip, or non-pitch motion (golf guard, low pitch_likeness).
+- Do not assign tier_excellent/good — prompt better capture.
+
+---
+
+## What quality is NOT
+
+- Not command (strike zone accuracy) — no ball track.
+- Not pitch-type effectiveness — no spin model v1.
+- Not injury prediction — decel faults discuss stress patterns cautiously per disclaimer.
+
+---
+
+## Relationship to findings library
+
+Each finding in Findings/001_common_faults.txt maps to one or more quality axes and lowers the relevant
+axis score. Coach briefs prioritize faults that affect timing and decel axes for health-aware messaging.
+
+---
+
+## Youth vs adult weighting
+
+Adults: emphasize timing, repeatability, decel path.
+Youth: add axis_workload_youth with equal or higher priority than mechanical tier when counts are unknown
+from video — prompt coach to log pitch count externally.
+
+---
+
+## Multi-pitch aggregation (future)
+
+Session quality = weighted median of per-pitch axis scores with fatigue drift detection (late-session
+timing degradation). v1 may only analyze single clips.
+
+---
+
+## Sources
+
+- PMC3764822 — sequential rotation importance (summarized).
+- MLB Pitch Smart — youth workload as quality-of-program factor.
+- Baseball Canada pitch count guidelines — rest and limits.
+- Internal CeRebel architecture — body-first constraints.

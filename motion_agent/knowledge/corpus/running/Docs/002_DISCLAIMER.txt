@@ -1,0 +1,69 @@
+# Running Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel running content summarizes **open biomechanics literature, sports-medicine consensus themes, and
+reputable coaching education**. It is **not** a substitute for licensed medical care, physical therapy
+diagnosis, or individualized return-to-run protocols.
+
+- Sharp pain, swelling, stress-fracture history, chest pain, or dizziness during running require evaluation
+  by a qualified clinician — do not rely on an app finding to increase volume or intensity.
+- Youth and masters athletes have different bone, tendon, and recovery tolerance; follow coach and medical
+  guidance for growth-related pain (e.g., apophysitis) and cardiovascular screening when required.
+
+## Not a training-plan or load-management system
+
+Weekly mileage, intensity distribution, and race peaking are **not** enforced by body tracking alone.
+This pack educates on visible gait tendencies; official training plans belong to coaches and licensed
+professionals.
+
+## Body tracking limitations
+
+Single-camera 2D pose estimation can mis-estimate:
+
+- Foot strike position relative to center of mass when the camera is not true sagittal.
+- Knee valgus in the frontal plane when filmed from the side only.
+- Pelvis obliquity when shorts or occlusion hide hip landmarks.
+- Cadence when foot contacts are missed at low frame rate.
+
+Findings describe **visible tendencies**, not laboratory-grade kinematics or kinetics. Confidence should
+be lower when joints are occluded or FPS is below ~24.
+
+## Cadence and “ideal form”
+
+Research shows relationships between step rate, stride length, and joint loading in controlled studies,
+but **no single cadence or foot-strike pattern is optimal for every runner**. Changing cadence may help
+some athletes and harm others if applied abruptly without progression. This pack avoids promising injury
+prevention from a single cue.
+
+## Biomechanical “norms”
+
+Published studies report **group averages and correlations**, not one correct pose for every body type,
+speed, or footwear. Terrain, fatigue, and shoe choice change appearance. Numeric checkpoints in this pack
+are conservative coaching heuristics for product gating — not clinical thresholds.
+
+## Coaching relationship
+
+Automated briefs support coaches, athletes, and parents who already have a training context. They do not
+replace supervised learning for beginners or post-injury retraining.
+
+## Emergency
+
+For collapse, suspected cardiac event, or acute trauma on a run, follow venue emergency procedures and
+seek immediate medical attention.
+
+## Product behavior
+
+- Running pack features may be gated as “coming soon” until detector validation completes — absence of a
+  finding is not proof of safe mechanics or readiness to race.
+- The system may refuse to analyze clips that appear to be other sports (golf swing, pitch, kick).
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` with authority levels. Guidelines change; retrieval
+dates matter. When in doubt, cite the live official source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Coaching tips from motion analysis — not medical advice. Stop if you feel pain. Change training load
+with a qualified coach or clinician.”

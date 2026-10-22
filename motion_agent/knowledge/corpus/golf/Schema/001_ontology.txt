@@ -1,0 +1,50 @@
+# Sport Pack alias — canonical content also in 001_golf-ontology.txt
+
+{
+  "@context": {
+    "golf": "https://example.org/golf-kb/ontology/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "label": "skos:prefLabel",
+    "source": {"@id": "prov:wasDerivedFrom", "@type": "@id"},
+    "validFrom": {"@id": "schema:validFrom", "@type": "xsd:date"},
+    "validThrough": {"@id": "schema:validThrough", "@type": "xsd:date"}
+  },
+  "@graph": [
+    {"@id": "golf:GolfEntity", "@type": "rdfs:Class", "label": {"en": "Golf entity", "zh-cn": "高尔夫实体"}},
+    {"@id": "golf:Rule", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:Definition", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:Clarification", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:Golfer", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "schema:Person"}},
+    {"@id": "golf:Course", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "schema:Place"}},
+    {"@id": "golf:Hole", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:Tournament", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "schema:SportsEvent"}},
+    {"@id": "golf:Round", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:Shot", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:EquipmentModel", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "schema:Product"}},
+    {"@id": "golf:MeasurementDefinition", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:SwingEvent", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:BiomechObservation", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:CoachingConcept", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:GolfEntity"}},
+    {"@id": "golf:Evidence", "@type": "rdfs:Class"},
+    {"@id": "golf:RuleFact", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:Evidence"}},
+    {"@id": "golf:StatisticalFact", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:Evidence"}},
+    {"@id": "golf:MeasuredFact", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:Evidence"}},
+    {"@id": "golf:ManufacturerClaim", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:Evidence"}},
+    {"@id": "golf:ResearchFinding", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:Evidence"}},
+    {"@id": "golf:CoachingAdvice", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:Evidence"}},
+    {"@id": "golf:CommunityOpinion", "@type": "rdfs:Class", "rdfs:subClassOf": {"@id": "golf:Evidence"}},
+    {"@id": "golf:authorityLevel", "@type": "rdf:Property", "schema:rangeIncludes": {"@id": "schema:Text"}},
+    {"@id": "golf:licenseNotice", "@type": "rdf:Property", "schema:rangeIncludes": {"@id": "schema:Text"}},
+    {"@id": "golf:retrievedAt", "@type": "rdf:Property", "schema:rangeIncludes": {"@id": "xsd:dateTime"}},
+    {"@id": "golf:sourceRecordId", "@type": "rdf:Property", "schema:rangeIncludes": {"@id": "schema:Text"}},
+    {"@id": "golf:confidence", "@type": "rdf:Property", "schema:rangeIncludes": {"@id": "xsd:decimal"}},
+    {"@id": "golf:measuredAt", "@type": "rdf:Property"},
+    {"@id": "golf:precedes", "@type": "rdf:Property"},
+    {"@id": "golf:associatedWith", "@type": "rdf:Property"}
+  ]
+}

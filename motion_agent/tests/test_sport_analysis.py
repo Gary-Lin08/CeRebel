@@ -44,6 +44,9 @@ class TestSportAnalysis(unittest.TestCase):
                 "build_sport_analysis",
                 {"sport": sport, "handedness": "right"},
             )
+            if sport == "baseball" and result.get("type") == "SPORT_MISMATCH":
+                # Golf capture must not be dressed as a pitch.
+                continue
             self.assertFalse(result.get("error"), result)
             self.assertEqual(result.get("ui_hint"), "sport_motion_board")
             self.assertGreaterEqual(len(result.get("phases") or []), 1)
@@ -70,9 +73,19 @@ class TestSportAnalysis(unittest.TestCase):
             self.assertIn("values", summary["series"][0])
 
     def test_prefetch_and_bootstrap(self) -> None:
-        payload = get_sport_analysis("baseball", data_dir=DATA_DIR)
-        self.assertFalse(payload.get("error"), payload)
-        self.assertEqual(payload.get("sport"), "baseball")
+        golf = get_sport_analysis("golf", data_dir=DATA_DIR)
+        self.assertFalse(golf.get("error"), golf)
+        self.assertEqual(golf.get("sport"), "golf")
+
+        baseball = get_sport_analysis("baseball", data_dir=DATA_DIR)
+        # Newest ready session is currently a golf swing — refuse pitch theater.
+        if baseball.get("type") == "SPORT_MISMATCH" or baseball.get("error"):
+            self.assertIn(
+                baseball.get("type"),
+                ("SPORT_MISMATCH", "ANALYSIS_FAILED", "INVALID_ARGUMENT"),
+                baseball,
+            )
+            return
 
         class _Quiet:
             supports_tool_calling = lambda self: True

@@ -1,0 +1,220 @@
+# Boxing — Shadowboxing Training Structure (technique form only)
+
+Scope: non-contact shadow rounds, warm-ups, and station progressions suitable for clubs, schools, and solo practice.
+No sparring, bag stations, or competition prep. Authority: B (coach-education patterns) with B+ where noted for
+motor learning principles. See Docs/002_DISCLAIMER.txt.
+
+================================================================================
+1. SESSION PURPOSE
+================================================================================
+
+Shadow sessions build **repeatable stance, guard, footwork, and punch paths** before adding equipment or partners.
+Body-first video review aligns with CeRebel phase windows: prep → extension → recoil → guard.
+
+Goals per session (pick 2–3):
+- Guard discipline under light fatigue.
+- Jab-cross rhythm with reset (beginner) or flow (advanced).
+- Footwork: advance, retreat, pivot without crossing feet.
+- Defensive shapes: slip and roll at half speed with hands high.
+
+================================================================================
+2. TYPICAL WARM-UP (8–12 MINUTES)
+================================================================================
+
+General movement (3–4 min):
+- Jump rope optional — skip if space limited; marching and light skipping in place acceptable.
+- Dynamic mobility: arm circles, hip openers, ankle rolls — avoid aggressive neck cranking.
+
+Boxing-specific activation (5–8 min):
+- `drill_stance_reset_hop` or stance line resets — 45 s.
+- `drill_guard_march` — 60 s.
+- Slow shadow jab only — 20 reps at 40% speed, focus recoil (links Coaching/002).
+- Optional: 30 s slip-rope imagined each direction at walking speed.
+
+Youth: shorten general section; emphasize game-like guard freezes called by coach.
+
+================================================================================
+3. SHADOW ROUND FORMAT
+================================================================================
+
+Round length:
+- Beginners: 1–2 min rounds, 1 min rest.
+- Intermediate: 2–3 min rounds.
+- Youth: 45–90 s rounds with longer rest; stop if form breaks (hands drop).
+
+Round types (rotate across a week):
+
+Type A — Fundamental round
+- Jab only or jab-step; recoil every rep.
+- Coach cue every 30 s from Coaching/001 (e.g., cue_home_faster).
+
+Type B — Combination round
+- 1-2 (jab-cross) with guard pause for beginners; continuous for advanced.
+- Metronome optional (`drill_metronome_one_two`).
+
+Type C — Movement round
+- Advance 3 steps, jab-cross, retreat 3 steps — no crossing feet.
+- Pivot 180° on coach call; guard stays high.
+
+Type D — Defense round
+- Slip-slip-roll-reset; no power punches required.
+- Half speed; prioritize `fault_hands_drop_on_slip` avoidance.
+
+Between rounds: reset stance, breathe, sip water — not a conditioning test unless coach explicitly plans fitness.
+
+================================================================================
+4. STATION ROTATIONS (SMALL GROUP, 20–30 MIN BLOCK)
+================================================================================
+
+Station 1 — Mirror shadow fundamentals
+- Athletes face mirror or film one rep; 90 s on jab-cross slow.
+- Finding focus: elbow path, guard return.
+
+Station 2 — Footwork ladder
+- `drill_short_step_ladder` + pivot circle abbreviated.
+- Finding focus: overstep, crossed feet.
+
+Station 3 — Defense lane
+- Slips and rolls with coach walking lane — verbal corrections only.
+- Finding focus: hands high during head move.
+
+Station 4 — Rhythm station
+- Metronome 1-2 or breath shadow round at 60% (`drill_breath_shadow_round`).
+- Finding focus: tension and guard under light fatigue.
+
+Rotate every 5–6 min; debrief one body focus sentence per station (motor learning B+: external focus cues).
+
+================================================================================
+5. SOLO HOME PRACTICE (10–15 MIN)
+================================================================================
+
+Minimal safe solo template:
+1. Stance reset × 8.
+2. 60 s guard march.
+3. 2 × 90 s shadow rounds Type B at moderate speed.
+4. 45 s hook freeze check each hand.
+5. 60 s cool-down walk, shoulders loose.
+
+Film one round oblique for CeRebel upload when available — confirm stance tag orthodox/southpaw.
+
+================================================================================
+6. VOLUME AND INTENSITY GUIDANCE
+================================================================================
+
+Shadowboxing is low external load but **high repetition** for shoulders and elbows if every punch is 100% speed.
+
+- Beginners: quality over volume — 4–6 short rounds per session max.
+- Youth: cap speed; coach ends round when hands drop or stance narrows.
+- Adults: increase round count before max speed; add footwork complexity before flurries.
+
+This is coaching workload guidance (B), not medical training load prescription. Pain stops the session.
+
+================================================================================
+7. PROGRESSION LADDER (TECHNIQUE ONLY)
+================================================================================
+
+Level 1: Stance + guard march + in-place jab with recoil.
+Level 2: Step jab + rear hand stays home.
+Level 3: 1-2 with guard reset between pairs.
+Level 4: Hooks with bent elbow freeze checks.
+Level 5: Slips and rolls at half speed with guard.
+Level 6: Movement rounds — advance/retreat with combos.
+Level 7: Flow combinations with intentional guard touch (advanced — still shadow).
+
+Do not skip guard discipline rungs to reach long combos faster (syllabus pattern, B).
+
+================================================================================
+8. INTEGRATION WITH CEREBEL (PLANNED)
+================================================================================
+
+Recommended clip capture for analysis:
+- 3–10 s segments with 2–4 clear punch cycles OR one footwork + combo block.
+- Camera ~30–45° off frontal; full body in frame including feet.
+- Tag stance and skill level (beginner guard-reset vs advanced flow) for finding thresholds.
+
+Coach briefs should pull one cue + one drill from Coaching/ mapped to top finding.
+
+================================================================================
+9. WHAT THIS PACK DOES NOT COVER
+================================================================================
+
+- Heavy bag round structure, mitt calling patterns, sparring rounds, weight cutting, fight camp peaking.
+- Strength and conditioning programs — refer to S&C professionals.
+- Medical return-to-boxing after concussion — clinician only.
+
+Future sibling content may address bag work with separate phase semantics and load disclaimers.
+
+================================================================================
+10. SOLO SHADOWBOXING PRACTICE BLOCKS (PRIMARY TEMPLATE)
+================================================================================
+
+These blocks are designed for **one athlete, no equipment**, in a clear floor space (optional mirror or
+phone camera at 30–45°). Each block lists duration, phase focus, and one Coaching/002 drill anchor.
+Rest 30–60 s between blocks unless noted. Technique-only — no power-max or “hit harder” language.
+
+Block S1 — Stance and guard reset (5 min)
+  0:00–1:00  General march + arm circles (low neck load).
+  1:00–2:00  `drill_stance_reset_hop` or step-reset for youth (8 landings, guard up).
+  2:00–3:30  `drill_guard_march` — freeze on coach self-call every 15 s.
+  3:30–5:00  Slow in-place jab × 16 (40% speed); recoil before next rep.
+  Focus finding band: fault_hands_drop, fault_narrow_stance (Quality/002).
+
+Block S2 — Jab discipline (6 min)
+  0:00–1:30  Lead jab only, in place — extension peak then full recoil (prep → extension → recoil → recovery).
+  1:30–3:00  Step jab forward 3 steps, retreat 3 steps — no crossed feet (`drill_short_step_ladder` abbreviated solo).
+  3:00–4:30  Jab with verbal cue “rear hand home” every 4 reps.
+  4:30–6:00  45 s continuous jabs at 60% speed; stop if hands drop.
+  Focus: fault_rear_hand_drop_on_jab, fault_slow_recoil.
+
+Block S3 — Cross and hip turn (6 min)
+  0:00–2:00  Rear-hand cross only, in place — emphasize hip before hand (half speed).
+  2:00–3:30  1-2 (jab-cross) with **guard pause** 1 s between pairs (beginner rhythm).
+  3:30–5:00  1-2 flow at 70% with reset every 8 pairs (advanced solo).
+  5:00–6:00  `drill_metronome_one_two` optional — 60 s at comfortable BPM.
+  Focus: fault_arm_only_punch, fault_slow_recoil, fault_flat_rear_foot_cross.
+
+Block S4 — Footwork travel (5 min)
+  0:00–2:00  Advance 4 steps, jab-cross, retreat 4 steps — repeat × 4 cycles.
+  2:00–3:30  Pivot 90° on lead foot, guard high, no cross-step.
+  3:30–5:00  “Square and go” — return to stance line after each combo (self-check base width).
+  Focus: fault_feet_crossed, fault_lateral_leak_punch, fault_overstep.
+
+Block S5 — Defense shapes at half speed (5 min)
+  0:00–2:00  Slip lead side × 8, slip rear × 8 — hands stay in guard band.
+  2:00–3:30  Roll under imaginary line × 6 each direction — knees soft.
+  3:30–5:00  Slip-slip-roll-reset cycle; no flurry punches required.
+  Focus: fault_hands_drop_on_slip, fault_chin_up.
+
+Block S6 — Rhythm and fatigue control (4 min)
+  0:00–2:00  `drill_breath_shadow_round` — exhale on extension, inhale on recoil.
+  2:00–4:00  90 s shadow round Type B at 65%; end early if fault_combo_without_guard appears (next prep before recoil).
+  Focus: guard integrity under light fatigue.
+
+================================================================================
+11. SOLO SESSION PRESETS (COMPOSE BLOCKS)
+================================================================================
+
+Preset “Fundamentals 15” (youth-friendly):
+  S1 + S2 (shorten S2 to 4 min) + 2 min walk cool-down. Cap speed at “sharp extension, snap back.”
+
+Preset “Intermediate 20”:
+  S1 + S2 + S3 + 3 min mixed footwork from S4 (one direction only).
+
+Preset “Movement 25”:
+  S1 + S4 + S3 + S6 — emphasizes base and reset under fatigue.
+
+Preset “Defense emphasis 12”:
+  S1 (3 min) + S5 + S6 (2 min) — no requirement for hard punches.
+
+Film for CeRebel: capture one 6–8 s clip from Preset including at least two full jab or 1-2 cycles with
+feet visible; tag orthodox/southpaw and age band (youth | adult).
+
+================================================================================
+12. SOLO SAFETY AND ENVIRONMENT
+================================================================================
+
+- Clear floor, no obstacles; barefoot or athletic shoes with grip; avoid wet surfaces.
+- Youth: parent or coach supervision recommended; end block when form breaks or athlete reports discomfort.
+- Adults: increase **block count** before **speed**; shoulder/elbow fatigue is local muscular load, not a
+  reason to push through sharp pain.
+- Hydration and rest between presets; shadowboxing is skill practice, not unsupervised fight preparation.

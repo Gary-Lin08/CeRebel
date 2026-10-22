@@ -1,0 +1,137 @@
+# Tennis Sport Pack — Ontology (Schema)
+
+## Entity: Player
+
+Attributes:
+- player_id (string, optional external)
+- handedness: right | left
+- audience_band: youth | adult | unknown
+- sex_category: optional; normative training context only, not mechanics prescription
+
+Relations:
+- performs → StrokeInstance
+- subject_of → FindingInstance
+
+## Entity: StrokeType
+
+Enum:
+- serve
+- forehand_groundstroke
+- backhand_one_hand
+- backhand_two_hand
+- volley (future)
+- overhead_smash (future)
+
+Attributes:
+- stroke_type_id (stable slug: stroke_serve, stroke_forehand, stroke_backhand_one_hand, stroke_backhand_two_hand)
+- racket_side_wrist: trail | lead (depends on handedness and stroke)
+
+## Entity: StrokeVariant
+
+Optional tags on StrokeInstance (not separate phase chains in v1):
+- serve: platform | pinpoint | flat | kick | slice (intent tag only)
+- groundstroke: open_stance | neutral_stance | semi_open
+
+## Entity: Phase
+
+Attributes:
+- phase_id (S_* serve, G_* groundstroke)
+- stroke_family: serve | groundstroke
+- applies_to_strokes: list of stroke_type_id (forehand and both backhands share G_*)
+- ordinal (integer order within family)
+- description_plain (English)
+
+Relations:
+- follows → Phase (previous in chain via precedes)
+- contains_events → PhaseEvent
+
+Serve chain: S_READY → S_TOSS_RISE → S_TROPHY_LOAD → S_RACKET_DROP → S_DRIVE_UP → S_CONTACT_PROXY → S_DECEL
+
+Groundstroke chain: G_SPLIT → G_UNIT_TURN → G_LOAD → G_FORWARD_SWING → G_CONTACT_PROXY → G_FOLLOW → G_RECOVERY
+
+## Entity: PhaseEvent
+
+Attributes:
+- event_id (often equals phase_id)
+- start_rule (narrative, body-only)
+- end_rule (narrative, body-only)
+- detector_proxy (engineering string, optional)
+
+## Entity: Finding
+
+Attributes:
+- finding_id (slug, prefix fault_)
+- headline (plain language)
+- primary_phase_id
+- secondary_phase_ids (optional list)
+- stroke_scope: serve | forehand | backhand_one_hand | backhand_two_hand | groundstroke_shared
+- severity_hint: info | form | load
+- body_signals (list of joint/segment observables)
+- why_it_matters (performance/load awareness; non-diagnostic)
+- audience_band: youth | adult | all
+- authority_level: B+ | B typical
+- evidence_type: ResearchFinding | CoachingAdvice
+- requires_ball_track: false (v1 default)
+
+Relations:
+- anchored_in → Phase
+- indicated_by → KinematicSignal (optional)
+- has_cue → Cue
+- has_drill → Drill
+- alias_of → Finding (legacy shared groundstroke ids)
+
+## Entity: KinematicSignal
+
+Examples: peak_hand_speed, hip_shoulder_separation, trunk_yaw_rate, knee_flexion_trend, toss_arm_lateral_drift, center_of_mass_drift
+
+Attributes:
+- signal_id
+- measured_on: joint or segment list
+- measured_at_phase: phase_id
+
+## Entity: Cue / Drill / Checkpoint
+
+(Unchanged from v1 scaffold — see prior sections.)
+
+## Entity: AudienceBand
+
+Enum: youth | adult | all
+
+Used on Finding, Player, LoadConcern, and optional EvidenceChunk filters.
+
+## Entity: LoadConcern
+
+Attributes:
+- concern_id
+- description (e.g., junior overhead volume)
+- audience_band: youth | adult
+- authority_level: A | B for published training policies
+
+Not a Finding — referenced in Training/ and disclaimers.
+
+## Entity: EvidenceChunk (RAG metadata)
+
+Attributes:
+- source_id (SOURCE_MANIFEST)
+- authority_level (A+ … C per SPORT_PACK_KB_SPEC)
+- evidence_type
+- retrieved_at
+- audience_band (optional)
+
+## Naming conventions
+
+- Phase IDs: prefix S_ (serve), G_ (groundstroke shared by FH/BH)
+- Finding IDs: prefix fault_
+- Legacy shared groundstroke faults keep fault_groundstroke_* ; forehand/backhand-specific add fault_forehand_* / fault_backhand*
+- Cue IDs: cue_<finding_id>
+- Drill IDs: drill_<finding_id>
+
+## Handedness mapping (default right-handed)
+
+Forehand: racket-side wrist = right wrist. Serve: racket-side = right; toss arm = left.
+Backhand one-hand: forward swing lead arm = left for RH. Backhand two-hand: both hands on racket.
+Left-handed: mirror lateral labels in product logic; corpus uses “racket-side” / “non-racket arm”.
+
+## Product constraint (body-first)
+
+All v1 Finding entities set requires_ball_track=false. Rule facts (let, foot fault) are glossary-only and not auto-detected without court calibration.

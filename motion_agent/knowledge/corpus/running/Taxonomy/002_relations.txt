@@ -1,0 +1,95 @@
+# Running Gait — Concept Relations (v2)
+
+Format: subject | relation | object | notes
+≥15 finding→phase and checkpoint edges required for v2.
+
+## Phase precedence
+
+phase_contact | precedes | phase_loading | within stride cycle
+phase_loading | precedes | phase_midstance |
+phase_midstance | precedes | phase_propulsion |
+phase_propulsion | precedes | phase_toe_off |
+phase_toe_off | precedes | phase_swing |
+phase_swing | precedes | phase_flight |
+phase_flight | precedes | phase_contact | next stride same leg
+
+## Phase → events
+
+phase_contact | bounded_by_start | event_ic | E_IC
+phase_toe_off | bounded_by_start | event_to | E_TO
+phase_midstance | contains_peak | event_midstance | max knee flex / pelvis level
+
+## Findings → phases (occursIn)
+
+fault_overstride | occursIn | phase_contact |
+fault_overstride | occursIn | phase_loading |
+fault_low_cadence_overstride | occursIn | phase_contact | clip-level cadence also
+fault_excessive_bounce | occursIn | phase_flight |
+fault_excessive_bounce | occursIn | phase_midstance |
+fault_trunk_lean_back | occursIn | phase_midstance |
+fault_trunk_lean_excess_fwd | occursIn | phase_propulsion |
+fault_hip_drop | occursIn | phase_midstance |
+fault_crossover_gait | occursIn | phase_contact |
+fault_knee_valgus_load | occursIn | phase_loading |
+fault_stiff_ankle_landing | occursIn | phase_contact |
+fault_arm_swing_asymmetry | occursIn | phase_swing |
+fault_excessive_trunk_rotation | occursIn | phase_propulsion |
+fault_scissor_kick | occursIn | phase_swing |
+fault_stride_asymmetry | occursIn | phase_contact | aggregated all phases
+fault_rearfoot_reach_proxy | occursIn | phase_contact |
+fault_forefoot_early_load | occursIn | phase_contact |
+fault_arm_crossing_midline | occursIn | phase_swing |
+fault_short_arm_drive | occursIn | phase_propulsion |
+fault_hip_extension_deficit | occursIn | phase_toe_off |
+fault_early_heel_rise | occursIn | phase_midstance |
+fault_insufficient_knee_flex_stance | occursIn | phase_loading |
+fault_pelvis_rotation_excess | occursIn | phase_propulsion |
+fault_shoulder_hike_run | occursIn | phase_midstance |
+fault_narrow_stance_base | occursIn | phase_contact |
+fault_contact_time_asymmetry | occursIn | phase_contact |
+fault_fatigue_cadence_drop | occursIn | phase_contact |
+fault_fatigue_hip_drop_rise | occursIn | phase_midstance |
+fault_forward_head_run | occursIn | phase_midstance |
+fault_push_off_asymmetry | occursIn | phase_toe_off |
+
+## Findings → measurements (measuredOn)
+
+fault_overstride | measuredOn | series_overstride |
+fault_low_cadence_overstride | measuredOn | series_cadence |
+fault_excessive_bounce | measuredOn | series_vertical_oscillation |
+fault_hip_drop | measuredOn | series_hip_drop |
+fault_arm_swing_asymmetry | measuredOn | series_arm_swing |
+fault_rearfoot_reach_proxy | measuredOn | series_overstride |
+fault_fatigue_cadence_drop | measuredOn | series_cadence |
+fault_contact_time_asymmetry | measuredOn | series_contact_time |
+
+## Checkpoints → findings (failTriggers)
+
+cp_contact_under_com_adult | failTriggers | fault_overstride |
+cp_cadence_with_reach | failTriggers | fault_low_cadence_overstride |
+cp_vertical_oscillation | failTriggers | fault_excessive_bounce |
+cp_trunk_stack_neutral | failTriggers | fault_trunk_lean_back |
+cp_trunk_fwd_excess | failTriggers | fault_trunk_lean_excess_fwd |
+cp_pelvis_level | failTriggers | fault_hip_drop |
+cp_crossover | failTriggers | fault_crossover_gait |
+cp_knee_valgus_visible | failTriggers | fault_knee_valgus_load |
+cp_ankle_compliance | failTriggers | fault_stiff_ankle_landing |
+cp_arm_symmetry | failTriggers | fault_arm_swing_asymmetry |
+cp_trunk_rotation_band | failTriggers | fault_excessive_trunk_rotation |
+cp_swing_clearance | failTriggers | fault_scissor_kick |
+cp_stride_time_symmetry | failTriggers | fault_stride_asymmetry |
+cp_stance_knee_flex | failTriggers | fault_insufficient_knee_flex_stance |
+cp_fatigue_cadence | failTriggers | fault_fatigue_cadence_drop |
+
+## Legacy id aliases (sameAs)
+
+overstride | sameAs | fault_overstride | migrated v2
+hip_drop | sameAs | fault_hip_drop | migrated v2
+crossover_gait | sameAs | fault_crossover_gait | migrated v2
+
+## Concept hierarchy
+
+distance_running | hasPhaseModel | stride_cycle |
+cadence | influences | fault_overstride | literature B+; not deterministic
+fault_hip_drop | associatedWith | fault_knee_valgus_load | frontal chain; non-diagnostic
+fault_fatigue_cadence_drop | associatedWith | fault_overstride | late-run pattern theme

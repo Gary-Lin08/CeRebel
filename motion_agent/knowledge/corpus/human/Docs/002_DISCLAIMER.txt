@@ -1,0 +1,90 @@
+# Human (General Motion) Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel human/general motion content summarizes **open biomechanics literature, physical therapy education
+themes, sports coaching fundamentals, and public health movement guidance**. It is **not** a substitute for
+licensed medical care, physical therapy diagnosis, chiropractic or osteopathic treatment plans, or
+return-to-play clearance.
+
+- Sharp pain, numbness, tingling, joint locking, chest pain, severe headache, or dizziness during movement
+  require evaluation by a qualified clinician — do not rely on an app finding to increase load or ignore symptoms.
+- Visible posture in video does not reveal bone structure, disc pathology, or neurological conditions.
+  Do not label someone with a clinical syndrome from pose estimation alone.
+- Youth, pregnant athletes, and post-surgical clients need individualized supervision; generic drills may be
+  inappropriate without professional screening.
+
+## Not a sport-technique authority
+
+This pack is intentionally **sport-agnostic**. When CeRebel recognizes a specific activity (running gait,
+pitching, golf swing, etc.), users should prefer that sport pack for technique detail. General cues like
+“stack your ribs over pelvis” support many activities but do not replace sport-specific coaching progressions.
+
+## Body tracking limitations
+
+Single-camera 2D pose estimation and monocular OpenSim pipelines can mis-estimate:
+
+- Pelvis tilt and lumbar curve when clothing is baggy or the camera is oblique.
+- Knee alignment in the frontal plane when filmed from the side only.
+- Head position when hair or hats occlude ear/eye landmarks.
+- Center of mass path when scale (height in meters) is uncertain.
+
+Findings describe **visible tendencies**, not laboratory-grade kinematics or kinetics. Confidence should
+be lower when joints are occluded, FPS is below ~24, or the clip shows heavy motion blur.
+
+## “Ideal posture” and norms
+
+Research and coaching literature report **group averages and training conventions**, not one correct pose for
+every body type, limb length, or activity history. Slight asymmetry can be normal. Numeric checkpoints in
+this pack are conservative coaching heuristics for product gating — not clinical cutoffs for pathology.
+
+## Balance and fall risk
+
+Balance drills suggested here are for **coached practice on stable ground** with spotting when needed.
+CeRebel does not assess environmental hazards (wet floors, equipment, vision impairment). Older adults and
+neurologically impaired individuals need professional fall-risk screening beyond video analysis.
+
+## Load and training volume
+
+Posture and coordination cues do not replace **progressive overload planning**, rest, or nutrition. Increasing
+training intensity based solely on “better looking” motion in one clip can increase injury risk if tissues
+are under-recovered.
+
+## Coaching relationship
+
+Automated briefs support coaches, teachers, athletes, and parents who already have a movement context. They
+do not replace supervised instruction for beginners learning complex lifts or plyometrics.
+
+## Emergency
+
+For collapse, suspected cardiac event, head trauma, or acute musculoskeletal injury during activity, follow
+venue emergency procedures and seek immediate medical attention.
+
+## Product behavior
+
+- HumanMotionPack (`general`) is **live** as fallback when no sport pack matches — absence of a finding is not
+  proof of safe mechanics or readiness for maximal effort.
+- The system may refuse analysis when clips are too short, too occluded, or appear to violate safety policies.
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` with authority levels. Guidelines change; retrieval dates
+matter. OpenSim pipeline notes in sibling file `opensim_motion_tools.txt` describe tool behavior, not medical
+evidence.
+
+## User-facing short disclaimer (for UI copy)
+
+“General body coaching from motion analysis — not medical advice. Stop if you feel pain. Use a qualified
+coach or clinician for sport technique and rehab.”
+
+## Data privacy (group / school contexts)
+
+When filming teams or classes, organizations should follow local policies for storing video of minors.
+CeRebel motion analysis is not a substitute for mandated pre-participation physical exams or concussion
+protocols. Coaches remain responsible for environment safety (surface, spacing, equipment).
+
+## General pack vs sport pack disclaimer
+
+If both general and sport findings appear during product transitions, sport-specific disclaimers from the
+matched sport pack may add context (e.g., running cadence). Users should read the sport pack Docs/002 when
+available; this human pack disclaimer remains the baseline for fallback coaching.

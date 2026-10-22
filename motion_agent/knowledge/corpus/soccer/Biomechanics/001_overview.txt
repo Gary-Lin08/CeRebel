@@ -1,0 +1,153 @@
+# Soccer Kicking — Biomechanics Overview (open literature summary)
+
+Authority tags: A+ federation | A clinical/consensus | B+ systematic reviews | B coaching science | C not used for findings.
+
+This document summarizes **relationships** visible on a body model. It does not prescribe medical treatment or
+individual angle prescriptions.
+
+---
+
+## 1. Kinetic chain (proximal to distal)
+
+Published kicking analyses commonly describe energy transfer from support foot through pelvis and trunk to the
+kicking leg:
+
+1. **Support leg** grounds reaction forces; stiffness and orientation affect pelvis stability (B+).
+2. **Pelvis rotation** toward the kicking side precedes or overlaps peak trunk rotation (B+).
+3. **Trunk tilt and rotation** contribute to foot speed and variability in strike outcomes (B+).
+4. **Kicking hip** flexes/extends with knee flexion during cocking, then rapid knee extension and ankle plantar
+   flexion approaching peak foot speed (B+).
+5. **Follow-through** involves hip flexion across the body and controlled deceleration — hamstring and hip flexor
+   demand depends on speed and style (A/B+ for load awareness, not individual risk prediction).
+
+CeRebel v1 measures joint positions and segment speeds, **not** ground reaction forces or joint torques unless
+future force plates integrate.
+
+---
+
+## 2. Key terms (body-model definitions)
+
+| Term | Operational definition on pose/OpenSim |
+|------|----------------------------------------|
+| Plant foot | Lead leg foot at E_PLANT_SET |
+| Kicking foot | Trail ankle speed peak at E_KICK_PEAK (contact proxy) |
+| Cocking | Interval E_PLANT_SET → E_KICK_PEAK with increasing trail knee flex then extension |
+| Hip “open” proxy | Pelvis yaw relative to global or calibrated kick direction (requires side or calibrated camera) |
+| Trunk lean | Angle of shoulder–pelvis line vs vertical in sagittal plane |
+| Plant distance | Separation of lead and trail ankle projections on kick-direction axis at plant |
+
+---
+
+## 3. Support foot and pelvis
+
+Reviews of soccer kicking report that support-foot placement relative to the ball influences pelvis rotation and
+the path of the kicking foot. Coaches teach planting ** beside** the ball with orientation that allows rotation
+toward target. Studies vary by skill level and kick type (instep vs side-foot).
+
+- **Authority:** B+ (Lees & Nolan 1998 review; subsequent instep kick kinematics papers).
+- **Youth:** Smaller athletes use shorter relative approach and plant distances; absolute adult templates do not apply.
+
+**Product implication:** cp_hip_open_proxy and plant distance checkpoints are conservative heuristics for monocular pose.
+
+---
+
+## 4. Trunk orientation and foot speed
+
+Forward trunk lean at ball contact (or near peak foot speed) appears in many skilled instep kick profiles compared
+with excessive backward lean associated with high ball flight in coaching models. Meta-analytic summaries caution
+that laboratory setups differ from match constraints.
+
+- **Adult bands (qualitative):** Visible forward lean at peak commonly coached; exact degrees vary by camera setup.
+- **Youth bands:** Less aggressive forward lean required for skill development; balance priority (B, NGB curricula).
+
+**Do not** state “X degrees prevents injury” — literature links mechanics to performance variability and joint
+loading patterns in group data only.
+
+---
+
+## 5. Joint angle profiles (instep kick, literature ranges)
+
+Reported **group means** from motion capture studies (not CeRebel norms):
+
+| Joint / segment | Typical observation near contact (adult skilled cohorts) | Authority |
+|-----------------|----------------------------------------------------------|-----------|
+| Kicking knee flex at end of backswing | Often substantial flexion before rapid extension | B+ |
+| Kicking knee at contact | Moving toward extension; not full lock required | B+ |
+| Support knee | Moderate flexion; less increase through strike in skilled patterns | B+ |
+| Hip flexion/extension kicking side | Rapid extension phase into contact | B+ |
+
+Youth athletes show lower absolute foot speeds and sometimes shorter backswing phases — separate coaching bands in Quality docs.
+
+---
+
+## 6. Timing: plant to peak foot speed
+
+Time from support foot stabilization to peak foot speed is frequently on the order of **~100–200 ms** in controlled
+lab kicks for adults (varies by approach speed and intent). Product checkpoint cp_plant_timing uses ~80 ms minimum
+at 30 fps as a B+ heuristic for detector alignment.
+
+Penalty kicks and curved approaches alter timing; phase model still applies with wider windows.
+
+---
+
+## 7. Side-foot pass vs instep drive
+
+| Feature | Instep drive (power) | Side-foot pass |
+|---------|----------------------|----------------|
+| Foot speed peak | Higher | Moderate |
+| Trunk lean | Often more forward | More upright acceptable |
+| Hip rotation | Larger | Reduced |
+| Plant distance | Mid band of cp_plant_distance | Often shorter |
+
+Intent selection in product UI should gate checkpoint strictness.
+
+---
+
+## 8. Load and injury context (careful wording)
+
+Hamstring, groin, and hip flexor strains occur in soccer from sprinting, kicking, and deceleration. Biomechanics
+literature discusses muscle activity during kicking and deceleration; **no finding in this pack diagnoses injury risk**.
+
+- Follow federation/medical consensus on weekly load, especially U13–U17 growth phases (A, general sports medicine).
+- Maximal repeated instep striking in fatigue states increases variability — coach-managed volume (B+).
+
+---
+
+## 9. Measurement limitations (CeRebel)
+
+- 2D pose: hip rotation and foot angle errors when camera oblique.
+- No ball: E_KICK_PEAK ≠ verified contact frame.
+- Footwear and surface invisible — friction and plant slip not modeled.
+- OpenSim coordinate names must map to internal series (future SoccerPack); until then, narrative-only KB.
+
+Suggested open sources for manifest expansion (summaries only, no long paste):
+
+- PubMed Central reviews on soccer kick biomechanics (search: “instep kick kinematics review”).
+- FIFA Football Technology & Grassroots coaching publications (https://www.fifa.com/technical).
+- UEFA training materials for youth technique (https://www.uefa.com).
+- ISokinetic / BJSM open-access articles on kicking and hamstring load (verify license).
+
+---
+
+## 10. Kick-likeness (planned detector concept)
+
+Features aligned with Architecture doc:
+
+- trail_ankle peak / median speed ratio
+- lead_ankle deceleration before peak
+- temporal ordering E_PLANT_SET before E_KICK_PEAK
+
+Golf and baseball detectors remain separate; soccer pack must not inherit pitch release logic without re-tuning.
+
+---
+
+## 11. Youth vs adult summary table
+
+| Topic | Youth emphasis | Adult emphasis |
+|-------|----------------|----------------|
+| Plant distance | Wider tolerance; consistency over distance | Band checkpoints |
+| Trunk lean | Balance; avoid extreme forward cue | Performance lean heuristics |
+| Volume | NGB duration; fun repetition | Coach periodization |
+| Foot speed peak | Lower absolute; ratio still usable | Full cp_foot_speed_burst |
+
+End Biomechanics overview v0.1.

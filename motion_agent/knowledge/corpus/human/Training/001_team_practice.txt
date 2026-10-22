@@ -1,0 +1,132 @@
+# General Human Motion — Team Practice and Group Film Sessions
+
+Body-first capture for PE classes, strength rooms, cross-training groups, and pre-season movement screens
+when sport-specific packs may not apply. Summarizes reputable coaching practice patterns (authority B);
+verify school district policies and medical staff requirements locally.
+
+Corpus pack id: human. Product pack id: general (HumanMotionPack fallback).
+
+---
+
+## 1. Session goals for motion analysis
+
+- **Consistency**: film fundamental patterns (squat, lunge, step, reach, single-leg balance) before fatiguing sport work.
+- **Repeatability**: full body in frame, 2–4 reps minimum, stable camera.
+- **Context tag**: barefoot vs shoes, warm-up vs post-workout, known injury history (coach note only — app does not store PHI by default).
+
+CeRebel briefs prioritize **one or two** general findings per athlete per session — avoid cue overload in PE settings.
+
+---
+
+## 2. Warm-up structure (before filming)
+
+Typical 8–12 minute general movement prep (B coaching consensus):
+
+1. Locomotor wake-up: march, skip, or light jog 2–3 minutes (optional, not required for static screen).
+2. Dynamic mobility: arm circles, hip circles, leg swings (front/back), ankle rocks.
+3. Activation: 10 bodyweight squats + 10 hip hinges slow tempo.
+4. Balance primer: 10 s single-leg stand each side.
+
+Youth: gamify balance (stick challenge); shorten hinge volume for U10.
+
+---
+
+## 3. Camera setup for groups
+
+**Frontal (preferred for stack, knees, shoulders)**:
+- Camera chest height, 3–4 m from athlete, full body vertical FOV.
+- Avoid wide-angle distortion at frame edges.
+
+**Sagittal (forward head, hip hinge)**:
+- Perpendicular to athlete profile; capture head to feet.
+- One athlete at a time in lane setup.
+
+**Oblique 45° (compromise view)**:
+- Useful when single camera only; lower confidence on knee valgus — document in session log.
+
+Multiple athletes: queue individually; keep background static for pose stability.
+
+---
+
+## 4. Standard film menu (sport-agnostic)
+
+Use consistent tasks so week-to-week comparison works:
+
+| Task id | Duration | Phases exercised | Notes |
+|---------|----------|------------------|-------|
+| task_stand_setup | 5 s hold | setup | Baseline stack |
+| task_bodyweight_squat | 3 reps slow | prep, load, action, recover | Primary lower-body screen |
+| task_reverse_lunge | 2 each leg | load, balance | Single-leg sway |
+| task_hip_hinge | 5 reps | prep, load | Dowel optional |
+| task_arm_raise | 3 each arm | action | ROM asymmetry |
+| task_single_leg_balance | 10 s each | load | Balance wobble |
+
+Coaches may subset for time; document which tasks were filmed.
+
+---
+
+## 5. Using phase scrub in a group setting
+
+- Show athletes **setup vs load** for stack breaks — visual learning lands faster than jargon.
+- Compare **action peak** frame for knee tracking (frontal) without stopping entire class on one metric.
+- If HumanMotionPack is active (no sport match), instant brief may ask about stack — tie to task_stand_setup.
+
+When sport pack later matches same clip library, re-label sessions in archive (engineering workflow).
+
+---
+
+## 6. Weekly micro-cycle pattern (example)
+
+**Week A — screen week**:
+- Day 1: film menu full, assign one drill from Coaching/002 per athlete from top finding.
+- Day 2: skill sport practice (sport pack if detected on different clips).
+- Day 3: repeat film menu subset (squat + balance only) after drill week.
+
+**Week B — drill emphasis**:
+- Daily 5-minute station: stack breath squat OR hip hinge stick from Coaching/002.
+- Film only on Day 5 for progress check.
+
+Masters: extend recover pauses; reduce hop drills (`drill_stick_landing`) if joint sensitive.
+
+---
+
+## 7. Integration with OpenSim / tool-assisted review (optional)
+
+When session pipeline produces OpenSim states (see opensim_motion_tools.txt):
+- Coach review station: pull pelvis tilt and knee angle at bottom of squat **from tools**, not eyeball alone.
+- Teach athletes difference between **observation** (video) and **measurement** (tool output).
+
+Tools unavailable: rely on 2D pose with documented lower confidence in briefs.
+
+---
+
+## 8. Privacy and youth safeguarding
+
+- Film only with organizational consent; avoid posting identifiable minors publicly.
+- Focus feedback on **movement**, not body appearance or weight.
+- Refer pain reports to athletic trainer or school nurse — app findings are not triage.
+
+---
+
+## 9. Common session mistakes (coaching)
+
+- Filming only the **fast** rep — hides rushed_prep and incomplete_recover.
+- Side camera only, then asking why knee valgus finding missing — explain camera gating.
+- Giving five cues at once — violates one-cue rule in Coaching/001.
+
+---
+
+## 10. Handoff to sport-specific coaching
+
+When athletes later film running, pitching, or golf with dedicated packs:
+- General stack findings remain relevant in warm-up.
+- Sport technique cues supersede generic hinge cues during sport skill reps.
+
+---
+
+## Cross-references
+
+- Coaching/002_drills.txt — station drill list
+- Quality/002_checkpoints.txt — what each task may trigger
+- Docs/001_ARCHITECTURE.txt — HumanMotionPack integration
+- Docs/002_DISCLAIMER.txt — not medical screening replacement

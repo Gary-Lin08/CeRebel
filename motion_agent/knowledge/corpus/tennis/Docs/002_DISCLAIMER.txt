@@ -1,0 +1,72 @@
+# Tennis Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel tennis content summarizes **open coaching literature, biomechanics reviews, and federation training
+materials**. It is **not** a substitute for licensed medical care, physical therapy, or individualized
+return-to-play protocols after shoulder, elbow, wrist, or back injury.
+
+- Pain, swelling, locking, numbness, or sudden loss of strength during serving or groundstrokes requires
+  evaluation by a qualified clinician — do not use app feedback to play through symptoms.
+- Junior athletes differ from adults in growth, coordination, and acceptable training volume; follow your
+  national association’s age-appropriate progression (see Training/001 and SOURCE_MANIFEST youth sources).
+
+## Not officiating or line calling
+
+ITF rule summaries in this pack are educational. Foot faults, lets, and score disputes are decided by officials
+and appropriate technology — not by body pose alone. Without calibrated court geometry, CeRebel does not claim
+to detect foot faults or ball in/out.
+
+## Body tracking limitations
+
+Single-camera pose estimation can mis-estimate:
+
+- Shoulder internal rotation and racket path when the arm is foreshortened toward the camera.
+- Toss arm position when occluded by the head or hair.
+- Knee flexion in deep knee bend when shorts or shadow obscure the joint.
+- Hip rotation in the plane perpendicular to the camera.
+
+Findings describe **visible tendencies** with confidence reduced when joints are occluded or frame rate is low.
+
+## No guaranteed performance outcomes
+
+Efficient sequencing described in research may support power and consistency for some athletes, but **serve speed,
+accuracy, and match performance** depend on training history, fatigue, equipment, surface, and many non-mechanical
+factors. Do not promise ranking or mph gains from a single cue or drill.
+
+## Biomechanical “norms”
+
+Elite players show wide variation in trophy pose, toss height, and groundstroke backswing length. Open literature
+reports **group trends**, not one pose for every body type. This pack avoids arbitrary degree targets as universal
+rules; youth athletes especially should not mimic adult professional models without qualified coaching.
+
+## Load and overuse
+
+High serve and overhead volume correlates with shoulder and elbow load in epidemiology literature. Automated briefs
+may note visible mechanical patterns associated with load (e.g., all-arm swing, harsh deceleration) but **do not
+diagnose** tendinopathy or predict injury from one clip.
+
+## Coaching relationship
+
+Automated briefs support coaches, parents, and athletes who already have a training plan. They do not replace
+on-court supervision, especially for beginners learning grip, footwork, and safe throwing-like serve motions.
+
+## Emergency
+
+For acute injury on court, follow venue emergency procedures and seek immediate medical attention when needed.
+
+## Product behavior
+
+- Tennis pack features may be gated as **coming soon** until sport detection validates — absence of a finding is
+  not proof of safe or legal technique.
+- The system may analyze general human motion when tennis is not confirmed; sport-specific findings should not apply
+  in that mode.
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` with authority levels. ITF rules and NGB training pages change;
+retrieval dates matter. When in doubt, cite the live official source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Coaching tips from body motion — not medical advice. Stop if you feel pain. Follow your coach and age-appropriate training load.”

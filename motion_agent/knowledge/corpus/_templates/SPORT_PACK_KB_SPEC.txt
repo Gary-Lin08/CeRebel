@@ -1,0 +1,116 @@
+# Sport Pack Knowledge Base Spec (CeRebel) — v2
+
+Every sport under `motion_agent/knowledge/corpus/<sport_id>/` follows this contract.
+Files are plain `.txt` for local RAG. Skip `_meta/` from indexing (already enforced).
+
+## Product constraints
+
+- Body-first coaching from reconstructed motion. Do NOT require ball/club/puck tracking.
+- Prefer open clinical / federation / peer-reviewed sources. Mark authority level.
+- Never invent angle norms as medical advice. Include disclaimer in Docs + Coaching.
+- Youth vs adult norms must be separated when numbers differ (use `youth_note:` on cards).
+- Commercial product may cite open knowledge; do not paste copyrighted manuals verbatim — summarize with source hints.
+- Finding IDs are stable product keys: always `fault_<snake_case>` (no kebab-case, no bare labels).
+
+## Required directory layout
+
+```text
+<sport_id>/
+  _meta/
+    pack_readme.txt          # pack purpose + status
+    SOURCE_MANIFEST.txt      # sources, license, authority, retrieved date
+    brain_plan.txt           # ontology + phase + finding map (brain agent)
+    research_notes.txt       # researched facts with URLs (search agent)
+    review_report.txt        # audit: accuracy, safety, gaps (review agent)
+    build_report.txt         # what files were written (build agent)
+  Docs/
+    001_ARCHITECTURE.txt
+    002_DISCLAIMER.txt
+  Schema/
+    001_ontology.txt
+  Taxonomy/
+    001_concepts.txt
+    002_relations.txt
+  Phases/
+    001_phase_model.txt
+  Quality/
+    001_quality_definition.txt
+    002_checkpoints.txt
+  Findings/
+    001_common_faults.txt
+  Coaching/
+    001_cues.txt
+    002_drills.txt
+  Biomechanics/
+    001_overview.txt
+  Training/
+    001_team_practice.txt
+```
+
+## Evidence authority levels
+
+- A+: federation rules / official standards
+- A: peer-reviewed clinical consensus
+- B+: strong open research reviews
+- B: reputable coaching federations / NGB manuals
+- C: community / unverified — do not use for product findings
+
+## Finding card shape (canonical — required for v2)
+
+Use this exact field set in `Findings/001_common_faults.txt`. Cards separated by `---`.
+
+```text
+---
+finding_id: fault_example_name
+headline_en: One plain-language sentence
+phases: phase_a, phase_b
+body_signal: Joint/segment proxy visible in OpenSim/skeleton view; name events (E_* or phase events).
+why_it_matters: Performance or population load framing — not individual diagnosis.
+feel_cue: "Short internal or external feel phrase."
+drill: 30–90s body-first drill; may cross-link Coaching/002_drills.txt ids.
+severity_default: low | medium | high
+sources: Short citation + (B+) / (B) / (A) authority tag
+youth_note: Optional — how youth thresholds differ
+confidence_note: Optional — capture conditions that invalidate the card
+---
+```
+
+Legacy packs may still contain older heading styles; when editing, migrate cards to this shape
+and rename kebab / bare ids to `fault_*`. Keep a one-line `legacy_id:` if an old slug must remain searchable.
+
+### Depth targets (v2)
+
+| Layer | Minimum |
+|-------|---------|
+| Finding cards with full fields | **25** per sport |
+| Distinct phase chains or skill lines | **2+** (e.g. serve + groundstroke) when the sport has multiple product modes |
+| Coaching cues that cite `fault_*` | **20** |
+| Drills that cite `fault_*` | **15** |
+| Taxonomy relations rows (CSV or triples) | **15** |
+| Phase model | **5–8 phases** per skill line with start/end + body signals + detector/event proxy notes |
+
+## Phase model
+
+Name 5–8 phases with start/end events suitable for OpenSim body tracking.
+Each phase block should include:
+
+1. Phase id (stable)
+2. Start / end body criteria
+3. Body signals
+4. `detector_events:` optional list of E_* or pack event names when known
+5. `fault_links:` optional list of finding_ids commonly scored in this phase
+6. Youth note when ROM/timing norms differ
+
+Map CONTACT / IMPACT with **body proxies** (e.g. peak wrist speed) when equipment is untracked.
+
+## Coaching files
+
+- `001_cues.txt`: one cue block per finding (or small group); include `finding_id:` or `fault_*` in the block.
+- `002_drills.txt`: 30–90s drills; each lists `targets: fault_a, fault_b`.
+
+## Review report
+
+`_meta/review_report.txt` must reflect **current** corpus files. Do not leave FAIL for missing
+DISCLAIMER / SOURCE_MANIFEST after those files exist. End with an explicit verdict line:
+
+`VERDICT: APPROVED_V2 | APPROVED_V1 | GAPS_REMAIN — <one sentence>`

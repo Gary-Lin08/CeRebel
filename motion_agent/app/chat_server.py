@@ -11,6 +11,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+from motion_agent.app.config import load_settings
+from motion_agent.app.health import health_report
 from motion_agent.app.routes import EXAMPLE_QUESTIONS, chat_payload, sse_pack, trace_to_dict
 from motion_agent.llm.agent import (
     answer_question,
@@ -25,17 +27,19 @@ from motion_agent.llm.prompts import (
 )
 from motion_agent.llm.qwen_client import build_vlm
 from motion_agent.mesh.opensim_clip import get_smplx_mesh_clip, smplx_mesh_status
-from motion_agent.storage.motion_store import default_data_dir, newest_ready_session_dir
+from motion_agent.storage.motion_store import newest_ready_session_dir
 from motion_agent.storage.video_store import resolve_media_file
 
 LOG = logging.getLogger("motion_agent.chat_server")
 
 UI_DIR = Path(__file__).resolve().parent / "ui"
-DATA_DIR = Path(os.environ.get("CEREBEL_DATA_DIR", str(default_data_dir())))
-HOST = os.environ.get("MOTION_AGENT_HOST", "0.0.0.0")
-PORT = int(os.environ.get("MOTION_AGENT_PORT", "8092"))
-BACKEND = os.environ.get("MOTION_AGENT_BACKEND", "dashscope")
-PROMPT_EDIT_PASSWORD = os.environ.get("MOTION_AGENT_PROMPT_PASSWORD", "20081005")
+SETTINGS = load_settings()
+DATA_DIR = SETTINGS.data_dir
+HOST = SETTINGS.host
+PORT = SETTINGS.port
+BACKEND = SETTINGS.backend
+# Local demo fallback when MOTION_AGENT_PROMPT_PASSWORD is unset.
+_LEGACY_PROMPT_PASSWORD = "20081005"
 
 
 def _public_presets() -> list[dict]:
@@ -50,8 +54,15 @@ def _public_presets() -> list[dict]:
     ]
 
 
+def _capture_visible(handler: BaseHTTPRequestHandler, session_id: str) -> bool:
+    from motion_agent.app.product_api import current_user, media_allowed
+
+    return media_allowed(SETTINGS, current_user(SETTINGS, handler.headers), session_id)
+
+
 def _check_prompt_password(provided: str | None) -> bool:
-    return bool(provided) and provided == PROMPT_EDIT_PASSWORD
+    expected = SETTINGS.prompt_password or _LEGACY_PROMPT_PASSWORD
+    return bool(provided) and provided == expected
 
 
 def _password_from_request(handler: BaseHTTPRequestHandler, parsed=None) -> str | None:
@@ -84,7 +95,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Prompt-Password")
+        self.send_header(
+            "Access-Control-Allow-Headers",
+            "Content-Type, X-Prompt-Password, X-Motion-Dev, Authorization, X-User-Token",
+        )
         self.end_headers()
 
     def do_GET(self) -> None:  # noqa: N802
@@ -93,21 +107,199 @@ class Handler(BaseHTTPRequestHandler):
 
         if path in ("/", "/index.html"):
             return self._serve_file(UI_DIR / "index.html")
+        if path in ("/terms", "/privacy"):
+            title = "Terms" if path == "/terms" else "Privacy"
+            body = (
+                "<p>CeRebel coaching is movement feedback from your video, not a medical diagnosis.</p>"
+                "<p>Videos and reconstructed motion stay on this account. Delete a capture to remove it from your library.</p>"
+                "<p>Invite beta allows a small number of new captures per day.</p>"
+            )
+            raw = f"<!doctype html><meta charset=utf-8><title>{title}</title><h1>{title}</h1>{body}".encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(raw)))
+            self.end_headers()
+            self.wfile.write(raw)
+            return
         if path.startswith("/static/"):
             return self._serve_file(UI_DIR / path[len("/static/") :])
         if path == "/api/health":
-            return _json_response(self, 200, {"ok": True, "backend": BACKEND})
+            code, payload = health_report(SETTINGS)
+            return _json_response(self, code, payload)
+        if path == "/api/ops":
+            password = _password_from_request(self, parsed)
+            if not _check_prompt_password(password):
+                return _json_response(self, 401, {"error": True, "message": "Password required"})
+            from motion_agent.app.product_api import ops_summary
+
+            return _json_response(self, 200, ops_summary(SETTINGS))
+        if path == "/api/me":
+            from motion_agent.app.product_api import current_user, library_payload
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 200, {"ok": True, "user": None, "captures": []})
+            return _json_response(self, 200, library_payload(SETTINGS, user))
+        if path == "/api/library":
+            from motion_agent.app.product_api import current_user, library_payload
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"ok": False, "error": True, "message": "Sign in required"})
+            return _json_response(self, 200, library_payload(SETTINGS, user))
+        if path.startswith("/api/progress"):
+            from motion_agent.app.product_api import current_user, read_progress, user_may_view_session
+
+            qs = parse_qs(parsed.query or "")
+            session_id = (qs.get("session_id") or [""])[0].strip()
+            user = current_user(SETTINGS, self.headers)
+            if user and session_id and not user_may_view_session(SETTINGS, user, session_id):
+                return _json_response(self, 403, {"error": True, "message": "That capture belongs to another account"})
+            prog = read_progress(SETTINGS, session_id) if session_id else None
+            if not prog:
+                return _json_response(self, 404, {"error": True, "message": "Unknown capture"})
+            return _json_response(self, 200, prog)
+        if path == "/api/sports":
+            try:
+                from motion_agent.app.product_session import sports_catalog_payload
+
+                return _json_response(self, 200, sports_catalog_payload())
+            except Exception as exc:  # noqa: BLE001
+                LOG.exception("sports catalog failed")
+                return _json_response(
+                    self, 500, {"ok": False, "error": True, "message": str(exc), "sports": []}
+                )
         if path == "/api/session":
-            info = get_current_session_info(DATA_DIR)
-            info["example_questions"] = EXAMPLE_QUESTIONS
+            from motion_agent.app.library import list_captures, owns
+            from motion_agent.app.product_api import current_user
+
+            qs = parse_qs(parsed.query or "")
+            requested = (qs.get("session_id") or [None])[0]
+            user = current_user(SETTINGS, self.headers)
+            if user and requested and not owns(SETTINGS.product_dir, user["user_id"], requested):
+                return _json_response(
+                    self, 403, {"error": True, "message": "That capture belongs to another account"}
+                )
+            if user and not requested:
+                from motion_agent.app.product_session import sports_catalog_payload
+
+                owned = list_captures(SETTINGS.product_dir, user["user_id"])
+
+                def _has_motion(sid: str) -> bool:
+                    return (DATA_DIR / "sessions" / sid / "ik" / "opensim-motion.json").is_file()
+
+                ready = next(
+                    (
+                        row["session_id"]
+                        for row in owned
+                        if row.get("status") == "ready" and _has_motion(row["session_id"])
+                    ),
+                    None,
+                )
+                if ready is None:
+                    ready = next(
+                        (
+                            row["session_id"]
+                            for row in owned
+                            if _has_motion(row["session_id"]) and row.get("status") != "error"
+                        ),
+                        None,
+                    )
+                if ready:
+                    requested = ready
+                elif not owned:
+                    return _json_response(
+                        self,
+                        200,
+                        {
+                            "ok": True,
+                            "empty": True,
+                            "signed_in": True,
+                            "email": user.get("email"),
+                            "message": "Upload a swing to get your first fix.",
+                            "product_title": "Your swing",
+                            "product_subtitle": "A short side-on clip is enough. We’ll name one fix when the swing is clear.",
+                            "example_questions": [],
+                            "coach_briefs": [],
+                            "consumer_ready": False,
+                            "sports_catalog": sports_catalog_payload()["sports"],
+                        },
+                    )
+                else:
+                    requested = owned[0]["session_id"]
+            if user and requested:
+                owned_row = next((r for r in list_captures(SETTINGS.product_dir, user["user_id"]) if r.get("session_id") == requested), None)
+                row_status = (owned_row or {}).get("status") or ""
+                motion_ready = (DATA_DIR / "sessions" / requested / "ik" / "opensim-motion.json").is_file()
+                if row_status in {"uploading", "extracting", "queued", "gemx", "ik", "processing"} or (
+                    owned_row and not motion_ready and row_status not in {"error", "deleted", "no_swing"}
+                ):
+                    from motion_agent.app.product_api import read_progress
+                    from motion_agent.app.product_session import sports_catalog_payload
+
+                    prog = read_progress(SETTINGS, requested) or {}
+                    return _json_response(
+                        self,
+                        200,
+                        {
+                            "ok": True,
+                            "processing": True,
+                            "signed_in": True,
+                            "email": user.get("email"),
+                            "session_id": requested,
+                            "status": row_status or prog.get("stage") or "processing",
+                            "message": prog.get("message")
+                            or "Rebuilding your body from the video…",
+                            "product_title": "Working on your swing",
+                            "product_subtitle": "This usually takes a few minutes. Keep this page open.",
+                            "sports_catalog": sports_catalog_payload()["sports"],
+                            "consumer_ready": False,
+                        },
+                    )
+            info = get_current_session_info(DATA_DIR, session_id=requested if user else None)
+            if user:
+                info["signed_in"] = True
+                info["email"] = user.get("email")
+            else:
+                info["demo"] = True
             info["backend"] = BACKEND
-            info["default_prompt_mode"] = DEFAULT_PROMPT_MODE
             info["prompt_presets"] = _public_presets()
             info["prompt_locked"] = True
+            # Consumer product fields (sport-matched mode + chips). Dev UI may
+            # still offer extra presets, but the session tells the truth first.
+            try:
+                from motion_agent.app.product_session import build_product_session_fields
+                from motion_agent.storage.motion_store import newest_ready_session_dir
+
+                session_dir = None
+                sid = info.get("session_id")
+                if sid:
+                    session_dir = DATA_DIR / "sessions" / str(sid)
+                if session_dir is None or not session_dir.is_dir():
+                    session_dir = newest_ready_session_dir(DATA_DIR)
+                if session_dir is not None and session_dir.is_dir():
+                    info.update(build_product_session_fields(session_dir, data_dir=DATA_DIR))
+                    if user and info.get("sport") == "general":
+                        info["no_swing"] = True
+                        info["consumer_ready"] = False
+                        if not info.get("detect_message"):
+                            info["detect_message"] = (
+                                "We couldn’t confirm a golf swing in this clip. "
+                                "Try a side-on take that shows a full swing."
+                            )
+                else:
+                    info.setdefault("example_questions", EXAMPLE_QUESTIONS)
+                    info.setdefault("default_prompt_mode", DEFAULT_PROMPT_MODE)
+            except Exception:  # noqa: BLE001
+                LOG.exception("product session fields failed")
+                info.setdefault("example_questions", EXAMPLE_QUESTIONS)
+                info.setdefault("default_prompt_mode", DEFAULT_PROMPT_MODE)
             return _json_response(self, 200, info)
         if path == "/api/golf_phases":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            if video_id and not _capture_visible(self, video_id):
+                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
             max_swings = 5
             raw_max = (qs.get("max_swings") or [None])[0]
             if raw_max is not None:
@@ -125,6 +317,8 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/sport_analysis":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            if video_id and not _capture_visible(self, video_id):
+                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
             sport = ((qs.get("sport") or ["golf"])[0] or "golf").strip().lower()
             handedness = ((qs.get("handedness") or ["right"])[0] or "right").strip().lower()
             payload = get_sport_analysis(
@@ -135,9 +329,28 @@ class Handler(BaseHTTPRequestHandler):
             )
             code = 200 if not payload.get("error") else 404 if payload.get("type") == "NO_SESSION" else 500
             return _json_response(self, code, payload)
+        if path == "/api/coach_briefs":
+            qs = parse_qs(parsed.query or "")
+            video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            if video_id and not _capture_visible(self, video_id):
+                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
+            sport = ((qs.get("sport") or ["golf"])[0] or "golf").strip().lower()
+            try:
+                from motion_agent.app.coach_briefs import build_coach_briefs
+
+                payload = build_coach_briefs(
+                    video_id=video_id, data_dir=DATA_DIR, sport=sport
+                )
+            except Exception as exc:  # noqa: BLE001
+                LOG.exception("coach briefs failed")
+                payload = {"error": True, "message": str(exc), "briefs": []}
+            code = 200 if not payload.get("error") else 404 if payload.get("type") == "NO_SESSION" else 500
+            return _json_response(self, code, payload)
         if path == "/api/smplx_mesh_status":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            if video_id and not _capture_visible(self, video_id):
+                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
             if video_id:
                 session_dir = DATA_DIR / "sessions" / str(video_id)
             else:
@@ -157,6 +370,8 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/smplx_mesh_clip":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            if video_id and not _capture_visible(self, video_id):
+                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
             try:
                 t0 = float((qs.get("t0") or qs.get("start") or ["0"])[0])
                 t1 = float((qs.get("t1") or qs.get("end") or ["0"])[0])
@@ -232,9 +447,13 @@ class Handler(BaseHTTPRequestHandler):
                 },
             )
         if path.startswith("/media/"):
+            from motion_agent.app.product_api import current_user, media_allowed
+
             parts = path.strip("/").split("/")
             if len(parts) >= 3:
                 session_id = parts[1]
+                if not media_allowed(SETTINGS, current_user(SETTINGS, self.headers), session_id):
+                    return _json_response(self, 403, {"error": True, "message": "This capture is private"})
                 rel = "/".join(parts[2:])
                 cand = resolve_media_file(session_id, rel, DATA_DIR)
                 if cand is not None:
@@ -245,6 +464,51 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+        if parsed.path in ("/api/auth/register", "/api/auth/login", "/api/auth/logout"):
+            length = int(self.headers.get("Content-Length", "0"))
+            raw = self.rfile.read(length) if length else b"{}"
+            try:
+                body = json.loads(raw.decode("utf-8") or "{}")
+            except json.JSONDecodeError:
+                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+            from motion_agent.app.product_api import handle_auth_post
+
+            code, payload = handle_auth_post(SETTINGS, parsed.path, body, self.headers)
+            return _json_response(self, code, payload)
+        if parsed.path == "/api/upload":
+            from motion_agent.app.product_api import current_user, parse_upload
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"ok": False, "error": True, "message": "Sign in to upload"})
+            try:
+                code, payload = parse_upload(self, SETTINGS, user)
+            except Exception as exc:  # noqa: BLE001
+                LOG.exception("upload failed")
+                return _json_response(self, 400, {"ok": False, "error": True, "message": str(exc)})
+            return _json_response(self, code, payload)
+        if parsed.path == "/api/account/delete":
+            from motion_agent.app.product_api import current_user, remove_account
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"error": True, "message": "Sign in required"})
+            code, payload = remove_account(SETTINGS, user)
+            return _json_response(self, code, payload)
+        if parsed.path == "/api/library/delete":
+            length = int(self.headers.get("Content-Length", "0"))
+            raw = self.rfile.read(length) if length else b"{}"
+            try:
+                body = json.loads(raw.decode("utf-8") or "{}")
+            except json.JSONDecodeError:
+                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+            from motion_agent.app.product_api import current_user, remove_capture
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"error": True, "message": "Sign in required"})
+            code, payload = remove_capture(SETTINGS, user, str(body.get("session_id") or ""))
+            return _json_response(self, code, payload)
         if parsed.path not in ("/api/chat", "/api/chat/stream"):
             return _json_response(self, 404, {"error": True, "message": "not found"})
         length = int(self.headers.get("Content-Length", "0"))
@@ -258,6 +522,16 @@ class Handler(BaseHTTPRequestHandler):
         if not question:
             return _json_response(self, 400, {"error": True, "message": "question required"})
         video_id = body.get("video_id")
+        from motion_agent.app.product_api import current_user
+
+        user = current_user(SETTINGS, self.headers)
+        if video_id:
+            from motion_agent.app.product_api import media_allowed
+
+            if not media_allowed(SETTINGS, user, str(video_id)):
+                return _json_response(
+                    self, 403, {"error": True, "message": "That capture belongs to another account"}
+                )
         attach_video = bool(body.get("attach_video", True))
         backend = body.get("backend") or BACKEND
         system_prompt = body.get("system_prompt")
@@ -270,6 +544,25 @@ class Handler(BaseHTTPRequestHandler):
             prompt_mode = prompt_mode.strip().lower() or None
         else:
             prompt_mode = None
+
+        # Consumer honesty: clamp to the Sport Pack this capture supports.
+        # ?dev=1 sends X-Motion-Dev: 1 so playground modes still work (except mismatch).
+        try:
+            from motion_agent.app.product_session import resolve_prompt_mode_for_session
+
+            dev_header = (self.headers.get("X-Motion-Dev") or "").strip() == "1"
+            pw = body.get("prompt_password") if isinstance(body.get("prompt_password"), str) else None
+            if not pw:
+                pw = _password_from_request(self, parsed)
+            allow_dev = dev_header or (bool(system_prompt) and _check_prompt_password(pw))
+            prompt_mode, _mode_meta = resolve_prompt_mode_for_session(
+                video_id=str(video_id) if video_id else None,
+                data_dir=DATA_DIR,
+                requested=prompt_mode,
+                allow_dev_modes=allow_dev,
+            )
+        except Exception:  # noqa: BLE001
+            LOG.exception("prompt_mode clamp failed")
 
         if system_prompt is not None:
             password = body.get("prompt_password")
@@ -373,6 +666,12 @@ class Handler(BaseHTTPRequestHandler):
             )
         except Exception as exc:  # noqa: BLE001
             LOG.exception("chat stream failed")
+            try:
+                from motion_agent.app.product_api import record_event
+
+                record_event(SETTINGS, "chat_error", session_id=video_id or "", message=str(exc)[:300])
+            except Exception:  # noqa: BLE001
+                LOG.exception("failed to record chat error")
             try:
                 emit(
                     {

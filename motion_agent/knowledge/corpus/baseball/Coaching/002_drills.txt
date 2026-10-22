@@ -1,0 +1,251 @@
+# Baseball Pitching — Drills (30–90 s micro-blocks)
+
+Drills link to `fault_*` findings and phases. Emphasize submaximal effort unless noted. Youth: prioritize form and
+counts over radar chasing.
+
+Disclaimer: Docs/002_DISCLAIMER.txt
+
+---
+
+## drill_stride_line
+
+targets: fault_stride_short, fault_stride_long, fault_closed_stride_landing, fault_open_stride_landing, fault_lead_foot_closed_toe
+phases: stride, landing
+duration_s: 45–60
+equipment: tape or chalk line toward home plate
+space: mound or flat ground 10 m
+steps:
+1. Place line from push foot toward target.
+2. Athlete performs 5–8 strides landing lead toe on/near line without throwing.
+3. Add short throw from last stride only if warm-up complete.
+progression: full delivery maintaining line for 5 pitches.
+authority: CoachingAdvice B
+source_ids: baseball_canada_pitch_counts (development context)
+
+---
+
+## drill_rocker_step_rhythm
+
+targets: fault_set_rush, fault_stride_long, fault_tempo_rush_delivery
+phases: set, lift, stride
+duration_s: 60
+equipment: optional metronome 50–70 bpm
+steps:
+1. Rocker step back, lift leg on beat 1, pause beat 2, stride on beat 3.
+2. Repeat without ball 6–8 cycles.
+3. Integrate throw on every third cycle at 50% effort.
+youth_note: shorten cycle if balance fails.
+authority: B
+
+---
+
+## drill_rocker_drive_leg
+
+targets: fault_back_leg_soft, fault_soft_drive_leg_balance
+phases: stride, landing
+duration_s: 45–60
+steps:
+1. Start in landing posture; rock back onto drive leg.
+2. Drive and land half effort ×10 focusing trail knee extension before plant.
+3. Add throw on last 4 reps only if warm.
+authority: B
+
+---
+
+## drill_braced_landing_holds
+
+targets: fault_front_knee_collapse, fault_posture_collapse_forward
+phases: landing
+duration_s: 45
+steps:
+1. From short stride, land on front leg and freeze 2 seconds with stable knee flexion.
+2. Coach checks knee over foot, not diving inward; chest stays tall.
+3. 6 reps each side if switch pitcher; otherwise throwing side only.
+authority: B
+source_ids: asmi_youth_position
+
+---
+
+## drill_towel_drill_extension
+
+targets: fault_mer_insufficient, fault_arm_path_wide, fault_arm_drag_late
+phases: release
+duration_s: 60
+equipment: small towel
+steps:
+1. Place towel between throwing elbow and ribs loosely (not clamped tight for youth).
+2. Throw easy long toss feeling extension through target without dropping towel early.
+3. 8–10 throws at 60% effort.
+avoid: max effort — form focus only.
+authority: B
+
+---
+
+## drill_follow_through_checkpoint
+
+targets: fault_arm_path_wide, fault_incomplete_deceleration, fault_finish_fall_off
+phases: follow
+duration_s: 60
+steps:
+1. After release, athlete taps opposite knee or shin with throwing hand before resetting.
+2. 10 submaximal throws into net or partner hold.
+3. Self-video one rep for decel path check.
+clinical_note: emphasize complete deceleration pattern, not speed.
+authority: B; clinical context A summarized pmc_pitch_count_clinical
+
+---
+
+## drill_glove_lead_target
+
+targets: fault_head_pull, fault_glove_flyout, fault_separation_low, fault_glove_side_collapse, fault_early_trunk_rotation
+phases: stride through release
+duration_s: 45
+steps:
+1. Glove arm points at target from leg lift through foot plant.
+2. Throw only when front foot lands; glove pulls to chest as trunk turns.
+3. 8 throws at 70% effort.
+authority: B
+
+---
+
+## drill_wall_drill_arm_path
+
+targets: fault_mer_insufficient, fault_arm_path_wide, fault_arm_path_inverted_w, fault_arm_slot_inconsistent
+phases: lift, release
+duration_s: 45
+equipment: wall or fence at shoulder distance
+steps:
+1. Stand sideways; simulate arm circle without ball, hand misses wall throughout.
+2. Slow motion 10 circles, then 5 with baseball shadow throw.
+authority: B
+
+---
+
+## drill_wrist_flick_partner_toss
+
+targets: fault_trunk_late_rotate
+phases: release
+duration_s: 45
+equipment: partner, tennis ball optional
+steps:
+1. Partner tosses ball waist high from 3 m.
+2. Athlete focuses on late wrist snap into partner’s glove — minimal body turn.
+3. 10 reps then integrate into one-step throw.
+audience: advanced youth/adult; skip for raw beginners.
+authority: B
+
+---
+
+## drill_one_knee_throws
+
+targets: fault_trunk_late_rotate, fault_separation_low, fault_arm_drag_late
+phases: landing, release
+duration_s: 60
+steps:
+1. Throwing-side knee down; short distance 5–8 m.
+2. Emphasize trunk rotation after arm starts back, hand fires last.
+caution: reduces lower-body load — use as feel drill, not primary training volume for youth.
+authority: B
+
+---
+
+## drill_balance_finish_hold
+
+targets: fault_set_rush, fault_finish_fall_off
+phases: follow
+duration_s: 60
+steps:
+1. Throw into net; hold finish 2 seconds without stepping off rubber.
+2. 8 reps; coach marks foot slip.
+authority: B
+
+---
+
+## drill_lift_balance_holds
+
+targets: fault_soft_drive_leg_balance, fault_set_rush
+phases: set, lift
+duration_s: 45
+steps:
+1. Lift lead leg to gather height; hold 2 s quiet balance.
+2. Soft rock then stride without throw ×6; add throw ×4 at 50%.
+youth_note: Hold 1 s if balance fails.
+authority: B
+
+---
+
+## drill_stack_posture_holds
+
+targets: fault_posture_lean_back, fault_posture_collapse_forward, fault_head_pull
+phases: stride, landing, release
+duration_s: 45
+steps:
+1. Walk-through stride focusing head over belt buckle.
+2. 8 walk-throughs; 4 half-effort throws maintaining stack.
+authority: B
+
+---
+
+## drill_mirror_side_view
+
+targets: fault_head_pull, fault_arm_slot_inconsistent
+phases: all
+duration_s: 45
+equipment: phone camera side view
+steps:
+1. Record 3 pitches side view.
+2. Athlete compares head position and slot at release to setup frame.
+3. Pick one cue from Coaching/001_cues.txt for next set.
+authority: ProductLogic — supports insufficient_data recovery
+
+---
+
+## drill_flat_ground_separation
+
+targets: fault_separation_low, fault_pelvis_drift, fault_early_trunk_rotation
+phases: stride, landing
+duration_s: 60
+steps:
+1. No mound; walk-through stride focusing closed chest while hips rotate under.
+2. 10 walk-throughs, 5 throws at 50%.
+youth: good pre-mound warm-up per many NGB progressions (summarized).
+authority: B
+source_ids: baseball_canada_pitch_counts
+
+---
+
+## drill_pitch_smart_rest_day
+
+targets: fault_youth_pitch_count_awareness
+phases: n/a
+duration_s: 30 (education block)
+steps:
+1. Review pitch count from last outing vs Pitch Smart / league table.
+2. If rest required, drill = mobility + lower-body strength, no full-effort throwing.
+audience: youth
+authority: A/B — mlb_pitch_smart, little_league_pitch_counts
+note: Coaching/load education only — not a medical prescription from video.
+
+---
+
+## Team practice integration
+
+See Training/001_team_practice.txt for how to slot these into 15-minute skill blocks.
+
+---
+
+## Drill safety
+
+- Warm up with general throwing progression before arm-path drills.
+- Stop if elbow or shoulder pain — refer to disclaimer.
+- Do not exceed pitch counts during drill-heavy practices.
+- No weighted-ball prescriptions without NGB guidance and coach supervision.
+
+---
+
+## Sources
+
+- USA Baseball / Pitch Smart development philosophy (summarized)
+- Baseball Canada development programs
+- Findings/001_common_faults.txt linkage
+- ASMI youth position statement (workload + mechanics balance)

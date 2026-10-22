@@ -1,0 +1,220 @@
+# Boxing pack — research notes (search agent)
+# Product: CeRebel body-first shadowboxing / form coaching (jab, cross, stance, guard, footwork)
+# Generated: 2026-10-21 | Summaries for RAG; verify live URLs and rule edition before competition citations
+# Scope filter: NO fight tactics, illegal blows, targeting to injure, or unsanctioned combat guidance.
+# Aligns: boxing/_meta/brain_plan.txt (v0.1) and corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+0. LICENSING POSTURE (READ FIRST)
+================================================================================
+
+Commercial RAG corpus = short summaries + stable URLs + authority tags. Do not bulk-paste
+copyrighted NGB manuals (USA Boxing GTF, IBA Coach Manual, Boxing Canada NCCP).
+
+Preferred open biomechanics: Frontiers + MDPI CC BY 4.0 papers listed in SOURCE_MANIFEST.
+Stanley et al. 2018 (Chester repository metadata: CC BY-NC-ND 4.0) — summarize only; NC limits
+verbatim reuse in commercial product.
+
+USABoxingEducation.org / member app videos: login-gated; link from public coach page only;
+do not scrape courseware.
+
+Community drill sites and wikis: excluded (authority C); not used for product findings.
+
+================================================================================
+1. NGB COACHING CONSENSUS — STANCE, GUARD, FOOTWORK (B)
+================================================================================
+
+Authority B | IBA Coach Manual 2019 (public PDF) + USA Boxing Grassroots Training Manual v01.1
+
+Stance (orthodox and southpaw diagrams in IBA manual):
+- Sideways-on ~45°; feet shoulder-width; weight balanced on both legs; knees slightly bent.
+- Lead hand at eye level; chin down protected by lead shoulder; rear elbow near ribs; rear fist
+  near chin; wrist aligned with forearm.
+- Common faults flagged for coaching: feet too wide/narrow, flat heels, standing tall, chin up.
+
+Footwork (both manuals):
+- The foot closest to the direction of travel moves first; maintain shoulder-width and balance.
+- Forward step: slight lead-foot lift → push from rear → lead toes land → rear foot slides up.
+- Backward step: mirror with rear foot initiating retreat.
+
+Teaching progression (USAB GTF / IBA aligned):
+- Master punches in place before adding forward/back/side steps.
+- Teach one punch with stance + movement before combinations.
+- Emphasize body rotation on straight punches; rapid retraction along the same path to guard.
+
+URLs:
+- https://www.iba.sport/wp-content/uploads/2019/01/AIBA-Coach-Regulations-Manual_WEB_2019_01-1.pdf
+- https://d36m266ykvepgv.cloudfront.net/uploads/media/lYivrDbNV6/o/usab-gtf-trainingmanual-v-01-1.pdf
+
+USA Boxing public education:
+- Coach hub describes USABoxingEducation.org (technique, nutrition, S&C) for members — not a
+  substitute for summarized GTF/IBA fundamentals in this pack.
+- URL: https://www.usaboxing.org/coach
+
+Boxing Canada Instruction-Beginners (B, youth/LTD):
+- Copyright © Boxing Canada 2024; includes safety chapter (environment, equipment, head injury
+  awareness) and teaching process — use for youth volume/safety tone, not adult power cues.
+- URL: https://boxingcanada.org/wp-content/uploads/2025/01/Instruction-Beginners-Reference-Manual-EN.pdf
+
+================================================================================
+2. STRAIGHT PUNCH TECHNIQUE — COACHING FACTS (B, v1 PRODUCT FOCUS)
+================================================================================
+
+Lead straight (jab) and rear straight (cross) share NGB teaching themes:
+
+Preparation / extension:
+- Punching without trunk rotation is a listed common mistake (USAB GTF).
+- Weight shift and hip/trunk rotation precede arm extension for rear-hand straight punches.
+- Fist rotation (supination) and full extension with immediate retraction to guard.
+
+Retraction faults (coaching-visible):
+- Slow or low retraction; hand drifting sideways; head leaning; chin unprotected.
+
+CeRebel phase mapping (internal B): B_GUARD → B_PREP → B_EXTEND (wrist speed peak proxy) →
+B_RETRACT → B_RESET — no impact/contact required.
+
+================================================================================
+3. BIOMECHANICS — KINETIC CHAIN & PUNCH TYPES (B+)
+================================================================================
+
+3A. Proximal-to-distal sequencing (open kinetic chain)
+
+Authority B+ | Liu et al. 2022, Frontiers in Physiology (PMC9798280, CC BY 4.0)
+- Lead straight punch: torso → arm segments accelerate and brake sequentially; distal hand
+  velocity and momentum depend on timing of segment deceleration.
+- Elite vs junior: higher peak/contact punch velocity; elite show greater lead-leg peak force,
+  impulse, and rate of force development (RFD) — rear-leg indices less discriminating in this cohort.
+- Training implication (research wording, not medical prescription): emphasize sequential
+  acceleration–braking and lead-leg explosive strength for lead straight performance.
+
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC9798280/
+
+3B. Cross / hook / uppercut — skill level differences (future pack extension)
+
+Authority B+ | Dinu & Louis 2020 (PMC7739747, CC BY 4.0)
+- Elite boxers produce higher force and velocity for cross, hook, uppercut vs juniors.
+- Juniors show higher relative shoulder contribution; elites use more integrated trunk/pelvis
+  timing (especially on cross).
+- Cross: front vs rear foot GRF split ~55/45 (both groups) — weight transfer pattern for rear-hand
+  straight useful for cross coaching heuristics in orthodox athletes.
+
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC7739747/
+
+3C. Lower limbs, GRF, fatigue
+
+Authority B+ | Stewart et al. 2025 (PMC12729554 — verify license on PMC record)
+- Amateur boxers: cross among highest punch force, GRF, and RFD pre-fatigue.
+- Lower-body fatigue circuit reduced punch force (~4% mean; larger drops in weaker punch types).
+- Supports product copy linking stable base + leg drive to sustainable shadowboxing form (not
+  conditioning prescriptions without coach oversight).
+
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC12729554/
+
+3D. Effective mass and technique vs body size
+
+Authority B+ | Kacprzak et al. 2025, Applied Sciences (CC BY 4.0, DOI 10.3390/app15074008)
+- Effective mass (peak force / fist acceleration at impact) higher for straight punches (jab, cross)
+  than hooks despite hooks sometimes showing higher peak force.
+- Body composition and years training did not correlate with effective mass — technique and
+  impulse–acceleration timing dominate.
+- Product: avoid “heavier athlete = better punch” simplifications; cue rotation and linear mechanics.
+
+URL: https://www.mdpi.com/2076-3417/15/7/4008
+
+3E. Amateur 3D punch descriptors (lab bag work)
+
+Authority B+ | Stanley et al. 2018 (DOI 10.1080/24748668.2018.1525651; NC-ND on Chester REP)
+- Six punch types on bag: straight vs hook vs uppercut differ in fist velocity, delivery time,
+  shoulder/elbow angular velocities.
+- Jab: shortest delivery time (~405 ms in reported cohort); lead hook highest peak fist velocity
+  (~11.95 m/s) in that study.
+- Jab-only significant lead vs rear GRF asymmetry among punches tested.
+- Use as population descriptors for punch-family taxonomy; do NOT publish as universal targets.
+
+URLs: https://doi.org/10.1080/24748668.2018.1525651
+       https://chesterrep.openrepository.com/handle/10034/621889
+
+3F. Measurement methods
+
+Authority B+ | Dunn et al. 2019 Translational Sports Medicine (Wiley — summarize only)
+- Punch integrator protocol for peak force, impulse, RFD reliability — informs future “quality”
+  checkpoints if external sensors added; not required for body-only v1.
+
+URL: https://onlinelibrary.wiley.com/doi/10.1002/tsm2.71
+
+================================================================================
+4. SAFETY, RULES, AND HEAD PROTECTION (A+ / A) — NOT HARM CONTENT
+================================================================================
+
+Guard mechanics (B) directly support safety: chin down, hands high, elbows in — consistent across
+IBA/USAB coaching manuals.
+
+Federation rules (A+):
+- USA Boxing National Rule Book (2026 effective via hub): medical clearance, fouls, headgear/glove
+  rules, stop scenarios — glossary + disclaimer support only.
+- IBA Technical & Competition Rules Apr 2026: medical and safety requirements cannot be weakened
+  at national level.
+
+URL (USAB): https://www.usaboxing.org/usa-boxing-rulebook
+URL (IBA): https://www.iba.sport/wp-content/uploads/2026/06/20260415-IBA-Technical-Competition-Rules.pdf
+
+Head impact biomechanics (A — clinical awareness ONLY):
+
+Authority A | Walilko et al. 2005 BJSM (PMC1725037)
+- Laboratory gloved straight punches to instrumented head form: reports translational/rotational
+  head acceleration scales with effective mass and impact velocity.
+- CeRebel use: reinforce why NGBs teach compact guard and neck stability; NEVER frame as
+  “how to maximize head injury,” knockout strategy, or illegal striking.
+
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC1725037/
+
+Concussion / return-to-sport: out of pack scope — redirect to licensed medical providers and
+  federation medical rules (brain_plan exclusion).
+
+================================================================================
+5. BODY TRACKING FEASIBILITY (B, INTERNAL)
+================================================================================
+
+Visible from single-camera body reconstruction (aligns brain_plan):
+- Stance width, knee flexion, COM over base, shoulder/hip rotation proxy, lead vs rear wrist height,
+  wrist speed peak timing (extension proxy), retraction path toward guard.
+- Weak/occluded: precise fist orientation, glove roll, subtle weight % split without force plates.
+
+OpenSim reference: https://simtk.org/projects/opensim (method B, not coaching authority).
+
+================================================================================
+6. CONTENT BOUNDARIES FOR BUILD AGENT
+================================================================================
+
+Do NOT author from excluded sources:
+- Anonymous web combos, street fighting, bare-knuckle illegal events, weight-cut harm, PED use.
+
+v1 findings/coaching should cite:
+- NGB stance/guard/jab/cross progressions (B)
+- B+ biomechanics for kinetic chain, leg drive, retraction, effective mass (relationships not single angles)
+
+Hooks/uppercuts/defensive slips: stub in taxonomy only until phase model extends beyond brain_plan v1.
+
+================================================================================
+7. URLs RECORDED IN SOURCE_MANIFEST (PRIMARY)
+================================================================================
+
+Coaching:
+https://d36m266ykvepgv.cloudfront.net/uploads/media/lYivrDbNV6/o/usab-gtf-trainingmanual-v-01-1.pdf
+https://www.iba.sport/wp-content/uploads/2019/01/AIBA-Coach-Regulations-Manual_WEB_2019_01-1.pdf
+https://www.usaboxing.org/coach
+https://boxingcanada.org/wp-content/uploads/2025/01/Instruction-Beginners-Reference-Manual-EN.pdf
+
+Rules:
+https://www.usaboxing.org/usa-boxing-rulebook
+https://www.iba.sport/about-iba/boxing-rules/
+
+Biomechanics (open or summarize):
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9798280/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC7739747/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC12729554/
+https://www.mdpi.com/2076-3417/15/7/4008
+https://doi.org/10.1080/24748668.2018.1525651
+
+Safety:
+https://pmc.ncbi.nlm.nih.gov/articles/PMC1725037/

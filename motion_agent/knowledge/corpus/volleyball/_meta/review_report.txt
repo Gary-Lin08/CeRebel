@@ -1,0 +1,44 @@
+# Volleyball Sport Pack — Review Report
+# Agent: REVIEW | Date: 2026-10-23 (v2 depth pass)
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+## 1. Pack completeness vs spec layout
+
+All required paths present (Docs, Schema, Taxonomy, Phases, Quality, Findings, Coaching,
+Biomechanics, Training, _meta manifests). Docs/002_DISCLAIMER.txt retained; not weakened.
+
+## 2. Safety and disclaimer
+
+- Pain redirect and non-diagnostic framing intact.
+- Landing / ACL language is load-awareness only (fault_landing_stiff, fault_spike_stiff_landing).
+- No invented clinical angle norms as medical advice.
+
+## 3. Product constraints
+
+- No ball-tracking dependency in findings.
+- COM–wrist timing labeled heuristic (fault_jump_behind_contact, fault_com_wrist_desync).
+- Block-ready findings are posture-only (no net/ball required).
+- Youth notes on landing volume and soft sticks.
+
+## 4. Finding card shape audit (v2)
+
+- 28 canonical fault_* cards with full field set (headline, phases, body_signal, why_it_matters,
+  feel_cue, drill, severity_default, sources).
+- Former kebab-case ids migrated with legacy_id on cards + alias_of rows in Taxonomy/002.
+
+## 5. Coaching / taxonomy / phases
+
+- Cues: every fault_* has a cue block.
+- Drills: most fault_* covered (≥15 drills with targets:).
+- Relations: ≫15 rows including migration aliases and new attack/block anchors.
+- Phase model: detector_events + fault_links per phase; SP_* aliases documented.
+
+## 6. Gaps (non-blocking)
+
+- VolleyballPack detector code still engineering follow-up.
+- Serve/pass fault ids remain in relations for future cards; v2 depth prioritizes approach/attack + block-ready.
+- Numeric thresholds remain ProductLogic/B until labeled clip calibration.
+
+## 7. Sign-off
+
+VERDICT: APPROVED_V2 — Volleyball pack meets v2 depth with 28 migrated fault_* cards focused on approach, swing, landing, and block-ready posture.

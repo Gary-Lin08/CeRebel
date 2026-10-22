@@ -1,0 +1,232 @@
+# Volleyball Sport Pack — Research Notes (Search Agent)
+# Product: CeRebel body-first coaching (no ball tracking required)
+# Generated: 2026-10-21
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Each factual claim in build artifacts should carry source id + URL from SOURCE_MANIFEST.txt
+
+================================================================================
+0. LICENSING GATE (READ FIRST)
+================================================================================
+
+FIVB public PDFs (rules, coaches manuals, terminology):
+  Authority A+ (rules) / B (coaching pedagogy).
+  License: © FIVB (rules PDF states "Design, layout and illustrations: © FIVB 2025";
+  coaches manuals ©2011 FIVB on Level I TOC). Public download ≠ open redistribution.
+  CeRebel corpus: summarize teaching themes + cite URL + retrieved_at; no long verbatim paste.
+
+USA Volleyball / Volleyball Canada web & lesson PDFs:
+  Authority B. License: © USAV / © Volleyball Canada; site terms. Summarize drills and LTAD
+  themes; Coach Academy full modules are account-gated.
+
+Peer-reviewed spike biomechanics:
+  Prefer CC BY 4.0 (MDPI Applied Sciences, MDPI Sensors) for quotable summaries in Biomechanics/.
+  PMC free-view articles (Sports Health, JSSM) often publisher-copyright — summarize + DOI only.
+  Sage paywall reviews (Oliveira spike kinematics SR 2020): abstract-level only unless licensed.
+
+Turkish Journal of Kinesiology landing SR (2026): marked OPEN ACCESS on journal site; verify
+  file-level license before PDF ingest.
+
+================================================================================
+1. CONSENSUS SPIKE PHASE MODELS (RECONCILE IN Phases/001)
+================================================================================
+
+1A. Upper-limb / clinical five-phase model (serve and spike shared pattern)
+  Source: Reeser & Fleisig lineage; Reeser et al. Sports Health 2010 (PMC3445065).
+  Phases: approach → takeoff → arm cocking → arm acceleration → follow-through.
+  Boundary: max shoulder external rotation separates cocking from acceleration.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC3445065/
+  Authority A (clinical) | License: © 2010 The Author(s); Sage (PMC free access, not CC-BY).
+
+1B. Whole-spike performance phases (lab, 3D mocap)
+  Source: Serrien et al. 2016 — approach, cocking, acceleration (VICON 3D; SPM).
+  Top-level vs junior elite differ in impact speed and jump height; pelvis/trunk orientation
+  angles showed invariant patterns while angular velocities differ by expertise and sex.
+  URL: https://doi.org/10.13189/saj.2016.040403
+  Authority B+ | License: verify on SAJ/Horizon open-access record (often CC BY for SAJ).
+
+1C. Jump–airborne–landing macro phases (training intervention studies)
+  Source: Kim et al. 2024/2025 Sci Rep spike training RCT (PMC12804966).
+  Jumping phase (approach + takeoff), airborne phase (COM apex), landing phase (deceleration).
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC12804966/
+  Authority B+ | License: Scientific Reports — typically CC BY 4.0 (confirm PMC record).
+
+1D. FIVB coaching progression (qualitative, technique teaching)
+  Source: FIVB Coaches Manual Level I — Chapter VI Teaching Basic Individual Techniques;
+  approach run, jump, hit, landing; mini/mass volleyball scaling in Chapter V.
+  URL: https://www.fivb.com/wp-content/uploads/2024/03/FIVB_Coach_Manual_EN.pdf
+  Authority B | License: © FIVB; summarize pedagogy only.
+
+================================================================================
+2. APPROACH & SPIKE-JUMP BIOMECHANICS (ADULT LAB — NOT PRESCRIPTIVE TARGETS)
+================================================================================
+
+RSJ-1L vs RSJ-2L (three-step approach spike jump, male college, force plates + mocap):
+  Source: Tai et al. Appl. Sci. 2021 (MDPI), doi 10.3390/app11062710.
+  RSJ-1L: faster approach velocity, higher peak vertical GRF (~3.0 vs ~1.6 BW on plant leg),
+  greater ankle/knee/hip moments, shorter push-off time, less jump height, stiffer knee at contact.
+  RSJ-2L: more countermovement, higher jump height, longer push-off.
+  Tactical mapping (authors): RSJ-1L ↔ quick spike / short set; RSJ-2L ↔ high set / more CM jump.
+  Authority B+ | License: CC BY 4.0 (MDPI Applied Sciences).
+
+Approach step count (2 vs 3 steps, female elite):
+  Source: Topics in Exercise Science and Kinesiology 2023, doi 10.9741/2766-2187.1074.
+  3-step with higher horizontal velocity: more dominant-knee flexion to brake horizontal momentum;
+  faster hip/knee/ankle extension on non-dominant leg at takeoff.
+  Authority B+ | Open-access journal article (verify license on publisher page).
+
+Spike jump height correlates (experienced players, 3D):
+  Source: Wagner et al. lineage; IJSM spike jump study (doi 10.1055/s-0029-1224177).
+  Significant correlations: max horizontal COM velocity, CMJ/SJ height, right knee flexion–extension
+  ROM, left shoulder hyperextension angular velocity; left vs right foot distance to COM asymmetry.
+  Authority B+ | License: Thieme — abstract/subscriber; cite relationships only.
+
+Classic 3D spike (international males):
+  Source: Coleman et al. 1993 J Sports Sci (doi 10.1080/02640419308729999).
+  Mean jump height ~0.62 m; COM vertical velocity at takeoff ~3.59 m/s; ball speed ~27 m/s
+  correlated with max humerus angular velocity (r ≈ 0.75).
+  Authority B+ | License: Taylor & Francis — summarize published abstract statistics only.
+
+Systematic review — spike kinematics (18 studies, 3D):
+  Source: Oliveira et al. Int J Sports Sci Coach 2020, doi 10.1177/1747954119899881.
+  Themes: jump height ↔ COM velocity; ball speed ↔ hitting-arm and trunk velocity variables;
+  cross-court from pos. 4 ↔ trunk rotation; sex differences; injury links inconclusive.
+  Quality mix: high/good/limited studies — do not pool into single angle norms.
+  Authority B+ | License: Sage — restricted access; use abstract + cited relationships.
+
+Successful vs faulty spikes (elite juniors, game-like):
+  Source: Sarvestan et al. Sensors 2021 (PMC7917820), doi 10.3390/s21041345.
+  ROM patterning similar between outcomes; upper-limb angular velocity differs 35–45% and 76–100%
+  of spike duration — coaches should emphasize arm speed/coordination, not only jump height.
+  Authority B+ | License: CC BY 4.0 (MDPI Sensors).
+
+================================================================================
+3. UPPER LIMB AT CONTACT & SHOULDER LOAD (CAREFUL WORDING)
+================================================================================
+
+Spike/serve upper limb at contact (lab cohort):
+  Source: PMC3445065.
+  Hard spike: shoulder abducted/externally rotated in cocking; acceleration = internal rotation +
+  elbow extension; contact with flexed/ internally rotated shoulder, extended elbow.
+  Roll shot / float serve: lower IR velocity, elbow extension velocity, ball speed.
+  Authority A | License: Sage via PMC — summarize only.
+
+Ball–hand contact force effect on modeled shoulder torque:
+  Source: Howard et al. J Sports Sci Med 2023 (PMC10499142), doi 10.52082/jssm.2023.488.
+  Adolescent females; estimated hand force ~416 ± 99 N (range ~238–672 N); including ball contact
+  force flips average modeled internal shoulder rotation torque sign/magnitude vs models that omit it.
+  Product: shoulder load awareness from visible arm speed + repeated volume — not torque diagnosis.
+  Authority B+ | License: JSSM open access (check PMC "Copyright and License" — typically author/journal OA terms).
+
+================================================================================
+4. LANDING AFTER SPIKE / BLOCK (INJURY-AWARENESS, NOT DIAGNOSIS)
+================================================================================
+
+Systematic review — spike and block landings (n=14 studies):
+  Source: Kurt Tuç & Cengizel, Turk J Kinesiol 2026, doi 10.31459/turkjkin.1838171.
+  Key variables: valgus–varus, joint angles/moments, ROM, GRF, stiffness, strength.
+  Female players: greater ROM and knee valgus ↔ higher reported injury risk in literature reviewed.
+  Spike landings: forward attack → horizontal + vertical momentum dissipation.
+  Authority B+ | License: OPEN ACCESS journal PDF (DergiPark); confirm reuse terms on download.
+
+Four-week spike-specific training (jump + landing kinetics):
+  Source: PMC12804966.
+  Post-training: higher jump COM, altered knee flexion moment during jump phase, reduced knee
+  extension moment / vertical joint force on landing (performance + landing-load themes).
+  Authority B+ | License: CC BY 4.0 (typical Sci Rep — verify).
+
+Epidemiology context (cited in training studies): high seasonal spike volumes and landing impacts
+up to ~7× body weight on single-leg landings in literature — use for workload disclaimers, not
+clip-level inference.
+
+================================================================================
+5. FIVB COACHING PUBLIC MATERIAL (PEDAGOGY → Phases / Coaching / Training)
+================================================================================
+
+Coaches Courses materials hub (14 documents):
+  URL: https://www.fivb.com/document-category/coaches-courses-materials/
+  Includes: Level I & II manuals (EN/FR/ES), beach drill-book, terminology, code of conduct.
+  Level II adds: training theory, physical prep, player development model, advanced tactics,
+  match management, psychological prep, team building.
+  Direct EN PDFs (2024 upload):
+    Level I: https://www.fivb.com/wp-content/uploads/2024/03/FIVB_Coach_Manual_EN.pdf
+    Level II: https://www.fivb.com/wp-content/uploads/2024/03/Coaches_Manual_Level_II_EN.pdf
+  Manuals state FIVB technical library is "open resource" for NFs/coaches via fivb.org technical pages.
+  Authority B | License: © FIVB.
+
+Volleyball Terminology (EN/FR/ES glossary, ~32 pp):
+  URL: https://www.fivb.com/wp-content/uploads/2024/03/FIVB_Technical_VB_Terminology.pdf
+  Use for Taxonomy/001 stable terms (approach, armswing, back-row attack, etc.).
+  Authority A+ (lexicon) | License: © FIVB Technical and Development Department.
+
+Official Volleyball Rules 2025–2028:
+  URL: https://www.fivb.com/wp-content/uploads/2025/01/FIVB-Volleyball_Rules2025_2028-EN.pdf
+  Effective competitions after 2025-01-01. Body pack uses rules for glossary (net touch, back-row
+  attack line, service order) — not line calling without calibration.
+  Authority A+ | License: © FIVB 2025.
+
+================================================================================
+6. NGB / YOUTH SCALING (SEPARATE NORMS FROM ADULT ELITE LAB)
+================================================================================
+
+USA Volleyball Development Model (Craft, Body, Mind, Heart, Team):
+  URL: https://usavolleyball.org/resources/
+  Coach Education / Coach Academy (IMPACT required for sanctioned junior coaches; modules gated).
+  Public Coach Tools: drill PDFs, lesson plans K-12, John Kessel "Growing the Game" articles.
+  URLs: https://usavolleyball.org/resources-for-coaches/coaches-tools/
+        https://usavolleyball.org/resources-for-coaches/lesson-plans/
+  Authority B | License: © USA Volleyball.
+
+FIVB Level I Mini and Mass Volleyball + school volleyball links:
+  Emphasize modified court/ball, participation volume, fundamental movement before full approach–jump
+  attack at adult heights.
+  Authority B | License: © FIVB.
+
+Volleyball Canada (LTAD, skills progressions):
+  URL: https://volleyball.ca/
+  Authority B | License: © Volleyball Canada — summarize youth scaling.
+
+================================================================================
+7. CeRebel BODY-ONLY PROXIES (PRODUCT, NOT EXTERNAL AUTHORITY)
+================================================================================
+
+Without ball track:
+  - E_CONTACT ≈ peak hitting-hand / wrist speed (same family as other packs).
+  - E_JUMP_PEAK ≈ pelvis/COM vertical maximum between plant and landing.
+  - Timing delta (jump peak vs wrist peak): heuristic for "jumping under vs behind" contact window;
+    tempo-dependent — flag confidence low without set context.
+
+Visible from single side or 45° camera:
+  Step cadence, penultimate step length proxy, knee flexion trend, pelvis rise, trunk rotation proxy,
+  hitting-arm angular speed peak, landing knee flexion velocity trend.
+
+Poor visibility:
+  Ball contact point, set tempo, block touch, precise shoulder ER when arm occluded.
+
+Beach vs indoor:
+  Sand reduces approach speed and jump height; same phase IDs; lower COM-rise expectations when
+  surface=beach in session metadata.
+
+================================================================================
+8. SUGGESTED FAULT THEMES FOR Findings/ (SEEDS — BUILD AGENT TO FORMALIZE)
+================================================================================
+
+| Theme | Phase | Body signal | Why (careful) | Sources |
+|-------|-------|-------------|---------------|---------|
+| Arm-only swing | Acceleration | Low trunk rotation before wrist peak | Less kinetic chain contribution | Oliveira SR; Sarvestan 2021 |
+| Late arm vs jump | Airborne | Wrist peak well after COM peak | Timing mismatch with set (heuristic) | FIVB teaching; product proxy |
+| Stiff plant (RSJ-1L pattern) | Takeoff | Short push-off, high GRF proxy via sharp knee | Quick tempo tool; may trade height | Tai 2021 |
+| Upright landing | Landing | Low knee flexion velocity, stiff catch | Landing-load awareness | Turk J Kinesiol SR 2026 |
+| Asymmetric plant | Approach | Step width / foot–COM asymmetry | Jump height correlates in lab | IJSM spike jump 2009 |
+
+================================================================================
+9. GAPS FOR BUILD / BRAIN AGENTS
+================================================================================
+
+- Ingest CC BY spike papers first (Tai 2021, Sarvestan 2021, Sci Rep training 2025) into Biomechanics/.
+- FIVB Level I Chapter VI: extract approach footwork teaching bullets into Coaching/001 (summarized).
+- Reconcile 5-phase upper-limb model with jump–airborne–landing macro model in Phases/001.
+- Oliveira 2020 full text paywalled — use abstract + DOI unless Sage license obtained.
+- Block phase kinematics underrepresented vs spike in landing SR — separate block findings later.
+- Docs/002_DISCLAIMER.txt: not medical advice; jump/spike volume not prescribed from one video.
+
+# End research_notes.txt

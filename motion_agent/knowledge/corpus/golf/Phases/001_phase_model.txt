@@ -1,0 +1,127 @@
+# Golf Sport Pack — Phase model (body-first)
+
+Seven phases align with `motion_agent/motion/golf_phases.py` (`PHASE_ORDER`) for OpenSim-compatible
+skeleton tracking. **Impact** is inferred from **peak trail-side wrist speed** (dominant hand); clubhead
+and ball are not required. Full swings (driver through wedge) and practice swings share the same chain;
+clip may contain multiple swings matched one-to-one to impact peaks. Short-game chips reuse the same
+phase ids with truncated finish windows.
+
+Handedness: examples assume **right-handed** golfer (lead = left, trail = right). Mirror joint names for left-handed athletes.
+
+Camera: **face-on** and **down-the-line (DTL)** views both work; DTL is preferred for pelvis–shoulder separation and spine tilt.
+Foreshortening on face-on can hide lateral sway — use confidence flags when lateral joint depth is unreliable.
+
+---
+
+## Phase chain (7 phases)
+
+### address
+**Detector id:** `address`
+**Start:** Swing window begins OR athlete holds static setup before motion onset.
+**End:** Trail wrist speed exceeds quiet threshold (~1.15× clip quiet baseline) — takeaway onset.
+**Body signals:** Low wrist and ankle speeds; knees slightly flexed; trunk inclined toward ball (DTL); pelvis
+between feet; head relatively stable vertically.
+**Key time:** Window start (often first frame of matched swing segment).
+**detector_events:** E_ADDRESS_HOLD, E_TAKEAWAY_ONSET
+**fault_links:** fault_setup_locked_legs, fault_setup_spine_too_upright, fault_setup_narrow_stance, fault_setup_weight_heels, fault_chip_trail_weight
+**Youth note:** Shorter static address is common; do not require long “freeze” before takeaway.
+
+### takeaway
+**Detector id:** `takeaway`
+**Start:** Sustained trail-side wrist / arm motion away from address.
+**End:** Mid-backswing boundary (~45% of takeaway→top duration in detector heuristics).
+**Body signals:** Trail wrist moves away from pelvis; lead arm may remain extended; minimal early pelvis rotation
+on DTL (one-piece takeaway coaching cue).
+**Without club:** Measure arm path and timing, not shaft plane.
+**detector_events:** E_TAKEAWAY_ONSET, E_HANDS_HIP_HIGH
+**fault_links:** fault_wrist_only_takeaway, fault_takeaway_steep_lift, fault_takeaway_inside_roll, fault_head_lateral_sway
+
+### backswing
+**Detector id:** `backswing`
+**Start:** Mid-backswing boundary after takeaway.
+**End:** **Top of backswing** — local minimum trail wrist speed before downswing (speed valley proxy for “top”).
+**Key time:** Top (speed valley frame).
+**Body signals:** Shoulder line rotates away from target; pelvis turns less than shoulders (X-factor build);
+lead knee may flex; weight shifts toward trail foot (CoP proxy: trail ankle vertical load themes in literature).
+**Camera caveat:** Wrist speed valley can be shallow on slow partial swings; phase may merge with transition on very short clips.
+**detector_events:** E_TOP (trail wrist speed valley)
+**fault_links:** fault_short_arm_swing, fault_incomplete_shoulder_turn, fault_sway_not_turn, fault_reverse_pivot, fault_lead_arm_collapse_top, fault_head_lateral_sway
+
+### transition
+**Detector id:** `transition`
+**Start:** Top (speed valley).
+**End:** Downswing onset — trail wrist speed accelerates toward impact.
+**Key time:** Top (direction change at pelvis/shoulders often visible here on DTL).
+**Body signals:** Brief pause or reversal in wrist speed; pelvis begins toward target while shoulders still closed;
+lower-body lead in kinematic sequence (qualitative — peak ordering not scored without multi-segment norms).
+**detector_events:** E_TOP, E_DOWNSWING_ONSET
+**fault_links:** fault_over_the_top_transition, fault_cast_from_top, fault_tempo_hitch_at_top, fault_tempo_rush_downswing, fault_flying_trail_elbow, fault_reverse_pivot
+
+### downswing
+**Detector id:** `downswing`
+**Start:** Transition end / rising trail wrist speed.
+**End:** Impact window start (half-width before peak speed frame).
+**Body signals:** Trail wrist speed rises sharply; hip rotation toward target; spine maintains tilt; lead side
+may straighten into impact (not scored as exact angles).
+**Quality focus:** Sequence pelvis → trunk → arm (B+ literature); arm-only fire before pelvis flags faults.
+**detector_events:** E_DOWNSWING_ONSET, E_IMPACT_PROXY (approaching)
+**fault_links:** fault_early_extension, fault_early_extension_thrust, fault_over_the_top_transition, fault_cast_from_top, fault_hanging_back, fault_slide_excessive, fault_impact_lead_knee_lock, fault_chip_stand_up
+
+### impact
+**Detector id:** `impact`
+**Event window:** Centered on **maximum trail-side wrist speed** in the swing segment (impact proxy).
+**Body signals:** Peak wrist speed; lead arm often extended toward target; pelvis open relative to address;
+head may remain behind ball position on DTL (coaching observation, not mandatory norm).
+**Not measured without club track:** Attack angle, face angle, low point, shaft lean at impact.
+**detector_events:** E_IMPACT_PROXY (argmax ||v(trail_wrist)||)
+**fault_links:** fault_early_extension, fault_early_extension_thrust, fault_hanging_back, fault_weight_shift_late, fault_slide_excessive, fault_impact_lead_knee_lock, fault_incomplete_hip_clearance, fault_chip_stand_up, fault_chip_trail_weight
+
+### follow_through
+**Detector id:** `follow_through`
+**Start:** Impact window end.
+**End:** Wrist speed returns toward quiet baseline OR swing segment end / athlete settles.
+**Body signals:** Trail arm wraps around body; weight on lead foot; balanced finish (lead ankle loaded, minimal
+fall-back); spine rises into vertical finish position.
+**Quality focus:** Controlled deceleration vs abrupt stop after impact proxy.
+**detector_events:** E_IMPACT_PROXY_END, E_FINISH_SETTLE
+**fault_links:** fault_fall_back_finish, fault_chicken_wing_stop, fault_abrupt_deceleration, fault_incomplete_hip_clearance, fault_weight_shift_late, fault_chip_trail_weight
+
+---
+
+## Multi-swing clips
+
+Detector builds non-overlapping swing hypotheses from wrist speed, Hungarian-matches impact peaks, then
+emits exclusive phase timelines per swing. Metadata: `phase_order`, `phase_min_duration_s` in tool output.
+
+---
+
+## Cross-phase timing metrics (future product)
+
+- swing_tempo_ms: address start → impact proxy
+- backswing_ms: takeaway start → top key_time
+- transition_ms: transition phase duration
+- downswing_ms: downswing start → impact proxy
+- top_to_impact_ms: top → impact (popular coaching tempo ratio numerator/denominator pair — qualitative only)
+- follow_decel_smoothness: jerk proxy on trail wrist speed after impact
+
+---
+
+## Mapping to taxonomy concepts
+
+| Phase | Taxonomy swing_event |
+|-------|----------------------|
+| address | golf:address |
+| takeaway + backswing | golf:backswing (coarse) |
+| downswing + impact | golf:downswing / golf:impact |
+| follow_through | golf:follow_through |
+
+---
+
+## Product copy examples
+
+- “Is my lower body starting before my shoulders on the way down?” → compare pelvis yaw onset vs shoulder yaw in **transition**.
+- “Do I hold balance through the finish?” → **follow_through** lead-foot stability and head vertical drift.
+- “Am I standing up on chips?” → **impact** spine-angle change on short-arc swings (fault_chip_stand_up).
+
+Sources: open golf swing biomechanics systematic reviews (B+); GRF/CoP review Watson et al. 2026 (B+); phase
+names align with PGA / LPGA coaching vocabulary and CeRebel detector ids (B). See Biomechanics/ and SOURCE_MANIFEST.

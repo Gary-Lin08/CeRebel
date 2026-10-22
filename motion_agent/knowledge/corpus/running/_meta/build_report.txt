@@ -1,0 +1,117 @@
+# Running Sport Pack — Build Report (Build Agent)
+Generated: 2026-10-21T00:00:00+00:00
+Spec: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+Status: content build complete — ready for RAG chunk ingest
+
+================================================================================
+SUMMARY
+================================================================================
+
+Sport ID: running
+Language: English (primary RAG)
+Finding IDs: 13
+Phase IDs: 7 (contact, loading, midstance, propulsion, toe_off, swing, flight)
+Checkpoint rows: 15 (Quality/002_checkpoints.txt)
+Authority mix: A/B+ for load and clinical association themes; B for cues/drills
+
+================================================================================
+FILES WRITTEN (content directories)
+================================================================================
+
+Docs/
+  001_ARCHITECTURE.txt       — pack purpose, pipeline integration, evidence types
+  002_DISCLAIMER.txt         — medical/safe-use, tracking limits, cadence caution
+
+Schema/
+  001_ontology.txt           — JSON-LD graph: phases, events, series, findings
+
+Taxonomy/
+  001_concepts.txt           — phase, finding, capture concepts + synonyms
+  002_relations.txt          — precedes, occursIn, failTriggers edges
+
+Phases/
+  001_phase_model.txt        — E_IC, E_TO events; 7-phase stride cycle
+
+Quality/
+  001_quality_definition.txt — five quality dimensions
+  002_checkpoints.txt        — checkpoint table with evidence levels
+
+Findings/
+  001_common_faults.txt      — 13 finding cards (SPORT_PACK shape)
+
+Coaching/
+  001_cues.txt               — feel cues by finding_id
+  002_drills.txt             — 30–90 s drills by finding_id
+
+Biomechanics/
+  001_overview.txt           — evidence-aware gait summary, adult/youth bands
+
+Training/
+  001_team_practice.txt      — team film sessions, camera setup, weekly patterns
+
+_meta/ (ops — exclude from coaching index)
+  pack_readme.txt            — updated status content build 2026-10-21
+  brain_plan.txt             — ontology + phase + finding map
+  SOURCE_MANIFEST.txt        — sources, URLs, authority levels
+  research_notes.txt         — researched facts with PubMed/PMC links
+  review_report.txt          — audit pass with product-code gaps noted
+  build_report.txt           — this file
+
+================================================================================
+ACCEPTANCE CHECKLIST (brain_plan §13)
+================================================================================
+
+[x] Every finding_id has Findings card + cue + drill
+[x] Every checkpoint references evidence level and phase id
+[x] Phase ids match Phases/001_phase_model.txt
+[x] No GPS/foot-pod dependency for findings
+[x] Youth/adult separation in Biomechanics/001 and youth checkpoint rows
+[x] Disclaimer in Docs/002
+
+================================================================================
+INGEST NOTES
+================================================================================
+
+- Chunk with metadata: sport=running, authority_level from manifest, audience when present.
+- Repeat finding slugs in Findings + Coaching for retrieval cross-link.
+- Do not index _meta/build_report.txt as coaching truth.
+
+================================================================================
+NEXT STEPS (engineering, not corpus)
+================================================================================
+
+1. Run corpus chunker on running/ (exclude _meta/)
+2. Implement motion_agent/sports/packs/running.py detector
+3. Enable catalog status when detector suite passes
+
+End build_report
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+
+Agent: build (v2 depth upgrade)
+Sport ID: running
+
+Changes:
+  Findings/001_common_faults.txt — rewritten canonical format; 13→28 cards;
+    all finding_id fault_*; legacy_id on prior bare slugs; mandatory sources/severity/feel_cue/drill/body_signal
+  Coaching/001_cues.txt — 28 cue blocks citing fault_*
+  Coaching/002_drills.txt — 28 drills with targets: fault_*
+  Phases/001_phase_model.txt — 7 phases each with detector_events + fault_links
+  Taxonomy/002_relations.txt — fault_* occursIn/failTriggers/sameAs edges (≥15)
+  _meta/review_report.txt — rewritten; VERDICT APPROVED_V2
+
+Finding count: 28
+Migration: bare → fault_* (overstride→fault_overstride, etc.)
+New themes: rearfoot/forefoot proxies, arm path, hip extension, fatigue cadence/hip drop, contact/push asymmetry
+
+Acceptance (v2):
+  [x] ≥25 finding cards full fields
+  [x] ≥20 cues citing fault_*
+  [x] ≥15 drills citing fault_*
+  [x] ≥15 taxonomy relations
+  [x] 5–8 phases with detector_events + fault_links
+  [x] review ends VERDICT: APPROVED_V2
+
+End v2 append

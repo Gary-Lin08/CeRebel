@@ -1,0 +1,141 @@
+# Weightlifting Biomechanics — Overview (open literature summaries)
+# authority: B+ unless noted | NOT medical advice | body-first, bar optional
+
+================================================================================
+SCOPE
+================================================================================
+
+This document summarizes peer-reviewed and consensus literature on **back squat**, **conventional deadlift**,
+and **standing overhead press** mechanics relevant to pose-based coaching. Claims are relationships and trends,
+not individualized load prescriptions.
+
+Primary segments modeled from video:
+- Pelvis / hip center, femur (hip–knee), shank (knee–ankle), thorax, upper arm, forearm/wrist proxy for bar.
+
+================================================================================
+COORDINATE & ANGLE CONVENTIONS (product alignment)
+================================================================================
+
+- Hip angle: trunk–thigh angle in sagittal plane (flexion decreases in deep squat/hinge).
+- Knee flexion: increasing angle = more flexed in standard biomechanics convention (match OpenSim pack).
+- Trunk angle: thorax vs vertical; forward lean = positive pitch in sagittal side view.
+- Lumbar proxy: thorax–pelvis relative angle — noisy in 2D; use qualitative trends only.
+
+Always downgrade confidence when camera not sagittal/oblique.
+
+================================================================================
+SQUAT — KINETIC & KINEMATIC THEMES
+================================================================================
+
+Joint moments:
+- Squat loads hip, knee, and ankle extensors; relative contribution shifts with depth, stance width, and load.
+- Deeper squats generally increase knee extensor demand at bottom; hip extensor demand remains substantial at heavy loads.
+
+Trunk angle & bar position (appearance):
+- Low-bar vs high-bar differences increase hip hinge and trunk lean for a given depth — body-only video cannot
+  read bar position; infer cautiously from elbow position and wrist height if bar tracked.
+
+Knee valgus:
+- Frontal-plane knee motion correlates with valgus moments in some studies; inter-individual anatomy and cueing
+  affect outcome. Product flags visible medial knee drift, not ACL risk scores.
+
+Depth:
+- "Parallel" and "below parallel" definitions vary by federation and anthropometry (hip vs knee landmark).
+- Product uses hip vs knee height proxy — users should confirm intent with coach.
+
+Tempo & reversal:
+- Rapid eccentric and bounce at bottom increase rate of force development demands; pause squats reduce elastic rebound.
+
+Youth:
+- Growth, limb ratios, and supervision dominate safety literature over absolute depth numbers (A consensus).
+
+Sources (representative):
+- Escamilla RF et al. — squat biomechanics reviews
+- Schoenfeld BJ et al. — squat depth and muscle activation meta-analyses
+- NSCA / ACSM resistance training position statements (A)
+
+================================================================================
+DEADLIFT — HINGE MECHANICS
+================================================================================
+
+First pull:
+- Successful pulls coordinate knee extension and hip extension; early hip rise without shoulder rise shifts
+  mechanics toward stiff-leg patterns and often increases lumbar flexion moment if trunk rounds.
+
+Bar path:
+- Bar should stay close to body to minimize moment arm on lumbar spine and hips; forward drift visible via wrist–foot
+  relationship when bar not tracked.
+
+Trunk stiffness:
+- Spinal stability literature emphasizes bracing and co-contraction; visible rounding is a technique/coaching target,
+  not a diagnosis of tissue failure from one rep on video.
+
+Sumo vs conventional:
+- Sumo widens base, changes hip/knee moments; v1 pack checkpoints emphasize conventional — sumo shares hinge themes
+  but different knee tracking.
+
+Lockout:
+- Completed by hip extension (glute max) with neutral-ish ribs; excessive lumbar hyperextension is a distinct pattern
+  from hip-driven lockout in coaching models.
+
+Sources (representative):
+- Cholewicki J, McGill SM — lifting biomechanics
+- Hales ME et al. — deadlift kinematics
+- Swinton PA et al. — biomechanical comparison of DL variants
+
+================================================================================
+OVERHEAD PRESS — UPPER EXTREMITY & TRUNK
+================================================================================
+
+Force line:
+- Strict press requires shoulder flexion and elbow extension with stable scapulothoracic rhythm; excessive thorax
+  extension shifts demand to lumbar extensors (lean-back press).
+
+Bar path:
+- Optimal path is near-vertical in side view with head translation to allow clearance — forward loop paths increase
+  shoulder torque requirements in simplified models.
+
+Leg drive:
+- Push press and jerk patterns deliberately use knee/hip extension; strict press minimizes lower-body excursion —
+  detectable via knee angle change before wrist peak.
+
+Shoulder load:
+- Overhead work loads rotator cuff and deltoid complex; impingement risk is individual and medical — literature
+  supports scapular control and progressive loading, not universal "safe" angles from 2D pose.
+
+Sources (representative):
+- Saeterbakken AH, Fimland MS — shoulder press variants
+- Kinetic analyses of standing overhead press (open access reviews)
+
+================================================================================
+GRF & IMU (optional future channels)
+================================================================================
+
+When force plates or IMU are unavailable (default product path):
+- Infer effort from segment speeds and joint angular velocities only.
+- Do not estimate bar load in kg from video.
+
+================================================================================
+MEASUREMENT LIMITATIONS (repeat for RAG)
+================================================================================
+
+- 2D pose underestimates axial rotation and true lumbar flexion.
+- Clothing, belts, and plates occlude joints.
+- Wrap-around cameras help knee valgus; side view helps trunk and bar path proxies.
+
+See Docs/002_DISCLAIMER.txt.
+
+================================================================================
+RELATION TO PHASE MODEL
+================================================================================
+
+| biomech theme              | phase windows              | lift_variant |
+|----------------------------|----------------------------|--------------|
+| Eccentric control          | descent (squat), setup (DL)| squat, deadlift |
+| Bottom reversal            | bottom                     | squat        |
+| Hip-shoulder sync          | pull                       | deadlift     |
+| Lumbar/trunk rigidity      | pull, transition           | deadlift     |
+| Strict lower-body quiet    | press                      | ohp          |
+| Vertical wrist path        | press, lockout             | ohp          |
+
+Cross-link faults in Findings/001_common_faults.txt.

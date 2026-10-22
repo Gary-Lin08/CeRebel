@@ -1,0 +1,184 @@
+# Running — Short Drills (30–90 s) — v2
+
+Each drill lists targets: fault_*. Equipment-minimal. Youth: submax effort.
+See Docs/002_DISCLAIMER.
+
+---
+
+drill_id: drill_overstride_ankle_glide
+targets: fault_overstride
+duration: 60 s
+description: Jog forward slowly focusing on foot touching down directly under hip. Start 10 s marching in place.
+authority: B
+
+drill_id: drill_low_cadence_metronome
+targets: fault_low_cadence_overstride, fault_fatigue_cadence_drop
+duration: 90 s
+description: Count cadence 20 s easy jog. Set metronome 5% higher; jog 70 s matching beats. Progress +5% weekly max in supervised plans.
+authority: B+
+
+drill_id: drill_bounce_quiet_upper
+targets: fault_excessive_bounce
+duration: 60 s
+description: Hands on hips, easy jog minimizing head vertical movement.
+authority: B
+
+drill_id: drill_trunk_lean_ankle
+targets: fault_trunk_lean_back
+duration: 75 s
+description: 15 s ankle-lean march → 30 s easy jog lean-from-ankle → 30 s hands-on-hips repeat.
+authority: B+
+
+drill_id: drill_trunk_hunch_tall_skip
+targets: fault_trunk_lean_excess_fwd, fault_forward_head_run
+duration: 60 s
+description: Low skipping emphasizing tall spine and ribs over pelvis. Not maximal plyometric height.
+authority: B
+
+drill_id: drill_hip_drop_balance
+targets: fault_hip_drop, fault_fatigue_hip_drop_rise
+duration: 90 s
+description: Single-leg balance bare foot 30 s per leg × 3, pelvis level, slight knee bend. Optional mini-band above knees.
+authority: A/B+
+
+drill_id: drill_crossover_line
+targets: fault_crossover_gait, fault_narrow_stance_base
+duration: 60 s
+description: Jog on straight line without feet crossing midline. Rear camera check.
+authority: B+
+
+drill_id: drill_knee_valgus_band
+targets: fault_knee_valgus_load
+duration: 90 s
+description: Mini-band above knees: 30 s lateral walk each direction → 30 s easy jog knee-over-middle-toe. Skip band if knee pain.
+authority: B+
+
+drill_id: drill_stiff_ankle_soft_land
+targets: fault_stiff_ankle_landing, fault_insufficient_knee_flex_stance
+duration: 60 s
+description: 15 s ankle circles each foot → 15 light hops soft landings → 30 s easy jog.
+authority: B
+
+drill_id: drill_arm_symmetry_cheek
+targets: fault_arm_swing_asymmetry
+duration: 60 s
+description: Run elbows ~90°, brush hands cheek to cheek symmetrically. Remove handheld items.
+authority: B
+
+drill_id: drill_trunk_rotation_hands_hips
+targets: fault_excessive_trunk_rotation, fault_pelvis_rotation_excess
+duration: 60 s
+description: Hands on hips easy jog limiting shoulder/pelvis twist; feel controlled trunk.
+authority: B+
+
+drill_id: drill_scissor_butt_kick
+targets: fault_scissor_kick
+duration: 90 s
+description: 30 s butt kicks in place → 60 s easy jog with heel-to-butt cue.
+authority: B
+
+drill_id: drill_asymmetry_hop_rhythm
+targets: fault_stride_asymmetry, fault_contact_time_asymmetry, fault_push_off_asymmetry
+duration: 90 s
+description: 5 submax single-leg hops each leg → 60 s bilateral jog listening for even rhythm. Youth: replace hops with 20 s single-leg stand each side.
+authority: B+
+
+drill_id: drill_rearfoot_reach_soft_tap
+targets: fault_rearfoot_reach_proxy, fault_overstride
+duration: 60 s
+description: Soft midfoot taps in place 20 s then easy jog focusing foot under hip.
+authority: B
+
+drill_id: drill_forefoot_soft_accept
+targets: fault_forefoot_early_load
+duration: 45 s
+description: Low hops quiet landings allowing heel kiss after forefoot; then 20 s jog.
+authority: B
+
+drill_id: drill_arm_corridor
+targets: fault_arm_crossing_midline
+duration: 60 s
+description: Jog with elbows brushing pockets; imagine two vertical slots for hands.
+authority: B
+
+drill_id: drill_arm_drive_exaggerated
+targets: fault_short_arm_drive, fault_arm_swing_asymmetry
+duration: 60 s
+description: Exaggerated cheek-to-cheek arm drives at easy jog for 60 s, then settle to natural.
+authority: B
+
+drill_id: drill_hip_ext_amarch
+targets: fault_hip_extension_deficit
+duration: 90 s
+description: 60 s walking A-march with hip open cue → 30 s easy jog leaving thigh trailing at toe-off.
+authority: B+
+
+drill_id: drill_early_heel_delay
+targets: fault_early_heel_rise
+duration: 45 s
+description: Slow march delaying heel lift until midstance feel → short jog carrying cue.
+authority: B
+
+drill_id: drill_soft_knee_load
+targets: fault_insufficient_knee_flex_stance, fault_stiff_ankle_landing
+duration: 60 s
+description: Soft-knee jogging in place 20 s then forward 40 s focusing bent-knee acceptance.
+authority: B+
+
+drill_id: drill_pelvis_quiet_belt
+targets: fault_pelvis_rotation_excess
+duration: 60 s
+description: Hands on hips, "quiet belt" jog minimizing pelvis yaw.
+authority: B
+
+drill_id: drill_shoulder_melt_jog
+targets: fault_shoulder_hike_run, fault_forward_head_run
+duration: 90 s
+description: 45 s shoulder-roll reset → 45 s jog with melt-shoulders cue.
+authority: B
+
+drill_id: drill_stance_width_rails
+targets: fault_narrow_stance_base, fault_crossover_gait
+duration: 60 s
+description: Dual parallel tapes hip-width; jog keeping one foot on each rail.
+authority: B+
+
+drill_id: drill_contact_even_listen
+targets: fault_contact_time_asymmetry, fault_stride_asymmetry
+duration: 90 s
+description: 5 hops each leg → 60 s even footfall listening jog.
+authority: B+
+
+drill_id: drill_fatigue_cadence_hold
+targets: fault_fatigue_cadence_drop, fault_low_cadence_overstride
+duration: 90 s
+description: Late in easy run (or after 5 min jog), hold metronome at early-run cadence 90 s.
+authority: B+
+
+drill_id: drill_fatigue_hip_level
+targets: fault_fatigue_hip_drop_rise, fault_hip_drop
+duration: 60 s
+description: Single-leg level holds 15 s each → short jog focusing level belt when "tired."
+authority: A/B+
+
+drill_id: drill_forward_head_jog
+targets: fault_forward_head_run
+duration: 90 s
+description: 45 s wall chin glide → 45 s tall-head easy jog.
+authority: B+
+
+drill_id: drill_push_match
+targets: fault_push_off_asymmetry
+duration: 60 s
+description: Alternate single-leg push marches 20 s → bilateral jog matching toe-off sound.
+authority: B
+
+---
+
+## Progressions
+
+1. Drill 30–90 s in warm-up or post-easy-run skill block.
+2. Re-film same pace and camera after 2–3 weeks.
+3. Do not stack more than two drill families same day for beginners.
+
+Cross-reference: Training/001_team_practice.txt, Findings/001_common_faults.txt

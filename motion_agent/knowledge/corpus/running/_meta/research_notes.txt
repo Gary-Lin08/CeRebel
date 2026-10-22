@@ -1,0 +1,80 @@
+# Running Sport Pack — Research Notes (with URLs)
+# Build agent retrieved: 2026-10-21
+# Facts below support Biomechanics/001, Findings/, and Quality/ checkpoints — summarized, not quoted at length.
+
+## Cadence and step-rate manipulation
+
+- Heiderscheit et al. (2011), Med Sci Sports Exerc — manipulating step rate ±5% and ±10% at constant speed
+  reported changes in hip and knee joint work and loading-related variables.
+  URL: https://pubmed.ncbi.nlm.nih.gov/21364480/
+  Authority: B+
+  Product use: low_cadence_overstride finding pairs low spm with overstride proxy; not cadence alone.
+
+## Overstriding and braking (themes)
+
+- Multiple kinematic studies report foot strike ahead of center of mass associated with greater braking impulse
+  in sagittal treadmill analyses (individual papers vary by speed and population).
+  Search hub: https://pubmed.ncbi.nlm.nih.gov/?term=running+overstride+braking
+  Authority: B+
+  Product use: overstride finding; qualitative + overstride_proxy, avoid cm prescription without calibration.
+
+## Vertical oscillation and economy
+
+- Running economy literature links excessive vertical COM displacement with higher metabolic cost in some cohorts.
+  Example search: https://pubmed.ncbi.nlm.nih.gov/?term=running+vertical+oscillation+economy
+  Authority: B+
+  Product use: excessive_bounce; prefer self-baseline within clip.
+
+## Hip drop / frontal plane
+
+- Pelvic drop during stance discussed in IT band syndrome and hip abductor endurance contexts (clinical observational).
+  Example: https://pubmed.ncbi.nlm.nih.gov/?term=running+hip+drop+pelvis
+  Authority: A/B+ for association themes
+  Product use: hip_drop at midstance; rear/front camera preference documented in Architecture.
+
+## Knee valgus in running
+
+- Dynamic knee valgus well studied in cutting/jumping; straight-line running frontal-plane collapse less uniform.
+  Neuromuscular training reviews: https://pmc.ncbi.nlm.nih.gov/?term=knee+valgus+prevention
+  Authority: B+
+  Product use: knee_valgus_load only with frontal/oblique capture confidence.
+
+## Arm swing asymmetry
+
+- Arm swing reduces torsional momentum; asymmetry may affect economy (biomechanical modeling and experimental studies).
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=running+arm+swing+asymmetry
+  Authority: B / B+
+  Product use: arm_swing_asymmetry ROM comparison.
+
+## Gait asymmetry and injury (non-diagnostic)
+
+- Systematic reviews note associations between gait asymmetry metrics and injury history in runners — not predictive for individuals.
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=running+gait+asymmetry+injury+systematic+review
+  Authority: B+
+  Product use: stride_asymmetry; pain → clinical redirect per Disclaimer.
+
+## Youth running gait
+
+- Developmental literature: children higher step frequency, shorter stride relative to stature.
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=child+running+gait+cadence
+  Authority: B+
+  Product use: youth checkpoint bands widened in Quality/002.
+
+## World Athletics / USATF (coaching frameworks)
+
+- Public coaching education pages emphasize progressive volume, strength, and technique without single universal form.
+  https://worldathletics.org/development/coaches
+  https://www.usatf.org/coaches
+  Authority: B
+  Product use: Training/001_team_practice.txt structure only.
+
+## Internal product alignment
+
+- Registry blurb: cadence, posture, asymmetry over strides (motion_agent/sports/registry.py COMING_SOON).
+- No RunningPack.py yet — phase IDs in Phases/001 are forward-compatible contract for future detector.
+
+## Gaps for future search agent
+
+- Treadmill vs overground systematic comparison for overstride proxy validity on monocular pose.
+- Masters runner-specific cadence bands in open literature.
+- Sprint vs distance trunk rotation norms for excessive_trunk_rotation pace scaling.

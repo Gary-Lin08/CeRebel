@@ -1,0 +1,222 @@
+# Yoga — Phase Model (v1)
+# Scope: static holds (mode=hold) and slow transitions (mode=flow)
+# Aligns: body-only pose keypoints; no props required
+# Stable phase IDs — do not rename without migration note in pack_readme
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Eight phases cover one **hold cycle** from arrival through stable alignment to exit.
+Flow mode inserts a five-phase **transition chain** between hold cycles when the practitioner moves between
+`pose_id` values in under ~8 s.
+
+Convention (facing camera unless noted):
+- Sagittal faults: side or 45° capture preferred for spine and knee–ankle line.
+- Frontal faults: front capture for knee valgus, hip drop, shoulder elevation symmetry.
+- Pelvis midpoint used as COM proxy when full-body COM unavailable.
+
+================================================================================
+HOLD MODE — PHASE TABLE
+================================================================================
+
+| phase_id      | label_en           | mode  | start event        | end event          |
+|---------------|--------------------|-------|--------------------|--------------------|
+| arrival       | Arrival / settling | hold  | E_CLIP_START       | E_ENTRY_END        |
+| entry         | Entry alignment    | hold  | E_CLIP_START       | E_ENTRY_END        |
+| hold_early    | Early hold         | hold  | E_ENTRY_END        | E_HOLD_MID         |
+| hold_anchor   | Anchor window      | hold  | E_HOLD_MID - 0.5s  | E_HOLD_MID + 0.5s  |
+| hold_late     | Late hold / drift  | hold  | E_HOLD_MID         | E_EXIT_START       |
+| micro_adjust  | Micro-corrections  | hold  | optional overlay   | within hold_late   |
+| exit          | Release / exit     | hold  | E_EXIT_START       | clip_end           |
+| rest          | Inter-pose rest    | hold  | low motion between | next E_ENTRY_END   |
+
+Product UI scrub bar (hold): arrival | hold (early→anchor→late) | exit
+
+Primary scoring window for alignment findings: **hold_anchor** with fallback to **hold_early** if clip short.
+
+================================================================================
+FLOW MODE — PHASE TABLE
+================================================================================
+
+| phase_id        | label_en        | mode | start event       | end event         |
+|-----------------|-----------------|------|-------------------|-------------------|
+| flow_init       | Transition start| flow | E_FLOW_START      | E_WEIGHT_SHIFT    |
+| weight_transfer | Load shift      | flow | E_WEIGHT_SHIFT    | E_PEAK_LOAD       |
+| peak_load       | Peak joint load | flow | E_PEAK_LOAD       | E_DECEL_START     |
+| decel           | Controlled arrival| flow | E_DECEL_START   | E_ARRIVAL         |
+| flow_arrival    | New pose entry  | flow | E_ARRIVAL         | E_ENTRY_END       |
+
+Example Sun Salutation A fragment (taxonomy IDs):
+  pose_down_dog → flow → pose_plank → flow → pose_chaturanga_low → flow → pose_up_dog → flow → pose_down_dog
+
+================================================================================
+EVENT DEFINITIONS (body-only)
+================================================================================
+
+E_CLIP_START
+  Definition: first frame of analysis window.
+  Fallback: user trim start.
+
+E_ENTRY_END
+  Definition: rolling mean of ||v(wrists, ankles, pelvis)|| below hold threshold for ≥12 consecutive frames.
+  Proxy threshold: product-normalized; typical 0.02–0.05 m/s per frame at 30 fps after scale calibration.
+  Fallback: clip_start + 20% duration if never quiet (low hold confidence flag).
+
+E_HOLD_MID
+  Definition: temporal midpoint between E_ENTRY_END and E_EXIT_START.
+  If E_EXIT_START absent: clip_end - 10% duration.
+
+E_HOLD_ANCHOR
+  Definition: frame in [E_HOLD_MID - 0.5s, E_HOLD_MID + 0.5s] with minimum COM horizontal drift rate.
+  Used for snapshot alignment cards.
+
+E_DRIFT_ONSET (optional)
+  Definition: shoulder line or hip line angle change vs E_HOLD_ANCHOR exceeds threshold for ≥8 frames during hold.
+  Maps to fault_hold_wandering, fault_balance_hip_drop late in hold.
+
+E_EXIT_START
+  Definition: joint speed sustained above hold threshold for ≥8 frames before clip end.
+  Fallback: clip_end if practitioner holds through clip (exit phase empty).
+
+E_FLOW_START
+  Definition: speed rise after prior E_ENTRY_END when mode=flow and pose_id changes expected.
+  Proxy: d/dt pelvis speed > threshold.
+
+E_WEIGHT_SHIFT
+  Definition: lateral COM shift toward lead leg or hands in transition (pose-dependent template).
+  Example Down Dog → Plank: wrist speed stable, ankle speed rises, pelvis moves forward.
+
+E_PEAK_LOAD
+  Definition: local maximum of knee flexion (lunge transitions) OR wrist load proxy (shoulder angle + wrist height)
+  in transition window.
+
+E_DECEL_START
+  Definition: joint speed magnitude begins monotonic decrease toward next pose.
+
+E_ARRIVAL
+  Definition: same criteria as E_ENTRY_END for the **new** pose template (pose classifier or user pose_id).
+
+================================================================================
+DETECTOR EVENT MAP (future sport_analysis)
+================================================================================
+
+| product_event_id   | maps_to       | priority |
+|--------------------|---------------|----------|
+| hold_stable_start  | E_ENTRY_END   | P0       |
+| hold_anchor_frame  | E_HOLD_ANCHOR | P0       |
+| hold_exit          | E_EXIT_START  | P1       |
+| flow_peak_load     | E_PEAK_LOAD   | P2       |
+| flow_arrival       | E_ARRIVAL     | P1       |
+
+================================================================================
+POSE-SPECIFIC ANCHOR NOTES (coaching, not separate phases)
+================================================================================
+
+pose_down_dog (Adho Mukha Svanasana)
+  Anchor signals: hip flexion, shoulder flexion, ear–arm line; heels low optional — ankle dorsiflexion not required
+  for pass.
+
+pose_plank (Phalakasana)
+  Anchor: ear–shoulder–hip–ankle line sagittal; no hip sag or pike beyond checkpoint thresholds.
+
+pose_warrior_2 (Virabhadrasana II)
+  Anchor: front knee flex ~90° target qualitative; arms horizontal; hips open to side plane — camera angle critical.
+
+pose_tree (Vrksasana)
+  Anchor: pelvis level; standing knee micro-bend; foot placement on inner thigh or calf (not knee joint — coaching rule).
+
+pose_chair (Utkatasana)
+  Anchor: knee flex with torso more upright than squat; arms overhead optional.
+
+pose_bridge (Setu Bandhasana)
+  Anchor: knee–ankle–hip alignment; thoracic extension without cervical crunch.
+
+================================================================================
+TIMING RELATIONSHIPS (qualitative, B+ / B literature)
+================================================================================
+
+Skilled hold practice (not prescriptive):
+- Entry completes within 3–8 s for most standing poses in beginner video homework.
+- Stable hold: visible micro-movement (breath) acceptable; drift findings fire on sustained trend not single frame.
+- Flow: peak load at Chaturanga-like transitions shows elbow flexion minimum before push-up phase — high injury-awareness
+  coaching; product flags elbow flare and hip drop, does not count reps as “good/bad” without context.
+
+Youth: shorter hold windows; Tree and balance phases may show larger sway — use age-tagged checkpoints in Quality/002.
+
+================================================================================
+CLIP TRIMMING GUIDANCE
+================================================================================
+
+Ideal hold clip: 5–30 s including 1–2 s entry and optional exit.
+Minimum for alignment: 3 s stable after E_ENTRY_END.
+Flow clip: include full transition plus 1 s hold at arrival pose.
+
+If clip starts late, arrival/entry phases empty — reduce confidence on entry-speed findings.
+
+================================================================================
+CROSS-REFERENCES
+================================================================================
+
+Taxonomy: pose_id list in 003_common_poses_set.txt
+Findings: fault_* → primary phase column
+Quality: checkpoint_* → evaluated phase
+Coaching: cue_* / drill_* → pose_id and phase focus
+Biomechanics: joint stacking and load narratives
+
+## V2 PHASE LINK INDEX (auto)
+
+# detector_events + fault_links per phase for OpenSim/body detectors
+
+phase_id: arrival
+detector_events: E_CLIP_START, E_ENTRY_END
+fault_links: (none primary)
+
+phase_id: decel
+detector_events: E_DECEL_START, E_ARRIVAL
+fault_links: fault_flow_uncontrolled_drop
+
+phase_id: entry
+detector_events: E_CLIP_START, E_ENTRY_END
+fault_links: fault_dog_narrow_base, fault_tree_foot_on_knee
+
+phase_id: exit
+detector_events: E_EXIT_START
+fault_links: (none primary)
+
+phase_id: flow_arrival
+detector_events: E_ARRIVAL, E_ENTRY_END
+fault_links: (none primary)
+
+phase_id: flow_init
+detector_events: E_FLOW_START, E_WEIGHT_SHIFT
+fault_links: (none primary)
+
+phase_id: hold_anchor
+detector_events: E_HOLD_ANCHOR, E_HOLD_MID
+fault_links: fault_dog_lumbar_sag, fault_dog_rounded_spine, fault_dog_shoulder_elevation, fault_dog_locked_knees, fault_plank_hip_sag, fault_plank_hip_pike, fault_plank_shoulder_forward, fault_plank_neck_crunch, fault_warrior_knee_collapse, fault_warrior_knee_past_toes, fault_warrior_arm_drop, fault_w1_hip_open, fault_tree_foot_on_knee, fault_tree_hip_jut, fault_balance_hip_drop, fault_locked_knee_balance, fault_forward_fold_spine_round, fault_chair_collapse_forward, fault_chair_knee_collapse, fault_bridge_knee_splay, fault_bridge_neck_crunch, fault_backbend_lumbar_dominant, fault_backbend_neck_hyperextension, fault_updog_shoulder_forward, fault_seated_slump, fault_triangle_knee_hyperextend, fault_upward_salute_rib_flare, fault_child_compressed_neck
+
+phase_id: hold_early
+detector_events: E_ENTRY_END, E_HOLD_MID
+fault_links: fault_dog_shoulder_elevation, fault_dog_narrow_base
+
+phase_id: hold_late
+detector_events: E_HOLD_MID, E_EXIT_START, E_DRIFT_ONSET
+fault_links: fault_hold_wandering
+
+phase_id: micro_adjust
+detector_events: E_DRIFT_ONSET
+fault_links: (none primary)
+
+phase_id: peak_load
+detector_events: E_PEAK_LOAD, E_DECEL_START
+fault_links: fault_plank_hip_sag, fault_chaturanga_elbow_flare, fault_chaturanga_shoulder_drop, fault_flow_uncontrolled_drop
+
+phase_id: rest
+detector_events: E_ENTRY_END
+fault_links: (none primary)
+
+phase_id: weight_transfer
+detector_events: E_WEIGHT_SHIFT, E_PEAK_LOAD
+fault_links: (none primary)
+

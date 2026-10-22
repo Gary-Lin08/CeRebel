@@ -1,0 +1,246 @@
+# Snowboarding Sport Pack — Concept relations
+
+## Phase ordering (linked turn chain)
+
+relation: precedes
+from: T_TRAVERSE
+to: T_INITIATE
+
+relation: precedes
+from: T_INITIATE
+to: T_BUILD
+
+relation: precedes
+from: T_BUILD
+to: T_APEX
+
+relation: precedes
+from: T_APEX
+to: T_RELEASE
+
+relation: precedes
+from: T_RELEASE
+to: T_EXIT
+
+relation: precedes
+from: T_EXIT
+to: T_TRANSITION
+
+relation: precedes
+from: T_TRANSITION
+to: T_TRAVERSE
+
+## Stance chain
+
+relation: precedes
+from: S_READY
+to: T_TRAVERSE
+
+notes: Short stance-only clips may end at S_READY without turn phases.
+
+## Concept → phase mapping
+
+relation: maps_to
+from: concept skill_stance
+to: phase S_READY
+
+relation: maps_to
+from: concept skill_traverse
+to: phase T_TRAVERSE
+
+relation: maps_to
+from: concept phase_apex
+to: phase T_APEX
+
+relation: maps_to
+from: concept phase_transition
+to: phase T_TRANSITION
+
+relation: maps_to
+from: concept skill_pressure_lead_foot
+to: phase T_INITIATE
+
+relation: maps_to
+from: concept skill_flex_extension
+to: phase T_BUILD
+
+relation: maps_to
+from: concept skill_flex_extension
+to: phase T_RELEASE
+
+## Finding → phase anchoring
+
+relation: anchored_in
+from: fault_stance_locked_knees
+to: S_READY
+
+relation: anchored_in
+from: fault_stance_width
+to: S_READY
+
+relation: anchored_in
+from: fault_stance_back_seat
+to: S_READY
+
+relation: anchored_in
+from: fault_stance_back_seat
+to: T_TRAVERSE
+
+relation: anchored_in
+from: fault_stance_hunched
+to: S_READY
+
+relation: anchored_in
+from: fault_turn_shoulders_first
+to: T_INITIATE
+
+relation: anchored_in
+from: fault_turn_stiff_legs
+to: T_APEX
+
+relation: anchored_in
+from: fault_turn_upper_body_rotate
+to: T_BUILD
+
+relation: anchored_in
+from: fault_turn_upper_body_rotate
+to: T_APEX
+
+relation: anchored_in
+from: fault_edge_flat_skid
+to: T_APEX
+
+relation: anchored_in
+from: fault_edge_uphill_leg_straight
+to: T_APEX
+
+relation: anchored_in
+from: fault_transition_abrupt
+to: T_TRANSITION
+
+relation: anchored_in
+from: fault_traverse_off_balance
+to: T_TRAVERSE
+
+relation: anchored_in
+from: fault_head_not_level
+to: T_TRAVERSE
+
+relation: anchored_in
+from: fault_head_not_level
+to: T_APEX
+
+relation: anchored_in
+from: concern_fall_stiff_brace
+to: T_APEX
+
+relation: anchored_in
+from: concern_fall_stiff_brace
+to: T_TRANSITION
+
+notes: concern_fall_stiff_brace may appear in any phase when fall imminent — clip-dependent.
+
+## Quality dimension → checkpoint
+
+relation: measured_by
+from: concept quality_balance
+to: checkpoint cp_stance_hips_centered
+
+relation: measured_by
+from: concept quality_balance
+to: checkpoint cp_traverse_balance
+
+relation: measured_by
+from: concept skill_upper_lower_separation
+to: checkpoint cp_turn_lower_lead
+
+relation: measured_by
+from: concept skill_upper_lower_separation
+to: checkpoint cp_upper_quiet
+
+relation: measured_by
+from: concept skill_edge_control
+to: checkpoint cp_edge_angulation
+
+relation: measured_by
+from: concept quality_head_eyes
+to: checkpoint cp_head_eyes_path
+
+relation: measured_by
+from: concept phase_transition
+to: checkpoint cp_transition_smooth
+
+## Safety relations
+
+relation: supported_by
+from: concept safety_helmet_on_snow
+to: source fis_icr_crash_helmet_compulsory
+authority: A+
+
+relation: related_to
+from: concept safety_helmet_on_snow
+to: checkpoint cp_helmet_reminder
+
+relation: related_to
+from: concept safety_fall_awareness
+to: finding concern_fall_stiff_brace
+
+relation: redirect_in_disclaimer
+from: concept load_concussion
+to: Docs/002_DISCLAIMER
+
+## Turn family → phase chain
+
+relation: uses_chain
+from: turn_family heel_side
+to: linked_turn_phase_chain
+
+relation: uses_chain
+from: turn_family toe_side
+to: linked_turn_phase_chain
+
+relation: uses_chain
+from: concept skill_linked_turns
+to: linked_turn_phase_chain
+
+## Synonym expansion for retrieval
+
+relation: synonym_of
+from: back seat
+to: concept fault_back_seat
+
+relation: synonym_of
+from: quiet upper body
+to: concept skill_upper_lower_separation
+
+relation: synonym_of
+from: heel edge
+to: concept skill_heel_side_turn
+
+relation: synonym_of
+from: toe edge
+to: concept skill_toe_side_turn
+
+relation: synonym_of
+from: crash helmet
+to: concept safety_helmet_on_snow
+
+relation: synonym_of
+from: skid
+to: concept fault_skid
+
+relation: synonym_of
+from: angulation
+to: concept skill_angulation
+
+## Cross-corpus RAG
+
+relation: external_glossary
+from: concept fis_frontside_backside
+to: corpus fis/Guidelines_Information/031_fis_sb_fk-judgeshandbook_update_spring-2022.txt
+authority: A+
+
+relation: external_vocab
+from: concept park_halfpipe
+to: corpus snowboard_aerial_vocab.txt
+authority: B glossary

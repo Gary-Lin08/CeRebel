@@ -1,0 +1,123 @@
+# Golf Sport Pack — Team & practice organization (body-first)
+
+Summarizes open national-governing-body and sport-science guidance for **structuring practice** when CeRebel
+captures body motion (range, team academy, school golf). Not a substitute for professional coaching certification.
+**Youth load:** summarize principles with pointers to official resources — do not reproduce proprietary load tables.
+
+---
+
+## Practice goals aligned with product
+
+1. **Repeatable capture:** Stable camera, one primary swing per clip, consistent DTL or face-on angle.
+2. **Phase-rich reps:** Full swings from address through balanced finish (matches Phases/001).
+3. **Quality over volume:** Fewer focused reps beat fatigued blocks for pose-based feedback.
+4. **Body-first stations:** Stations below need no ball tracking; launch monitor optional for separate analytics lane.
+
+---
+
+## Sample team stations (60–90 min academy block)
+
+### Station A — Setup & tempo (15 min)
+- drill_athletic_address_bounce + cue_balanced_setup
+- drill_metronome_3_to_1 (Coaching/002)
+- Capture: 3 shadow swings filmed for automated phase cards
+
+### Station B — Turn & takeaway (15 min)
+- drill_cross_shoulder_turn + drill_takeaway_pause_check
+- Coach checkpoint: golf_takeaway_one_piece, golf_backswing_turn
+
+### Station C — Transition & ground shift (20 min)
+- drill_step_through_shadow + drill_pump_from_top
+- Capture: 2 filmed swings DTL emphasizing transition_sequence dimension
+
+### Station D — Finish & balance (15 min)
+- drill_lead_foot_finish_hold + drill_full_rainbow_finish
+- Team challenge: hold finish 3 s without trail foot replant
+
+### Station E — Optional skills (15 min, ball allowed)
+- On-course or range hitting **separate** from CeRebel scoring pipeline unless product integrates launch data later.
+- Keep body-capture station ball-free for consistent pose signal.
+
+Rotate groups of 3–4 athletes per station; one coach operator manages camera tripod.
+
+---
+
+## Individual practice (recreational)
+
+**Weekly template (3 sessions × 30–40 min body-focused):**
+- Session 1: Setup + takeaway drills; film 5 drivers or longest club comfortable.
+- Session 2: Transition drills + wall spine tilt; film 5 mid-irons or hybrid shadows.
+- Session 3: Finish holds + tempo metronome; film 5 wedges full swing.
+
+Compare phase timing to prior week in product — not to tour benchmarks.
+
+---
+
+## Filming & environment
+
+- **Tripod height:** Roughly hand height, centered on athlete sternum; DTL perpendicular to target line proxy.
+- **Lighting:** Avoid backlit sunset; silhouette breaks joint confidence.
+- **Clothing:** Contrast against background; avoid identical colors to range mat.
+- **Safety:** Ensure clearance for full follow-through; station spacing ≥ 2 club lengths between athletes in shadow work.
+
+---
+
+## Youth development (audience=youth)
+
+**Principles (summarized from public PGA Jr. League and LPGA* Girls Golf themes — authority B):**
+- Emphasize fun, athletic movement, and balance over maximizing clubhead speed.
+- Limit repetitive maximal-effort driver swings when athletes report fatigue or growth-related discomfort.
+- Multi-sport participation supported by general pediatric sport science — avoid year-round single-sport overload for pre-teen athletes (consult latest ACSM / NGB position summaries via SOURCE_MANIFEST URLs).
+- **Session length:** 45–60 min total for 8–12 age groups with water breaks; skill stations over continuous hitting.
+- **Cues:** One cue per swing; positive finish holds; no aggressive “snap” coaching for developing athletes.
+- **Capture:** Parent/coach films from safe distance; avoid distracting athlete mid-swing.
+
+**Red flags:** Reported pain, dizziness, or joint swelling — stop activity; medical evaluation required (not diagnosable from video).
+
+*LPGA is a registered trademark; references are to publicly described community programs, not endorsement.
+
+---
+
+## High school / collegiate team notes
+
+- Pre-practice: dynamic warm-up (general movement prep — leg swings, thoracic rotation openers) 8–10 min; not a replacement for team AT protocols.
+- Pair athletes for peer filming; coach reviews CeRebel phase cards in classroom mode post-practice.
+- Periodization: integrate body-capture review days on technical weeks; reduce filming volume during tournament weeks to limit cognitive load.
+
+---
+
+## Adaptive & senior golf
+
+- Allow shorter backswings and narrower stance while still scoring setup_balance and follow_through_balance.
+- Chair/seated modifications for balance-impaired athletes — phases may truncate; document `trim_start_event` in metadata when address absent.
+
+---
+
+## Equipment minimal kit
+
+- Tripod + smartphone
+- Alignment sticks (optional)
+- Metronome app
+- No force plates required for CeRebel v1 body pipeline
+
+---
+
+## Relation to other pack folders
+
+- Phases/001 — detector-aligned names for debrief language.
+- Quality/001 — dimensions coaches should emphasize per station.
+- Findings/001 + Coaching/001–002 — link station drills to fault cards.
+- Biomechanics/ — GRF/CoP context for ground_force_use dimension (literature, not live force data).
+- Rules/Handicap/Equipment — orthogonal to swing practice; do not mix penalty rulings into technique sessions.
+
+---
+
+## Sources & authority
+
+- PGA Jr. League coach resources (B) — practice fun and station models summarized
+- LPGA Foundation community golf descriptions (B)
+- Watson et al. 2026 GRF/CoP review (B+) — why pressure shift stations matter qualitatively
+- Golf swing biomechanics systematic review 2022 (B+) — sequence education
+- World Golf Foundation / Olympic golf development public materials (B)
+
+Update SOURCE_MANIFEST when adding new URLs. Retrieved for pack build: 2026-10-21.

@@ -1,0 +1,81 @@
+# Boxing Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel boxing content summarizes **open coaching literature, biomechanics reviews, and coach-education
+progressions**. It is **not** a substitute for licensed medical care, physical therapy diagnosis, neurologic
+evaluation, or individualized return-to-sport protocols after concussion, hand, wrist, elbow, shoulder, or neck
+injury.
+
+- Pain, dizziness, headache, vision changes, numbness, or joint instability during shadowboxing or any training
+  require evaluation by a qualified clinician — do not rely on an app finding to “train through.”
+- Youth athletes need age-appropriate supervision, shorter rounds, and emphasis on form over speed; follow your
+  national boxing federation, school, or club policies on contact and sparring (this pack addresses **non-contact
+  shadow form only**).
+
+## Not a combat or scoring tool
+
+This pack does **not** judge fight outcomes, judge round scoring, certify amateur/pro eligibility, or replace
+certified coaching credentials. Shadowboxing analysis cannot measure effective punch power against an opponent.
+
+## Body tracking limitations
+
+Single-camera 2D pose estimation can mis-estimate:
+
+- Wrist and elbow angles when the punching arm is foreshortened toward or away from the camera.
+- Trunk rotation in the transverse plane when the athlete faces the camera squarely or at steep angles.
+- Head slip distance when hair, hood, or motion blur occlude the head proxy.
+- Foot pivot and hip turn when legs overlap or shorts occlude knees.
+
+Findings describe **visible tendencies** in shadow form, not laboratory-grade punch kinematics with force plates.
+Confidence should be lower when joints are occluded, frame rate is below ~30 fps for fast combinations, or the
+clip mixes unrelated exercise (burpees, dance) with brief arm swings.
+
+## No guaranteed performance outcomes
+
+Mechanics cues may support movement patterns discussed in research and coaching literature, but **ring
+performance, power on pads, and injury risk depend on many factors** (strength, fatigue, prior injury, sleep,
+contact load, etc.). Do not promise knockouts or ranking improvements from a single shadow drill.
+
+## Biomechanical “norms”
+
+Open literature reports **ranges and group averages** across skill levels and punch types. Stature, stance width
+preference, and mobility all change appearance. This pack avoids presenting arbitrary degree targets as universal
+rules, especially for youth.
+
+## Head and neck
+
+Shadowboxing includes optional defensive head motion. Athletes with cervical spine conditions or recent concussion
+should follow clinician guidance before aggressive slip/roll volume. Automated findings on head position are
+**coaching hints**, not clinical diagnosis.
+
+## Hand and wrist load
+
+This v1 pack excludes heavy bag and mitt impact. Shadow work is low external load, but repeated maximal-speed
+flailing can still irritate shoulders or elbows — stop if pain occurs.
+
+## Coaching relationship
+
+Automated briefs support coaches, parents, and athletes who already have a training plan. They do not replace
+in-person supervision, especially for beginners learning stance and guard for the first time.
+
+## Emergency
+
+For acute injury during training, follow venue emergency procedures and seek immediate medical attention when
+needed. Suspected concussion requires removal from contact training and medical evaluation — shadow-only practice
+does not eliminate concussion history considerations for return to sparring elsewhere.
+
+## Product behavior
+
+- Boxing pack features may be gated as “coming_soon” until detector validation completes — absence of a finding
+  is not proof of safe or optimal mechanics.
+- Mislabeled stance (orthodox vs southpaw) may invert lead/rear findings; users should confirm stance tag.
+
+## Authority and updates
+
+Sources are summarized in coaching and biomechanics docs with authority levels (B/B+). Federation syllabi change;
+retrieval dates matter. When in doubt, cite the live official coach-education source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Shadowboxing tips from motion analysis — not medical advice. Stop if you feel pain. This is not sparring or fight coaching.”

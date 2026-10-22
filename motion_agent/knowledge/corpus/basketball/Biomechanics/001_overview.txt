@@ -1,0 +1,126 @@
+# Basketball Shooting Biomechanics — Overview (open literature summaries)
+# Authority: B+ unless noted. Not medical advice. Jump shot + free throw focus.
+
+================================================================================
+1. WHY BODY-FIRST ANALYSIS WORKS WITHOUT THE BALL
+================================================================================
+
+Basketball shooting is a **whole-body kinetic chain**: ankles/knees/hips extend, trunk stabilizes or slightly extends,
+shoulder elevates and elbow extends, wrist and fingers impart final velocity and orientation on the ball. Pose-based
+pipelines anchor timing on **shooting-wrist speed peak** as a release proxy because ball release and wrist peak are
+closely timed in controlled captures (B+). Without ball tracking, CeRebel still evaluates:
+
+- Sequencing (legs before arms on jump shots)
+- Set-point height and elbow–wrist relationship
+- Guide-hand independence
+- Landing absorption (jump shot)
+
+================================================================================
+2. JUMP SHOT VS FREE THROW — KEY DIFFERENCES
+================================================================================
+
+| aspect              | jump shot                          | free throw                          |
+|---------------------|-------------------------------------|-------------------------------------|
+| COM vertical motion | substantial rise before/at release | minimal; feet often stay planted    |
+| knee strategy       | eccentric dip → explosive extension | optional quiet flex → extension     |
+| time pressure       | higher (game speed)                 | self-paced routine                  |
+| trunk               | may include slight lean/contest     | more repeatable upright templates   |
+| landing             | bilateral absorption required       | n/a (no airborne phase)             |
+
+Research comparing skilled and novice shooters often shows **greater lower-body contribution and more consistent
+timing** in skilled jump shooters (B+). Free throw studies emphasize **routine consistency and reduced variability**
+in joint angles across attempts (B+).
+
+================================================================================
+3. KINETIC CHAIN (QUALITATIVE SEQUENCE)
+================================================================================
+
+Classic teaching model (summarized from multiple kinematic papers, B+):
+
+1. **Lower extremity**: ankle plantarflexion and knee/hip extension generate upward force.
+2. **Trunk**: stabilizes and transfers force; excessive flexion or rotation can alter release path visible in 2D.
+3. **Upper extremity**: shoulder elevation, elbow extension, wrist flexion/extension couple.
+4. **Release window**: ball leaves hand near maximum wrist angular velocity; fingers last contact (not visible without ball).
+
+For **jump shots**, leg extension typically **begins before** peak elbow/wrist extension in skilled groups.
+**Arm-only** patterns (high wrist peak with delayed COM rise) appear more often in novices or fatigued states in
+observational studies — product maps this to fault_arm_only_shot without claiming causality for injury.
+
+For **free throws**, lower extremity work is subtler; performance correlates in some studies with **limited variability**
+in elbow and knee angles shot-to-shot rather than maximal power (B+).
+
+================================================================================
+4. JOINT ANGLES — HOW TO TALK ABOUT NUMBERS IN PRODUCT
+================================================================================
+
+Published cohorts report **means and ranges** that differ by skill, gender, stature, and capture method (2D vs 3D).
+Do **not** ship single-degree "ideal" targets as universal.
+
+Useful qualitative patterns (B+):
+
+- **Elbow flexion** decreases from set to release (extension trend); incomplete extension at wrist-speed peak → coaching
+  focus on full reach, not a fixed elbow angle.
+- **Knee flexion** at dip varies widely in jump shots; very low flexion may limit power; very deep flexion may delay release.
+- **Shoulder abduction** ("flyaway elbow") varies by style; extreme outward elbow in frontal view is a common coaching fix
+  for consistency, not a proven injury threshold in youth.
+
+Youth: absolute angles smaller due to limb length; compare **within-athlete** repeatability rather than pro templates.
+
+================================================================================
+5. GROUND REACTION FORCES AND LANDING (JUMP SHOT)
+================================================================================
+
+Landing after shooting jumps produces ground reaction forces comparable to other small vertical jumps (B+). Coaching
+and S&C literature recommends **knee flexion on landing** to dissipate energy (A/B+ for general landing education).
+CeRebel flags stiff or asymmetric landings as **fault_stiff_landing** / **fault_asymmetric_landing** — population-level
+biomechanics support soft bilateral landings; individual ACL risk cannot be scored from monocular pose alone.
+
+================================================================================
+6. OFF-HAND (GUIDE HAND) ROLE
+================================================================================
+
+The guide hand stabilizes the ball during lift; at release it should not impart forward force. Kinematic studies note
+**asymmetric hand roles** — shooting hand high velocity, guide hand low (B+). Product uses off-hand wrist speed ratio
+near release as a practical proxy (fault_guide_hand_push).
+
+================================================================================
+7. VISUAL ATTENTION AND HEAD STABILITY
+================================================================================
+
+Free throw and shooting studies link **gaze stability** and routine duration to performance variability (B+). Head jerk
+at release (fault_head_jerk_release) is a low-severity coaching signal visible in pose, not a clinical diagnosis.
+
+================================================================================
+8. FATIGUE AND LOAD (TEAM CONTEXT)
+================================================================================
+
+Repeated jump shooting in practice increases cumulative jump load. Federation youth guidelines emphasize age-appropriate
+practice duration and rest (B/A+ for policy). Biomechanics alone does not prescribe daily shot counts — see Training/001.
+
+================================================================================
+9. MEASUREMENT LIMITATIONS (REPEAT FOR RAG)
+================================================================================
+
+- 2D pose underestimates shoulder rotation and wrist release angle.
+- "Release" event = wrist speed peak, not official ball release.
+- Contested shots alter trunk lean — comparisons should tag context (open vs contested) when product supports tags.
+
+================================================================================
+10. SOURCE POINTERS (DETAIL IN SOURCE_MANIFEST)
+================================================================================
+
+- PubMed Central / open reviews on basketball shooting kinematics (B+).
+- Okazaki, Knudson, and successors on jump shot and free throw mechanics (B+).
+- USA Basketball youth skill development (B).
+- FIBA Mini Basketball philosophy — fundamentals, modified equipment (B).
+- Landing mechanics systematic reviews — general, not basketball-specific only (A/B+).
+
+Summaries only; no verbatim copyrighted coaching manuals.
+
+================================================================================
+11. OPEN QUESTIONS FOR FUTURE PACK REVISIONS
+================================================================================
+
+- One-motion vs two-motion jump shooters: separate fault thresholds?
+- Left-hand vs right-hand oblique camera normalization.
+- 3D OpenSim coordinate naming alignment with elbow flexion sign conventions.

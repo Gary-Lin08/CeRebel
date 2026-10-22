@@ -1,0 +1,267 @@
+# Freestyle (Front Crawl) — Phase Model (body-first, side-view friendly)
+
+## Overview
+
+Eight phases describe one freestyle stroke cycle on the **pulling arm**, with parallel kick and body-roll signals
+across the cycle. Phases overlap by design: breathing occurs during recovery and early catch on the breathing side;
+kick continues throughout.
+
+Default camera: **side profile**, swimmer moving left-to-right in frame (adjust mirroring in software).
+Authority: ProductLogic + summarized open biomechanics (B+); see Biomechanics/001_overview.txt.
+
+Stroke side metadata: `stroke_side=right` means the right arm is the pulling arm for event anchoring in this document.
+Mirror joint names for left-arm analysis.
+
+---
+
+## Phase 1 — Recovery (swim_phase_recovery)
+
+order_index: 1
+start_event: E_EXIT (previous cycle) or clip start if mid-cycle
+end_event: E_ENTRY
+
+Description:
+Pulling arm travels forward above or through the water surface with elbow higher than wrist (high-elbow recovery
+is typical in distance freestyle; straighter recovery appears in some sprint models). Shoulders roll so the
+recovering arm clears the water without excessive lateral sway.
+
+Body-measurable signals:
+- Pulling wrist above shoulder line proxy (2D side view) during most of recovery.
+- Elbow flexion moderate (roughly 90–130° visual band — not a medical prescription).
+- Contralateral arm underwater in pull or catch unless double-arm drill.
+
+Typical duration: 0.25–0.55 s at moderate pace (cycle period ~1.0–1.8 s).
+
+Detector notes:
+- E_EXIT: pulling wrist vertical velocity turns positive toward surface; forward speed drops vs pull peak.
+- If recovery is submerged “doggy paddle,” wrist may stay low — flag low confidence for recovery metrics.
+
+Fault window: fault_low_elbow_recovery, fault_crossover_entry_setup (late recovery path).
+
+---
+
+## Phase 2 — Entry and extension (swim_phase_entry)
+
+order_index: 2
+start_event: E_ENTRY
+end_event: E_CATCH
+
+Description:
+Hand enters water ahead of the shoulder with fingers first (ideal) and arm extends forward along the body line.
+Minimal splash and **no crossing the centerline** at entry are coaching targets; underwater extension sets up catch.
+
+Body-measurable signals:
+- Pulling wrist reaches forward local maximum before downward motion.
+- Shoulder elevation relative to trunk stable — shrugging through entry flags fault_shoulder_hike_entry.
+- Head neutral unless breathing; eyes down in pool swimming.
+
+Events:
+- E_ENTRY: wrist forward position peak + downward velocity onset; often synchronized with opposite arm pull peak.
+
+Typical duration: 0.08–0.20 s.
+
+Fault window: fault_overreach_entry, fault_crossover_entry, fault_flat_hand_entry (visual splash proxy only).
+
+---
+
+## Phase 3 — Catch and early vertical forearm (swim_phase_catch)
+
+order_index: 3
+start_event: E_CATCH
+end_event: E_PULL_MID (internal; between catch and pull peak)
+
+Description:
+After entry, the forearm and hand orient to press backward on the water — **early vertical forearm (EVF)** in coaching
+language. Elbow flexion increases while upper arm internally rotates; wrist depth proxy increases in side view.
+
+Body-measurable signals:
+- Elbow flexion rate positive; elbow stays **higher** than wrist in side view during successful catch (EVF proxy).
+- Minimal downward “pressing” before backward motion — fault dropped_elbow_catch if wrist leads elbow downward.
+
+Events:
+- E_CATCH: elbow flexion acceleration peak after entry; optional delay 0.05–0.15 s after E_ENTRY at steady pace.
+
+Typical duration: 0.10–0.25 s.
+
+Fault window: fault_dropped_elbow, fault_sculling_outside, fault_pause_at_catch.
+
+---
+
+## Phase 4 — Pull (propulsive phase) (swim_phase_pull)
+
+order_index: 4
+start_event: E_PULL_MID
+end_event: E_PUSH_START
+
+Description:
+Hand and forearm accelerate backward under the body; trunk rotates toward pulling side. Propulsion is primarily
+from arm action in many steady-state freestyle models, with kick maintaining alignment.
+
+Body-measurable signals:
+- Pulling wrist speed reaches cycle maximum (E_PULL_PEAK).
+- Elbow flexion near maximum mid-pull then begins extending into push.
+- Hip and shoulder roll toward pulling side — phase coupled with swim_phase_body_roll.
+
+Events:
+- E_PULL_PEAK: argmax pulling-wrist speed between E_CATCH and E_EXIT.
+
+Typical duration: 0.15–0.35 s.
+
+Fault window: fault_wide_pull, fault_pull_under_body, fault_asymmetric_pull_timing.
+
+---
+
+## Phase 5 — Push and hand exit (swim_phase_push)
+
+order_index: 5
+start_event: E_PUSH_START
+end_event: E_EXIT
+
+Description:
+Hand accelerates backward past the hip; elbow extends; hand exits near hip or upper thigh. Incomplete push —
+exiting too early — reduces propulsive length.
+
+Body-measurable signals:
+- Wrist trajectory passes hip keypoint proxy before E_EXIT.
+- Elbow extension rate peak near exit.
+- Exit with hand close to body vs wide — fault wide_exit.
+
+Events:
+- E_PUSH_START: elbow extension rate turns positive after pull peak (heuristic).
+- E_EXIT: wrist breaks surface or lateral speed drops entering recovery.
+
+Typical duration: 0.08–0.18 s.
+
+Fault window: fault_short_push, fault_wide_exit, fault_upward_exit.
+
+---
+
+## Phase 6 — Breathing (swim_phase_breathe)
+
+order_index: 6 (parallel overlay)
+start_event: E_BREATHE_START
+end_event: E_BREATHE_END
+
+Description:
+On breathing strokes, head rotates to the side with mouth clearing water; one goggle stays in when possible.
+Breathing usually occurs during recovery of the opposite arm or early catch of pulling arm depending on pattern.
+
+Body-measurable signals:
+- Head yaw toward breathing side peaks at E_BREATHE.
+- Lateral head displacement relative to spine — excessive lift flags fault_excessive_head_lift.
+- Timing: breath should not coincide with maximum pull force on breathing side (fault late_breath_timing).
+
+Events:
+- E_BREATHE: head yaw local maximum; E_BREATHE_END: head returns within neutral band.
+
+Typical duration: 0.20–0.45 s for inhale window.
+
+Fault window: fault_excessive_head_lift, fault_bilateral_imbalance_breath, fault_hold_breath_tension.
+
+---
+
+## Phase 7 — Body roll (swim_phase_body_roll)
+
+order_index: 7 (continuous)
+start_event: continuous with cycle
+end_event: continuous
+
+Description:
+Freestyle uses trunk rotation to lengthen reach and reduce shoulder impingement risk in many coaching models.
+Roll amplitude varies by distance vs sprint; open water often shows higher roll with sighting inserts.
+
+Body-measurable signals:
+- Shoulder line tilt oscillates with stroke period.
+- Hips rotate with shoulders — fault flat_swim if roll amplitude below athlete baseline.
+- Over-roll can correlate with crossover entry — fault_over_rotation.
+
+Measurable proxy: peak-to-peak shoulder tilt angle from horizontal per cycle.
+
+Typical roll peak: often 30–45° visual band for many trained swimmers in side view — individual variation large.
+
+---
+
+## Phase 8 — Kick (swim_phase_kick)
+
+order_index: 8 (continuous)
+start_event: continuous
+end_event: continuous
+
+Description:
+Flutter kick from hips with relatively straight knees at surface swimming speeds; ankle plantar flexion at kick
+end. Two-beat, four-beat, and six-beat patterns change timing relative to arm cycle.
+
+Body-measurable signals:
+- Ankle vertical velocity oscillation at 2× or 3× stroke frequency (pattern dependent).
+- Knee flexion modest — excessive knee bend flags fault_bicycle_kick.
+- Kick depth — feet breaking surface may indicate fault_surface_kick_splash (efficiency context).
+
+Detector notes:
+- E_KICK_PEAK: ankle speed peak; align to contralateral or ipsilateral arm per detected pattern (low confidence).
+
+---
+
+## Cycle assembly and multi-stroke sessions
+
+- Segment cycles using alternating E_ENTRY events on each wrist.
+- Report **left/right asymmetry** when at least 3 cycles per side are detected.
+- Exclude push-off glide: first cycle after wall contact often has suppressed kick — mark metadata.
+
+## Event summary table
+
+| Event ID | Description | Primary proxy |
+|----------|-------------|---------------|
+| E_ENTRY | Hand enters water | Wrist forward peak → down |
+| E_CATCH | Catch initiation | Elbow flexion accel post-entry |
+| E_PULL_PEAK | Max pull speed | Max wrist speed underwater |
+| E_PUSH_START | Push phase start | Elbow extension accel |
+| E_EXIT | Hand exits | Wrist surface break / speed drop |
+| E_BREATHE | Breath peak | Head yaw max |
+| E_KICK_PEAK | Kick peak | Ankle vertical speed max |
+
+## Confidence flags
+
+- camera_front_only: reduce catch and elbow findings confidence.
+- open_water_sighting: suppress head-lift fault severity unless pool baseline known.
+- low_fps: events under 30 fps widen timing uncertainty ±1 frame.
+
+## V2 PHASE LINK INDEX (auto)
+
+# detector_events + fault_links per phase for OpenSim/body detectors
+
+phase_id: full_cycle
+detector_events: E_ENTRY, E_EXIT
+fault_links: fault_asymmetric_cycle_timing
+
+phase_id: swim_phase_body_roll
+detector_events: (continuous)
+fault_links: fault_flat_swim, fault_over_rotation, fault_snaking_hips, fault_dead_hip_kick
+
+phase_id: swim_phase_breathe
+detector_events: E_BREATHE, E_BREATHE_END
+fault_links: fault_excessive_head_lift, fault_late_breath_timing, fault_hold_breath_tension, fault_early_breath_drop
+
+phase_id: swim_phase_catch
+detector_events: E_CATCH, E_PULL_MID
+fault_links: fault_dropped_elbow, fault_pause_at_catch, fault_sculling_outside
+
+phase_id: swim_phase_entry
+detector_events: E_ENTRY, E_CATCH
+fault_links: fault_crossover_entry, fault_overreach_entry, fault_flat_hand_entry, fault_over_rotation, fault_shoulder_hike_entry, fault_early_breath_drop
+
+phase_id: swim_phase_kick
+detector_events: E_KICK_PEAK
+fault_links: fault_bicycle_kick, fault_wide_kick, fault_surface_kick_splash, fault_dead_hip_kick
+
+phase_id: swim_phase_pull
+detector_events: E_PULL_MID, E_PULL_PEAK, E_PUSH_START
+fault_links: fault_dropped_elbow, fault_wide_pull, fault_late_breath_timing, fault_snaking_hips, fault_asymmetric_pull_power, fault_double_peaked_pull
+
+phase_id: swim_phase_push
+detector_events: E_PUSH_START, E_EXIT
+fault_links: fault_short_push, fault_wide_exit, fault_upward_exit, fault_thumb_first_exit_extreme
+
+phase_id: swim_phase_recovery
+detector_events: E_EXIT, E_ENTRY
+fault_links: fault_low_elbow_recovery, fault_wide_exit, fault_thumb_first_exit_extreme
+

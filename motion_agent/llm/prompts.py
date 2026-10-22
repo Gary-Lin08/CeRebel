@@ -83,7 +83,7 @@ Rules:
   you are not certain about. Do not rely on memory alone for rulebook content.
 - For technique / trick naming / orientation conventions, also use search_knowledge_base
   first (or in parallel with motion tools) so answers stay consistent with the local
-  knowledge pack. Prefer sources under fis/ and snowboard_*.txt when filtering with
+  knowledge pack. Prefer sources under fis/, snowboarding/, and snowboard_*.txt when filtering with
   the sources= argument. Cite hit `source` filenames.
 - list_knowledge_sources when you need to see which rulebooks/glossaries are available.
 - Do not invent numerical measurements.
@@ -273,46 +273,73 @@ Rules:
   drill, check) in the findings; keep the prose above the fence short.
 """
 
+def _sport_preset(
+    sid: str,
+    label: str,
+    description: str,
+    prompt: str,
+) -> dict[str, Any]:
+    return {
+        "id": sid,
+        "label": label,
+        "description": description,
+        "prompt": prompt,
+    }
+
+
+# Coming-soon sports reuse general motion prompt; DOMAIN_PREAMBLES scopes the KB.
+_COMING_SOON_PRESET_META: list[tuple[str, str, str]] = [
+    ("tennis", "Tennis", "Serve/groundstroke body coaching + tennis/ KB."),
+    ("basketball", "Basketball", "Shot form + basketball/ KB."),
+    ("soccer", "Soccer", "Strike/plant mechanics + soccer/ KB."),
+    ("running", "Running", "Gait form + running/ KB."),
+    ("weightlifting", "Weightlifting", "Squat/hinge/press form + weightlifting/ KB."),
+    ("swimming", "Swimming", "Freestyle timing + swimming/ KB (beta capture)."),
+    ("volleyball", "Volleyball", "Approach/contact sequencing + volleyball/ KB."),
+    ("boxing", "Boxing", "Shadowboxing technique + boxing/ KB."),
+    ("yoga", "Yoga", "Pose alignment + yoga/ KB."),
+]
+
 PROMPT_PRESETS: dict[str, dict[str, Any]] = {
-    "general": {
-        "id": "general",
-        "label": "General motion",
-        "description": "Human motion comprehension across activities.",
-        "prompt": GENERAL_SYSTEM_PROMPT,
-    },
-    "snowboarding": {
-        "id": "snowboarding",
-        "label": "Snowboarding",
-        "description": "Freestyle/alpine snowboard + FIS knowledge-base search.",
-        "prompt": SNOWBOARD_SYSTEM_PROMPT,
-    },
-    "golf": {
-        "id": "golf",
-        "label": "Golf",
-        "description": (
-            "Golf swing / short game + USGA–R&A / WHS / equipment / biomechanics KB."
-        ),
-        "prompt": GOLF_SYSTEM_PROMPT,
-    },
-    "baseball": {
-        "id": "baseball",
-        "label": "Baseball",
-        "description": "Pitch analysis with labeled kinematic figures.",
-        "prompt": BASEBALL_SYSTEM_PROMPT,
-    },
+    "general": _sport_preset(
+        "general",
+        "General motion",
+        "Human motion comprehension + human/ KB.",
+        GENERAL_SYSTEM_PROMPT,
+    ),
+    "snowboarding": _sport_preset(
+        "snowboarding",
+        "Snowboarding",
+        "Freestyle/alpine snowboard + FIS knowledge-base search.",
+        SNOWBOARD_SYSTEM_PROMPT,
+    ),
+    "golf": _sport_preset(
+        "golf",
+        "Golf",
+        "Golf swing / short game + USGA–R&A / WHS / equipment / biomechanics KB.",
+        GOLF_SYSTEM_PROMPT,
+    ),
+    "baseball": _sport_preset(
+        "baseball",
+        "Baseball",
+        "Pitch analysis with labeled kinematic figures + baseball/ KB.",
+        BASEBALL_SYSTEM_PROMPT,
+    ),
 }
+for _sid, _label, _desc in _COMING_SOON_PRESET_META:
+    PROMPT_PRESETS[_sid] = _sport_preset(_sid, _label, _desc, GENERAL_SYSTEM_PROMPT)
 
 DEFAULT_PROMPT_MODE = "snowboarding"
 
 # Per-mode domain line injected into the user-context preamble.
 DOMAIN_PREAMBLES: dict[str, str] = {
     "general": (
-        "Domain: general human motion comprehension "
-        "(use search_knowledge_base when domain docs help).\n"
+        "Domain: general human motion (search_knowledge_base defaults to human/ "
+        "and opensim_motion_tools.txt).\n"
     ),
     "snowboarding": (
         "Domain: snowboarding (technique + FIS/competition knowledge via "
-        "search_knowledge_base).\n"
+        "search_knowledge_base over fis/, snowboarding/, snowboard_*.txt).\n"
     ),
     "golf": (
         "Domain: golf (technique + Rules of Golf / USGA–R&A / WHS / equipment / "
@@ -327,8 +354,36 @@ DOMAIN_PREAMBLES: dict[str, str] = {
     ),
     "baseball": (
         "Domain: baseball pitching. build_sport_analysis traces (stride, knee flex, "
-        "hip–shoulder separation, throwing-hand speed) are the numeric record. "
-        "Cite only those samples and close with a cerebel-analysis fence.\n"
+        "hip–shoulder separation, throwing-hand speed) are the numeric record when "
+        "present. Cite those samples and close with a cerebel-analysis fence. "
+        "search_knowledge_base defaults to baseball/ for cues, phases, and drills.\n"
+    ),
+    "tennis": (
+        "Domain: tennis body-first coaching. search_knowledge_base defaults to tennis/.\n"
+    ),
+    "basketball": (
+        "Domain: basketball shooting form. search_knowledge_base defaults to basketball/.\n"
+    ),
+    "soccer": (
+        "Domain: soccer kicking / plant mechanics. search_knowledge_base defaults to soccer/.\n"
+    ),
+    "running": (
+        "Domain: running gait form (non-diagnostic). search_knowledge_base defaults to running/.\n"
+    ),
+    "weightlifting": (
+        "Domain: barbell squat/hinge/press form. search_knowledge_base defaults to weightlifting/.\n"
+    ),
+    "swimming": (
+        "Domain: swimming freestyle (deck video). search_knowledge_base defaults to swimming/.\n"
+    ),
+    "volleyball": (
+        "Domain: volleyball approach/contact. search_knowledge_base defaults to volleyball/.\n"
+    ),
+    "boxing": (
+        "Domain: boxing shadowboxing technique only. search_knowledge_base defaults to boxing/.\n"
+    ),
+    "yoga": (
+        "Domain: yoga pose alignment (non-medical). search_knowledge_base defaults to yoga/.\n"
     ),
 }
 

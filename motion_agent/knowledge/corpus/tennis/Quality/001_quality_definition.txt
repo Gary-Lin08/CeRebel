@@ -1,0 +1,66 @@
+# Tennis Sport Pack — Quality definitions (body-first)
+
+“Quality” in CeRebel tennis mode means **observable body patterns** associated with coordinated, balanced strokes in
+open coaching and biomechanics literature — not match outcomes, mph, or ranking. All dimensions are **non-diagnostic**.
+
+## Dimensions
+
+### dimension: leg_contribution
+**Serve:** Visible knee flexion during S_TROPHY_LOAD and extension into S_DRIVE_UP before S_CONTACT_PROXY.
+**Groundstroke:** Load leg knee flexion during G_LOAD with push into G_FORWARD_SWING.
+**Poor sign:** Upright legs through load while racket-side wrist speed still high (all-arm pattern).
+**Authority:** B+ kinetic chain reviews; B coaching consensus.
+
+### dimension: trunk_rotation_timing
+**Groundstroke:** Trunk rotation (pelvis/shoulder yaw proxy) peaks **before** G_CONTACT_PROXY, not simultaneously with maximum wrist speed only.
+**Serve:** Trunk tilt and rotation build during S_TROPHY_LOAD and S_DRIVE_UP; not frozen upright through S_CONTACT_PROXY.
+**Poor sign:** Shoulders and hips rotate together only at contact proxy with no prior coil.
+**Authority:** B+.
+
+### dimension: asymmetric_shoulder_load_serve
+**Serve:** Racket-side shoulder elevated above lead shoulder during S_TROPHY_LOAD without excessive shrugging-only motion (visible elbow below or near shoulder height on racket side).
+**Poor sign:** Both shoulders level and racket arm pushed solely forward with no elevation window.
+**Authority:** B coaching; B+ variability in elite data — qualitative only.
+
+### dimension: toss_arm_coordination
+**Serve:** Non-racket arm reaches organized height during S_TOSS_RISE then clears downward or inward **before** S_CONTACT_PROXY without wild lateral drift at S_TROPHY_LOAD.
+**Without ball:** Drift = non-racket wrist lateral offset from sternum midline on front/side view.
+**Authority:** B coaching.
+
+### dimension: deceleration_control
+**Both strokes:** Racket-side wrist speed decreases progressively through S_DECEL or G_FOLLOW without sharp reversal (hitch) immediately after contact proxy.
+**Poor sign:** Speed cliff then secondary spike (fighting the finish).
+**Authority:** B+ load management themes; B coaching.
+
+### dimension: dynamic_balance
+**Serve:** Athlete lands inside court or recovers without excessive lateral fall after S_DECEL.
+**Groundstroke:** Center of mass stays between feet through G_FOLLOW; no single-leg collapse away from shot direction.
+**Authority:** B coaching.
+
+### dimension: rhythm_tempo
+**Serve:** Continuous motion S_READY → S_CONTACT_PROXY without long freeze at S_TROPHY_LOAD (> subjective “two-count pause” on video at 30fps ≈ 15+ frames static wrists).
+**Poor sign:** Rush from ready to contact with skipped S_TROPHY_LOAD visibility.
+**Authority:** B coaching.
+
+### dimension: recovery_readiness
+**Groundstroke:** G_RECOVERY shows racket centering and foot adjustment toward athletic stance.
+**Authority:** B coaching.
+
+## Youth vs adult quality interpretation
+
+**Youth (audience=youth):** Smaller amplitude on leg_contribution and asymmetric_shoulder_load_serve; reward coordination and balance over deep adult-style knee bend. Follow red/orange/green court scaling in Training/001.
+
+**Adult recreational:** Emphasize deceleration_control and leg_contribution to reduce all-arm habits; still avoid prescribing exact knee angles.
+
+**Elite comparison mode (future):** Compare athlete to self over sessions, not to professional template skeletons.
+
+## Scoring philosophy (product)
+
+When automated scoring ships, each dimension maps 0–1 confidence from pose quality and phase alignment.
+Low joint confidence caps scores. Missing G_SPLIT does not fail a groundstroke clip.
+
+## Relation to findings
+
+Each dimension links to one or more fault_* cards in Findings/001_common_faults.txt when patterns fail visually.
+
+Sources: ITF coaching science hub (B+); PMC tennis biomechanics reviews (B+); USTA player development summaries (B).

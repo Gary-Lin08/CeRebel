@@ -1,0 +1,105 @@
+# Soccer Sport Pack — Architecture (CeRebel)
+
+## Purpose
+
+This pack supplies retrieval-grounded knowledge for **body-first soccer kicking and striking coaching** in CeRebel.
+The product reconstructs human motion from video (2D/3D body keypoints) and explains what the athlete’s body
+is doing across recognizable kick phases. Ball tracking, goal context, and match tactics are optional enrichments,
+not prerequisites for coaching briefs or chat answers.
+
+Primary motion scope (v1):
+- **Instep drive / power shot** and **side-foot pass** patterns from single-camera side or rear-quarter body capture.
+- Right- and left-footed kickers; mirror joint naming (trail leg = kicking leg, lead leg = plant leg for a
+  standard same-side approach).
+
+Out of scope for automatic findings (may appear as glossary only):
+- Ball spin, curve, launch angle, and post-contact flight.
+- Defensive positioning, pressing triggers, set-piece choreography, goalkeeper mechanics.
+- Dribbling feints, heading, and slide tackling unless future packs extend ontology.
+
+## Design principles
+
+1. **Body-measurable claims only** for automated findings: joint angles, segment speeds, timing between plant and
+   kicking-foot speed peak, trunk lean, hip orientation proxies visible without a ball.
+2. **Evidence layering**: peer-reviewed kicking biomechanics and federation coaching science (A/B+) inform
+   relationships (plant timing, trunk lean, support-leg stiffness); cues and drills are coaching advice (B),
+   always paired with disclaimer docs.
+3. **No fabricated medical norms**: numeric angle targets are avoided as prescriptive medicine; ranges are
+   described qualitatively or attributed to published summaries with youth/adult separation where relevant.
+4. **Phase-first retrieval**: faults, checkpoints, and cues index to `Phases/001_phase_model.txt` event IDs so
+   the motion pipeline can attach findings to time windows.
+
+## Directory roles (this pack)
+
+| Path | Role |
+|------|------|
+| Docs/ | Product architecture, disclaimers, pack-level policies |
+| Phases/ | Canonical kick phase model + detector event mapping |
+| Quality/ | What “good” means in body terms; checkpoint catalog |
+| Findings/ | Fault library (finding cards) |
+| Coaching/ | Cues and drills linked to findings |
+| Biomechanics/ | Open-literature summaries of kicking mechanics |
+| Training/ | Team practice patterns, volume and progression context |
+| _meta/ | Manifests, build reports — excluded from chunk index |
+
+Schema and Taxonomy folders may be added in later pack revisions for ontology-aligned RAG expansion.
+
+## Motion pipeline integration (planned)
+
+### Input contract
+
+- Session adapter produces a `MotionSequence`: joint positions over time, FPS/dt, duration.
+- Minimum joints for kick-likeness scoring (future detector): kicking-side ankle, plant-side ankle, pelvis,
+  both knees, trunk (shoulder or hip line).
+
+### Kick-likeness gate (conservative, planned)
+
+Before enabling full product findings, a future SoccerPack may compute a **soft** kick-likeness score from:
+- **Kicking-foot speed burst**: peak trail-ankle speed vs median (expect high burst near contact proxy).
+- **Plant signal**: lead-ankle deceleration or low vertical velocity before kicking-foot peak.
+- **Single-leg dominance**: trail-ankle peak vs lead-ankle peak in the strike window.
+
+Score alone does **not** authorize medical or load advice; it only gates sport-mode selection and prevents
+false positives from running or golf-like swings.
+
+### Phase detection (v1 heuristic alignment)
+
+Until dedicated event detectors ship, align narrative phases to these computable proxies:
+
+| Event ID | Proxy signal | Notes |
+|----------|--------------|-------|
+| E_KICK_PEAK | argmax trail-ankle speed in clip | Primary timing anchor; not true ball contact without ball track |
+| E_PLANT | lead-ankle speed local minimum before E_KICK_PEAK | Plant foot “set” window |
+| E_APPROACH_END | last frame where both feet had elevated speed before E_PLANT | Run-up deceleration into plant |
+| E_FOLLOW_END | frames after E_KICK_PEAK where trail knee flex increases and ankle speed decays | Follow-through and recovery |
+
+Handedness convention for kicking: **trail = kicking foot**, **lead = plant foot** (right-footed kicker:
+trail right, plant left).
+
+### Coach brief generation (future)
+
+When SoccerPack is live, `build_coach_briefs(..., sport="soccer")` will consume:
+- Phase windows (when available).
+- Finding cards from `Findings/001_common_faults.txt` keyed by checkpoint failures.
+- Cues and drills from `Coaching/` with disclaimer footer from `Docs/002_DISCLAIMER.txt`.
+
+Current product status: soccer is **coming soon** in the sport catalog; this KB supports RAG and future detector work.
+
+## Capture guidance (for coaches and athletes)
+
+- **Preferred camera**: side view (sagittal plane of kick) or mild rear-quarter; full body in frame including
+  plant foot and kicking foot at follow-through.
+- **Clip length**: include 2–4 approach steps through recovery (typically 1.5–3.0 s at 30–60 fps).
+- **Surface**: flat ground or turf; note that soft sand or heavy mud changes plant-leg mechanics and may reduce
+  finding confidence.
+- **Youth**: use age-appropriate ball size and goal; do not cue maximum-effort shooting volume from this pack alone.
+
+## RAG indexing
+
+- All `.txt` files under this pack except `_meta/` are eligible for chunking.
+- Finding IDs and phase IDs are stable slugs for cross-document retrieval.
+- Authority levels appear in Biomechanics and Finding source lines (see SPORT_PACK_KB_SPEC).
+
+## Version
+
+Pack content v0.1 — body-first kicking focus — build date 2026-10-21.

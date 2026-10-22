@@ -1,0 +1,126 @@
+# Human (General Motion) Pack — Architecture (CeRebel)
+
+## Purpose
+
+This pack supplies retrieval-grounded knowledge for **sport-agnostic body coaching** when CeRebel does not
+confidently match a specialized sport pack (running, baseball, golf, etc.). The product reconstructs human
+motion from video (2D/3D body keypoints or OpenSim-derived kinematics) and explains how the person organizes
+head, ribs, pelvis, limbs, and center of mass through simple movement phases.
+
+Corpus pack id: **human**. Product registry id: **general** (`HumanMotionPack`).
+
+Primary motion scope (v1):
+- Standing, stepping, reaching, squatting, lunging, jumping prep, throwing prep, and mixed daily-athletic
+  clips where activity type is unknown or mixed.
+- Clips of roughly 2–30 seconds with visible full body preferred.
+- Coaching emphasizes **posture stack**, **balance**, **limb–torso timing**, and **phase-ordered** feedback.
+
+Out of scope for automated findings:
+- Naming a specific sport technique as “correct” without sport context.
+- Diagnosing scoliosis, disc injury, concussion, or neurological deficit from pose alone.
+- Implement trajectory, ball release point, or court/field rules.
+
+## Design principles
+
+1. **Body-measurable claims only** for automated findings: segment angles, relative landmark positions,
+   timing of weight shift, left–right symmetry of ROM, head–pelvis alignment proxies.
+2. **Evidence layering**: postural control and clinical movement literature (A/B+) inform load and balance
+   language; coaching cues and drills are advice (B), always paired with disclaimer docs.
+3. **No fabricated medical norms**: numeric targets are cohort heuristics or self-baseline comparisons —
+   not prescriptions for individuals.
+4. **Phase-first retrieval**: faults, checkpoints, and cues index to `Phases/001_phase_model.txt` event IDs
+   so briefs can attach findings to prep, action, or recover windows.
+5. **Sibling tool corpus**: measurement policy and OpenSim coordinates are defined in
+   `motion_agent/knowledge/corpus/opensim_motion_tools.txt` (listed in `_meta/SOURCE_MANIFEST.txt`).
+
+## Directory roles (this pack)
+
+| Path | Role |
+|------|------|
+| Docs/ | Product architecture, disclaimers |
+| Schema/ | Entity types: mover, phase, finding, cue, drill, measurement |
+| Taxonomy/ | Concepts and relations for RAG expansion |
+| Phases/ | Universal prep → action → recover phase model |
+| Quality/ | Body-defined quality dimensions and checkpoint catalog |
+| Findings/ | Sport-agnostic fault library (finding cards) |
+| Coaching/ | Cues and drills linked to findings |
+| Biomechanics/ | Open-literature summaries of posture and coordination |
+| Training/ | Group film, PE, and general movement screening patterns |
+| _meta/ | Manifests, build reports — excluded from chunk index |
+
+## Motion pipeline integration (HumanMotionPack)
+
+### Input contract
+
+- Session adapter produces a `MotionSequence`: joint positions over time, FPS/dt, duration.
+- Preferred joints: pelvis, lumbar/thorax proxies (shoulder–hip midlines), head, knees, ankles, wrists.
+- Camera: frontal or oblique frontal for stack and knee tracking; sagittal for hip hinge and forward head.
+
+### General-motion gate (conservative)
+
+Human pack is the **fallback** when sport detectors return `matched=False`. A future enhancement may score:
+- **Posture stack stability**: variance of head–shoulder–hip alignment in setup and recover.
+- **Bilateral symmetry**: shoulder height, arm ROM, step width consistency.
+- **Phase detectability**: at least one clear prep and one action velocity peak on a primary segment.
+
+Low scores still allow generic coaching; they reduce confidence on phase-scoped findings.
+
+### Phase detection (v1 heuristic alignment)
+
+Until dedicated activity classifiers ship, align narrative phases to computable proxies:
+
+| Event ID | Proxy signal | Notes |
+|----------|--------------|-------|
+| E_SETUP | Clip start or local minimum of pelvis speed | Ready posture |
+| E_PREP_END | Max eccentric joint flexion or max backward COM displacement | Wind-up / load |
+| E_ACTION_PEAK | Max resultant hand/foot speed or max knee/hip extension velocity | Main effort |
+| E_RECOVER_END | Speed returns below threshold; stack re-forms | End of rep |
+
+Phases `setup` through `reset` are bounded by these events (see Phases/001).
+
+### OpenSim / tool alignment
+
+When motion tools are available (see opensim_motion_tools.txt):
+- Prefer **measured** joint angles and COM from `get_motion_state` / `get_joint_trajectory` over RGB guesswork.
+- State that inverse dynamics and GRF are **estimated**, not force-plate truth.
+- Use SMPL-X names (`left_hip`, `pelvis`, `right_knee`) in series_id documentation.
+
+### Coach brief generation
+
+`build_briefs(..., sport="general")` consumes:
+- Clip-level stack and balance proxies.
+- Top finding cards ranked by severity × confidence × phase alignment.
+- Instant briefs may use `human_posture` id when no finding fires (see human.py).
+
+### RAG ingest metadata
+
+Suggested chunk tags:
+- `sport=human`, `product_pack=general`
+- `authority_level` from SOURCE_MANIFEST per section
+- `phase_id`, `finding_id` when present in source file headers
+
+### Relationship to sport packs
+
+When a sport pack later matches with higher confidence, sport-specific findings supersede generic ones for
+the same clip. Human pack content remains useful for warm-up, cooldown, and cross-training posture review.
+
+## Evidence types in this pack
+
+| Type | Example use |
+|------|-------------|
+| A / A+ | Public health activity safety; clinical consensus on pain red flags |
+| B+ | Postural control, trunk–pelvis coordination reviews |
+| B | NSCA/ACE-level coaching cues and drill naming |
+| ProductLogic | Checkpoint thresholds for noisy monocular capture |
+
+## Versioning
+
+v1 content build: 2026-10-21. Phase IDs and finding slugs are stable contracts for future detectors.
+Changes require brain_plan update and build_report regeneration.
+
+## Cross-references
+
+- Phases/001_phase_model.txt — canonical phase and event IDs
+- Schema/001_ontology.txt — JSON-LD graph for retrieval expansion
+- Findings/001_common_faults.txt — finding cards consumed by briefs
+- motion_agent/knowledge/corpus/opensim_motion_tools.txt — measurement and coordinate policy (sibling file)

@@ -1,0 +1,308 @@
+# Soccer (Association Football) Kicking KB — Research Notes (Search Agent)
+# Product: CeRebel body-first coaching (no ball tracking required)
+# Generated: 2026-10-21
+# Purpose: factual seeds for phase model, biomechanics summaries, coaching frameworks, safety — each
+#          claim must carry source URL in build artifacts.
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Brain alignment: soccer/_meta/brain_plan.txt (instep drive + side-foot pass; contact_proxy)
+
+================================================================================
+0. LICENSING & COMMERCIAL RAG POLICY (READ FIRST)
+================================================================================
+
+Federation coaching PDFs (FIFA, UEFA, The FA, IFAB, U.S. Soccer):
+  Official public downloads exist, but copyright notices typically prohibit reproduction
+  (including partial reproduction) in derivative works without written permission.
+  CeRebel corpus: **summarize concepts with URL + retrieved_at**; do not paste long manual
+  excerpts into indexed chunks. Trademarks (FIFA, UEFA, FA crests) not for product UI.
+
+FIFA.com / Inside FIFA editorial use:
+  Third parties may use FIFA article text/statistics for **purely editorial, non-commercial**
+  purposes with clear source acknowledgement (see Legal / Branding page).
+  URL: https://inside.fifa.com/organisation/contact-fifa/legal-branding-and-rights
+  Commercial coaching product ≠ “editorial non-commercial”; treat FIFA web copy as reference-only.
+
+FIFA Training Centre session PDFs:
+  Same FIFA © posture as other GFD publications; link + short coaching-point summaries only.
+
+PMC / journal articles:
+  Free to read on PMC ≠ CC-BY. Check each article’s “Copyright and License information” block
+  before bulk reuse. J Sports Sci Med (Kellis 2007) is classic open full-text on PMC without
+  implying commercial redistribution rights.
+
+Open-access biomechanics (preferred for verbatim short quotes):
+  - BMC Sports Science, Medicine and Rehabilitation (Shan & Zhang 2011): publisher OA; preserve
+    attribution per BMC license on article page.
+  - MDPI / Springer Nature CC BY reviews when license block confirms CC BY 4.0.
+
+FIFA 11+ / F-MARC:
+  Programme and manual distributed **free of charge** for worldwide implementation on pitch;
+  still © FIFA / F-MARC. Summarize exercise structure and evidence claims; optional future
+  ingest of manual PDF for internal reference with attribution, not verbatim RAG dump.
+
+U.S. Soccer Player Development Framework PDFs:
+  Marked “© 2020 U.S. Soccer CONFIDENTIAL - Not to be shared without U.S. Soccer approval” on
+  some circulated copies — **do not mirror PDF in corpus**; summarize public philosophy from
+  ussoccer.com pages only unless written permission obtained.
+
+================================================================================
+1. PRODUCT PHASE MODEL (BODY-ONLY — RECONCILE WITH brain_plan.txt)
+================================================================================
+
+CeRebel v1 kick families: instep drive (laces power) | side-foot pass (inside foot push).
+
+Shared phase chain (UI IDs): approach → plant_prep → plant → backswing → forward_swing →
+contact_proxy → follow.
+
+contact_proxy = argmax ||v(kicking_ankle)|| in analysis window; NOT verified foot–ball contact.
+
+Research-backed phase language for Biomechanics/001 (map to above IDs):
+
+| Research label (literature) | Typical body events | Maps to CeRebel phase |
+|-----------------------------|---------------------|------------------------|
+| Preparation / run-up      | CoM toward ball; final stride length | approach, plant_prep |
+| Support-foot plant        | Lead leg decel; bracing | plant |
+| Backswing / leg cocking   | Hip ext + knee flex on kicking leg | backswing |
+| Forward swing / acceleration | Hip/knee extension; foot speed rise | forward_swing |
+| Impact / ball contact     | Peak foot speed; foot-ball interaction | contact_proxy (proxy only) |
+| Follow-through            | Decel; recovery step; balance | follow |
+
+Four-phase technical model (Aedo-Muñoz et al. systematic review, 2017–2020 literature):
+  preparation → roll (backswing) → impact → follow-up.
+  URL: https://www.revistas.una.ac.cr/index.php/mhsalud/article/view/12638
+  Authority: B+ (open journal SR; kinematic/kinetic variable tables — use as taxonomy, not single norms).
+
+================================================================================
+2. INSTEP KICK BIOMECHANICS (PRIMARY FOR FINDINGS — B+ / A WHERE NOTED)
+================================================================================
+
+2A. Proximal-to-distal sequencing (consensus narrative review)
+  Source: Kellis E, Katis A. J Sports Sci Med. 2007;6(2):154-65. PMC3786235.
+  URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC3786235/
+  Authority: B+ (highly cited review; lab-heavy literature)
+  Key points for body-first coaching:
+    - Multi-joint kick: segmental rotations in multiple planes.
+    - Angular velocity peaks in order: **thigh → shank → foot** (proximal-to-distal).
+    - Backswing: thigh decelerates (motion-dependent moment from shank + hip muscles).
+    - Forward swing: knee extensor moment + thigh–shank interaction accelerates shank.
+    - **Foot-ball contact quality** drives final ball speed, path, spin (not visible in v1 product).
+    - Max instep ball speed literature range ~**18–35 m/s** depending on skill, age, approach, dominance.
+    - **Accuracy** instructions → lower joint/segment velocities vs max-power kicks.
+    - Gap: most studies = max power under lab; need more “fast but accurate” work for passing copy.
+
+2B. Full-body / tension arc / whip (coaching metaphor grounded in review)
+  Source: Shan G, Zhang X. BMC Sports Sci Med Rehabil. 2011;3:23. Open access.
+  URL: https://link.springer.com/article/10.1186/1758-2555-3-23
+  DOI: 10.1186/1758-2555-3-23
+  Authority: B+
+  Key points:
+    - Effective instep kick uses **whole body**; “tension arc” + **whip-like** leg release.
+    - Trunk flexion, run-up angle, post-contact posture differ with training, sex, skill.
+    - Adductor magnus repetitive strain noted in training — load/volume caution (not diagnosis).
+    - Research–practice gap: lab methods not yet “user-friendly” for daily coaching — fits CeRebel
+      body-video value proposition if uncertainty is disclosed.
+
+2C. Comprehensive kick review (support leg, trunk, footwear — cite summarized)
+  Source: Lees A. J Sports Sci. 2010;28(8):805-17.
+  DOI: https://doi.org/10.1080/02640414.2010.481305
+  Authority: B+ (paywalled; use abstract + known themes in summaries)
+  Themes for product (no ball tracking):
+    - Technique spans **approach through ball flight**; upper body, support leg, pelvis influence
+      kicking leg mechanics and foot-ball impact.
+    - Product scope stops at body follow-through; do not claim launch/spin findings.
+
+2D. Sex-based differences (meta-analysis — separate youth/adult copy)
+  Source: “It’s not all about power” SR/MA, Sports Biomechanics 2021.
+  DOI: https://doi.org/10.1080/14763141.2021.1981426
+  Authority: B+ (23 studies, 455 soccer players)
+  Key points:
+    - Males: higher ball velocity; higher ankle/foot/toe linear speeds; greater ankle plantarflexion
+      at strike; higher hip/knee torques and ball-to-foot velocity ratios (lab cohorts).
+    - Females: larger **trunk flexion range** than males in compared studies.
+    - **Skill level within sex** may matter more than sex alone for coaching cues.
+    - Product: avoid single universal angle targets; offer separate bands where evidence exists.
+
+2E. Skilled vs novice (coaching)
+  Skilled players: “tension arc” power generation; novices differ (cited in 2021 SR above).
+  Use qualitative checkpoints (posture, timing) not lab torque numbers in consumer UI.
+
+================================================================================
+3. SIDE-FOOT PASS (COACHING AUTHORITY — B; BIOMECH B+ LIMITED)
+
+FIFA Grassroots “basic techniques” and futsal manuals emphasize:
+  - Inside-of-foot contact for short passing; body over ball; follow-through toward target.
+  - Futsal: more touches, shorter passes, technical development in constrained space.
+  URLs:
+    - FIFA Grassroots Manual (PDF mirror on member association sites; verify against FIFA hub):
+      https://cdn1.sportngin.com/attachments/document/8546-2348967/FIFA_grassroots_en.pdf
+    - FIFA Futsal Coaching Manual EN:
+      https://www.fifatrainingcentre.com/media/native/community-area-document/resources/futsal/FIFA_GFD_Futsal_Coaching_Manual_EN.pdf
+  Authority: B (FIFA GFD)
+  Biomechanics: side-foot = lower peak foot speed, greater accuracy emphasis (Kellis review);
+  build Biomechanics/001 as qualitative contrast to instep, not duplicate instep angles.
+
+================================================================================
+4. FIFA COACHING & DEVELOPMENT (PUBLIC DOCS)
+
+4A. FIFA Training Centre (hub)
+  URL: https://www.fifatrainingcentre.com/
+  Grassroots practice library (age-specific sessions, video + downloadable session plans):
+    https://www.fifatrainingcentre.com/en/practice/grassroots.php
+  News: downloadable session plans (org, coaching points, variations):
+    https://www.fifatrainingcentre.com/en/downloadable-session-plans-now-available.php
+  Example grassroots session PDF (“Take them on” — 1v1, communication, safety tips):
+    https://www.fifatrainingcentre.com/media/native/test/FIFA_Session_Plan_Grassroots_020.pdf
+  Elite 11v11 session example (“Building from the back” — Skinner plan, 11v11 part 4):
+    https://www.fifatrainingcentre.com/media/native/test/FIFA_Session_Plan_Skinner.pdf
+  Authority: B (coaching methodology); not biomechanical A.
+
+4B. FIFA Grassroots Manual (philosophy + coach-educator + SSG + basic techniques)
+  Philosophy: relationships, team spirit, fun; **learning through play**; coach-educator respects
+  child physical/psychological characteristics; session structure + small-sided games + festivals.
+  Chapters include: basic techniques, example exercises, grassroots plan guidelines.
+  Prefer official FIFA grassroots document portal for retrieval metadata:
+    https://grassroots.fifa.com/official-documents
+  Authority: B
+
+4C. FIFA Futsal Coaching Manual (2024 EN PDF on Training Centre)
+  Constraint-led, play-first; developing player 6–12, youth 13–18; complements Grassroots Manual.
+  Cross-format player development principles (avoid rush to 11v11 without technical base).
+  Authority: B
+
+4D. FIFA Beach Soccer Coaching Manual 2024
+  URL: https://www.fifatrainingcentre.com/media/native/bs-manuals/FIFA_Beach_Soccer_Manual_2024_EN_2.pdf
+  © FIFA 2024; reproduction prohibited without FIFA permission.
+  Relevance: limited for association-football kicking pack; optional cross-reference for volley/
+  overhead skills (out of brain_plan v1 scope).
+
+4E. FIFA 11+ injury prevention warm-up (F-MARC)
+  URL (manual PDF via FA mirror example): https://www-assets.palloliitto.fi/62562/1653402453-11plus_workbook_e.pdf
+  Hub: https://www.f-marc.com/11plus/
+  Authority: A for **injury-prevention warm-up structure** (not kicking mechanics)
+  Evidence cited in manual: teams using 11+ ≥2×/week → **30–50% fewer injuries** in referenced RCTs.
+  Structure: Part 1 running + stretch/partner contacts; Part 2 six exercise sets (core, legs, balance,
+  plyo) ×3 levels; Part 3 running/cutting. ~20 min; pre-match = Parts 1+3 only.
+  Key coaching emphasis: knee-over-toe, soft landings, straight leg alignment (Training/001 cross-link).
+
+================================================================================
+5. UEFA COACHING CONVENTION (PUBLIC PDFs — COACH EDUCATION STANDARD)
+
+5A. UEFA Coaching Convention 2025 (English PDF via UEFA document library / national FA mirrors)
+  URL: https://documents.uefa.com/v/u/Technical-Regulations/UEFA-Coaching-Convention-Online
+  Mirror example: https://www.epo.gr/sites/default/files/file-content-card/2025-09/UEFA_Coaching_Convention_2025_ENG.pdf
+  Authority: A+ for **coach education requirements** in Europe; B+ for grassroots session design
+  Key methodology (Article 8 — reality-based learning):
+    - Interactive, **club-context** learning; lifelong learning attitude.
+    - Cycle: activity → reflection → theory → planning; mentoring, distance learning.
+    - Formative + summative assessment by coach educators.
+  Course organisation: syllabuses of minimum content per diploma level; peer learning minimums.
+
+5B. UEFA C diploma — syllabus of minimum content (2020 edition PDF)
+  URL: https://editorial.uefa.com/resources/0267-11ec01bba280-63cf6747f768-1000/uefa_diploma_c_2020_en.pdf
+  Grassroots coach competences: player-centred approach, positive behaviours, planning/delivery/review,
+  safe learning environment, basic game management, holistic player development (technical, physical,
+  psychological, social).
+  Authority: B+ for **coaching behavior and session planning**; not kicking angles.
+
+5C. UEFA Women’s football competence framework (C diploma, 2023)
+  URL: https://editorial.uefa.com/resources/0285-190a6e9d0f6f-f8385ec9c395-1000/uefa_women_s_football_competence_frameworks.pdf
+  Competence-based, learner-centred qualifications; menu of evidence-based options for NAs.
+  Authority: B
+
+================================================================================
+6. THE FA (ENGLAND) — COACHING FRAMEWORK
+
+6A. England DNA overview (Boot Room)
+  URL: https://www.thefa.com/bootroom/resources/coaching/the-england-dna-what-do-you-need-to-know
+  Five elements: who we are, how we play, how we coach, how we support, how we measure.
+  Foundation Phase (5–11): play-based, holistic **Four Corner Model** (technical/tactical, physical,
+  psychological, social).
+  Authority: B
+
+6B. Foundation Phase technical/tactical headlines (in possession / out of possession / transition)
+  Boot Room guide: https://www.thefa.com/bootroom/resources/coaching/the-technical-corner-and-the-foundation-phase
+  PDF plan example (possession behaviors): https://www.thefa.com/-/media/education-hub/files/pdf/technical-corner-dna-plan.ashx
+  Sample behaviors: stay on ball, receive on multiple surfaces, combine creatively; positive defending;
+  intelligent reactions in transition.
+  Authority: B (coaching outcomes; map to body cues at high level only in v1)
+
+6C. How we coach — Plan, Do, Review
+  URL: https://www.thefa.com/bootroom/resources/england-dna/how-we-coach/training-strategy
+  Session design uses DNA Coaching Fundamentals + Four Corner objectives.
+  Authority: B
+
+6D. Grassroots youth matchday guide (“Play Your Part”)
+  URL: https://www.thefa.com/-/media/cfa/londonfa/files/players/grassroots-guide---youth.ashx?la=en
+  Min 50% playing time, positive sideline behavior, development over scoreline — Training/001 culture.
+  Authority: B
+
+6E. Pre-season / physical prep Foundation Phase (DNA)
+  Example PDF: https://community.thefa.com/cfs-file/__key/docpreview-s/00-00-00-03-00/DNA-9_2D00_12-pre_2D00_season-_2D00_-Pete-Sturgess.pdf
+  Emphasis: enjoyment, varied movement, SSG, avoid adult pre-season models for children.
+  Authority: B
+
+================================================================================
+7. IFAB LAWS OF THE GAME (GLOSSARY / FUTURE RULES FOLDER — A+)
+
+Laws of the Game 2024/25 effective 1 July 2024 (English PDF):
+  URL: https://downloads.theifab.com/downloads/laws-of-the-game-2024-25?l=en
+  Reproduction prohibited without IFAB permission (booklet notice).
+  Product v1 (brain_plan): IFAB text **out of scope** except future glossary hooks (e.g. direct vs
+  indirect free kick, offside — not required for kicking mechanics pack).
+  Authority: A+ for rules; summarize only.
+
+Simplified “Football Rules” for young players/coaches: www.footballrules.com (IFAB-linked).
+
+================================================================================
+8. U.S. SOCCER (SUPPLEMENTARY NGB — B)
+
+Player Development Framework philosophy (public web):
+  URL: https://www.ussoccer.com/us-way/player-development
+  Grassroots: game-like experiences, player-centered, holistic development, reality-based coaching
+  education (parallel themes to UEFA Article 8).
+  Session plans hub: https://www.ussoccer.com/soccer-forward/resource-hub/coaches-session-plans
+  Authority: B
+  PDF frameworks on third-party CDNs often marked confidential — do not ingest verbatim.
+
+================================================================================
+9. COMMON MECHANICS THEMES → BODY SIGNALS (SEEDS FOR Findings/ — NOT PRESCRIPTIVE)
+
+| Theme | Body-measurable signal (pose/OpenSim) | Coaching direction | Sources |
+|-------|--------------------------------------|--------------------|---------|
+| Trunk too upright at strike | Low trunk flexion vs run-up | Use hip flexion + arm counterbalance cues; accuracy vs power tradeoff | Kellis PMC3786235; 2021 SR |
+| Over-lean / loss of balance post strike | Excessive trunk flexion; slow recovery step | Core control; decel through follow | Shan 2011; Kellis |
+| Plant foot too open | Support toe angle / pelvis opens early | Align plant beside ball; stabilize before backswing | Lees 2010 themes; coaching consensus |
+| “All leg” swing | Arms static; low contralateral arm drive | Use arm swing for balance/timing | Shan 2011 whole-body |
+| Backswing too short | Knee flex amplitude low before forward swing | Increase leg cocking via hip ext mobility drills | Kellis |
+| Forward swing only from knee | Hip extension lag; shank peak before thigh | Proximal-to-distal timing drills | Kellis |
+| Side-foot: body behind ball | Trunk behind CoM at contact_proxy | Pass on ground; lean over ball | FIFA grassroots techniques |
+| Max reps youth | N/A (training load) | Cap volley/max shots; prioritize variety | FA DNA; FIFA 11+ |
+
+Do **not** publish single “correct” knee/hip angles as medical or performance guarantees.
+
+================================================================================
+10. SUGGESTED SERIES / CHECKPOINTS (ALIGN brain_plan Quality/)
+
+From literature + brain_plan:
+  - approach: CoM velocity toward kick direction, step cadence
+  - plant: support knee flexion, pelvis orientation, CoM deceleration
+  - backswing: kicking-side knee flexion peak, hip extension
+  - forward_swing: kicking-side knee extension rate, foot speed rise
+  - contact_proxy: peak ||v(kicking_ankle)||
+  - follow: trunk angle recovery, balance (single-leg stability duration)
+
+Compare instep vs side-foot: expect lower peak foot speed and less trunk range for side-foot passes
+(Kellis accuracy vs power; FIFA technique descriptions).
+
+================================================================================
+11. GAPS FOR BUILD / REVIEW AGENTS
+
+- Complete Findings/001 + Coaching/001–002 from brain_plan fault IDs with URLs from this file.
+- Biomechanics/001: instep chain + side-foot contrast + youth/adult language separation.
+- SOURCE_MANIFEST.txt: authority + license column per row (this search pass).
+- Verify PMC license blocks at ingest for any full-text chunking (Kellis 2007, future additions).
+- No ball speed/spin/curve claims in product without ball tracking.
+- Elite 11v11 FIFA session plans useful for Training/001 team practice; kicking pack remains individual
+  strike mechanics focus.
+
+# End research_notes.txt

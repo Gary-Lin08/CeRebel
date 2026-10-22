@@ -1,0 +1,54 @@
+# Yoga pack — brain plan (ontology + phase + finding map)
+# Generated: 2026-10-21 | Aligns with SPORT_PACK_KB_SPEC
+
+## Motion types (top-level)
+
+1. HOLD — static asana after E_ENTRY_END; alignment scored at hold_anchor
+2. FLOW — transition between pose_id nodes; peak_load at chaturanga/lunge shifts
+3. BALANCE — subset of HOLD with sway tolerance bands (Tree, Warrior III prep)
+
+## Phase event IDs (shared vocabulary)
+
+Hold chain:
+  arrival → E_ENTRY_END → hold_early → E_HOLD_ANCHOR → hold_late → E_EXIT_START → exit
+
+Flow chain:
+  E_FLOW_START → E_WEIGHT_SHIFT → E_PEAK_LOAD → E_DECEL_START → E_ARRIVAL → E_ENTRY_END
+
+## Common poses set (v1)
+
+See Taxonomy/003_common_poses_set.txt — 24 pose_id slugs covering standing, kneeling, prone, supine, seated.
+
+Priority film poses for detector MVP:
+  pose_down_dog, pose_plank, pose_warrior_2, pose_tree, pose_chair, pose_bridge
+
+## Finding slug map → primary phase
+
+| finding_id | headline phase | pose_id |
+|------------|----------------|---------|
+| fault_dog_lumbar_sag | hold_anchor | pose_down_dog |
+| fault_dog_shoulder_elevation | hold_anchor | pose_down_dog |
+| fault_plank_hip_sag | hold_anchor, peak_load | pose_plank, pose_chaturanga_low |
+| fault_chaturanga_shoulder_drop | peak_load | pose_chaturanga_low |
+| fault_warrior_knee_collapse | hold_anchor | pose_warrior_2 |
+| fault_tree_foot_on_knee | entry | pose_tree |
+| fault_forward_fold_spine_round | hold_anchor | forward fold family |
+| fault_backbend_neck_hyperextension | hold_anchor | cobra/up dog |
+| fault_flow_uncontrolled_drop | peak_load | flow |
+| fault_hold_wandering | hold_late | * |
+
+(Full list in Findings/001_common_faults.txt — 30 cards)
+
+## Ontology entities (planned Schema/001)
+
+Practitioner, Pose, PoseFamily, Phase, PhaseEvent, Finding, Cue, Drill, Checkpoint, PracticeMode (hold|flow), AudienceBand
+
+## RAG cross-links
+
+- Every finding repeats cue in Coaching/001 and drill in Coaching/002 where applicable
+- Quality/002 checkpoints reference fail → finding_id
+- Biomechanics/001 explains mechanism themes without degree prescriptions
+
+## Out of scope for automated findings
+
+Chakra/organ claims, pranayama quality, prop geometry, mat brand, class music BPM, spiritual attainment.

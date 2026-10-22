@@ -1,0 +1,184 @@
+# Basketball Shooting — Drills (30–90 s blocks, body-first)
+# Each drill lists fault links, phase focus, equipment, youth note.
+
+================================================================================
+FORM & UPPER BODY (NO RIM REQUIRED)
+================================================================================
+
+drill_one_hand_form_finish
+  duration: 60–75 s
+  phases: set, release, follow
+  faults: fault_short_arm_release, fault_flyaway_elbow, fault_chicken_wing_finish
+  setup: Athlete at shooting line or anywhere with ceiling clearance; optional light ball or sock ball.
+  steps: Set with shooting hand only; guide hand behind back. Extend through gooseneck, hold 2 s. 8–10 reps.
+  body_focus: Elbow path, wrist above elbow at set, hold after release.
+  youth: Use smaller ball; reduce reps to 6; emphasize hold not height.
+  authority: B
+
+drill_guide_hand_open
+  duration: 45–60 s
+  phases: set, release
+  faults: fault_guide_hand_push
+  setup: Two-hand grip at set; guide hand on side of ball.
+  steps: Rise to set; at extension guide hand opens and drops without touching ball path. 10 reps slow.
+  body_focus: Off-hand wrist speed near zero at release window.
+  youth: Same; coach watches off-hand from front.
+  authority: B
+
+drill_wall_set_touch
+  duration: 60 s
+  phases: transfer, set
+  faults: fault_low_set_point, fault_arm_only_shot
+  setup: Stand arm’s length from wall, side angle optional.
+  steps: Dip lightly, rise, bring shooting hand to wall at forehead height without pushing wall. 8 reps.
+  body_focus: Set height and upward path before extension.
+  youth: No jump required — rise on toes optional.
+  authority: B
+
+================================================================================
+LOWER BODY / JUMP SHOT
+================================================================================
+
+drill_dip_rise_no_shot
+  duration: 60–90 s
+  phases: dip, drive
+  faults: fault_no_load, fault_excessive_dip, fault_asymmetric_dip
+  setup: Filmed from front; tape line between feet.
+  steps: Athletic stance; controlled dip (knees flex), immediate rise to full extension on balls of feet; no arm shoot. 10 reps on metronome 80 BPM.
+  body_focus: Symmetric knee flex, COM rises before any arm motion.
+  youth: Shallower dip; 6 reps.
+  authority: B+
+
+drill_channel_vertical_hop
+  duration: 75 s
+  phases: drive, transfer
+  faults: fault_lateral_leak, fault_arm_only_shot
+  setup: Two parallel tape lines 15 cm apart.
+  steps: Dip-drive hop staying inside channel; arms can mimic shot at top. 8 hops.
+  body_focus: Lateral COM control.
+  youth: Channel wider; hop height moderate.
+  authority: B
+
+drill_landing_stick
+  duration: 90 s
+  phases: follow
+  faults: fault_stiff_landing, fault_asymmetric_landing
+  setup: Mat recommended; film from front.
+  steps: After form jump shot or hop-shoot, land and freeze 1 s with matched knee bend. 6 shots or hops.
+  body_focus: Knee flexion symmetry at E_LAND_STABLE proxy.
+  youth: Lower hop; prioritize soft knees.
+  authority: A/B+ landing education summarized
+
+================================================================================
+FREE THROW ROUTINE
+================================================================================
+
+drill_ft_breath_routine
+  duration: 90 s
+  phases: setup, follow
+  faults: fault_rushed_free_throw, fault_chicken_wing_finish
+  setup: Line at FT distance optional; no make required.
+  steps: Personal routine (e.g., 3 bounces, inhale, set, shoot, hold finish 2 s). Repeat 4 complete routines without rushing first step.
+  body_focus: Low wrist speed in setup window; hold after release.
+  youth: Shorten routine; same order every time.
+  authority: B+
+
+drill_ft_quiet_legs
+  duration: 60 s
+  phases: setup, release
+  faults: fault_arm_only_shot (ft variant — arm-only FT push)
+  setup: Seated-to-stand optional contrast; standing at line.
+  steps: Knees soft but no heel lift; shoot 5 FTs focusing on legs quiet, power from smooth extension.
+  body_focus: Minimal COM rise (< jump threshold).
+  youth: Step-in closer if needed for success.
+  authority: B
+
+================================================================================
+TEAM STATIONS (SEE Training/001 FOR CONTEXT)
+================================================================================
+
+drill_partner_elbow_check
+  duration: 45 s
+  phases: set
+  faults: fault_flyaway_elbow
+  setup: Partners face each other at 2 m.
+  steps: Shooter holds set; partner calls "in" or "out" based on elbow relative to wrist. 6 sets.
+  body_focus: Frontal plane elbow position.
+  youth: Use verbal only, no touching.
+  authority: B
+
+drill_metronome_catch_shoot_tempo
+  duration: 90 s
+  phases: dip, drive, release
+  faults: fault_excessive_dip, fault_arm_only_shot
+  setup: Passer optional; metronome 100 BPM for advanced.
+  steps: On beat: catch-dip-rise-release pattern; adjust dip depth to stay on beat. 8 reps.
+  body_focus: Tempo linking dip to release.
+  youth: Slower BPM; pass from close distance.
+  authority: B
+
+================================================================================
+DRILL SELECTION MATRIX (for RAG)
+================================================================================
+
+| priority fault              | first drill              | second drill           |
+|-----------------------------|--------------------------|------------------------|
+| fault_arm_only_shot         | drill_dip_rise_no_shot   | drill_wall_set_touch   |
+| fault_flyaway_elbow         | drill_one_hand_form_finish | drill_partner_elbow_check |
+| fault_guide_hand_push       | drill_guide_hand_open    | drill_one_hand_form_finish |
+| fault_stiff_landing         | drill_landing_stick      | drill_channel_vertical_hop |
+| fault_rushed_free_throw     | drill_ft_breath_routine  | drill_ft_quiet_legs    |
+
+All drills assume pain-free participation; stop if joint pain occurs (Docs/002).
+
+================================================================================
+V2 CATCH-AND-SHOOT / FT RHYTHM
+================================================================================
+
+drill_ft_metronome_rhythm
+  duration: 90 s
+  phases: setup, release, follow
+  faults: fault_ft_rhythm_break, fault_rushed_free_throw, fault_ft_early_arm
+  setup: FT line optional; metronome or counted beats.
+  steps: Personal routine on 4 even beats; hold finish 2 s; 5 reps.
+  body_focus: Consistent setup window; legs before arm.
+  youth: Fewer dribbles; same order.
+  authority: B+
+
+drill_catch_plant_freeze
+  duration: 75 s
+  phases: setup, dip
+  faults: fault_catch_shoot_late_pivot, fault_inside_pivot_collapse, fault_catch_shoot_hop_back
+  setup: Partner toss or self-toss.
+  steps: Catch, freeze feet square 1 count, then dip-rise form shot; 8 reps.
+  body_focus: Plant stability; no hop-back.
+  youth: Closer toss; freeze longer.
+  authority: B
+
+drill_forehead_set_hold
+  duration: 60 s
+  phases: set, release
+  faults: fault_set_behind_head, fault_low_set_point
+  setup: Side camera preferred.
+  steps: Rise to forehead-window set, hold 2 s, extend; 8 reps.
+  body_focus: Wrist anterior to ear line.
+  authority: B
+
+drill_footprint_landing_v2
+  duration: 90 s
+  phases: follow
+  faults: fault_landing_forward_lunge, fault_stiff_landing, fault_asymmetric_landing
+  setup: Tape footprints; mat optional.
+  steps: Form jumper; land in marks with soft matched knees; 6 reps.
+  body_focus: Two-foot soft stick.
+  youth: Soft knees over footprint perfection.
+  authority: A/B+ landing education summarized
+
+drill_thumb_up_guide
+  duration: 60 s
+  phases: set, release
+  faults: fault_offhand_thumb_over, fault_guide_hand_push
+  setup: Frontal or 45° view.
+  steps: At set freeze guide thumb vertical; open on extend; 10 slow reps.
+  body_focus: Off-hand shelf without thumb-over.
+  authority: B

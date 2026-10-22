@@ -1,0 +1,116 @@
+# General Human Motion — Quality Definition (body-first)
+
+## What “good movement quality” means in CeRebel (general pack)
+
+Quality is **not** a single score in v1. The product describes how well visible body organization aligns with
+checkpoints derived from postural control literature and fundamental coaching — without claiming one ideal pose
+for every body, sport, or task.
+
+Quality is evaluated in five dimensions. Each dimension links to checkpoints in `002_checkpoints.txt` and may
+trigger finding IDs when failed.
+
+### Dimension 1 — Axial stack and head–pelvis alignment
+
+**Intent**: Head, ribs, and pelvis stay organized in a coherent stack during setup and under load; excessive
+forward head or rib flare does not dominate the pattern.
+
+Body signals:
+- Stack alignment proxy (head vs shoulder midline vs pelvis in sagittal/frontal composition)
+- Forward head angle proxy when sagittal view available
+- Rib cage angle vs pelvis in load phases
+
+Failed checkpoints may trigger: `posture_stack_break`, `forward_head`, `ribcage_flare_anterior`,
+`pelvis_anterior_tilt_excess`.
+
+Evidence band: B+ for trunk–pelvis coordination themes; B for coaching cues.
+
+### Dimension 2 — Balance and weight transfer
+
+**Intent**: Center of mass moves deliberately over the base of support during prep and single-leg moments;
+recovery returns to stable standing without large sway.
+
+Body signals:
+- Lateral COM sway magnitude during single-leg load
+- Timing of weight shift vs action peak (prep duration ratio)
+- Excessive whole-body lean to one side
+
+Failed checkpoints may trigger: `single_leg_balance_wobble`, `insufficient_weight_shift`,
+`excessive_lateral_lean`.
+
+Evidence band: B+ postural control literature; B for drill selection.
+
+### Dimension 3 — Lower-limb alignment and hip hinge
+
+**Intent**: When bending or accepting load, hips contribute flexion; knees track without extreme inward collapse
+on visible camera plane.
+
+Body signals:
+- Hip vs lumbar flexion share during prep/load (pattern heuristic)
+- Frontal-plane knee angle proxy at max flexion
+- Ankle–knee–hip alignment in frontal view
+
+Failed checkpoints may trigger: `stiff_spine_no_hip_hinge`, `knee_valgus_visible`.
+
+Evidence band: B+ neuromuscular training and squat/lunge kinematics themes (non-diagnostic).
+
+### Dimension 4 — Limb–torso coordination and timing
+
+**Intent**: Arms and legs move in sync with trunk; preparation is long enough to organize stack before peak speed.
+
+Body signals:
+- Thorax yaw vs pelvis yaw mismatch during prep/action
+- Prep phase duration / action peak timing ratio
+- Arm path crossing body chaotically vs task context (generic flag)
+
+Failed checkpoints may trigger: `arms_fight_torso`, `rushed_prep`.
+
+Evidence band: B+ segment coupling reviews; B coaching.
+
+### Dimension 5 — Symmetry and repeatable recovery
+
+**Intent**: Left and right sides show comparable shoulder level and limb ROM when task is bilateral; athlete
+completes recover phase toward neutral between reps.
+
+Body signals:
+- Shoulder height difference at setup
+- Peak wrist/ankle ROM left vs right in action phase
+- Recover phase stack variance vs setup baseline
+
+Failed checkpoints may trigger: `shoulder_height_asymmetry`, `limb_rom_asymmetry`, `incomplete_recover`.
+
+Evidence band: B for symmetry coaching; B+ for variability themes (not injury diagnosis).
+
+## Youth vs adult quality interpretation
+
+Youth:
+- Stack varies with growth; mild shoulder height difference may appear — widen asymmetry bands U14.
+- Do not apply adult static “perfect posture” language; emphasize control and pain-free range.
+
+Adult:
+- Apply adult checkpoint bands in 002; desk-work forward head common — coach without shaming.
+
+Masters:
+- Slower prep and longer recover may be normal; product may tag `audience=masters` in future without changing phase IDs.
+
+## Relationship to findings severity
+
+Checkpoints produce **coaching priorities**, not medical grades. A failed knee-valgus proxy suggests alignment
+awareness and strength work themes — it does not diagnose ACL risk or pathology.
+
+## Repeatability and capture quality
+
+Quality analysis confidence drops when:
+- FPS < 24, heavy blur, or occluded pelvis/knees
+- Camera not approximately frontal for knee/shoulder symmetry claims
+- Clip shorter than one full prep–action–recover cycle
+- OpenSim tools unavailable and only low-confidence 2D pose exists
+
+Document low-confidence state in coach briefs; KB defines concepts only. When tools are available, prefer
+measured series per `opensim_motion_tools.txt`.
+
+## Cross-references
+
+- Phases/001_phase_model.txt — when each dimension is measured
+- Findings/001_common_faults.txt — user-facing fault cards
+- Biomechanics/001_overview.txt — literature-backed relationships
+- Docs/002_DISCLAIMER.txt — not medical advice

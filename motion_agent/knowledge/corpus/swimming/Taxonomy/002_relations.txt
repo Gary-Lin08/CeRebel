@@ -1,0 +1,58 @@
+# Freestyle Swimming — Concept Relations (v1)
+
+# Format: relation_type | subject_id | object_id | notes
+
+precedes | phase_recovery | phase_entry | within same arm cycle
+precedes | phase_entry | phase_catch | sequential underwater setup
+precedes | phase_catch | phase_pull | propulsion build
+precedes | phase_pull | phase_push | hand passes hip region
+precedes | phase_push | phase_recovery | next cycle begins at E_EXIT
+
+overlaps | phase_breathe | phase_recovery | breath often during opposite recovery
+overlaps | phase_breathe | phase_catch | some swimmers breathe during early catch
+overlaps | phase_kick | phase_pull | kick continuous during pull
+overlaps | phase_body_roll | phase_pull | roll peaks mid-pull toward pulling side
+
+associated_with | early_vertical_forearm | phase_catch | coaching cue cluster
+associated_with | body_roll | phase_entry | roll aids reach extension
+associated_with | body_roll | phase_pull | roll aids pull path under body
+
+failTriggers | fault_dropped_elbow | phase_catch | primary detection window
+failTriggers | fault_dropped_elbow | phase_pull | sustained dropped elbow
+failTriggers | fault_crossover_entry | phase_entry | hand crosses midline proxy
+failTriggers | fault_excessive_head_lift | phase_breathe | vertical head displacement
+failTriggers | fault_low_elbow_recovery | phase_recovery | elbow below wrist in recovery
+failTriggers | fault_bicycle_kick | phase_kick | excessive knee flexion
+failTriggers | fault_flat_swim | phase_body_roll | low shoulder tilt amplitude
+failTriggers | fault_short_push | phase_push | early E_EXIT before hip pass
+
+measuredOn | series_elbow_flexion | phase_catch | pulling arm
+measuredOn | series_elbow_flexion | phase_pull | pulling arm
+measuredOn | series_wrist_speed | phase_pull | E_PULL_PEAK
+measuredOn | series_shoulder_roll | phase_body_roll | peak tilt per cycle
+measuredOn | series_head_yaw | phase_breathe | E_BREATHE
+
+synonym_of | freestyle_front_crawl | crawl stroke | en
+synonym_of | early_vertical_forearm | high elbow catch | en coaching
+synonym_of | phase_push | finish phase | en
+
+contrasts_with | sprint_freestyle | distance_freestyle | rate vs length emphasis
+contrasts_with | pool_swimming | open_water_swimming | sighting and confidence flags
+
+requires_context | open_water_freestyle | fault_excessive_head_lift | suppress false positive when sighting
+
+blockedBySport | swimming | running_gait | misclassified dry land
+blockedBySport | swimming | golf_swing | misclassified dry land
+
+co_occurs_with | fault_crossover_entry | fault_over_rotation | common pattern chain
+co_occurs_with | fault_dropped_elbow | fault_shoulder_hike_entry | compensation chain
+
+remediated_by | fault_dropped_elbow | drill_fist_drill | Coaching/002_drills.txt
+remediated_by | fault_dropped_elbow | drill_sculling_front | Coaching/002_drills.txt
+remediated_by | fault_crossover_entry | drill_single_arm_freestyle | Coaching/002_drills.txt
+remediated_by | fault_excessive_head_lift | drill_bilateral_breathing | Coaching/002_drills.txt
+remediated_by | fault_bicycle_kick | drill_vertical_kick | Coaching/002_drills.txt
+
+source_authority | early_vertical_forearm | pmc_freestyle_biomech_reviews | B+
+source_authority | fault_family_head_breath | usa_swimming_learn_to_swim | B
+source_authority | axis_workload_youth | world_aquatics_development | B

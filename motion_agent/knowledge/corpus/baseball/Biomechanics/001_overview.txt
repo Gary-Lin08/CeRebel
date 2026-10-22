@@ -1,0 +1,171 @@
+# Baseball Pitching — Biomechanics Overview (open literature summary)
+
+This document summarizes **relationships** reported in open-access reviews and clinical consensus documents.
+It does not prescribe universal angle targets for individual athletes. Camera-based apps measure proxies, not
+lab-grade joint moments.
+
+Primary sources: PMC3764822 (pitching biomechanics overview), ASMI public materials, PMC3445080 (workload/injury context).
+Authority default: B+ for kinematic relationships; A for injury/workload themes at population level.
+
+---
+
+## Kinetic chain concept
+
+Overhand pitching is a **proximal-to-distal** sequence: lower extremity generates force, trunk rotates and
+tilts, throwing arm accelerates through a large range of motion, hand/wrist deliver final velocity to the ball.
+
+Efficient sequencing (general pattern in literature):
+1. Lead foot accepts force while pelvis rotates toward plate.
+2. Trunk rotation peaks near arm acceleration.
+3. Elbow extends and wrist speed peaks near release.
+
+When trunk rotation peaks **before** the front leg firms, the arm often compensates — visible as early shoulder
+opening or horizontal push. CeRebel maps this tendency to fault_early_trunk_rotation using yaw timing proxies.
+
+---
+
+## Segments and joints (body tracking view)
+
+### Lower body
+- **Drive leg** pushes against rubber; extension timing correlates with pelvis velocity in lab studies.
+- **Stride leg** length and direction affect timing of pelvis rotation; excessive closed landing restricts hip rotation.
+- **GRF** (ground reaction force) not measured in CeRebel v1; inferred indirectly via ankle/knee kinematics.
+
+Visible proxies:
+- Lead ankle forward velocity and deceleration at plant.
+- Knee flexion stability through release.
+
+### Trunk and pelvis
+- **Pelvis rotation** toward plate begins during stride and continues through release.
+- **Trunk rotation** often lags pelvis briefly — hip-shoulder **separation** — storing elastic energy in torso tissues
+  when timing is appropriate (qualitative in coaching; quantitative in 3D labs).
+
+2D limitation: oblique cameras blend rotation into flexion; separation metrics carry higher uncertainty — product uses
+qualitative checkpoint language unless multi-view calibration exists.
+
+### Throwing arm
+- **Arm cocking (late cocking)**: throwing arm reaches maximum external rotation relative to trunk; elbow flexed.
+  Lab studies associate this phase with high elbow valgus load — **population-level** finding, not individual diagnosis.
+- **Acceleration**: rapid elbow extension and internal rotation; wrist flexion/extension contributes to release velocity in lab models.
+- **Deceleration**: eccentric work of posterior shoulder and elbow musculature; incomplete follow-through discussed as
+  a modifiable coaching factor over high cumulative workloads.
+
+CeRebel does **not** estimate valgus moment from 2D pose.
+
+---
+
+## Timing variables (conceptual, not single norms)
+
+Researchers often report group means for intervals such as:
+- Foot contact to release
+- Maximum pelvis rotation to release
+- Maximum shoulder external rotation to release
+
+These intervals vary by pitcher height, delivery style (stretch vs windup), and pitch type in lab settings with ball tracking.
+Product approach: compare athlete to **their session baseline** rather than publishing fixed millisecond norms.
+
+Release detection in product: **E_RELEASE = argmax trail wrist speed** (pitch_score.py).
+
+---
+
+## Stride mechanics
+
+Stride length in research is often normalized to body height or leg length. Very short strides associated with
+upright trunk and arm-dominant patterns in coaching literature; overstride associated with landing instability.
+
+Direction: stride toward plate supports hip rotation; closed landing can force early trunk opening — mapped to
+fault_landing_closed.
+
+---
+
+## Shoulder and elbow (health-aware coaching language)
+
+Open clinical reviews emphasize:
+- **Cumulative workload** (pitches per game, season, year) as primary modifiable risk factor for youth elbow/shoulder pain.
+- **Mechanics** as secondary modifiable factor — especially timing, deceleration, and avoiding concurrent high-intensity
+  throwing when fatigued.
+
+ASMI youth position statement themes (summarized):
+- Develop overall athleticism and throwing fundamentals before specialization.
+- Avoid year-round maximal throwing without adequate rest.
+- Do not treat one kinematic snapshot as clearance to throw through pain.
+
+Product implication: pair mechanics findings with Pitch Smart / league rest tables for youth sessions.
+
+---
+
+## Wrist and hand
+
+Late wrist flexion/extension contributes to release velocity in biomechanical models with force plates and high-speed video.
+Without ball track, CeRebel uses **wrist speed burst** as efficiency proxy (fault_push_no_whip when burst low).
+
+---
+
+## Comparison to other throwing sports
+
+Javelin, cricket, and tennis serves share proximal-to-distal sequencing but differ in plane of motion, stride constraints,
+and object weight. Do not transfer golf swing or tennis serve norms to pitching phase model.
+
+Golf misclassification is explicitly guarded in baseball pack (different plane, dual wrist peaks).
+
+---
+
+## Measurement quality factors
+
+| Factor | Effect on inference |
+|--------|---------------------|
+| Camera side view | Best for arm path and trunk flexion |
+| 30 fps vs 60 fps | Underestimates peak wrist speed |
+| Single vs multi-camera | Rotation angles unreliable in one view |
+| Markerless pose noise | Smooth signals before peak detection |
+
+Recommend checkpoint cp_capture_quality before high-confidence findings.
+
+---
+
+## Youth vs adult biomechanics notes
+
+Youth pitchers:
+- Smaller absolute forces; growth plates sensitive to volume — prioritize Pitch Smart limits.
+- Greater inter-athlete variability in maturity; avoid adult pro model comparisons.
+
+Adult pitchers:
+- Higher absolute joint loads; deceleration capacity trainable with S&C (general literature) but individualized.
+
+No youth/adult split on phase IDs — split on workload policies and cue complexity.
+
+---
+
+## Open research gaps (do not overclaim in product)
+
+- Direct causal links between single 2D pose fault labels and injury incidence are **not** established in literature.
+- Pitch-type-specific kinematics require ball and grip context.
+- Fatigue detection from one clip is speculative; multi-pitch drift analysis future work.
+
+---
+
+## Key references (URLs in SOURCE_MANIFEST)
+
+- PMC3764822 — The biomechanics of pitching (kinematic/kinetic review)
+- PMC3445080 — Pitch count regulation and injury context
+- ASMI youth position statement — https://asmi.org/asmi-position-statement-for-youth-baseball-pitchers/
+- MLB Pitch Smart — workload tables (not biomechanics primary)
+
+---
+
+## Mapping summary to CeRebel artifacts
+
+| Biomech theme | Phase | Finding / checkpoint |
+|---------------|-------|----------------------|
+| Separation timing | stride/plant | fault_early_trunk_rotation, cp_separation_window |
+| Front-side block | plant | fault_open_lead_knee, cp_firm_front_side |
+| Wrist speed peak | acceleration | E_RELEASE, cp_release_wrist_burst |
+| Deceleration | follow-through | fault_chicken_wing, cp_decel_across_body |
+| Workload | training | Pitch Smart, drill_pitch_smart_rest_day |
+
+---
+
+## Internal detector reference
+
+trail wrist speed burst, stride_ratio, arm_ratio — see motion_agent/sports/packs/pitch_score.py
+Authority: ProductLogic

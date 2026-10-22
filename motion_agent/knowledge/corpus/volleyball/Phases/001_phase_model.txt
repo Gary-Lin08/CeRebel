@@ -1,0 +1,169 @@
+# Volleyball Attack Approach — Phase Model (v2)
+# Scope: attack approach (3-step / 4-step); jump serve shares takeoff→landing spine; block-ready posture body-only
+# Body-only OpenSim / pose keypoints; no ball required
+# Stable phase IDs — UI labels + SP_* detector ids
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Seven phases describe one complete approach-jump-strike-land cycle using events
+approximated from multi-joint tracking without a ball. Overlap at boundaries is
+normal (trunk rotation begins during plant; arm swing continues into landing).
+
+Handedness: trail = hitting side (right-side hitter: trail = right wrist).
+
+UI scrub bar: ready | approach | plant | takeoff | swing | contact | landing
+Detector aliases: SP_READY | SP_APPROACH | SP_PENULT | SP_PLANT | SP_TAKEOFF | SP_SWING | SP_CONTACT | SP_LANDING
+
+================================================================================
+PHASE TABLE
+================================================================================
+
+| phase_id | SP_* alias   | label_en       | start event        | end event          |
+|----------|--------------|----------------|--------------------|--------------------|
+| ready    | SP_READY     | Ready / base   | clip_start         | E_APPROACH_START   |
+| approach | SP_APPROACH  | Approach steps | E_APPROACH_START   | E_PLANT            |
+| (penult) | SP_PENULT    | Penultimate    | E_PENULTIMATE      | E_PLANT            |
+| plant    | SP_PLANT     | Plant / load   | E_PLANT            | E_COM_RISE         |
+| takeoff  | SP_TAKEOFF   | Takeoff        | E_COM_RISE         | E_COM_PEAK         |
+| swing    | SP_SWING     | Airborne swing | E_COM_PEAK         | E_CONTACT          |
+| contact  | SP_CONTACT   | Contact window | E_CONTACT - 2 fr   | E_CONTACT + 3 fr   |
+| landing  | SP_LANDING   | Landing        | end(contact)       | E_LAND_STABLE      |
+
+Jump serve variant:
+- May collapse `approach` if athlete uses minimal steps; annotate variant=serve.
+- `ready` includes pre-toss stance; toss not detected without ball.
+
+================================================================================
+PHASE DETAILS (detector_events / fault_links)
+================================================================================
+
+### ready / SP_READY
+**Start/end:** See table.
+**Body signals:** Athletic base; knees soft; hands ready.
+**detector_events:** E_READY_STABLE
+**fault_links:** fault_block_ready_upright, fault_block_arms_low
+
+### approach / SP_APPROACH
+**Body signals:** Horizontal ankle/pelvis speed rising; step cadence.
+**detector_events:** E_APPROACH_START, approach_speed peak
+**fault_links:** fault_short_approach, fault_spike_short_approach, fault_slow_approach, fault_approach_crossover_chaotic, fault_jump_timing_rushed
+
+### SP_PENULT (internal split of late approach)
+**Body signals:** Penultimate knee flex; long/deep step.
+**detector_events:** E_PENULTIMATE
+**fault_links:** fault_penultimate_flat, fault_spike_no_penult_load
+
+### plant / SP_PLANT
+**Body signals:** Last foot contact; knee flex load; step width.
+**detector_events:** E_PLANT
+**fault_links:** fault_soft_plant, fault_narrow_plant, fault_wide_plant, fault_approach_last_step_overreach, fault_swing_no_draw, fault_spike_early_arm, fault_jump_timing_rushed
+
+### takeoff / SP_TAKEOFF
+**Body signals:** Pelvis vertical velocity positive; bilateral leave; coil retained.
+**detector_events:** E_COM_RISE, E_COM_PEAK (end)
+**fault_links:** fault_arm_only_swing, fault_asymmetric_takeoff, fault_jump_early_reach, fault_spike_late_jump, fault_hitting_shoulder_open_early, fault_com_wrist_desync
+
+### swing / SP_SWING
+**Body signals:** Trail wrist acceleration; trunk open; elbow path.
+**detector_events:** wrist accel onset; trunk_rotation rate peak
+**fault_links:** fault_late_trunk_open, fault_spike_early_arm, fault_arm_swing_elbow_lead, fault_swing_no_draw, fault_jump_behind_contact, fault_arm_only_swing
+
+### contact / SP_CONTACT
+**Body signals:** argmax ||v(trail_wrist)|| — NOT verified ball contact.
+**detector_events:** E_CONTACT (= contact_peak_wrist)
+**fault_links:** fault_jump_behind_contact, fault_jump_early_reach, fault_com_wrist_desync, fault_late_trunk_open
+
+### landing / SP_LANDING
+**Body signals:** Knee/hip flex after E_LAND; bilateral accept; quiet stick.
+**detector_events:** E_LAND, E_LAND_STABLE
+**fault_links:** fault_landing_stiff, fault_spike_stiff_landing, fault_landing_single_leg_dominant, fault_landing_forward_fall
+
+================================================================================
+EVENT DEFINITIONS (body-only)
+================================================================================
+
+E_READY_STABLE
+  Rolling std of pelvis position below threshold for ≥6 frames at clip start.
+  Fallback: first frame.
+
+E_APPROACH_START
+  Max ankle horizontal speed exceeds baseline × 1.8 for 3 consecutive frames after ready.
+  Fallback: ready_end + 8% of window span.
+
+E_PENULTIMATE (internal, splits approach)
+  Second foot strike before E_PLANT: ankle vertical velocity zero-cross with deceleration spike.
+  Used for penultimate_knee series and finding fault_penultimate_flat.
+
+E_PLANT
+  Last foot contact before takeoff: final ankle height local minimum / speed deceleration before E_COM_RISE.
+  Fallback: E_COM_RISE minus ~100–140 ms at 60 fps (low confidence).
+
+E_COM_RISE
+  Pelvis vertical velocity v_y > 0.04 m/s (scale-normalized in product code when available).
+
+E_COM_PEAK
+  argmax pelvis height in [E_COM_RISE, E_CONTACT + 5 frames].
+
+E_CONTACT
+  argmax ||v(trail_wrist)|| in analysis window.
+  Primary timing anchor. NOT verified ball contact.
+
+E_LAND
+  First frame after E_CONTACT where either ankle vertical velocity ≈ 0 and height near post-airborne minimum.
+
+E_LAND_STABLE
+  E_LAND + frames until both knee flexion rates below threshold (settled stance).
+
+================================================================================
+DETECTOR EVENT MAP (future sport_analysis)
+================================================================================
+
+| product_event_id   | maps_to     | priority |
+|--------------------|-------------|----------|
+| contact_peak_wrist | E_CONTACT   | P0       |
+| com_peak           | E_COM_PEAK  | P0       |
+| takeoff_onset      | E_COM_RISE  | P1       |
+| plant_foot         | E_PLANT     | P1       |
+| approach_start     | E_APPROACH_START | P2  |
+| penultimate_foot   | E_PENULTIMATE | P2     |
+| land_contact       | E_LAND      | P1       |
+
+================================================================================
+TIMING RELATIONSHIPS (qualitative, B+)
+================================================================================
+
+Skilled indoor hitters often show:
+- Approach speed peak in late approach/plant before vertical impulse.
+- COM rise begins at or just after plant; arm remains partially back during early takeoff.
+- Wrist speed peak (E_CONTACT) at or after COM peak for many high sets; quick-tempo attacks may show
+  near-simultaneous peaks — product uses banded checkpoint, not single ideal delay.
+
+Youth: slower approach, lower COM rise, smaller frame delay between COM peak and E_CONTACT.
+
+================================================================================
+CLIP TRIMMING GUIDANCE
+================================================================================
+
+Ideal: full ready stance through stable landing; side or 45° camera showing feet and hitting arm.
+Minimum: 0.4 s before E_APPROACH_START through E_LAND_STABLE.
+Late trim loses ready/approach findings; early trim loses landing absorption findings.
+
+================================================================================
+3-step vs 4-step approach
+================================================================================
+
+Same phase IDs. Four-step patterns show longer `approach` duration and may have clearer E_PENULTIMATE.
+Metadata step_pattern=3|4 set by coach or future cadence detector.
+
+================================================================================
+CROSS-REFERENCES
+================================================================================
+
+Findings: primary phase column per finding_id (fault_*)
+Quality: checkpoint_* → evaluated phase
+Coaching: cue / drill → phase focus
+Biomechanics: joint sequence and norm bands
+
+Sources: PMC spike biomechanics reviews (B+); USA Volleyball coaching summaries (B); CeRebel event proxies (internal B).

@@ -1,0 +1,22 @@
+# Yoga Sport Pack — Source Manifest
+# Retrieved / summarized: 2026-10-21
+# License: summaries and original CeRebel text — CC0-style internal corpus unless noted
+# Full copyrighted manuals NOT pasted verbatim
+
+| source_id | title | authority | use in pack | url (verify live) |
+|-----------|-------|-----------|-------------|-------------------|
+| cramer_lbp_reviews | Systematic reviews on yoga for chronic low back pain | B+ | forward fold, hinge cues, disclaimer | https://pubmed.ncbi.nlm.nih.gov/?term=yoga+low+back+pain+systematic+review |
+| acsm_flexibility | ACSM Guidelines for Exercise Testing and Prescription (flexibility/neuromotor) | B | frequency, hold duration framing | https://www.acsm.org |
+| nhs_exercise | NHS exercise and flexibility guidance | B | safety, general population | https://www.nhs.uk/live-well/exercise/ |
+| yoga_alliance_scope | Yoga Alliance standards / scope of practice summaries | B | not medical care, teacher role | https://www.yogaalliance.org |
+| plank_emg_reviews | Push-up/plank scapular muscle activation literature | B+ | plank, chaturanga findings | https://pubmed.ncbi.nlm.nih.gov/?term=push-up+scapular+EMG |
+| knee_valgus_squat | Knee valgus in squat/lunge biomechanics | B+ | warrior, chair checkpoints | https://pubmed.ncbi.nlm.nih.gov/?term=knee+valgus+squat+biomechanics |
+| yoga_injury_surveys | Yoga-related injury prevalence surveys | B+ | flow control, chaturanga caution | https://pubmed.ncbi.nlm.nih.gov/?term=yoga+injury+survey |
+| hypermobility_guidance | Joint hypermobility exercise principles | A/B+ | hypermobility disclaimer | https://pubmed.ncbi.nlm.nih.gov/?term=hypermobility+exercise |
+| iyengar_alignment_summaries | Open alignment descriptions (Light on Yoga excerpts NOT copied) | B | pose names, qualitative stacking | book reference only — summarized |
+| internal_product_spec | SPORT_PACK_KB_SPEC.txt | Internal B | layout, finding card shape | corpus/_templates/ |
+
+evidence_type defaults at ingest:
+- Docs/, Phases/, Quality/, Training/ → ProductLogic + CoachingAdvice mix
+- Findings/, Coaching/ → CoachingAdvice (B)
+- Biomechanics/ → ResearchFinding (B+)

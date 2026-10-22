@@ -1,0 +1,202 @@
+# Snowboarding — Checkpoint Catalog
+# Format: checkpoint_id | phase | family | body signal | pass heuristic | fail → finding | authority
+
+================================================================================
+TRAVERSE / SETUP (alpine_turn)
+================================================================================
+
+checkpoint_athletic_flex_traverse
+  phase: traverse
+  family: alpine_turn
+  signal: avg knee flexion, hip flexion, ankle dorsiflexion proxy
+  pass: visible flex at knees and hips; not locked straight legs while moving
+  fail: extended knees with upright trunk “locking” through traverse → fault_locked_legs_traverse
+  authority: B (instructor consensus)
+  youth: same; smaller absolute flex OK
+
+checkpoint_quiet_arms_traverse
+  phase: traverse
+  family: alpine_turn
+  signal: wrist speed relative to COM speed
+  pass: arms low-moderate motion vs gross flailing
+  fail: sustained high wrist speed / wide arm swing unrelated to turn prep → fault_arm_flail_traverse
+  authority: B
+
+checkpoint_com_stable_speed
+  phase: traverse
+  family: alpine_turn
+  signal: COM speed coefficient of variation over traverse window
+  pass: controlled speed before init; no chaotic acceleration spike unless tagged race_start
+  fail: erratic speed into initiation → fault_rushed_entry
+  authority: B
+
+================================================================================
+ANTICIPATION / INITIATION (alpine_turn)
+================================================================================
+
+checkpoint_progressive_lead_load
+  phase: anticipation, initiation
+  family: alpine_turn
+  signal: lead-knee flexion increase before E_TURN_APEX vs trail knee
+  pass: lead leg shows measurable load progression (style allows counter-flex variants — prefer unclear if ambiguous)
+  fail: no lead-side loading before apex with upright skid posture → fault_no_lead_load
+  authority: B+
+
+checkpoint_upper_body_quiet_init
+  phase: initiation
+  family: alpine_turn
+  signal: shoulder rotation rate vs pelvis yaw proxy
+  pass: shoulders do not lead turn by large independent twist before steering phase
+  fail: early counter-rotation spike → fault_shoulder_leads_turn
+  authority: B
+
+checkpoint_flex_not_collapse
+  phase: anticipation
+  family: alpine_turn
+  signal: trunk height vs knee flexion (hip hinge vs collapse)
+  pass: hips back modestly; head stable relative to pelvis
+  fail: chest dropped toward knees with loss of spine length → fault_collapsed_torso
+  authority: B
+
+================================================================================
+STEERING / APEX (alpine_turn)
+================================================================================
+
+checkpoint_lateral_lean_present
+  phase: steering, apex
+  family: alpine_turn
+  signal: shoulder–pelvis lateral offset (2D proxy for angulation)
+  pass: measurable lean into turn when camera angle supports
+  fail: upright “vertical stack” through apex at moderate speed → fault_upright_skid
+  authority: B+ (carved vs skidded distinction approximate without board track)
+  note: low confidence on head-on camera → unclear
+
+checkpoint_knee_flex_maintained_apex
+  phase: apex
+  family: alpine_turn
+  signal: knee flexion at E_TURN_APEX vs traverse
+  pass: knees remain flexed; not fully extended at max lean
+  fail: leg extension at max lean → fault_straight_leg_apex
+  authority: B
+
+checkpoint_head_exit_direction
+  phase: steering, apex
+  family: alpine_turn
+  signal: head orientation proxy toward turn exit (when visible)
+  pass: head generally oriented down fall line or exit (coaching “look where you go”)
+  fail: head rotated strongly into snow or up hill → fault_head_misaligned
+  authority: B
+
+================================================================================
+TRANSITION / COMPLETION (alpine_turn)
+================================================================================
+
+checkpoint_smooth_unweight
+  phase: transition
+  family: alpine_turn
+  signal: rate of change of lean magnitude + knee extension timing
+  pass: brief unweight; not prolonged hop or pivot-only skid
+  fail: abrupt extension hop with COM pop → fault_hoppy_transition
+  authority: B
+
+checkpoint_completion_recenter
+  phase: completion
+  family: alpine_turn
+  signal: COM path returns toward stable traverse metrics
+  pass: shoulders and pelvis align toward new traverse within window
+  fail: sustained counter-rotated stuck posture → fault_stuck_in_turn
+  authority: B
+
+================================================================================
+APPROACH / PRELOAD (air_jump)
+================================================================================
+
+checkpoint_approach_balanced
+  phase: approach
+  family: air_jump
+  signal: lateral COM drift, shoulder level
+  pass: COM over base; shoulders level within tolerance
+  fail: large lateral lean or open shoulders → fault_off_balance_approach
+  authority: B
+
+checkpoint_preload_depth_controlled
+  phase: preload
+  family: air_jump
+  signal: knee/hip flexion delta from approach to E_TAKEOFF
+  pass: visible preload without maximal squat depth (qualitative)
+  fail: no preload before takeoff → fault_no_preload
+  fail: excessive collapse with trunk dive → fault_overcollapsed_preload
+  authority: B+
+
+checkpoint_arms_stable_preload
+  phase: preload
+  family: air_jump
+  signal: wrist position relative to shoulders
+  pass: arms contribute to balance, not wild windmill
+  fail: large asymmetric arm swing → fault_asymmetric_arm_preload
+  authority: B
+
+================================================================================
+TAKEOFF / FLIGHT (air_jump)
+================================================================================
+
+checkpoint_extension_through_takeoff
+  phase: takeoff
+  family: air_jump
+  signal: knee extension timing vs E_TAKEOFF
+  pass: legs extend through takeoff window after preload
+  fail: takeoff with flexed knees only (no extension phase) → fault_weak_extension_takeoff
+  authority: B+
+
+checkpoint_trunk_quiet_flight
+  phase: flight
+  family: air_jump
+  signal: trunk flexion change rate mid-air
+  pass: controlled posture for skill level; large tweaks flagged only at advanced tag
+  fail: uncontrolled pike or wild arch before landing prep → fault_loose_trunk_air
+  authority: B
+
+================================================================================
+LANDING / RECOVER (air_jump)
+================================================================================
+
+checkpoint_landing_flexion_absorb
+  phase: landing
+  family: air_jump
+  signal: peak knee flexion within 300 ms of E_LAND_CONTACT (frame-adjusted)
+  pass: visible flexion absorption; hips travel down after contact
+  fail: minimal knee flex change → fault_stiff_leg_landing
+  authority: B+
+
+checkpoint_symmetric_landing_base
+  phase: landing
+  family: air_jump
+  signal: ankle/knee flexion L vs R at peak absorption
+  pass: both legs share load within tolerance
+  fail: single-leg catch with large lateral COM shift → fault_one_foot_landing
+  authority: B
+
+checkpoint_recover_stable
+  phase: recover
+  family: air_jump
+  signal: COM speed and knee flexion rate after E_LAND_STABLE
+  pass: rider re-centers to athletic stance
+  fail: continued backward or heel-heavy collapse → fault_landing_backseat
+  authority: B
+
+================================================================================
+YOUTH OVERRIDES (both families)
+================================================================================
+
+For audience_band=youth:
+- Downgrade severity for upright_skid if speed proxy is low (learning wedge turns).
+- Upgrade severity for stiff_leg_landing (growth-plate and skill-appropriate landings emphasis).
+- Do not fail preload_depth for small amplitude if timing checkpoint passes.
+
+================================================================================
+AUTHORITY LEGEND
+================================================================================
+
+A+ = FIS safety/equipment pointers (via separate fis/ RAG)
+B+ = peer-reviewed / systematic reviews on landing and turn mechanics
+B  = instructor progression consensus, open coaching texts

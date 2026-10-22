@@ -1,0 +1,112 @@
+# Weightlifting Sport Pack — Build Report
+Generated: 2026-10-21T00:00:00+00:00
+Agent: BUILD
+Product: CeRebel body-first coaching (squat / deadlift / strict OHP)
+Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+BUILD SUMMARY
+================================================================================
+
+Status: content build complete (v1 corpus)
+Lift focus: back squat, conventional deadlift, strict overhead press
+Registry: weightlifting remains coming_soon in motion_agent/sports/registry.py
+
+Files written:
+
+Docs/
+  001_ARCHITECTURE.txt       — pack purpose, pipeline plan, lift_variant fork
+  002_DISCLAIMER.txt         — medical/load/safety disclaimers
+
+Phases/
+  001_phase_model.txt        — 3 lift phase models, events E_BOTTOM/E_PULL_START/E_OHP_LOCKOUT
+
+Quality/
+  001_quality_definition.txt — quality dimensions per lift
+  002_checkpoints.txt        — 20+ body-measurable checkpoints
+
+Findings/
+  001_common_faults.txt      — 22 finding cards (8 squat, 7 deadlift, 7 OHP)
+
+Coaching/
+  001_cues.txt               — global + lift-specific feel cues, fault cross-links
+  002_drills.txt             — 18 short drills (30–90s), fault cross-links
+
+Biomechanics/
+  001_overview.txt           — squat/DL/OHP literature themes
+  002_squat_deadlift_ohp_deep_dive.txt — extended kinematic/kinetic summaries
+
+Training/
+  001_team_practice.txt      — session templates, filming, team workflow
+
+_meta/
+  SOURCE_MANIFEST.txt        — authority-tagged sources
+  pack_readme.txt            — updated status (see git)
+  build_report.txt           — this file
+
+Not in this build (spec optional / future):
+  Schema/001_ontology.txt
+  Taxonomy/001_concepts.txt, 002_relations.txt
+  _meta/brain_plan.txt, research_notes.txt, review_report.txt
+
+================================================================================
+CONTENT METRICS (approximate)
+================================================================================
+
+Finding cards (fault_*): 22
+Checkpoints (cp_*): 22
+Coaching cues: 25+
+Drills: 18
+Phase models: 3 (squat, deadlift, ohp)
+Total corpus .txt files (excl. _meta): 11
+Estimated ingest chunks (plain text, ~512 tok): 180–250 (pre-chunking)
+
+================================================================================
+RAG INDEXING NOTES
+================================================================================
+
+- Index all paths above except _meta/build_report.txt (ops).
+- Chunk tags recommended: lift_variant, audience, authority_level, fault_id, phase_id
+- Repeat fault_* slugs in Findings + Coaching for embedding recall
+- Cross-link: Quality checkpoints maps_to_finding fields → Findings ids
+
+================================================================================
+VALIDATION CHECKLIST (for review agent)
+================================================================================
+
+[ ] No diagnostic injury language in findings
+[ ] Youth tags present where numeric/load advice appears
+[ ] No verbatim copyrighted manual paste
+[ ] Phase IDs stable vs future WeightliftingPack code
+[ ] Squat/DL/OHP substantial coverage confirmed
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Review agent: review_report.txt
+2. Brain agent: brain_plan.txt + Schema/Taxonomy
+3. Engineering: WeightliftingPack detector + lift_score heuristics
+4. Ingest: chunk into sport KB sqlite/jsonl when pipeline wired
+
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+build_agent: corpus_v2_consistency_upgrade
+sports_batch: basketball, boxing, snowboarding, weightlifting, swimming, yoga
+
+Actions:
+- Migrated Findings/001_common_faults.txt to canonical `---` + finding_id: fault_* cards
+  with headline_en, phases, body_signal, why_it_matters, feel_cue, drill, severity_default, sources
+- Findings count now: 28
+- Ensured Coaching cues/drills cite fault_* (cues≈29, drills≈26)
+- Confirmed Taxonomy/002_relations.txt rows ≥15 (count≈1)
+- Added Phases V2 PHASE LINK INDEX with detector_events + fault_links
+- Rewrote _meta/review_report.txt (stale missing-DISCLAIMER claims corrected)
+- Appended this build_report section
+
+Sport-specific notes:
+- Squat/DL/OHP form-only; +7 findings to 28; no 1RM programming.
+build_status: v2_upgrade_complete
+VERDICT_REF: APPROVED_V2

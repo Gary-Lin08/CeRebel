@@ -1,0 +1,273 @@
+# CeRebel Swimming KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: swimming (freestyle / front crawl v1 primary)
+# Aligns: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Product: body-first coaching from reconstructed motion; side + above pool-deck video only
+# NO pool timing systems (touchpads, pace clocks, lap splits, electronic stroke-rate pads)
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for freestyle (front crawl) stroke mechanics with
+arm–body–leg timing inferred from monocular or multi-view deck video (preferred:
+side profile + optional overhead). Other competitive strokes (backstroke,
+breaststroke, butterfly) are glossary + phase stubs only in v1 — no automated
+finding catalog until dedicated packs or stroke classifier ships.
+
+Out of scope v1:
+- Lap time, split times, SWOLF, pace per 100, turn analysis, underwater-only footage
+- Touchpad / starting-block instrumentation, wearable IMU stroke-rate as required input
+- Medical diagnosis, shoulder impingement claims from 2D pose alone
+- Water-line segmentation required for "in water vs recovery" (use body proxies)
+
+Build agent writes full Findings/Coaching bodies from this map; brain agent does not.
+
+================================================================================
+2. PRODUCT CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+- All measurable claims tie to reconstructed body: joint angles, segment speeds,
+  trunk roll, head/neck orientation relative to spine — NOT wall-clock stroke rate
+  unless derived from repeating cycle events in the same video clip.
+- Capture guidance: side view for arm path, kick depth, head position; above view
+  for body roll symmetry, arm crossing, kick width. Oblique reduces roll accuracy.
+- Each user-facing finding MUST map to: phase window, series/signal id, feel cue,
+  30–90s drill (deck or dryland where noted).
+- Youth vs adult numeric norms: separate bands in Biomechanics/001; never present
+  youth numbers as adult targets.
+- Authority: A/A+ for federation safety & volume; B+ for coaching consensus;
+  A for peer-reviewed swim biomech summaries; no C in checkpoints/findings.
+- Do NOT require pool timing systems or official meet data for any product feature.
+
+================================================================================
+3. STROKE FAMILIES (TOP-LEVEL)
+================================================================================
+
+1. FREESTYLE (FRONT_CRAWL) — v1 full phase model + findings (default pack mode)
+2. BACKSTROKE — alternate arm cycle, supine; taxonomy concepts only v1
+3. BREASTSTROKE — simultaneous pull, whip kick, glide; taxonomy only v1
+4. BUTTERFLY — simultaneous arms, dolphin kick; taxonomy only v1
+
+Handedness / breathing side: label "breathing side" vs "non-breathing side" arm;
+default analysis on non-breathing side cycle when breath obscures face (side view).
+
+================================================================================
+4. PHASE MODEL — FREESTYLE (UI + FUTURE DETECTOR ALIGNMENT)
+================================================================================
+
+Phase IDs (exact — stable contract for future sport_analysis swimming window):
+
+| id            | label_en        | label_zh     | role |
+|---------------|-----------------|--------------|------|
+| fs_glide      | Glide           | 滑行         | Brief extension between cycles; minimal wrist speed |
+| fs_entry      | Entry           | 入水         | Hand enters forward; arm extends toward line |
+| fs_catch      | Catch           | 抱水/抓水    | Elbow lifts; wrist drops; early vertical force proxy |
+| fs_pull       | Pull            | 划水         | Propulsive phase; hand accelerates backward vs trunk |
+| fs_finish     | Finish          | 推水         | Hand passes hip; elbow extends late |
+| fs_recovery   | Recovery        | 移臂         | Elbow leads; arm clears above body proxy |
+| fs_breath     | Breath (opt.)   | 换气         | Head rotates; only when visible in clip |
+| fs_kick_beat  | Kick downbeat   | 打腿下压     | Ankle vertical velocity peak (side view) |
+
+Event definitions (body-only, OpenSim-friendly, one stroke cycle on analysis arm):
+
+- cycle_anchor: repeating argmax pull-side wrist speed backward component in window
+  (or min-to-max elbow flexion cycle — future code picks one primary).
+- E_ENTRY: pull-side wrist forward displacement local max before catch flexion rise.
+- E_CATCH: pull-side elbow flexion local min→rise inflection + wrist below shoulder proxy.
+- E_PULL_PEAK: argmax ||v(pull_wrist)|| in backward direction vs trunk mid-cycle.
+- E_FINISH: pull-side shoulder extension local max / wrist passes hip landmark proxy.
+- E_RECOVERY_START: pull-side elbow flexion drops after finish; wrist rises relative to trunk.
+- E_BODY_ROLL_MAX: |trunk_roll| peak toward pull side during catch–pull (side or above).
+- E_KICK_DOWN: argmax ankle vertical velocity (same-side or bilateral average) near catch.
+
+Phase spans (conceptual — Phases/001 expands fallbacks):
+
+- fs_glide: prior E_FINISH → E_ENTRY (short if continuous sprint).
+- fs_entry: E_ENTRY → E_CATCH.
+- fs_catch: E_CATCH → 30% of E_CATCH→E_PULL_PEAK interval.
+- fs_pull: end(fs_catch) → E_PULL_PEAK.
+- fs_finish: E_PULL_PEAK → E_FINISH.
+- fs_recovery: E_FINISH → E_ENTRY (next cycle).
+- fs_breath: overlap fs_recovery/entry when head yaw exceeds threshold (optional phase).
+- fs_kick_beat: E_KICK_DOWN nearest E_CATCH (±25% cycle — heuristic).
+
+Other strokes (no v1 phase IDs in UI): see Taxonomy/001 stroke_family_* stubs.
+
+================================================================================
+5. MEASUREMENT SURFACE (CODE ↔ KB)
+================================================================================
+
+Analysis board series (define norms & checkpoints per series):
+
+| series_id           | signal                                      | unit | primary phases        | view hint |
+|---------------------|---------------------------------------------|------|------------------------|-----------|
+| body_roll           | trunk roll angle (pull-side down)           | °    | fs_catch, fs_pull      | side/above |
+| head_alignment      | head vs trunk long axis (side bend)          | °    | fs_breath, fs_glide    | side |
+| pull_elbow_flex     | pull-side elbow flexion                     | °    | fs_catch, fs_pull      | side |
+| pull_wrist_path     | pull-side wrist depth vs shoulder           | cm*  | fs_catch, fs_pull      | side |
+| recovery_elbow_lead | recovery-side elbow height vs wrist         | cm*  | fs_recovery            | side |
+| kick_amplitude      | ankle vertical excursion (cycle avg)      | cm*  | fs_kick_beat           | side |
+| kick_timing         | phase offset E_KICK_DOWN − E_CATCH          | ms   | fs_kick_beat, fs_catch | side |
+| hip_drop            | pelvis lateral tilt / COM sink proxy        | cm*  | fs_catch, fs_pull      | side |
+| arm_crossover       | pull-side wrist medial to spine (above)     | cm*  | fs_entry, fs_recovery | above |
+| stroke_cycle_time   | E_ENTRY → next E_ENTRY from same video      | ms   | all                    | derived |
+
+* Scale from stature estimate or shoulder–hip segment; not absolute pool meters.
+
+NOT in v1 series: hand force, propulsive impulse, true S pull path without 3D.
+
+================================================================================
+6. CLINICAL / COACHING NORMS (EVIDENCE-BANDED)
+================================================================================
+
+Use as RAG reference bands, NOT medical advice. Build adds URLs in SOURCE_MANIFEST.
+
+ADULT (fit/competitive swimmers; mostly B+ coaching + A kinematic reviews):
+
+- Body roll: often ~30–45° toward pull side at catch in coached distance freestyle (B+);
+  product flags excessive flat (< ~15°) or over-roll (> ~55°) as qualitative checkpoints.
+- Catch: early vertical forearm cue; elbow flex often increases notably after entry (B+);
+  avoid prescribing exact ° as universal — youth differs.
+- Kick: 6-beat vs 2-beat stylistic; product measures amplitude + timing vs catch, not
+  "correct beat count" without full cycle visibility.
+- Head: neutral alignment in non-breath phases; excessive lift during breath (B+ fault).
+- Hip position: hips near surface — proxy via pelvis vs shoulder line in side view (B+).
+
+YOUTH (learn-to-swim through age-group; B+ / federation safety A+ for volume):
+
+- Higher head lift common; shorter lever arms; lower body roll — down-weight severity.
+- Emphasis on horizontal balance and pain-free shoulder path over elite catch angles.
+- No high-volume paddle prescriptions in product KB without coach context.
+
+Exclude pool timing norms (e.g. "X seconds per 100") from automated findings.
+
+================================================================================
+7. QUALITY MODEL
+================================================================================
+
+Quality/001 dimensions (build):
+(1) horizontal body line & head, (2) catch/pull timing & elbow path,
+(3) body rotation & bilateral symmetry, (4) kick support & timing,
+(5) recovery clearance & crossover (above view).
+
+Quality/002 checkpoint table (summary):
+
+checkpoint_id           | phase(s)           | series/signal           | rule (summary)                         | fail→finding_id           | evidence
+------------------------|--------------------|-------------------------|----------------------------------------|-----------------------------|----------
+cp_roll_band_adult      | fs_catch, fs_pull  | body_roll               | roll within ~15–55° band               | fault_flat_body             | B+
+cp_roll_band_youth      | fs_catch, fs_pull  | body_roll               | wider acceptable; flag only extreme flat | fault_flat_body           | B+
+cp_catch_elbow_set      | fs_catch           | pull_elbow_flex         | flex increases after entry (Δ threshold)| fault_late_catch           | B+
+cp_pull_acceleration    | fs_pull            | pull_wrist_path         | backward speed peak before finish      | fault_weak_pull            | B+
+cp_finish_extension     | fs_finish          | pull_elbow_flex         | extension not prematurely bent           | fault_short_finish         | B+
+cp_recovery_lead        | fs_recovery        | recovery_elbow_lead     | elbow leads wrist (side proxy)           | fault_straight_arm_recovery| B+
+cp_head_breath_lift      | fs_breath          | head_alignment          | excess lateral lift vs glide             | fault_head_lift_breath     | B+
+cp_hip_sag               | fs_pull            | hip_drop                | pelvis drops vs glide baseline           | fault_hip_drop             | B+
+cp_kick_timing           | fs_kick_beat       | kick_timing             | downbeat near catch (± heuristic window) | fault_kick_out_of_sync     | B+
+cp_arm_crossover         | fs_recovery        | arm_crossover           | wrist crosses midline (above)            | fault_crossover            | B+
+cp_bilateral_symmetry    | fs_pull            | body_roll (L/R cycles)  | |roll_L − roll_R| above tolerance         | fault_asymmetric_rotation  | B+
+
+================================================================================
+8. FINDING CATALOG (FREESTYLE v1 — 10–12 STABLE IDs)
+================================================================================
+
+| finding_id                  | headline_en (short)              | primary_phases              | body signal (measurable)                         | in_code_v1 |
+|-----------------------------|----------------------------------|-----------------------------|--------------------------------------------------|------------|
+| fault_flat_body             | Swimming too flat                | fs_catch, fs_pull           | body_roll below band                             | planned    |
+| fault_over_rotation         | Over-rolling to breathing side   | fs_catch, fs_recovery       | body_roll above band; recovery wide              | planned    |
+| fault_late_catch            | Arm stays straight too long      | fs_entry, fs_catch          | delayed elbow flex rise after entry              | planned    |
+| fault_elbow_drop            | Elbow drops on pull              | fs_pull                     | wrist depth >> elbow; flex decreases mid-pull    | planned    |
+| fault_crossover             | Hand crosses centerline          | fs_entry, fs_recovery       | arm_crossover medial to spine (above)            | planned    |
+| fault_straight_arm_recovery | Recovery arm swings low          | fs_recovery                 | recovery elbow not leading wrist                 | planned    |
+| fault_head_lift_breath      | Head lifts to breathe            | fs_breath                   | head_alignment spike vs glide                    | planned    |
+| fault_hip_drop              | Hips sink on pull                | fs_pull                     | hip_drop vs baseline                             | planned    |
+| fault_kick_out_of_sync      | Kick mistimed with catch         | fs_kick_beat, fs_catch      | kick_timing outside window                       | planned    |
+| fault_kick_too_wide         | Kick amplitude excessive         | fs_kick_beat                | kick_amplitude high vs stature                   | planned    |
+| fault_weak_pull             | Pull lacks acceleration          | fs_pull                     | no clear pull_wrist speed peak                   | planned    |
+| fault_short_finish          | Pull ends early                  | fs_finish                   | finish extension before hip proxy                | planned    |
+
+Each finding card MUST include: id, headline, phases, signal, why (performance/load
+— cautious), feel cue, drill 30–90s, sources[], authority level.
+
+================================================================================
+9. ONTOLOGY CLASSES (Schema/001_ontology.txt)
+================================================================================
+
+Namespace prefix: swimming:
+
+Core classes:
+- SwimmingEntity (root)
+- Swimmer (schema:Person role)
+- StrokeCycle (single arm-stroke cycle instance on analysis side)
+- StrokeFamily — FRONT_CRAWL, BACKSTROKE, BREASTSTROKE, BUTTERFLY
+- SwimPhase (subclass TemporalPhase) — fs_* ids above
+- SwimEvent — entry, catch, pull_peak, finish, recovery_start, body_roll_max, kick_down
+- CameraViewHint — side_deck, above_deck, oblique
+- BodySegment, JointAngle, SegmentSpeed (MeasurementDefinition subclasses)
+- BiomechObservation, Finding, Checkpoint, CoachingConcept (Cue, Drill)
+- Evidence (+ ResearchFinding, CoachingConsensus, FederationGuideline)
+- OutOfScopePoolTiming (concept — lap splits, touchpads, pace clock required)
+
+Key properties:
+- swimming:precedes, swimming:occursIn, swimming:measuredOn, swimming:failTriggers
+- swimming:authorityLevel, swimming:ageBand (youth|adult)
+- swimming:preferredView (series → CameraViewHint)
+- swimming:requiresPoolTimingSystem (default false on all findings)
+
+================================================================================
+10. TAXONOMY STUBS (Taxonomy/001_concepts, 002_relations)
+================================================================================
+
+Build agent expands rows; brain seeds phase + series + finding concepts and
+precedes/manifestsIn/indicatedBy edges. See written stub files.
+
+================================================================================
+11. OTHER STROKES — BRIEF (BUILD AGENT EXPANDS IN BIOMECHANICS GLOSSARY ONLY)
+================================================================================
+
+BACKSTROKE: supine; pull starts deep catch under water; rotation toward pulling arm;
+  head stable; kick continuous flutter — phase model future pack.
+BREASTSTROKE: simultaneous outsweep/insweep; whip kick; long glide — not cyclic
+  alternate-arm; separate phase model future.
+BUTTERFLY: simultaneous arm recovery over water; two dolphin kicks per arm cycle;
+  high shoulder demand — separate pack; no v1 findings.
+
+================================================================================
+12. REQUIRED DOC OUTLINES (BUILD AGENT)
+================================================================================
+
+Docs/001_ARCHITECTURE.txt — pipeline, side/above capture, cycle detection, no timing systems
+Docs/002_DISCLAIMER.txt — not medical advice; monocular uncertainty; shoulder pain → pro
+Phases/001_phase_model.txt — full fs_* events, fallbacks, EN/ZH
+Quality/001–002, Findings/001, Coaching/001–002, Biomechanics/001, Training/001
+SOURCE_MANIFEST, research_notes, review_report
+
+Biomechanics/001 MUST cite: body roll, catch timing, kick coupling (B+/A summaries);
+  explicitly state stroke rate from video cycle only; reject touchpad dependency.
+
+Training/001 — deck filming angles, kickboard/pull buoy drills as optional props;
+  team lane filming from side; no pace-clock prescription as coaching requirement.
+
+================================================================================
+13. SOURCE PRIORITY (SEARCH / MANIFEST)
+================================================================================
+
+A+: World Aquatics / national federation safety & learn-to-swim progressions (volume)
+A: Peer-reviewed swim biomechanics (front crawl kinematics, shoulder load reviews)
+B+: ASCA / NGB coaching manuals (summarized), USA Swimming / Swimming Canada public guides
+B: Reputable technique articles with biomech citations
+Exclude C from thresholds. No copyrighted full manual paste.
+
+================================================================================
+14. BUILD ORDER & ACCEPTANCE (PACK v1 BRAIN ARTIFACTS)
+================================================================================
+
+Brain deliverables (this task): brain_plan.txt, Schema/001, Taxonomy/001–002.
+
+Acceptance for full pack (build agent later):
+- Every finding_id has Findings card + cue + drill
+- Phase ids exactly fs_glide … fs_kick_beat as listed
+- No pool timing system required anywhere in product paths
+- Youth/adult separation in Biomechanics + youth checkpoint rows
+- Other strokes present as concepts only; FRONT_CRAWL drives findings
+
+End brain_plan v0.1

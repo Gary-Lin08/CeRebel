@@ -1,0 +1,115 @@
+# Tennis Sport Pack — Checkpoints catalog
+
+Checkpoints are **pass/fail body observations** tied to phase IDs. Use for coach briefs and future automated rules.
+Wording is qualitative; no universal degree targets.
+
+---
+
+## Serve checkpoints
+
+### checkpoint_id: serve_knee_load_min
+**Phase:** S_TROPHY_LOAD
+**Dimension:** leg_contribution
+**Pass:** Knees show visible flexion compared to S_READY (both knees or load-side deeper) while racket-side shoulder is elevated.
+**Fail link:** fault_serve_knee_lock
+**Measure proxy:** knee angle trend downward ≥ modest threshold vs ready, camera permitting.
+**Youth:** Pass with shallower flexion if rhythm and balance pass.
+
+### checkpoint_id: serve_shoulder_asymmetry
+**Phase:** S_TROPHY_LOAD
+**Dimension:** asymmetric_shoulder_load_serve
+**Pass:** Racket-side shoulder higher than lead shoulder on side or rear oblique view.
+**Fail link:** fault_serve_shoulder_tilt_flat
+**Measure proxy:** shoulder height difference sign consistent for handedness.
+
+### checkpoint_id: serve_toss_arm_stable
+**Phase:** S_TOSS_RISE through S_TROPHY_LOAD
+**Dimension:** toss_arm_coordination
+**Pass:** Non-racket wrist not drifting far lateral to sternum midline at S_TROPHY_LOAD.
+**Fail link:** fault_serve_toss_arm_drift
+**Measure proxy:** horizontal wrist offset normalized by shoulder width.
+
+### checkpoint_id: serve_continuous_tempo
+**Phase:** S_READY → S_CONTACT_PROXY
+**Dimension:** rhythm_tempo
+**Pass:** No prolonged static hold at S_TROPHY_LOAD; motion flows to S_DRIVE_UP.
+**Fail link:** fault_double_fault_rhythm_rush (rush variant) or coach note “frozen trophy” (future fault freeze)
+**Measure proxy:** wrist speed near zero duration at trophy window.
+
+### checkpoint_id: serve_drive_extension
+**Phase:** S_DRIVE_UP
+**Dimension:** leg_contribution
+**Pass:** Knee extension and ankle rise visible before S_CONTACT_PROXY.
+**Fail link:** fault_serve_knee_lock (if drive absent)
+
+### checkpoint_id: serve_decel_smooth
+**Phase:** S_DECEL
+**Dimension:** deceleration_control
+**Pass:** Racket-side wrist speed decreases smoothly; arm finishes across body or to opposite hip.
+**Fail link:** fault_serve_poor_decel
+
+### checkpoint_id: serve_landing_balance
+**Phase:** S_DECEL
+**Dimension:** dynamic_balance
+**Pass:** Lead foot step into court without major lateral lean collapse.
+**Fail link:** (info only in v1) — extreme collapse may reference fault_serve_excessive_arch if paired with hyperextension
+
+### checkpoint_id: serve_trunk_lean_control
+**Phase:** S_DRIVE_UP
+**Dimension:** dynamic_balance
+**Pass:** Trunk leans away from net on side view without extreme low-back arch dominating motion.
+**Fail link:** fault_serve_excessive_arch
+
+---
+
+## Groundstroke checkpoints
+
+### checkpoint_id: groundstroke_early_turn
+**Phase:** G_UNIT_TURN
+**Dimension:** trunk_rotation_timing
+**Pass:** Trunk yaw rotation largely completes before G_FORWARD_SWING peak wrist acceleration.
+**Fail link:** fault_groundstroke_late_unit_turn
+
+### checkpoint_id: groundstroke_load_leg
+**Phase:** G_LOAD
+**Dimension:** leg_contribution
+**Pass:** Load-leg knee flexion visible; pelvis stable into forward swing.
+**Fail link:** fault_groundstroke_wide_stance_stuck (if wide but no flex)
+
+### checkpoint_id: groundstroke_body_then_arm
+**Phase:** G_FORWARD_SWING
+**Dimension:** trunk_rotation_timing
+**Pass:** Trunk uncoiling precedes or coincides with early wrist acceleration, not arm-only punch with frozen pelvis.
+**Fail link:** fault_groundstroke_all_arm
+
+### checkpoint_id: groundstroke_contact_proxy_peak
+**Phase:** G_CONTACT_PROXY
+**Dimension:** (timing anchor)
+**Pass:** N/A — event marker for other checks.
+
+### checkpoint_id: groundstroke_finish_balance
+**Phase:** G_FOLLOW
+**Dimension:** dynamic_balance
+**Pass:** Weight on balanced base; opposite arm counterbalances racket-side finish.
+**Fail link:** fault_groundstroke_upright_recovery if athlete bolts upright without finish
+
+### checkpoint_id: groundstroke_recovery_center
+**Phase:** G_RECOVERY
+**Dimension:** recovery_readiness
+**Pass:** Feet and racket return toward ready; no stuck wide open stance without reset.
+**Fail link:** fault_groundstroke_wide_stance_stuck
+
+### checkpoint_id: groundstroke_split_present
+**Phase:** G_SPLIT
+**Dimension:** rhythm_tempo
+**Pass:** Optional — micro-hop or foot widen if clip includes preparation.
+**Fail:** informational only if clip trimmed.
+
+---
+
+## Checkpoint usage in RAG answers
+
+When users ask “what should I look for on my serve load,” retrieve this file with phase S_TROPHY_LOAD checkpoints
+serve_knee_load_min and serve_shoulder_asymmetry plus Coaching cues for linked faults.
+
+Sources: CeRebel phase model (internal B); coaching checkpoints aligned with USTA/LTA public coaching frameworks (B).

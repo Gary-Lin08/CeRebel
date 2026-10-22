@@ -1,0 +1,177 @@
+# Snowboarding Sport Pack — Concept taxonomy
+
+## Core concepts (with synonyms for RAG)
+
+concept_id: skill_stance
+label: Snowboard stance
+synonyms: athletic stance, ready position, neutral stance, base position, centered stance, balanced on board
+phase_family: stance
+maps_to: S_READY
+notes: Body-first — ankle width, knee flex, hip over feet; binding angles optional metadata.
+
+concept_id: skill_regular_goofy
+label: Regular and goofy stance
+synonyms: regular foot, goofy foot, left foot forward, right foot forward, which foot leads
+authority: B+ coaching / FIS glossary
+notes: Product mirrors lead/trail legs; does not require binding hardware visibility.
+
+concept_id: skill_linked_turns
+label: Linked turns
+synonyms: S-turns, C-turns, continuous turns, flowing turns, carve to carve, turn linking
+phase_family: turn
+maps_to: T_INITIATE through T_TRANSITION
+
+concept_id: skill_heel_side_turn
+label: Heel-side turn
+synonyms: heelside, heel edge turn, backside turn (context-dependent), falling leaf heelside
+phase_family: turn
+turn_family: heel_side
+
+concept_id: skill_toe_side_turn
+label: Toe-side turn
+synonyms: toeside, toe edge turn, frontside turn (context-dependent), falling leaf toeside
+phase_family: turn
+turn_family: toe_side
+
+concept_id: skill_traverse
+label: Traverse
+synonyms: cross-hill, across the fall line, side slip traverse, riding across slope
+phase_family: turn
+maps_to: T_TRAVERSE
+
+concept_id: skill_edge_control
+label: Edge control
+synonyms: edging, on edge, hold an edge, pressure control, grip, carve vs skid
+authority: B+ coaching theme
+notes: Product uses body angulation proxies — not measured metal edge angle.
+
+concept_id: skill_angulation
+label: Angulation
+synonyms: knee angulation, hip angulation, bank the board, tilt, lateral flex, create edge angle with body
+authority: B+ biomechanics / coaching
+links: fault_edge_flat_skid, fault_edge_uphill_leg_straight
+
+concept_id: skill_flex_extension
+label: Flex and extension
+synonyms: absorb, extend, pump legs, up unweighting, down unweighting, compression, decompression
+phase_family: turn
+maps_to: T_BUILD, T_RELEASE
+
+concept_id: skill_upper_lower_separation
+label: Upper / lower body separation
+synonyms: quiet upper body, stable shoulders, hips lead, counter-rotation, don't rotate shoulders first
+links: fault_turn_shoulders_first, fault_turn_upper_body_rotate
+
+concept_id: skill_pressure_lead_foot
+label: Pressure and lead leg
+synonyms: pressure on front foot, initiate with lead leg, steer from front foot, weight forward in turn
+maps_to: T_INITIATE
+authority: B coaching heuristic
+
+concept_id: phase_apex
+label: Turn apex
+synonyms: middle of turn, max edge, belly of turn, sharpest part of turn
+maps_to: T_APEX
+
+concept_id: phase_transition
+label: Edge transition
+synonyms: edge change, switch edges, from heel to toe, flatten board, between turns
+maps_to: T_TRANSITION
+
+concept_id: quality_balance
+label: Balance on snow
+synonyms: centered, stacked, over the board, not in the back seat, stable base
+links: fault_stance_back_seat, fault_traverse_off_balance
+
+concept_id: quality_head_eyes
+label: Head and vision
+synonyms: look where you go, head up, eyes down the hill, don't look at board tip
+links: fault_head_not_level
+
+concept_id: fault_back_seat
+label: Back-seat riding
+synonyms: sitting back, hips back, weight on back foot, scared lean back
+links: fault_stance_back_seat
+
+concept_id: fault_skid
+label: Skidded turn
+synonyms: sliding turn, sideways slip, no carve, chattering, washing out
+links: fault_edge_flat_skid
+
+## Safety concepts
+
+concept_id: safety_helmet_on_snow
+label: Snowboard helmet
+synonyms: crash helmet, ski helmet, certified helmet, wear a helmet, FIS helmet rule, ASTM F2040, EN 1077
+authority: A+ FIS competition equipment; B+ general recreation
+type: SafetyGuideline
+notes: Compulsory for FIS snowboard events; strongly recommended all on-snow riding in product copy.
+
+concept_id: safety_fall_awareness
+label: Falling safely (awareness)
+synonyms: how to fall, tuck and roll, don't stick arms out, avoid wrist jam, slide to stop
+authority: B coaching awareness — not medical protocol
+type: SafetyGuideline
+
+concept_id: safety_terrain_ability
+label: Terrain and speed control
+synonyms: match terrain to ability, green run, slow zone, crowded slope, visibility, tree well awareness (glossary)
+authority: B+
+
+concept_id: concern_stiff_fall
+label: Stiff bracing before a fall
+synonyms: locked out, arms straight, stiff landing, caught edge fall prep
+links: concern_fall_stiff_brace
+severity: safety
+
+concept_id: load_concussion
+label: Head injury / concussion awareness
+synonyms: hit head, dazed, concussion, see a doctor
+authority: A clinical consensus (Disclaimer redirect only)
+type: LoadConcern
+notes: Not a form finding; no diagnostic language in coaching drills.
+
+## Glossary (non-finding, RAG disambiguation)
+
+concept_id: fis_frontside_backside
+label: Frontside and backside (FIS)
+synonyms: front side turn, back side turn, FS, BS
+authority: A+ FIS glossary (fis/ corpus)
+notes: Direction relative to rider; pair with heel/toe in coaching text.
+
+concept_id: switch_riding
+label: Switch riding
+synonyms: fakie, riding switch, non-dominant foot forward
+notes: Future extension; glossary only in v1 findings.
+
+concept_id: park_halfpipe
+label: Freestyle / halfpipe / jumps
+synonyms: pipe, park, jumps, rails, slopestyle, big air
+notes: Out of scope v1 automated findings; link fis/ and snowboard_aerial_vocab.txt for RAG.
+
+## Body landmarks (measurement vocabulary)
+
+concept_id: body_knee_flexion
+label: Knee flexion
+synonyms: bend knees, soft knees, athletic bend, flexed legs
+measure: knee_angle_lead, knee_angle_trail, knee-flex-mean
+
+concept_id: body_knee_angulation
+label: Knee angulation asymmetry
+synonyms: different knee bend each leg, angulated knees
+measure: knee-angulation series
+
+concept_id: body_trunk_inclination
+label: Trunk inclination
+synonyms: lean into turn, incline, bank body
+measure: trunk-inclination series (side camera)
+
+concept_id: body_pelvis_rotation
+label: Pelvis rotation
+synonyms: hip rotation, steer with hips, lower body turn
+measure: pelvis-rotation series
+
+concept_id: body_com_base
+label: Center of mass over base
+synonyms: stacked over feet, balance point, hips over board
+measure: com-over-base series

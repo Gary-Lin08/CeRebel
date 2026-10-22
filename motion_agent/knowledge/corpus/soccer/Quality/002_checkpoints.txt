@@ -1,0 +1,77 @@
+# Soccer Kick — Checkpoint Catalog
+
+Format: checkpoint_id | phase(s) | signal | rule summary | fail → finding_id | evidence
+
+---
+
+## Approach and setup
+
+cp_approach_control | approach | COM speed at E_APPROACH_END vs approach peak | Last-step deceleration present: COM speed at E_APPROACH_END < 85% of approach peak | approach-rushed | B+
+
+cp_lateral_drift | approach, plant | Pelvis lateral displacement vs setup | Lateral drift > ~15% of estimated stature (hip–ankle segment) without target alignment | approach-wide | B
+
+cp_arm_balance | approach, plant | Shoulder line roll / arm asymmetry | Excessive trunk twist without counter-arm swing (heuristic: shoulder line angular velocity spike without opposite arm motion) | arms-collapsed | B
+
+---
+
+## Plant foot
+
+cp_plant_timing | plant, cocking | Δt(E_PLANT_SET, E_KICK_PEAK) | Adult: plant set at least ~80 ms before kick peak (at 30 fps ≈ 2+ frames); youth: ≥ 50 ms | plant-late | B+
+
+cp_plant_knee_stiff | plant, strike | lead knee flex change plant→peak | Lead knee flex increase < ~12° from plant set to kick peak (support leg stays relatively stiff) | plant-knee-soft | B+
+
+cp_plant_distance_band | plant | Ankle separation at E_PLANT_SET (kick direction axis) | Normalized plant distance ~0.25–0.45 × estimated leg length (instep); side-foot pass ~0.15–0.35 | plant-too-close / plant-too-far | B
+
+cp_hip_open_proxy | plant, strike | Pelvis yaw vs plant foot line (when visible) | Closed hip proxy: pelvis yaw < ~20° open toward target side at kick peak (camera sagittal preferred) | plant-foot-closes-hip | B+
+
+---
+
+## Trunk and hips
+
+cp_trunk_lean_forward | cocking, strike | Trunk angle vs vertical at E_KICK_PEAK | Excessive upright: forward lean < ~10° at peak (adult power kick); youth band wider (5° minimum) | leaning-back | B+
+
+cp_hip_leads_foot | cocking, strike | Pelvis angular velocity peak vs ankle speed rise | Pelvis rotation peak should precede or coincide with first 50% of ankle acceleration (sequence heuristic) | hips-stay-square | A (concept) B+ (threshold)
+
+cp_upper_body_behind | strike | Shoulder vs pelvis AP offset | Shoulders visibly behind pelvis at kick peak (lean-back combo) | leaning-back | B+
+
+---
+
+## Kicking leg
+
+cp_cocking_knee_flex | cocking | trail knee flex at max cocking | Insufficient cocking: trail knee flex at local max before peak < ~45° (adult instep heuristic) | backswing-short | B
+
+cp_knee_extension_through | strike, follow | trail knee flex change peak→follow | Knee extends ≥ ~15° from peak to follow end (not “stabbing” with flexed knee) | knee-stiff-strike | B+
+
+cp_foot_speed_burst | strike | trail ankle speed peak / session median | Peak ≥ ~2.5× median ankle speed in clip (pass: ≥ ~1.8×) | strike-no-acceleration | B
+
+---
+
+## Follow-through and balance
+
+cp_follow_through_length | follow | trail ankle displacement after peak | Follow displacement < ~20% of leg length before recovery | follow-through-cut | B
+
+cp_plant_hop_control | follow, recovery | lead ankle vertical velocity post peak | Uncontrolled hop: lead ankle vertical velocity spike > 2× approach peak | plant-collapse | B
+
+---
+
+## Youth modifier rows (override adult bands)
+
+cp_youth_plant_distance | plant | same as cp_plant_distance_band | Widen band: 0.20–0.50 × leg length | plant-too-close / plant-too-far | B
+
+cp_youth_trunk_lean | strike | same as cp_trunk_lean_forward | Minimum forward lean ~5°; do not require aggressive lean for U10 | leaning-back | B
+
+cp_youth_volume_guardrail | n/a (training) | session metadata | Product should not encourage repeated max-effort shots for youth without coach context | (training redirect) | A+ (FIFA/UEFA load principles summarized)
+
+---
+
+## Checkpoint → finding alias map
+
+- cp_hip_open_proxy fail → plant-foot-closes-hip
+- cp_plant_distance_band low → plant-too-close; high → plant-too-far
+- cp_trunk_lean_forward fail → leaning-back (may co-trigger cp_upper_body_behind)
+
+## Implementation notes
+
+- Normalize distances by estimated leg length from pose (hip–ankle) when absolute meters unavailable.
+- All angular rules degrade gracefully when camera not side-on; lower confidence flag in product copy.
+- Side-foot pass mode: use cp_foot_speed_burst pass threshold and relaxed cp_cocking_knee_flex.

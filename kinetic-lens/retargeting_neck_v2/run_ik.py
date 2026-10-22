@@ -77,7 +77,12 @@ def run_ik(model_path: Path, marker_path: Path, motion_path: Path, times: list[f
         raise RuntimeError("OpenSim inverse kinematics failed")
 
 
-def _postprocess_motion(frames: list[dict], yaw: np.ndarray) -> None:
+def _postprocess_motion(
+    frames: list[dict],
+    yaw: np.ndarray,
+    *,
+    pose3d: dict | None = None,
+) -> None:
     _scripts_path()
     from cerebel_ik_retarget import (
         apply_global_yaw_to_motion,
@@ -171,7 +176,7 @@ def run_neck_ik(
     if pose_yaw:
         yaw = np.asarray(pose_yaw, dtype=np.float64)
     apply_hand_retargeting_to_motion(motion["frames"], pose3d)
-    _postprocess_motion(motion["frames"], yaw)
+    _postprocess_motion(motion["frames"], yaw, pose3d=pose3d)
     motion["metadata"]["pipeline"] = (
         "SOMA anatomical landmarks → augmented Rajagopal (torso→neck→head) → OpenSim IK"
     )

@@ -1,0 +1,139 @@
+# Basketball Sport Pack — Architecture (CeRebel)
+
+## Purpose
+
+This pack supplies retrieval-grounded knowledge for **body-first basketball shooting coaching** in CeRebel.
+The product reconstructs human motion from video (2D/3D body keypoints) and explains what the athlete’s body
+is doing across recognizable shooting phases. Ball tracking, make/miss labels, and defender context are optional
+enrichments, not prerequisites for coaching briefs or chat answers.
+
+Primary motion scope (v1):
+- **Jump shot** (catch-and-shoot or off-dribble rise) from single-camera or multi-camera body capture.
+- **Free throw** (static line, no jump) as a parallel phase variant with shared upper-body events.
+- Right- and left-handed shooters; mirror joint naming (shooting arm = trail side for R-hand shooter facing camera).
+
+Out of scope for automatic findings (may appear as glossary only):
+- Ball arc, release angle, spin rate, shot distance, contest level, screen timing.
+- Layups, dunks, post moves, passing, defense, rebounding unless future packs extend ontology.
+
+## Design principles
+
+1. **Body-measurable claims only** for automated findings: joint angles, segment speeds, timing between events,
+   posture landmarks visible without a ball.
+2. **Evidence layering**: peer-reviewed shooting kinematics (B+) inform relationships (e.g., leg drive before
+   arm extension); federation and NGB skill progressions (B) inform youth practice structure; cues and drills are
+   coaching advice (B), always paired with disclaimer docs.
+3. **No fabricated medical norms**: numeric angle “targets” are avoided as prescriptive medicine; ranges are
+   described qualitatively or attributed to published summaries with youth/adult separation where relevant.
+4. **Phase-first retrieval**: faults, checkpoints, and cues index to `Phases/001_phase_model.txt` event IDs so
+   the motion pipeline can attach findings to time windows.
+5. **Shot-type fork**: jump shot uses `variant=jump`; free throw uses `variant=ft` — same upper-body release
+   logic, different lower-body phase labels (no airborne landing checkpoint on FT).
+
+## Directory roles (this pack)
+
+| Path | Role |
+|------|------|
+| Docs/ | Product architecture, disclaimers, pack-level policies |
+| Schema/ | Entity types: shooter, phase, finding, cue, drill, shot variant |
+| Taxonomy/ | Concepts and relations for RAG expansion (synonyms, phase order) |
+| Phases/ | Canonical phase model + detector event mapping |
+| Quality/ | What “good” means in body terms; checkpoint catalog |
+| Findings/ | Fault library (finding cards) |
+| Coaching/ | Cues and drills linked to findings |
+| Biomechanics/ | Open-literature summaries of shooting mechanics |
+| Training/ | Team practice patterns, FT routine context |
+| _meta/ | Manifests, build reports — excluded from chunk index |
+
+## Motion pipeline integration (planned)
+
+### Input contract
+
+- Session adapter produces a `MotionSequence`: joint positions over time, FPS/dt, duration.
+- Required joints for shot-likeness scoring (future `shot_score.py`): shooting wrist, off-hand wrist, both ankles,
+  shooting-side elbow, pelvis/COM proxy.
+- Handedness selects trail vs lead sides (default right-handed shooter facing camera: trail = right shooting arm).
+
+### Shot-likeness gate (conservative, planned)
+
+Before enabling full product findings, a **soft** shot-likeness score may use:
+- **Wrist speed burst**: peak shooting-wrist speed vs median (expect high burst near release).
+- **Vertical COM rise** (jump shot): COM or hip height increase before release vs quiet COM (free throw).
+- **Elbow extension timing**: shooting elbow flexion decreases into release window.
+
+Score alone does **not** authorize medical advice; it only gates sport-mode selection and prevents golf/pitch
+false positives when dedicated pack ships.
+
+### Phase detection (v1 heuristic alignment)
+
+Until dedicated event detectors ship, align narrative phases to these computable proxies:
+
+| Event ID | Proxy signal | Notes |
+|----------|--------------|-------|
+| E_SETUP | low wrist+ankle speed at clip start | Stance / routine |
+| E_DIP_MIN | local minimum knee flex (both or shooting-side leg) before drive | Jump shot load |
+| E_COM_RISE | positive vertical velocity of pelvis/COM | Jump shot only; absent or minimal on FT |
+| E_SET_POINT | shooting wrist near local max height before release peak speed | “Set” window |
+| E_RELEASE | argmax \|\|v(shooting_wrist)\|\| in analysis window | Primary timing anchor |
+| E_LAND | shooting-side ankle vertical velocity zero-crossing after release | Jump shot landing |
+| E_FT_HOLD | low wrist speed for ≥200 ms after release | Free throw finish hold |
+
+Future detectors may add off-hand separation frame, max knee extension timing, and trunk lean angle;
+ontology slots exist in Schema.
+
+### Coach brief generation (planned)
+
+`build_coach_briefs(..., sport="basketball")` will consume:
+- Phase windows (when available).
+- Top finding cards ranked by severity × confidence × phase alignment.
+- One feel cue + one short drill per prioritized finding (from Coaching/).
+
+Registry status: basketball remains **coming_soon** until detector validation; corpus is RAG-ready ahead of code.
+
+## RAG chunking guidance
+
+- English primary text; short definitional sentences for embedding.
+- Repeat stable finding IDs (`fault_*`) in Findings and cross-link in Coaching.
+- Include `authority_level` in chunk metadata at ingest time (manifest-driven).
+- Tag chunks with `shot_variant=jump|ft|both` where mechanics differ.
+- Do not index `_meta/build_report.txt` or raw manifest CSV as coaching truth — use as ops only.
+
+## Evidence types (basketball pack)
+
+| evidence_type | Example content | Default authority |
+|---------------|-----------------|-------------------|
+| ResearchFinding | Jump shot vs FT kinematic comparisons | B+ |
+| BiomechRelationship | Sequential leg–trunk–arm extension | B+ |
+| CoachingAdvice | Cues, drills, practice structure | B |
+| FederationGuideline | FIBA / USA Basketball youth skill progressions | B |
+| ProductLogic | Detector mapping, pack gates | Internal B |
+
+## Youth vs adult
+
+Jump volume, rim height, and ball size differ by age band. **Free throw and form shooting volume** can be high
+with low impact; **repeated max-effort jump shooting** in growing athletes should follow NGB rest and monitoring
+guidance — never merge youth and adult workload tables without an age tag.
+
+Mechanics findings often overlap, but absolute joint angles and release height differ with stature and limb length;
+avoid single “model shooter” degree targets in product copy.
+
+## Internationalization
+
+v1 corpus is English for RAG. Localized coach copy may be layered later; phase IDs and finding slugs stay stable.
+
+## Versioning
+
+Pack status: **content build 2026-10-21** (see `_meta/build_report.txt`).
+Breaking changes to phase IDs or finding slugs require migration notes in pack_readme.
+
+## Related code paths
+
+- `motion_agent/sports/registry.py` — basketball catalog entry (coming_soon).
+- Future: `motion_agent/sports/packs/basketball.py` — pack registration and shot-likeness heuristic.
+
+## Next engineering milestones
+
+1. Labeled jump-shot and free-throw clip suite → shot-likeness + phase event validation.
+2. Event detectors for set point and landing symmetry (jump shot).
+3. Optional ball-track ingest channel (separate evidence_type BallMeasured).
+4. Layup / floater phase model extension or sibling pack.

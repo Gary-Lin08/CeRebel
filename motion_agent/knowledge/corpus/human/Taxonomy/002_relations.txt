@@ -1,0 +1,83 @@
+# General Human Motion — Concept Relations (v2)
+
+Format: subject | relation | object | notes
+
+## Phase precedence
+
+human:phase_setup | precedes | human:phase_prep | within one rep
+human:phase_prep | precedes | human:phase_load |
+human:phase_load | precedes | human:phase_action |
+human:phase_action | precedes | human:phase_follow_through |
+human:phase_follow_through | precedes | human:phase_recover |
+human:phase_recover | precedes | human:phase_reset |
+human:phase_reset | precedes | human:phase_setup | next rep
+
+## Events occur in phases
+
+human:event_setup | occursIn | human:phase_setup | E_SETUP
+human:event_prep_end | occursIn | human:phase_prep | end of wind-up
+human:event_action_peak | occursIn | human:phase_action | primary speed peak
+human:event_recover_end | occursIn | human:phase_recover | E_RECOVER_END
+
+## Findings → phases
+
+fault_forward_head | occursIn | human:phase_setup |
+fault_forward_head | occursIn | human:phase_recover |
+fault_posture_stack_break | occursIn | human:phase_load |
+fault_posture_stack_break | occursIn | human:phase_action |
+fault_ribcage_flare_anterior | occursIn | human:phase_load |
+fault_pelvis_anterior_tilt_excess | occursIn | human:phase_setup |
+fault_lateral_pelvis_drop | occursIn | human:phase_load |
+fault_knee_valgus_visible | occursIn | human:phase_load |
+fault_stiff_spine_no_hip_hinge | occursIn | human:phase_prep |
+fault_single_leg_balance_wobble | occursIn | human:phase_load |
+fault_insufficient_weight_shift | occursIn | human:phase_prep |
+fault_excessive_lateral_lean | occursIn | human:phase_load |
+fault_shoulder_height_asymmetry | occursIn | human:phase_setup |
+fault_limb_rom_asymmetry | occursIn | human:phase_action |
+fault_rushed_prep | occursIn | human:phase_prep |
+fault_incomplete_recover | occursIn | human:phase_recover |
+fault_arms_fight_torso | occursIn | human:phase_action |
+fault_rounded_shoulders | occursIn | human:phase_setup |
+fault_squat_depth_shallow | occursIn | human:phase_load |
+fault_heels_rise_squat | occursIn | human:phase_load |
+fault_trunk_collapse_squat | occursIn | human:phase_load |
+fault_reach_shoulder_hike | occursIn | human:phase_action |
+fault_overhead_arch_lumbar | occursIn | human:phase_action |
+fault_gait_trunk_lean | occursIn | human:phase_load |
+fault_gait_short_step | occursIn | human:phase_action |
+fault_hip_shift_lateral_squat | occursIn | human:phase_load |
+fault_knee_dominant_hinge | occursIn | human:phase_prep |
+fault_scapular_wing_proxy | occursIn | human:phase_action |
+fault_base_of_support_narrow | occursIn | human:phase_setup |
+
+## Checkpoints → findings
+
+cp_stack_neutral_setup | failTriggers | fault_posture_stack_break |
+cp_forward_head_setup | failTriggers | fault_forward_head |
+cp_rib_flare_load | failTriggers | fault_ribcage_flare_anterior |
+cp_pelvis_apt_setup | failTriggers | fault_pelvis_anterior_tilt_excess |
+cp_knee_valgus_load | failTriggers | fault_knee_valgus_visible |
+cp_com_sway_single_leg | failTriggers | fault_single_leg_balance_wobble |
+cp_weight_shift_insufficient | failTriggers | fault_insufficient_weight_shift |
+cp_lateral_lean_excess | failTriggers | fault_excessive_lateral_lean |
+cp_shoulder_height_asym | failTriggers | fault_shoulder_height_asymmetry |
+cp_limb_rom_asym | failTriggers | fault_limb_rom_asymmetry |
+cp_hip_hinge_absent | failTriggers | fault_stiff_spine_no_hip_hinge |
+cp_prep_duration_short | failTriggers | fault_rushed_prep |
+cp_recover_incomplete | failTriggers | fault_incomplete_recover |
+cp_arms_torso_conflict | failTriggers | fault_arms_fight_torso |
+cp_heels_rise_squat | failTriggers | fault_heels_rise_squat |
+cp_bos_narrow | failTriggers | fault_base_of_support_narrow |
+
+## Legacy aliases
+
+forward_head | sameAs | fault_forward_head | migrated v2
+posture_stack_break | sameAs | fault_posture_stack_break | migrated v2
+knee_valgus_visible | sameAs | fault_knee_valgus_visible | migrated v2
+stiff_spine_no_hip_hinge | sameAs | fault_stiff_spine_no_hip_hinge | migrated v2
+
+## Sport pack handoff
+
+general_human_motion | defersTo | sport_pack_when_matched | running, soccer, etc.
+human:phase_setup | overlaps | running:phase_contact | only when human fallback active

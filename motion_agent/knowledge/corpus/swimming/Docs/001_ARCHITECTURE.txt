@@ -1,0 +1,127 @@
+# Swimming Sport Pack — Architecture (CeRebel)
+
+## Purpose
+
+This pack supplies retrieval-grounded knowledge for **body-first freestyle (front crawl) coaching** in CeRebel.
+The product reconstructs human motion from video (2D/3D body keypoints) and explains what the swimmer’s body
+is doing across recognizable stroke-cycle phases. Lane lines, touchpads, and split times are optional enrichments,
+not prerequisites for coaching briefs or chat answers.
+
+Primary motion scope (v1):
+- **Freestyle (front crawl)** in pool or open-water–style continuous swimming, side or front oblique camera.
+- Bilateral breathing and single-side breathing; default stroke side labeled in session metadata when known.
+- One arm cycle per analysis window, or rolling average over multiple cycles when cycle detection is stable.
+
+Secondary glossary scope (not full automated findings in v1):
+- Backstroke, breaststroke, butterfly, starts, turns, and underwater dolphin kick — concepts in taxonomy only.
+
+Out of scope for automatic findings:
+- Exact hand pitch/yaw underwater when wrist is occluded by torso or surface glare.
+- Propulsive force, drag coefficient, SWOLF, or heart-rate zones without external sensors.
+- Disqualification rulings (FINA/World Aquatics stroke judges) — summarized for coaches only, not automated.
+
+## Design principles
+
+1. **Body-measurable claims only** for automated findings: shoulder/elbow/wrist paths, head position during
+   breathing, trunk roll amplitude, kick rhythm proxies, timing between entry and catch.
+2. **Evidence layering**: open biomechanics reviews (B+) inform propulsion and shoulder load relationships;
+   national governing body learn-to-swim progressions (B) inform drills; clinical consensus (A) informs pain
+   and overuse context — always paired with disclaimer docs.
+3. **No fabricated medical norms**: avoid prescribing single “ideal” elbow angles; describe patterns and
+   attribute ranges to published summaries; separate youth developmental stages from elite performance models.
+4. **Phase-first retrieval**: faults, checkpoints, and cues index to `Phases/001_phase_model.txt` event IDs so
+   the motion pipeline can attach findings to time windows within a stroke cycle.
+
+## Directory roles (this pack)
+
+| Path | Role |
+|------|------|
+| Docs/ | Product architecture, disclaimers, capture guidance |
+| Schema/ | Entity types: swimmer, stroke cycle, phase, finding, cue, drill |
+| Taxonomy/ | Concepts and relations for RAG expansion (synonyms, phase order) |
+| Phases/ | Canonical freestyle cycle model + detector event mapping |
+| Quality/ | What “good” means in body terms; checkpoint catalog |
+| Findings/ | Fault library (finding cards) |
+| Coaching/ | Cues and drills linked to findings |
+| Biomechanics/ | Open-literature summaries of freestyle mechanics |
+| Training/ | Practice structure, volume, and youth progression context |
+| _meta/ | Manifests, build reports — excluded from chunk index |
+
+## Capture and camera guidance
+
+### Preferred views
+
+- **Side view (profile)**: Best for entry, catch depth proxy, elbow flexion during pull, exit timing, body roll,
+  and kick amplitude. Camera height near water line or slightly above; minimize lane rope occlusion.
+- **Front oblique (45°)**: Useful for crossover at entry, head position, and asymmetry between left/right strokes.
+- **Overhead**: Rare in consumer capture; good for symmetry when available.
+
+### Clip length and framing
+
+- Include **at least 3–6 full stroke cycles** at steady pace when possible (roughly 4–12 s at moderate fitness).
+- Keep full arm length and head in frame; cropping at wrists reduces pull-phase confidence.
+- Underwater cameras improve catch visibility but are not required for v1 heuristics.
+
+### Environment flags
+
+- Open water: higher body roll and sighting may trigger false `fault_excessive_head_lift` — lower confidence.
+- Push-off from wall: exclude first 5–8 m or mark `trim_start_event=push_off` so glide phases do not dominate.
+
+## Motion pipeline integration
+
+### Input contract
+
+- Session adapter produces a `MotionSequence`: joint positions over time, FPS/dt, duration.
+- Recommended joints: both wrists, elbows, shoulders, hips, knees, ankles, nose/head keypoint.
+- Stroke side: `stroke_side=right` means right arm is the **pulling** arm in the analyzed cycle (or dominant
+  side for asymmetry summaries).
+
+### Stroke-likeness gate (conservative)
+
+Before enabling full product findings, compute a **soft** freestyle-likeness score from:
+
+- **Alternating arm peaks**: left and right wrist speed peaks alternate with period in plausible swim band (~0.8–2.5 s).
+- **Elevated shoulder roll**: thorax/shoulder line tilt oscillates with stroke rhythm.
+- **Sustained horizontal body**: pelvis height variance below sprint-running profile; not vertical jumping.
+
+Score gates sport-mode selection; it does not authorize medical advice.
+
+### Phase detection (v1 heuristic alignment)
+
+Until dedicated underwater event detectors ship, align narrative phases to computable proxies on the **pulling**
+arm unless metadata specifies analysis arm.
+
+| Event ID | Proxy signal | Notes |
+|----------|--------------|-------|
+| E_ENTRY | pulling wrist forward speed local max at hand-forward position; often near water surface Y | Side view |
+| E_CATCH | elbow flexion rate peak after entry; wrist depth proxy increases | Noisy if 2D only |
+| E_PULL_PEAK | max pulling-wrist speed while elbow flexed | Propulsion window |
+| E_EXIT | pulling wrist rises toward surface; forward speed drops before recovery | Recovery start |
+| E_BREATHE | head yaw or lateral tilt peak if breathing on analyzed side | Optional |
+| E_KICK_PEAK | ankle vertical velocity peak on same side or contralateral per 2-beat/6-beat pattern | Low confidence |
+
+Future detectors may add finger-tip depth, pitch angle from multi-view, and roll phase from IMU fusion.
+
+### Coach brief generation
+
+`build_coach_briefs(..., sport="swimming")` consumes:
+
+- Phase windows when cycle segmentation succeeds.
+- Finding cards from Findings/001_common_faults.txt filtered by phase and confidence.
+- Cues/drills from Coaching/ linked by finding id.
+- Disclaimer snippets from Docs/002_DISCLAIMER.txt for any shoulder or breathing load topic.
+
+### RAG indexing
+
+- Index all paths except `_meta/` (enforced globally).
+- Chunk boundaries prefer `---` section breaks and finding card headers (`finding_id:`).
+- English primary; Chinese synonyms appear in taxonomy for query expansion only.
+
+## Pack status
+
+Pack status: **content build 2026-10-21** (see `_meta/build_report.txt`).
+
+## Related code (when wired)
+
+Swimming may remain catalog `beta` until pool-side capture validation completes; knowledge pack is usable for
+RAG chat independent of live detectors.

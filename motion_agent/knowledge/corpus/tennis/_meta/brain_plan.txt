@@ -1,0 +1,154 @@
+# Tennis pack — brain plan (ontology + phase + finding map)
+# Agent: BRAIN | Updated: 2026-10-21 | Contract: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+## Mission
+
+Body-first coaching for **serve**, **forehand**, and **backhand** (one- and two-handed) from video pose / OpenSim-ready motion.
+**Ball and racket object tracking are optional; v1 findings must not depend on them.** Contact is proxied by racket-side wrist speed peak (±2 frames).
+
+## Stroke families (v1 product scope)
+
+| family_id | Phases | Notes |
+|-----------|--------|-------|
+| serve | S_* chain (7) | Platform vs pinpoint stance = tag only; same phase IDs |
+| forehand | G_* chain (7) | Open / semi-open / neutral stance = tag only |
+| backhand_one_hand | G_* chain (7) | Lead-arm drive; shoulder external rotation emphasis in G_LOAD |
+| backhand_two_hand | G_* chain (7) | Dual-arm unit; top-hand rotation cue in G_FORWARD_SWING |
+
+Out of scope v1: volley, smash, return patterns, tactics, line calls, device racket speed.
+
+## Phase models (detector events — no ball)
+
+### Serve — `S_READY` … `S_DECEL` (7 phases)
+
+| phase_id | start_event | end_event | Primary body signals |
+|----------|-------------|-----------|----------------------|
+| S_READY | static address | racket or toss arm begins upward path | foot width, knee soft, CoM over base |
+| S_TOSS_RISE | non-racket arm lifts | toss arm near max height OR trophy begins | lead wrist height, lateral drift vs sternum |
+| S_TROPHY_LOAD | coil visible | racket begins drop OR upward drive | knee flex min, racket-side shoulder elevation |
+| S_RACKET_DROP | racket head falls below elbow | upward acceleration begins | elbow flex, scapular position |
+| S_DRIVE_UP | leg push / trunk rise | S_CONTACT_PROXY | knee extension timing, trunk tilt |
+| S_CONTACT_PROXY | peak racket-side wrist speed | speed < 85% of peak | shoulder abduction, elbow extension |
+| S_DECEL | post-peak deceleration | stable land or recovery stance | follow-through path, landing knee/ankle |
+
+### Forehand — `G_SPLIT` … `G_RECOVERY` (7 phases)
+
+| phase_id | start_event | end_event | Primary body signals |
+|----------|-------------|-----------|----------------------|
+| G_SPLIT | clip onset or hop | G_UNIT_TURN begins | bilateral ankle micro-peak |
+| G_UNIT_TURN | pelvis/trunk turn away | hand moves to max lay-back | hip–shoulder separation |
+| G_LOAD | load leg accepts weight | G_FORWARD_SWING | knee flex, CoM over load foot |
+| G_FORWARD_SWING | hand accelerates forward | G_CONTACT_PROXY | trunk uncoil vs arm |
+| G_CONTACT_PROXY | peak racket-side wrist speed | 85% speed drop | elbow slot, wrist stability |
+| G_FOLLOW | deceleration | finish across body or high wrap | balance, scapular upward rotation |
+| G_RECOVERY | finish end | athletic ready | foot adjust, split-step prep |
+
+### Backhand (1H and 2H) — same `G_*` IDs, family-specific emphasis
+
+| phase_id | backhand_one_hand focus | backhand_two_hand focus |
+|----------|-------------------------|-------------------------|
+| G_UNIT_TURN | lead shoulder retraction, racket tip back | compact dual-arm coil |
+| G_LOAD | lead-side load, shoulder ext. rot. | both hands stay on racket, knee flex |
+| G_FORWARD_SWING | lead arm drives; trunk stays sideways longer | top hand active; avoid bottom-hand-only pull |
+| G_CONTACT_PROXY | reach vs rotation (elbow–trunk distance) | hands forward together at peak speed |
+| G_FOLLOW | high finish over opposite shoulder | finish with hands on chest line |
+
+## Shared detector proxies
+
+| Event | Body proxy |
+|-------|------------|
+| S_CONTACT_PROXY / G_CONTACT_PROXY | argmax racket-side wrist speed in stroke window |
+| S_TOSS_RISE | argmax non-racket wrist vertical velocity early |
+| S_TROPHY_LOAD | knee flex local min + shoulder elevation asymmetry before contact |
+| G_UNIT_TURN | trunk yaw velocity peak before contact proxy |
+| G_SPLIT | bilateral ankle speed micro-peak at clip start |
+
+## Finding map → `Findings/001_common_faults.txt`
+
+Each card: fault_* id, headline, phase_id(s), body_signals, why_it_matters, feel cue, drill, sources, audience_band.
+
+### Serve findings
+
+| finding_id | primary phase | audience | headline (short) |
+|------------|---------------|----------|------------------|
+| fault_serve_knee_lock | S_TROPHY_LOAD | all | Legs stay straight in load |
+| fault_serve_toss_arm_drift | S_TOSS_RISE, S_TROPHY_LOAD | all | Toss arm drifts wide at trophy |
+| fault_serve_shoulder_tilt_flat | S_TROPHY_LOAD | all | Racket-side shoulder not elevated |
+| fault_serve_elbow_low | S_TROPHY_LOAD, S_RACKET_DROP | all | Elbow drops below shoulder in coil |
+| fault_serve_poor_leg_sync | S_DRIVE_UP | adult | Leg drive after arm speed peak |
+| fault_serve_poor_decel | S_DECEL | all | Abrupt hitch after contact proxy |
+| fault_serve_excessive_arch | S_DRIVE_UP | adult | Excessive low-back arch in drive |
+| fault_serve_landing_imbalance | S_DECEL | all | Unstable landing / lateral fall |
+| fault_serve_rhythm_rush | S_READY → S_CONTACT_PROXY | all | Rushed tempo; skipped load visibility |
+| fault_serve_short_finish_youth | S_DECEL | youth | Abbreviated follow-through (volume-aware) |
+
+### Forehand findings
+
+| finding_id | primary phase | audience | headline (short) |
+|------------|---------------|----------|------------------|
+| fault_forehand_late_unit_turn | G_UNIT_TURN | all | Trunk still turning during forward swing |
+| fault_forehand_all_arm | G_FORWARD_SWING | all | Arm outruns trunk (low separation) |
+| fault_forehand_flying_elbow | G_LOAD, G_FORWARD_SWING | all | Hitting elbow lifts above shoulder plane |
+| fault_forehand_open_no_load | G_LOAD | adult | Open stance without knee load |
+| fault_forehand_over_rotate_finish | G_FOLLOW | all | Excessive trunk rotation past balance |
+| fault_forehand_upright_recovery | G_FOLLOW, G_RECOVERY | all | Bolt upright; no balanced finish |
+
+### Backhand findings
+
+| finding_id | primary phase | audience | headline (short) |
+|------------|---------------|----------|------------------|
+| fault_backhand1_dropped_shoulder | G_LOAD, G_FORWARD_SWING | all | Lead shoulder collapses on 1H BH |
+| fault_backhand1_reaching | G_FORWARD_SWING, G_CONTACT_PROXY | all | Arm-only reach; elbow far from trunk |
+| fault_backhand1_late_prep | G_UNIT_TURN | all | Racket lags trunk turn |
+| fault_backhand2_bottom_hand_only | G_FORWARD_SWING | all | Top hand inactive; dominant arm pulls |
+| fault_backhand2_tight_shoulders_youth | G_LOAD | youth | Limited turn; mobility-safe cues only |
+| fault_backhand_wide_stance_stuck | G_LOAD | all | Wide base without flex or transfer |
+| fault_groundstroke_late_unit_turn | G_UNIT_TURN | all | (legacy id) same as fault_forehand_late_unit_turn — alias in taxonomy |
+| fault_groundstroke_all_arm | G_FORWARD_SWING | all | (legacy id) alias for arm-dominant GS |
+| fault_groundstroke_upright_recovery | G_FOLLOW | all | (legacy id) shared FH/BH |
+| fault_groundstroke_wide_stance_stuck | G_LOAD | all | (legacy id) shared FH/BH |
+
+Authority target when populated: **B+** biomechanics relationships, **B** federation coaching summaries; never **C** in product findings.
+
+## Youth vs adult (coaching copy — not medical norms)
+
+**Youth (≈8–14, developmental)**
+- Emphasize balance, rhythm, and repeatable toss-arm path over max wrist speed.
+- Serve: avoid prescribing elite knee depth or hyperextension; flag `fault_serve_short_finish_youth` as informational when protecting volume.
+- Groundstrokes: unit turn and recovery over power sequencing; do not fail clips against adult elite angle tables.
+- Tag findings/cues with `audience_band: youth` where cues differ (see fault_backhand2_tight_shoulders_youth, fault_serve_short_finish_youth).
+
+**Adult (recreational / amateur)**
+- Full kinetic-chain cues (legs → trunk → arm) appropriate.
+- Load-awareness language on serve volume OK; still no injury diagnosis from one clip.
+- Open-stance forehand/backhand common; detectors must not assume closed stance.
+
+**Shared (`all`)**
+- Body-visible signals only; same phase IDs; handedness mirrored in product (racket-side wrist).
+
+## Ontology cross-reference
+
+- `Schema/001_ontology.txt` — entities: Player, StrokeType, StrokeVariant, Phase, PhaseEvent, Finding, Cue, Drill, Checkpoint, AudienceBand, EvidenceChunk
+- `Taxonomy/001_concepts.txt` — RAG concepts + synonyms
+- `Taxonomy/002_relations.txt` — precedes, maps_to, anchored_in, audience_applies
+
+## Downstream build order
+
+1. `Findings/001_common_faults.txt` — expand all fault_* rows above (8-field cards)
+2. `Coaching/001_cues.txt`, `002_drills.txt` — 1:1 fault_* ids
+3. `Phases/001_phase_model.txt` — already seeded; sync BH variant table
+4. `Quality/*` — already links fault_* ; add new fault ids as checkpoints fail links
+5. `_meta/SOURCE_MANIFEST.txt` — cite B+ serve/GS biomechanics reviews, USTA youth (B)
+
+## RAG cross-links
+
+- Repeat stable IDs in every doc: `fault_*`, `S_*`, `G_*`, `stroke_forehand`, `stroke_backhand_one_hand`, `stroke_backhand_two_hand`
+- `Docs/002_DISCLAIMER.txt` before product-facing coaching export
+- No finding requires ball track; `requires_ball_track: false` on all v1 faults
+
+## BRAIN deliverable checklist
+
+- [x] brain_plan.txt — families, per-stroke phases, finding map, youth/adult, build order
+- [x] Schema/001_ontology.txt
+- [x] Taxonomy/001_concepts.txt
+- [x] Taxonomy/002_relations.txt

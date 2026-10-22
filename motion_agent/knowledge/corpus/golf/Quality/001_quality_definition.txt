@@ -1,0 +1,105 @@
+# Golf Sport Pack — Quality definitions (body-first)
+
+“Quality” in CeRebel golf mode means **observable body patterns** associated with coordinated, balanced full
+swings in open biomechanics and coaching literature — not score, handicap, or carry distance. Dimensions are
+**non-diagnostic**; pain or injury requires qualified clinical evaluation (see Docs/ when DISCLAIMER is added).
+
+Impact and club metrics (attack angle, path, dynamic loft) are **out of scope** for pose-only scoring.
+
+---
+
+## Dimensions
+
+### dimension: setup_balance
+**Phases:** address
+**Good sign:** Feet shoulder-width or athletic width; pelvis midline between ankles on face-on; minimal lateral
+head sway while addressing; knee flex visible (not locked upright).
+**Poor sign:** Weight visibly stacked on toes or heels only; large pre-swing lateral pelvis shift; excessive
+spine rounding or extreme reverse tilt held statically.
+**Authority:** B coaching setup consensus; B+ postural themes in swing reviews.
+
+### dimension: takeaway_connection
+**Phases:** takeaway through early backswing
+**Good sign:** Arms and trunk move together; trail wrist path smooth without early independent lift (“pickup”);
+pelvis rotation lags shoulders slightly on DTL.
+**Poor sign:** Wrist-only takeaway with minimal torso turn; abrupt first move.
+**Authority:** B+ kinematic chain literature; B teaching pro vocabulary.
+
+### dimension: backswing_turn_and_width
+**Phases:** backswing (through top)
+**Good sign:** Shoulder turn away from target; lead arm reasonably extended (not collapsed across chest);
+stable head vertical band on DTL; weight loads trail side without excessive sway off ball line.
+**Poor sign:** Short turn with arms-only lift; large lateral slide instead of rotation; loss of posture (early extension of spine before top).
+**Authority:** B+; variability high among skilled players — compare athlete to self across sessions.
+
+### dimension: transition_sequence
+**Phases:** transition, downswing
+**Good sign:** Lower body initiates toward target while shoulders remain partially closed; wrist speed valley
+at top followed by coordinated acceleration — pelvis rotation visible before maximum shoulder rotation rate toward target.
+**Poor sign:** Shoulders and arms fire down while pelvis stalls (over-the-top body pattern proxy); immediate cast from top without lower-body shift.
+**Authority:** B+ kinematic sequence reviews; B coaching.
+
+### dimension: ground_force_use
+**Phases:** transition through impact
+**Good sign:** Visible push from trail leg into lead side; lead hip clears; ankles show purposeful pressure shift
+(CoP themes — qualitative without force plates).
+**Poor sign:** Upright swing with no leg drive; hanging back on trail side through impact proxy; early lead heel lift.
+**Authority:** B+ GRF/CoP systematic review (2026); not force-plate scores in product v1.
+
+### dimension: spine_angle_maintenance
+**Phases:** backswing through impact
+**Good sign:** Forward bend established at address largely preserved on DTL until after impact proxy; head stays
+in stable corridor relative to pelvis.
+**Poor sign:** Early extension — pelvis thrusts toward ball, spine angle increases before impact proxy (“standing up”).
+**Authority:** B+ coaching and biomechanics; common fault card fault_early_extension.
+
+### dimension: impact_posture_proxy
+**Phases:** impact window
+**Good sign:** Lead side firm; pelvis open; trail heel may rise on full driver swings without losing balance;
+head behind or near setup position on DTL (coaching heuristic, not universal norm).
+**Poor sign:** Heavy trail-side lean at peak wrist speed; lead knee collapsed inward severely.
+**Authority:** B coaching; B+ variability in elite data.
+
+### dimension: follow_through_balance
+**Phases:** follow_through
+**Good sign:** Weight finishes on lead foot; athlete holds finish 1+ seconds without stepping back or stumbling;
+smooth wrist speed decay after peak.
+**Poor sign:** Fall-back off lead foot; immediate recoil into address; harsh arm stop (“chicken wing” freeze).
+**Authority:** B coaching; B+ deceleration load themes (awareness only).
+
+### dimension: rhythm_tempo
+**Phases:** whole chain address → follow_through
+**Good sign:** Continuous motion without long freeze at top (> ~15 frames static wrists at 30 fps ≈ 0.5 s coach flag);
+backswing and downswing durations in proportion for that athlete’s baseline.
+**Poor sign:** Rush from top; or excessive pause then violent downswing (two-count hitch).
+**Authority:** B coaching tempo; product compares self over time, not tour averages.
+
+---
+
+## Youth vs adult quality interpretation
+
+**Youth (audience=youth):** Reward athletic setup, balanced finish, and smooth tempo over adult-amplitude shoulder
+turn or aggressive leg drive. Shorter backswings and softer transition are normal. Avoid cueing maximum X-factor or
+“snap” that increases spinal load. Follow Training/001 youth volume guidance.
+
+**Adult recreational:** Emphasize transition_sequence, spine_angle_maintenance, and follow_through_balance to reduce
+compensations that correlate with inconsistency in coaching observation (not injury prediction).
+
+**Senior / limited mobility:** Narrower turn and shorter follow-through may still pass setup_balance and
+follow_through_balance if symmetric and pain-free per athlete report.
+
+---
+
+## Scoring philosophy (product)
+
+Each dimension maps to 0–1 confidence from pose quality, phase alignment, and camera view tags.
+Low joint confidence caps scores. Missing address frames (trimmed clip) does not fail a swing if takeaway→finish visible.
+
+---
+
+## Relation to findings
+
+Dimensions link to fault_* cards in Findings/001_common_faults.txt and checkpoints in Quality/002_checkpoints.txt.
+
+Sources: Golf swing biomechanics systematic review (PMC, B+); Watson et al. GRF/CoP review Sports Medicine 2026 (B+);
+PGA/LPGA junior development summaries (B); USGA/R&A rules unrelated to swing quality — not cited for body scores.

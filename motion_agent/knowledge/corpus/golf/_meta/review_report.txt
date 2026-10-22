@@ -1,0 +1,83 @@
+# Golf Sport Pack — Review Report (v2 depth audit)
+Generated: 2026-10-23
+Corpus path: motion_agent/knowledge/corpus/golf/
+Product: CeRebel body-first coaching (GolfPack; club/ball not required for phases)
+Spec: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+EXECUTIVE SUMMARY
+================================================================================
+
+| Area              | Verdict     | Notes |
+|-------------------|-------------|-------|
+| Spec layout       | PASS        | Phases/Quality/Findings/Coaching/Training/Docs disclaimer present |
+| Finding cards     | PASS v2     | 30 canonical `fault_*` cards with full field set |
+| Coaching          | PASS v2     | ≥20 cues + ≥15 drills cross-linked to fault_* |
+| Taxonomy relations| PASS v2     | ≥15 relation rows (phase chain + finding/coaching links) |
+| Phase model       | PASS v2     | 7 phases with detector_events + fault_links |
+| Safety            | PASS        | Docs/002_DISCLAIMER.txt; no diagnostic injury claims |
+| Licensing         | REVIEW NOTE | Large R&A/USGA PDF volume remains — commercial redistribute policy unchanged |
+
+Prior 2026-10-21 review marked coaching KB incomplete. Build agents since filled Phases/Quality/Findings/Coaching/Training;
+this audit confirms v2 depth targets for Findings+Coaching+Taxonomy+Phases.
+
+================================================================================
+1. FINDINGS DEPTH
+================================================================================
+
+Findings/001_common_faults.txt — 30 cards in canonical shape:
+  finding_id, headline_en, phases, body_signal, why_it_matters, feel_cue, drill,
+  severity_default, sources (+ optional youth_note / confidence_note).
+
+Retained (13): early_extension, over_the_top_transition, cast_from_top, hanging_back,
+  sway_not_turn, slide_excessive, short_arm_swing, wrist_only_takeaway, tempo_hitch_at_top,
+  fall_back_finish, chicken_wing_stop, setup_locked_legs, abrupt_deceleration.
+
+Added (17): early_extension_thrust, weight_shift_late, head_lateral_sway, incomplete_shoulder_turn,
+  takeaway_steep_lift, takeaway_inside_roll, tempo_rush_downswing, flying_trail_elbow,
+  lead_arm_collapse_top, setup_spine_too_upright, setup_narrow_stance, setup_weight_heels,
+  reverse_pivot, impact_lead_knee_lock, incomplete_hip_clearance, chip_stand_up, chip_trail_weight.
+
+Body-first: impact = trail wrist speed proxy; no club path / face / AoA as measured truth.
+
+================================================================================
+2. COACHING / TAXONOMY / PHASES
+================================================================================
+
+- Coaching/001_cues.txt: one cue block per finding (30 fault cues) + positive cues.
+- Coaching/002_drills.txt: 18+ drills with `targets: fault_*` including short-game drills.
+- Taxonomy/002_relations.txt: thickened beyond legacy 9 TrackMan/phase rows — finding occurs_in,
+  coaching addresses/remediates, detector event links (≥15 data rows).
+- Phases/001_phase_model.txt: each of 7 phases includes detector_events + fault_links.
+
+================================================================================
+3. SAFETY
+================================================================================
+
+- Docs/002_DISCLAIMER.txt present; Coaching headers reference it.
+- Findings use population/load and performance framing only.
+- Abrupt deceleration / chicken-wing cards use stress-awareness language without diagnosis.
+- Youth notes on turn, chip volume, and setup flex.
+
+================================================================================
+4. GAPS (non-blocking for v2 coaching depth)
+================================================================================
+
+- Commercial redistribution review for large Rules/Handicap/Equipment PDFs still advised.
+- TrackMan taxonomy labels remain as vocabulary only — product must not imply LM metrics from body video.
+- Short-game chip cards share full-swing phase ids; detector confidence lower on truncated finishes.
+
+================================================================================
+5. REVIEWER SIGN-OFF
+================================================================================
+
+| Check | Status |
+|-------|--------|
+| Spec-complete coaching layers | Yes |
+| ≥25 finding cards canonical | Yes (30) |
+| Cues/drills cite fault_* | Yes |
+| Relations ≥15 | Yes |
+| Phase detector_events + fault_links | Yes |
+| Safe for body-first coaching RAG | Yes (with disclaimer) |
+
+VERDICT: APPROVED_V2 — Golf Findings/Coaching/Taxonomy/Phases meet v2 depth with 30 body-first fault cards and disclaimer-backed coaching links.

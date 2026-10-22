@@ -1,0 +1,77 @@
+# Weightlifting Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel weightlifting content summarizes **open coaching literature, resistance-training consensus statements,
+and biomechanics reviews**. It is **not** a substitute for licensed medical care, physical therapy diagnosis,
+or individualized return-to-lifting protocols after injury.
+
+- Sharp pain, joint locking, radiating numbness, or chest pain during lifting require stopping the set and
+  seeking qualified care — do not rely on an app finding to continue max-effort attempts.
+- Spinal and shoulder symptoms during squats, deadlifts, or overhead work need in-person evaluation; video
+  cannot rule out disc, labral, or vascular issues.
+
+## Not a programming or load prescription tool
+
+This pack describes **movement quality and common technique patterns**. It does **not**:
+
+- Calculate one-rep max, prescribe working percentages, or replace certified strength coaches.
+- Approve attempting maximal loads based on a single good-looking warm-up rep.
+- Enforce competition depth rules (powerlifting vs Olympic vs gym standards) without explicit user context.
+
+Always use spotters, safety bars, and collars appropriate to your facility. Bail procedures (squat) and
+drop policies (deadlift) are gym-specific — not encoded here.
+
+## Body tracking limitations
+
+Single-camera pose estimation can mis-estimate:
+
+- Lumbar flexion when the torso is foreshortened or clothed loosely.
+- Knee valgus in pure frontal view without 3D or dual-camera fusion.
+- Bar path relative to feet when the bar is occluded or not tracked.
+- Hip hinge angle when the camera is too low or high.
+
+Findings describe **visible tendencies**, not force-plate or EMG ground truth. Lower confidence when joints
+are occluded, frame rate is below ~30 fps for fast concentric phases, or the lifter wears baggy clothing.
+
+## Overhead press specific risks
+
+Strict pressing overhead can aggravate shoulder impingement symptoms in some individuals. CeRebel does not
+screen for shoulder pathology. Users with prior shoulder surgery or chronic pain should work with a clinician
+or coach before emulating generic lockout positions.
+
+## Youth and novice lifters
+
+Children and adolescents need age-appropriate supervision, technique emphasis, and conservative loading per
+NGB and clinical consensus. Do not tell youth to match adult depth, load, or bar speed from elite examples
+in social media.
+
+## No guaranteed performance outcomes
+
+Technique cues may support efficient patterns discussed in research, but **strength gains depend on program
+design, sleep, nutrition, training age, and individual anatomy**. Do not promise PR outcomes from one drill.
+
+## Coaching relationship
+
+Automated briefs support athletes and coaches who already have a training plan. They do not replace hands-on
+coaching for learning bracing, breathing, and rack/unrack safety.
+
+## Emergency
+
+For acute injury in the weight room, follow facility emergency procedures. Suspected spinal cord or head
+injury: do not move the person; call emergency services.
+
+## Product behavior
+
+- Weightlifting pack features may be gated as **coming_soon** until detector validation completes.
+- Absence of a finding is not proof of safe loading or injury-free mechanics.
+- Mislabeled clips (e.g., golf swing analyzed as squat) should be refused when cross-sport detectors ship.
+
+## User-facing short disclaimer (for UI copy)
+
+“Movement tips from video — not medical advice or load prescription. Stop if you feel pain. Use proper safety equipment.”
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` when present. Consensus statements update periodically;
+retrieval dates matter. Verify live publisher pages for organizational guidelines.

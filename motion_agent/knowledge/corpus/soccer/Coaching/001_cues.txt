@@ -1,0 +1,156 @@
+# Soccer Kick — Coaching Cues (v2)
+
+Pair with Findings/001_common_faults.txt by finding_id. Docs/002_DISCLAIMER.txt applies.
+Drills in Coaching/002_drills.txt.
+
+---
+
+cue_id: cue_plant_laces_target
+finding_id: fault_plant_foot_closes_hip
+text_en: "Point the plant shoelaces at where you want the ball to go."
+alt_en: "Feel the hip pocket open toward the goal before the foot comes through."
+
+cue_id: cue_plant_beside
+finding_id: fault_plant_too_close
+text_en: "Plant beside the ball, not on top of the line."
+alt_en: "Give the kicking knee room — space in the holster."
+
+cue_id: cue_plant_not_past
+finding_id: fault_plant_too_far
+text_en: "Your plant lands in the same zip code as the ball, not the next field."
+alt_en: "Shorten the last step — quiet and close."
+
+cue_id: cue_chin_over_ball
+finding_id: fault_leaning_back
+text_en: "Finish with your chin over the ball line."
+alt_en: "Fall forward into the strike — controlled dive."
+
+cue_id: cue_belt_then_foot
+finding_id: fault_hips_stay_square
+text_en: "Turn your shirt number to the target before the foot snaps."
+alt_en: "Twist the belt buckle first, foot second."
+
+cue_id: cue_heel_pocket
+finding_id: fault_backswing_short
+text_en: "Big pocket — heel toward back pocket."
+alt_en: "Draw a letter J with your kicking foot."
+
+cue_id: cue_stiff_post
+finding_id: fault_plant_knee_soft
+text_en: "Stiff post leg — wood, not rubber."
+alt_en: "Push the ground away with the plant foot."
+
+cue_id: cue_quiet_last_step
+finding_id: fault_approach_rushed
+text_en: "Last step whispers; the kick shouts."
+alt_en: "Brake with the plant, don't skid into it."
+
+cue_id: cue_swing_through_frame
+finding_id: fault_follow_through_cut
+text_en: "Foot finishes in the team photo — still in frame past contact."
+alt_en: "Let the leg ride — don't hit the brakes at the ball."
+
+cue_id: cue_tightrope_arms
+finding_id: fault_arms_collapsed
+text_en: "Arms wide on the tightrope last two steps."
+alt_en: "Opposite arm reaches to the sideline as the foot swings."
+
+cue_id: cue_snap_long
+finding_id: fault_knee_stiff_strike
+text_en: "Snap the leg long to the target wall."
+alt_en: "Extend through like a straight whip."
+
+cue_id: cue_tall_on_plant
+finding_id: fault_plant_collapse
+text_en: "Grow tall on the plant tree while the other leg swings."
+alt_en: "Hold your shape on the plant side for one beat after contact."
+
+cue_id: cue_railroad_approach
+finding_id: fault_approach_wide
+text_en: "Run on train tracks, not a snake path."
+alt_en: "Hips face the ball line until the plant sets."
+
+cue_id: cue_sharp_snap
+finding_id: fault_strike_no_acceleration
+text_en: "One sharp crack on the rebounder."
+alt_en: "Fast foot, relaxed shoulders."
+
+cue_id: cue_gather_steps
+finding_id: fault_approach_short_steps
+text_en: "Last two steps grow longer and quieter into the plant."
+alt_en: "Gather, then plant — don't chop into it."
+
+cue_id: cue_plant_open_enough
+finding_id: fault_plant_toe_out_excess
+text_en: "Plant open enough to see the target — not spun all the way out."
+alt_en: "Open hip, stable plant — not a pirouette."
+
+cue_id: cue_quiet_plant
+finding_id: fault_plant_heel_strike_hard
+text_en: "Quiet plant — soft knee, soft heel."
+alt_en: "Don't jam the plant; set it."
+
+cue_id: cue_belt_first
+finding_id: fault_hip_opens_late
+text_en: "Belt turns first — foot follows the hip."
+alt_en: "Open the door before you walk through."
+
+cue_id: cue_chest_turns
+finding_id: fault_trunk_rotation_absent
+text_en: "Let the chest turn with the belt toward the target."
+alt_en: "Don't stay a stiff board through the swing."
+
+cue_id: cue_free_arm_sideline
+finding_id: fault_non_kicking_arm_passive
+text_en: "Reach the free arm toward the target sideline as the foot swings."
+alt_en: "Opposite arm balances the whip."
+
+cue_id: cue_long_arc_finish
+finding_id: fault_follow_across_body_short
+text_en: "Finish past the far hip — paint a long arc."
+alt_en: "Cross the zipper with the swinging foot."
+
+cue_id: cue_lock_ankle
+finding_id: fault_ankle_locked_strike
+text_en: "Lock the ankle — toes up, firm laces."
+alt_en: "Firm foot, soft knee on the swing leg."
+
+cue_id: cue_short_pass_draw
+finding_id: fault_side_foot_big_windup
+text_en: "Short draw, soft push — pass doesn't need a golf backswing."
+alt_en: "Push pass: small pocket, big accuracy."
+
+cue_id: cue_copy_strong_plant
+finding_id: fault_weak_foot_plant_mismatch
+text_en: "Copy your strong-foot plant movie on the other side."
+alt_en: "Same plant picture, other foot."
+
+cue_id: cue_volley_lean
+finding_id: fault_volley_trunk_upright
+text_en: "Chest over the space — athletic lean into the volley."
+alt_en: "Don't stand up tall and stab the volley."
+
+cue_id: cue_plant_then_swing
+finding_id: fault_volley_plant_late
+text_en: "Plant first, then swing — base before whip."
+alt_en: "Set the post before the hammer."
+
+cue_id: cue_long_hip_path
+finding_id: fault_kicking_hip_adduction_early
+text_en: "Swing long from the hip pocket — don't cut across early."
+alt_en: "Out and through, not across and short."
+
+cue_id: cue_shirt_to_goal
+finding_id: fault_shoulders_closed_target
+text_en: "Show your shirt number to the goal as you strike."
+alt_en: "Open the shoulders with the hips."
+
+---
+
+## Global cueing principles
+
+1. One main fix: highest-severity finding for brief UX.
+2. Intent tag: pass vs shot — down-weight power cues for pass intent.
+3. Youth: smooth and balanced; plant consistency over max power.
+4. Camera: if hip-open cues fail due to oblique angle, suggest side-view recapture.
+5. Non-dominant foot: mirror language; specify kicking foot in UI.

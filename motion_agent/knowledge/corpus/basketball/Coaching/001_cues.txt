@@ -1,0 +1,154 @@
+# Basketball Shooting — Feel Cues
+# Linked to fault_* IDs and phases. Authority mostly B (coaching); pair with Docs/002_DISCLAIMER.
+
+## Global cues (jump shot + free throw)
+
+cue_balance_first
+  phases: setup, follow
+  text_en: "Land where you leave — finish balanced before you run back on defense."
+  maps_findings: fault_narrow_base, fault_asymmetric_landing, fault_stiff_landing
+  authority: B
+
+cue_rim_eyes
+  phases: set, release
+  text_en: "See the rim over the ball — eyes finish the target, not the floor."
+  maps_findings: fault_head_jerk_release, fault_low_set_point
+  authority: B
+
+cue_relaxed_wrist
+  phases: release, follow
+  text_en: "Snap is soft — wrist loose, fingers down like dipping in warm water."
+  maps_findings: fault_wrist_only_release, fault_chicken_wing_finish
+  authority: B
+
+## Jump shot cues
+
+cue_ground_to_sky
+  phases: dip, drive, transfer
+  text_en: "Floor pushes you up; the ball rides the elevator, not the fishing pole."
+  maps_findings: fault_arm_only_shot, fault_no_load, fault_lateral_leak
+  authority: B
+
+cue_quick_sit_quick_go
+  phases: dip, drive
+  text_en: "Small sit, fast go — load the legs like a pogo, not a deep squat."
+  maps_findings: fault_excessive_dip, fault_no_load
+  authority: B
+
+cue_vertical_channel
+  phases: drive, transfer
+  text_en: "Jump in a phone booth — hips and shoulders rise in one column."
+  maps_findings: fault_lateral_leak, fault_asymmetric_dip
+  authority: B
+
+cue_set_on_the_way_up
+  phases: transfer, set
+  text_en: "Ball meets set point while you're still rising — not after you've peaked."
+  maps_findings: fault_arm_only_shot, fault_low_set_point
+  authority: B+ summary language
+
+## Free throw cues
+
+cue_same_movie
+  phases: setup, release, follow
+  text_en: "Same movie every time — breathe, bounce, set, shoot, hold."
+  maps_findings: fault_rushed_free_throw
+  authority: B+ (routine research)
+
+cue_no_jump_quiet_legs
+  phases: setup, drive
+  text_en: "Legs stay quiet — power from smooth extension, not a hop."
+  maps_findings: (variant mismatch if COM rises — product warning)
+  authority: B
+
+cue_hold_the_pose
+  phases: follow
+  text_en: "Freeze the gooseneck until the ball hits rim — you stay the statue."
+  maps_findings: fault_chicken_wing_finish
+  authority: B
+
+## Upper body / release cues
+
+cue_elbow_window
+  phases: set, release
+  text_en: "Elbow in the window under the ball — wrist follows through the window."
+  maps_findings: fault_flyaway_elbow, fault_low_set_point
+  authority: B
+
+cue_guide_shelf
+  phases: set, release
+  text_en: "Guide hand is a shelf; it opens when the shooting hand lifts the book."
+  maps_findings: fault_guide_hand_push
+  authority: B
+
+cue_full_reach
+  phases: release, follow
+  text_en: "Extend like you're closing a high cabinet — shoulder, elbow, wrist in order."
+  maps_findings: fault_short_arm_release, fault_wrist_only_release
+  authority: B+
+
+## Youth-safe cue variants (shorter, no max-effort language)
+
+cue_youth_feet_paint
+  phases: setup
+  text_en: "Step back to your footprints — same feet every rep."
+  audience: youth
+  maps_findings: fault_narrow_base, fault_feet_misaligned
+  authority: B
+
+cue_youth_soft_land
+  phases: follow
+  text_en: "Quiet feet on landing — bend knees like sitting on a low chair."
+  audience: youth
+  maps_findings: fault_stiff_landing
+  authority: B
+
+## Cues to avoid in automated product copy (manual coach only)
+
+- "Snap your elbow" (can encourage hyperextension pain)
+- "Throw at the rim" (conflicts with arc language)
+- "Jump as high as you can every rep" (youth load concern)
+
+## V2 additions (catch-and-shoot + FT rhythm)
+
+cue_ft_same_clock
+  phases: setup, release, follow
+  text_en: "Same clock every free throw — bounce, breathe, set, shoot."
+  maps_findings: fault_ft_rhythm_break, fault_rushed_free_throw
+  authority: B+
+
+cue_ft_legs_then_arm
+  phases: transfer, set, release
+  text_en: "Legs finish the quiet push — then the arm opens."
+  maps_findings: fault_ft_early_arm, fault_arm_only_shot
+  authority: B
+
+cue_catch_feet_ready
+  phases: setup, dip
+  text_en: "Catch on ready feet — square before you sit."
+  maps_findings: fault_catch_shoot_late_pivot, fault_inside_pivot_collapse
+  authority: B
+
+cue_no_hop_back
+  phases: setup, dip
+  text_en: "Catch and sit under you — no reverse hop."
+  maps_findings: fault_catch_shoot_hop_back
+  authority: B
+
+cue_set_forehead_window
+  phases: set
+  text_en: "Set in the forehead window — see rim over the ball."
+  maps_findings: fault_set_behind_head, fault_low_set_point
+  authority: B
+
+cue_chest_over_toes
+  phases: drive, release
+  text_en: "Chest over toes through the shot — jump up, not away."
+  maps_findings: fault_lean_back_release, fault_landing_forward_lunge
+  authority: B
+
+cue_thumb_sky_shelf
+  phases: set, release
+  text_en: "Guide thumb to the sky — shelf, not steering wheel."
+  maps_findings: fault_offhand_thumb_over, fault_guide_hand_push
+  authority: B

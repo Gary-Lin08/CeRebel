@@ -10,3 +10,10 @@ data/
 *.sto
 kinetic-lens/node_modules/
 kinetic-lens/dist/
+kinetic-lens/retargeting_neck_v2/outputs/
+.pytest_cache/
+.env
+.env.*
+!.env.example
+*.pem
+secrets/

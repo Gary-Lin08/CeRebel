@@ -1,0 +1,375 @@
+# Soccer Kick — Common Faults (finding cards) — v2
+
+Authority: B / B+ summarized open literature and NGB coaching; not diagnostic. See Docs/002_DISCLAIMER.txt.
+Stable keys use fault_* snake_case. legacy_id retains prior kebab-case slugs for RAG.
+
+Body-first: plant and swing visible without ball tracking. E_KICK_PEAK = foot-speed contact proxy.
+
+---
+
+finding_id: fault_plant_foot_closes_hip
+legacy_id: plant-foot-closes-hip
+headline_en: Plant foot points away from target and closes the hip
+phases: plant, cocking, strike
+body_signal: At E_PLANT_SET and E_KICK_PEAK, plant-foot toe direction points substantially across intended kick line; pelvis yaw toward target limited (cp_hip_open_proxy).
+why_it_matters: Support-foot orientation and pelvis rotation link to kicking-foot velocity and accuracy variability in biomechanics reviews. Closed hip can restrict trunk rotation and shift load — performance and load awareness, not diagnosis.
+feel_cue: "Show the laces of your plant shoe to the target side of the field."
+drill: 60 s cone plant window — plant so inside arch faces cone; 3 slow + 2 firm passes (drill_plant_cone_window).
+severity_default: medium
+sources: Lees & Nolan 1998 soccer biomechanics review (B+); UEFA/FIFA plant-foot coaching summaries (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_plant_too_close
+legacy_id: plant-too-close
+headline_en: Plant foot lands too close to the ball line
+phases: plant, cocking
+body_signal: Lead ankle vs trail ankle at E_PLANT_SET inside lower band of normalized plant distance (cp_plant_distance_band); kicking knee may appear cramped at max cocking.
+why_it_matters: Very short plant distance can limit hip extension and reduce swing arc; coaches associate with scooped or low strikes. Visible without ball.
+feel_cue: "Leave a hand's width between plant and strike line."
+drill: 45 s two-line plant — five instep strikes planting on outer line (drill_plant_two_line).
+severity_default: medium
+sources: Nunes et al. instep kicking kinematics reviews (B+); grassroots NGB manuals summarized (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_plant_too_far
+legacy_id: plant-too-far
+headline_en: Plant foot lands too far from the ball line
+phases: plant, strike
+body_signal: Normalized plant distance above upper band at E_PLANT_SET; COM may lag behind kicking foot at E_KICK_PEAK.
+why_it_matters: Over-reaching can reduce plant-leg stability and delay kicking-foot timing relative to COM (B+ open kicking studies).
+feel_cue: "Step beside the ball, not past it."
+drill: 45 s gate step — plant between ball-line and forward cone; 4 reps (drill_plant_gate).
+severity_default: medium
+sources: Kellis & Katis instep kick determinants (B+); coaching consensus (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_leaning_back
+legacy_id: leaning-back
+headline_en: Upper body leans back through the strike window
+phases: cocking, strike
+body_signal: Trunk forward lean below checkpoint at E_KICK_PEAK; shoulders behind pelvis in AP axis (cp_trunk_lean_forward).
+why_it_matters: Backward lean at peak foot speed commonly coached as high flight and lost power transfer; papers relate trunk orientation to foot speed — performance tendency, not injury prediction.
+feel_cue: "Chest over the ball; finish nose over laces."
+drill: 60 s shoulder-pole bow — light stick across shoulders, bow toward target (drill_lean_pole_bow).
+severity_default: medium
+sources: Barfield kicking biomechanics review summaries (B+); FIFA Grassroots technique guides (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_hips_stay_square
+legacy_id: hips-stay-square
+headline_en: Hips stay square while the leg swings
+phases: cocking, strike
+body_signal: Low pelvis yaw rate through cocking; pelvis rotation peak delayed after kicking-foot acceleration onset (cp_hip_leads_foot).
+why_it_matters: Proximal-to-distal sequence (pelvis/trunk before foot) is a core kicking model. Square hips with early foot swing can indicate leg-only pattern.
+feel_cue: "Turn the belt buckle to the target before you whip the foot."
+drill: 90 s band pelvis turn then 3 linked kicks (drill_hips_band_turn).
+severity_default: medium
+sources: Sequence timing in soccer kick kinematics (B+); NSCA soccer performance summaries (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_backswing_short
+legacy_id: backswing-short
+headline_en: Kicking leg doesn't draw back before the strike
+phases: cocking
+body_signal: Trail knee flex at max cocking below threshold; short E_PLANT_SET → E_KICK_PEAK with low hip extension range.
+why_it_matters: Reduced cocking can cap foot speed potential in instep studies; may be acceptable for quick passes — use coach intent.
+feel_cue: "Touch your heel toward your back pocket, then snap through."
+drill: 45 s heel-tap cadence — tap glute 3× then full swing (drill_backswing_heel_tap).
+severity_default: medium
+sources: Nunome et al. kicking biomechanics (B+); UEFA technique syllabus summaries (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_plant_knee_soft
+legacy_id: plant-knee-soft
+headline_en: Plant knee collapses during the strike
+phases: plant, strike
+body_signal: Lead knee flex increases more than ~12° from E_PLANT_SET to E_KICK_PEAK (cp_plant_knee_stiff).
+why_it_matters: Excessive support-leg knee flex can reduce stability and alter trunk orientation; load-aware coaches monitor striking volume with anterior knee discomfort — not diagnostic.
+feel_cue: "Lock the post — stiff plant leg like a fence post."
+drill: 60 s post-leg hold pass — 10 s hold then 3 passes × 3 (drill_plant_post_hold).
+severity_default: medium
+sources: Support-leg kinetics in kicking (B+); sports medicine load management consensus (A, general)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_approach_rushed
+legacy_id: approach-rushed
+headline_en: Run-up doesn't decelerate into the plant
+phases: approach, plant
+body_signal: COM speed at E_APPROACH_END ≥ 85% of approach peak (cp_approach_control); shortened plant phase duration.
+why_it_matters: Uncontrolled approach timing correlates with inconsistent plant placement in coaching literature; visible as body speed without ball.
+feel_cue: "Last step is the quietest step."
+drill: 60 s beep plant sync from 5 m — 6 approaches (drill_approach_beep).
+severity_default: medium
+sources: Approach velocity studies in penalty kicks (B+); coaching periodization materials (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_follow_through_cut
+legacy_id: follow-through-cut
+headline_en: Follow-through stops right after the strike
+phases: strike, follow
+body_signal: Trail ankle displacement after E_KICK_PEAK below cp_follow_through_length; rapid ankle-speed decay without crossing body (style-dependent).
+why_it_matters: Abbreviated follow-through may reflect fear of load or balance loss; full path is part of coached power transfer. Discuss pain with qualified staff.
+feel_cue: "Swing through the picture frame — foot ends past the opposite hip."
+drill: 45 s finish-line tape — kicking foot must pass line (drill_follow_finish_line).
+severity_default: medium
+sources: Deceleration and muscle activity in kicking (B+); FIFA fitness/coaching resources (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_arms_collapsed
+legacy_id: arms-collapsed
+headline_en: Arms collapse and trunk loses balance in the approach
+phases: setup, approach, plant
+body_signal: Minimal counter-swing of arms; shoulder line rotation without opposite arm extension (cp_arm_balance).
+why_it_matters: Arm action contributes to rotational balance in run-ups; asymmetry may precede trunk lean faults.
+feel_cue: "Reach arms like a tightrope walker on the last two steps."
+drill: 45 s paper-plate carry kicks — 5 reps (drill_arms_plate_carry).
+severity_default: low
+sources: Whole-body coordination in kicking (B); motor development coaching (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_knee_stiff_strike
+legacy_id: knee-stiff-strike
+headline_en: Kicking knee stays bent through the strike window
+phases: strike, follow
+body_signal: Trail knee extension from E_KICK_PEAK to E_FOLLOW_END below ~15° (cp_knee_extension_through).
+why_it_matters: "Stabbing" contact reduces effective leg extension in many coached models; may suit some pass types — distinguish pass vs shot intent.
+feel_cue: "Snap the leg long like a whip handle extending."
+drill: 45 s long-leg wall touch at three-quarter speed (drill_knee_long_leg).
+severity_default: medium
+sources: Joint angle profiles in instep kick (B+); NGB skill cards (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_plant_collapse
+legacy_id: plant-collapse
+headline_en: Athlete falls off the plant leg after contact
+phases: follow, recovery
+body_signal: Large lead-ankle vertical velocity or lateral hop post peak (cp_plant_hop_control); COM shifts abruptly away from plant side.
+why_it_matters: Plant-side balance affects repeatability and fall risk on wet surfaces — training safety awareness.
+feel_cue: "Land the plant and stay tall on that leg until the swing finishes."
+drill: 60 s freeze finish — hold plant 2 s after kick (drill_plant_freeze).
+severity_default: medium
+sources: Dynamic balance in kicking (B); landing stability open physio articles (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_approach_wide
+legacy_id: approach-wide
+headline_en: Approach curves wide with extra lateral drift
+phases: approach, plant
+body_signal: Pelvis lateral displacement vs setup exceeds cp_lateral_drift without tactical curved run-up tag.
+why_it_matters: Unintentional wide approach can misalign plant foot and hip opening; curved free kicks are tactical exceptions.
+feel_cue: "Run straight arrows on railroad tracks to the ball."
+drill: 45 s corridor run-up inside 40 cm cone gate (drill_approach_corridor).
+severity_default: low
+sources: Curved vs straight run-up kinematics (B+); coaching manuals (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_strike_no_acceleration
+legacy_id: strike-no-acceleration
+headline_en: Kicking foot never reaches a clear speed burst
+phases: cocking, strike
+body_signal: Trail ankle peak speed below cp_foot_speed_burst ratio vs clip median — may indicate pass intent, fatigue, or clipped window.
+why_it_matters: Distinguish low-intent pass from failed power mechanics using coach-selected intent; low peak may mean clip trimmed late.
+feel_cue: "Explode the foot — one sharp snap."
+drill: 90 s RPE ladder 50/75/100% with full approach (drill_strike_rpe_ladder).
+severity_default: medium
+sources: Foot speed determinants in soccer kick (B+); detector notes (B)
+confidence_note: Requires coach intent tag when available.
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_approach_short_steps
+headline_en: Approach uses tiny rushed steps without gather
+phases: approach, plant
+body_signal: Step length in last 2–3 steps below band; high step frequency without COM deceleration into E_PLANT_SET (cp_approach_step_length).
+why_it_matters: Missing gather step can destabilize plant placement and timing (B coaching). Visible without ball.
+feel_cue: "Last two steps grow longer and quieter into the plant."
+drill: 60 s gather-step walk-ins — exaggerate penultimate step then plant (drill_approach_gather).
+severity_default: low
+sources: Run-up step pattern coaching (B); approach kinematics summaries (B+)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_plant_toe_out_excess
+headline_en: Plant foot points excessively outward
+phases: plant, strike
+body_signal: Plant foot yaw relative to pelvis–target line exceeds open-hip band into extreme external rotation (cp_plant_toe_out). Distinct from healthy open plant.
+why_it_matters: Extreme toe-out can reduce medial plant stability and alter hip opening path (B). Mild open plant is often desirable.
+feel_cue: "Plant open enough to see the target — not spun all the way out."
+drill: 45 s plant-angle tape marks — 5 kicks within marked yaw band (drill_plant_toe_band).
+severity_default: low
+sources: Plant foot orientation literature (B+); coaching plant education (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_plant_heel_strike_hard
+headline_en: Plant foot jams heel-first with little give
+phases: plant
+body_signal: At E_PLANT_SET, heel landmark drops abruptly with minimal knee flex onset; lead ankle stiff (cp_plant_heel_hard).
+why_it_matters: Hard plant landing may increase impact load on support leg and jar trunk timing (B). Soften plant for repeatability.
+feel_cue: "Quiet plant — soft knee, soft heel."
+drill: 45 s quiet plant holds without kick then 3 soft plants with pass (drill_plant_quiet).
+severity_default: medium
+sources: Support-leg loading themes (B+); landing coaching (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_hip_opens_late
+headline_en: Hip opens after the foot already accelerates
+phases: cocking, strike
+body_signal: Peak pelvis yaw occurs after trail-ankle acceleration onset by more than timing band (cp_hip_late_vs_foot). Related to square hips but timing-specific.
+why_it_matters: Late hip opening breaks proximal-to-distal sequence and can reduce foot speed potential (B+).
+feel_cue: "Belt turns first — foot follows the hip."
+drill: 60 s pause-at-open: plant, open hip, then swing (drill_hip_open_pause).
+severity_default: medium
+sources: Proximal-distal kicking sequence reviews (B+)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_trunk_rotation_absent
+headline_en: Trunk stays rigid without rotating into the kick
+phases: cocking, strike
+body_signal: Thorax yaw change through cocking→strike below band while pelvis may move (cp_trunk_yaw_absent).
+why_it_matters: Trunk rotation contributes to energy transfer in full instep models (B+). Rigid trunk often pairs with leaning back or arm collapse.
+feel_cue: "Let the chest turn with the belt toward the target."
+drill: 60 s cross-body reach opposite arm while slow swinging (drill_trunk_turn_reach).
+severity_default: medium
+sources: Trunk contribution to kicking velocity summaries (B+)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_non_kicking_arm_passive
+headline_en: Non-kicking arm hangs passive through the swing
+phases: plant, cocking, strike
+body_signal: Opposite arm (to kicking leg) shows minimal shoulder flexion/abduction counter-swing; wrist path near hip (cp_nk_arm_passive).
+why_it_matters: Non-kicking arm counterbalance aids rotational stability and trunk orientation (B). Distinct from bilateral arm collapse.
+feel_cue: "Reach the free arm toward the target sideline as the foot swings."
+drill: 45 s opposite-arm point kicks — 6 reps (drill_nk_arm_point).
+severity_default: low
+sources: Upper-limb role in kicking coordination (B); coaching balance cues (B)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_follow_across_body_short
+headline_en: Follow-through never crosses the body midline
+phases: follow
+body_signal: After E_KICK_PEAK, trail ankle fails to cross midline proxy before recovery (cp_follow_cross_midline); may co-occur with cut follow-through.
+why_it_matters: Full across-body path is a common power and balance coaching target for instep drives (B). Pass styles may intentionally abbreviate.
+feel_cue: "Finish past the far hip — paint a long arc."
+drill: 45 s midline-cross finish check with cone marker (drill_follow_cross_cone).
+severity_default: low
+sources: Follow-through kinematics coaching (B); kicking path reviews (B+)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_ankle_locked_strike
+headline_en: Kicking ankle stays floppy or unlocked at the strike proxy
+phases: strike
+body_signal: Trail ankle dorsiflexion/plantarflexion angle unstable near E_KICK_PEAK; foot segment yaw wobbles (cp_ankle_lock_proxy). Body-only — no ball contact confirmation.
+why_it_matters: Coaching models prefer a firm ankle for instep surface presentation (B). Floppy ankle may reduce repeatable strike face — not medical claim.
+feel_cue: "Lock the ankle — toes up, firm laces."
+drill: 45 s ankle-lock shadow swings then 3 firm passes (drill_ankle_lock_shadow).
+severity_default: medium
+sources: Ankle posture in instep kicking coaching (B); foot segment kinematics (B+)
+confidence_note: Limited without clear foot visibility.
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_side_foot_big_windup
+headline_en: Side-foot pass uses an oversized backswing
+phases: cocking, strike
+body_signal: For side-foot intent (or low peak speed + medial foot orientation proxy), trail hip extension / knee flex at cocking exceeds pass-appropriate band (cp_sidefoot_windup).
+why_it_matters: Large windup on push passes reduces accuracy and slows release in coaching models (B). Shot intent exempt.
+feel_cue: "Short draw, soft push — pass doesn't need a golf backswing."
+drill: 60 s wall push-passes with abbreviated cocking (drill_sidefoot_short_cock).
+severity_default: low
+sources: Side-foot pass technique NGB summaries (B); pass vs drive kinematics (B+)
+youth_note: Emphasize accuracy over power language for U12.
+
+---
+
+finding_id: fault_weak_foot_plant_mismatch
+headline_en: Weak-foot kick shows plant and hip pattern mismatched to strong foot
+phases: plant, cocking, strike
+body_signal: When non-dominant kicking side tagged, plant distance and pelvis yaw differ from dominant-side self-baseline beyond band (cp_weak_foot_mismatch).
+why_it_matters: Weak-foot inconsistency is expected; large plant/hip mismatch vs own strong foot guides bilateral practice (B). Not a pathology label.
+feel_cue: "Copy your strong-foot plant movie on the other side."
+drill: 90 s alternate-foot plant freezes then easy passes each foot (drill_weak_foot_mirror).
+severity_default: low
+sources: Bilateral kicking asymmetry research summaries (B+); NGB weak-foot progressions (B)
+youth_note: Prioritize confidence and contact quality over matching adult power.
+
+---
+
+finding_id: fault_volley_trunk_upright
+headline_en: Volley body shape stays too upright without athletic lean
+phases: cocking, strike
+body_signal: For volley-tagged or airborne-ball body context (kicking foot elevated before plant fully set), trunk remains near vertical with minimal controlled lean into swing (cp_volley_trunk).
+why_it_matters: Coaching volley body shape favors slight forward athletic posture and hip behind ball height proxy (B). No ball track required — body shape only.
+feel_cue: "Chest over the space — athletic lean into the volley."
+drill: 60 s self-toss thigh volleys focusing trunk lean (drill_volley_trunk_lean).
+severity_default: medium
+sources: Volley technique coaching summaries (B); aerial kicking posture themes (B+)
+confidence_note: Prefer volley intent tag; otherwise lower confidence.
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_volley_plant_late
+headline_en: Plant arrives late under a volley body swing
+phases: plant, cocking
+body_signal: E_PLANT_SET occurs after trail ankle has already accelerated past mid-cocking threshold; plant knee still settling at E_KICK_PEAK (cp_volley_plant_late).
+why_it_matters: Late plant under aerial swings reduces base stability (B). Body-first timing proxy without ball.
+feel_cue: "Plant first, then swing — base before whip."
+drill: 60 s plant-then-swing shadow volleys (drill_volley_plant_first).
+severity_default: medium
+sources: Timing in aerial kicking coaching (B); support-leg readiness themes (B+)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_kicking_hip_adduction_early
+headline_en: Kicking hip pulls across early before extension
+phases: cocking, strike
+body_signal: Trail hip adduction increases early in forward swing before hip extension peak; kicking knee cuts across midline early (cp_hip_add_early).
+why_it_matters: Early adduction can shorten swing arc and scrape plant leg (B). May appear with closed plant hip.
+feel_cue: "Swing long from the hip pocket — don't cut across early."
+drill: 45 s outside-cone swing path clears cone then kicks (drill_hip_path_clear).
+severity_default: medium
+sources: Swing-plane coaching (B); hip kinematics in instep kick (B+)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+finding_id: fault_shoulders_closed_target
+headline_en: Shoulders stay closed away from the target
+phases: strike, follow
+body_signal: Shoulder line yaw toward target at E_KICK_PEAK below band; trunk faces sideline more than goal (cp_shoulders_closed).
+why_it_matters: Closed shoulders often pair with closed hips and leaning back (B). Opening the shirt number to target is a common accuracy cue.
+feel_cue: "Show your shirt number to the goal as you strike."
+drill: 45 s shirt-to-target freezes at peak swing (drill_shoulders_open_target).
+severity_default: medium
+sources: Upper-body orientation in kicking accuracy coaching (B); trunk–pelvis coupling (B+)
+youth_note: Plant stability and approach rhythm; avoid elite hip-speed absolutes.
+---
+
+# Finding index (28 cards)
+
+fault_plant_foot_closes_hip | fault_plant_too_close | fault_plant_too_far | fault_leaning_back |
+fault_hips_stay_square | fault_backswing_short | fault_plant_knee_soft | fault_approach_rushed |
+fault_follow_through_cut | fault_arms_collapsed | fault_knee_stiff_strike | fault_plant_collapse |
+fault_approach_wide | fault_strike_no_acceleration | fault_approach_short_steps | fault_plant_toe_out_excess |
+fault_plant_heel_strike_hard | fault_hip_opens_late | fault_trunk_rotation_absent | fault_non_kicking_arm_passive |
+fault_follow_across_body_short | fault_ankle_locked_strike | fault_side_foot_big_windup | fault_weak_foot_plant_mismatch |
+fault_volley_trunk_upright | fault_volley_plant_late | fault_kicking_hip_adduction_early | fault_shoulders_closed_target
+
+Cross-link: Coaching/001_cues.txt, Coaching/002_drills.txt, Phases/001_phase_model.txt

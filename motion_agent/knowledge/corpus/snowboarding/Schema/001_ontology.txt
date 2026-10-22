@@ -1,0 +1,175 @@
+# Snowboarding Sport Pack — Ontology (Schema)
+
+## Entity: Rider
+
+Attributes:
+- rider_id (string, optional external)
+- stance_orientation: regular | goofy | unknown
+- audience_band: youth | adult | unknown
+- lead_foot: left | right (derived from stance when known)
+
+Relations:
+- performs → RideInstance
+- subject_of → FindingInstance
+
+## Entity: RideInstance
+
+Attributes:
+- clip_id (session reference)
+- terrain_context: flat | gentle_pitch | unknown
+- turn_family: heel_side | toe_side | linked | traverse_only | unknown
+
+Relations:
+- has_phase_sequence → SnowboardPhase (ordered)
+- observed_on → BiomechObservation
+
+## Entity: TurnFamily
+
+Enum (coaching tags, not auto-classified in v1):
+- heel_side
+- toe_side
+- linked
+- traverse_only
+
+Attributes:
+- turn_family_id (stable slug)
+- fis_glossary_terms optional (frontside, backside — narrative only)
+
+## Entity: SnowboardPhase
+
+Attributes:
+- phase_id (e.g., S_READY, T_APEX, T_TRANSITION)
+- phase_family: stance | turn | transition
+- ordinal (integer order within turn chain)
+- description_plain (English)
+
+Relations:
+- follows → SnowboardPhase
+- contains_events → PhaseEvent
+
+## Entity: PhaseEvent
+
+Attributes:
+- event_id
+- start_rule (narrative, body-only)
+- end_rule (narrative)
+- detector_proxy (optional engineering string)
+
+Examples:
+- apex_body_proxy — max lateral trunk inclination or knee angulation peak
+- initiate_knee_flex — lead knee flexion rise after traverse
+- transition_flatten_proxy — local min trunk inclination between apex peaks
+
+## Entity: Finding
+
+Attributes:
+- finding_id (slug, prefix fault_ or concern_ for safety-adjacent)
+- headline (plain language)
+- phase_id (primary)
+- turn_family optional
+- severity_hint: info | form | balance | load | safety
+- body_signals (list of measurable descriptions)
+- why_it_matters (performance, balance, control — non-diagnostic)
+- authority_level: B+ | B typical; A+ only when tied to FIS equipment rules via SafetyGuideline link
+- evidence_type: CoachingConsensus | BiomechRelationship | SafetyGuidelineRef
+
+Relations:
+- has_cue → Cue
+- has_drill → Drill
+- anchored_in → SnowboardPhase
+
+## Entity: Cue
+
+Attributes:
+- cue_id
+- finding_id (foreign)
+- feel_text (athlete-facing, body-first)
+- coach_text (optional longer)
+
+## Entity: Drill
+
+Attributes:
+- drill_id
+- finding_id
+- duration_sec (30–90 typical)
+- setup (minimal equipment; prefer on-snow lesson progressions)
+- instructions (ordered steps)
+- off_snow_variant optional (carpet, balance board — B coaching)
+
+## Entity: Checkpoint
+
+Attributes:
+- checkpoint_id
+- phase_id
+- quality_dimension (from Quality/001)
+- series_id (measurement surface)
+- pass_description (body observable)
+- fail_links → Finding (optional)
+
+## Entity: SafetyGuideline
+
+Attributes:
+- guideline_id (e.g., safety_helmet_on_snow)
+- headline
+- authority_level: A+ for FIS compulsory equipment rules; B+ for general on-snow safety
+- audience_band: youth | adult | all
+- product_action: remind | redirect | stop_and_seek_care (for clinical redirects in Disclaimer only)
+
+Relations:
+- cites → EvidenceChunk (fis/ paths)
+- related_finding → Finding (optional, e.g., concern_fall_stiff_brace)
+
+Not a performance Finding — surfaced in Coaching and Docs/002.
+
+## Entity: LoadConcern
+
+Attributes:
+- concern_id (e.g., load_concussion_redirect)
+- description
+- audience_band
+- authority_level A | A+ for clinical consensus summaries (Disclaimer)
+
+Used in Training/ and Docs — not scored as form faults.
+
+## Entity: EquipmentRule
+
+Attributes:
+- rule_id (e.g., fis_crash_helmet_compulsory)
+- equipment_type: helmet | back_protector (SBX — reference only)
+- standard_refs (CE, ASTM F2040, EN 1077 — narrative, cite manifest)
+- authority_level: A+
+
+Relations:
+- applies_to → SafetyGuideline
+
+## Entity: EvidenceChunk (RAG metadata pattern)
+
+Attributes:
+- source_id (from SOURCE_MANIFEST)
+- authority_level
+- evidence_type
+- retrieved_at
+- corpus_path optional (e.g., fis/Rules/008_precisions-sbfsfk-southern-hemisphere-2627.txt)
+
+## Naming conventions
+
+- Turn phase IDs: prefix T_
+- Static stance phase: prefix S_
+- Finding IDs: prefix fault_ (form); concern_ (safety-adjacent observable)
+- Safety guideline IDs: prefix safety_
+- Cue IDs: cue_<finding_id>
+- Drill IDs: drill_<finding_id>
+
+## Handedness / lead-trail mapping
+
+Default **regular** (left foot forward):
+- lead leg = left; trail leg = right
+- Goofy: mirror lead/trail in product logic; corpus may say "lead knee"
+
+## Measurement definitions (series_id)
+
+JointAngle: knee_angle_lead, knee_angle_trail, hip_flex proxy
+SegmentOrientation: trunk_inclination_lateral, pelvis_yaw, thorax_yaw
+Derived: knee_angulation, shoulder_pelvis_separation, com_lateral_offset
+
+All observations are proxies — no snowboard edge angle entity in v1.

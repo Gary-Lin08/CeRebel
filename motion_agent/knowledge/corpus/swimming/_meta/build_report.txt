@@ -1,0 +1,100 @@
+# Swimming Sport Pack — Build Report
+
+generated_at: 2026-10-21T00:00:00+08:00
+build_agent: corpus_swimming_freestyle_v1
+primary_stroke: freestyle (front crawl)
+language_primary: English
+index_scope: all paths except _meta/ (global ingest rule)
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Content files written | 18 |
+| Finding cards | 24 |
+| Coaching cues | 18 |
+| Drills | 15 |
+| Quality checkpoints | 16 |
+| Phase model phases | 8 |
+| Approximate total words (content only, excl. _meta/) | ~11230 |
+| Estimated RAG chunks (512-token heuristic, ~400 words/chunk) | ~28–35 |
+
+## Files written
+
+| Path | Role | Approx lines |
+|------|------|--------------|
+| Docs/001_ARCHITECTURE.txt | Pack architecture, capture, pipeline | 130 |
+| Docs/002_DISCLAIMER.txt | Safety and limitations | 65 |
+| Schema/001_ontology.txt | JSON-LD ontology graph | 75 |
+| Taxonomy/001_concepts.txt | Concept catalog | 145 |
+| Taxonomy/002_relations.txt | Relations and remediation links | 55 |
+| Phases/001_phase_model.txt | Freestyle phase + event model | 210 |
+| Quality/001_quality_definition.txt | Quality axes and tiers | 115 |
+| Quality/002_checkpoints.txt | Checkpoint catalog | 130 |
+| Findings/001_common_faults.txt | Finding cards | 280 |
+| Coaching/001_cues.txt | Cues linked to findings | 145 |
+| Coaching/002_drills.txt | Drills and selection matrix | 165 |
+| Biomechanics/001_overview.txt | Biomechanics overview | 169 |
+| Biomechanics/002_freestyle_propulsion_and_forces.txt | Propulsion/drag summary | 145 |
+| Training/001_team_practice.txt | Practice structure | 120 |
+| Training/002_youth_development.txt | Youth progression | 115 |
+| _meta/SOURCE_MANIFEST.txt | Sources and authority | 25 |
+| _meta/pack_readme.txt | Pack status (updated) | 12 |
+| _meta/build_report.txt | This file | — |
+
+## Directories completed (spec compliance)
+
+- [x] Docs/
+- [x] Phases/
+- [x] Quality/
+- [x] Findings/
+- [x] Coaching/
+- [x] Biomechanics/ (spec minimum + extra propulsion doc)
+- [x] Training/ (spec minimum + youth doc)
+- [x] Schema/
+- [x] Taxonomy/
+
+## Not in scope (this build)
+
+- brain_plan.txt, research_notes.txt, review_report.txt (other agent stages)
+- Live SportPack detector code wiring (registry remains beta)
+- PDF ingest / generated_corpus chunks.jsonl (plain-text pack only)
+
+## RAG indexing notes
+
+- Chunk on `---` separators and `finding_id:` / `checkpoint_id:` / `drill_id:` headers.
+- English primary; zh-cn labels in Schema for query expansion only.
+- Freestyle-primary; backstroke/breaststroke/butterfly remain taxonomy glossary unless future build expands.
+
+## Validation checklist
+
+- [x] Disclaimer present in Docs/
+- [x] Phase model maps to event IDs for detector alignment
+- [x] Each high-priority fault has cue + drill linkage via relations or Coaching files
+- [x] No fabricated medical angle norms as universal rules
+- [x] Youth separated in Quality and Training docs
+
+build_status: complete
+gap_fill_verified: 2026-10-21 — Biomechanics/001, Training/001, build_report present; pack passes check_pack_completeness.py
+
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+build_agent: corpus_v2_consistency_upgrade
+sports_batch: basketball, boxing, snowboarding, weightlifting, swimming, yoga
+
+Actions:
+- Migrated Findings/001_common_faults.txt to canonical `---` + finding_id: fault_* cards
+  with headline_en, phases, body_signal, why_it_matters, feel_cue, drill, severity_default, sources
+- Findings count now: 27
+- Ensured Coaching cues/drills cite fault_* (cues≈23, drills≈17)
+- Confirmed Taxonomy/002_relations.txt rows ≥15 (count≈43)
+- Added Phases V2 PHASE LINK INDEX with detector_events + fault_links
+- Rewrote _meta/review_report.txt (stale missing-DISCLAIMER claims corrected)
+- Appended this build_report section
+
+Sport-specific notes:
+- Freestyle; +3 findings to 27 (was ~24).
+build_status: v2_upgrade_complete
+VERDICT_REF: APPROVED_V2

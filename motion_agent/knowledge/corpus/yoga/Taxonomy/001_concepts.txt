@@ -1,0 +1,26 @@
+# Yoga — Concepts (v1 taxonomy for RAG)
+# Stable concept_id slugs; English definitions with Sanskrit aliases where useful
+
+concept_yoga: Physical practice integrating posture (asana), often breath and attention; CeRebel scope is asana motion only.
+concept_asana: Posture; unit of analysis is pose_id hold or flow node.
+concept_pranayama: Breath regulation — out of scope for pose-only detection (glossary only).
+concept_vinyasa: Breath-linked movement sequence; maps to mode=flow.
+concept_hatha: Slower held poses; maps to mode=hold emphasis.
+concept_alignment: Body stacking for sustainable load — not aesthetic depth.
+concept_drishiti: Gaze focal point; relates to fault_hold_wandering coaching.
+concept_bandha: Muscular locks — not visible in 2D pose v1.
+concept_prop: Block, strap, blanket — coaching text only.
+concept_sun_salutation: Named flow template; see Training/001 Sun A table.
+concept_counterpose: Pose that balances prior shape (fold after backbend).
+concept_bilateral: Left-right symmetric intent (Mountain, Chair).
+concept_unilateral: Single-leg or asymmetric (Tree, Warriors).
+concept_closed_chain_upper: Hands on floor (Dog, Plank, Chaturanga).
+concept_inversion_prep: Hips above heart approximate (Down Dog) — not full inversion findings.
+concept_hip_hinge: Flexion primarily at hips with spine neutral priority.
+concept_lumbar_flexion: Forward bending segment contribution — forward fold faults.
+concept_lumbar_extension: Backbend segment contribution — dog sag, plank sag.
+concept_knee_tracking: Frontal-plane knee over foot alignment.
+concept_scapular_upward_rotation: Shoulder blade motion in overhead and dog — elevation fault inverse.
+concept_hypermobility: Excess passive ROM — stability over depth policy.
+concept_hold_stillness: Low joint velocity window after entry.
+concept_transition_control: Bounded acceleration in flow mode.

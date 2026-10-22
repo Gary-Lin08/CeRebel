@@ -1,0 +1,72 @@
+# Basketball Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel basketball content summarizes **open coaching literature, biomechanics reviews, and federation skill
+progressions**. It is **not** a substitute for licensed medical care, physical therapy diagnosis, or
+individualized return-to-play protocols after knee, ankle, shoulder, or wrist injury.
+
+- Pain, swelling, instability, or sharp joint symptoms during jumping or shooting require evaluation by a
+  qualified clinician — do not rely on an app finding to “play through.”
+- Youth athletes have different bone maturity, growth-plate sensitivity, and training tolerance than adults;
+  follow your league’s age-appropriate practice guidelines (USA Basketball, FIBA Mini Basketball, school athletic
+  policies).
+
+## Not a game-stat or scouting tool
+
+Make percentage, shot charts, and play-by-play data are **not** inferred from body pose alone. This pack does
+not certify eligibility, rank players, or replace certified coaching credentials.
+
+## Body tracking limitations
+
+Single-camera 2D pose estimation can mis-estimate:
+
+- Shooting elbow flexion when the arm is foreshortened toward or away from the camera.
+- Wrist and finger orientation (release angle) without ball markers.
+- Knee valgus and ankle roll on landing when legs overlap or shorts occlude joints.
+- Trunk lean in the sagittal plane when the capture angle is oblique.
+
+Findings describe **visible tendencies**, not laboratory-grade kinematics. Confidence should be lower when
+joints are occluded, frame rate is below ~60 fps for jump shots, or the athlete is heavily contested (body shape
+changes).
+
+## No guaranteed performance outcomes
+
+Mechanics cues may support movement patterns discussed in research and coaching literature, but **shooting
+accuracy, consistency under fatigue, and injury risk depend on many factors** (practice quality, sleep,
+strength, cumulative jump load, psychology, etc.). Do not promise percentage improvements from a single drill.
+
+## Biomechanical “norms”
+
+Open literature reports **ranges and group averages** across skill levels and shot types (free throw vs jump shot).
+Tall vs short shooters, one-motion vs two-motion styles, and mobility differences all change appearance. This
+pack avoids presenting arbitrary degree targets as universal rules, especially for youth.
+
+## Jump load and landing
+
+Repeated hard landings with poor alignment can increase stress on knees and ankles (clinical consensus, A).
+Automated landing findings are **coaching hints**, not clinical diagnosis of ACL or patellofemoral conditions.
+
+## Coaching relationship
+
+Automated briefs support coaches, parents, and athletes who already have a training plan. They do not replace
+in-person supervision, especially for beginners learning basic shooting footwork and rim approach.
+
+## Emergency
+
+For acute injury on court, follow venue emergency procedures and seek immediate medical attention when needed.
+
+## Product behavior
+
+- Basketball pack features may be gated as “coming_soon” until detector validation completes — absence of a
+  finding is not proof of safe or optimal mechanics.
+- Free throw and jump shot variants use different lower-body checkpoints; mislabeled clip type may reduce accuracy.
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` with authority levels. Federation youth guidelines change;
+retrieval dates matter. When in doubt, cite the live official source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Coaching tips from motion analysis — not medical advice. Stop if you feel pain. Land softly and follow your coach’s plan.”

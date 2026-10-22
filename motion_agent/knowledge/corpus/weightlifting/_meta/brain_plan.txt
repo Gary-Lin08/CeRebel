@@ -1,0 +1,350 @@
+# CeRebel Weightlifting KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: weightlifting (barbell squat / hinge / press form)
+# Aligns: SPORT_PACK_KB_SPEC.txt | Product: body-first OpenSim coaching; NO bar tracking
+# Registry: motion_agent/sports/registry.py (coming_soon — detector not wired v1)
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for barbell strength patterns coaches use for
+squat, deadlift (hinge), and press families. Analysis uses reconstructed body
+only (joint angles, segment positions, speeds). Bar path is inferred from hand
+/wrist height proxies when visible — never required for a finding.
+
+In scope v1:
+- Back squat (high-bar default narrative; low-bar noted as style variant in Biomechanics)
+- Conventional deadlift from floor (sumo = stance variant, same phase IDs)
+- Standing overhead press (OHP); bench press shares press phase IDs with floor-start note
+
+Out of scope v1:
+- Olympic lifts (snatch, clean & jerk) — separate pack / phase model later
+- Load on bar (kg), 1RM, RPE, program design, peaking blocks
+- Medical diagnosis, pain treatment, return-to-lift protocols (redirect to licensed providers)
+- Belt/wrap/chalk product advice; monolift / specialty equipment rules
+
+Build agent writes full Findings/Coaching bodies from this map; brain agent does not.
+
+================================================================================
+2. SAFETY-FIRST (NON-NEGOTIABLE — BEFORE ANY FORM FINDING)
+================================================================================
+
+Product behavior (Docs/002 + Coaching preface — build agent):
+
+1. PAIN / INJURY LANGUAGE: If user or session metadata mentions sharp pain, numbness,
+   joint locking, or recent surgery — do NOT prescribe drills. Surface safety-pain-stop
+   and "stop lifting and consult a qualified professional."
+
+2. NO MEDICAL NORMS AS PRESCRIPTION: Angle bands are coaching heuristics for typical
+   cohorts in open literature — NOT individualized medical clearance.
+
+3. YOUTH: No max-effort singles, no 1RM estimation, no "grind through" cues.
+   Findings severity down-weight; emphasize technique, supervision, and load caps
+   (NSCA / ACSM youth summaries — A/B+). No weighted max testing in product KB.
+
+4. SPOTTER / BAIL: For bench (future video) and heavy squat — KB states body-only
+   analysis cannot verify spotters or safety pins; flag safety-environment-unknown
+   when user context implies near-max attempt without stating safety setup.
+
+5. LUMBAR SPINE: Findings about "rounding" or "hyperextension" describe visible
+   posture under load and possible tissue/load implications in careful wording —
+   never diagnose disc injury.
+
+6. ASYMMETRY: Bilateral capture preferred; single-camera monocular OpenSim increases
+   uncertainty — checkpoints use conservative thresholds (see section 5).
+
+7. REFUSE WRONG SPORT: When golf/baseball detectors exist elsewhere, weightlifting pack
+   must document sport-mismatch in Architecture (build); KB does not mix swing mechanics.
+
+Every user-facing finding card AFTER safety gate includes: id, phases, body signal,
+why (performance/load — cautious), feel cue, 30–90s drill, sources[], authority level.
+
+================================================================================
+3. LIFT FAMILIES & PHASE MODELS (UI + FUTURE DETECTOR)
+================================================================================
+
+Three parallel phase chains. Phase IDs are stable contracts (prefix by family).
+
+--- SQUAT (sq_*) — 7 phases ---
+
+| id          | label_en    | label_zh   | role |
+|-------------|-------------|------------|------|
+| sq_setup    | Setup       | 深蹲预备   | Bar on back, stance, grip width proxy |
+| sq_brace    | Brace       | 深蹲憋气   | Trunk stiffening before descent |
+| sq_descent  | Descent     | 深蹲下放   | Controlled eccentric, hips/knees flex |
+| sq_bottom   | Bottom      | 深蹲底部   | Turnaround; max knee/hip flex window |
+| sq_ascent   | Ascent      | 深蹲上升   | Drive out of hole; knee/hip extend |
+| sq_lockout  | Lockout     | 深蹲锁定   | Hips/knees near full extension at top |
+| sq_rerack   | Rerack      | 深蹲回架   | Walk-back / bar to rack (if in clip) |
+
+Events (body-only, OpenSim-friendly):
+- sq_bottom_event: frame of maximum bilateral knee flexion (mean knee_angle_l/r) in rep window
+- sq_lockout_event: first local max pelvis vertical position after sq_bottom_event
+- sq_brace_end: last frame before knee flexion velocity exceeds negative threshold
+- sq_descent: sq_brace_end → sq_bottom_event
+- sq_ascent: sq_bottom_event → sq_lockout_event
+
+--- HINGE / DEADLIFT (dl_*) — 7 phases ---
+
+| id          | label_en      | label_zh     | role |
+|-------------|---------------|--------------|------|
+| dl_setup    | Setup         | 硬拉预备     | Stance, shins near bar proxy, neutral spine intent |
+| dl_brace    | Brace         | 硬拉憋气     | Lat engagement proxy; trunk stiffening |
+| dl_break    | Break floor   | 硬拉离地     | Initial separation from floor |
+| dl_knee_pass| Knee pass     | 硬拉过膝     | Bar/hands pass knee height; leg drive |
+| dl_lockout  | Lockout       | 硬拉锁定     | Hip extension complete; upright finish |
+| dl_lower    | Lowering      | 硬拉下放     | Controlled eccentric (if full rep in clip) |
+| dl_reset    | Reset         | 硬拉复位     | Return to setup between reps |
+
+Events:
+- dl_break_event: max upward vertical velocity of wrist midpoint (or hand bodies) after stillness
+- dl_knee_pass_event: knee_angle peaks decreasing while hip still extending (heuristic)
+- dl_lockout_event: max hip_flexion closure (min hip flexion angle) / max pelvis height post-pull
+- dl_lower: optional phase if eccentric visible after lockout
+
+--- PRESS (pr_*) — 6 phases (OHP default; bench = pr_setup on bench, skip long walkout) ---
+
+| id          | label_en    | label_zh   | role |
+|-------------|-------------|------------|------|
+| pr_setup    | Setup       | 推举预备   | Rack/unrack position, grip |
+| pr_unrack   | Unrack      | 出架       | Clear bar from rack; initial overhead/bench hold |
+| pr_eccentric| Eccentric   | 推举下放   | Bar lowered to chin/chest band |
+| pr_drive    | Drive       | 推举发力   | Concentric press |
+| pr_lockout  | Lockout     | 推举锁定   | Elbows near extension; bar over base |
+| pr_rerack   | Rerack      | 回架       | Return to rack |
+
+Events:
+- pr_drive_event: max positive vertical velocity of wrist midpoint during concentric
+- pr_bottom_event: max elbow_flex during eccentric (OHP: before drive; bench: touch proxy)
+- pr_lockout_event: max elbow extension (min elbow_flex) after drive
+
+Handedness: bilateral bar — use mean/symmetry of L/R angles; flag asymmetry finding when |L−R| exceeds band.
+
+Phases/001_phase_model.txt (build): expand events, fallbacks, scrub UX, family auto-select placeholder.
+
+================================================================================
+4. MEASUREMENT SURFACE (CODE ↔ KB)
+================================================================================
+
+Analysis board series (define norms & checkpoints per series; v1 planned):
+
+| series_id           | signal                              | unit | primary phases        | lift families |
+|---------------------|-------------------------------------|------|------------------------|---------------|
+| knee_flex_bilateral | mean(knee_angle_l, knee_angle_r)    | °    | sq_descent, sq_bottom  | squat         |
+| hip_flex_bilateral  | mean(hip_flexion_l, hip_flexion_r)  | °    | sq_*, dl_*             | squat, hinge  |
+| lumbar_extension    | lumbar_extension                    | °    | all                    | all           |
+| lumbar_bending      | lumbar_bending                      | °    | sq_descent, dl_break   | squat, hinge  |
+| pelvis_tilt         | pelvis_tilt                         | °    | sq_*, pr_drive         | squat, press  |
+| trunk_lean_proxy    | torso vs vertical (pelvis→torso)    | °    | sq_descent, dl_break   | squat, hinge  |
+| elbow_flex_bilateral| mean(elbow_flex_l, elbow_flex_r)    | °    | pr_eccentric, pr_drive | press         |
+| shoulder_flex       | mean(arm_flex_l, arm_flex_r)        | °    | pr_*                   | press         |
+| pelvis_height       | pelvis body vertical position       | m    | sq_bottom, dl_lockout  | squat, hinge  |
+| knee_valgus_proxy   | knee_adduction or 2D knee medial drift | °/cm | sq_ascent           | squat         |
+| asymmetry_knee      | |knee_angle_l − knee_angle_r|       | °    | sq_ascent, dl_lockout  | squat, hinge  |
+
+Future: latissimus proxy (elbow position relative to torso), scapular retraction (press).
+
+OpenSim glossary: link each series to coordinates in Biomechanics/001 (build).
+
+================================================================================
+5. CLINICAL / COACHING NORMS (EVIDENCE-BANDED — NOT MEDICAL ADVICE)
+================================================================================
+
+Wording: "typical in published cohorts / coaching consensus." Build adds URLs in
+SOURCE_MANIFEST + research_notes.
+
+ADULT (recreational to intermediate barbell; authority A/B+):
+
+Squat depth (body proxy): knee flex at bottom often ~100–130° in coached full-depth
+squats (B+); product flags "likely shallow" if peak knee flex < ~90° without mobility
+context (conservative for noisy IK). Partial squat is valid training — do not shame;
+label as depth checkpoint only.
+
+Torso angle (squat): forward lean varies by build and bar position; flag extreme
+combinations of forward lean + lumbar flexion increase (dl/sq shared concern) rather
+than single absolute torso degree (A systematic reviews on squat biomechanics).
+
+Deadlift start: hip height between squat and stiff-leg; "hips shoot up first" =
+hip flexion decreases before knee extension begins (B+ coaching heuristic).
+
+Press: lumbar extension increase under load (excessive arch) — compare lumbar_extension
+delta from pr_setup to pr_lockout; conservative flag > ~15–20° change (B+, not diagnostic).
+
+YOUTH (≤16 emphasis on supervision; NSCA/ACSM — A/B+ for policy, B+ for angles):
+
+- Shallower absolute depth targets OK; no max load language.
+- Separate checkpoint rows: cp_*_youth vs cp_*_adult in Quality/002.
+- Growth plates: technique and submaximal sets only in Coaching/002 drill copy.
+
+Exclude authority C from checkpoint/finding thresholds.
+
+================================================================================
+6. QUALITY MODEL
+================================================================================
+
+Quality/001_quality_definition.txt (build):
+
+Dimensions:
+(1) Safety & bracing readiness (setup/brace across families)
+(2) Spinal neutrality under load (squat + hinge priority)
+(3) Lower-body symmetry and knee/hip tracking (squat, hinge)
+(4) Bar-body vertical coordination (proxy: hands/wrist vs pelvis timing)
+(5) Press path and shoulder/elbow stacking (press)
+(6) Controlled tempo / no collapse at turnaround (bottom, eccentric)
+
+Score v1: checkpoint pass count — not a single composite load score.
+
+Quality/002_checkpoints.txt — seed table:
+
+checkpoint_id              | phase(s)           | series/signal           | rule (summary)                         | fail→finding_id           | evidence
+---------------------------|--------------------|---------------------------|----------------------------------------|---------------------------|----------
+cp_safety_pain_gate        | all                | user/session flags        | pain keywords → block form drills      | safety-pain-stop          | A (clinical policy)
+cp_sq_brace_before_descent | sq_brace→sq_descent| lumbar + pelvis stability | no knee flex before trunk set          | sq-rush-descent           | B+
+cp_sq_depth_band_adult     | sq_bottom          | knee_flex_bilateral       | peak within coached band or labeled partial | sq-depth-shallow     | B+
+cp_sq_depth_band_youth     | sq_bottom          | knee_flex_bilateral       | youth partial OK; no forced ATG cue    | sq-depth-forced-youth     | B+
+cp_sq_chest_hip_sync       | sq_ascent          | trunk_lean + pelvis height| chest/pelvis rise together            | sq-good-morning           | B+
+cp_sq_knee_tracking        | sq_ascent          | knee_valgus_proxy         | medial drift ↑ under load              | sq-knee-valgus            | A (risk) B+ (threshold)
+cp_sq_heel_stay            | sq_descent,bottom  | ankle / calcn height      | sudden heel rise at bottom             | sq-heel-rise              | B+
+cp_dl_lumbar_neutral_break | dl_break→dl_knee_pass | lumbar_extension Δ     | flexion loss > conservative band       | dl-lumbar-flexion         | A (load) B+ (IK threshold)
+cp_dl_hip_shoulder_sync    | dl_break           | hip vs shoulder height    | hips rise before shoulders             | dl-hips-shoot             | B+
+cp_dl_lockout_neutral      | dl_lockout         | lumbar_extension          | hyperextension spike at finish         | dl-hyperextension-lockout | B+
+cp_pr_rib_pelvis_stack     | pr_drive           | lumbar_extension Δ        | arch increase during drive             | pr-excessive-arch         | B+
+cp_pr_elbow_stack          | pr_drive           | elbow_flex path           | elbows flare extreme vs torso          | pr-elbow-flare            | B+
+cp_pr_lockout_complete     | pr_lockout         | elbow_flex_bilateral      | elbows not reaching extension band     | pr-incomplete-lockout     | B+
+cp_bilateral_symmetry      | sq_ascent,dl_lockout | asymmetry_knee          | |L−R| > conservative band              | lift-bilateral-asymmetry  | B+
+cp_tempo_control_bottom    | sq_bottom          | knee flex velocity        | bounce / uncontrolled reversal         | sq-bounce-bottom          | B+
+
+================================================================================
+7. FINDING CATALOG (12 STABLE IDs — SAFETY ORDERED)
+================================================================================
+
+| finding_id              | headline_en (short)                 | primary_phases        | body signal (measurable)                         | severity | in_code_v1 |
+|-------------------------|-------------------------------------|-----------------------|--------------------------------------------------|----------|------------|
+| safety-pain-stop        | Stop — pain reported                | all                   | session/user pain flag (non-kinematic)           | critical | planned    |
+| safety-environment-unknown | Confirm spotters/pins            | sq_*, pr_*            | user near-max context without safety note        | high     | planned    |
+| sq-good-morning         | Chest rises slower than hips        | sq_ascent             | pelvis height ↑ before torso uprighting        | high     | planned    |
+| dl-lumbar-flexion       | Lower back rounds under pull        | dl_break, dl_knee_pass| lumbar_extension decreases vs setup              | high     | planned    |
+| sq-knee-valgus          | Knees cave inward on the way up       | sq_ascent             | knee_valgus_proxy / medial knee drift            | high     | planned    |
+| dl-hips-shoot           | Hips pop up before the bar moves    | dl_break              | hip flexion closes before knee extension         | high     | planned    |
+| pr-excessive-arch       | Excessive back arch on press        | pr_drive, pr_lockout  | lumbar_extension Δ large vs pr_setup              | medium   | planned    |
+| sq-heel-rise            | Heels lift at the bottom            | sq_bottom             | calcn vertical jump vs mid-foot                  | medium   | planned    |
+| sq-bounce-bottom        | Bounce out of the bottom            | sq_bottom             | knee flex velocity spike at turnaround           | medium   | planned    |
+| dl-hyperextension-lockout | Over-lean at the top of the pull  | dl_lockout            | lumbar_extension high vs standing setup          | medium   | planned    |
+| pr-incomplete-lockout   | Press does not finish at lockout    | pr_lockout            | elbow_flex above extension band                  | medium   | planned    |
+| pr-elbow-flare          | Elbows flare wide on the press      | pr_drive              | arm_add / elbow path lateral                     | low      | planned    |
+| sq-depth-shallow        | Squat may be above parallel         | sq_bottom             | knee_flex peak below adult band (informational)  | info     | planned    |
+| lift-bilateral-asymmetry| Left/right effort looks uneven      | sq_ascent, dl_lockout | |knee_angle_l − knee_angle_r| sustained          | medium   | planned    |
+| sq-rush-descent         | Descent starts before bracing       | sq_brace, sq_descent  | early knee flex before stable trunk              | low      | planned    |
+
+Build agent: full SPORT_PACK finding cards for each row (sections 1–8 of spec).
+
+================================================================================
+8. ONTOLOGY CLASSES (Schema/001_ontology.txt)
+================================================================================
+
+Namespace prefix: wlift:
+
+Core classes:
+- WeightliftingEntity (root)
+- Lifter (schema:Person role)
+- BarbellRep (single rep instance; family tagged)
+- LiftFamily — squat | hinge | press
+- LiftPhase (subclass TemporalPhase) — sq_*, dl_*, pr_* instances
+- LiftEvent — bottom, lockout, break_floor, drive_peak, etc.
+- BodySegment, JointAngle, SegmentSpeed, SegmentPosition (MeasurementDefinition)
+- BiomechObservation
+- CoachingConcept (cue, drill, constraint)
+- Finding (fault pattern with stable finding_id)
+- SafetyGate (blocks coaching output — pain, environment)
+- Checkpoint
+- Evidence (+ ResearchFinding, CoachingConsensus, FederationGuideline)
+- SportMismatch (non-lift motion misclassified)
+
+Properties:
+- wlift:liftFamily (rep → family)
+- wlift:precedes (phase → phase)
+- wlift:occursIn (finding|checkpoint → phase)
+- wlift:measuredOn (observation → series_id)
+- wlift:failTriggers (checkpoint → finding)
+- wlift:authorityLevel (A+|A|B+|B|C)
+- wlift:ageBand (youth|adult|unspecified)
+- wlift:blockedBySafety (rep → SafetyGate)
+
+================================================================================
+9. TAXONOMY STUBS (Taxonomy/001_concepts, 002_relations)
+================================================================================
+
+Build agent expands rows; brain seeds phase + series + finding concepts and
+precedes / occursIn / failTriggers edges. See written stub files.
+
+================================================================================
+10. REQUIRED DOC OUTLINES (BUILD AGENT)
+================================================================================
+
+Docs/001_ARCHITECTURE.txt
+- Pack role; RAG paths; _meta excluded from index
+- Pipeline: adapt_session → rep window → lift family classify → phases → series → findings
+- Safety gate before findings; sport mismatch notes
+- No bar/load tracking; wrist/hand proxies only
+
+Docs/002_DISCLAIMER.txt
+- Not medical advice; pain → stop; youth supervision; monocular IK uncertainty
+
+Phases/001_phase_model.txt
+- Three family chains (section 3); events, fallbacks, EN/ZH labels
+
+Quality/001 + 002 — section 6
+
+Findings/001 — section 7 cards
+
+Coaching/001_cues.txt — safety cues first; then by finding_id
+Coaching/002_drills.txt — 30–90s; empty bar / PVC / bodyweight regressions; youth variants
+
+Biomechanics/001_overview.txt MUST contain:
+- Squat vs hinge vs press joint moment patterns (summary, A/B+)
+- Lumbar neutrality debate — product uses visible posture proxies only
+- Adult vs youth norm tables with authority tags
+- OpenSim coordinate glossary → series_ids
+- Limitations: no bar mass, no force plate, IK noise
+
+Training/001_team_practice.txt
+- Rack etiquette, warm-up ramp, partner filming angles (side 30–45°)
+- How coaches use one-main-fix + phase scrub in group setting
+
+================================================================================
+11. SOURCE PRIORITY (SEARCH / MANIFEST)
+================================================================================
+
+A+: NSCA position statements (youth resistance training), ACSM guidelines (summarized)
+A: Peer-reviewed squat/deadlift/press biomechanics & injury epidemiology (systematic reviews)
+B+: USA Weightlifting / IPF technical summaries (form, not rules verbatim)
+B: Expose / Starting Strength / Catalyst open articles (summarize with URL)
+Exclude C from thresholds.
+
+Suggested citations (build fills URLs): Escamilla squat kinematics reviews; McGill spine
+mechanics summaries (careful wording); NSCA youth RT; Schoenfeld hypertrophy mechanics reviews.
+
+================================================================================
+12. BUILD ORDER (SUGGESTED)
+================================================================================
+
+1. Schema + Taxonomy (stubs done)
+2. Docs/001–002, Phases/001
+3. Biomechanics/001 (norms + limitations + safety framing)
+4. Quality/001–002
+5. Findings/001 then Coaching/001–002
+6. Training/001
+7. SOURCE_MANIFEST, research_notes, review_report
+
+================================================================================
+13. ACCEPTANCE CRITERIA (PACK v1)
+================================================================================
+
+- Safety gates documented before form findings in Docs and Coaching
+- Every finding_id in section 7 has Findings card + cue + drill
+- Phase ids exactly match section 3 tables per family
+- No bar tracking or load (kg) dependency stated as required
+- Youth/adult separation in Biomechanics/001 and checkpoint youth rows
+- Three lift families each have 5–8 phases with body-only events
+
+End brain_plan v0.1

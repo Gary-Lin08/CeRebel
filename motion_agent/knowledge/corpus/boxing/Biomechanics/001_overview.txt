@@ -1,0 +1,206 @@
+# Boxing Shadowboxing — Biomechanics Overview (open literature summaries)
+
+Authority: primarily B+ (peer-reviewed striking kinematics and reviews) and B (coach-education synthesis).
+This document supports RAG retrieval for **non-contact shadow form** — no impact forces, glove mass, or opponent
+reaction. Not medical advice. See Docs/002_DISCLAIMER.txt.
+
+================================================================================
+1. WHY BIOMECHANICS MATTERS WITHOUT A TARGET
+================================================================================
+
+Shadowboxing removes impact but preserves the **coordination pattern** coaches care about: base of support, segment
+sequencing from lower body to hand, and return to guard. Pose-only pipelines estimate joint angles and segment
+speeds; they cannot measure punch force. Findings therefore describe **visible sequencing and posture**, not
+Newtonian output at the glove.
+
+Research on boxing and martial-arts straight punches generally reports contribution of **leg drive, hip/pelvis
+rotation, and trunk rotation** to hand velocity and timing, with the arm acting as the final link in a chain
+(B+). Shadow practice at submaximal speed still trains these relative timings when athletes avoid pure arm swinging.
+
+================================================================================
+2. KINETIC CHAIN (QUALITATIVE MODEL)
+================================================================================
+
+Common coaching and biomechanical descriptions for rear-hand straight punches (cross analog):
+
+1. **Ground interaction**: Push from rear foot; rear heel may rise or pivot to permit hip rotation (style-dependent).
+2. **Pelvis and trunk**: Rotation and slight weight transfer increase hand path velocity before peak elbow extension.
+3. **Shoulder and elbow**: Elbow extends along a path constrained by guard discipline; excessive abduction changes
+   shoulder loading patterns in lab studies (group-level, not individual prescription).
+4. **Wrist and hand**: Peak linear speed of the hand/wrist proxy often occurs near maximum elbow extension in
+   straight punches in controlled studies — product uses wrist speed peak as E_EXTENSION_PEAK.
+
+Jabs (lead hand) may show **smaller hip rotation** but still often include weight shift or step in skilled athletes.
+Flagging “arm-only” on all lead-hand strikes is intentionally conservative for rear-hand and hook/uppercut classes.
+
+Hooks and uppercuts emphasize **angular momentum** and bent-elbow geometry; horizontal and vertical hooks show
+different elbow flexion ranges in kinematic captures (B+). Shadow hooks should not appear as fully extended slaps if
+the goal is fundamental skill transfer.
+
+================================================================================
+3. STANCE AND BASE OF SUPPORT
+================================================================================
+
+Boxing stance is a **split stance** with weight biased but not frozen on one leg. Normalized base width and knee
+flexion affect:
+
+- Lateral stability during slips and pivots.
+- Time to initiate weight transfer toward the striking side.
+- COM excursion during footwork — overstepping increases recovery time (coaching models, B).
+
+Youth athletes often adopt a slightly wider base for balance; biomechanical comparisons between age groups are limited
+— product uses qualitative youth bands in Quality docs rather than elite adult templates.
+
+================================================================================
+4. TRUNK ROTATION AND SPINE LOADING (CAREFUL WORDING)
+================================================================================
+
+Rotation for power punches comes from **hips and thorax**, not from extreme passive lumbar twisting alone. Coaching
+cues that promote rear-foot pivot aim to distribute rotation through the kinetic chain (B).
+
+Excessive end-range neck extension or flexion during slips and rolls is discouraged in safety-oriented coaching (B+)
+because of habit formation for later contact training — **not** because shadowboxing alone causes concussion.
+
+CeRebel does not diagnose spine or shoulder pathology from pose data.
+
+================================================================================
+5. RECOIL AND DECELERATION
+================================================================================
+
+After peak hand speed, **active retraction** (elbow flexion, shoulder retraction) is part of defensive habit.
+Biomechanically, decelerating the hand uses shoulder and elbow musculature; slow or wide recoil paths are visible
+in pose and correlate with coaching corrections but are not unique injury predictors in shadow-only contexts.
+
+Rapid repeated maximal-speed punching without recovery may increase **local muscular fatigue** in shoulders — volume
+guidance belongs in Training/001 and coach supervision, not automated diagnosis.
+
+================================================================================
+6. DEFENSIVE MOVEMENTS (HEAD AND TRUNK)
+================================================================================
+
+Slips: primarily **lateral translation and rotation of the head** relative to pelvis with knees flexed; hands remain
+high in fundamental teaching (B).
+
+Rolls: combine **trunk flexion and lateral offset**; knee flexion lowers COM and supports smooth return (B).
+
+Pose estimation error is high for subtle head motion — slip/roll findings should run at lower default confidence.
+
+================================================================================
+7. MEASUREMENT SURFACE FOR PRODUCT (FUTURE SERIES)
+================================================================================
+
+| series_id              | signal                                      | unit | primary phases      |
+|------------------------|---------------------------------------------|------|---------------------|
+| base-width             | ankle separation                            | norm | stance, footwork    |
+| knee-flex              | avg knee angle                              | °    | stance, prep          |
+| pelvis-yaw-rate        | pelvis rotation velocity proxy              | °/s  | prep, extension       |
+| com-lateral            | COM position between ankles                 | norm | prep, footwork        |
+| wrist-speed-strike     | \|\|v(striking_wrist)\|\|                    | m/s  | extension             |
+| elbow-flex-strike      | elbow angle striking arm                    | °    | extension             |
+| guard-height           | wrist height vs sternum/chin proxy          | norm | guard, recovery       |
+| head-pitch             | chin tuck proxy                             | °    | guard, extension      |
+| recoil-time            | peak to guard band                          | ms   | recoil                |
+
+Do not present fixed degree “optima” as universal — literature reports **ranges across skill levels**.
+
+================================================================================
+8. SHADOW VS BAG WORK (SCOPE BOUNDARY)
+================================================================================
+
+Heavy bag and mitt impacts introduce **reaction forces**, wrist alignment under load, and equipment-specific
+technique. Those contexts are **out of v1 pack scope**. Biomechanics of impact absorption and glove coupling appear
+only as forward pointers for future packs.
+
+================================================================================
+9. REPRESENTATIVE SOURCE TYPES (NOT VERBATIM)
+================================================================================
+
+- Systematic and narrative reviews of punching and striking kinematics in boxing and martial arts (B+).
+- Laboratory studies of straight punches with motion capture (B+).
+- National boxing federation coach education materials on stance, guard, and shadow rounds (B).
+
+Specific URLs and retrieval dates belong in `_meta/SOURCE_MANIFEST.txt` when the manifest agent completes; this
+overview is safe for RAG without long copyrighted excerpts.
+
+================================================================================
+10. YOUTH VS ADULT (BIOMECH)
+================================================================================
+
+Children and adolescents differ in limb length ratios, strength, and coordination maturity. Shadowboxing for youth
+should emphasize **technique volume at controlled speed** rather than maximizing wrist speed peaks relative to adult
+norms from literature (often college or elite samples).
+
+Separate youth checkpoints in Quality/002; do not merge adult kinematic ranges into youth pass/fail without an age tag.
+
+================================================================================
+11. JAB (LEAD STRAIGHT) — SHADOW BIOMECHANICS
+================================================================================
+
+The jab is the primary **lead-hand straight** in orthodox shadowboxing. Biomechanically it is often a
+shorter impulse than the rear straight: less trunk rotation in many skilled athletes, but still rarely a
+pure arm swing when coached for fundamentals (B+).
+
+Body-visible priorities for pose-only coaching (no opponent, no impact):
+
+- **Rear-hand integrity**: Rear wrist should remain in the guard height band while the lead hand extends.
+  Dropping the rear hand is a defensive habit error visible in lab and field coaching, not a “power” cue.
+- **Extension path**: Lead elbow extends along a forward axis with moderate abduction; wide elbow flare
+  changes shoulder moment arm and is flagged in kinematic studies as style- or skill-dependent variance.
+- **Extension proxy**: Product timing uses argmax ||v(lead_wrist)|| in the punch window — this is peak
+  hand speed in space, not contact force or intent to harm.
+- **Retraction**: Active elbow flexion and shoulder retraction return the lead hand to guard before the
+  next prep peak; incomplete retraction shows as sustained lead-wrist speed (rhythm fault in Quality/002).
+
+Youth shadow jabs: prioritize **control and return** over maximizing lead-wrist speed relative to adult
+literature samples (often trained or collegiate athletes).
+
+================================================================================
+12. CROSS (REAR STRAIGHT) — SHADOW BIOMECHANICS
+================================================================================
+
+The cross (rear-hand straight in orthodox) typically shows **greater pelvis and trunk rotation** than the
+jab in group kinematic comparisons (B+). Coaching heuristics that match visible body signals:
+
+- **Foot and hip**: Rear-foot push and trail-foot pivot on the ball permit hip yaw toward the lead side;
+  a flat rear foot during rotation is a common teaching correction (heuristic, not a universal degree target).
+- **Sequencing**: Hip/trunk rotation often rises before or coincident with rear-wrist speed peak; an
+  arm-only cross shows rear-wrist peak with minimal hip-rotation rise (fault_arm_only_punch in Findings/001).
+- **Weight transfer**: COM shifts toward the lead leg through extension in many athletes; excessive lateral
+  sway outside the foot polygon is a balance finding, not a combat tactic.
+- **Retraction**: Rear hand must return to guard band after extension — lingering forward hand speed is
+  visible in shadow and correlates with open guard in later training contexts (form only).
+
+Southpaw athletes mirror lead/rear joint naming in product logic; biomechanical descriptions above swap
+hand labels, not the sequencing principles.
+
+================================================================================
+13. BRAIN-PLAN MEASUREMENT SURFACE (V1 SERIES — SHADOW)
+================================================================================
+
+These series_id values align Phases/001 events with analysis boards (brain_plan §5). Units are for
+coaching heuristics; thresholds live in Quality/002, not as injury-prevention guarantees.
+
+| series_id        | signal                              | unit | primary phases (pack)   |
+|------------------|-------------------------------------|------|-------------------------|
+| lead-wrist-spd   | ||v(lead_wrist)||                    | m/s  | extension (jab)         |
+| rear-wrist-spd   | ||v(rear_wrist)||                    | m/s  | extension (cross)       |
+| guard-height     | wrist height vs shoulder (both)     | norm | guard, recoil, recovery |
+| rear-hand-drop   | rear wrist height during jab          | norm | extension (jab)         |
+| hip-rotation     | pelvis yaw / trunk yaw proxy        | °    | prep, extension         |
+| stance-width     | ankle mediolateral separation       | norm | stance, guard, footwork |
+| com-sway         | COM lateral vs ankle midpoint       | cm   | guard, footwork         |
+| knee-flex        | bilateral knee flexion mean         | °    | stance, prep            |
+
+Section 7 table above lists additional exploratory signals (head pitch, recoil-time) for future packs.
+Do not merge conflicting series names in ingest without a migration note.
+
+================================================================================
+14. NON-HARM AND PRODUCT BOUNDARY (REINFORCEMENT)
+================================================================================
+
+This pack describes **movement quality for fitness and skill development** in non-contact shadowboxing.
+It does not instruct how to strike a person, maximize injury to an opponent, or select targets on the body.
+Biomechanics of head impact and effective mass at glove contact appear in research literature only to
+support why federations teach compact guard and stable neck posture — not to optimize harm.
+
+Stop activity on pain; seek licensed care for injury or concussion concerns (Docs/002_DISCLAIMER.txt).

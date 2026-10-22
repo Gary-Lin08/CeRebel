@@ -1,0 +1,207 @@
+# Boxing Shadowboxing — Drills (30–90 s blocks, body-first)
+# Each drill lists fault links, phase focus, equipment, youth note.
+# No bag, mitts, or sparring — shadow form only.
+
+================================================================================
+STANCE & GUARD
+================================================================================
+
+drill_guard_march
+  duration: 60 s
+  phases: stance, guard, footwork
+  faults: fault_hands_drop, fault_narrow_stance, fault_stiff_legs
+  setup: Open floor space; optional mirror.
+  steps: Athletic stance; march in place 20 s; add forward/back micro-steps 20 s; finish 20 s lateral shuffle without dropping hands.
+  body_focus: Wrist height, base width, knee flex.
+  youth: Shorter march; coach calls "freeze" in guard every 10 s.
+  authority: B
+
+drill_elbow_towel_guard
+  duration: 45 s
+  phases: guard
+  faults: fault_elbows_flared
+  setup: Small towel tucked under both elbows against ribs.
+  steps: Hold guard while shifting weight lead-rear; towel must not fall. 3 rounds of 15 s.
+  body_focus: Compact elbow position.
+  youth: Use paper towel; less pressure.
+  authority: B
+
+drill_stance_reset_hop
+  duration: 45 s
+  phases: stance
+  faults: fault_narrow_stance, fault_feet_crossed
+  setup: Tape shoulder-width line on floor.
+  steps: Light hop to land on line in orthodox/southpaw; guard up; 8 resets.
+  body_focus: Ankle separation normalized to shoulder width.
+  youth: Step reset instead of hop.
+  authority: B
+
+================================================================================
+JAB & STRAIGHTS
+================================================================================
+
+drill_step_jab_shadow
+  duration: 60 s
+  phases: prep, extension, recoil
+  faults: fault_reaching_jab, fault_slow_recoil, fault_rear_hand_drop_on_jab
+  setup: Film oblique if possible.
+  steps: Small lead step as jab peaks; recoil to guard before next rep. 10 jabs.
+  body_focus: Step timing vs wrist peak; rear hand at cheek.
+  youth: In-place jab only until step is stable.
+  authority: B
+
+drill_tunnel_jab_cross
+  duration: 75 s
+  phases: prep, extension, recoil, recovery
+  faults: fault_elbow_flare_straight, fault_arm_only_punch, fault_combo_without_guard
+  setup: Stand near wall for spatial reference (no contact required).
+  steps: Slow jab-cross; pause 1 count in guard between pairs; 8 pairs at 50% speed.
+  body_focus: Elbow path; hip turn on cross; guard reset.
+  youth: Jab only for first week progression.
+  authority: B
+
+drill_pivot_cross_shadow
+  duration: 75 s
+  phases: prep, extension, footwork
+  faults: fault_flat_rear_foot_cross, fault_arm_only_punch
+  setup: Rear foot visible to camera if filming.
+  steps: Emphasize rear heel lift on cross; 6 slow crosses each side (switch stance optional for southpaw practice).
+  body_focus: Rear foot rotation proxy at E_ROTATION_PEAK.
+  youth: Half-speed; fewer reps.
+  authority: B+
+
+================================================================================
+HOOKS & UPPERCUTS
+================================================================================
+
+drill_hook_freeze_check
+  duration: 60 s
+  phases: extension, recoil
+  faults: fault_hook_arm_extended, fault_wide_recoil
+  setup: Mirror optional.
+  steps: Lead hook to freeze at peak 1 s; verify bent elbow; recoil compact; 6 lead, 6 rear (advanced).
+  body_focus: Elbow flexion at peak; recoil path.
+  youth: Lead hook only; 4 reps.
+  authority: B
+
+drill_squat_uppercut_shadow
+  duration: 45 s
+  phases: prep, extension
+  faults: fault_arm_only_uppercut
+  setup: None.
+  steps: Slight knee bend; extend legs as uppercut rises; slow tempo; 5 per hand.
+  body_focus: Knee/hip extension timing with wrist rise.
+  youth: Minimal depth; focus on sync not power.
+  authority: B+
+
+================================================================================
+FOOTWORK & MOVEMENT
+================================================================================
+
+drill_short_step_ladder
+  duration: 60 s
+  phases: footwork, guard
+  faults: fault_overstep, fault_feet_crossed
+  setup: Two tape marks 30 cm apart.
+  steps: Guard up; step lead foot mark to mark forward and back without crossing feet; 10 cycles.
+  body_focus: Step length control.
+  youth: Wider marks if balance needs help.
+  authority: B
+
+drill_pivot_circle
+  duration: 90 s
+  phases: footwork, stance
+  faults: fault_lateral_leak_punch, fault_narrow_stance
+  setup: Imagine circle diameter 1 m.
+  steps: Lead foot pivots on circle; rear foot adjusts; guard maintained; 30 s each direction.
+  body_focus: Base maintenance during pivot.
+  youth: Larger circle; slower speed.
+  authority: B
+
+================================================================================
+DEFENSE (SHADOW)
+================================================================================
+
+drill_slip_rope_imagined
+  duration: 45 s
+  phases: extension (slip)
+  faults: fault_hands_drop_on_slip, fault_chin_up
+  setup: None.
+  steps: Slow slips L/R; hands stay at cheeks; 8 slips each side.
+  body_focus: Head lateral displacement with wrist height stable.
+  youth: Smaller slip amplitude.
+  authority: B
+
+drill_knee_soft_roll
+  duration: 60 s
+  phases: prep, extension (roll)
+  faults: fault_stiff_roll
+  setup: None.
+  steps: Half-speed roll under imagined bar; knees visibly flex; 6 rolls each direction.
+  body_focus: Knee flexion during trunk flexion.
+  youth: Skip deep rolls; emphasize balance.
+  authority: B
+
+================================================================================
+RHYTHM & COMBOS
+================================================================================
+
+drill_metronome_one_two
+  duration: 90 s
+  phases: full cycle
+  faults: fault_combo_without_guard, fault_slow_recoil
+  setup: Metronome 60–70 BPM.
+  steps: Jab on beat 1, cross on beat 2, guard reset before next pair; 12 pairs.
+  body_focus: E_GUARD_STABLE between peaks in beginner mode.
+  youth: 50 BPM; single punches on alternate beats.
+  authority: B
+
+drill_breath_shadow_round
+  duration: 90 s
+  phases: guard, extension, recoil
+  faults: fault_tense_shoulders, fault_hands_drop
+  setup: Timer visible.
+  steps: 90 s continuous shadow at 60% speed; inhale in guard, exhale on each punch; coach stops if hands drop.
+  body_focus: Relaxation and guard discipline under light fatigue.
+  youth: 45 s round; emphasize form stop early.
+  authority: B
+
+================================================================================
+DRILL SELECTION MATRIX (for RAG)
+================================================================================
+
+| priority fault              | first drill                 | second drill              |
+|-----------------------------|-----------------------------|---------------------------|
+| fault_hands_drop            | drill_guard_march           | drill_breath_shadow_round |
+| fault_arm_only_punch        | drill_pivot_cross_shadow    | drill_tunnel_jab_cross    |
+| fault_slow_recoil           | drill_metronome_one_two     | drill_step_jab_shadow     |
+| fault_feet_crossed          | drill_short_step_ladder     | drill_stance_reset_hop    |
+| fault_hook_arm_extended     | drill_hook_freeze_check     | drill_metronome_one_two   |
+| fault_hands_drop_on_slip    | drill_slip_rope_imagined    | drill_guard_march         |
+
+All drills assume pain-free participation; stop if joint or neck pain occurs (Docs/002).
+
+================================================================================
+V2 HIP / GUARD / COMPACT PREP
+================================================================================
+
+drill_belt_freeze_cross
+  duration: 75 s
+  phases: prep, extension
+  faults: fault_incomplete_hip_rotation, fault_flat_rear_foot_cross, fault_arm_only_punch
+  steps: Slow-mo cross; freeze at peak checking belt toward target and rear heel up; 8/side.
+  authority: B+
+
+drill_mirror_chin_nest
+  duration: 60 s
+  phases: guard
+  faults: fault_guard_chin_gap, fault_chin_up, fault_hands_drop
+  steps: Mirror guard holds with slow nod; chin nested, hands high; 5 holds.
+  authority: B
+
+drill_pocket_load_only
+  duration: 45 s
+  phases: prep, extension
+  faults: fault_telegraph_windup, fault_shoulder_line_opens
+  steps: Jab/cross leaving guard ≤15 cm then extend; partner flags big loops; 10 each.
+  authority: B

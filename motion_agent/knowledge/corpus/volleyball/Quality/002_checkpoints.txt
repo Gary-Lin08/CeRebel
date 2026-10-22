@@ -1,0 +1,141 @@
+# Volleyball Approach — Checkpoints (v1)
+
+# Format: checkpoint_id | phase(s) | series/signal | rule summary | fail→finding | age | evidence
+
+cp_approach_speed_adult
+  phases: approach, plant
+  series: approach_speed
+  rule: peak ankle horizontal speed in approach window ≥ 2.2 m/s (scale-normalized) OR ≥ 1.15 × clip baseline
+  fail: slow-approach
+  age: adult
+  evidence: B+
+
+cp_approach_speed_youth
+  phases: approach, plant
+  series: approach_speed
+  rule: peak ≥ 1.6 m/s OR ≥ 1.10 × baseline (conservative for developing athletes)
+  fail: slow-approach
+  age: youth
+  evidence: B+
+
+cp_approach_displacement_adult
+  phases: approach, plant
+  rule: horizontal pelvis displacement from E_APPROACH_START to E_PLANT ≥ 1.8 m OR ≥ 0.35 × estimated stature
+  fail: short-approach
+  age: adult
+  evidence: B
+
+cp_approach_displacement_youth
+  phases: approach, plant
+  rule: displacement ≥ 1.2 m OR ≥ 0.28 × stature
+  fail: short-approach
+  age: youth
+  evidence: B
+
+cp_penultimate_knee_adult
+  phases: approach, plant
+  series: penultimate_knee
+  rule: knee flexion at E_PENULTIMATE ≥ 35° (sagittal) OR flex increase ≥ 12° from prior step
+  fail: penultimate-flat
+  age: adult
+  evidence: B+
+
+cp_penultimate_knee_youth
+  phases: approach, plant
+  rule: flex ≥ 28° OR increase ≥ 10°
+  fail: penultimate-flat
+  age: youth
+  evidence: B
+
+cp_plant_knee_adult
+  phases: plant, takeoff
+  series: plant_knee
+  rule: at E_PLANT knee flex 30–55°; fail low if < 22° at plant
+  fail: soft-plant
+  age: adult
+  evidence: B+
+
+cp_plant_knee_youth
+  phases: plant, takeoff
+  rule: at E_PLANT flex ≥ 20°; fail if < 15°
+  fail: soft-plant
+  age: youth
+  evidence: B
+
+cp_com_rise_after_plant
+  phases: plant, takeoff
+  series: com_vertical
+  rule: E_COM_RISE frame index ≥ E_PLANT (COM rise not before plant contact proxy)
+  fail: arm-only-swing (partial — combine with arm ratio)
+  age: all
+  evidence: B+
+
+cp_arm_swing_ratio_adult
+  phases: swing, contact
+  series: arm_swing, com_vertical
+  rule: peak wrist speed / median wrist speed ≥ 3.5 AND COM rise amplitude ≥ 0.06 m (normalized)
+  fail: arm-only-swing
+  age: adult
+  evidence: B+
+
+cp_arm_swing_ratio_youth
+  phases: swing, contact
+  rule: ratio ≥ 2.8 AND COM rise ≥ 0.04 m
+  fail: arm-only-swing
+  age: youth
+  evidence: B
+
+cp_com_contact_timing_adult
+  phases: swing, contact
+  rule: (E_CONTACT - E_COM_PEAK) in frames at 60fps: -3 to +8 frames (contact near apex band)
+  fail early apex: jump-behind-contact if E_COM_PEAK > E_CONTACT + 10 frames
+  fail late apex: jump-early-reach if E_CONTACT < E_COM_PEAK - 8 frames
+  age: adult
+  evidence: B (product heuristic informed by B+ literature variability)
+
+cp_com_contact_timing_youth
+  phases: swing, contact
+  rule: -5 to +12 frames band; same fail logic with +4 frame slack
+  age: youth
+  evidence: B
+
+cp_trunk_before_wrist_peak
+  phases: swing, contact
+  series: trunk_rotation
+  rule: trunk rotation rate peak occurs before or within 2 frames of wrist acceleration onset
+  fail: late-trunk-open
+  age: all
+  evidence: B+
+
+cp_takeoff_symmetry
+  phases: takeoff
+  rule: |t_left_airborne - t_right_airborne| ≤ 4 frames at 60 fps
+  fail: asymmetric-takeoff
+  age: all
+  evidence: B
+
+cp_step_width_adult
+  phases: plant, takeoff
+  series: step_width
+  rule: mediolateral ankle separation at E_PLANT between 0.25 m and 0.55 m (normalized)
+  fail narrow: narrow-plant if < 0.20 m
+  fail wide: wide-plant if > 0.65 m
+  age: adult
+  evidence: B
+
+cp_step_width_youth
+  phases: plant, takeoff
+  rule: band 0.22–0.50 m
+  age: youth
+  evidence: B
+
+cp_landing_knee_flex
+  phases: landing
+  rule: within 8 frames of E_LAND, knee flex increase ≥ 15° (adult) or ≥ 12° (youth) from airborne minimum
+  fail: landing-stiff
+  age: adult / youth split
+  evidence: B+
+
+# Notes
+# Thresholds are coaching heuristics for noisy monocular pose — always attach confidence flag when near band edge.
+# See Docs/002_DISCLAIMER.txt

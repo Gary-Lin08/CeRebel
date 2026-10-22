@@ -1,0 +1,128 @@
+# Volleyball Attack Biomechanics — Overview (body-first, open sources)
+
+Authority tags: A+ federation glossary | A clinical load context | B+ kinematic reviews | B coaching | Product internal.
+
+Always read Docs/002_DISCLAIMER.txt before interpreting numbers in product UI.
+
+---
+
+## 1. Kinetic chain (approach → hit → land)
+
+Published spike and jump-serve analyses commonly describe:
+
+1. **Horizontal approach** — Athlete gains speed on the last steps; ground reaction forces shift toward the plant foot.
+2. **Eccentric loading** — Penultimate and plant steps show knee flexion; hip extensors and quadriceps load elastically (B+).
+3. **Vertical impulse** — Ankle, knee, and hip extension drive COM upward during takeoff.
+4. **Trunk rotation and tilt** — Pelvis and trunk rotate toward the net; increases hitting hand path length (B+).
+5. **Arm swing** — Hitting arm draws back then accelerates; elbow extends; wrist speed peaks near contact proxy (B+).
+6. **Landing** — Bilateral or staggered foot contact; knee flexion dissipates momentum (B+ general athletics).
+
+CeRebel does not compute joint torques or ground reaction forces in v1 — only kinematic proxies from pose/OpenSim.
+
+Sources: PMC-indexed volleyball spike reviews (search "volleyball spike kinematics"); summarized in SOURCE_MANIFEST.
+
+---
+
+## 2. Measurement definitions on body model
+
+### COM vertical (series: com_vertical)
+
+Proxy: pelvis center or mid-hip height; vertical velocity from finite differences.
+Use: takeoff onset (E_COM_RISE), jump apex (E_COM_PEAK), arm-only vs leg-driven jump discrimination.
+
+### Approach speed (series: approach_speed)
+
+Max of left/right ankle speed magnitude in horizontal plane during approach/plant phases.
+Use: slow-approach, short-approach context.
+
+### Plant knee / penultimate knee (series: plant_knee, penultimate_knee)
+
+Sagittal knee flexion angle at event frames. **Camera sensitivity**: 45° side view preferred; front view underestimates flexion.
+
+### Arm swing (series: arm_swing)
+
+||v(trail_wrist)||; E_CONTACT = argmax in window.
+Disclaimer: not ball speed; not contact point height.
+
+### Trunk rotation (series: trunk_rotation)
+
+lumbar_rotation or shoulder-line yaw relative to facing at ready; use rate peak timing vs wrist acceleration.
+
+### Step width (series: step_width)
+
+Mediolateral distance between ankles at E_PLANT.
+
+### COM–contact timing
+
+Δt = frame(E_CONTACT) - frame(E_COM_PEAK). Negative = contact before apex; positive = contact after apex.
+Coaching heuristic for "behind the ball" language when COM peaks well before hand speed peak (B, product).
+
+---
+
+## 3. Norm bands (typical published ranges — not prescriptions)
+
+### Adult indoor hitters (club/college; high variance)
+
+| Signal | Typical band (literature/coaching summaries) | Authority |
+|--------|-----------------------------------------------|-----------|
+| Approach last-step speed | moderate–high vs self baseline | B+ |
+| Plant knee flex at takeoff | ~30–50° sagittal (high variance) | B+ |
+| COM rise (normalized) | visible distinct peak before landing | B+ |
+| Wrist speed peak timing vs COM | often near apex ± few frames | B+ / B product |
+| Trunk rotation | substantial before hand peak | B+ |
+
+### Youth (middle school / early HS)
+
+| Signal | Notes | Authority |
+|--------|-------|-----------|
+| Approach speed | lower absolute speeds; emphasize rhythm over max | B |
+| Jump height | lower COM rise; do not compare to elite cm targets | B |
+| Arm speed ratio | lower peak/median ratio expected | B |
+| Volume | limit maximal jump-spike reps per practice (LTAD) | B+ |
+
+Never present youth numbers as adult targets in UI copy.
+
+---
+
+## 4. Jump serve (kinematic overlap)
+
+Jump serves use similar leg drive and trunk rotation; horizontal approach may be minimal. Toss phase is **not** body-scored without ball.
+Strike phase maps to `contact`; landing checkpoints identical.
+
+---
+
+## 5. Load and injury context (careful wording)
+
+Reviews associate high volleyball jump volume with patellar tendinopathy and shoulder overload in some cohorts (A epidemiology).
+**Single-clip kinematics cannot predict injury.** Findings like arm-only-swing and landing-stiff are framed as efficiency and load
+awareness cues, not diagnoses.
+
+---
+
+## 6. OpenSim / coordinate glossary (when available in session)
+
+Map product series to coordinates when export includes:
+- knee_angle_l / knee_angle_r → plant_knee selection by plant foot side
+- lumbar_rotation → trunk_rotation
+- pelvis_ty or equivalent → com_vertical
+- wrist linear velocity from body markers → arm_swing
+
+If coordinates missing, pack RAG still supports qualitative coaching; automated checkpoints defer with low confidence.
+
+---
+
+## 7. Limitations (v1)
+
+- No ball → no true "contact point" or set-relative jump height.
+- 2D/monocular error on shoulder rotation and knee flexion.
+- Block, set, and pass motions not detected by approach phase model.
+- Beach sand changes jump height; use metadata surface=beach for softer COM thresholds.
+
+---
+
+## 8. Suggested citations (URLs in SOURCE_MANIFEST)
+
+- FIVB rules hub (A+) — terminology only
+- USA Volleyball / Volleyball Canada coaching education (B)
+- PMC spike and jump-serve kinematic articles (B+)
+- ACSM youth training position summaries for jump volume context (A)

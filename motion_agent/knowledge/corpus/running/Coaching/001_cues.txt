@@ -1,0 +1,155 @@
+# Running — Feel Cues (by finding_id) — v2
+
+Coaching advice authority B unless noted. Pair with Docs/002_DISCLAIMER.
+Each block cites fault_* for RAG pairing. Prefer external focus for youth/beginners.
+
+---
+
+cue_id: cue_foot_under_hip
+finding_id: fault_overstride
+text_en: "Foot lands under your hip, not reaching forward."
+alt_en: "Pull the ground back under you instead of braking in front."
+
+cue_id: cue_shorter_quicker
+finding_id: fault_low_cadence_overstride
+text_en: "Shorter, quicker steps at the same easy speed."
+alt_en: "Imagine running on ladder rungs close together."
+
+cue_id: cue_forward_not_up
+finding_id: fault_excessive_bounce
+text_en: "Forward, not up — quiet head."
+alt_en: "Glide horizontally over the ground."
+
+cue_id: cue_lean_from_ankles
+finding_id: fault_trunk_lean_back
+text_en: "Lean from the ankles, eyes on horizon."
+alt_en: "Fall forward into the run like a controlled tip."
+
+cue_id: cue_tall_spine_run
+finding_id: fault_trunk_lean_excess_fwd
+text_en: "Tall spine — grow through the crown of your head."
+alt_en: "Run proud, not folded at the belt."
+
+cue_id: cue_level_belt
+finding_id: fault_hip_drop
+text_en: "Level belt — don't sag on the landing hip."
+alt_en: "Hold the pelvis like a full glass of water."
+
+cue_id: cue_parallel_tracks
+finding_id: fault_crossover_gait
+text_en: "Feet on parallel tracks, hip-width apart."
+alt_en: "Run on railroad rails under each hip."
+
+cue_id: cue_knee_over_toe
+finding_id: fault_knee_valgus_load
+text_en: "Knee points over the middle toe at landing."
+alt_en: "Spread the floor with your foot without rolling the ankle."
+
+cue_id: cue_soft_spring
+finding_id: fault_stiff_ankle_landing
+text_en: "Soft spring ankle and knee at contact."
+alt_en: "Absorb on a bent leg, not a locked peg."
+
+cue_id: cue_cheek_to_cheek
+finding_id: fault_arm_swing_asymmetry
+text_en: "Cheek to cheek — hands same path both sides."
+alt_en: "Elbows drive back, not across the body unevenly."
+
+cue_id: cue_quiet_chest
+finding_id: fault_excessive_trunk_rotation
+text_en: "Quiet chest, legs do the work."
+alt_en: "Shoulders stay squared forward while hips rotate underneath."
+
+cue_id: cue_heel_to_butt
+finding_id: fault_scissor_kick
+text_en: "Heel to butt on the back swing, knee forward."
+alt_en: "Step over the opposite knee lightly."
+
+cue_id: cue_even_rhythm
+finding_id: fault_stride_asymmetry
+text_en: "Even rhythm — match left and right footfalls."
+alt_en: "Listen for one drumbeat pattern."
+
+cue_id: cue_heel_kiss_under
+finding_id: fault_rearfoot_reach_proxy
+text_en: "Let the foot kiss under you — don't reach with the heel first."
+alt_en: "Touchdown under the hip, whole foot soft."
+
+cue_id: cue_whole_foot_accept
+finding_id: fault_forefoot_early_load
+text_en: "Allow a soft whole-foot acceptance — ankle yields a little."
+alt_en: "Don't stay tip-toe stiff through landing."
+
+cue_id: cue_elbows_beside_ribs
+finding_id: fault_arm_crossing_midline
+text_en: "Elbows drive back beside the ribs — hands don't cross the zipper."
+alt_en: "Keep the arm swing in two vertical slots."
+
+cue_id: cue_elbow_drive_back
+finding_id: fault_short_arm_drive
+text_en: "Drive the elbow back — cheek to hip pocket."
+alt_en: "Bigger pendulum, same easy pace."
+
+cue_id: cue_thigh_trails
+finding_id: fault_hip_extension_deficit
+text_en: "Push the ground behind you — leave the thigh trailing briefly."
+alt_en: "Open the hip at toe-off like closing a door behind you."
+
+cue_id: cue_heel_soft_longer
+finding_id: fault_early_heel_rise
+text_en: "Keep the heel soft longer — load then roll."
+alt_en: "Don't pop the heel early."
+
+cue_id: cue_soft_bent_knee
+finding_id: fault_insufficient_knee_flex_stance
+text_en: "Land on a soft bent knee — spring, not peg."
+alt_en: "Let the knee bend as you accept the ground."
+
+cue_id: cue_quiet_belt
+finding_id: fault_pelvis_rotation_excess
+text_en: "Quiet belt — hips rotate just enough to let the leg swing."
+alt_en: "Don't wring the pelvis each step."
+
+cue_id: cue_melt_shoulders_run
+finding_id: fault_shoulder_hike_run
+text_en: "Melt the shoulders down — long neck, soft jaw."
+alt_en: "Drop the hangers; arms swing free."
+
+cue_id: cue_hip_width_rails
+finding_id: fault_narrow_stance_base
+text_en: "Widen to hip-width rails — two parallel tracks."
+alt_en: "Give each foot its own lane."
+
+cue_id: cue_even_push_lift
+finding_id: fault_contact_time_asymmetry
+text_en: "Even push and even lift — match the hang of each foot."
+alt_en: "Same time on left and right."
+
+cue_id: cue_metronome_when_tired
+finding_id: fault_fatigue_cadence_drop
+text_en: "Keep the metronome in your legs when you get tired."
+alt_en: "Don't let steps get long and slow late in the run."
+
+cue_id: cue_level_when_tired
+finding_id: fault_fatigue_hip_drop_rise
+text_en: "Level the belt even when tired — strong stance hip."
+alt_en: "Push the ground away; don't sag late."
+
+cue_id: cue_crown_tall_run
+finding_id: fault_forward_head_run
+text_en: "Crown tall, chin gently back — eyes on the horizon."
+alt_en: "Slide the head back on the shelf while you run."
+
+cue_id: cue_same_snap
+finding_id: fault_push_off_asymmetry
+text_en: "Same snap off both feet — listen for matching toe-off."
+alt_en: "Match the push left and right."
+
+---
+
+## Cue selection notes
+
+- Prefer external focus cues for youth and beginners (B+ motor learning).
+- Avoid pain-linked cues — use performance and balance language.
+- Treadmill: emphasize pelvis-relative foot placement, not belt-relative reaching.
+- One primary cue per brief; stack secondary in chat only.

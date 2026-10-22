@@ -1,0 +1,120 @@
+# Volleyball Sport Pack — Concept taxonomy (v0.1)
+# Body-first: no ball flight, no net/court calibration required.
+
+## Skill family concepts
+
+concept_id: skill_spike_approach
+label: Spike approach and hit
+synonyms: approach, spike, attack, hit, four-step approach, penultimate step, plant step, jump spike, arm swing
+skill_family: spike_approach
+phase_prefix: SP_
+
+concept_id: skill_serve
+label: Volleyball serve
+synonyms: overhand serve, float serve, jump serve, jump float, topspin serve, service motion, toss, strike
+skill_family: serve
+phase_prefix: SV_
+
+concept_id: skill_pass_platform
+label: Forearm pass / platform pass
+synonyms: bump, pass, receive, serve receive, platform, forearm pass, angle pass
+skill_family: pass_platform
+phase_prefix: PS_
+
+## Spike phase concepts (maps_to SP_*)
+
+concept_id: phase_sp_penult
+label: Penultimate step
+synonyms: penultimate, load step, deep knee bend step
+maps_to: SP_PENULT
+
+concept_id: phase_sp_contact_proxy
+label: Spike contact proxy
+synonyms: hit timing, max hand speed, peak swing
+maps_to: SP_CONTACT
+
+## Serve phase concepts (maps_to SV_*)
+
+concept_id: phase_sv_toss_arm
+label: Toss-arm motion (no ball)
+synonyms: guide arm, non-strike arm up, toss arm pattern
+maps_to: SV_TOSS_ARM
+
+concept_id: phase_sv_strike_proxy
+label: Serve strike proxy
+synonyms: hand speed peak, contact window
+maps_to: SV_STRIKE
+
+## Pass phase concepts (maps_to PS_*)
+
+concept_id: phase_ps_platform
+label: Platform formation
+synonyms: forearms together, flat platform, platform angle
+maps_to: PS_PLATFORM
+
+concept_id: phase_ps_extend
+label: Pass extension
+synonyms: move through the ball, leg drive pass, forward lean
+maps_to: PS_EXTEND
+
+## Cross-cutting concepts
+
+concept_id: phase_kinetic_chain_vb
+label: Kinetic chain (volleyball)
+synonyms: ground up power, hip shoulder separation, trunk then arm
+authority: B+
+
+concept_id: quality_platform_integrity
+label: Platform integrity
+synonyms: broken platform, dropped elbows, symmetric forearms
+skill_family: pass_platform
+
+concept_id: quality_jump_swing_timing
+label: Jump and arm swing timing
+synonyms: swing at peak, late jump, early arm
+skill_family: spike_approach
+notes: Prefer body timing language over ball-relative coaching phrases in product.
+
+## Body landmark concepts
+
+concept_id: body_hitting_wrist
+label: Hitting-side wrist
+measure: speed peak, height at peak
+
+concept_id: body_toss_arm_wrist
+label: Non-strike arm wrist (serve)
+measure: elevation, lateral drift
+
+concept_id: body_platform_segment
+label: Forearm platform segment
+measure: orientation vs horizontal, elbow height symmetry
+
+concept_id: body_com_vertical
+label: Center of mass vertical motion
+measure: jump height proxy, landing decel
+
+## Finding concepts (fault_* slugs — align Findings/001)
+
+concept_id: fault_spike_early_arm
+label: Early arm on spike
+links: fault_spike_early_arm
+
+concept_id: fault_pass_broken_platform
+label: Broken platform
+links: fault_pass_broken_platform
+
+concept_id: fault_serve_knee_lock
+label: Locked legs on serve
+links: fault_serve_knee_lock
+
+## Glossary (rules, not body-detected)
+
+concept_id: rotation_rules
+label: Rotation and positions
+authority: A+ FIVB/USAV
+
+concept_id: youth_volleyball_progressions
+label: Youth volleyball progressions
+synonyms: U12, U14, mini volleyball
+audience: youth
+authority: B+

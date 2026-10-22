@@ -1,0 +1,113 @@
+# Soccer Kick — Phase Model (body-first, OpenSim-friendly) — v2
+
+## Scope
+
+Applies to **approach + instep-style strike** and **side-foot pass** with single plant foot and swinging
+kicking leg. Volley body-shape findings reuse the same phase IDs with plant/cocking timing notes.
+Penalty-style and curved run-ups map to the same events with wider approach windows.
+
+Convention: **trail leg = kicking foot**, **lead leg = plant foot**.
+
+## Phase list (7 phases)
+
+| phase_id | label_en | start_event | end_event | body narrative |
+|----------|----------|-------------|-----------|----------------|
+| setup | Setup / pre-approach | clip_start | E_APPROACH_START | Oriented to target; minimal COM drift |
+| approach | Run-up | E_APPROACH_START | E_APPROACH_END | Steps toward ball; COM velocity elevated |
+| plant | Plant foot contact | E_APPROACH_END | E_PLANT_SET | Lead foot accepts weight; kicking leg countermovement |
+| cocking | Leg cocking / backswing | E_PLANT_SET | E_KICK_PEAK | Kicking hip extends, knee flexes, ankle trails |
+| strike | Strike window | E_KICK_PEAK ± 3 frames | Peak foot speed; trunk lean and hip rotation near max |
+| follow | Follow-through | end(strike) | E_FOLLOW_END | Kicking leg swings across; plant may hop |
+| recovery | Recovery | E_FOLLOW_END | clip_end | Deceleration; athletic stance |
+
+---
+
+## Phase blocks (detector_events + fault_links)
+
+### phase_id: setup
+start_end: clip_start → E_APPROACH_START
+body_signals: Pelvis speed low; shoulder/hip orientation toward target; arm readiness.
+detector_events: E_APPROACH_START
+fault_links: fault_arms_collapsed
+youth_note: Setup may be brief; widen window for U10.
+
+### phase_id: approach
+start_end: E_APPROACH_START → E_APPROACH_END
+body_signals: COM speed elevated; step length pattern; lateral pelvis drift; arm counter-swing.
+detector_events: E_APPROACH_START, E_APPROACH_END
+fault_links: fault_approach_rushed, fault_approach_wide, fault_approach_short_steps, fault_arms_collapsed
+youth_note: Single hop-step approaches normal — E_APPROACH may collapse.
+
+### phase_id: plant
+start_end: E_APPROACH_END → E_PLANT_SET
+body_signals: Lead ankle speed drop; plant distance vs trail; plant knee flex; foot yaw; heel acceptance.
+detector_events: E_APPROACH_END, E_PLANT_SET
+fault_links: fault_plant_foot_closes_hip, fault_plant_too_close, fault_plant_too_far, fault_plant_knee_soft, fault_plant_toe_out_excess, fault_plant_heel_strike_hard, fault_approach_rushed, fault_volley_plant_late, fault_weak_foot_plant_mismatch, fault_non_kicking_arm_passive
+youth_note: Shorter plant-set times; relax distance bands.
+
+### phase_id: cocking
+start_end: E_PLANT_SET → E_KICK_PEAK
+body_signals: Trail hip extension / knee flex; pelvis yaw rate; trunk lean; opposite arm path.
+detector_events: E_PLANT_SET, E_KICK_PEAK
+fault_links: fault_backswing_short, fault_hips_stay_square, fault_hip_opens_late, fault_leaning_back, fault_trunk_rotation_absent, fault_side_foot_big_windup, fault_kicking_hip_adduction_early, fault_strike_no_acceleration, fault_volley_trunk_upright, fault_non_kicking_arm_passive
+youth_note: Shorter cocking duration normal; do not force adult windup.
+
+### phase_id: strike
+start_end: E_KICK_PEAK − 3f → E_KICK_PEAK + 3f
+body_signals: Peak ||v(trail_ankle)||; trunk lean; knee extension onset; ankle lock proxy; shoulder yaw.
+detector_events: E_KICK_PEAK
+fault_links: fault_leaning_back, fault_plant_foot_closes_hip, fault_plant_too_far, fault_plant_knee_soft, fault_knee_stiff_strike, fault_ankle_locked_strike, fault_shoulders_closed_target, fault_strike_no_acceleration, fault_volley_trunk_upright, fault_kicking_hip_adduction_early, fault_weak_foot_plant_mismatch
+youth_note: Lower peak foot speed expected; use self-baseline.
+
+### phase_id: follow
+start_end: end(strike) → E_FOLLOW_END
+body_signals: Trail ankle path length/cross-midline; plant hop; continued trunk rotation.
+detector_events: E_KICK_PEAK, E_FOLLOW_END
+fault_links: fault_follow_through_cut, fault_follow_across_body_short, fault_knee_stiff_strike, fault_plant_collapse, fault_shoulders_closed_target
+youth_note: Abbreviated follow on passes is OK — check intent.
+
+### phase_id: recovery
+start_end: E_FOLLOW_END → clip_end
+body_signals: COM settle; plant-side balance; return to athletic stance.
+detector_events: E_FOLLOW_END
+fault_links: fault_plant_collapse
+youth_note: Quick reset common in game-like drills.
+
+---
+
+## Event definitions (computable proxies)
+
+### E_KICK_PEAK
+- Maximum ||v(trail_ankle)|| in analysis window (or max forward component if target calibrated).
+- Contact proxy without ball tracking.
+- Fallback: last peak above 70% global max before clip end.
+
+### E_PLANT_SET
+- First frame after E_APPROACH_END where lead-ankle speed drops below fraction of approach peak for ≥N frames.
+- Fallback: E_KICK_PEAK − ~120–180 ms adult full swing.
+
+### E_APPROACH_END
+- Last frame before E_PLANT_SET with both ankles elevated speed.
+- Fallback: E_PLANT_SET − one step (~300 ms).
+
+### E_APPROACH_START
+- First frame pelvis COM speed exceeds setup baseline OR first clear step after clip_start.
+- Fallback: clip_start + 5% duration.
+
+### E_FOLLOW_END
+- Trail-ankle speed < 30% peak AND trail knee flexion increasing.
+- Fallback: E_KICK_PEAK + 15% window span.
+
+## Phase precedence
+
+setup → approach → plant → cocking → strike → follow → recovery
+
+## Side-foot / volley variants
+
+Same phase IDs; coaching interpretation and thresholds differ:
+- Side-foot: lower peak speed; shorter cocking; relaxed follow length.
+- Volley: plant may be late relative to swing; emphasize fault_volley_* cards.
+
+## UI scrub bar labels
+
+`setup`, `approach`, `plant`, `cocking`, `strike`, `follow`, `recovery`

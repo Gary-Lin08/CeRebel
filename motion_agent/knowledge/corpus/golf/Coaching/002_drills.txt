@@ -1,0 +1,234 @@
+# Golf Sport Pack — Drills (30–90 s blocks, body-first)
+
+Each drill lists fault links (`targets:`), phase focus, equipment, youth note. Ball and launch monitor optional unless stated.
+
+================================================================================
+SETUP & CONNECTION
+================================================================================
+
+drill_athletic_address_bounce
+  duration: 30–45 s
+  phases: address
+  targets: fault_setup_locked_legs, fault_setup_weight_heels
+  setup: Filmed face-on; no club required.
+  steps: 6–8 small knee flex bounces; on last bounce settle into address flex and hold 3 s.
+  body_focus: Knee flexion, weight mid-foot.
+  youth: 4 bounces; wider stance OK.
+  authority: B
+
+drill_setup_hip_hinge
+  duration: 30–45 s
+  phases: address
+  targets: fault_setup_spine_too_upright
+  setup: DTL camera; hands on thighs.
+  steps: Soft knees; hinge hips until chest over toes; settle arms hang; hold 3 s ×6.
+  body_focus: Trunk inclination from hip hinge.
+  youth: Shorter hinge; comfort first.
+  authority: B
+
+drill_stance_width_check
+  duration: 30 s
+  phases: address
+  targets: fault_setup_narrow_stance
+  setup: Face-on; optional clubs as outer guides.
+  steps: Set feet under outer shoulders; remove guides; take 4 half-swings holding width.
+  body_focus: Ankle lateral separation.
+  youth: Slightly wider OK for balance.
+  authority: B
+
+drill_cross_shoulder_turn
+  duration: 60 s
+  phases: takeaway, backswing
+  targets: fault_short_arm_swing, fault_wrist_only_takeaway, fault_lead_arm_collapse_top
+  setup: Hands on opposite shoulders; feet shoulder width.
+  steps: 10 slow turns away from imaginary target; add short club or alignment stick on reps 6–10.
+  body_focus: Thorax rotation before arm lift.
+  youth: 6 reps; no stick required.
+  authority: B
+
+drill_takeaway_pause_check
+  duration: 45–60 s
+  phases: takeaway
+  targets: fault_wrist_only_takeaway, fault_takeaway_inside_roll
+  setup: DTL camera; club or stick optional.
+  steps: Takeaway to hip height, stop 1 s, verify shoulder turn; 8 reps continuous after 4 stop reps.
+  body_focus: One-piece first move; hands ahead of trail hip.
+  youth: Stop reps only (4 total).
+  authority: B
+
+drill_low_wide_takeaway
+  duration: 45 s
+  phases: takeaway
+  targets: fault_takeaway_steep_lift, fault_wrist_only_takeaway
+  setup: Any view; club optional.
+  steps: 8 reps stop at knee height emphasizing low handle path then rise with turn.
+  body_focus: Vertical vs forward wrist path.
+  youth: 4 reps slow.
+  authority: B
+
+================================================================================
+TRANSITION & SEQUENCE
+================================================================================
+
+drill_step_through_shadow
+  duration: 45–60 s
+  phases: transition, downswing
+  targets: fault_over_the_top_transition, fault_hanging_back, fault_weight_shift_late
+  setup: Open space; no ball.
+  steps: Small step toward target with lead foot as downswing starts; swing to full finish. 6–8 reps slow.
+  body_focus: Lower-body lead, pelvis open before chest.
+  youth: Step without full speed; 4 reps.
+  authority: B
+
+drill_pump_from_top
+  duration: 60–90 s
+  phases: transition, downswing
+  targets: fault_cast_from_top, fault_tempo_hitch_at_top, fault_flying_trail_elbow
+  setup: DTL filming; optional towel under trail arm.
+  steps: Swing to top; two partial downswings stopping at hip height; third through finish. Repeat 3 cycles.
+  body_focus: Maintain lag feel; trail elbow near ribs; no freeze at top between pumps.
+  youth: One pump + one full; reduce cycles.
+  authority: B
+
+drill_metronome_3_to_1
+  duration: 90 s
+  phases: whole chain
+  targets: fault_tempo_hitch_at_top, fault_tempo_rush_downswing
+  setup: Phone metronome 60 BPM; shadow swings.
+  steps: Three beats backswing, one beat downswing-through-finish; 6–8 swings.
+  body_focus: Continuous rhythm.
+  youth: 4 swings; slower tempo 50 BPM.
+  authority: B
+
+drill_top_hold_check
+  duration: 60 s
+  phases: backswing, transition
+  targets: fault_incomplete_shoulder_turn, fault_short_arm_swing
+  setup: DTL or face-on.
+  steps: Reach top, hold 1 s checking lead shoulder under chin, then slow through finish ×6.
+  body_focus: Shoulder yaw completeness vs baseline.
+  youth: Hold 0.5 s; 4 reps.
+  authority: B
+
+drill_trail_load_check
+  duration: 60 s
+  phases: backswing, transition
+  targets: fault_reverse_pivot, fault_sway_not_turn
+  setup: Face-on.
+  steps: Slow backswing loading trail foot; hold top 1 s feeling trail pressure; transition without leaning target ×6.
+  body_focus: Trail ankle load vs lead lean.
+  youth: 4 reps; wider base.
+  authority: B
+
+================================================================================
+POSTURE & PRESSURE
+================================================================================
+
+drill_wall_spine_tilt
+  duration: 60 s
+  phases: downswing, impact
+  targets: fault_early_extension, fault_early_extension_thrust
+  setup: Stand DTL with hips lightly touching wall or chair back (not leaning heavily).
+  steps: Slow shadow swings maintaining light hip contact until after impact proxy. 6 reps.
+  body_focus: Spine angle preservation; rotation without thrust.
+  youth: Skip wall; use “sit on a barstool” imagery only.
+  authority: B+
+
+drill_lead_foot_finish_hold
+  duration: 60 s
+  phases: follow_through
+  targets: fault_fall_back_finish, fault_hanging_back, fault_weight_shift_late
+  setup: Face-on camera.
+  steps: Full shadow swing; hold finish 3 s on lead foot only (trail toe may touch). 5 reps.
+  body_focus: Weight transfer completion.
+  youth: 2 s hold; 4 reps.
+  authority: B
+
+drill_hip_rotation_gate
+  duration: 45 s
+  phases: downswing, impact
+  targets: fault_slide_excessive, fault_sway_not_turn, fault_incomplete_hip_clearance
+  setup: Alignment stick vertical outside lead hip (ground slot).
+  steps: Rotate through downswing without pushing stick forward; 6 slow reps.
+  body_focus: Rotation vs slide; hip clearance.
+  youth: Imaginary gate only (no stick) for safety.
+  authority: B
+
+drill_lead_brace_impact
+  duration: 45 s
+  phases: downswing, impact
+  targets: fault_impact_lead_knee_lock, fault_slide_excessive
+  setup: Face-on.
+  steps: Pause at impact posture with soft-firm lead knee; then rotate through finish ×6.
+  body_focus: Athletic brace not lock.
+  youth: 4 reps half speed.
+  authority: B
+
+drill_head_quiet_box
+  duration: 45 s
+  phases: takeaway, backswing, downswing
+  targets: fault_head_lateral_sway, fault_sway_not_turn
+  setup: Face-on; optional tape mark behind head on wall.
+  steps: Half-swings keeping head in quiet vertical band; 8 reps.
+  body_focus: Head lateral COM stability.
+  youth: 4 reps; no wall contact required.
+  authority: B
+
+================================================================================
+DECELERATION & FINISH
+================================================================================
+
+drill_full_rainbow_finish
+  duration: 60 s
+  phases: follow_through
+  targets: fault_abrupt_deceleration, fault_chicken_wing_stop
+  setup: Any view with space for full wrap.
+  steps: Emphasize trail arm crossing body; hold end pose 2 s. 5 reps at 50% speed.
+  body_focus: Smooth speed decay, bilateral arm extension through chest height.
+  youth: 3 reps; hold 1 s.
+  authority: B
+
+drill_feet_together_balance
+  duration: 45 s
+  phases: whole chain
+  targets: fault_sway_not_turn, fault_head_lateral_sway
+  setup: Advanced athletes only; narrow base.
+  steps: 4 half-speed shadow swings; reset balance between reps.
+  body_focus: Rotation stability.
+  youth: Not recommended — use wider base rotation drill instead.
+  authority: B
+
+================================================================================
+SHORT GAME (BODY-ONLY)
+================================================================================
+
+drill_chip_posture_hold
+  duration: 60 s
+  phases: address, downswing, impact
+  targets: fault_chip_stand_up, fault_early_extension
+  setup: Chip-length swing; DTL preferred.
+  steps: Soft knees; hinge; 8 chip shadows maintaining spine angle through strike proxy; hold finish 1 s.
+  body_focus: Spine angle stability on short arc.
+  youth: 4 reps; no ball required.
+  authority: B
+
+drill_chip_lead_pressure
+  duration: 45 s
+  phases: address, impact, follow_through
+  targets: fault_chip_trail_weight, fault_fall_back_finish
+  setup: Face-on; chip length.
+  steps: Set ~60% feel on lead foot; 8 chips holding lead-side finish 2 s.
+  body_focus: Lead pressure through strike proxy.
+  youth: 4 reps; emphasize balance not lean angle.
+  authority: B
+
+================================================================================
+CAPTURE TIPS (COACH OPERATOR)
+
+- Film DTL for spine angle and sequence; face-on for sway/slide.
+- Single swing per clip improves phase detector matching when possible.
+- Handedness metadata: pass `handedness=left` for lefties (detector defaults right).
+- Chip clips: score posture/pressure windows even if finish truncated.
+
+Sources: PGA practice guides (B); drill names are common coaching vocabulary summarized, not verbatim manuals;
+fault links in Findings/001.

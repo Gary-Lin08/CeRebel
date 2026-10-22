@@ -1,0 +1,208 @@
+# Baseball Pitching — Phase Model (UI + detector alignment)
+
+## Contract with product code
+
+Phase IDs **must** match `motion_agent/motion/sport_analysis.py` → `_baseball_window()`.
+The analysis scrub bar and coach briefs use these six phases only (v1/v2).
+
+| id       | label_en       | label_zh   | role |
+|----------|----------------|------------|------|
+| set      | Set            | 预备       | Quiet on rubber; minimal COM drift |
+| lift     | Leg lift       | 抬腿       | Lead knee rises; balance on drive leg |
+| stride   | Stride         | 跨步       | COM moves toward plate; lead foot in air |
+| landing  | Landing        | 前脚着地   | Lead foot contact → stable base |
+| release  | Release        | 出手       | Throwing-hand speed peak (proxy for ball release) |
+| follow   | Follow-through | 随挥       | Deceleration after release peak |
+
+Handedness: **trail** = throwing side wrist; **lead** = glove-side leg (RHP: trail right, lead left).
+
+Clinical six-phase literature (wind-up → follow-through) maps into this UI model: wind-up ≈ set+lift;
+ASMI stride/arm cocking overlap stride+landing; acceleration ≈ release window; deceleration ≈ follow.
+Source: pmc_clinician_pitching_guide (PMC9950989), summarized.
+
+---
+
+## Analysis window
+
+Given clip bounds `[start_s, end_s]` and span = end_s - start_s (minimum ~0.4 s):
+
+1. Compute trail-wrist speed in window; **release_event** = time of argmax speed → `release_t`.
+2. **landing_event** = `_landing_time()` from lead-ankle deceleration before release, else fallback:
+   `landing_t = max(start_s, release_t - 0.18 * span)`.
+3. Phase boundaries:
+   - set_end = start_s + 0.12 * span
+   - lift_end = max(set_end, landing_t - 0.28 * span)
+   - stride_end = landing_t
+   - land_end = min(end_s, landing_t + 0.08 * span)
+   - release_end = min(end_s, max(land_end, release_t + 0.06 * span))
+4. Phases shorter than 20 ms are dropped; first/last phases clamp to clip edges.
+
+User-facing note (from code): “Release is the throwing-hand speed peak (trail wrist). Landing is estimated from the lead foot.”
+
+---
+
+## Phase 1 — set
+
+Time: start_s → set_end (~12% of window span)
+
+Body focus:
+- Stable posture on rubber; minimal center-of-mass drift.
+- Low wrist and ankle speeds relative to later burst.
+
+Quality checkpoints: cp_balance_set (see Quality/002_checkpoints.txt)
+
+**detector_events:** E_SET_START, E_SET_END
+**fault_links:** fault_set_rush, fault_soft_drive_leg_balance, fault_tempo_rush_delivery
+
+OpenSim-friendly signals:
+- Ankle speed magnitude near baseline.
+- Pelvis position variance low.
+
+---
+
+## Phase 2 — lift
+
+Time: set_end → lift_end
+
+Body focus:
+- Drive-leg knee flexion and leg lift; balance before forward move.
+- lift_end is tied to landing (28% span before landing) so short clips still get a lift segment.
+
+Quality: cp_balance_set spans set+lift
+
+**detector_events:** E_LEG_LIFT_PEAK (future: max drive-knee height), E_LIFT_END
+**fault_links:** fault_set_rush, fault_soft_drive_leg_balance, fault_mer_insufficient, fault_arm_path_inverted_w, fault_tempo_rush_delivery
+
+Youth coaching: shorter lift, control over height (Baseball Canada — baseball_canada_pitching_mechanics).
+
+---
+
+## Phase 3 — stride
+
+Time: lift_end → stride_end (= landing_t)
+
+Body focus:
+- Lead leg travels toward plate; pelvis begins opening.
+- Hip–shoulder separation window opens (trunk lags pelvis when efficient).
+
+Measurement series: `stride` (lead–trail ankle AP separation, cm), `back-knee` (trail knee flex °)
+
+**detector_events:** E_STRIDE_START, E_LANDING (approaching)
+**fault_links:** fault_stride_short, fault_stride_long, fault_pelvis_drift, fault_glove_flyout, fault_back_leg_soft, fault_early_trunk_rotation, fault_arm_path_wide, fault_arm_path_inverted_w, fault_posture_lean_back, fault_glove_side_collapse
+
+Research alignment: OBP distinguishes foot contact vs foot plant; product landing_event approximates
+lead-foot deceleration before release (obp_pitching_readme).
+
+---
+
+## Phase 4 — landing
+
+Time: stride_end → land_end (~8% span minimum, ≥20 ms)
+
+Body focus:
+- Lead foot accepts force; front knee flexion often ~35–55° in adult lab cohorts (not a universal target).
+- Separation at landing: product flag if |lumbar_rotation| < 25° (conservative for monocular noise).
+
+Measurement series: `separation`, `front-knee`, `stride`
+
+**detector_events:** E_LANDING (lead-ankle decel heuristic / event_lead_foot_contact)
+**fault_links:** fault_separation_low, fault_front_knee_collapse, fault_back_leg_soft, fault_stride_short, fault_stride_long, fault_closed_stride_landing, fault_open_stride_landing, fault_lead_foot_closed_toe, fault_pelvis_drift, fault_early_trunk_rotation, fault_glove_side_collapse, fault_posture_collapse_forward, fault_posture_lean_back
+
+Norm bands (RAG reference only, adult): stride length at contact often ~75–90% body height in literature;
+product checkpoints use 0.70–0.95 height ratio (B+) — see Quality/002. Youth bands differ — see youth_note on finding cards.
+
+---
+
+## Phase 5 — release
+
+Time: land_end → release_end (includes release_t peak)
+
+Body focus:
+- Trunk rotation; elbow extension; **throwing-hand speed peak** at release_t.
+- This is NOT ball release without ball track — same proxy as pitch_score.py E_RELEASE.
+
+Measurement series: `throwing-hand` (||v(trail_wrist)|| m/s)
+
+**detector_events:** E_RELEASE (argmax ||v(trail_wrist)||), event_release_peak_wrist
+**fault_links:** fault_head_pull, fault_arm_path_wide, fault_trunk_late_rotate, fault_mer_insufficient, fault_front_knee_collapse, fault_arm_drag_late, fault_arm_slot_inconsistent, fault_glove_flyout, fault_posture_lean_back, fault_posture_collapse_forward
+
+Detector pitch_likeness (ce_rebel_pitch_score):
+- wrist burst peak/median, lead ankle stride_ratio before release, arm_ratio trail vs lead wrist.
+
+---
+
+## Phase 6 — follow
+
+Time: release_end → end_s
+
+Body focus:
+- Arm deceleration across body; spine flexion; fielding-ready balance optional.
+
+**detector_events:** E_RELEASE_END, E_FINISH_SETTLE
+**fault_links:** fault_head_pull, fault_arm_path_wide, fault_finish_fall_off, fault_incomplete_deceleration
+
+Clinical note: deceleration phase loads elbow/shoulder in lab studies; incomplete follow-through is a
+coaching modifiable factor, not a diagnosis (pmc_pitch_count_clinical, Fortenbaugh review).
+
+---
+
+## Non-phase / session findings
+
+**fault_links (session):** fault_sport_mismatch_golf, fault_youth_pitch_count_awareness
+- Sport mismatch: suppress phase scoring; instruct recapture.
+- Pitch-count awareness: coaching education when metadata present — not a kinematic detector.
+
+---
+
+## Event dictionary
+
+| Event ID | Definition |
+|----------|------------|
+| E_RELEASE / release_event | argmax ||v(trail_wrist)|| in analysis window |
+| E_LANDING / landing_event | Last strong lead-ankle deceleration before release; see _landing_time |
+| E_LEG_LIFT_PEAK / max_leg_lift | Future: peak drive-knee height; not separate UI phase in v1 |
+| E_SET_START / E_SET_END | Window start → set_end boundary |
+| E_FINISH_SETTLE | Wrist speed returns toward quiet / clip end |
+
+---
+
+## Fallback and edge cases
+
+- **Missing lead ankle**: landing_t fallback to release_t - 18% span; landing phase still defined.
+- **Clip starts mid-delivery**: set phase may be truncated; annotate low confidence on set-rush findings.
+- **Stretch delivery**: leg lift minimal — lift phase may be very short; stride dominates.
+- **Window too short** (<8 frames): segmentation fails — tier_insufficient_data.
+- **Golf mislabel**: fault_sport_mismatch_golf — no phase assignment (Docs/001_ARCHITECTURE).
+
+---
+
+## Mapping to ASMI / OBP lab phases (reference)
+
+| UI phase | ASMI clinical (PMC9950989) | OBP events |
+|----------|----------------------------|------------|
+| set+lift | Wind-up | pre foot contact |
+| stride | Stride | foot contact → foot plant region |
+| landing | Early arm cocking start | foot plant |
+| release | Arm acceleration / ball release | MER → BR |
+| follow | Deceleration + follow-through | post BR → MIR |
+
+---
+
+## Scrub bar UX copy (English)
+
+- Set: “Stay balanced before you move.”
+- Leg lift: “Lift and gather — don’t rush.”
+- Stride: “Move toward the plate; hips lead.”
+- Landing: “Front foot lands firm.”
+- Release: “Hand speed peaks here — estimated release.”
+- Follow-through: “Finish and decelerate across the body.”
+
+---
+
+## Sources
+
+- motion_agent/motion/sport_analysis.py `_baseball_window`, `_landing_time`
+- pmc_clinician_pitching_guide — https://pmc.ncbi.nlm.nih.gov/articles/PMC9950989/
+- obp_pitching_readme — foot contact vs plant nomenclature
+- baseball_canada_pitching_mechanics — youth qualitative phases
+- driveline_sequencing_95 — overlapping subphases (coaching granularity)

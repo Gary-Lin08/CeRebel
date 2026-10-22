@@ -1,0 +1,153 @@
+# Freestyle — Quality Checkpoints (body-measurable catalog)
+
+Each checkpoint maps to quality axes in Quality/001_quality_definition.txt and phase windows in
+Phases/001_phase_model.txt. Severity: info | low | medium | high (coaching priority, not injury severity).
+
+---
+
+checkpoint_id: cp_entry_shoulder_width
+phase: swim_phase_entry
+axis: body_line
+headline_en: Hand enters near shoulder line without crossing midline
+signal: Pulling wrist lateral position at E_ENTRY within shoulder-width band relative to sternum proxy
+pass_criteria: Wrist entry lateral offset below crossover threshold for camera calibration
+fail_finding: fault_crossover_entry
+authority: B
+confidence_modifiers: reduce if camera_front_only
+
+checkpoint_id: cp_entry_forward_extension
+phase: swim_phase_entry
+axis: catch_pull
+headline_en: Reach extends before catch begins
+signal: Time E_ENTRY → E_CATCH within 0.05–0.25 s band at moderate pace; forward wrist peak visible
+pass_criteria: Monotonic forward reach then downward path
+fail_finding: fault_overreach_entry, fault_pause_at_catch
+authority: B+
+
+checkpoint_id: cp_catch_elbow_above_wrist
+phase: swim_phase_catch
+axis: catch_pull
+headline_en: Elbow stays above wrist during catch (EVF proxy)
+signal: Side view: elbow Y ≤ wrist Y (image coords) for ≥40% of catch window
+pass_criteria: Sustained ordering through E_CATCH to E_PULL_MID
+fail_finding: fault_dropped_elbow
+authority: B+
+confidence_modifiers: low if underwater occluded
+
+checkpoint_id: cp_catch_no_downward_press
+phase: swim_phase_catch
+axis: catch_pull
+headline_en: Hand does not press straight down before moving back
+signal: Wrist vertical velocity before backward component; downward-only spike flags fail
+pass_finding: fault_sculling_outside (if lateral instead)
+authority: B
+
+checkpoint_id: cp_pull_peak_timing
+phase: swim_phase_pull
+axis: catch_pull
+headline_en: Pull accelerates to peak before push
+signal: E_PULL_PEAK occurs after E_CATCH + minimum delay; single peak per cycle
+pass_criteria: Unimodal wrist speed curve underwater
+fail_finding: fault_double_peaked_pull
+authority: B+
+
+checkpoint_id: cp_pull_under_body
+phase: swim_phase_pull
+axis: body_line
+headline_en: Pull path travels under body centerline proxy
+signal: Wrist lateral path passes within trunk shadow band in side view
+fail_finding: fault_wide_pull, fault_pull_under_body (if too deep and crossed)
+authority: B
+
+checkpoint_id: cp_push_past_hip
+phase: swim_phase_push
+axis: catch_pull
+headline_en: Hand exits after passing hip region
+signal: Wrist horizontal position relative to hip keypoint at E_EXIT
+pass_criteria: Exit when wrist posterior to hip proxy
+fail_finding: fault_short_push
+authority: B
+
+checkpoint_id: cp_recovery_elbow_height
+phase: swim_phase_recovery
+axis: body_line
+headline_en: Recovery elbow leads wrist (high-elbow recovery model)
+signal: Elbow Y above wrist Y for ≥50% of recovery phase
+fail_finding: fault_low_elbow_recovery
+authority: B
+notes: Sprint straight-arm recovery may fail by design — tag stroke_style=sprint to relax
+
+checkpoint_id: cp_breathe_rotation_not_lift
+phase: swim_phase_breathe
+axis: breathing
+headline_en: Breath uses head rotation more than vertical lift
+signal: Ratio head_yaw / head_vertical_displacement at E_BREATHE
+pass_criteria: Yaw dominant in pool swimming
+fail_finding: fault_excessive_head_lift
+authority: B
+
+checkpoint_id: cp_breathe_timing
+phase: swim_phase_breathe
+axis: breathing
+headline_en: Breath window avoids peak pull on breathing side
+signal: E_BREATHE offset from E_PULL_PEAK on same-side arm
+fail_finding: fault_late_breath_timing
+authority: B
+
+checkpoint_id: cp_roll_amplitude
+phase: swim_phase_body_roll
+axis: rotation
+headline_en: Shoulder roll sufficient for reach without snaking
+signal: Peak-to-peak shoulder tilt per cycle within athlete baseline or generic 25–50° band
+fail_finding: fault_flat_swim, fault_over_rotation
+authority: B+
+
+checkpoint_id: cp_kick_hip_driven
+phase: swim_phase_kick
+axis: kick
+headline_en: Kick knee flexion stays moderate
+signal: Knee flexion amplitude per kick cycle below bicycle threshold
+fail_finding: fault_bicycle_kick
+authority: B
+
+checkpoint_id: cp_kick_narrow
+phase: swim_phase_kick
+axis: kick
+headline_en: Feet stay inside body line projection
+signal: Ankle lateral separation relative to hip width
+fail_finding: fault_wide_kick
+authority: B
+
+checkpoint_id: cp_left_right_period
+phase: full_cycle
+axis: repeatability
+headline_en: Left and right stroke periods match
+signal: |T_L - T_R| / mean(T) < asymmetry_threshold (default 0.08)
+fail_finding: fault_asymmetric_cycle_timing
+authority: ProductLogic
+
+checkpoint_id: cp_left_right_pull_peak
+phase: swim_phase_pull
+axis: repeatability
+headline_en: Pull speed peaks balanced left vs right
+signal: |peak_L - peak_R| / mean(peak) < 0.12 with ≥3 cycles each side
+fail_finding: fault_asymmetric_pull_power
+authority: ProductLogic
+
+checkpoint_id: cp_youth_stroke_rate_sanity
+phase: full_cycle
+axis: workload_youth
+headline_en: Stroke rate appropriate for skill stage (coaching context)
+signal: Derived SPM compared to NGB band tables in Training/002_youth_development.txt
+fail_finding: none automatic — info flag only
+authority: B
+audience: youth
+
+---
+
+## Checkpoint bundles (coach brief presets)
+
+bundle_distance_freestyle: cp_catch_elbow_above_wrist, cp_push_past_hip, cp_breathe_rotation_not_lift, cp_roll_amplitude
+bundle_sprint_freestyle: cp_pull_peak_timing, cp_kick_hip_driven, cp_recovery_elbow_height (relaxed)
+bundle_beginner: cp_entry_shoulder_width, cp_breathe_rotation_not_lift, cp_kick_hip_driven
+bundle_open_water: cp_body_line (cp_roll_amplitude), cp_breathe_timing — suppress cp_breathe_rotation strictness when sighting tag set

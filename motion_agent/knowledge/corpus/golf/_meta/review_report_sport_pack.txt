@@ -1,0 +1,324 @@
+# Golf Sport Pack — Sport Pack Alignment Review
+Generated: 2026-10-21
+Corpus path: motion_agent/knowledge/corpus/golf/
+Product: CeRebel body-first coaching (GolfPack live; club/ball not required for phases)
+Spec: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+EXECUTIVE SUMMARY
+================================================================================
+
+| Area              | Verdict        | Notes |
+|-------------------|----------------|-------|
+| Spec layout       | PARTIAL        | Strong rules/handicap/equipment/biomech primary sources; missing Phases/Quality/Findings/Coaching/Training and consumer disclaimer. |
+| Coaching KB       | NOT READY      | No finding cards, checkpoints, or sourced cues/drills under pack tree; live product relies on code heuristics + seed `golf_*.txt` outside pack. |
+| Licensing           | REVIEW REQUIRED | Manifest + hashes exist; large verbatim R&A/USGA/WHS PDF text in RAG; commercial redistribution not cleared in manifest rows. |
+| Safety              | GAP            | No `Docs/002_DISCLAIMER.txt`; indexed biomech reviews contain injury/lumbar/ACL epidemiology — high misinterpretation risk in live golf mode. |
+| Product integration | LIVE (code)    | `GolfPack` in LIVE_PACKS; RAG routes `golf/` + `golf_*.txt`; phase cards via `segment_golf_swings` — not grounded in spec-shaped Findings/Quality. |
+
+Verdict: Golf is a **mature primary-source / rules KB** ingested from `golf_kb_primary_source_pack`, not yet a **complete CeRebel sport pack** per SPORT_PACK_KB_SPEC. Safe for rules/handicap/equipment Q&A with version caveats; **not safe to treat as audited coaching corpus** until Phases/Quality/Findings/Coaching/Training + disclaimer ship.
+
+================================================================================
+1. CORPUS STATE REVIEWED
+================================================================================
+
+Files present (14 indexed `.txt` + `_meta/`):
+
+  Rules/           4 (2023 Rules, 2026 clarifications, poster, USGA local terms)
+  Handicap/        1 (2024 WHS / USGA)
+  Equipment/       2 (Equipment Rules, conforming ball list)
+  Biomechanics/    2 (GRF/CoP 2026 review; kinematics 2022 review — full PDF text)
+  Taxonomy/        001_concepts.txt, 002_relations.txt
+  Schema/          001_golf-ontology.txt (spec expects 001_ontology.txt)
+  Docs/            001_ARCHITECTURE.txt, 002_ecosystem_research_zh.txt
+
+_meta/ present:
+  SOURCE_MANIFEST.txt, build_report.txt, download_report.txt, ingest_manifest.txt,
+  README.txt, pack_readme.txt (legacy golf_kb readme — not spec-aligned status doc)
+
+_meta/ missing (spec-required):
+  brain_plan.txt
+  research_notes.txt
+  review_report.txt (sibling sport packs use this name; this file is review_report_sport_pack.txt)
+
+Spec directories **entirely missing**:
+  Phases/
+  Quality/
+  Findings/
+  Coaching/
+  Training/
+  Biomechanics/001_overview.txt (spec summary slot; pack has two full papers instead)
+
+Sibling corpus (indexed with golf per `_meta/README.txt` and `GOLF_KB_SOURCES`):
+  knowledge/corpus/golf_swing_vocab.txt
+  knowledge/corpus/golf_biomechanics_conventions.txt
+
+Approx. ingest scale (ingest_manifest.txt): ~1.2M chars indexed; Rules alone ~410k chars.
+
+================================================================================
+2. GAPS vs SPORT_PACK_KB_SPEC — Phases / Quality / Findings / Coaching / Training
+================================================================================
+
+### 2.1 Phases/
+
+Spec: `Phases/001_phase_model.txt` — 5–8 phases with OpenSim-friendly start/end events,
+detector mapping when known.
+
+Current state:
+  - Taxonomy lists swing_event concepts: address, backswing, downswing, impact, follow_through
+    (no transition/top-of-backswing as first-class concept; impact still ball-centric label).
+  - Relations chain backswing → downswing → impact → follow_through (Bourgain 2022).
+  - `golf_swing_vocab.txt` (outside pack) lists 7 phases including takeaway, transition,
+    impact — closer to coaching language but **not** in pack tree, no event definitions,
+    no detector event ids, no OpenSim DOF mapping per phase.
+
+Gap:
+  [P-1] No authoritative `Phases/001_phase_model.txt` aligned with `segment_golf_swings` output.
+  [P-2] "Impact" phase name conflicts with product constraint (no club/ball track); need
+        `strike_proxy` / max-hand-speed window language in phase doc and taxonomy.
+  [P-3] Short-game phases (chip/pitch/bunker) mentioned only in seed vocab — out of v1 scope
+        unless detector supports them.
+
+### 2.2 Quality/
+
+Spec: `Quality/001_quality_definition.txt`, `Quality/002_checkpoints.txt` — capture validity,
+confidence gates, camera angle, occlusion.
+
+Current state: **empty**. Live pack uses code threshold only (`GolfPack.CONFIDENCE_MIN = 0.45`).
+
+Gap:
+  [Q-1] No documented side vs face-on preference, club visibility, fps, or full-body visibility.
+  [Q-2] No explicit low-confidence conditions for pelvis/thorax rotation from monocular pose.
+  [Q-3] No separation of driver vs iron capture expectations (GRF/CoP literature is driver-biased).
+
+### 2.3 Findings/
+
+Spec: `Findings/001_common_faults.txt` — cards with id, headline, phase, body signal,
+why it matters, feel cue, 30–90s drill, sources (authority ≥ B for load claims).
+
+Current state: **empty**. Consumer example questions ("lead arm collapsing," "pelvis drift")
+have **no KB finding slugs** or sourced thresholds.
+
+Gap:
+  [F-1] Zero finding cards; coach briefs / LLM may invent faults without manifest-backed sources.
+  [F-2] Biomech PDFs discuss X-factor, crunch factor, kinematic sequence — must NOT surface
+        as automated findings until converted to body-measurable, disclaimer-wrapped cards.
+  [F-3] No youth vs adult split (junior sets, growth, reduced trunk rotation norms).
+
+Minimum provisional faults to source before marketing "body fixes" (brain_plan + research_notes):
+  - insufficient_hip_rotation_in_backswing / early_upper_body_downswing
+  - excessive_lateral_sway_address_to_top
+  - lead_arm_flexion_before_strike_proxy
+  - pelvis_early_extension_strike_proxy
+  - limited_weight_shift_trail_to_lead
+  - cut_short_follow_through_balance
+
+### 2.4 Coaching/
+
+Spec: `Coaching/001_cues.txt`, `Coaching/002_drills.txt` — reference disclaimer; no medical promises.
+
+Current state: **empty**. `golf_biomechanics_conventions.txt` covers handedness, GRF honesty,
+phase windows — good **engineering policy** but not spec Coaching docs and not injury firewall.
+
+Gap:
+  [C-1] No in-pack cues/drills tied to finding ids.
+  [C-2] Spec requires disclaimer **in Coaching docs** — blocked until `Docs/002_DISCLAIMER.txt`.
+  [C-3] Rules/handicap/equipment text must not be mixed into swing-coaching retrieval without
+        routing (agent already splits KB vs phases for rules keywords — findings path still open).
+
+### 2.5 Training/
+
+Spec: `Training/001_team_practice.txt` — practice structure, warm-up, federation-safe education.
+
+Current state: **empty**.
+
+Gap:
+  [T-1] No warm-up / mobility education (hip IR often cited in literature for LBP context) framed
+        as non-medical team practice content with A/B+ citations.
+  [T-2] No junior / academy practice boundaries (volume, supervision).
+  [T-3] Optional: TPI / PGA public summaries **link-only** per manifest (mytpi row: do not mirror).
+
+### 2.6 Biomechanics/ (spec shape)
+
+Spec: `Biomechanics/001_overview.txt` — curated summary with authority tags.
+
+Current state: Two **full-text** systematic reviews (~184k chars combined) — valuable B+ sources
+but wrong artifact for product findings pipeline; increases RAG risk of quoting injury causality.
+
+Gap:
+  [B-1] Add `001_overview.txt` summarizing measurable body signals, explicit non-claims (no CHS,
+        no force-plate GRF from video), pointer to full papers.
+  [B-2] Keep full papers for rules-style Q&A or move to `_meta`/non-indexed archive if counsel
+        prefers minimize injury-claim surface in default retrieval.
+
+### 2.7 Schema / Taxonomy / Docs / _meta
+
+  [D-1] Rename or alias Schema to `001_ontology.txt` for tooling parity.
+  [D-2] Replace or supplement `Docs/002_ecosystem_research_zh.txt` with `Docs/002_DISCLAIMER.txt`.
+  [D-3] Add `brain_plan.txt` mapping: phase ids ↔ detector ↔ finding slugs ↔ series names.
+  [D-4] Add `research_notes.txt` with URLs for any coaching thresholds (not only PDF ids in CSV).
+  [D-5] Update `pack_readme.txt` to CeRebel sport pack status (not zip `08_tools/refresh.py` only).
+
+================================================================================
+3. LICENSING AND PROVENANCE
+================================================================================
+
+Strengths:
+  - `_meta/SOURCE_MANIFEST.txt` lists id, publisher, url, version, download flag,
+    redistribution_note, target path (legacy folder names preserved in CSV).
+  - `build_report.txt` records SHA-256, page/chunk counts per document (2026-09-20 build).
+  - Biomech rows: CC BY 4.0 with attribution requirement (MDPI 2022, Springer 2026).
+  - Live hubs (USGA/R&A rules, conforming lists, APIs) correctly marked download_by_script=no.
+
+Risks and gaps:
+
+  [L-1] **R&A / USGA Rules, Handicap, Equipment PDFs** — manifest says official download;
+        redistribution_note warns review governing-body terms before commercial corpus use.
+        Ingested text is **near-complete** (Rules 260 pp, Equipment 99 pp, balls list 94 pp).
+        Commercial RAG policy (spec): summarize with URLs; do not paste copyrighted manuals
+        at length. **Current ingest exceeds typical summarize-only posture** — legal/commercial
+        review required before treating as shippable product corpus.
+
+  [L-2] **Dynamic conforming ball list** — must refresh monthly; build dated 2026-09-20;
+        production answers need `retrieved_at` / version in chunk metadata (architecture describes
+        this; verify index rebuild preserves fields).
+
+  [L-3] **TrackMan vocabulary** in Taxonomy (attack_angle, club_path, etc.) — source_hint
+        references vendor definitions; TrackMan rows in manifest are **no-download / proprietary**.
+        OK as normalized concept labels if answers do not imply measured launch-monitor values
+        from body-only video.
+
+  [L-4] **TPI, PGA ShotLink, Data Golf, Sportradar** — correctly not mirrored; do not ingest
+        proprietary coaching or stats bulk without entitlement rows.
+
+  [L-5] **GolfDB / CaddieSet** — NC or unverified license; not ingested (good).
+
+  [L-6] Manifest lacks explicit columns used elsewhere in corpus program: `authority` (A+–C),
+        `license` ( SPDX / terms shorthand ), `commercial_use_ok` — recommend harmonize with
+        baseball/tennis manifest pattern for audit automation.
+
+  [L-7] `Docs/002_ecosystem_research_zh.txt` — internal research; confirm license/PII before
+        external distribution; not a substitute for disclaimer.
+
+Licensing verdict: **REVIEW REQUIRED** for governing-body PDF volume in index; **OK with attribution**
+for CC BY biomech; **BLOCKED** for mirroring listed commercial coaching/stats sources.
+
+================================================================================
+4. SAFETY
+================================================================================
+
+### 4.1 What was reviewed
+
+Indexed content includes extensive Rules/medical-exception language (equipment for medical reasons),
+handicap illness/injury administrative rules, and **peer-reviewed injury epidemiology** inside
+Biomechanics PDF text (low-back pain, crunch factor, ACL loading mentions, elbow overuse).
+
+No consumer-facing `Docs/002_DISCLAIMER.txt` in pack. Engineering guardrails exist only in
+`golf_biomechanics_conventions.txt` (estimated GRF not force-plate; no invented CHS).
+
+### 4.2 Risk register (live GolfPack + RAG)
+
+  [S-1] **No diagnosis / injury prediction**
+        Do not label "golfer's elbow," disc injury, ACL tear, or LBP causation from video.
+        Biomech reviews discuss associations — RAG must not surface as user-specific diagnosis.
+
+  [S-2] **Lumbar / X-factor / crunch factor firewall**
+        Literature is mixed on X-factor, crunch factor, and LBP causality. Automated "excessive
+        X-factor" findings without B+ sourced cards and disclaimer are **P0 blockers**.
+
+  [S-3] **GRF / CoP overclaim**
+        Watson 2026 links GRF/CoP to CHS on force platforms. Monocular OpenSim estimates are
+        not equivalent — copy must match `golf_biomechanics_conventions.txt` and disclaimer.
+
+  [S-4] **No prescription**
+        No stop-playing, brace, PT protocol, or return-to-play timelines from app output.
+
+  [S-5] **Youth**
+        No junior norms in corpus; do not apply adult elite kinematic peaks to juniors when age unknown.
+
+  [S-6] **Rules vs coaching confusion**
+        Rules answers are A+ but not medical/legal advice; handicap injury provisions are administrative,
+        not clinical guidance for swing coaching.
+
+  [S-7] **Pain and play-through**
+        Coaching cues in product strings ("biggest thing to fix") must not encourage playing through
+        sharp back pain, radicular symptoms, or acute joint locking.
+
+  [S-8] **Ball/club metrics**
+        Taxonomy impact-linked measurements (face_angle, dynamic_loft) require launch monitor or
+        club track — forbid implying these from body-only pose.
+
+### 4.3 Safety gates before treating KB as coaching authority
+
+  - [ ] `Docs/002_DISCLAIMER.txt` present; referenced in Coaching/ and LLM golf preamble
+  - [ ] Findings cite authority ≥ B+ for load/injury-adjacent wording
+  - [ ] Biomech overview separates population research from individual user claims
+  - [ ] Quality/ documents low-confidence capture (oblique angle, missing feet, heavy occlusion)
+  - [ ] Optional: RAG filter to deprioritize injury paragraphs in technique mode
+
+Safety verdict: **GAP (high)** for live coaching mode until disclaimer + Findings/Quality exist;
+**moderate** for rules/handicap/equipment Q&A with version/disclaimer in UI.
+
+================================================================================
+5. PRODUCT FIT — BODY-FIRST
+================================================================================
+
+Compatible (align with spec once documented in Phases/Findings):
+  - Address posture, pelvis/thorax rotation, hip-shoulder separation proxies
+  - Weight shift qualitatively trail → lead
+  - Lead-arm structure approaching strike_proxy
+  - Pelvis drift / early extension after strike_proxy
+  - Tempo / phase windows from `segment_golf_swings`
+  - Rules, handicap, equipment conformance Q&A (orthogonal to motion, already strong)
+
+Out of scope / honest boundaries:
+  - Club path, face angle, AoA, spin, ball speed, strokes gained (need club/ball or authorized stats)
+  - Foot fault / OB / penalty relief without rules KB bootstrap (KB supports this path)
+  - Force-plate GRF magnitude or CoP trajectory as measured truth from video
+
+Catalog alignment:
+  - GolfPack `status=live`, blurb "Swing phases, body fixes, and instant drills" **overstates**
+    KB readiness for "fixes" and "drills" until Findings/Coaching ship.
+  - Example questions are body-appropriate if phrased with strike_proxy and disclaimer.
+
+Cross-sport:
+  - BaseballPack blocks on golf detection — good false-positive hygiene; golf KB should document
+    sport-mismatch only in Architecture if multi-sport confusion arises.
+
+================================================================================
+6. MUST-FIX PRIORITIES (SPORT PACK COMPLETION)
+================================================================================
+
+P0 — before claiming audited coaching corpus:
+  [M-1] `Docs/002_DISCLAIMER.txt`
+  [M-2] `Phases/001_phase_model.txt` synced with `segment_golf_swings` + strike_proxy naming
+  [M-3] `Findings/001_common_faults.txt` (≥8 cards, spec shape, sourced)
+  [M-4] `Quality/001_quality_definition.txt` + `002_checkpoints.txt`
+  [M-5] `Coaching/001_cues.txt` + `002_drills.txt` tied to finding ids
+  [M-6] `brain_plan.txt` + `research_notes.txt`
+  [M-7] Legal/commercial sign-off on volume of R&A/USGA indexed text OR truncate to summaries + URLs
+
+P1 — quality bar:
+  [M-8] `Biomechanics/001_overview.txt`; consider retrieval policy for injury-heavy paper chunks
+  [M-9] Integrate or relocate `golf_swing_vocab.txt` / conventions into pack tree
+  [M-10] Harmonize SOURCE_MANIFEST authority + commercial_use_ok columns
+  [M-11] Refresh conforming ball list + rules version strategy documented in pack_readme
+
+P2:
+  [M-12] `Training/001_team_practice.txt`
+  [M-13] Rename Schema file for spec consistency
+  [M-14] Re-run review after build agent fills gaps; merge into `review_report.txt` if desired
+
+================================================================================
+7. REVIEWER SIGN-OFF
+================================================================================
+
+| Check | Status |
+|-------|--------|
+| Rules/handicap/equipment RAG (with version caveats) | Acceptable primary-source posture pending redistribution review |
+| Spec-complete sport pack (Phases/Quality/Findings/Coaching/Training) | **No** |
+| Safe to expose unsourced "body fix" coaching as KB-grounded | **No** |
+| GolfPack live status vs KB coaching depth | **Mismatch — document in pack_readme** |
+| Licensing audit complete | **Partial — manifest exists; commercial PDF volume flagged** |
+
+End of report.

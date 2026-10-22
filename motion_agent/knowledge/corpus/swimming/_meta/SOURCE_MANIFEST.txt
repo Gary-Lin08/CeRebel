@@ -1,0 +1,20 @@
+# swimming Sport Pack — Source Manifest
+# Authority: A+ federation rules | A clinical consensus | B+ reviews | B NGB coaching | C community (not used for findings)
+# Retrieved for pack build: 2026-10-21
+# Primary stroke: freestyle (front crawl)
+
+id,category,title,publisher,url,format,authority,download_by_script,notes
+world_aquatics_swimming,rules_glossary,World Aquatics Swimming Rules (overview),World Aquatics,https://www.worldaquatics.com/swimming,web,A+,no,Stroke definitions and competition context; not automated DQ.
+usa_swimming_learn,coaching,USA Swimming Learn to Swim / coach resources,USA Swimming,https://www.usaswimming.org/coach,web,B,no,Summarized progressions and skill language; verify current curricula.
+swim_england_framework,coaching,Swim England Learn to Swim Framework,Swim England,https://www.swimming.org/swimengland/learn-to-swim/,web,B,no,Stage-based skill development summaries.
+swimming_canada_ltad,coaching,Swimming Canada LTAD resources,Swimming Canada,https://www.swimming.ca/,web,B,no,Long-term athlete development context.
+pmc_freestyle_kinematics,biomech,Front crawl kinematics reviews (PMC),PubMed Central,https://www.ncbi.nlm.nih.gov/pmc/,html/pdf,B+,no,Search-backed summaries in Biomechanics/; no verbatim paste.
+pmc_swimming_shoulder,clinical,Swimming shoulder overuse reviews (PMC),PubMed Central,https://www.ncbi.nlm.nih.gov/pmc/,html/pdf,A,yes,Load context only — not diagnostic from video.
+asca_education,coaching,American Swimming Coaches Association education,ASCA,https://swimmingcoach.org/,web,B,no,Coaching convention summaries.
+ioc_injury_prevention_swim,clinical,IOC consensus statements on youth sport load (general),IOC,https://www.olympic.org/,web,A,no,General load principles applied in Training/ youth section.
+openpose_body_tracking,method,Body keypoint tracking for sport motion,Academic / product internal,https://github.com/CMU-Perceptual-Computing-Lab/openpose,software,B,n/a,Method reference; not coaching authority.
+ce_rebel_internal,product,CeRebel swimming pack architecture and phase map,CeRebel / internal,internal: motion_agent/knowledge/corpus/swimming/,internal,B,n/a,Phase events E_ENTRY etc.; beta sport catalog.
+
+# License note for commercial RAG corpus
+# Summaries only. Do not paste full copyrighted coaching manuals. Prefer open PMC and NGB public web pages with retrieved_at.
+# Freestyle-primary pack; other strokes glossary-only in v1.

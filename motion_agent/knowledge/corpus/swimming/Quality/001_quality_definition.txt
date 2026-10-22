@@ -1,0 +1,120 @@
+# Freestyle — Quality Definition (body-first)
+
+## What “quality” means in CeRebel
+
+Quality is **not** a single split time or SWOLF score. For this pack, **quality freestyle** (movement quality) means:
+
+1. **Stable body line** — hips near surface without excessive vertical oscillation; head neutral except brief breath window.
+2. **Ordered pull sequence** — entry → catch with elbow above wrist proxy → accelerating pull → complete push past hip.
+3. **Symmetric timing (when bilateral)** — left and right cycle periods and pull peaks within athlete baseline band.
+4. **Integrated roll and kick** — trunk rotates with pull; kick originates from hip without bicycle knee action.
+5. **Breathing without disrupting pull** — head rotates rather than lifts straight up; breath timed away from max force on breathing side when possible.
+6. **Training-load context** — for youth, quality includes appropriate volume and skill progression, not only aesthetics.
+
+Quality findings are **coaching signals**, not medical grades.
+
+Authority mix: B+ biomechanics relationships, B NGB coaching progressions, A for pain/overuse language boundaries.
+
+---
+
+## Dimensions of quality (orthogonal axes)
+
+### axis_catch_pull
+Definition: Effective setup and propulsion from entry through push.
+High quality: EVF proxy after entry; wrist speed peak mid-pull; exit near hip.
+Low quality: dropped elbow; sculling outward; short push.
+
+Measurable proxies:
+- Elbow-wrist vertical ordering in side view during catch.
+- Time from E_ENTRY to E_PULL_PEAK within athlete band.
+- Wrist passes hip keypoint before E_EXIT.
+
+### axis_body_line
+Definition: Horizontal alignment and minimal snaking.
+High quality: spine long; hips stable; entry at shoulder width.
+Low quality: crossover entry; hips fishtail; legs spread wide.
+
+Measurable proxies:
+- Lateral wrist entry position vs shoulder midline (2D).
+- Pelvis lateral displacement per cycle.
+
+### axis_rotation
+Definition: Coupled hip-shoulder roll supporting reach and pull.
+High quality: roll peaks with pull; sufficient amplitude for reach without over-rotation.
+Low quality: flat swim; excessive roll with crossover.
+
+Measurable proxies:
+- Shoulder tilt peak-to-peak per cycle.
+- Phase lag between roll peak and E_PULL_PEAK.
+
+### axis_breathing
+Definition: Head motion during breath.
+High quality: rotation-dominated breath; quick return to neutral.
+Low quality: straight lift; breath during peak pull on same side.
+
+Measurable proxies:
+- Head vertical displacement during E_BREATHE.
+- Yaw magnitude vs vertical displacement ratio.
+
+### axis_kick
+Definition: Flutter kick efficiency proxy.
+High quality: narrow kick; hip-driven; ankles relaxed.
+Low quality: bicycle kick; large splash; kick pauses.
+
+Measurable proxies:
+- Knee flexion amplitude.
+- Ankle lateral separation.
+
+### axis_repeatability
+Definition: Consistency across cycles in clip.
+High quality: low SD on cycle period and E_PULL_PEAK timing.
+Low quality: high variance — fatigue, pain avoidance, or skill instability.
+
+Requires ≥4 cycles.
+
+### axis_workload_youth
+Definition: Volume and intensity appropriate to age and skill stage.
+High quality: follows NGB progression; technique focus before distance overload.
+Low quality: excessive yardage with breakdown in catch/pull — flag coaching context.
+
+Audience: youth; sources in Training/ and SOURCE_MANIFEST.
+
+---
+
+## Quality tiers (product language)
+
+tier_excellent:
+- No medium/high findings on catch_pull, body_line, rotation, breathing, or kick axes.
+- Repeatability SD in lowest tertile of session history if available.
+
+tier_good:
+- At most one medium finding; no high-severity shoulder-load pattern flags.
+- Asymmetry below configured threshold L/R.
+
+tier_needs_work:
+- Multiple medium findings OR one high finding (e.g., persistent dropped elbow both sides).
+
+tier_insufficient_data:
+- Fewer than 2 full cycles, heavy occlusion, or misclassified non-swim motion.
+
+---
+
+## Relationship to performance
+
+Movement quality as defined here **correlates imperfectly** with speed. Sprint specialists may exhibit technique
+that differs from distance models. The pack emphasizes **repeatable, load-aware patterns** discussed in open
+literature rather than mimicking a single elite swimmer template.
+
+---
+
+## Youth vs adult
+
+Youth:
+- Higher stroke rate and shorter stroke length can be normal while learning.
+- Fault severity capped for entry/recovery until catch mechanics stabilize (coach override).
+
+Adult:
+- Full fault library applies; prior shoulder injury history should trigger conservative language (disclaimer).
+
+Open water:
+- Sighting strokes excluded from tier scoring when tagged in metadata.

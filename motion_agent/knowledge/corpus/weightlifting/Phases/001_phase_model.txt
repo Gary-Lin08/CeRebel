@@ -1,0 +1,208 @@
+# Weightlifting — Phase Model (v1)
+# Scope: back squat, conventional deadlift, strict overhead press (OHP)
+# Aligns: body-only OpenSim / pose keypoints; bar optional
+# Stable phase IDs — do not rename without migration note in pack_readme
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Each lift variant shares a high-level arc: setup → eccentric/load → transition → concentric → lockout → recovery.
+Squat and deadlift use vertical COM and hip/knee angles; OHP uses wrist/elbow vertical path with strict knee
+quietness (no dip-drive in v1).
+
+Tag every chunk and finding with:
+  lift_variant = squat | deadlift | ohp
+
+Handedness: bilateral lifts use left/right joint suffixes; asymmetry findings compare L vs R when visible.
+
+================================================================================
+PHASE TABLE — BACK SQUAT (lift_variant=squat)
+================================================================================
+
+| phase_id   | label_en        | start event     | end event       |
+|------------|-----------------|-----------------|-----------------|
+| setup      | Setup / brace   | clip_start      | E_ECC_START     |
+| descent    | Eccentric squat | E_ECC_START     | E_BOTTOM        |
+| bottom     | Bottom position | E_BOTTOM        | E_ASCENT_START  |
+| ascent     | Concentric drive| E_ASCENT_START  | E_LOCKOUT       |
+| lockout    | Standing finish | E_LOCKOUT       | E_RECOVERY      |
+| recovery   | Rep reset       | E_RECOVERY      | next E_ECC or clip_end |
+
+================================================================================
+PHASE TABLE — CONVENTIONAL DEADLIFT (lift_variant=deadlift)
+================================================================================
+
+| phase_id   | label_en        | start event     | end event       |
+|------------|-----------------|-----------------|-----------------|
+| setup      | Address / brace | clip_start      | E_PULL_START    |
+| pull       | Floor to knee   | E_PULL_START    | E_KNEE_PASS     |
+| transition | Knee to lockout | E_KNEE_PASS     | E_LOCKOUT       |
+| lockout    | Hips & knees extended | E_LOCKOUT | E_LOWER_START or clip_end |
+| lowering   | Eccentric down  | E_LOWER_START   | clip_end        |
+
+Notes: Many training clips end at lockout; lowering is optional. Findings for rounding often span pull+transition.
+
+================================================================================
+PHASE TABLE — STRICT OHP (lift_variant=ohp)
+================================================================================
+
+| phase_id   | label_en        | start event     | end event       |
+|------------|-----------------|-----------------|-----------------|
+| setup      | Rack / front rack | clip_start    | E_PRESS_START   |
+| press      | Drive to lockout| E_PRESS_START   | E_OHP_LOCKOUT   |
+| lockout    | Overhead finish | E_OHP_LOCKOUT   | E_HOLD_END      |
+| recovery   | Return to rack  | E_HOLD_END      | clip_end        |
+
+================================================================================
+EVENT DEFINITIONS (body-only)
+================================================================================
+
+E_SETUP_STABLE
+  Definition: rolling std of pelvis position below threshold for ≥10 frames at clip start.
+  Fallback: first frame.
+  Use: trim walk-up noise.
+
+--- Squat ---
+
+E_ECC_START
+  Definition: average knee flexion increasing (eccentric) for 3 consecutive frames after setup.
+  Proxy: d(knee_angle_avg)/dt > +threshold.
+  Fallback: setup_end + 5% window span.
+
+E_BOTTOM
+  Definition: local minimum pelvis vertical position (or max knee flexion) before ascent.
+  Proxy: argmin hip_y in [E_ECC_START, E_LOCKOUT]; tie-break with max knee_angle_avg.
+  Coaching: “bottom” — not IPF depth without bar/box reference.
+
+E_ASCENT_START
+  Definition: positive vertical velocity of pelvis after E_BOTTOM.
+  Proxy: v_y(pelvis) > threshold for 2 frames.
+
+E_LOCKOUT (squat)
+  Definition: knee_angle_avg and hip extension within ~10° of standing reference at clip start; |v_y(pelvis)| low.
+  Fallback: argmax hip_y in rep window.
+
+E_RECOVERY
+  Definition: E_LOCKOUT + frames until knee flexion begins next rep OR 300 ms idle.
+
+--- Deadlift ---
+
+E_PULL_START
+  Definition: vertical velocity of hands/wrists or shoulder center becomes positive; hip extension velocity increases.
+  Proxy: first frame where v_y(mid_wrist) > threshold AND hip_angle decreasing (hinge closing) ended.
+
+E_KNEE_PASS
+  Definition: knee flexion stops decreasing and begins extending while hips still extend (classic “knee pass”).
+  Proxy: inflection in knee_angle_avg between pull start and lockout.
+  Fallback: pull_start + 35% of rep span (low confidence flag).
+
+E_LOCKOUT (deadlift)
+  Definition: hip and knee near full extension; shoulders behind or over ankle proxy in sagittal view.
+  Same family as squat lockout with hip-dominant extension check.
+
+E_LOWER_START
+  Definition: hip flexion velocity sustained negative after lockout (controlled down).
+
+--- OHP ---
+
+E_PRESS_START
+  Definition: vertical velocity of mid-wrist exceeds threshold; elbows begin extension phase.
+  Strict filter: knee_angle_avg change < 5° in prior 200 ms (reject push press for v1).
+
+E_OHP_LOCKOUT
+  Definition: local maximum wrist height; elbow flexion near minimum in window.
+  Proxy: argmax wrist_y with elbow_angle > 160° (scale-normalized in product).
+
+E_HOLD_END
+  Definition: wrist speed below 15% of press peak for ≥150 ms after lockout.
+
+================================================================================
+DETECTOR EVENT MAP (future sport_analysis)
+================================================================================
+
+| product_event_id   | maps_to        | lift_variant   | priority |
+|--------------------|----------------|----------------|----------|
+| squat_bottom       | E_BOTTOM       | squat          | P0       |
+| squat_lockout      | E_LOCKOUT      | squat          | P0       |
+| dl_pull_start      | E_PULL_START   | deadlift       | P0       |
+| dl_lockout         | E_LOCKOUT      | deadlift       | P0       |
+| ohp_lockout_wrist  | E_OHP_LOCKOUT  | ohp            | P0       |
+| ohp_press_start    | E_PRESS_START  | ohp            | P1       |
+
+Phase scrub bar (UI):
+  Squat: setup | descent | bottom | ascent | lockout
+  Deadlift: setup | pull | transition | lockout
+  OHP: setup | press | lockout
+
+================================================================================
+TIMING RELATIONSHIPS (qualitative, B+ literature)
+================================================================================
+
+Squat:
+- Skilled lifters often show controlled descent then faster concentric; exact tempo varies by intent (strength vs warm-up).
+- Forward trunk lean increases with load and stance; not automatically a fault without knee/hip coupling.
+
+Deadlift:
+- Hips and shoulders rise together in first pull when technique is balanced; early hip-only rise (“stripper pull”) visible in sagittal pose.
+- Lockout completes with hip thrust, not excessive lumbar hyperextension alone.
+
+OHP:
+- Strict press: minimal knee/hip flexion; bar path proxy tracks wrist vertical line near mid-foot in side view.
+- Lockout with elbows extended and head “through the window” is style-dependent; measure shoulder flexion cautiously in 2D.
+
+Youth: smaller ROM, slower bar speeds, wider stance experimentation — use audience-tagged checkpoints.
+
+================================================================================
+CLIP TRIMMING GUIDANCE
+================================================================================
+
+- Include full setup brace if possible; findings on descent need ≥0.5 s before E_BOTTOM.
+- Deadlift: start before pull slack removal visible as hand movement; end at lockout hold ≥0.3 s.
+- OHP: include unrack step-back if analyzing setup stability; strict press only for v1 phase fork.
+- Multi-rep clips: segment per rep using E_RECOVERY / next E_ECC_START.
+
+================================================================================
+CROSS-LIFT CONFUSION GUARDS (planned)
+================================================================================
+
+- Deep squat vs deadlift setup: deadlift shows higher hip hinge, hands below knees at E_PULL_START.
+- OHP vs squat: OHP has rising wrists without simultaneous large knee flexion.
+- Document mismatch in coach copy when lift_variant detector confidence < threshold.
+
+## V2 PHASE LINK INDEX (auto)
+
+# detector_events + fault_links per phase for OpenSim/body detectors
+
+phase_id: ascent
+detector_events: E_ASCENT_START, E_LOCKOUT
+fault_links: fault_squat_knee_valgus, fault_squat_forward_lean_excess, fault_squat_bounce_bottom, fault_squat_heel_lift, fault_squat_asymmetric_hip, fault_squat_elbow_flare_bar
+
+phase_id: bottom
+detector_events: E_BOTTOM, E_ASCENT_START
+fault_links: fault_squat_good_morning, fault_squat_knee_valgus, fault_squat_forward_lean_excess, fault_squat_bounce_bottom, fault_squat_heel_lift, fault_squat_asymmetric_hip, fault_squat_butt_wink
+
+phase_id: descent
+detector_events: E_ECC_START, E_BOTTOM
+fault_links: fault_squat_good_morning, fault_squat_knee_valgus, fault_squat_forward_lean_excess, fault_squat_butt_wink, fault_squat_early_knee_slide, fault_squat_elbow_flare_bar
+
+phase_id: lockout
+detector_events: E_LOCKOUT, E_RECOVERY
+fault_links: fault_squat_incomplete_lockout, fault_dl_soft_lockout_knees, fault_dl_hyperextend_lockout, fault_ohp_incomplete_lockout, fault_ohp_asymmetric_press, fault_ohp_shrug_lockout, fault_dl_uneven_shoulder, fault_ohp_head_through_late, fault_ohp_rib_flare
+
+phase_id: press
+detector_events: E_PRESS_START, E_LOCKOUT
+fault_links: fault_ohp_leg_drive, fault_ohp_forward_loop, fault_ohp_excessive_leanback, fault_ohp_elbow_flare, fault_ohp_asymmetric_press, fault_ohp_head_through_late, fault_ohp_rib_flare
+
+phase_id: pull
+detector_events: E_PULL_START, E_KNEE_PASS, E_LOCKOUT
+fault_links: fault_dl_hips_shoot, fault_dl_rounding_pull, fault_dl_bar_forward, fault_dl_hitched_pull, fault_dl_uneven_shoulder, fault_dl_arms_pulling
+
+phase_id: setup
+detector_events: E_ECC_START, E_PULL_START
+fault_links: fault_dl_bar_forward, fault_dl_setup_too_squatty, fault_ohp_leg_drive, fault_squat_elbow_flare_bar
+
+phase_id: transition
+detector_events: E_KNEE_PASS
+fault_links: fault_dl_rounding_pull, fault_dl_hitched_pull
+

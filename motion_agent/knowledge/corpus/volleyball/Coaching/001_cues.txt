@@ -1,0 +1,144 @@
+# Volleyball Approach — Coaching Cues (v2)
+# Grouped by finding_id; mix internal and external focus
+# Long drill prose lives in Coaching/002_drills.txt
+
+## fault_jump_behind_contact
+legacy_id: jump-behind-contact
+cue_external: "Reach over the net at your highest point."
+cue_internal: "Feel tall ribs — hand finishes the swing at peak height."
+cue_external: "Hang in the air one beat before you whip."
+
+## fault_jump_early_reach
+legacy_id: jump-early-reach
+cue_external: "Floor fires first, hand fires second."
+cue_internal: "Push ankles and knees before the shoulder spins."
+cue_external: "Jump on time — don't swing on the way up from the plant."
+
+## fault_arm_only_swing
+legacy_id: arm-only-swing
+cue_external: "Jump like you're blocking — then swing."
+cue_internal: "Power from glutes, not only deltoid."
+cue_external: "Big bounce, small arm at the start."
+
+## fault_soft_plant
+legacy_id: soft-plant
+cue_external: "Sit in the last step."
+cue_internal: "Load the quad on the brake step."
+cue_external: "Heels heavy, then spring."
+
+## fault_short_approach
+legacy_id: short-approach
+cue_external: "Start behind the back line in practice — build distance."
+cue_internal: "Count four steps with the last two explosive."
+
+## fault_penultimate_flat
+legacy_id: penultimate-flat
+cue_external: "Long-deep second-to-last."
+cue_internal: "Drop the hips on penultimate, rise on plant."
+
+## fault_asymmetric_takeoff
+legacy_id: asymmetric-takeoff
+cue_external: "Two feet leave together."
+cue_internal: "Even pressure under big toe both sides."
+
+## fault_late_trunk_open
+legacy_id: late-trunk-open
+cue_external: "Chest to net, then arm."
+cue_internal: "Rotate belly button first, hand last."
+
+## fault_landing_stiff
+legacy_id: landing-stiff
+cue_external: "Quiet feet — bend knees."
+cue_internal: "Absorb in the legs, not the lower back."
+coach_note: Load awareness only — not ACL diagnosis. See Docs/002_DISCLAIMER.txt.
+
+## fault_slow_approach
+legacy_id: slow-approach
+cue_external: "Accelerate like a runway."
+cue_internal: "Fast feet on the last two steps only."
+
+## fault_narrow_plant
+legacy_id: narrow-plant
+cue_external: "Skateboard width base."
+cue_internal: "Stable hips over a strong platform."
+
+## fault_wide_plant
+legacy_id: wide-plant
+cue_external: "Power under your center."
+cue_internal: "Pull last step in — don't straddle."
+
+## fault_spike_no_penult_load
+cue_external: "Long-deep second-to-last — drop the hips, then spring."
+cue_internal: Same family as fault_penultimate_flat.
+
+## fault_spike_short_approach
+cue_external: "Start farther back — build the runway."
+
+## fault_spike_early_arm
+cue_external: "Chest to net first — then snap the elbow."
+cue_internal: "Arm waits while the trunk opens."
+
+## fault_spike_late_jump
+cue_external: "Floor first — jump on time, swing at the top."
+
+## fault_spike_stiff_landing
+cue_external: "Quiet feet — bend like a spring."
+coach_note: Same family as fault_landing_stiff; disclaimer applies.
+
+## fault_approach_crossover_chaotic
+cue_external: "Run a straight line to the plant — steps under your hips."
+cue_internal: "Quiet hips side-to-side; drive forward."
+
+## fault_approach_last_step_overreach
+cue_external: "Plant under you — last step powerful, not a lunge."
+cue_internal: "Feel the plant under the belt buckle."
+
+## fault_arm_swing_elbow_lead
+cue_external: "Elbow high like a bow — then throw the hand past the elbow."
+cue_internal: "High elbow slot, then whip."
+
+## fault_swing_no_draw
+cue_external: "Pull the hitting elbow back like drawing a bow before you jump."
+cue_internal: "Feel the stretch behind the shoulder, then release."
+
+## fault_hitting_shoulder_open_early
+cue_external: "Keep your hitting shoulder closed until you’re rising — then open and swing."
+cue_internal: "Stay coiled through takeoff."
+
+## fault_landing_single_leg_dominant
+cue_external: "Two feet together — share the landing."
+cue_internal: "Even pressure left and right."
+
+## fault_landing_forward_fall
+cue_external: "Sit back into the landing — hips and knees share the bend."
+cue_internal: "Hinge hips, don't fold at the waist only."
+
+## fault_block_ready_upright
+cue_external: "Athletic ready — soft knees, weight forward, hands ready at shoulders."
+cue_internal: "Spring-loaded base, not a stick."
+
+## fault_block_arms_low
+cue_external: "Hands at shoulder shelves — ready to press up."
+cue_internal: "Pre-load the elbows before the jump."
+
+## fault_jump_timing_rushed
+cue_external: "Approach… plant… then jump — give the plant one beat."
+cue_internal: "One quiet count on the plant before you leave."
+
+## fault_com_wrist_desync
+cue_external: "Meet the swing at the top of your jump — rise and whip together."
+cue_internal: "Feel hand speed peak while you are still tall."
+
+## General ready-phase cues (no finding required)
+
+cue_external: "Athletic ready — weight forward."
+cue_external: "See the setter, loose shoulders."
+
+## Jump serve variant (variant=serve)
+
+cue_external: "Same jump-then-strike order as attack."
+cue_internal: "Toss is timing — body still uses legs-first on strike."
+
+## Disclaimer pointer
+
+All cues are coaching suggestions, not medical treatment. See Docs/002_DISCLAIMER.txt.

@@ -1,0 +1,40 @@
+# Yoga pack — research notes (facts with URLs for build agents)
+# Date: 2026-10-21
+
+## Yoga for musculoskeletal health
+
+- Multiple systematic reviews report yoga can improve pain and function in **chronic low back pain** for some
+  participants vs waitlist; effect sizes vary; supervision and modification matter.
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=yoga+chronic+low+back+pain+meta-analysis
+
+## Injury and load
+
+- Self-report surveys suggest **shoulder, wrist, and hamstring** regions appear often in yoga-related injury
+  reports in recreational practitioners; mechanism often linked to repetitive vinyasa and overenthusiastic depth.
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=yoga+related+injuries
+
+## Plank and chaturanga
+
+- Push-up variations show scapular stabilizer and trunk muscle engagement; form affects shoulder abduction angle.
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=plank+scapular+muscle+activity
+
+## Balance
+
+- Yoga and tai chi class interventions appear in balance/fall-prevention literature for older adults (mixed quality).
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=yoga+balance+older+adults+systematic+review
+
+## Hypermobility
+
+- Clinical guidance favors **strength at mid-range** over passive end-range stretching for hypermobile individuals.
+  Search: https://pubmed.ncbi.nlm.nih.gov/?term=hypermobility+physical+therapy+exercise
+
+## Teaching safety conventions (non-primary literature)
+
+- Foot not on standing knee in Tree — ubiquitous in teacher training safety lists (Yoga Alliance RYS materials, B).
+- Heels down in Down Dog not required for benefit — common Iyengar-influenced pedagogy summary (B).
+
+## Product implications
+
+- Phase model must tolerate breath micro-movement in holds.
+- Pose_id user selection critical until classifier ships.
+- 45° camera recommended in architecture for Dog/Plank/Warrior I.

@@ -1,0 +1,213 @@
+# swimming pack — research notes (search agent)
+# Retrieved: 2026-10-21 | Product: CeRebel body-first coaching (no lane/wall instrumentation required)
+# Purpose: factual seeds for phase model, faults, cues — each build artifact should carry source URL.
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Authority: A+ federation rules | A clinical | B+ reviews | B NGB coaching | C community (excluded)
+
+================================================================================
+0. LICENSING & INGEST (READ FIRST)
+================================================================================
+
+Commercial RAG corpus (CeRebel):
+  - World Aquatics Competition Regulations + USA Swimming Rulebook: © federation;
+    summarize legal stroke definitions and competition context; verify live amendments.
+  - USA Swimming University / member webinars: gated; use public catalog text only.
+  - PMC: many swimming papers are free to read but NOT all CC BY. Prefer confirmed CC BY 4.0:
+      PMC9630912, PMC10044880, PMC9909090; PMC9334501 (Sports Med Open — verify on PMC page).
+  - J Sports Sci Med PMC deposits (PMC8488830, PMC9982531, PMC3761493): © JSSM — cite + summarize.
+  - Sports Health PMC10732115: clinical shoulder coordination — non-diagnostic product copy.
+
+Do not paste copyrighted coach certification slide decks or full rulebooks at length.
+
+================================================================================
+1. FEDERATION RULE TOUCHPOINTS (A+) — GLOSSARY / LEGAL STROKE ONLY
+================================================================================
+
+World Aquatics (international):
+  Competition Regulations hub lists versioned PDFs (2025–2026 updates: backstroke ledge,
+  swimwear, open water wearables, etc.). Swimming technical rules live in Part Two of the
+  regulations document set — freestyle is "any stroke except breaststroke, butterfly, or backstroke"
+  with surface swimming requirements except legal turns/push-offs.
+  URLs: https://www.worldaquatics.com/rules/competition-regulations
+        https://www.worldaquatics.com/swimming/documents
+
+USA Swimming (US NGB, aligns with World Aquatics):
+  2026 Rulebook PDF (Article 101: stroke definitions; 101.5 Freestyle; 102 conduct/officiating).
+  Rules & Policies page publishes amendments that supersede PDF text between print cycles.
+  URLs: https://www.usaswimming.org/docs/default-source/governance/governance-lsc-website/rules_policies/rulebooks/2026-rulebook.pdf
+        https://www.usaswimming.org/about-usas/governance/rules-policies
+
+Body pack scope: does NOT adjudicate turns, finishes, or underwater distance without pool
+calibration; rules inform terminology (e.g. legal pull, breakout) only.
+
+================================================================================
+2. PUBLIC COACHING — WORLD AQUATICS (B)
+================================================================================
+
+Coaches Certification Programme (Swimming Levels 1–3) and Clinics for Coaches are the
+primary World Aquatics coach-development pathways (5–10 day NF-hosted clinics; certification
+courses for swimming L1–L3). Public web describes competencies and continuous learning — not
+full curriculum PDFs for swimming equivalent to water-polo manuals on Development Publications.
+  URLs: https://www.worldaquatics.com/development/programmes/Athletes-Entourage
+        https://www.worldaquatics.com/development/programmes/clinics-coaches
+        https://www.worldaquatics.com/development/publications
+
+Discover Water (youth 6–12): physical literacy + water safety framework; Guidebook on Aquatics
+Community page; Playbook/Activity Cards restricted to member federations. Use for youth pack
+segment only (Training/), not elite freestyle biomechanics findings.
+  URL: https://www.worldaquatics.com/development/programmes/aquatics-community/
+
+================================================================================
+3. PUBLIC COACHING — USA SWIMMING (B)
+================================================================================
+
+USA Swimming University: Core Certification, ADM tracks, Legacy Project, Summer League Coaching
+(90 min: quality coaching, stroke fundamentals, kids/parents, planning). Member vs non-member
+pricing; many stroke mini-courses (e.g. "Key Points of Freestyle" for 10&U) require login.
+  URL: https://www.usaswimming.org/coaches-leaders/coaches/education
+
+American Development Model — freestyle progression themes (summarized):
+  - Streamlined push-off, breakout kick-to-pull, bilateral breathing comfort, legal flip turn.
+  - Named drill families: timing the breath, one-eye breathing, early vertical forearm (EVF),
+    one-arm drills, 6-count switch, vertical sculling.
+  - Levels tie stroke count, pace clock use, and legal 100s/IM by level — separate youth norms.
+  URLs: https://www.usaswimming.org/coaches-leaders/coaches/american-development-model
+        https://www.usaswimming.org/docs/default-source/coaching-resourcesdocuments/adm-competence-progressions.pdf
+
+Regional Coach Clinics (2026): "national-level readiness" holistic framework — not a single
+technique doctrine; useful for long-term athlete development copy, not phase-detector events.
+  URL: https://www.usaswimming.org/coaches-leaders/connect-learn/programs-services/clinics-workshops/regional-coach-clinics
+
+================================================================================
+4. FREESTYLE / FRONT CRAWL BIOMECHANICS — PMC & OPEN REVIEWS (B+ / A)
+================================================================================
+
+4A. Propulsion, drag, and within-cycle velocity (B+, CC BY where noted)
+
+Active drag narrative review (Lopes et al. 2022, PMC9630912, CC BY 4.0):
+  Synthesizes experimental/numerical active drag methods; technique and body position affect
+  drag–propulsion balance. Product: frame faults as "increased drag risk / efficiency" not
+  absolute speed promises.
+
+Intracycle velocity variation scoping review (Fernandes et al. 2023, PMC10044880, CC BY 4.0):
+  Front crawl dominates literature; IVV quantification methods diverge; links to coordination,
+  fatigue, stroke rate/length tradeoffs. High heterogeneity — avoid single IVV target.
+
+4B. Stroke coordination and trunk roll (B+)
+
+400-m front-crawl meta-analysis (Correia et al. 2023, PMC9909090, CC BY 4.0):
+  Pooled index of coordination (IdC) ≈ −11% → catch-up coordination pattern in aggregated
+  400-m trials; arm-stroke efficiency ηp ≈ 35%; mean speed ~1.34 m/s in included studies
+  (below world-record pace). Heterogeneity >75% — population references only.
+
+400-m pace coordination stability (Schnitzler et al. 2009, PMC3761493):
+  During all-out 400-m, stroke length and speed drop with fatigue while IdC and stroke rate
+  can remain stable — coordination metrics may persist as SL falls. Useful for interpreting
+  late-race visible shortening without over-cuing SR alone.
+
+Elite trunk roll strategies (Niu et al. 2026, PMC13443057):
+  Three upper-trunk vs pelvic roll strategies (upper-trunk-leading, pelvic-leading, near-synchronous);
+  near-synchronous most frequent (~53%); faster within-athlete speed increases odds of
+  upper-trunk-leading. Conclusion: individualized coordination, not one optimal roll phase lock.
+  License: verify on PMC page before extended quotation.
+
+Coaching alignment (USA ADM): shoulder/hip roll and EVF cues are pedagogical — reconcile with
+research showing inter-individual trunk strategies and speed-dependent strategy shifts.
+
+4C. Training interventions (B+, JSSM)
+
+S&C meta-analysis (Kwok et al. 2021, PMC8488830):
+  Resistance/core training can improve sprint front crawl and stroke biomechanics; resistance
+  may increase stroke rate; plyometrics help starts; turn evidence limited. Findings belong in
+  Training/ — not automatic fault labels from body pose alone.
+
+4D. Underwater undulatory kick — starts/turns (B+)
+
+UUS systematic review (West et al. 2022, PMC9334501, Sports Medicine - Open):
+  Foot acceleration, kick frequency, hip/knee/ankle angular velocity and ROM correlate with
+  underwater velocity; prone vs supine differences; ~15 m maximum underwater distance (rule context).
+  Body-first above-water pack may only weakly observe dolphin kick; flag start/turn phases when
+  camera sees breakout.
+
+4E. EMG and shoulder load (B+ / A)
+
+Front-crawl sEMG review (Kwok et al. 2023, PMC9982531):
+  Literature biased to upper-limb muscles; trunk/legs and start/turn phases under-represented.
+  Supports whole-body cues (rotation, kick) rather than arm-only fault cards.
+
+Swimmer's shoulder muscle synergies (Matsuura et al. 2023, PMC10732115, Sports Health):
+  Elite swimmers with shoulder pain history show different muscle coordination during recovery
+  (front crawl and backstroke): reduced upper-limb contribution when trunk rolls. Clinical level 4
+  case-control — product may mention recovery-phase trunk–arm timing as load awareness, NOT
+  diagnosis or "you have swimmer's shoulder."
+
+================================================================================
+5. PHASE MODEL SEED (BODY-FIRST, PROVISIONAL FOR brain_plan / Phases/)
+================================================================================
+
+Suggested 6–8 phases for side-on pool video (above water, one stroke side visible):
+
+  1. ENTRY / EXTENSION — hand enters, arm extends forward
+  2. CATCH / EVF — elbow flexion increases, forearm vertical tendency (proxy only)
+  3. PULL / PROPULSION — hand path under body, peak shoulder/elbow flexion
+  4. PUSH / EXIT — hand accelerates backward, release toward hip
+  5. RECOVERY — elbow exits, arm swings forward (high shoulder load visibility)
+  6. BREATH (optional tagged sub-phase) — head rotation when bilateral breathing visible
+
+Underwater push-off / breakout: separate tags if feet and wall visible; else omit.
+
+Cross-cycle metrics: stroke rate proxy (cadence of shoulder peaks), stroke length proxy
+(shoulder–hip displacement per cycle if scale unknown — trend only), trunk roll amplitude
+(shoulder vs hip rotation differential).
+
+================================================================================
+6. COMMON FAULT THEMES → VISIBLE SIGNALS (FOR Findings/ — CAREFUL WORDING)
+================================================================================
+
+| Theme | Phase | Visible signal (monocular side) | Why it matters (performance framing) | Cue/drill pointer (B sources) | Sources |
+|-------|-------|----------------------------------|--------------------------------------|----------------------------------|---------|
+| Flat swim / low roll | Pull–recovery | Shoulders stay square; hip roll << shoulder roll | Associated with shorter propulsive window in coaching literature; trunk reviews show roll strategies vary | 6-count switch; emphasize hip-led rotation | ADM; PMC13443057 |
+| Cross-over entry | Entry | Hand crosses midline in front of head | Increases drag / snaking in coaching tradition; drag review links alignment to active drag | Enter wide; "track parallel" | ADM EVF progressions; PMC9630912 |
+| Weak EVF / dropped elbow (proxy) | Catch–pull | Elbow stays high; wrist leads before vertical forearm | Reduces propulsive surface in coaching models | EVF drills, sculling | USA ADM |
+| Over-rotation on breath | Recovery | Long pause with head up; hip drops | Disrupts rhythm; IVV/coordination literature links rhythm to velocity fluctuations | One-eye breathing; timing breath | ADM; PMC10044880 |
+| Asymmetric stroke | Full cycle | Left/right shoulder peak timing or arc mismatch | Bilateral breathing and injury awareness themes in EMG/shoulder studies | One-arm drills both sides | PMC9982531; PMC10732115 |
+| Shortened stroke late race | Pull | Same SR proxy but smaller reach / elbow extension | Matches fatigue-induced SL drop with stable coordination (400-m study) | Hold SL cues; aerobic context | PMC3761493 |
+
+No single numeric elbow angle or roll degree should be marketed as "correct" for all athletes.
+
+================================================================================
+7. BODY TRACKING FEASIBILITY (B, INTERNAL)
+================================================================================
+
+Good side-camera visibility: shoulder/elbow/wrist timing, head turn for breath, hip roll proxy,
+kick knee flexion rhythm (if legs not turbid), stroke cadence.
+
+Poor or absent: exact hand pitch, pitch of forearm in highly turbid water, precise catch angle,
+underwater pull path, wall distance for 15 m breakout, finger pitch.
+
+OpenSim: shoulder complex highly constrained in water; use trends and phase timing, not
+lab-grade joint moments.
+
+================================================================================
+8. GAPS FOR BUILD / BRAIN / REVIEW AGENTS
+================================================================================
+
+- Write Docs/002_DISCLAIMER.txt: not medical advice; shoulder pain → qualified clinician.
+- Split Training/ youth (ADM, Discover Water) from elite open-water / sprint biomechanics.
+- Ingest CC BY PMC full texts into Biomechanics/001 only as short summaries + DOI.
+- Paywalled reviews (e.g. Sports Biomechanics coordination SR 2022 on Taylor & Francis): link only.
+- Phase detector: none in motion_agent/sports yet — map events in brain_plan.txt.
+- Rule citations: always retrieved_at + check USA Swimming amendments page before ship.
+
+## Primary URLs (also in SOURCE_MANIFEST.txt)
+
+https://www.worldaquatics.com/rules/competition-regulations
+https://www.usaswimming.org/about-usas/governance/rules-policies
+https://www.usaswimming.org/coaches-leaders/coaches/american-development-model
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9630912/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10044880/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9909090/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC13443057/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10732115/
+
+# End research_notes.txt

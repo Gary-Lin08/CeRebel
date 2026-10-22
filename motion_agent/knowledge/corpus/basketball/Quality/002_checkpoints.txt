@@ -1,0 +1,187 @@
+# Basketball Shooting — Checkpoint Catalog
+# Format: checkpoint_id | phase | variant | body signal | pass heuristic | fail → finding | authority
+
+================================================================================
+SETUP
+================================================================================
+
+checkpoint_stance_width
+  phase: setup
+  variant: jump, ft
+  signal: horizontal distance between ankle markers normalized by shoulder width
+  pass: ankles roughly shoulder-width to slightly wider; feet not crossed
+  fail_low: ankles closer than ~0.7× shoulder width → fault_narrow_base
+  fail_high: extreme wide stance with trunk sway → fault_over_wide_base (low severity)
+  authority: B (coaching consensus)
+  youth: same heuristic; smaller absolute widths normal
+
+checkpoint_foot_alignment
+  phase: setup
+  variant: jump, ft
+  signal: angle between foot line and pelvis facing (when visible)
+  pass: shooting-side foot slightly forward or square — style-dependent; flag only extreme pigeon-toe/inversion
+  fail: lead foot dramatically rotated inward with knee valgus hint at setup → fault_feet_misaligned
+  authority: B
+  note: oblique camera reduces confidence — prefer unclear over fail
+
+checkpoint_trunk_upright_setup
+  phase: setup
+  variant: jump, ft
+  signal: trunk lean from vertical (2D proxy)
+  pass: moderate athletic flex at hips/knees without excessive forward fold
+  fail: head well forward of pelvis with rounded trunk → fault_collapsed_setup
+  authority: B+
+
+================================================================================
+DIP / LOAD (JUMP SHOT)
+================================================================================
+
+checkpoint_dip_sync
+  phase: dip
+  variant: jump
+  signal: timing correlation knee flexion both legs
+  pass: both knees flex within ~100 ms (frame-adjusted)
+  fail: single-leg dip only with opposite leg straight → fault_asymmetric_dip
+  authority: B
+
+checkpoint_dip_depth_moderate
+  phase: dip
+  variant: jump
+  signal: change in knee flexion from setup to E_DIP_MIN
+  pass: visible but not maximal squat depth (qualitative); youth smaller amplitude OK
+  fail: no flex change before rise (stiff legs) → fault_no_load
+  fail: extreme flex with loss of trunk control → fault_excessive_dip
+  authority: B+ (load aids power in literature); youth band: smaller change still pass if rhythm OK
+
+================================================================================
+DRIVE / JUMP
+================================================================================
+
+checkpoint_com_rise_before_release
+  phase: drive, transfer
+  variant: jump
+  signal: E_COM_PEAK time vs E_RELEASE time
+  pass: COM rise initiates before or through early set phase
+  fail: wrist speed peak before meaningful COM rise → fault_arm_only_shot
+  authority: B+
+
+checkpoint_symmetric_drive
+  phase: drive
+  variant: jump
+  signal: knee extension timing L vs R
+  pass: both legs extend in jump; slight asymmetry OK for one-foot gather clips
+  fail: strong lateral collapse (COM shifts > threshold toward one ankle) → fault_lateral_leak
+  authority: B
+
+================================================================================
+SET / UPPER BODY
+================================================================================
+
+checkpoint_elbow_under_wrist_plane
+  phase: set
+  variant: jump, ft
+  signal: shooting elbow x-position vs wrist in frontal view (when visible)
+  pass: elbow not dramatically outside wrist line (flyaway elbow proxy)
+  fail: elbow lateral to wrist with abducted upper arm → fault_flyaway_elbow
+  authority: B+ / coaching B
+  note: foreshortened camera → unclear
+
+checkpoint_shooting_wrist_above_elbow_at_set
+  phase: set
+  variant: jump, ft
+  signal: wrist_y vs elbow_y at E_SET_START
+  pass: wrist at or above elbow height for overhand style
+  fail: wrist below elbow (pushing from chest) → fault_low_set_point
+  authority: B
+
+checkpoint_off_hand_quiet
+  phase: set, release
+  variant: jump, ft
+  signal: off-hand wrist speed vs shooting wrist pre-release
+  pass: off-hand speed < ~40% of shooting wrist at release window
+  fail: off-hand speed spike with shooting hand → fault_guide_hand_push
+  authority: B
+
+checkpoint_head_stability
+  phase: set, release
+  variant: jump, ft
+  signal: head position drift relative to pelvis
+  pass: head stable or lifts with trunk; not snapping sideways at release
+  fail: rapid lateral head move at release → fault_head_jerk_release
+  authority: B (coaching); low severity
+
+================================================================================
+RELEASE
+================================================================================
+
+checkpoint_elbow_extension_at_release
+  phase: release
+  variant: jump, ft
+  signal: shooting elbow flexion angle at E_RELEASE
+  pass: elbow near extension (not locked hyperextension — qualitative)
+  fail: large flexion at wrist speed peak → fault_short_arm_release
+  authority: B+
+
+checkpoint_shoulder_to_wrist_line
+  phase: release
+  variant: jump, ft
+  signal: alignment shoulder–elbow–wrist in plane of camera
+  pass: roughly colinear at release for standard overhand
+  fail: broken line with wrist ahead of elbow only (catapult without shoulder) → fault_wrist_only_release
+  authority: B
+
+================================================================================
+FOLLOW / LANDING (JUMP) / FT HOLD
+================================================================================
+
+checkpoint_follow_through_hold
+  phase: follow
+  variant: jump, ft
+  signal: shooting wrist held above shoulder line briefly post-release
+  pass: wrist remains elevated ≥8 frames post E_RELEASE (fps-adjusted)
+  fail: immediate snap-down → fault_chicken_wing_finish
+  authority: B
+
+checkpoint_soft_landing_flex
+  phase: follow
+  variant: jump
+  signal: knee flexion at E_LAND vs in air
+  pass: knees flex on landing (eccentric absorption)
+  fail: near-locked knees at contact → fault_stiff_landing
+  authority: A/B+ (landing load literature)
+
+checkpoint_landing_symmetry
+  phase: follow
+  variant: jump
+  signal: knee flexion L vs R at E_LAND_STABLE
+  pass: difference below threshold
+  fail: one knee deeply flexed, other straight → fault_asymmetric_landing
+  authority: B+
+
+checkpoint_ft_routine_pause
+  phase: setup, follow
+  variant: ft
+  signal: duration of low motion before shot; hold after release
+  pass: repeatable quiet period (coach-defined band in training doc)
+  fail: rushed shot with no setup stillness → fault_rushed_free_throw
+  authority: B (coaching routine)
+
+================================================================================
+META-CHECKPOINTS (CAPTURE)
+================================================================================
+
+checkpoint_capture_shooting_arm_visible
+  phase: all
+  variant: jump, ft
+  signal: joint confidence scores
+  pass: shooting elbow and wrist visible >70% frames in set–release
+  fail: suppress upper-body faults; show capture warning only
+  authority: ProductLogic
+
+checkpoint_variant_match
+  phase: drive
+  variant: jump, ft
+  signal: COM rise magnitude
+  pass: jump variant has COM rise; ft variant minimal
+  fail: mismatch → reduce confidence globally
+  authority: ProductLogic

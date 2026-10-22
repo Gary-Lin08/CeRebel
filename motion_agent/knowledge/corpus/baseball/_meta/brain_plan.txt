@@ -1,0 +1,294 @@
+# CeRebel Baseball Pitching KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: baseball / softball (windmill out of scope v1)
+# Aligns: SPORT_PACK_KB_SPEC.txt, motion_agent/motion/sport_analysis.py (_baseball_window)
+# Product: body-first OpenSim coaching; NO ball tracking; detector MUST refuse golf.
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for overhand pitching (MLB/NGB coaching + clinical
+biomechanics summaries). Softball fastpitch shares many lower-body/trunk patterns;
+label copy may say "pitch / throw" where joint logic is identical.
+
+Out of scope v1:
+- Ball velocity, spin, pitch type classification, strike zone
+- Windmill softball as a separate phase model
+- Medical diagnosis, return-to-throw protocols (point to licensed providers)
+
+Build agent writes full Findings/Coaching bodies from this map; brain agent does not.
+
+================================================================================
+2. PRODUCT CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+- All measurable claims tie to reconstructed body: joint positions, OpenSim
+  coordinates (e.g. knee_angle_l/r, lumbar_rotation), segment speeds.
+- UI phase scrub bar MUST use the six phase IDs below (stable contract with code).
+- Each user-facing finding MUST map to: phase window, series id, feel cue, 30–90s drill.
+- Youth vs adult numeric norms: separate bands; never present youth numbers as adult.
+- Authority: cite A/A+ for product thresholds; B+ for coaching heuristics; no C in findings.
+- Golf refusal: BaseballPack runs GolfPack.detect first; pitch_likeness is secondary.
+  KB must NOT describe golf; document "sport mismatch" in Docs/001_ARCHITECTURE (build).
+
+================================================================================
+3. PHASE MODEL (UI + DETECTOR ALIGNMENT)
+================================================================================
+
+Phase IDs (exact — match sport_analysis._baseball_window):
+
+| id       | label_en      | label_zh     | role |
+|----------|---------------|--------------|------|
+| set      | Set           | 预备/setup   | Quiet on rubber; minimal COM drift |
+| lift     | Leg lift      | 抬腿         | Lead knee rises; balance on drive leg |
+| stride   | Stride        | 跨步         | COM moves toward plate; foot in air |
+| landing  | Landing       | 前脚着地     | Lead foot contact → stable base |
+| release  | Release       | 出手         | Throwing-hand speed peak (proxy for release) |
+| follow   | Follow-through| 随挥         | Deceleration after release peak |
+
+Event definitions (body-only, OpenSim-friendly):
+
+- release_event: argmax ||v(trail_wrist)|| in analysis window (NOT ball release).
+- landing_event: last strong deceleration of lead_ankle speed before release_event
+  (see _landing_time); fallback: ~18% of window span before release.
+- set_end: start + 12% window span (or first meaningful COM motion — future).
+- lift_end: max(set_end, landing - 28% span).
+- stride: lift_end → landing_event.
+- landing phase: landing_event → landing_event + 8% span (min 20 ms).
+- release phase: end(landing) → release + 6% span.
+
+Handedness: trail = throwing side; lead = glove side (RHP: trail right, lead left).
+
+Detector pitch_likeness features (document in Biomechanics/001, not duplicated here):
+- wrist speed burst (peak/median), lead ankle stride_ratio, throwing vs glove wrist arm_ratio.
+- Enable live only when DETECTOR_ENABLED + labeled suite passes; golf block always on.
+
+Phases/001_phase_model.txt (build): expand events, fallback behavior, scrub UX copy.
+
+================================================================================
+4. MEASUREMENT SURFACE (CODE ↔ KB)
+================================================================================
+
+Analysis board series (must define norms & checkpoints per series):
+
+| series_id      | signal                          | unit | primary phases        |
+|----------------|----------------------------------|------|------------------------|
+| stride         | lead–trail ankle AP separation  | cm   | stride, landing        |
+| back-knee      | knee_angle_trail                | °    | stride, landing        |
+| front-knee     | knee_angle_lead                 | °    | landing, release       |
+| separation     | lumbar_rotation (zero at start)| °    | landing, release       |
+| throwing-hand  | ||v(trail_wrist)||               | m/s  | release, follow        |
+
+Future series (Quality/002 + Findings v2): lead_elbow_flex, shoulder_rotation_trail,
+pelvis_anterior_tilt, head_neck_flex — only after coordinate availability audit.
+
+================================================================================
+5. CLINICAL / COACHING NORMS (EVIDENCE-BANDED)
+================================================================================
+
+Use as RAG reference bands, NOT individual medical advice. Build agent adds URLs in
+SOURCE_MANIFEST + research_notes. Wording: "typical in published cohorts".
+
+ADULT (college/pro male overhand; authority mostly A / B+):
+
+- Stride length (foot contact): ~75–90% of body height; coaching consensus often
+  cites ~85% height (B+). Product checkpoint: flag "short" < ~70%, "long" > ~95%
+  (adjust for capture scale — normalize by stature estimate from model height metadata
+  or shoulder–ankle segment if available).
+- Hip–shoulder separation at foot contact: often ~40–60° in EMG/kinematic studies (A);
+  product "low separation" heuristic currently < 25° at landing (code) — KB should
+  explain why conservative for noisy monocular OpenSim.
+- Max external rotation (MER) at shoulder: frequently reported ~165–180° in pro pitchers (A);
+  youth: lower absolute values normal; do NOT use 170° as youth target.
+- Lead knee flex at foot strike: often ~35–55° (A/B+); excessive collapse = increase
+  > ~8–15° from landing to release (matches code front-knee rule).
+- Trunk tilt (forward): variable by style; flag extreme upright or hyper-flexion only
+  with multi-study B+ backing in Biomechanics doc.
+- Pelvis rotation velocity peak: typically precedes trunk then arm (kinematic sequence, A).
+
+YOUTH CAVEATS (Little League / middle school; authority B+ / clinical consensus):
+
+- Shorter stride relative to height; slower tempo; lower MER; emphasis on control &
+  volume limits (USA Baseball / MLB Pitch Smart — A+ for volume, B+ for mechanics).
+- Avoid cueing "throw as hard as pros"; findings severity down-weight for < 14 yrs
+  unless pain/injury language (then safety redirect, not drill prescription).
+- Open growth plates: no weighted-ball drill prescriptions in product KB.
+
+Evidence levels for pack (see section 6): every numeric checkpoint lists one level.
+
+================================================================================
+6. QUALITY MODEL
+================================================================================
+
+Quality/001_quality_definition.txt (build):
+
+- Dimensions: (1) kinetic chain timing, (2) lower-body drive & bracing,
+  (3) trunk separation & posture, (4) arm path & deceleration (limited by coords),
+  (5) repeatability / balance (set & lift).
+- Score is NOT a single number in v1 — qualitative "checkpoints passed" for coach UX.
+- Link checkpoints → finding IDs when failed.
+
+Quality/002_checkpoints.txt — required checkpoint table:
+
+checkpoint_id          | phase(s)        | series/signal              | rule (summary)                    | fail→finding_id        | evidence
+-----------------------|-----------------|----------------------------|-----------------------------------|------------------------|----------
+cp_stride_adult_band   | landing         | stride / height ratio      | 0.70–0.95 adult band              | stride-short/long      | B+
+cp_stride_youth_band   | landing         | stride / height ratio      | 0.55–0.85 youth band              | stride-short/long      | B+
+cp_back_leg_drive      | stride→landing  | back-knee Δ flex           | knee extends ≥8° by landing       | back-leg-soft          | B+
+cp_separation_landing  | landing         | separation                 | |sep| ≥ 25° (conservative)        | separation-low         | A (norm) B+ (threshold)
+cp_front_knee_brace    | landing→release | front-knee Δ flex          | Δ < 8° landing→release            | front-knee-collapse    | B+
+cp_mer_band            | release         | shoulder ER (future)       | within age band; low if << youth p10 | mer-insufficient    | A
+cp_trunk_sequence      | landing→release | pelvis vs trunk peak times | pelvis peak before trunk before hand | trunk-late-rotate  | A
+cp_balance_set         | set, lift       | COM / ankle speed          | minimal drift pre-stride          | set-rush               | B
+cp_glove_side_stable   | stride→release  | lead wrist vs trunk        | lead arm not max speed before trunk | glove-flyout        | B+
+cp_head_stack          | release         | head vs trunk (future)     | excessive lateral pull            | head-pull              | B+
+cp_pelvis_drift        | stride→landing  | pelvis AP vs set           | COM toward plate without hip lead | pelvis-drift           | B+
+cp_arm_path_efficiency | release         | throwing-hand path         | excessive lateral loop (heuristic)| arm-path-wide          | B
+
+Note: thresholds marked "future" ship as findings with lower confidence until coords exist.
+
+================================================================================
+7. FINDING CATALOG (8–12 STABLE IDs)
+================================================================================
+
+Format for build agent (Findings/001 + Coaching/001–002): full cards per SPORT_PACK spec.
+
+| finding_id           | headline_en (short)              | primary_phases      | body signal (measurable)                    | severity hint | in_code_v1 |
+|----------------------|----------------------------------|---------------------|---------------------------------------------|---------------|------------|
+| back-leg-soft        | Back leg stays bent              | stride, landing     | back-knee flex high at landing; Δflex <8°   | high          | yes (back-leg) |
+| separation-low       | Hips and shoulders turn together | landing             | |lumbar_rotation| < 25° at landing          | high          | yes (separation) |
+| front-knee-collapse  | Front knee gives after landing   | landing, release    | lead knee flex +≥8° to release              | high          | yes (front-knee) |
+| stride-short         | Stride looks short               | stride, landing     | stride cm / height below band               | medium        | partial (highlight only) |
+| stride-long          | Stride overreaches               | stride, landing     | stride cm / height above band               | medium        | planned |
+| mer-insufficient     | Arm lay-back limited             | lift, release       | trail shoulder ER below age band            | medium        | planned (coords) |
+| glove-flyout         | Glove side pulls off early       | stride, release     | lead wrist speed peak before trunk rotation | medium        | planned |
+| head-pull            | Head pulls to glove side         | release, follow     | head lateral offset vs trunk                | low           | planned |
+| pelvis-drift         | Hips drift without rotation      | stride, landing     | pelvis translation ↑, rotation lag          | medium        | planned (focus catalog) |
+| trunk-late-rotate    | Trunk opens late                 | landing, release    | trunk peak after hand speed peak            | medium        | planned |
+| arm-path-wide        | Arm path loops wide              | stride, release     | trail wrist lateral deviation               | low           | planned |
+| set-rush             | Rushed setup / no pause          | set, lift           | early COM motion; short set phase           | low           | planned |
+
+Alias map for code ↔ KB: back-leg → back-leg-soft; separation → separation-low;
+front-knee → front-knee-collapse.
+
+Each finding card MUST include: id, headline EN+ZH optional, phases, signal, why
+(performance/load — cautious), feel cue, drill 30–90s, sources[], authority level.
+
+================================================================================
+8. ONTOLOGY CLASSES (Schema/001_ontology.txt)
+================================================================================
+
+Namespace prefix: baseball:
+
+Core classes:
+- BaseballEntity (root)
+- Pitcher (schema:Person role)
+- PitchDelivery (single continuous motion instance)
+- PitchPhase (subclass of TemporalPhase) — instances: set, lift, stride, landing, release, follow
+- PitchEvent — release_peak_wrist, lead_foot_contact, max_leg_lift
+- BodySegment, JointAngle, SegmentSpeed (MeasurementDefinition subclasses)
+- BiomechObservation (measured fact tied to session)
+- CoachingConcept (cue, drill, constraint)
+- Finding (fault pattern with stable finding_id)
+- Checkpoint (quality rule)
+- Evidence (+ subclasses: ResearchFinding, CoachingConsensus, FederationGuideline)
+- SportMismatchGolf (detector outcome — not a pitch)
+
+Key properties:
+- baseball:precedes (phase → phase)
+- baseball:occursIn (finding|checkpoint → phase)
+- baseball:measuredOn (observation → series_id)
+- baseball:failTriggers (checkpoint → finding)
+- baseball:authorityLevel (A+|A|B+|B|C)
+- baseball:ageBand (youth|adult|unspecified)
+- baseball:blockedBySport (PitchDelivery → golf when detector blocks)
+
+================================================================================
+9. TAXONOMY STUBS (Taxonomy/001_concepts, 002_relations)
+================================================================================
+
+Build agent expands rows; brain seeds phase + series + finding concepts and
+precedes/occursIn/failTriggers edges. See written stub files.
+
+================================================================================
+10. REQUIRED DOC OUTLINES (BUILD AGENT)
+================================================================================
+
+Docs/001_ARCHITECTURE.txt
+- Pack role in CeRebel; RAG paths; _meta excluded from index
+- Pipeline: adapt_session → pitch window → phases → series → findings
+- Golf refusal path (GolfPack + session_looks_like_golf + SPORT_MISMATCH)
+- Handedness conventions; release = wrist speed peak disclaimer
+
+Docs/002_DISCLAIMER.txt
+- Not medical advice; not a substitute for coach/clinician; pain → stop + professional
+- Monocular OpenSim uncertainty; thresholds are coaching heuristics
+
+Phases/001_phase_model.txt
+- Full event definitions, fallbacks, EN/ZH labels, UI scrub notes
+
+Quality/001_quality_definition.txt + 002_checkpoints.txt
+- Dimensions + checkpoint table (section 6) with evidence column populated
+
+Findings/001_common_faults.txt
+- One section per finding_id (section 7); no invented med claims
+
+Coaching/001_cues.txt
+- Group by finding_id; 1–3 feel cues each; internal vs external focus mix
+- Do NOT duplicate long drill prose — reference 002_drills
+
+Coaching/002_drills.txt
+- 30–90s constraints per finding; equipment-minimal; youth-safe variants
+- Pitch Smart volume reminder for youth drills involving throws
+
+Biomechanics/001_overview.txt MUST contain:
+- Kinetic chain overview (foot → hip → trunk → shoulder → elbow → wrist)
+- Definitions: MER, separation, stride length measurement on body model
+- Norm tables: adult vs youth bands (section 5) with authority tags
+- OpenSim coordinate glossary tied to series_ids
+- pitch_likeness + golf-block behavior (conceptual, link to code paths)
+- Limitations: no ball, no joint torques in v1, 2D/3D capture variance
+- Suggested open sources to cite (build fills URLs): Fleisig et al. pitching biomech;
+  ASMI summaries; MLB Pitch Smart; NCAA / USA Baseball safety; systematic reviews
+
+Training/001_team_practice.txt MUST contain:
+- Flat-ground vs mound progressions; towel / pivot / rocker drill families
+- Practice structure: warm-up, constraint throws, bullpen volume caps (youth)
+- How coaches use phase scrub + one-main-fix UX in team setting
+- Partner / catcher positioning for body-only capture (side view preferred)
+- Weekly load guidance pointers (Pitch Smart age charts — summarize, don't reproduce tables)
+
+================================================================================
+11. SOURCE PRIORITY (FOR SEARCH / MANIFEST AGENTS)
+================================================================================
+
+A+: MLB Pitch Smart, USA Baseball medical/safety bulletins, rule books (minimal for KB)
+A: Peer-reviewed pitching biomechanics (JSR, AJSM reviews), Fleisig/Andrews ASMI open summaries
+B+: NCAA/NFHS coaching manuals (summarized), Driveline open articles (mechanics only)
+B: Reputable NGB coaching clinic materials
+Exclude C from checkpoint/finding thresholds.
+
+================================================================================
+12. BUILD ORDER (SUGGESTED)
+================================================================================
+
+1. Schema + Taxonomy (stubs done)
+2. Docs/001–002, Phases/001
+3. Biomechanics/001 (norms + limitations)
+4. Quality/001–002
+5. Findings/001 then Coaching/001–002
+6. Training/001
+7. SOURCE_MANIFEST, research_notes, review_report
+
+================================================================================
+13. ACCEPTANCE CRITERIA (PACK v1)
+================================================================================
+
+- Every finding_id in section 7 has a Findings card + cue + drill
+- Every checkpoint references evidence level and at least one phase id
+- Phase ids exactly: set, lift, stride, landing, release, follow
+- No ball-tracking dependency stated anywhere
+- Youth/adult norm separation in Biomechanics/001 and checkpoint youth rows
+- Golf refusal documented in Architecture; no golf mechanics content
+
+End brain_plan v0.1

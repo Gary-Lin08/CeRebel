@@ -1,0 +1,343 @@
+# Weightlifting — Common Faults (finding cards)
+# Canonical v2. Scope: squat, deadlift, overhead press FORM ONLY — no 1RM programming.
+# Not medical diagnosis. See Docs/002_DISCLAIMER.txt.
+
+---
+
+finding_id: fault_squat_good_morning
+headline_en: Chest drops ahead of hips on the way down
+phases: descent, bottom
+body_signal: Thorax pitch increases faster than hip flexion; hip angle lags knee flexion early in descent.
+why_it_matters: Often shifts load toward hip extensors and lumbar tissues; common coaching concern when lifters lose brace under load (performance and comfort — not a diagnosis).
+feel_cue: "Chest and hips drop together — no dive with the shoulders first."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Escamilla et al. squat kinematics reviews; NSCA squat teaching (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_knee_valgus
+headline_en: Knees cave inward during descent or drive
+phases: descent, ascent, bottom
+body_signal: Medial drift of knee keypoints relative to foot keypoints in frontal/oblique view.
+why_it_matters: Associated in literature with increased knee valgus moment in some populations; product flags visible trend only — not ACL risk prediction.
+feel_cue: "Sit between your heels — knees open where your toes point."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Hewett et al. knee valgus context; strength coaching consensus (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_forward_lean_excess
+headline_en: Torso pitches far forward for the depth shown
+phases: descent, bottom, ascent
+body_signal: Thorax angle vs tibia; COM shifted anterior to mid-foot proxy.
+why_it_matters: May limit quad contribution and increase hip/low-back demand at a given depth — style-dependent (low-bar allows more lean).
+feel_cue: "Balance over the middle of your foot — not toes, not heels only."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Wretenberg et al. bar position and trunk angle; practical coaching (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_bounce_bottom
+headline_en: Rebound out of the bottom looks uncontrolled
+phases: bottom, ascent
+body_signal: Knee flexion re-increases after E_BOTTOM; rapid pelvis velocity reversal.
+why_it_matters: Loss of tension at turnaround can reduce control and repeatability under heavier loads.
+feel_cue: "Own the bottom — no bounce; change direction under control."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Coaching consensus on pause squats; kinetic studies of reversal (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_heel_lift
+headline_en: Heels rise off the floor near bottom or ascent
+phases: bottom, ascent
+body_signal: Ankle plantarflexion spike; heel keypoint vertical rise vs forefoot.
+why_it_matters: Reduces base of support; often paired with ankle mobility or stance limitations.
+feel_cue: "Three points of pressure: big toe, little toe, heel — don’t roll to the toes."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: low
+sources: Mobility and squat depth coaching summaries (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_asymmetric_hip
+headline_en: Hips shift to one side in the hole or on the way up
+phases: bottom, ascent
+body_signal: Pelvis tilt / hip height L vs R > threshold through concentric.
+why_it_matters: Suggests side-to-side load shift; may reflect mobility asymmetry or motor habit — not scoliosis diagnosis.
+feel_cue: "Screw your feet into the floor — spread the floor without moving your feet."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Bilateral asymmetry training literature general (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_incomplete_lockout
+headline_en: Rep finishes short of full hip and knee extension
+phases: lockout
+body_signal: Knee_angle_avg and hip extension short of standing reference at finish; |v_y(pelvis)| may stay elevated.
+why_it_matters: Incomplete lockout reduces repeatability of training standards in coaching models (form-only — no 1RM advice).
+feel_cue: "Stand tall — finish with glutes, not a back bend."
+drill: 60s light technique drill focusing on this pattern (see Coaching/002_drills.txt).
+severity_default: low
+sources: NSCA teaching progressions (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_hips_shoot
+headline_en: Hips rise faster than the shoulders on the pull
+phases: pull
+body_signal: Hips shoot up while shoulders lag; vertical velocity of hip >> shoulder in first third of pull.
+why_it_matters: Stripper-pull pattern can increase lumbar demand and reduce efficient force transfer (performance / load framing — not diagnosis).
+feel_cue: "Push the floor away — don’t yank with your back first."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Deadlift kinematics reviews (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_rounding_pull
+headline_en: Trunk rounds early in the deadlift pull
+phases: pull, transition
+body_signal: Rapid thorax pitch / lumbar flexion proxy increase early in pull.
+why_it_matters: Coaching flags visible rounding as a form cue under load appearance — not disc pathology from video.
+feel_cue: "Pull yourself into the bar — lats tight, chest proud, hips where you can push."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Deadlift technique consensus (B+); spine load education summarized (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_bar_forward
+headline_en: Bar drifts forward away from the mid-foot
+phases: setup, pull
+body_signal: Horizontal distance wrist midpoint to ankle midpoint increases markedly through first pull.
+why_it_matters: Bar-close path is standard efficiency coaching; forward drift changes demand (form-only).
+feel_cue: "Three points of pressure: big toe, little toe, heel — don’t roll to the toes."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Deadlift path coaching (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_setup_too_squatty
+headline_en: Setup looks like a squat without a hinge
+phases: setup
+body_signal: Knees far forward and hips low without recognizable hip hinge; shins pitched with shoulders behind mid-foot.
+why_it_matters: Conventional DL setup prefers hinge geometry for most coaching models (style notes for sumo).
+feel_cue: "Pull yourself into the bar — lats tight, chest proud, hips where you can push."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: low
+sources: Deadlift setup teaching (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_soft_lockout_knees
+headline_en: Knees stay soft at lockout
+phases: lockout
+body_signal: Knees remain flexed while hips extend at finish.
+why_it_matters: Soft-knee lockout can reduce stable finish position in coaching standards.
+feel_cue: "Finish by squeezing glutes — stand tall, ribs stacked over pelvis."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: low
+sources: Coaching consensus (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_hyperextend_lockout
+headline_en: Lockout achieved by leaning back with rib flare
+phases: lockout
+body_signal: Thorax beyond vertical with rib flare; finish driven by lumbar extension proxy more than hip squeeze.
+why_it_matters: Finish tall with glutes is preferred vs extreme layback (form cue — not spine diagnosis).
+feel_cue: "Finish by squeezing glutes — stand tall, ribs stacked over pelvis."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Deadlift lockout coaching (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_hitched_pull
+headline_en: Pull shows a hitch or re-bend mid-rep
+phases: pull, transition
+body_signal: Knee flexion re-increases after extension begins; pelvis stalls then restarts.
+why_it_matters: Hitching may reflect fatigue or load selection — form observation only; no programming advice.
+feel_cue: "One continuous pull — no hitch, no re-bend at the knee."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Coaching observation (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_leg_drive
+headline_en: Visible dip-and-drive on a strict press
+phases: setup, press
+body_signal: Knee flex change > 5–8° through press when strict variant selected.
+why_it_matters: Strict OHP coaching separates push-press; flag when user tagged strict (form-only).
+feel_cue: "Legs like concrete — all motion from shoulders and elbows."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Overhead press teaching progressions (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_forward_loop
+headline_en: Bar loops forward then back overhead
+phases: press
+body_signal: Large forward wrist displacement then back overhead (looping path vs vertical).
+why_it_matters: Near-vertical path is efficiency coaching for OHP (B+).
+feel_cue: "Press straight up — slightly back to clear your face, not around it."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: OHP path biomechanics summaries (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_excessive_leanback
+headline_en: Exaggerated layback before bar clears head
+phases: press
+body_signal: Thorax angle backward and lumbar extension proxy exaggerated before bar clears head.
+why_it_matters: Modest lean may be style; excess layback is a common form cue target — not diagnosis.
+feel_cue: "Ribs down, glutes tight — no leaning back to cheat the weight up."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Overhead bracing coaching (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_elbow_flare
+headline_en: Elbows flare excessively during the press
+phases: press
+body_signal: Elbows abduct markedly off a stacked path under wrists through mid-press.
+why_it_matters: Elbow position cues affect shoulder comfort narratives in coaching (form — not diagnosis).
+feel_cue: "Elbows slightly in front of the bar — forearms vertical at the bottom."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: low
+sources: OHP coaching (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_incomplete_lockout
+headline_en: Press finishes short of elbow/shoulder lockout
+phases: lockout
+body_signal: Elbows remain flexed and wrists not stacked over mid-foot/shoulder at finish.
+why_it_matters: Full lockout is a coaching standard for completed reps (form-only).
+feel_cue: "Punch the ceiling — lock elbows without shrugging into your ears."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: low
+sources: Press teaching (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_asymmetric_press
+headline_en: One arm leads or finishes higher
+phases: press, lockout
+body_signal: Wrist height L vs R differs > threshold through press or lockout; trunk lateral bend may appear.
+why_it_matters: Asymmetry may reflect habit or mobility — coaching flag only, not diagnosis.
+feel_cue: "Both hands reach the ceiling at the same time."
+drill: 60s light technique drill focusing on this pattern (see Coaching/002_drills.txt).
+severity_default: medium
+sources: Bilateral lifting coaching (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_shrug_lockout
+headline_en: Finish is a shrug instead of stacked lockout
+phases: lockout
+body_signal: Scapular elevation dominates finish; elbows soft while shoulders hike.
+why_it_matters: Stacked lockout with long arms is preferred vs shrug finish in coaching models.
+feel_cue: "Punch the ceiling — lock elbows without shrugging into your ears."
+drill: 60s: Practice pattern (see Coaching/002_drills.txt).
+severity_default: low
+sources: OHP lockout coaching (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_butt_wink
+headline_en: Pelvis tucks under at the bottom of the squat
+phases: bottom, descent
+body_signal: Posterior pelvic tilt increases near E_BOTTOM while lumbar flexion proxy rises.
+why_it_matters: Coaching discusses pelvic tuck as a form/depth cue — not disc diagnosis from video; reduce depth or improve control if pattern appears with discomfort (see disclaimer).
+feel_cue: "Keep the belt buckle from curling under — stop where the pelvis stays quiet."
+drill: 60s high-box squat pauses: sit to box before tuck appears; 5 slow reps empty bar or bodyweight.
+severity_default: medium
+sources: Squat depth and pelvic kinematics reviews (B+); NSCA teaching themes (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_early_knee_slide
+headline_en: Knees shoot forward early before hips sit
+phases: descent
+body_signal: Knee translation anterior dominates first 30% of descent while hip flexion lags.
+why_it_matters: Early knee slide can change squat balance and ankle demand; style and limb lengths vary — flag relative pattern.
+feel_cue: "Break hips and knees together — sit between the heels, not onto the toes."
+drill: 45s hip-first tempo: 3 s down focusing simultaneous hip-knee bend facing a wall at toe distance.
+severity_default: low
+sources: Squat teaching progressions (B); kinematics summaries (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_squat_elbow_flare_bar
+headline_en: Elbows flare and wrists extend excessively under the bar
+phases: setup, descent, ascent
+body_signal: Elbows abduct markedly with wrist extension high throughout squat; upper arm not stacked under bar path proxy.
+why_it_matters: Bar support posture affects upper-back tightness cues; extreme wrist extension is a comfort/form note (not diagnosis).
+feel_cue: "Drive elbows under the bar — wrists stacked, chest up."
+drill: 60s empty-bar rack holds: set elbows, walk out, 3 breath holds.
+severity_default: low
+sources: Barbell squat upper-back coaching (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_uneven_shoulder
+headline_en: Shoulders uneven at deadlift lockout or pull
+phases: pull, lockout
+body_signal: Shoulder height L vs R differs > threshold through E_LOCKOUT or mid-pull; trunk lateral bend may appear.
+why_it_matters: Asymmetry may reflect grip, stance, or habit — coaching flags visible imbalance, not scoliosis diagnosis.
+feel_cue: "Pack both armpits — finish with shoulders level like a shelf."
+drill: 90s light Romanian DL: pause at lockout checking shoulder line; 6 reps.
+severity_default: medium
+sources: Deadlift symmetry coaching (B); bilateral lifting reviews (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_dl_arms_pulling
+headline_en: Elbows bend early as if curling the deadlift
+phases: pull
+body_signal: Elbow flexion increases before hip extension completes; wrist path rises with bent elbows mid-pull.
+why_it_matters: Arms-as-straps is standard DL coaching; early arm pull changes bar path and upper-limb demand (form-only — no 1RM advice).
+feel_cue: "Long arms like ropes — legs and hips lift the floor, arms just hold."
+drill: 60s pause deadlift at mid-shin with soft elbows check then finish light reps.
+severity_default: medium
+sources: Deadlift technique consensus (B); EMG/kinematics summaries (B+)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_head_through_late
+headline_en: Head stays forward — bar path blocked at lockout
+phases: press, lockout
+body_signal: At E_LOCKOUT bar/wrist line remains anterior to ear; cervical retraction delayed.
+why_it_matters: OHP coaching often uses head-through-window after bar passes face — timing cue for stacked lockout.
+feel_cue: "Bar past your hairline, then head through — finish tall under the wrists."
+drill: 75s light OHP or stick press: pause when wrists above crown, then glide head through; 6 reps.
+severity_default: low
+sources: Overhead press teaching progressions (B)
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.
+---
+
+finding_id: fault_ohp_rib_flare
+headline_en: Ribs flare hard to finish the overhead press
+phases: press, lockout
+body_signal: Rib-cage anterior flare with lumbar extension increase through lockout; pelvis may anterior-tilt vs setup brace.
+why_it_matters: Excessive lumbar extension to finish OHP is a common form cue target; frame as bracing/stacking, not spine diagnosis.
+feel_cue: "Zip the ribs down — press as if your belt stays quiet."
+drill: 60s dead-bug then 5 light presses keeping lower back lightly on wall reference.
+severity_default: medium
+sources: Overhead bracing coaching (B); core/spine load education summarized (B+)
+
+# Severity: medium default; spine/knee language is form and population load education only.
+# Youth: technique with light implements; never chase depth or load from video alone.
+youth_note: Brace and bar path under light load; do not cue max depth under fatigue for youth.

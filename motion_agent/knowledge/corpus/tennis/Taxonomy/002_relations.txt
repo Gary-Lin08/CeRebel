@@ -1,0 +1,436 @@
+# Tennis Sport Pack — Concept relations
+
+## Phase ordering (serve)
+
+relation: precedes
+from: S_READY
+to: S_TOSS_RISE
+
+relation: precedes
+from: S_TOSS_RISE
+to: S_TROPHY_LOAD
+
+relation: precedes
+from: S_TROPHY_LOAD
+to: S_RACKET_DROP
+
+relation: precedes
+from: S_RACKET_DROP
+to: S_DRIVE_UP
+
+relation: precedes
+from: S_DRIVE_UP
+to: S_CONTACT_PROXY
+
+relation: precedes
+from: S_CONTACT_PROXY
+to: S_DECEL
+
+## Phase ordering (groundstroke — forehand & backhand)
+
+relation: precedes
+from: G_SPLIT
+to: G_UNIT_TURN
+
+relation: precedes
+from: G_UNIT_TURN
+to: G_LOAD
+
+relation: precedes
+from: G_LOAD
+to: G_FORWARD_SWING
+
+relation: precedes
+from: G_FORWARD_SWING
+to: G_CONTACT_PROXY
+
+relation: precedes
+from: G_CONTACT_PROXY
+to: G_FOLLOW
+
+relation: precedes
+from: G_FOLLOW
+to: G_RECOVERY
+
+## Stroke type → phase chain
+
+relation: uses_chain
+from: stroke_serve
+to: serve_phase_chain
+
+relation: uses_chain
+from: stroke_forehand
+to: groundstroke_phase_chain
+
+relation: uses_chain
+from: stroke_backhand_one_hand
+to: groundstroke_phase_chain
+
+relation: uses_chain
+from: stroke_backhand_two_hand
+to: groundstroke_phase_chain
+
+relation: uses_chain
+from: stroke_backhand
+to: groundstroke_phase_chain
+
+## Concept → phase mapping (serve)
+
+relation: maps_to
+from: concept phase_s_ready
+to: phase S_READY
+
+relation: maps_to
+from: concept phase_s_toss_rise
+to: phase S_TOSS_RISE
+
+relation: maps_to
+from: concept phase_trophy_pose
+to: phase S_TROPHY_LOAD
+
+relation: maps_to
+from: concept phase_racket_drop
+to: phase S_RACKET_DROP
+
+relation: maps_to
+from: concept phase_s_drive_up
+to: phase S_DRIVE_UP
+
+relation: maps_to
+from: concept phase_s_contact_proxy
+to: phase S_CONTACT_PROXY
+
+relation: maps_to
+from: concept phase_s_decel
+to: phase S_DECEL
+
+## Concept → phase mapping (groundstroke)
+
+relation: maps_to
+from: concept phase_split_step
+to: phase G_SPLIT
+
+relation: maps_to
+from: concept phase_unit_turn
+to: phase G_UNIT_TURN
+
+relation: maps_to
+from: concept phase_g_load
+to: phase G_LOAD
+
+relation: maps_to
+from: concept phase_g_forward_swing
+to: phase G_FORWARD_SWING
+
+relation: maps_to
+from: concept phase_g_contact_proxy
+to: phase G_CONTACT_PROXY
+
+relation: maps_to
+from: concept phase_follow_through
+to: phase G_FOLLOW
+
+relation: maps_to
+from: concept phase_g_recovery
+to: phase G_RECOVERY
+
+## Phase ordering (volley — v2)
+
+relation: precedes
+from: V_READY
+to: V_SPLIT
+
+relation: precedes
+from: V_SPLIT
+to: V_FORWARD_BLOCK
+
+relation: precedes
+from: V_FORWARD_BLOCK
+to: V_CONTACT_PROXY
+
+relation: precedes
+from: V_CONTACT_PROXY
+to: V_RECOVERY
+
+relation: uses_chain
+from: stroke_volley
+to: volley_phase_chain
+
+## Finding → phase anchoring (serve)
+
+relation: anchored_in
+from: fault_serve_knee_lock
+to: S_TROPHY_LOAD
+
+relation: anchored_in
+from: fault_serve_toss_arm_drift
+to: S_TOSS_RISE
+
+relation: anchored_in
+from: fault_serve_toss_arm_drift
+to: S_TROPHY_LOAD
+
+relation: anchored_in
+from: fault_serve_shoulder_tilt_flat
+to: S_TROPHY_LOAD
+
+relation: anchored_in
+from: fault_serve_elbow_low
+to: S_TROPHY_LOAD
+
+relation: anchored_in
+from: fault_serve_elbow_low
+to: S_RACKET_DROP
+
+relation: anchored_in
+from: fault_serve_poor_leg_sync
+to: S_DRIVE_UP
+
+relation: anchored_in
+from: fault_serve_poor_decel
+to: S_DECEL
+
+relation: anchored_in
+from: fault_serve_excessive_arch
+to: S_DRIVE_UP
+
+relation: anchored_in
+from: fault_serve_landing_imbalance
+to: S_DECEL
+
+relation: anchored_in
+from: fault_serve_rhythm_rush
+to: S_READY
+
+relation: anchored_in
+from: fault_serve_short_finish_youth
+to: S_DECEL
+
+relation: anchored_in
+from: fault_serve_abbreviated_drop
+to: S_RACKET_DROP
+
+relation: alias_of
+from: fault_double_fault_rhythm_rush
+to: fault_serve_rhythm_rush
+
+## Finding → phase anchoring (forehand)
+
+relation: anchored_in
+from: fault_forehand_late_unit_turn
+to: G_UNIT_TURN
+
+relation: anchored_in
+from: fault_forehand_all_arm
+to: G_FORWARD_SWING
+
+relation: anchored_in
+from: fault_forehand_flying_elbow
+to: G_LOAD
+
+relation: anchored_in
+from: fault_forehand_flying_elbow
+to: G_FORWARD_SWING
+
+relation: anchored_in
+from: fault_forehand_open_no_load
+to: G_LOAD
+
+relation: anchored_in
+from: fault_forehand_over_rotate_finish
+to: G_FOLLOW
+
+## Finding → phase anchoring (backhand)
+
+relation: anchored_in
+from: fault_backhand1_dropped_shoulder
+to: G_LOAD
+
+relation: anchored_in
+from: fault_backhand1_reaching
+to: G_CONTACT_PROXY
+
+relation: anchored_in
+from: fault_backhand1_late_prep
+to: G_UNIT_TURN
+
+relation: anchored_in
+from: fault_backhand2_bottom_hand_only
+to: G_FORWARD_SWING
+
+relation: anchored_in
+from: fault_backhand2_tight_shoulders_youth
+to: G_LOAD
+
+## Finding → phase anchoring (shared groundstroke — legacy ids)
+
+relation: anchored_in
+from: fault_groundstroke_all_arm
+to: G_FORWARD_SWING
+
+relation: anchored_in
+from: fault_groundstroke_late_unit_turn
+to: G_UNIT_TURN
+
+relation: anchored_in
+from: fault_groundstroke_upright_recovery
+to: G_FOLLOW
+
+relation: anchored_in
+from: fault_groundstroke_wide_stance_stuck
+to: G_LOAD
+
+relation: alias_of
+from: fault_groundstroke_all_arm
+to: fault_forehand_all_arm
+
+relation: alias_of
+from: fault_groundstroke_late_unit_turn
+to: fault_forehand_late_unit_turn
+
+## Finding → phase anchoring (volley / movement)
+
+relation: anchored_in
+from: fault_volley_arm_stab
+to: V_FORWARD_BLOCK
+
+relation: anchored_in
+from: fault_volley_feet_stuck
+to: V_SPLIT
+
+relation: anchored_in
+from: fault_volley_feet_stuck
+to: V_FORWARD_BLOCK
+
+relation: anchored_in
+from: fault_split_step_late
+to: G_SPLIT
+
+relation: anchored_in
+from: fault_split_step_late
+to: V_SPLIT
+
+relation: anchored_in
+from: fault_recovery_slow_recenter
+to: G_RECOVERY
+
+relation: anchored_in
+from: fault_unit_turn_incomplete_open
+to: G_UNIT_TURN
+
+## Finding → audience
+
+relation: audience_applies
+from: fault_serve_short_finish_youth
+to: audience_youth
+
+relation: audience_applies
+from: fault_backhand2_tight_shoulders_youth
+to: audience_youth
+
+relation: audience_applies
+from: fault_serve_poor_leg_sync
+to: audience_adult
+
+relation: audience_applies
+from: fault_serve_excessive_arch
+to: audience_adult
+
+relation: audience_applies
+from: fault_forehand_open_no_load
+to: audience_adult
+
+relation: audience_applies
+from: fault_serve_knee_lock
+to: audience_all
+
+relation: audience_applies
+from: fault_forehand_all_arm
+to: audience_all
+
+## Finding → body signals
+
+relation: indicated_by
+from: fault_forehand_all_arm
+to: body_hip_shoulder_separation
+
+relation: indicated_by
+from: fault_forehand_late_unit_turn
+to: body_trunk_rotation
+
+relation: indicated_by
+from: fault_serve_knee_lock
+to: body_knee_flexion
+
+relation: indicated_by
+from: fault_serve_toss_arm_drift
+to: body_toss_arm
+
+relation: indicated_by
+from: fault_serve_rhythm_rush
+to: quality_rhythm
+
+relation: indicated_by
+from: fault_serve_landing_imbalance
+to: quality_balance
+
+## Quality dimension → checkpoint (Quality/002)
+
+relation: measured_by
+from: quality_leg_drive
+to: checkpoint serve_knee_load_min
+
+relation: measured_by
+from: quality_rhythm
+to: checkpoint serve_continuous_tempo
+
+relation: measured_by
+from: quality_balance
+to: checkpoint groundstroke_finish_balance
+
+## Evidence (high level)
+
+relation: supported_by
+from: concept phase_kinetic_chain
+to: source pmc_tennis_serve_biomech
+authority: B+
+
+relation: supported_by
+from: concept audience_youth
+to: source usta_national_campus_youth
+authority: B
+
+relation: supported_by
+from: concept let_serve
+to: source itf_rules_tennis
+authority: A+
+
+## Synonym expansion for retrieval
+
+relation: synonym_of
+from: coil
+to: phase_unit_turn
+
+relation: synonym_of
+from: trophy pose
+to: phase_trophy_pose
+
+relation: synonym_of
+from: all arm
+to: fault_all_arm
+
+relation: synonym_of
+from: kinetic chain
+to: phase_kinetic_chain
+
+relation: synonym_of
+from: one hander
+to: stroke_backhand_one_hand
+
+relation: synonym_of
+from: two hander
+to: stroke_backhand_two_hand
+
+relation: synonym_of
+from: junior
+to: audience_youth

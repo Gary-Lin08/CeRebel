@@ -1,0 +1,29 @@
+concept_id,category,label_en,label_zh_cn,aliases_en,aliases_zh_cn,definition_en,source_hint
+soccer:kick_instep_drive,kick_family,instep drive,正脚背抽射,laces kick|full instep strike|power shot,抽射|正脚背,Strike using the dorsum of the foot with hip and knee extension; power-oriented body chain.,UEFA / FA coaching frameworks (summarized)
+soccer:kick_side_foot_pass,kick_family,side-foot pass,脚弓推传,inside-foot pass|push pass|instep pass excluded,脚内侧传球|推传,Pass using the medial foot surface with minimal backswing and guided follow-through.,UEFA / FA coaching frameworks (summarized)
+soccer:approach_run,mechanics,approach run,助跑,run-up|approach steps,助跑步,Steps toward the ball that set rhythm deceleration and plant alignment before the kick.,Kicking biomechanics reviews (B+)
+soccer:gather_step,mechanics,gather step,调整步,short last step|penultimate step,最后小步,Final approach step that shortens to lower CoM and set plant foot placement.,Coaching consensus (B+)
+soccer:plant_foot,mechanics,plant foot,支撑脚,support foot|standing foot,支撑脚,Non-kicking foot that contacts ground and braces during the forward swing.,Kicking biomechanics literature
+soccer:kicking_foot,mechanics,kicking foot,踢球脚,striking foot,摆腿脚,Foot that swings to contact; speed peak proxies contact window without ball track.,CeRebel product definition
+soccer:contact_proxy,event,contact window proxy,触球窗口代理,foot speed peak|impact proxy,脚速峰值代理,Time window around peak kicking-ankle speed standing in for foot–ball contact in v1.,CeRebel product definition
+soccer:leg_cocking,mechanics,leg cocking,摆腿后引,backswing phase|hip flexion loading,后摆加载,Kicking hip and knee flexion that stores range before rapid extension.,Research reviews on soccer kicking (A/B+)
+soccer:hip_trunk_separation,mechanics,hip–trunk separation,髋躯干分离,pelvis-trunk differential|X-factor kick,髋肩分离踢球,Pelvis rotation relative to thorax during the forward swing; timing linked to foot speed.,Biomechanics literature
+soccer:trunk_lean,measurement,trunk lean,躯干前倾,forward lean|torso angle,上体前倾,Sagittal trunk angle relative to vertical during plant and strike; family-dependent norms.,Biomechanics / coaching (B+)
+soccer:approach_speed,measurement,approach speed,助跑速度,run-up velocity,助跑速率,CoM or pelvis velocity component toward intended kick direction.,OpenSim / pose pipeline
+soccer:plant_knee_flex,measurement,support knee flexion,支撑膝屈曲,plant leg bend,支撑腿弯曲,Flexion angle of support knee from plant through contact window; bracing indicator.,Biomechanics literature
+soccer:kick_knee_flex,measurement,kicking knee flexion,踢球膝屈曲,strike leg flex,摆腿膝屈曲,Flexion of kicking knee; peak in backswing differs by kick family.,Biomechanics literature
+soccer:kicking_foot_speed,measurement,kicking-foot speed,踢球脚速度,ankle speed peak,脚速峰值,Linear speed of kicking-side ankle; peak defines contact_proxy event.,CeRebel series definition
+soccer:plant_offset,measurement,plant foot offset,支撑脚横向位置,lateral plant distance,置脚横向距离,Lateral distance from support ankle to pelvis or midline at plant; placement cue.,Coaching consensus (B+)
+soccer:phase_approach,phase,approach,助跑,,,Run-up from first meaningful motion toward plant prep.,brain_plan phase model
+soccer:phase_plant_prep,phase,plant prep,置脚准备,,,Last steps before support foot contact; decel and trunk set.,brain_plan phase model
+soccer:phase_plant,phase,plant,支撑,,,Support foot on ground; bracing through early forward swing.,brain_plan phase model
+soccer:phase_backswing,phase,backswing,后摆,,,Kicking leg flexion / cocking after plant.,brain_plan phase model
+soccer:phase_forward_swing,phase,forward swing,前摆,,,Hip and knee extension accelerating the foot.,brain_plan phase model
+soccer:phase_contact_proxy,phase,contact window,触球窗口,,,Peak kicking-foot speed ± brief span; no ball required.,brain_plan phase model
+soccer:phase_follow,phase,follow-through,随挥,,,Deceleration and balance recovery after peak foot speed.,brain_plan phase model
+soccer:approach_no_decel,finding,run-up stays at full speed,助跑不减速,,,CoM speed does not reduce before plant; unstable plant common.,brain_plan finding
+soccer:plant_knee_soft,finding,plant leg collapses,支撑腿塌陷,,,Support knee flex increases excessively into strike.,brain_plan finding
+soccer:instep_no_trunk_hip,finding,hips and chest turn together,髋胸同转,,,Low separation; trunk and foot speed peaks aligned without hip lead.,brain_plan finding
+soccer:side_foot_big_windup,finding,big wind-up on push pass,推传大幅后摆,,,Instep-like knee flex on a side-foot pass.,brain_plan finding
+soccer:curved_approach,coaching_tag,curved approach,弧线助跑,banana run|angle run,斜线助跑,Approach path not straight; pelvis arcs to open hips — tag only in v1.,Coaching consensus (B+)
+soccer:ball_flight,out_of_scope,ball flight,球飞行轨迹,trajectory|spin|hang time,球路|旋转,Explicitly excluded from v1 automated findings and checkpoints.,SPORT_PACK_KB_SPEC

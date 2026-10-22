@@ -1,0 +1,152 @@
+# Volleyball Sport Pack — Ontology (Schema v0.1)
+# Aligns: _meta/brain_plan.txt, SPORT_PACK_KB_SPEC.txt
+# Body-first; contact = wrist/platform proxies — not ball track.
+
+## Entity: Player
+
+Attributes:
+- player_id (string, optional external)
+- handedness: right | left
+- hitting_side: right | left (dominant spike/serve hand)
+- audience_band: youth | adult | unknown
+- surface_context: indoor | beach | unknown (tags only v1)
+
+Relations:
+- performs → SkillInstance
+- subject_of → FindingInstance
+
+## Entity: SkillFamily
+
+Enum (v1):
+- spike_approach
+- serve
+- pass_platform
+
+Future (glossary only): block, set, dig
+
+Attributes:
+- skill_family_id (stable slug)
+- phase_chain_prefix: SP_ | SV_ | PS_
+
+## Entity: SkillInstance
+
+Attributes:
+- instance_id
+- skill_family_id
+- contact_proxy_side: hitting | strike | platform
+
+Relations:
+- has_phase_sequence → VolleyballPhase (ordered)
+- yields → BiomechObservation
+
+## Entity: VolleyballPhase
+
+Attributes:
+- phase_id (SP_PENULT, SV_LOAD, PS_PLATFORM, …)
+- skill_family: spike_approach | serve | pass_platform
+- ordinal (integer within family)
+- label_en, label_zh optional
+- description_plain
+
+Relations:
+- follows → VolleyballPhase
+- contains_events → VolleyballEvent
+
+Spike phases: SP_READY, SP_APPROACH, SP_PENULT, SP_PLANT, SP_TAKEOFF, SP_SWING, SP_CONTACT, SP_LANDING
+Serve phases: SV_READY, SV_LOAD, SV_TOSS_ARM, SV_DRAW, SV_STRIKE, SV_FOLLOW
+Pass phases: PS_READY, PS_MOVE, PS_PLATFORM, PS_CONTACT, PS_EXTEND, PS_RECOVER
+
+## Entity: VolleyballEvent
+
+Attributes:
+- event_id (contact_proxy_sp, plant_event, takeoff_event, toss_arm_peak, platform_set)
+- start_rule, end_rule (narrative, body-only)
+- detector_proxy optional
+
+## Entity: MeasurementDefinition
+
+Subclasses: JointAngle, SegmentSpeed, SegmentOrientation, COMDerived
+
+Attributes:
+- series_id (brain_plan section 5)
+- unit
+- primary_phases
+
+Examples:
+- hitting_hand_speed → SegmentSpeed (spike)
+- strike_hand_speed → SegmentSpeed (serve)
+- platform_angle → SegmentOrientation (pass)
+- jump_height_proxy → COMDerived (spike)
+
+## Entity: Finding
+
+Attributes:
+- finding_id (prefix fault_)
+- headline
+- skill_family_id
+- phase_id (primary)
+- severity_hint: info | form | load
+- body_signals (list)
+- why_it_matters (non-diagnostic)
+- authority_level: B+ | B | A (landing themes)
+- evidence_type: BiomechRelationship | CoachingAdvice
+
+Relations:
+- has_cue → Cue
+- has_drill → Drill
+- occurs_in → VolleyballPhase
+
+v1 finding_id set: fault_spike_no_penult_load, fault_spike_short_approach, fault_spike_early_arm,
+fault_spike_late_jump, fault_spike_stiff_landing, fault_serve_knee_lock, fault_serve_toss_arm_drift,
+fault_serve_poor_decel, fault_pass_broken_platform, fault_pass_absorb_only, fault_pass_narrow_base
+
+## Entity: Cue
+
+Attributes:
+- cue_id (cue_<finding_id>)
+- finding_id
+- feel_text (body-first)
+- coach_text optional
+
+## Entity: Drill
+
+Attributes:
+- drill_id (drill_<finding_id>)
+- finding_id
+- duration_sec (30–90)
+- setup, instructions
+- youth_variant optional
+
+## Entity: Checkpoint
+
+Attributes:
+- checkpoint_id (cp_*)
+- phase_id(s)
+- series_id
+- pass_description
+- fail_triggers → Finding
+
+## Entity: LoadConcern
+
+Attributes:
+- concern_id, description, audience_band, authority_level
+Used in Training/ — not a Finding.
+
+## Entity: EvidenceChunk (RAG metadata)
+
+Attributes:
+- source_id, authority_level (A+|A|B+|B|C), evidence_type, retrieved_at, audience_band optional
+
+## Naming conventions
+
+- Spike: SP_* | Serve: SV_* | Pass: PS_*
+- Findings: fault_* | Events: *_proxy when speed-peak based
+
+## Handedness (default RH attacker)
+
+hitting_wrist = right on spike; toss arm = left on serve; pass platform symmetric.
+
+## Properties
+
+- volleyball:precedes, volleyball:occursIn, volleyball:measuredOn, volleyball:failTriggers
+- volleyball:skillFamily, volleyball:authorityLevel, volleyball:ageBand

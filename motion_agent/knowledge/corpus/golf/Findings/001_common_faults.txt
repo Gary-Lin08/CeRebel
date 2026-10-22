@@ -1,0 +1,372 @@
+# Golf Sport Pack — Common faults (finding cards)
+
+Authority: B / B+ summarized open literature and NGB coaching; not diagnostic. See Docs/002_DISCLAIMER.txt.
+Body-measurable only; club/ball track not required. Trail = dominant hand (right-handed default).
+
+---
+
+finding_id: fault_early_extension
+headline_en: Early extension — standing up out of posture before the hit
+phases: downswing, impact
+body_signal: Pelvis moves toward ball on DTL; spine angle from horizontal increases markedly before impact proxy; head rises vertically relative to address; hips may thrust while shoulders lag.
+why_it_matters: Coaching and biomechanics literature link loss of spine angle to inconsistent low-point control and compensations through the arms (B+ themes); cannot infer ball flight from body alone.
+feel_cue: "Keep your belt buckle back while your hips turn — chest stays over the ball longer."
+drill: 60s chair or wall hip-depth shadows: maintain light hip contact with imaginary wall through downswing (see Coaching/002_drills.txt drill_wall_spine_tilt).
+severity_default: high
+sources: Golf swing biomechanics systematic review (B+, PMC); PGA teaching summit posture summaries (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_early_extension_thrust
+headline_en: Early extension — pelvic thrust toward the ball without matching turn
+phases: downswing, impact
+body_signal: Pelvis AP translation toward ball line dominates over pelvic yaw; belt-buckle moves forward while shoulder open angle remains small at impact proxy.
+why_it_matters: Thrust-dominant early extension often pairs with blocked rotation and hanging-back compensations in coaching chains (B); distinguish from intentional stack-and-tilt variants — qualitative only.
+feel_cue: "Turn the belt buckle to the target — don't shove the hips at the ball."
+drill: 45s wall-gate turn: hips lightly on wall, rotate open without pushing wall forward (shadow).
+severity_default: high
+sources: Open swing posture reviews (B+); PGA instruction articles (B)
+youth_note: Juniors often "stand up" from lack of strength — cue turn first, not deeper squat.
+
+---
+
+finding_id: fault_over_the_top_transition
+headline_en: Upper body starts the downswing — shoulders spin toward target before hips
+phases: transition, downswing
+body_signal: Shoulder yaw toward target peaks early while pelvis rotation still minimal; trail elbow may lift away from rib cage on DTL; wrist path steepening visible on face-on.
+why_it_matters: Common pattern associated with out-to-in path in coaching models (B); body-only mode flags sequence, not club path.
+feel_cue: "Bump the ground with your lead hip, then turn — pants pocket to target before chest."
+drill: 45s step-in swings: small step toward target with lead foot, then swing (shadow, no ball) — drill_step_through_shadow.
+severity_default: high
+sources: Open kinematic sequence reviews (B+); LPGA instructor education materials (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_cast_from_top
+headline_en: Casting — trail arm straightens and releases angle too early from the top
+phases: transition, early downswing
+body_signal: Trail elbow extension rate high immediately after top; wrist speed jumps before pelvis accelerates; loss of lag visible as early hand height drop on DTL.
+why_it_matters: Reduces stored angular momentum in coaching kinetics models (B+ awareness); often pairs with weak transition_sequence checkpoint.
+feel_cue: "Keep the trail elbow soft longer — pull the butt of the club toward the ball, not throw the hands."
+drill: 60s pump drill body-only: from top, stop at hip height twice, then third rep through finish (drill_pump_from_top).
+severity_default: medium
+sources: Biomechanics reviews on wrist/club lag proxies (B+); teaching pro drill libraries (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_hanging_back
+headline_en: Hanging back — weight stays on trail side through impact proxy
+phases: downswing, impact
+body_signal: Pelvis remains behind address position at impact proxy; lead knee flexed or collapsed without bracing; trail head/shoulder stack behind ball line on DTL.
+why_it_matters: GRF/CoP literature associates pressure shift to lead side with skilled players and speed (B+); hanging back often coincides with inconsistent strike in coaching observation (B).
+feel_cue: "Push the ground with your trail foot until your lead side catches you."
+drill: 45s lead-leg-only finish holds: swing to finish, lift trail foot 2 s — drill_lead_foot_finish_hold.
+severity_default: high
+sources: Watson et al. GRF/CoP systematic review 2026 (B+); PGA ground-force coaching themes (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_weight_shift_late
+headline_en: Late weight shift — pressure moves to lead side after impact proxy
+phases: impact, follow_through
+body_signal: Lead ankle load proxy rises only after peak trail wrist speed; trail heel stays flat through impact window; finish may still recover to lead side.
+why_it_matters: Delayed pressure transfer shortens the useful window for sequence and balance in coaching GRF models (B+); related to hanging_back but scored on timing.
+feel_cue: "Feel the lead foot press as you start down — not after the hit."
+drill: 60s step-through shadows with early lead-foot plant emphasis (drill_step_through_shadow).
+severity_default: medium
+sources: Watson et al. 2026 (B+); PGA pressure-shift cues (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_sway_not_turn
+headline_en: Sway instead of turn — lateral slide off the ball without hip rotation
+phases: backswing through transition
+body_signal: Pelvis translates away from target on face-on with limited shoulder turn; head moves off center; trail knee straightens without hip internal rotation cues.
+why_it_matters: Reduces rotational power and stable low point in coaching frameworks (B); distinguish from intentional stack-and-tilt variants — qualitative only.
+feel_cue: "Turn your back to the target — don't slide your hips sideways."
+drill: 60s feet-together shadow swings: narrow base exposes sway; focus rotation (drill_feet_together_balance).
+severity_default: medium
+sources: Open swing reviews (B+); TPI-style movement screening summaries (B, non-diagnostic)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_slide_excessive
+headline_en: Excessive slide toward target — hips bump laterally without rotation
+phases: downswing, impact
+body_signal: Pelvis translates toward target on face-on with limited open angle; lead hip may pass lead ankle line; head drops toward ball.
+why_it_matters: Can block rotation and alter low point in coaching models (B); often confused with proper "bump" — sequence checkpoint distinguishes rotation component.
+feel_cue: "Rotate into your lead leg — don't slide your belt buckle straight at the flag."
+drill: 45s alignment-stick hip turn: stick in ground outside lead hip; rotate without touching stick forward (drill_hip_rotation_gate).
+severity_default: medium
+sources: Coaching biomechanics summaries (B+); PGA instruction articles (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_head_lateral_sway
+headline_en: Head drifts sideways off the ball line
+phases: takeaway, backswing, downswing
+body_signal: Head COM proxy translates laterally beyond narrow vertical band vs address on face-on; often co-occurs with sway_not_turn or reverse_pivot.
+why_it_matters: Head sway is a visible stability cue in NGB teaching (B); body-only check does not imply ball contact quality.
+feel_cue: "Keep your head in a quiet box — turn under a still chin."
+drill: 45s address-mirror holds then half-swings watching head stay in frame (drill_head_quiet_box).
+severity_default: low
+sources: PGA beginner pathway (B); open kinematic stability themes (B+)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_short_arm_swing
+headline_en: Short backswing turn — arms lift without shoulder rotation
+phases: backswing
+body_signal: Shoulder yaw small address→top; wrists high but spine vertical; elbows disconnected from trunk on DTL.
+why_it_matters: Limits coil and tempo options for many recreational players (B coaching); juniors may be intentional — compare to athlete baseline.
+feel_cue: "Turn your lead shoulder under your chin — let the club ride the turn."
+drill: 60s cross-arm rotation: hands on opposite shoulders, practice turn without club (drill_cross_shoulder_turn).
+severity_default: medium
+sources: LPGA junior curriculum (B); kinematics reviews (B+)
+youth_note: Shorter absolute turn is normal for juniors; use self-comparison, not adult elite peaks.
+
+---
+
+finding_id: fault_incomplete_shoulder_turn
+headline_en: Incomplete shoulder turn at the top relative to athlete baseline
+phases: backswing, transition
+body_signal: Peak shoulder yaw below athlete's own warm-up baseline or coaching band; lead shoulder does not pass under chin proxy; often paired with early transition rush.
+why_it_matters: Incomplete coil reduces available rotation window before downswing in coaching models (B); not a universal degree target.
+feel_cue: "Give yourself time to finish the turn — feel the trail knee load before you start down."
+drill: 60s turn-and-pause: reach top, hold 1 s checking lead shoulder under chin, then slow through (drill_top_hold_check).
+severity_default: low
+sources: LPGA/PGA turn fundamentals (B); B+ kinematics summaries
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_wrist_only_takeaway
+headline_en: Hands-only takeaway — club moves before the torso
+phases: takeaway
+body_signal: Trail wrist speed rises with minimal thorax/pelvis rotation; arms move inside or lift independently in first 0.3 s of motion.
+why_it_matters: Disrupts width and sequence in one-piece takeaway teaching (B); early disconnect correlates with later cast in coaching chains (B, not causal proof).
+feel_cue: "Move the handle with your chest — one piece for the first foot of motion."
+drill: 45s takeaway-only: stop when hands hip-high, check shoulder turn visible (drill_takeaway_pause_check).
+severity_default: medium
+sources: PGA beginner pathway (B); biomechanics coordination themes (B+)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_takeaway_steep_lift
+headline_en: Steep lift takeaway — arms rise vertically with little chest turn
+phases: takeaway
+body_signal: Trail wrist vertical rise dominates forward/lateral path in first 0.4 s; elbows separate from torso early; shoulder yaw lagging.
+why_it_matters: Steep early lift sets up over-the-top transitions in many recreational chains (B coaching); body flags path tendency, not club plane angle.
+feel_cue: "Push the handle low and wide first — then let it rise with the turn."
+drill: 45s low-and-slow takeaways to knee height only (drill_low_wide_takeaway).
+severity_default: medium
+sources: PGA takeaway fundamentals (B); open plane-proxy discussions (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_takeaway_inside_roll
+headline_en: Hands roll inside early — trail elbow tucks behind hip too soon
+phases: takeaway
+body_signal: Trail wrist path pulls behind hip line early on DTL while shoulders still square; lead arm may collapse across chest.
+why_it_matters: Excessively inside takeaway often invites later steepening or cast in coaching observation (B); qualitative pattern only.
+feel_cue: "Keep the logo of your glove facing the ball longer — chest turns, hands stay in front."
+drill: 45s takeaway to hip-high with lead arm visible ahead of trail hip (drill_takeaway_pause_check).
+severity_default: low
+sources: Teaching pro fault catalogs (B); coordination themes (B+)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_tempo_hitch_at_top
+headline_en: Hitch at the top — freeze then rush the downswing
+phases: transition
+body_signal: Wrist speed near zero ≥ ~0.4 s at top then sharp acceleration; visible postural reset or grip tighten proxy (shoulders elevate abruptly).
+why_it_matters: Rhythm faults correlate with inconsistent contact in coaching experience (B); body timing fixable without launch monitor.
+feel_cue: "Smooth waltz at the top — one continuous turn, no stop sign."
+drill: 90s metronome 3:1 shadows — three beats back, one beat through (drill_metronome_3_to_1).
+severity_default: medium
+sources: Coaching tempo literature (B); CeRebel phase model (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_tempo_rush_downswing
+headline_en: Rushed downswing — backswing-to-downswing ratio collapses
+phases: transition, downswing
+body_signal: Downswing duration much shorter than athlete baseline relative to backswing (e.g. near 1:1 instead of ~3:1 coaching feel); peak wrist speed arrives early after top.
+why_it_matters: Compressed tempo often co-occurs with cast and over-the-top patterns (B); product uses relative timing, not absolute ms norms as medical advice.
+feel_cue: "Count three going back, one coming through — don't fire from the top."
+drill: 90s metronome 3:1 with audible count (drill_metronome_3_to_1).
+severity_default: medium
+sources: Coaching tempo literature (B); phase timing models (B+)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_fall_back_finish
+headline_en: Fall-back finish — weight drifts to trail foot after the hit
+phases: follow_through
+body_signal: After impact proxy, pelvis moves away from target; trail foot replants flat; head falls back; unable to hold lead-foot balance.
+why_it_matters: Indicates incomplete weight transfer or early extension recovery (B coaching); balance dimension fails checkpoint golf_finish_weight_lead.
+feel_cue: "Finish tall on your lead leg — belt buckle faces the target."
+drill: 60s hold-finish: each rep hold 3 s on lead foot only (drill_lead_foot_finish_hold).
+severity_default: medium
+sources: PGA finish-position guides (B); GRF shift themes (B+)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_chicken_wing_stop
+headline_en: Chicken-wing stop — lead arm breaks and elbows pinch post-impact
+phases: follow_through
+body_signal: Lead elbow flexion increases sharply after impact proxy; trail arm does not wrap; wrist speed cliff then stall; shoulders stop rotating early.
+why_it_matters: Abrupt deceleration patterns discussed in load-management coaching (B+ awareness, not diagnosis); often follows hanging back or early extension.
+feel_cue: "Let both arms extend toward the target, then fold around your body."
+drill: 45s extension-through finish: emphasize straight lead arm through chest height post-impact proxy (drill_full_rainbow_finish).
+severity_default: medium
+sources: Open reviews on follow-through kinematics (B+); teaching pro fault catalogs (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_flying_trail_elbow
+headline_en: Flying trail elbow — trail elbow lifts away from ribs at transition
+phases: transition, downswing
+body_signal: Trail elbow–torso gap widens at top→early downswing on DTL; elbow points upward/outward while pelvis still closed.
+why_it_matters: Often co-occurs with over-the-top transition in coaching catalogs (B); body pattern only — not a club-path measurement.
+feel_cue: "Keep the trail elbow soft and near your shirt seam as you start down."
+drill: 60s pump drill with trail elbow brushing towel under arm (drill_pump_from_top).
+severity_default: medium
+sources: PGA transition teaching themes (B); open kinematic sequence reviews (B+)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_lead_arm_collapse_top
+headline_en: Lead arm collapses — excessive elbow bend at the top
+phases: backswing, transition
+body_signal: Lead elbow flexion large at top; wrists high but lead arm not near extended; often shortens effective arc width.
+why_it_matters: Coaching models associate collapsed lead structure with timing and width loss (B); juniors and limited-mobility adults may need adapted cues.
+feel_cue: "Keep a soft-straight lead arm — width from turn, not from bending the elbow."
+drill: 60s cross-shoulder then short-club swings checking lead arm structure (drill_cross_shoulder_turn).
+severity_default: low
+sources: LPGA junior curriculum (B); teaching catalogs (B)
+youth_note: Soft elbow is fine; avoid forcing hyperextension.
+
+---
+
+finding_id: fault_setup_locked_legs
+headline_en: Locked legs at address — no athletic flex to load the swing
+phases: address
+body_signal: Knee extension angles near full; pelvis high; minimal ankle flex; subsequent swing may show all-arm backswing.
+why_it_matters: Reduces ability to use ground force in downswing (B+ GRF themes); common in beginners and seniors — adapt cues, do not shame.
+feel_cue: "Soft knees like you’re guarding in basketball — ready to move."
+drill: 30s athletic bounce at address: small knee flex pulses, then hold and swing (drill_athletic_address_bounce).
+severity_default: medium
+sources: Watson et al. 2026 (B+); PGA setup fundamentals (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_setup_spine_too_upright
+headline_en: Spine too upright at address — little forward tilt from hips
+phases: address
+body_signal: Trunk inclination from vertical near zero on DTL; pelvis under shoulders without hip hinge; arms hang close to thighs.
+why_it_matters: Limits room for rotation and arm swing width in setup teaching (B); not a medical posture diagnosis.
+feel_cue: "Hinge from the hips — butt back, chest over the ball space."
+drill: 30s hip-hinge holds then settle into address (drill_setup_hip_hinge).
+severity_default: low
+sources: PGA setup fundamentals (B); TPI-style screening summaries (B, non-diagnostic)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_setup_narrow_stance
+headline_en: Stance too narrow for a full swing base
+phases: address
+body_signal: Ankle lateral separation clearly less than shoulder width proxy on face-on; subsequent sway or balance loss common.
+why_it_matters: Narrow base reduces lateral stability for full swings in coaching frameworks (B); chips may intentionally use narrower feet — see chip cards.
+feel_cue: "Feet under the outsides of your shoulders — athletic, not feet together."
+drill: 30s stance-width check: place clubs outside feet then remove and hold (drill_stance_width_check).
+severity_default: low
+sources: PGA beginner pathway (B)
+youth_note: Very young juniors may use slightly wider relative stance for balance.
+
+---
+
+finding_id: fault_setup_weight_heels
+headline_en: Weight parked on heels at address
+phases: address
+body_signal: Ankle dorsiflexion low; pelvis behind mid-foot; toes unload; early sway or early extension often follows.
+why_it_matters: Heel-biased setup reduces athletic readiness for pressure shift (B+ GRF themes summarized).
+feel_cue: "Feel the balls of your feet and heels equally — like a ready athletic stance."
+drill: 30s mid-foot bounce then hold address (drill_athletic_address_bounce).
+severity_default: low
+sources: Watson et al. 2026 themes (B+); PGA setup (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_reverse_pivot
+headline_en: Reverse pivot — weight moves toward target on the backswing
+phases: backswing, transition
+body_signal: Lead ankle load rises while trail side unloads during backswing; head/shoulders lean toward target; trail knee may straighten excessively.
+why_it_matters: Opposite of intended trail-side load; often precedes hanging back or steep downswing in coaching chains (B).
+feel_cue: "Load the trail leg like a coiled spring — don't lean into the target going back."
+drill: 60s trail-foot pressure holds at top then slow transition (drill_trail_load_check).
+severity_default: high
+sources: Open swing reviews (B+); PGA fault catalogs (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_impact_lead_knee_lock
+headline_en: Lead knee locks stiff through impact proxy
+phases: downswing, impact
+body_signal: Lead knee extension near full at impact proxy with little prior flex-brace; pelvis may stall; early extension often co-occurs.
+why_it_matters: Stiff lead side can block rotation and force upper-body compensations (B coaching); soft athletic brace preferred over locked or collapsed extremes.
+feel_cue: "Brace the lead leg soft-firm — catch yourself, don't lock the knee like a stick."
+drill: 45s lead-leg brace holds at impact posture then rotate through (drill_lead_brace_impact).
+severity_default: medium
+sources: Coaching biomechanics summaries (B+); PGA impact posture themes (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_abrupt_deceleration
+headline_en: Abrupt stop after impact — arms slam to a halt
+phases: follow_through
+body_signal: Trail wrist speed drops >50% within 2–3 frames post impact proxy without smooth wrap; trunk jerk visible.
+why_it_matters: Smooth deceleration distributes momentum (B+); harsh stops are coaching red flags for shoulder/elbow stress awareness — not injury diagnosis from video.
+feel_cue: "Swing to a full photo pose — let the club finish around your neck, not at the ball."
+drill: 60s continuous motion: 5 full slow finishes holding last frame 2 s each (drill_full_rainbow_finish).
+severity_default: medium
+sources: Sports medicine awareness articles on golf load (B+ summarized); coaching (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_incomplete_hip_clearance
+headline_en: Hips fail to clear — pelvis stays closed through impact proxy
+phases: impact, follow_through
+body_signal: Pelvis open angle small at impact proxy vs skilled coaching models; lead hip does not clear behind lead heel line; shoulders may outrun hips.
+why_it_matters: Incomplete clearance often pairs with slide or chicken-wing stop (B); body sequence cue only.
+feel_cue: "Clear the lead hip behind you — make room for the arms to pass."
+drill: 45s hip-clearance gate with stick outside lead hip (drill_hip_rotation_gate).
+severity_default: medium
+sources: Kinematic sequence reviews (B+); PGA instruction (B)
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_chip_stand_up
+headline_en: Chip posture stand-up — spine rises through short-game strike proxy
+phases: address, downswing, impact
+body_signal: On chip-length swings, spine angle increases and head rises before peak wrist speed; knees straighten; arms lift independently.
+why_it_matters: Short-game body-only coaching prioritizes stable posture for consistent low-point feel (B); no ball-flight claim.
+feel_cue: "Stay in your chip posture — chest over the ball space until after the hit."
+drill: 60s chip-length shadows holding spine angle with soft knees (drill_chip_posture_hold).
+severity_default: medium
+sources: PGA short-game fundamentals (B); coaching catalogs (B)
+confidence_note: Prefer face-on + DTL; chip clips may lack full finish — score posture window only.
+youth_note: Soft trail knee and tempo matter more than elite shoulder-turn depth; compare to prior clips.
+---
+
+finding_id: fault_chip_trail_weight
+headline_en: Chip weight stays on trail foot through strike proxy
+phases: address, impact, follow_through
+body_signal: On chip-length swings, trail ankle remains primary load through peak wrist speed; lead side never accepts pressure; finish falls back.
+why_it_matters: Trail-biased chips commonly produce thin/fat contact in coaching observation (B); body pressure cue only.
+feel_cue: "Lean slightly into the lead side before you chip — stay there through the finish."
+drill: 45s lead-foot chip shadows: 60% pressure lead, hold finish 2 s (drill_chip_lead_pressure).
+severity_default: medium
+sources: PGA short-game teaching (B)
+youth_note: Keep volume low; prioritize posture over speed.
+
+---

@@ -1,0 +1,132 @@
+# Soccer Team Practice — Kicking and Striking (body-first training design)
+
+Summarizes open NGB coaching structure and biomechanics-informed practice design. **Not** a replacement for your
+club curriculum or licensed coach education courses. Cite live FIFA/UEFA/NGB resources for official progression tables.
+
+---
+
+## 1. Session goals aligned with motion analysis
+
+When CeRebel soccer mode is available, team sessions can pair **one body checkpoint** with **one drill block**:
+
+| Week theme | Checkpoint focus | Example drill (see Coaching/002) |
+|------------|------------------|----------------------------------|
+| 1 | Plant consistency | Two-line plant |
+| 2 | Hip open proxy | Cone plant window |
+| 3 | Trunk through strike | Shoulder pole bow |
+| 4 | Approach rhythm | Beep plant sync |
+| 5 | Follow-through | Finish line tape |
+
+Rotate themes rather than stacking five fixes in one session — matches “one main fix” product UX.
+
+---
+
+## 2. Typical practice structure (60–90 min field session)
+
+**Warm-up (10–15 min)**
+
+- General movement: jog, dynamic stretches, hip openers (no prolonged static stretch cold).
+- Rondo or passing triangle at low intensity — not counted as striking load.
+
+**Technical block (15–20 min)**
+
+- Unopposed striking: side-foot pass accuracy first, then instep distance control.
+- Use Coaching/002 drills in pairs; each athlete 6–10 quality reps, not maximal volume.
+
+**Opposed / game-like (20–30 min)**
+
+- Small-sided games with constraints (e.g., must use side-foot finish inside box) — tactical, not auto-scored by pack.
+
+**Finisher (optional, 5–10 min)**
+
+- Controlled repetition strikes on goal with coach count cap; record 1–2 side-view clips for motion upload.
+
+**Cool-down**
+
+- Low-intensity jog, brief mobility; monitor athletes reporting groin/hamstring tightness.
+
+---
+
+## 3. Progressions (no ball tracking required)
+
+### Stage A — Static plant and swing
+
+Athlete steps in, plants, swings without ball (shadow kicks). Emphasizes cp_plant_timing and cp_plant_knee_stiff.
+Youth: 8 reps per foot; adults: 10–12.
+
+### Stage B — Ball on ground, short distance
+
+Pass to partner 5–10 m; focus finding from brief (e.g., plant-foot-closes-hip). Increase distance only when
+checkpoint stable across two uploads.
+
+### Stage C — Approach run-up
+
+Add 2–4 step approach; film side view for approach-rushed and leaning-back findings.
+
+### Stage D — Match speed
+
+Introduce defender pressure or time limits; motion clips may be noisier — lower automated confidence expected.
+
+---
+
+## 4. Volume and load guidance (summarized, not reproduced tables)
+
+Federation and sports-science sources emphasize:
+
+- **Youth:** Limit consecutive maximal strikes; prioritize variety (passing, 1v1, small games) over repeated
+  full-power shooting blocks. Follow your NGB’s recommended practice duration by age band (FIFA Grassroots
+  principles — authority A+ for participation, B for technical detail).
+- **Teen:** Monitor cumulative weekly header + strike load during growth spurts; club medical staff lead return
+  from injury.
+- **Adult amateur:** Hard surface and fatigue increase variability — schedule quality striking when legs are fresh.
+
+CeRebel does **not** count balls struck in a session unless integrated with team data — treat load advice as
+educational.
+
+---
+
+## 5. Partner and camera setup for team capture
+
+- **Side view:** Camera on tripod at mid-torso height, 3–5 m from athlete, perpendicular to kick direction.
+- **Full frame:** Include approach steps, plant foot, and follow-through foot.
+- **Batch capture:** Line athletes; 30 s per player (one approach kick) during technical block.
+- **Privacy:** Obtain consent for video upload in minors; follow school/club policy.
+
+---
+
+## 6. Using coach briefs in a team huddle
+
+1. Show phase scrub (when live): “Here is plant vs strike.”
+2. State one finding headline in plain language.
+3. Assign one drill from Coaching/002 for next 5 minutes.
+4. Re-record 2 athletes as demonstration of improvement — avoid public shaming on faults.
+
+---
+
+## 7. Equipment-minimal station rotation (4 stations, 8 players)
+
+| Station | Activity | Finding target |
+|---------|----------|----------------|
+| 1 | Wall rebounder side-foot | plant-too-close |
+| 2 | Cone plant window | plant-foot-closes-hip |
+| 3 | Corridor run-up | approach-wide |
+| 4 | Freeze finish balance | plant-collapse |
+
+2 minutes per station, rotate twice.
+
+---
+
+## 8. Integration with match day
+
+- Avoid first-time technical overhaul on match day; use briefs for maintenance cues only.
+- Post-match fatigued kicking clips are poor baseline for checkpoint thresholds.
+
+---
+
+## 9. Glossary cross-links
+
+- Phase IDs: Phases/001_phase_model.txt
+- Fault library: Findings/001_common_faults.txt
+- Safety: Docs/002_DISCLAIMER.txt
+
+Pack version 0.1 — training doc for RAG and coach education summaries.

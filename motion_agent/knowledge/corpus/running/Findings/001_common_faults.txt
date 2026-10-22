@@ -1,0 +1,374 @@
+# Running Gait — Common Faults (finding cards) — v2
+
+Authority: B / B+ summarized open literature; not diagnostic. See Docs/002_DISCLAIMER.txt.
+finding_id stable keys: fault_<snake_case>. legacy_id kept for prior RAG slugs.
+
+---
+
+finding_id: fault_overstride
+legacy_id: overstride
+headline_en: Foot lands too far ahead of your body
+phases: contact, loading
+body_signal: At E_IC, stance ankle/foot landmark markedly ahead of pelvis center in sagittal view; overstride_proxy ratio above adult checkpoint band; knee may still be extending toward ground at contact.
+why_it_matters: Reaching with the foot ahead of mass associates with greater braking and higher impact loading variables in lab studies — performance and tissue load may increase for some runners (B+). Not every rearfoot contact is harmful.
+feel_cue: "Land with your foot under your hip, not reaching out front."
+drill: 60 s ankle glides — jog in place then move forward slowly, foot under hip (Coaching/002_drills.txt drill_overstride_ankle_glide).
+severity_default: medium
+sources: Heiderscheit et al. 2011 step-rate/loading; running kinematics foot-placement reviews (B+)
+youth_note: Youth often land closer under COM; raise overstride threshold before scoring.
+
+---
+
+finding_id: fault_low_cadence_overstride
+legacy_id: low_cadence_overstride
+headline_en: Slow turnover combined with long reach
+phases: contact
+body_signal: Cadence estimate below ~155 spm (adult heuristic, ≥4 IC events) AND overstride_proxy fails cp_contact_under_com_adult on same clip.
+why_it_matters: Low step rate at constant speed implies longer strides; combined with overreach, braking may increase (B+). Cadence alone is not a fault — both signals required.
+feel_cue: "Quicker, shorter steps — like running on hot coals."
+drill: 90 s metronome +5% above self-counted cadence for easy jog (drill_low_cadence_metronome).
+severity_default: medium
+sources: Heiderscheit et al. 2011; step-rate retraining coaching literature (B+)
+youth_note: Natural youth cadence often higher; do not force adult 155 spm floor.
+
+---
+
+finding_id: fault_excessive_bounce
+legacy_id: excessive_bounce
+headline_en: Too much up-and-down bounce
+phases: flight, midstance
+body_signal: vertical_oscillation peak-to-peak per stride exceeds clip self-baseline band or cohort heuristic (cp_vertical_oscillation).
+why_it_matters: Excessive vertical COM oscillation may increase energy cost in some runners (B+). Often pairs with stiff push-off or overstriding.
+feel_cue: "Run quiet and forward, not pogo up and down."
+drill: 60 s quiet upper-body jog, hands on hips minimizing head bounce (drill_bounce_quiet_upper).
+severity_default: low
+sources: Running economy kinematics reviews (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_trunk_lean_back
+legacy_id: trunk_lean_back
+headline_en: Torso too upright or leaning back at landing
+phases: contact, midstance
+body_signal: trunk_lean vs vertical shows insufficient forward tilt or apparent backward lean at midstance (cp_trunk_stack_neutral fail).
+why_it_matters: Excessive upright/backward trunk at contact can coincide with overreach and braking (B+). Horizontal impulse may suffer.
+feel_cue: "Slight forward lean from the ankles, eyes on the horizon."
+drill: 45 s lean-from-ankle march then 30 s easy jog (drill_trunk_lean_ankle).
+severity_default: medium
+sources: Distance running form reviews; trunk posture in gait literature (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_trunk_lean_excess_fwd
+legacy_id: trunk_lean_excess_fwd
+headline_en: Hunched forward from the waist
+phases: midstance, propulsion
+body_signal: Excessive thoracic flexion — shoulders ahead of hips without ankle-driven whole-body lean (cp_trunk_fwd_excess).
+why_it_matters: Waist-hinge posture may restrict hip extension and breathing (B). Lumbar load may rise for some athletes — coach review, not diagnosis.
+feel_cue: "Tall spine, lean the whole body like a tower tipping slightly forward."
+drill: 60 s tall-posture low skips, ribs stacked over pelvis (drill_trunk_hunch_tall_skip).
+severity_default: medium
+sources: Coaching education; posture in endurance running (B)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_hip_drop
+legacy_id: hip_drop
+headline_en: Pelvis drops on the stance side
+phases: midstance
+body_signal: hip_drop / pelvis obliquity — swing-side hip lower than stance beyond ~5–8° proxy at midstance (cp_pelvis_level).
+why_it_matters: Frontal-plane pelvic drop discussed with hip abductor endurance and ITB symptom associations (A/B+). Visible drop may indicate stability limit under single-leg load — not a diagnosis.
+feel_cue: "Keep the belt line level — don't let the hip sag on the landing leg."
+drill: 90 s single-leg balance each side, pelvis level (drill_hip_drop_balance).
+severity_default: medium
+sources: ITB/hip stabilizer biomechanics reviews; Trendelenburg assessment literature (A/B+)
+youth_note: Mild drop common during growth; raise severity only if large and persistent.
+
+---
+
+finding_id: fault_crossover_gait
+legacy_id: crossover_gait
+headline_en: Foot crosses toward the midline
+phases: contact, loading
+body_signal: crossover_proxy — foot landmark medial to contralateral hip or crosses midline on rear view (cp_crossover).
+why_it_matters: Narrow base and cross-over patterns appear in observational studies of some injured or fatigued runners (B+). Association not causation.
+feel_cue: "Feet land hip-width, parallel tracks like skis."
+drill: 60 s line runs without crossing midline (drill_crossover_line).
+severity_default: medium
+sources: Clinical observational running gait reports; hip stability coaching (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_knee_valgus_load
+legacy_id: knee_valgus_load
+headline_en: Knee caves inward on landing (visible)
+phases: loading, midstance
+body_signal: Frontal/oblique camera shows knee medial to hip–ankle line during loading (cp_knee_valgus_visible). Side-only: downgrade confidence.
+why_it_matters: Dynamic knee valgus is a load-distribution concern in jump/cut sports; in straight running, visible collapse may increase medial knee stress (B+). Not ACL diagnosis from video.
+feel_cue: "Push the knee out over the middle toe as you land."
+drill: 60 s mini-band lateral steps then 30 s jog knee-over-foot (drill_knee_valgus_band).
+severity_default: medium
+sources: Neuromuscular training and valgus literature; running frontal-plane studies (B+)
+confidence_note: Requires frontal or oblique camera.
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_stiff_ankle_landing
+legacy_id: stiff_ankle_landing
+headline_en: Stiff, locked ankle at touchdown
+phases: contact, loading
+body_signal: Low ankle dorsiflexion increase after contact; minimal early knee flexion (cp_ankle_compliance). Needs clear sagittal high-FPS.
+why_it_matters: Reduced compliance at contact may increase impact peaks in lab studies (B+). Often co-occurs with overstride.
+feel_cue: "Soft ankle, soft knee — let the leg bend like a spring."
+drill: 45 s ankle rolls + soft landing hops in place (drill_stiff_ankle_soft_land).
+severity_default: medium
+sources: Impact loading and knee/ankle flexion reviews (B)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_arm_swing_asymmetry
+legacy_id: arm_swing_asymmetry
+headline_en: Arms swing unevenly
+phases: swing, flight
+body_signal: arm_swing_range differs L/R beyond cp_arm_symmetry band, or peak shoulder flexion timing mismatched.
+why_it_matters: Asymmetry may reflect compensation, handheld objects, or habit (B). Can disturb trunk rotation rhythm.
+feel_cue: "Cheek to cheek — hands travel same path both sides."
+drill: 60 s mirror arm drive, elbows ~90° matching both sides (drill_arm_symmetry_cheek).
+severity_default: low
+sources: Arm swing and metabolic cost studies (B+); coaching cues (B)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_excessive_trunk_rotation
+legacy_id: excessive_trunk_rotation
+headline_en: Excessive upper-body twist
+phases: propulsion, swing
+body_signal: trunk_rotation yaw amplitude exceeds band for pace context (cp_trunk_rotation_band).
+why_it_matters: Large counter-rotation may waste energy or indicate lower-body drive deficit (B). Sprint vs distance norms differ.
+feel_cue: "Drive the leg forward; shoulders stay quietly counter-rotated, not wringing."
+drill: 60 s hands-on-hips run limiting arm contribution (drill_trunk_rotation_hands_hips).
+severity_default: low
+sources: Trunk rotation in running economy literature (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_scissor_kick
+legacy_id: scissor_kick
+headline_en: Low knee lift — feet scissor near ground
+phases: swing, flight
+body_signal: Low swing-phase knee flexion; ankles pass close to ground or near contralateral leg (cp_swing_clearance). Fatigue increases appearance.
+why_it_matters: Insufficient clearance may increase trip risk and alter stride efficiency (B). May indicate hip-flexor/hamstring fatigue — refer pain to clinician.
+feel_cue: "Lift the heel toward the butt on the back swing; knees forward not feet back."
+drill: 45 s butt kicks + 45 s easy jog carrying heel-lift cue (drill_scissor_butt_kick).
+severity_default: low
+sources: Sprint drill coaching adapted to distance (B); clearance in gait analysis (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_stride_asymmetry
+legacy_id: stride_asymmetry
+headline_en: Left and right strides don't match
+phases: contact, loading, midstance, propulsion, toe_off, swing, flight
+body_signal: Stride time or contact time differs L/R > ~8–10% sustained (cp_stride_time_symmetry); optional ROM asymmetry on knee/hip.
+why_it_matters: Persistent asymmetry warrants coach review; with pain may need clinical evaluation (A for pain guidance). Youth growth can produce temporary asymmetry (B+).
+feel_cue: "Same rhythm both sides — listen for even footfalls."
+drill: 90 s alternate single-leg hops then bilateral jog comparing sound (drill_asymmetry_hop_rhythm).
+severity_default: medium
+sources: Gait asymmetry and injury association reviews (non-diagnostic); developmental gait (B+)
+youth_note: Temporary asymmetry during growth spurts — down-weight severity unless large.
+
+---
+
+finding_id: fault_rearfoot_reach_proxy
+headline_en: Heel reaches far ahead before contact (rearfoot proxy)
+phases: contact
+body_signal: At E_IC, heel landmark contacts with ankle clearly ahead of knee; large foot–pelvis horizontal offset with extended knee (body-only foot-strike proxy — not force-plate classification).
+why_it_matters: Rearfoot contact with overreach is discussed with higher braking GRF peaks in some lab cohorts (B+). Midfoot/forefoot can also overload — context matters.
+feel_cue: "Let the foot kiss under you — don't reach with the heel first."
+drill: 60 s soft midfoot taps in place then easy jog (drill_rearfoot_reach_soft_tap).
+severity_default: medium
+sources: Foot-strike and loading reviews (B+); coaching strike education (B)
+confidence_note: Body-only proxy; shoe visibility and camera angle affect confidence.
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_forefoot_early_load
+headline_en: Early forefoot-only load with stiff ankle
+phases: contact, loading
+body_signal: At E_IC, toe/forefoot landmark lowest with minimal heel descent through early loading; ankle plantarflexion remains high while knee stays stiff.
+why_it_matters: Early forefoot loading without adequate compliance may concentrate load at metatarsals/Achilles in some runners (B). Not a prescription to change strike style.
+feel_cue: "Allow a soft whole-foot acceptance — ankle yields a little."
+drill: 45 s quiet landings from low hops focusing heel kiss after forefoot (drill_forefoot_soft_accept).
+severity_default: low
+sources: Forefoot strike loading summaries (B+); coaching (B)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_arm_crossing_midline
+headline_en: Arms cross the body midline while swinging
+phases: swing, flight
+body_signal: Wrist path crosses trunk midline repeatedly; elbows swing across torso rather than mostly sagittal (cp_arm_cross_midline).
+why_it_matters: Crossing arms can amplify trunk rotation and waste energy at distance paces (B coaching). May compensate for lower-body drive asymmetry.
+feel_cue: "Elbows drive back beside the ribs — hands don't cross the zipper."
+drill: 60 s corridor arm swings jogging with elbows brushing pockets (drill_arm_corridor).
+severity_default: low
+sources: Arm swing mechanics coaching (B); segment coupling themes (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_short_arm_drive
+headline_en: Arms barely drive — short pendulum
+phases: swing, propulsion
+body_signal: Peak shoulder flexion/extension ROM below band for pace; elbows near trunk with tiny amplitude (cp_arm_drive_short).
+why_it_matters: Insufficient arm drive may reduce counter-rotation balance and perceived rhythm (B). Common when fatigued or carrying items.
+feel_cue: "Drive the elbow back — cheek to hip pocket."
+drill: 60 s exaggerated cheek-to-cheek arm drives at easy jog (drill_arm_drive_exaggerated).
+severity_default: low
+sources: Arm contribution to running economy summaries (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_hip_extension_deficit
+headline_en: Hip does not open behind the body at push-off
+phases: propulsion, toe_off
+body_signal: At E_TO, stance hip extension angle remains flexed relative to neutral; thigh never trails behind vertical band (cp_hip_ext_toe_off).
+why_it_matters: Limited hip extension shortens propulsive lever and may pair with overstride compensation (B+). Check mobility vs fatigue context.
+feel_cue: "Push the ground behind you — leave the thigh trailing briefly."
+drill: 60 s walking A-march with hip open cue then 30 s jog (drill_hip_ext_amarch).
+severity_default: medium
+sources: Hip extension in running propulsion reviews (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_early_heel_rise
+headline_en: Heel lifts too early in stance
+phases: loading, midstance
+body_signal: Heel vertical rise begins before midstance window; stance ankle plantarflexes early while knee still flexing (cp_early_heel_rise).
+why_it_matters: Early heel rise can shorten loading and stiffen the lever (B). May reflect calf tightness or hurried propulsion — not a diagnosis.
+feel_cue: "Keep the heel soft longer — load then roll."
+drill: 45 s slow march with delayed heel lift then easy jog (drill_early_heel_delay).
+severity_default: low
+sources: Stance kinematics coaching (B); ankle rocker summaries (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_insufficient_knee_flex_stance
+headline_en: Stance knee stays too straight through loading
+phases: contact, loading
+body_signal: Peak stance knee flexion after E_IC below band; knee remains near extension through loading (cp_stance_knee_flex).
+why_it_matters: Reduced knee flexion at loading associates with higher impact peaks in some studies (B+). Often co-occurs with overstride and stiff ankle.
+feel_cue: "Land on a soft bent knee — spring, not peg."
+drill: 60 s soft-knee jogging in place then forward (drill_soft_knee_load).
+severity_default: medium
+sources: Impact attenuation and knee flexion reviews (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_pelvis_rotation_excess
+headline_en: Pelvis twists excessively each stride
+phases: propulsion, swing
+body_signal: Pelvis yaw peak-to-peak exceeds band relative to trunk; belt line swings side-to-side in top view proxy (cp_pelvis_yaw_band).
+why_it_matters: Large pelvic rotation may indicate hip drive compensation or core endurance limit (B). Distinguish from healthy modest counter-rotation.
+feel_cue: "Quiet belt — hips rotate just enough to let the leg swing."
+drill: 60 s hands-on-hips with "quiet belt" cue (drill_pelvis_quiet_belt).
+severity_default: low
+sources: Pelvis–trunk coupling in running (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_shoulder_hike_run
+headline_en: Shoulders hike toward ears while running
+phases: midstance, propulsion, swing
+body_signal: Shoulder elevation relative to ear/neck shrinks; traps visibly elevated both sides or asymmetrically (cp_shoulder_hike_run).
+why_it_matters: Upper-trap tension can disturb arm swing and breathing rhythm (B). Often fatigue or stress related — not medical diagnosis.
+feel_cue: "Melt the shoulders down — long neck, soft jaw."
+drill: 45 s shoulder-roll reset then 45 s jog with melt cue (drill_shoulder_melt_jog).
+severity_default: low
+sources: Postural tension coaching (B)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_narrow_stance_base
+headline_en: Feet land on a very narrow track
+phases: contact, midstance
+body_signal: Mediolateral foot spacing below hip-width band without true crossover; both feet near midline (cp_stance_width_narrow).
+why_it_matters: Very narrow base can challenge frontal-plane stability and pair with hip drop (B+). Distinct from intentional track-lane line drills.
+feel_cue: "Widen to hip-width rails — two parallel tracks."
+drill: 60 s dual-line jog between two parallel tapes (drill_stance_width_rails).
+severity_default: low
+sources: Base of support and frontal stability themes (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_contact_time_asymmetry
+headline_en: One side stays on the ground longer
+phases: contact, loading, midstance, propulsion
+body_signal: Stance duration L vs R differs beyond ~8% sustained across ≥6 strides (cp_contact_time_asym).
+why_it_matters: Contact-time asymmetry may reflect guarding, strength imbalance, or shoe/surface factors (B+). Investigate with coach if new or painful.
+feel_cue: "Even push and even lift — match the hang of each foot."
+drill: 90 s even footfall listening jog after 5 hops each leg (drill_contact_even_listen).
+severity_default: medium
+sources: Temporal asymmetry reviews in running (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_fatigue_cadence_drop
+headline_en: Cadence drops as the clip progresses (fatigue)
+phases: contact
+body_signal: Cadence in last third of clip ≥5–8% lower than first third at similar speed proxy; often with rising overstride_proxy (cp_fatigue_cadence).
+why_it_matters: Fatigue-related cadence drop and stride lengthening are common end-of-run patterns and may raise braking load (B+). Coaching focus: maintain rhythm, not heroics.
+feel_cue: "Keep the metronome in your legs when you get tired."
+drill: 90 s late-run metronome hold at easy pace (drill_fatigue_cadence_hold).
+severity_default: medium
+sources: Fatigue kinematics in prolonged running (B+)
+confidence_note: Needs clip long enough (≥20–30 s) and stable speed estimate.
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_fatigue_hip_drop_rise
+headline_en: Hip drop worsens late in the run
+phases: midstance
+body_signal: Peak pelvis obliquity in late clip exceeds early-clip band by set delta (cp_fatigue_hip_drop).
+why_it_matters: Rising pelvic drop under fatigue links to hip abductor endurance themes (A/B+). Suggest volume/strength review with coach — not injury label.
+feel_cue: "Level the belt even when tired — strong stance hip."
+drill: 60 s single-leg level holds then short jog (drill_fatigue_hip_level).
+severity_default: medium
+sources: Fatigue and frontal-plane pelvis research summaries (A/B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_forward_head_run
+headline_en: Head juts forward while running
+phases: midstance, propulsion
+body_signal: Ear/nose landmark anterior to shoulder–pelvis stack through midstance (cp_forward_head_run).
+why_it_matters: Forward head can accompany hunched trunk and raise neck effort (B). Video shows tendency only.
+feel_cue: "Crown tall, chin gently back — eyes on the horizon."
+drill: 45 s wall chin glide then 45 s tall-head jog (drill_forward_head_jog).
+severity_default: low
+sources: Postural alignment education; neck posture reviews summarized (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+finding_id: fault_push_off_asymmetry
+headline_en: One side pushes off harder or earlier
+phases: propulsion, toe_off
+body_signal: Peak ankle upward velocity or hip extension rate differs L/R beyond band at E_TO (cp_push_asym).
+why_it_matters: Push asymmetry may alter stride symmetry and perceived effort (B+). Check shoes, prior injury history with staff if sudden.
+feel_cue: "Same snap off both feet — listen for matching toe-off."
+drill: 60 s alternate single-leg push marches then bilateral jog (drill_push_match).
+severity_default: medium
+sources: Bilateral propulsion asymmetry themes (B+)
+youth_note: Cadence relative to height; avoid absolute overstride cm norms for growing athletes.
+---
+
+# Finding index (28 cards, fault_* keys)
+
+fault_overstride | fault_low_cadence_overstride | fault_excessive_bounce | fault_trunk_lean_back |
+fault_trunk_lean_excess_fwd | fault_hip_drop | fault_crossover_gait | fault_knee_valgus_load |
+fault_stiff_ankle_landing | fault_arm_swing_asymmetry | fault_excessive_trunk_rotation | fault_scissor_kick |
+fault_stride_asymmetry | fault_rearfoot_reach_proxy | fault_forefoot_early_load | fault_arm_crossing_midline |
+fault_short_arm_drive | fault_hip_extension_deficit | fault_early_heel_rise | fault_insufficient_knee_flex_stance |
+fault_pelvis_rotation_excess | fault_shoulder_hike_run | fault_narrow_stance_base | fault_contact_time_asymmetry |
+fault_fatigue_cadence_drop | fault_fatigue_hip_drop_rise | fault_forward_head_run | fault_push_off_asymmetry
+
+Cross-link: Coaching/001_cues.txt, Coaching/002_drills.txt, Quality/002_checkpoints.txt, Phases/001_phase_model.txt

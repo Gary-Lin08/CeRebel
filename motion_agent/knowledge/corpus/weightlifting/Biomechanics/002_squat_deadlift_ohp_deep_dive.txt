@@ -1,0 +1,109 @@
+# Squat, Deadlift, OHP — Biomechanics Deep Dive (B+ summaries)
+# Focus content for RAG retrieval on the three v1 lifts
+
+================================================================================
+BACK SQUAT — STANCE, DEPTH, AND SEGMENT COUPLING
+================================================================================
+
+Stance width:
+- Wider stances increase hip adductor involvement and can alter trunk angle at same depth.
+- Narrow stances may increase ankle dorsiflexion demand — heel lift fault more common with limited ankle ROM.
+- Product: measure ankle–knee–hip only; do not infer muscle activation percentages without EMG channel.
+
+Femur/torso ratios:
+- Long femur lifters appear more forward-leaning at depth with upright chest cues — anthropometry interacts with
+  "good morning" fault heuristics; avoid false positives on long-limbed athletes.
+
+Ascent strategies:
+- "Hip drive" vs "knee drive" coaching cues change observable knee–hip extension sequencing slightly but both can
+  succeed when bar stays balanced over mid-foot proxy.
+
+Safety literature (A/B+):
+- Squats performed with supervision and progressive loading are supported in healthy populations in consensus statements.
+- Pain during squatting warrants clinical evaluation — not continued loading based on app feedback.
+
+Detectable fault signatures (pose):
+- good_morning: thorax pitch rate >> hip flexion rate early descent.
+- valgus: medial knee vs foot in frontal/oblique view.
+- bounce: non-monotonic knee angle at bottom.
+
+================================================================================
+CONVENTIONAL DEADLIFT — START, PASS THE KNEE, LOCKOUT
+================================================================================
+
+Start position:
+- Hip height sets knee angle and shoulder-over-bar relationship; "too squatty" increases knee forward travel and
+  can reposition bar relative to shins.
+
+Initial pull slack:
+- Pre-movement shoulder depression and lat engagement reduce visible upper-back rounding; may appear as brief
+  stillness before E_PULL_START.
+
+Sticky points:
+- Common sticking region near knee: knee extension may lag if bar forward or hips high.
+- Hitched pulls show velocity stagnation — distinguish from intentional pause deadlifts via user tag.
+
+Spine biomechanics (careful wording):
+- Flexion under load increases tissue stress in biomechanical models; individual tolerance varies widely.
+- Product language: "visible rounding pattern" not "herniated disc risk."
+
+RDL vs deadlift:
+- RDL emphasizes hip hinge with minimal knee bend; useful drill for fault_dl_hips_shoot and bar-close awareness.
+
+Lockout errors:
+- Hyperextension: thorax past vertical, ribs flared — distinct from neutral hip extension finish.
+- Soft knees: knee flexion at lockout while hips appear extended.
+
+================================================================================
+STRICT OVERHEAD PRESS — PATH, CLEARANCE, STABILITY
+================================================================================
+
+Setup variants:
+- Front rack: elbows forward, wrists extended; thoracic extension moderate.
+- Too much layback before bar moves = fault_ohp_excessive_leanback signature.
+
+Head movement:
+- "Head through" at lockout is standard coaching — head translates forward under bar in side view; do not confuse
+  with cervical flexion fault unless extreme and sustained.
+
+Grip width:
+- Wider grip reduces ROM, changes shoulder abduction; narrow grip increases elbow flare risk when mobility limited.
+
+Scapular rhythm:
+- Upward rotation and elevation occur through press; "no shrug" coaching targets excessive elevation at lockout only.
+
+Push press contamination:
+- Knee flexion–extension burst before wrist velocity peak is clearest strict vs push press discriminator for v1.
+
+Seated vs standing:
+- Seated removes leg drive — useful regression in drills; biomechanics reduce hip extension contribution to zero.
+
+================================================================================
+BILATERAL SYMMETRY
+================================================================================
+
+Squat: hip hike at bottom may reflect ankle mobility asymmetry, past injury habit, or bar uneven load (if bar tracked).
+
+Deadlift: mixed grip is standard on heavy pulls but changes shoulder rotation appearance — note in capture metadata.
+
+OHP: asymmetric wrist height at lockout — bar tilt or unilateral weakness proxy.
+
+================================================================================
+COMPARATIVE TABLE (coaching-oriented, not exhaustive EMG)
+================================================================================
+
+| lift     | primary visible phase risk      | key joint signals              | common product faults        |
+|----------|----------------------------------|--------------------------------|------------------------------|
+| squat    | bottom turnaround, ascent      | knee flex, trunk pitch, valgus | good_morning, valgus, bounce |
+| deadlift | pull off floor                 | hip–shoulder sync, trunk angle | hips_shoot, rounding, bar fwd |
+| ohp      | press to lockout               | wrist path, knee quiet, lean   | leg_drive, loop, leanback    |
+
+================================================================================
+REFERENCES (URLs for manifest — summarize only in product)
+================================================================================
+
+- NSCA Essentials / position statements: https://www.nsca.com (training guidelines)
+- ACSM resistance training for health: https://www.acsm.org
+- PubMed open reviews: "squat biomechanics systematic review", "deadlift kinematics", "shoulder press biomechanics"
+
+Retrieved for pack build: 2026-10-21. Verify citations when upgrading authority to A where federation PDFs added.

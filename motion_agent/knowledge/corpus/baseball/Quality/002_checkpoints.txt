@@ -1,0 +1,171 @@
+# Baseball Pitching — Quality Checkpoints
+
+Required checkpoint catalog (brain_plan §6). Phases use UI ids: set, lift, stride, landing, release, follow.
+Evidence levels: A = clinical/lab consensus; B+ = coaching heuristic / conservative product threshold.
+
+| checkpoint_id          | phase(s)        | series/signal              | rule (summary)                         | fail→finding_id        | evidence |
+|------------------------|-----------------|----------------------------|----------------------------------------|------------------------|----------|
+| cp_stride_adult_band   | landing         | stride / height ratio      | 0.70–0.95 adult band                   | stride-short, stride-long | B+    |
+| cp_stride_youth_band   | landing         | stride / height ratio      | 0.55–0.85 youth band                   | stride-short, stride-long | B+    |
+| cp_back_leg_drive      | stride→landing  | back-knee Δ flex           | knee extends ≥8° by landing            | back-leg-soft          | B+       |
+| cp_separation_landing  | landing         | separation                 | \|sep\| ≥ 25° (conservative)           | separation-low         | A norm, B+ threshold |
+| cp_front_knee_brace    | landing→release | front-knee Δ flex          | Δ < 8° landing→release                 | front-knee-collapse    | B+       |
+| cp_mer_band            | release         | shoulder ER (future)       | within age band                        | mer-insufficient       | A        |
+| cp_trunk_sequence      | landing→release | pelvis vs trunk peak times | pelvis before trunk before hand peak   | trunk-late-rotate      | A        |
+| cp_balance_set         | set, lift       | COM / ankle speed          | minimal drift pre-stride               | set-rush               | B        |
+| cp_glove_side_stable   | stride→release  | lead wrist vs trunk        | lead arm not max speed before trunk    | glove-flyout           | B+       |
+| cp_head_stack          | release         | head vs trunk (future)     | excessive lateral pull                 | head-pull              | B        |
+| cp_pelvis_drift        | stride→landing  | pelvis AP vs set           | COM toward plate without hip rotation  | pelvis-drift           | B        |
+| cp_arm_path_efficiency | release         | throwing-hand path         | excessive lateral loop (heuristic)     | arm-path-wide          | B        |
+
+Thresholds marked “future” ship findings at lower confidence until coordinates validated.
+
+---
+
+## cp_stride_adult_band
+
+phases: landing
+series: stride (lead–trail ankle separation normalized by stature estimate)
+pass: ratio between 0.70 and 0.95 of body height proxy.
+fail: below 0.70 → stride-short; above 0.95 → stride-long.
+reference: pmc_clinician_pitching_guide cites ~85% height at foot contact in clinical summary (not individual Rx).
+cue: cue_stride_to_target
+drill: drill_stride_line
+
+---
+
+## cp_stride_youth_band
+
+phases: landing
+pass: ratio 0.55–0.85 youth band (shorter relative stride normal).
+fail: same finding_ids as adult band with youth ageBand metadata.
+sources: pmc_youth_mechanics_sr; baseball_canada_pitching_mechanics
+note: never apply adult 0.70 lower bound to U12 without age tag.
+
+---
+
+## cp_back_leg_drive
+
+phases: stride, landing
+series: back-knee (trail knee flexion °)
+pass: knee flexion decreases by at least 8° from stride start to landing (extension).
+fail: back-leg-soft — knee still heavily flexed at landing, Δ < 8°.
+matches: sport_analysis._baseball_report back-leg rule.
+cue: “Push the rubber away.”
+drill: Rocker drill (see code default copy) or drill_rocker_step_rhythm.
+
+---
+
+## cp_separation_landing
+
+phases: landing
+series: separation (lumbar_rotation ° at landing)
+pass: absolute separation ≥ 25° (product conservative vs lab ~40–60° cohort means).
+fail: separation-low.
+why_conservative: monocular OpenSim noise — brain_plan §5.
+sources: pmc_clinician_pitching_guide; fortenbaugh_pitching_biomech
+
+---
+
+## cp_front_knee_brace
+
+phases: landing, release
+series: front-knee
+pass: front knee flex change from landing to release < 8°.
+fail: front-knee-collapse.
+cue: cue_brace_front_leg
+drill: drill_braced_landing_holds, Stride-and-brace (in-app default)
+
+---
+
+## cp_mer_band
+
+phases: release
+series: shoulder ER trail (future)
+pass: within age-appropriate band; adult lab MER often ~165–180° reported — not youth target.
+fail: mer-insufficient when below youth p10 (future).
+sources: pmc_clinician_pitching_guide; pmc_youth_mechanics_sr
+
+---
+
+## cp_trunk_sequence
+
+phases: landing, release
+signal: peak pelvis rotation before trunk before throwing-hand speed peak.
+fail: trunk-late-rotate if hand peak precedes trunk peak.
+sources: driveline_interpret_biomech_reports (sequencing concept); fortenbaugh_pitching_biomech (A)
+
+---
+
+## cp_balance_set
+
+phases: set, lift
+signal: COM drift, ankle speed near baseline before stride.
+fail: set-rush
+cue: cue_pause_at_top
+drill: drill_rocker_step_rhythm
+
+---
+
+## cp_glove_side_stable
+
+phases: stride, release
+signal: lead wrist speed peak not before trunk rotation peak (planned).
+fail: glove-flyout
+cue: cue_glove_leads
+drill: drill_glove_lead_target
+
+---
+
+## cp_head_stack
+
+phases: release
+signal: head lateral offset vs trunk (future)
+fail: head-pull
+cue: cue_smell_the_glove
+
+---
+
+## cp_pelvis_drift
+
+phases: stride, landing
+signal: pelvis translates toward plate without separation increase.
+fail: pelvis-drift
+cue: cue_stay_closed_longer
+drill: drill_flat_ground_separation
+
+---
+
+## cp_arm_path_efficiency
+
+phases: release
+signal: trail wrist path lateral deviation heuristic.
+fail: arm-path-wide
+drill: drill_wall_drill_arm_path
+
+---
+
+## cp_capture_quality (gate)
+
+phases: all
+pass: full body visible; side/45° camera; includes landing through follow; ≥8 frames in window (code minimum).
+fail: tier_insufficient_data — suppress high-confidence mechanical checkpoints.
+
+---
+
+## Suggested brief weights
+
+cp_separation_landing, cp_back_leg_drive, cp_front_knee_brace: weight 1.2
+cp_stride_*_band: 1.0
+cp_balance_set, cp_glove_side_stable: 0.9
+cp_arm_path_efficiency, cp_head_stack: 0.8
+cp_capture_quality: mandatory gate
+
+---
+
+## Sources
+
+- brain_plan.txt §6
+- motion_agent/motion/sport_analysis.py _baseball_report
+- pmc_clinician_pitching_guide (PMC9950989)
+- Quality/001_quality_definition.txt

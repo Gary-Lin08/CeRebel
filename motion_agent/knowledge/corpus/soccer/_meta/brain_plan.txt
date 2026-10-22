@@ -1,0 +1,291 @@
+# CeRebel Soccer Kicking & Striking KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: soccer / association football
+# Aligns: SPORT_PACK_KB_SPEC.txt | Product: body-first OpenSim coaching; NO ball flight tracking
+# Registry blurb: "Strike and plant-foot mechanics."
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for **approach-run body mechanics** and two v1 kick
+families detectable from pose / OpenSim reconstruction only:
+
+1. **Instep drive** — laces / full instep power strike (shooting, driven pass)
+2. **Side-foot pass** — inside-of-foot push pass (short and medium passing)
+
+Out of scope v1:
+- Ball trajectory, spin, speed, curve, or landing point
+- Header, volley, bicycle kick, chip, knuckleball as separate phase models
+- Goalkeeper distribution, throw-ins, tackling
+- IFAB law text beyond glossary hooks for future Rules/ folder
+- Medical diagnosis, return-to-play after groin/hamstring injury
+
+Build agent writes full Findings/Coaching bodies from this map; brain agent does not.
+
+================================================================================
+2. PRODUCT CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+- All measurable claims tie to reconstructed body: joint angles, segment speeds,
+  pelvis/trunk rotation, CoM drift, support-leg bracing — never ball sensors.
+- **Contact** in product copy means **contact_proxy**: peak ||v(kicking_ankle)|| in
+  the analysis window (±2 frames), NOT verified foot–ball impact.
+- UI phase scrub bar MUST use the seven shared phase IDs below (stable contract
+  when soccer pack ships in sport_analysis).
+- Each user-facing finding MUST map to: phase window, series_id, feel cue, 30–90s drill.
+- Youth vs adult numeric norms: separate bands in Biomechanics/001; never youth as adult.
+- Authority: A/A+ for safety volume limits; B+ for coaching checkpoints; no C in findings.
+- Optional ball position on ground may enrich cues later; v1 findings MUST NOT require it.
+
+================================================================================
+3. KICK FAMILIES (TAXONOMY ROOTS)
+================================================================================
+
+| kick_family_id          | label_en           | label_zh     | v1 priority |
+|-------------------------|--------------------|--------------|-------------|
+| kick_instep_drive       | Instep drive       | 正脚背抽射   | primary     |
+| kick_side_foot_pass     | Side-foot pass     | 脚弓推传     | primary     |
+
+Shared phase chain; family-specific checkpoint weights and copy differ in build docs.
+User or coach tags kick_family in UI; auto-classifier is future (hip flex amplitude +
+trunk lean heuristics — document in Biomechanics, do not block v1 on it).
+
+================================================================================
+4. PHASE MODEL (UI + DETECTOR ALIGNMENT)
+================================================================================
+
+Phase IDs (exact — target contract for future _soccer_window):
+
+| id            | label_en        | label_zh       | role |
+|---------------|-----------------|---------------|------|
+| approach      | Approach run    | 助跑           | Steps in; rhythm & decel toward plant |
+| plant_prep    | Plant prep      | 置脚准备       | Last 1–2 steps; CoM lowers; arms set |
+| plant         | Plant           | 支撑脚着地     | Support foot contact; bracing window |
+| backswing     | Backswing       | 后摆           | Kicking leg flexion / leg cocking |
+| forward_swing | Forward swing   | 前摆           | Hip–knee extension; foot accelerates |
+| contact_proxy | Contact window  | 触球窗口       | Peak kicking-foot speed ± brief span |
+| follow        | Follow-through  | 随挥           | Deceleration; balance; recovery step |
+
+Event definitions (body-only, OpenSim-friendly):
+
+- contact_proxy_event: argmax ||v(kicking_ankle)|| in analysis window.
+- backswing_end: last local max knee_flex_kicking before contact_proxy_event.
+- backswing_start: knee_flex_kicking rises above run baseline after plant_prep.
+- plant_event: support-side ankle speed minimum / vertical decel spike before
+  contact_proxy (lead = support leg for right-foot kick: support left).
+- plant_prep_start: CoM AP velocity toward target drops below 85% of approach peak
+  OR last second step detected (fallback: contact_proxy − 35% window span).
+- approach_start: clip start or first meaningful CoM velocity toward kick direction.
+- follow_end: kicking_ankle speed < 40% of peak for ≥ 8% window span OR clip end.
+
+Phase spans (defaults when events missing):
+- approach: approach_start → plant_prep_start
+- plant_prep: plant_prep_start → plant_event
+- plant: plant_event → backswing_start (min 20 ms)
+- backswing: backswing_start → backswing_end
+- forward_swing: backswing_end → contact_proxy_event
+- contact_proxy: contact_proxy_event ± 3% window span (min 25 ms)
+- follow: end(contact_proxy) → follow_end
+
+Footedness: kicking = striking foot; support = plant foot (RF kicker: kick right, plant left).
+Capture: side view preferred (sagittal kick plane); oblique reduces hip rotation fidelity.
+
+Phases/001_phase_model.txt (build): expand events, fallbacks, EN/ZH scrub copy, family notes.
+
+================================================================================
+5. APPROACH-RUN MECHANICS (COACHING + MEASUREMENT FOCUS)
+================================================================================
+
+Document in Biomechanics/001; checkpoints reference these body signals:
+
+- **Step rhythm**: roughly even cadence in approach; last step often shorter (gather).
+- **Deceleration**: CoM still moves toward target but AP speed drops before plant
+  (not a full stop far from plant — coaching "run through the ball" = controlled decel).
+- **Trunk angle**: slight forward lean into plant_prep (instep); more upright for side-foot.
+- **Arm action**: contralateral arm forward at plant for balance; both arms quiet on side-foot.
+- **Curved approach**: pelvis path arcs — tag only; same phase IDs (future: path curvature series).
+- **Hip opening**: support hip externally rotates so plant toes point toward target line (proxy:
+  foot segment yaw vs pelvis at plant_event).
+
+Instep-specific approach cues: 4–6 steps typical at youth; longer at adult power shots (B+).
+Side-foot-specific: 1–3 steps; minimal backswing; "pass through" not "swing over".
+
+================================================================================
+6. MEASUREMENT SURFACE (CODE ↔ KB)
+================================================================================
+
+Analysis board series (define norms & checkpoints per series):
+
+| series_id           | signal                                      | unit | primary phases              |
+|---------------------|---------------------------------------------|------|-----------------------------|
+| approach_speed      | CoM or pelvis velocity toward target axis   | m/s  | approach, plant_prep        |
+| trunk_lean          | trunk flexion vs vertical (sagittal)        | °    | plant_prep, plant, contact  |
+| plant_knee          | knee_angle_support                            | °    | plant, forward_swing        |
+| kick_knee_flex      | knee_angle_kicking                            | °    | backswing, forward_swing    |
+| hip_rotation        | pelvis yaw vs address / target line         | °    | plant, forward_swing        |
+| trunk_rotation      | thorax yaw relative to pelvis               | °    | forward_swing, contact_proxy|
+| separation          | trunk_rotation − hip_rotation (same frame)  | °    | plant, contact_proxy        |
+| kicking_foot_speed  | \|\|v(kicking_ankle)\|\|                      | m/s  | contact_proxy, follow       |
+| plant_offset        | support ankle lateral offset from pelvis AP   | cm   | plant                       |
+| com_drift           | CoM mediolateral during plant→contact       | cm   | plant, forward_swing        |
+
+Future: hip_extension_kicking, ankle_plantarflexion at contact_proxy — after coord audit.
+
+================================================================================
+7. CLINICAL / COACHING NORMS (EVIDENCE-BANDED)
+================================================================================
+
+Use as RAG reference bands, NOT individual medical advice. Wording: "typical in published
+cohorts" or "coaching consensus". Build agent adds URLs in SOURCE_MANIFEST.
+
+ADULT instep drive (B+ / A where cited in systematic kicking reviews):
+- Support knee flex at plant: often ~20–35° with bracing through contact window.
+- Kicking knee flex peak in backswing: often ~80–110° before rapid extension (wide inter-athlete).
+- Trunk lean forward at plant: commonly ~10–25° sagittal (style-dependent).
+- Hip–trunk separation timing: pelvis rotation peak before or with kicking-foot speed peak (A).
+
+ADULT side-foot pass (B+):
+- Smaller backswing: kicking knee flex peak often lower than instep (~45–70°).
+- More upright trunk at contact_proxy (~5–15° lean).
+- Support foot closer to body midline; plant_offset smaller than instep.
+
+YOUTH (B+ / federation coaching):
+- Shorter approach; emphasis on plant stability and passing accuracy over max foot speed.
+- Avoid cueing "snap hip like pros" under ~12 yrs; findings severity down-weight.
+- No weighted-ball or overspeed kick prescriptions in product KB.
+
+Exclude ball speed / launch angle from any checkpoint.
+
+================================================================================
+8. QUALITY MODEL
+================================================================================
+
+Quality/001_quality_definition.txt (build):
+
+- Dimensions: (1) approach rhythm & decel, (2) plant foot placement & bracing,
+  (3) kinetic chain (hip → trunk → leg), (4) kick leg path (family-appropriate),
+  (5) follow-through balance.
+- v1: checkpoint pass/fail grid, not a single score.
+
+Quality/002_checkpoints.txt — seed checkpoint table:
+
+checkpoint_id              | phase(s)           | series/signal        | rule (summary)                         | fail→finding_id           | evidence
+---------------------------|--------------------|----------------------|----------------------------------------|---------------------------|----------
+cp_approach_decel          | plant_prep         | approach_speed       | speed drops ≥15% from approach peak    | approach-no-decel         | B+
+cp_trunk_lean_instep       | plant, contact     | trunk_lean           | adult instep: lean ≥8° or family tag   | instep-too-upright        | B+
+cp_trunk_lean_side_foot    | contact_proxy      | trunk_lean           | side-foot: lean ≤20° (avoid layback)   | side-foot-lean-back       | B+
+cp_plant_knee_brace        | plant→contact      | plant_knee           | support knee flex increase <12° to peak| plant-knee-soft           | B+
+cp_plant_base              | plant              | plant_offset + drift | excessive mediolateral CoM drift       | plant-unstable            | B+
+cp_backswing_instep        | backswing          | kick_knee_flex       | instep: peak flex ≥60° (conservative)  | instep-short-backswing    | B+
+cp_backswing_side_foot     | backswing          | kick_knee_flex       | side-foot: peak flex ≤85° (no big wind)| side-foot-big-windup      | B+
+cp_separation_instep       | forward_swing      | separation           | \|separation\| ≥15° at foot speed rise | instep-no-trunk-hip       | A (timing) B+ (threshold)
+cp_foot_speed_timing       | forward_swing      | kicking_foot_speed   | plant_knee stable before speed rise    | swing-before-plant        | B+
+cp_follow_balance          | follow             | com_drift            | CoM drift after kick within band       | follow-off-balance        | B+
+
+================================================================================
+9. FINDING CATALOG (10 STABLE IDs)
+================================================================================
+
+Format for build agent (Findings/001 + Coaching/001–002): full cards per SPORT_PACK spec.
+
+| finding_id              | headline_en (short)              | primary_phases        | body signal (measurable)                         | families        |
+|-------------------------|----------------------------------|-----------------------|--------------------------------------------------|-----------------|
+| approach-no-decel       | Run-up stays at full speed       | approach, plant_prep  | approach_speed flat into plant                   | both            |
+| approach-overstride     | Last step too long               | plant_prep, plant     | final step length vs stature high                | instep          |
+| plant-knee-soft         | Plant leg collapses              | plant, forward_swing  | plant_knee flex +≥12° to contact_proxy           | both            |
+| plant-unstable          | Body sways off plant             | plant, forward_swing  | com_drift high; plant_offset erratic             | both            |
+| plant-foot-closed       | Plant foot points wrong way      | plant                 | support foot yaw vs target line misaligned       | both            |
+| instep-too-upright      | Chest stays vertical on shot     | plant_prep, plant     | trunk_lean low for instep tag                    | instep          |
+| instep-no-trunk-hip     | Arm swing only; hips quiet       | forward_swing         | low separation; trunk peak after foot peak       | instep          |
+| instep-short-backswing  | No leg cocking before strike     | backswing             | kick_knee_flex peak low                          | instep          |
+| side-foot-big-windup    | Big backswing on a push pass     | backswing             | kick_knee_flex peak like instep                  | side_foot       |
+| side-foot-lean-back     | Leaning away on pass             | contact_proxy         | trunk_lean negative / layback                    | side_foot       |
+| swing-before-plant      | Kicking leg moves before brace   | plant, backswing      | kicking_foot_speed rise before plant_knee stable | both            |
+| follow-off-balance      | Falling after the kick           | follow                | com_drift; recovery step absent                  | both            |
+
+Each finding card MUST include: id, headline EN+ZH optional, phases, signal, why
+(performance/load — cautious), feel cue, drill 30–90s, sources[], authority level.
+
+================================================================================
+10. ONTOLOGY CLASSES (Schema/001_ontology.txt)
+================================================================================
+
+Namespace prefix: soccer:
+
+Core classes:
+- SoccerEntity (root)
+- Player (schema:Person role)
+- KickDelivery (single kick motion instance)
+- KickFamily — kick_instep_drive, kick_side_foot_pass
+- KickPhase (subclass of temporal phase) — seven phase ids in section 4
+- KickEvent — contact_proxy_peak_foot, plant_foot_contact, max_kick_knee_flex
+- BodySegment, JointAngle, SegmentSpeed (MeasurementDefinition subclasses)
+- BiomechObservation, CoachingConcept, Finding, Checkpoint, Evidence
+- PopulationNote (youth | adult | all)
+
+Key properties:
+- soccer:precedes (phase → phase)
+- soccer:belongsToFamily (phase|finding → KickFamily)
+- soccer:occursIn (finding|checkpoint → phase)
+- soccer:measuredOn (observation → series_id)
+- soccer:failTriggers (checkpoint → finding)
+- soccer:authorityLevel (A+|A|B+|B|C)
+- soccer:requiresBallTrack (default false for all v1 entities)
+
+================================================================================
+11. TAXONOMY STUBS (Taxonomy/001_concepts, 002_relations)
+================================================================================
+
+Brain seeds kick families, phases, events, series, findings, and precedes /
+belongsToFamily / occursIn / measuredAt edges. Build agent expands rows and URLs.
+
+================================================================================
+12. REQUIRED DOC OUTLINES (BUILD AGENT)
+================================================================================
+
+Docs/001_ARCHITECTURE.txt — pack role; RAG paths; pipeline; contact_proxy disclaimer
+Docs/002_DISCLAIMER.txt — not medical advice; monocular uncertainty
+Phases/001_phase_model.txt — section 4 full detail
+Quality/001 + 002 — section 8
+Findings/001 — section 9 cards
+Coaching/001 cues + 002 drills per finding
+Biomechanics/001 — approach + instep + side-foot chain; youth/adult bands; limitations
+Training/001 — partner passing grids; approach-run gates; minimal equipment
+
+Suggested open sources (build fills URLs): UEFA / FA coaching curriculum summaries;
+FIFA Medical Assessment & Research Centre open summaries; peer-reviewed soccer kicking
+biomechanics reviews (Lees, Nunome, Barfield); IOC injury prevention consensus (load).
+
+================================================================================
+13. SOURCE PRIORITY
+================================================================================
+
+A+: FIFA/IFAB only for glossary; national FA medical bulletins for youth load
+A: Systematic reviews on kicking kinematics / kinetics (body-only claims)
+B+: UEFA, US Soccer, FA coaching framework (summarized mechanics)
+B: Reputable NGB skill manuals
+Exclude C from checkpoint thresholds.
+
+================================================================================
+14. BUILD ORDER
+================================================================================
+
+1. Schema + Taxonomy (brain stubs written)
+2. Docs/001–002, Phases/001
+3. Biomechanics/001
+4. Quality/001–002
+5. Findings/001, Coaching/001–002
+6. Training/001
+7. SOURCE_MANIFEST, research_notes, review_report, build_report
+
+================================================================================
+15. ACCEPTANCE CRITERIA (PACK v1)
+================================================================================
+
+- Every finding_id in section 9 has Findings card + cue + drill
+- Phase ids exactly: approach, plant_prep, plant, backswing, forward_swing, contact_proxy, follow
+- No ball flight / spin / speed dependency anywhere in checkpoints
+- Instep drive and side-foot pass both represented in taxonomy and ≥4 findings each
+- Youth/adult separation in Biomechanics/001
+
+End brain_plan v0.1

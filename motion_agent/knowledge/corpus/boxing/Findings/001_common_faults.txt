@@ -1,0 +1,331 @@
+# Boxing Shadowboxing — Common Faults (finding cards)
+# Canonical v2. Scope: NON-CONTACT shadow form only — no sparring or partner contact.
+# Guard/chin language is posture and habit only — not concussion protection. See Docs/002_DISCLAIMER.txt.
+
+---
+
+finding_id: fault_hands_drop
+headline_en: Hands fall below guard between or during strikes
+phases: guard, recovery, extension
+body_signal: Either wrist below navel height proxy for ≥4 frames between E_EXTENSION_PEAK events or during slip when hands should stay high.
+why_it_matters: Open guard habits in shadow often carry into mitt work; coaching syllabi emphasize consistent guard (performance habit — not injury prediction).
+feel_cue: "Cheek to cheek — both phones ringing, keep them at your face."
+drill: 60s guard march: small steps, hands at cheeks; coach calls random numbers; athlete taps own cheek without dropping hands.
+severity_default: medium
+sources: Amateur boxing coach education guard modules (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_arm_only_punch
+headline_en: Cross or hook fires from the shoulder without hip or weight shift
+phases: prep, extension
+body_signal: E_EXTENSION_PEAK on rear hand with pelvis yaw rate near zero and COM lateral shift below threshold vs prep window.
+why_it_matters: Biomechanics literature links lower-limb and trunk drive to hand speed; arm-only shadow patterns limit sequencing transfer (performance).
+feel_cue: "Push the floor with the ball of your back foot — let the hip start the punch."
+drill: 75s shadow cross slow-mo: 50% speed, freeze at hip turn then hand; 8 reps each side filmed oblique.
+severity_default: medium
+sources: Punching kinematics reviews (B+); coach-education sequencing (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_elbow_flare_straight
+headline_en: Elbow wings outward on the jab or cross
+phases: extension, drive
+body_signal: Striking elbow lateral to wrist-shoulder line in oblique view at E_EXTENSION_PEAK; upper arm abduction increased vs guard.
+why_it_matters: Wide elbow path can expose ribs in real exchange and reduces straight-line stability; common fundamentals correction (coaching).
+feel_cue: "Elbow rides the lane — punch through a narrow tunnel in front of your chest."
+drill: 45s wall lane: stand sideways near wall; jab/cross shadow staying inside imaginary lane.
+severity_default: medium
+sources: Boxing fundamentals manuals summarized (B); straight punch kinematics (B+)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_hook_arm_extended
+headline_en: Hook thrown with a straight arm like a slap
+phases: extension
+body_signal: Elbow flexion at E_EXTENSION_PEAK above ~160° (camera-dependent; use relative change vs prep).
+why_it_matters: Bent-elbow hook structure is standard teaching for shoulder-friendly arc (coaching); overextended hooks change load pattern (not medical claim).
+feel_cue: "Bend the phone — hook around the corner at ninety, not a windmill."
+drill: 60s hook freeze: extend to hook peak, pause 1 count checking elbow bent, recoil to guard; 6 per hand.
+severity_default: medium
+sources: Coach-education hook progressions (B); hook vs straight comparisons (B+)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_slow_recoil
+headline_en: Hand stays extended after the punch peak
+phases: recoil, recovery
+body_signal: Time from E_EXTENSION_PEAK to guard band > ~500 ms at 60 fps; wrist speed stays elevated without returning.
+why_it_matters: Slow recoil in shadow reduces realistic defensive rhythm and combo reset taught in amateur progressions.
+feel_cue: "Snap back like a rubber band — out fast, home faster."
+drill: 90s double-tap guard: one jab, recoil touch guard before cross; metronome 70 BPM; 10 cycles.
+severity_default: medium
+sources: Shadowboxing routine syllabi (B); coaching combo timing (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_wide_recoil
+headline_en: Hand loops wide on the way back to guard
+phases: recoil
+body_signal: Wrist path lateral deviation during recoil exceeds threshold vs straight retract line; elbow abducted on return.
+why_it_matters: Wide returns telegraph next punches and open the center line in coaching models (performance).
+feel_cue: "Shortest road home — elbow drops first, hand follows your chest."
+drill: 45s recoil-only: from full extension without impact, pull hand straight to cheek.
+severity_default: low
+sources: Fundamentals coaching (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_feet_crossed
+headline_en: Feet cross during stance or step
+phases: stance, footwork, prep
+body_signal: Lead foot crosses past rear midline during prep or step; ankles stack in frontal view.
+why_it_matters: Crossed feet reduce base and delay recovery in footwork teaching (coaching).
+feel_cue: "Feet on two rails — never cross the tracks."
+drill: 60s railroad steps: tape two parallel lines; shadow move without crossing.
+severity_default: medium
+sources: Footwork fundamentals (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_narrow_stance
+headline_en: Stance too narrow for balance
+phases: stance
+body_signal: Medial-lateral ankle separation < ~0.65× shoulder width with unstable sway.
+why_it_matters: Athletic base supports weight transfer and balance in shadow (coaching).
+feel_cue: "Bounce-ready legs — athletic width, not a tightrope."
+drill: 45s stance holds: set width, bounce lightly, check ankles under hips.
+severity_default: medium
+sources: Coaching consensus (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_stiff_legs
+headline_en: Legs locked straight in stance
+phases: stance, guard
+body_signal: Knees locked straight with upright rigid posture; little knee flex variance.
+why_it_matters: Soft knees support movement readiness and hip drive (coaching).
+feel_cue: "You are on springs, not stilts — soft knees."
+drill: 60s bounce guard: micro-bounce in place with hands high; 3×20 s.
+severity_default: medium
+sources: Coaching consensus (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_over_lead_weight
+headline_en: Weight stuck over the lead toe
+phases: stance
+body_signal: COM over lead toe with rear heel high before any step.
+why_it_matters: Centered weight allows jab step or shift without diving (coaching).
+feel_cue: "Weight in the middle — slight lead bias OK, not a dive."
+drill: 45s weight rock: shift 60/40 lead-rear without losing guard; film side.
+severity_default: low
+sources: Coaching (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_elbows_flared
+headline_en: Elbows flare wide in guard
+phases: guard
+body_signal: Elbows markedly abducted with open ribs in frontal/oblique view at E_GUARD_STABLE.
+why_it_matters: Elbows-in guard is standard for covering the midsection in shadow habits (coaching).
+feel_cue: "Elbows soft on the ribs — shell up, not a T-pose."
+drill: 60s mirror guard: set elbows in, hold while nodding; 5 holds.
+severity_default: medium
+sources: Amateur guard modules (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_chin_up
+headline_en: Chin lifts during guard or extension
+phases: guard, extension
+body_signal: Head tilted up exposing neck line during strike peak or guard; chin away from sternum proxy.
+why_it_matters: Chin-tuck language is posture and balance only — not concussion protection (see Docs/002_DISCLAIMER).
+feel_cue: "Chin tucked — see the room from under your eyebrows."
+drill: 60s mirror guard holds with slow nod yes/no without lifting chin.
+severity_default: medium
+sources: Amateur boxing guard modules (B+ safety coaching consensus)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_reaching_jab
+headline_en: Jab reaches with lean and lost base
+phases: prep, footwork
+body_signal: Large forward trunk lean without foot adjustment; COM projects ahead of lead ankle at jab peak.
+why_it_matters: Distance management via small step or weight shift is preferred over diving (coaching).
+feel_cue: "Distance from the floor — step small or shift weight, don't dive with your head."
+drill: 75s jab step ladder: short marks; jab with or without small step keeping upright stack.
+severity_default: medium
+sources: Jab mechanics coaching (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_tense_shoulders
+headline_en: Shoulders shrug and tense before the punch
+phases: prep
+body_signal: Exaggerated shrug before extension; lead shoulder pinned toward ear.
+why_it_matters: Relaxed shoulders support fluid extension and reduce early fatigue in shadow rounds (coaching).
+feel_cue: "Punch on the exhale — tight core, loose shoulders."
+drill: 45s shoulder drops: set guard, exhale drop shoulders, then jab; 10 reps.
+severity_default: low
+sources: Coaching (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_rear_hand_drop_on_jab
+headline_en: Rear hand drops during the jab
+phases: extension
+body_signal: Rear hand drops to waist during jab peak; non-striking wrist leaves guard zone.
+why_it_matters: Beginner models keep rear hand at cheek during jab (coaching habit).
+feel_cue: "Rear hand stays on the phone while the jab stings."
+drill: 60s jab with rear fist glued to cheek; film oblique; 12 jabs.
+severity_default: medium
+sources: Fundamentals (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_flat_rear_foot_cross
+headline_en: Rear foot stays flat blocking hip turn on the cross
+phases: prep, extension
+body_signal: Planted flat rear foot with forced trunk twist only; rear heel does not lift/pivot on power straight.
+why_it_matters: Rear heel hinge allows hip rotation into the cross (B+ sequencing).
+feel_cue: "Back heel is a hinge — open it so the hip can speak."
+drill: 75s cross with freeze at peak checking rear heel up and belt toward target; 8 reps.
+severity_default: medium
+sources: Punching kinematics (B+); coach education (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_combo_without_guard
+headline_en: Next punch starts before hands return to guard
+phases: recovery, prep
+body_signal: E_PREP_START for punch N+1 before E_GUARD_STABLE after punch N peak in beginner combo tag.
+why_it_matters: Beginner syllabi teach reset between punches before speed; advanced flow differs — respect skill tag.
+feel_cue: "Touch home base — every punch visits the guard hotel."
+drill: 90s 1-2-reset: jab-cross, full guard pause 1 count, repeat; 8 sequences.
+severity_default: medium
+sources: Combination teaching progressions (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_arm_only_uppercut
+headline_en: Uppercut swings from the arm without leg drive
+phases: prep, extension
+body_signal: Wrist vertical rise at peak without knee extension or hip rise proxy in same window.
+why_it_matters: Uppercuts in coaching models load from legs and trunk rotation (B+ summaries).
+feel_cue: "Lift from the knees — the fist rides the elevator from the floor."
+drill: 45s squat-uppercut shadow: slight knee bend then extend as hand rises; slow; 6 each hand.
+severity_default: medium
+sources: Hook/uppercut mechanics summaries (B+); coaching (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_overstep
+headline_en: Footwork steps are too long and lunging
+phases: footwork
+body_signal: Lead ankle displacement per E_STEP_START > ~1.2× shoulder width.
+why_it_matters: Oversteps delay recovery and mimic reaching in ring movement drills (coaching footwork).
+feel_cue: "Steal a small step — cat feet, not giraffe legs."
+drill: 60s short step ladder: tape marks 30 cm apart; shadow move mark to mark with guard up.
+severity_default: medium
+sources: Footwork fundamentals (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_hands_drop_on_slip
+headline_en: Hands drop during a slip
+phases: extension
+body_signal: E_SLIP_PEAK with either wrist below sternum.
+why_it_matters: Defensive drills keep guard active while head moves (coaching habit).
+feel_cue: "Head moves, hands stay — slip behind the windshield wipers."
+drill: 45s slip-rope shadow: imagined rope; slip L/R without hand drop; slow tempo.
+severity_default: medium
+sources: Defensive skill progressions (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_stiff_roll
+headline_en: Roll bends only at the waist with straight legs
+phases: prep, extension
+body_signal: Trunk flexion with minimal knee flex change during roll motion.
+why_it_matters: Legs-soft rolls are standard teaching for balance and smooth return to stance (coaching).
+feel_cue: "Roll through the knees — circle under the bar, not fold at the belt."
+drill: 60s knee-soft roll shadow: half-speed rolls with visible knee bend; 6 each direction.
+severity_default: medium
+sources: Defensive fundamentals (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_lateral_leak_punch
+headline_en: Hips sway sideways without purposeful pivot on power punches
+phases: prep, extension
+body_signal: COM lateral displacement opposite to punch side without matching pelvis yaw toward target side.
+why_it_matters: Sway can indicate balance leak versus rotation; coaching seeks rotation around base (performance).
+feel_cue: "Turn the corner of the hips — don't surf side to side."
+drill: 75s belt-line focus: tape line on floor; hips rotate over line while shadowing crosses.
+severity_default: medium
+sources: Trunk rotation coaching (B+); kinematics summaries (B+)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_double_load_same_side
+headline_en: Repeated hard rear-hand punches without resetting base
+phases: recovery, prep
+body_signal: Two rear-hand E_EXTENSION_PEAK within 400 ms with COM not re-centering between peaks.
+why_it_matters: Beginners may lose form stacking power shots — coaching suggests reset (B).
+feel_cue: "One ticket per turn — reset the feet, then throw again."
+drill: 60s alternate power: one cross, recover fully, one hook, recover.
+severity_default: low
+sources: Combo discipline drills (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_incomplete_hip_rotation
+headline_en: Cross or hook finishes with incomplete hip rotation
+phases: prep, extension, drive
+body_signal: Pelvis yaw toward punch side at E_EXTENSION_PEAK below baseline while rear-hand wrist speed peaks; rear heel stays flat.
+why_it_matters: Shadow power sequencing links hip rotation to hand speed and shoulder-friendly mechanics (performance — not contact advice).
+feel_cue: "Turn the belt buckle to the target — rear heel kisses up as the fist arrives."
+drill: 75s slow-mo cross: freeze at peak checking belt facing target and rear heel up; 8 reps each side.
+severity_default: medium
+sources: Punching kinematics reviews (B+); amateur coach-education sequencing (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_guard_chin_gap
+headline_en: Chin sits high with a gap above the rear fist in guard
+phases: guard, recovery
+body_signal: Head pitch elevated AND rear wrist below chin band for ≥6 frames at E_GUARD_STABLE.
+why_it_matters: Guard posture cues keep hands framing the face for balance and habit in shadow — posture only, not head-injury protection (see disclaimer).
+feel_cue: "Nest the chin — rear fist under cheekbone, eyes under brows."
+drill: 60s mirror guard holds: set guard, nod yes/no slowly without lifting chin or dropping hands; 5 holds.
+severity_default: medium
+sources: Amateur boxing guard modules (B); posture coaching (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_telegraph_windup
+headline_en: Large wind-up loops telegraph the punch in shadow
+phases: prep, extension
+body_signal: Striking wrist path length before E_EXTENSION_START exceeds threshold; elbow retracts markedly behind trunk before forward motion.
+why_it_matters: Compact prep is standard fundamentals teaching for timing and shoulder economy in non-contact shadow.
+feel_cue: "Short load — punch from the pocket, not from behind your ear."
+drill: 45s pocket jab/cross: hands leave guard ≤15 cm then extend; 10 each.
+severity_default: low
+sources: Boxing fundamentals summarized (B)
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.
+---
+
+finding_id: fault_shoulder_line_opens
+headline_en: Lead shoulder flies open early on the jab
+phases: prep, extension
+body_signal: Lead shoulder yaw opens toward target > pelvis yaw early in jab; rear hand may drop as torso squares.
+why_it_matters: Keeping a quieter lead shoulder with rear hand home is common shadow coaching for balanced stance.
+feel_cue: "Jab from a closed door — shoulder stays quiet, rear hand stays on the phone."
+drill: 60s jab with rear fist glued to cheek; film oblique; 12 jabs.
+severity_default: medium
+sources: Jab mechanics coaching (B); trunk–shoulder sequencing summaries (B+)
+
+# Severity: medium default for guard/chin/hip-rotation; no contact claims.
+# Youth: slower tempo; emphasize guard reset and no windmill hooks.
+youth_note: Guard and chin habits; reset between punches — no power-volume prescriptions.

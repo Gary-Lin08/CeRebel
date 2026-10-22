@@ -1,0 +1,163 @@
+# CeRebel Human (General Motion) KB — Brain Plan (v0.1)
+# Agent: BRAIN | Corpus sport id: human | Product pack id: general (HumanMotionPack)
+# Aligns: SPORT_PACK_KB_SPEC.txt
+# Product: body-first fallback coaching when no sport pack matches
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for **sport-agnostic human motion** from monocular or multi-view body capture.
+Analysis emphasizes posture stack (head–rib–pelvis), balance, limb–torso coordination, and prep → action →
+recover timing visible on the skeleton.
+
+In scope v1:
+- Standing, stepping, squatting, lunging, reaching, jump/throw prep patterns
+- 14 finding cards with cues and drills
+- Cross-link measurement policy to sibling opensim_motion_tools.txt
+
+Out of scope v1:
+- Medical diagnosis, pathology naming, rehab protocols
+- Sport-specific technique optima (defer to sport packs when matched)
+- Implement / ball tracking
+
+Build agent writes Findings/Coaching bodies from this map.
+
+================================================================================
+2. PRODUCT CONSTRAINTS
+================================================================================
+
+- Measurable claims tie to reconstructed body or OpenSim tool series when available.
+- Phase scrub bar uses seven phase IDs below (stable contract for HumanMotionPack enhancements).
+- Each finding maps to: phase window, series_id, feel cue, 30–90s drill.
+- Youth vs adult: widen asymmetry and stack bands for youth checkpoints.
+- Authority A/A+ for public health pain red flags; B+ for postural control and knee alignment themes;
+  B for cues/drills; no C in automated thresholds.
+
+================================================================================
+3. PHASE MODEL (ONE MOVEMENT REP)
+================================================================================
+
+Phase IDs (exact — for Phases/001_phase_model.txt):
+
+| id              | label_en        | role |
+|-----------------|-----------------|------|
+| setup           | Setup / Ready   | Organized stack, weight balanced |
+| prep            | Preparation     | Wind-up, eccentric, counter-movement |
+| load            | Load / Transfer | Weight acceptance, COM over base |
+| action          | Action          | Peak effort, max segment speeds |
+| follow_through  | Follow-through  | Deceleration, finish path |
+| recover         | Recovery        | Return toward neutral stack |
+| reset           | Reset           | Ready for next rep |
+
+Event definitions (body-only):
+
+- setup_event (E_SETUP): pelvis speed minimal or clip start.
+- prep_end_event (E_PREP_END): max eccentric flexion or COM backward velocity minimum before action.
+- action_peak_event (E_ACTION_PEAK): max wrist/ankle speed or extension velocity peak.
+- recover_end_event (E_RECOVER_END): stack variance returns toward setup band.
+
+Handedness / side: findings tag side=left|right|bilateral where applicable.
+
+================================================================================
+4. MEASUREMENT SURFACE (FUTURE CODE ↔ KB)
+================================================================================
+
+| series_id           | signal                              | unit   | primary phases      |
+|---------------------|-------------------------------------|--------|---------------------|
+| stack_alignment     | head–shoulder–pelvis proxy deviation| norm   | setup, action       |
+| head_forward        | head ant. to shoulder–pelvis line   | °/ratio| setup, recover      |
+| pelvis_tilt         | sagittal tilt proxy                 | °      | setup, load         |
+| pelvis_obliquity    | frontal hip height difference       | °      | load                |
+| ribcage_angle       | thorax vs pelvis anterior angle     | °      | load, action        |
+| com_sway            | lateral COM path single-leg         | cm*    | load                |
+| com_over_base       | COM projection over support foot      | ratio  | prep, load          |
+| knee_valgus         | frontal knee vs hip–ankle line        | °/bool | load, action        |
+| hip_vs_lumbar_flex  | flexion share hips vs lumbar        | ratio  | prep, load          |
+| shoulder_height     | \|Y_L - Y_R\| at shoulders          | cm*    | setup               |
+| limb_rom            | peak wrist/ankle ROM L vs R           | °      | action              |
+| prep_action_ratio   | prep duration / to action peak        | ratio  | prep                |
+| thorax_pelvis_yaw   | relative rotation mismatch            | °      | prep, action        |
+
+* scale-normalized when absolute meters unknown; prefer OpenSim COM when tools enabled.
+
+================================================================================
+5. EVIDENCE-BANDED NORMS (NOT MEDICAL PRESCRIPTION)
+================================================================================
+
+ADULT (authority mostly B+ / B):
+
+- Stack: moderate deviation at setup triggers posture_stack_break only when load/action worsens OR sustained gross deviation.
+- Forward head: sagittal proxy beyond conservative band — educational, not cervical diagnosis.
+- Knee valgus: flag only frontal/oblique confidence; neuromuscular training themes B+.
+- Balance sway: top quartile vs self-baseline on single-leg task when ≥2 trials in clip.
+
+YOUTH (U14):
+
+- Widen shoulder_height and stack checkpoints (cp_*_youth rows in Quality/002).
+- Do not apply adult FHP shaming language.
+
+================================================================================
+6. FINDING ID MAP (14)
+================================================================================
+
+forward_head | posture_stack_break | ribcage_flare_anterior | pelvis_anterior_tilt_excess
+lateral_pelvis_drop | knee_valgus_visible | stiff_spine_no_hip_hinge
+single_leg_balance_wobble | insufficient_weight_shift | excessive_lateral_lean
+shoulder_height_asymmetry | limb_rom_asymmetry | rushed_prep | incomplete_recover | arms_fight_torso
+
+Each has: Findings card, Coaching cue block, Coaching drill block, ≥1 checkpoint in Quality/002.
+
+================================================================================
+7. CHECKPOINT MAP
+================================================================================
+
+See Quality/002_checkpoints.txt — 17 rows including 2 youth variants.
+
+================================================================================
+8. ONTOLOGY & TAXONOMY
+================================================================================
+
+Schema/001_ontology.txt — human: namespace, phases, series, opensimTools cross-ref.
+Taxonomy/001_concepts.txt — concepts + synonyms for RAG expansion.
+Taxonomy/002_relations.txt — precedes, occursIn, failTriggers edges.
+
+================================================================================
+9. CORPUS CROSS-LINKS
+================================================================================
+
+SOURCE_MANIFEST must list:
+  opensim_motion_tools → motion_agent/knowledge/corpus/opensim_motion_tools.txt
+
+Architecture Docs/001 references sibling file for coordinates and SMPL-X naming.
+
+================================================================================
+10. PRODUCT CODE ALIGNMENT
+================================================================================
+
+motion_agent/sports/packs/human.py — HumanMotionPack id=general, status live, fallback detect matched=False.
+Future: wire finding_id in build_briefs from checkpoint engine.
+
+Sport packs take precedence when detect matched=True with higher confidence.
+
+================================================================================
+11. RAG CHUNKING HINTS
+================================================================================
+
+Metadata: sport=human, product_pack=general, finding_id, phase_id, authority_level.
+Repeat finding slugs across Findings + Coaching + Taxonomy relations.
+Exclude _meta/ from coaching index (spec default).
+
+================================================================================
+12. ACCEPTANCE (build agent)
+================================================================================
+
+[x] All spec directories and files present
+[x] 14 findings with cue + drill
+[x] Phase ids consistent across Phases, Schema, brain_plan, checkpoints
+[x] Disclaimer in Docs/002
+[x] opensim_motion_tools in SOURCE_MANIFEST
+[x] pack_readme status content build complete
+[x] build_report.txt with line counts
+
+End brain_plan

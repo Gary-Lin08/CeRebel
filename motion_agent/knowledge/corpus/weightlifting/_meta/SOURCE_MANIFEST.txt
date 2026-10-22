@@ -1,0 +1,47 @@
+# Weightlifting Sport Pack — Source Manifest
+# Retrieved / summarized: 2026-10-21
+# Format: id | title | authority | license / access | url | used_in
+
+wl_nsca_guidelines
+  title: NSCA resistance training and exercise technique guidance (squat, DL, press summaries)
+  authority: B
+  access: public web / professional publications
+  url: https://www.nsca.com
+  used_in: Training/, Coaching/, Quality/
+
+wl_acsm_position
+  title: ACSM position stand — progression models and health aspects of resistance training
+  authority: A
+  access: journal / ACSM public summaries
+  url: https://www.acsm.org
+  used_in: Docs/002_DISCLAIMER, Biomechanics/001, Training/
+
+wl_squat_biomech_reviews
+  title: Open-access systematic reviews on squat kinematics and kinetics
+  authority: B+
+  access: PubMed / PMC open access articles (summarized, not verbatim)
+  url: https://pubmed.ncbi.nlm.nih.gov (search: squat biomechanics review)
+  used_in: Biomechanics/, Findings/ (squat faults)
+
+wl_deadlift_biomech
+  title: Deadlift kinematics and spinal loading literature (McGill, Cholewicki, subsequent reviews)
+  authority: B+
+  access: journals / author summaries
+  url: https://pubmed.ncbi.nlm.nih.gov (search: deadlift biomechanics)
+  used_in: Biomechanics/, Findings/ (DL faults)
+
+wl_ohp_biomech
+  title: Standing overhead / shoulder press kinematics studies
+  authority: B+
+  access: open research summaries
+  url: https://pubmed.ncbi.nlm.nih.gov (search: overhead press biomechanics)
+  used_in: Biomechanics/, Findings/ (OHP faults)
+
+wl_internal_product
+  title: CeRebel SPORT_PACK_KB_SPEC, basketball/baseball pack patterns
+  authority: Internal B
+  access: repo corpus/_templates
+  used_in: Docs/001_ARCHITECTURE, Phases/
+
+# No copyrighted federation rulebooks pasted at length.
+# Future: USAPL / IPF technique guides as B sources with URL + short summary only.

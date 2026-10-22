@@ -1,0 +1,37 @@
+# Volleyball coaching knowledge — disclaimer (CeRebel)
+
+## Not medical advice
+
+Content in this sport pack is for **education and movement awareness** only. It is not medical advice, physical
+therapy, or a substitute for evaluation by a licensed clinician, athletic trainer, or physician.
+
+Stop activity and seek professional care if you have pain, swelling, instability, numbness, or symptoms that worsen
+with jumping or overhead hitting.
+
+## Monocular and pose-reconstruction limits
+
+CeRebel infers body motion from video and biomechanical models. Joint angles and speeds are **estimates** affected by
+camera angle, clothing, occlusion, frame rate, and model error. Do not use app output to diagnose shoulder impingement,
+ACL injury, or other conditions.
+
+## Contact and ball position
+
+Without ball tracking, "contact" in this pack means a **hitting-hand speed peak proxy**, not verified ball touch.
+Coaching about "jumping under the ball" is expressed as timing between center-of-mass motion and arm swing — a
+heuristic that may differ from true ball-relative contact.
+
+## Youth athletes
+
+Growth plates and fatigue sensitivity matter in volleyball jump volume. Youth-specific bands in this pack are
+coaching references, not league rules. Follow your national federation and school/club policies for practice load,
+and consult qualified coaches for progression.
+
+## Evidence and thresholds
+
+Numeric checkpoints are **coaching heuristics** derived from open literature and federation coaching summaries (see
+SOURCE_MANIFEST). They are not universal standards for every body type, skill level, or playing surface (indoor vs beach).
+
+## Emergency
+
+This product does not handle on-court emergencies. Follow venue safety protocols for head injury, cardiac events, or
+severe acute injury.

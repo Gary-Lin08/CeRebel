@@ -1,0 +1,115 @@
+# Volleyball Team Practice — Body-First Coaching Patterns (v1)
+
+Purpose: How coaches use CeRebel phase scrub + one-main-fix UX in team settings without ball tracking.
+Audience tags: youth vs adult load pointers; not league rule replacements.
+
+---
+
+## 1. Capture setup for useful briefs
+
+**Camera**
+- Side or 45° to approach lane; full body from ready through landing in frame.
+- 60 fps preferred for COM–wrist timing checkpoints.
+- Avoid shooting only from behind baseline (hides knee flexion).
+
+**Session tagging**
+- step_pattern: 3 | 4
+- variant: attack | serve
+- ageBand: youth | adult
+- surface: indoor | beach (softens COM thresholds)
+
+**Partner positioning**
+- During hitting lines, diggers off camera lane reduce occlusion.
+- Jump serve: capture from side; toss may occlude arm — still usable for takeoff/landing.
+
+---
+
+## 2. Warm-up (10–15 min) — movement quality before volume
+
+- Dynamic ankle/knee/hip (leg swings, lunges, inchworms).
+- **Shadow approaches** × 6 each athlete: no ball, focus rhythm penultimate→plant.
+- **Soft landing sticks** × 5: links to landing-stiff finding prevention (not injury guarantee).
+
+Youth: shorter warm-up jumps; no max-effort plyo before age-appropriate progression (Volleyball Canada LTAD themes, B).
+
+---
+
+## 3. Skill block — approach footwork (15 min)
+
+Structure:
+1. Coach demo 3-step and 4-step on same phase scrub labels (ready→landing).
+2. Athletes walk-through last two steps only (penultimate-flat, soft-plant drills).
+3. Add arm swing; record 1 clip each; review one finding in app.
+
+**One-main-fix rule**: Pick highest-severity finding aligned to team goal (e.g. COM timing day → jump-behind-contact cues only).
+
+Adults: add approach speed build with cone depth.
+Youth: emphasize rhythm and plant bend over absolute speed.
+
+---
+
+## 4. Hitting line integration (20–30 min)
+
+Traditional hitting line with setter; CeRebel adds parallel **shadow lane**:
+- Every third rotation: shadow approach + jump without ball for clean kinematics.
+- When using live sets, expect noisier COM–wrist timing — coach notes set tempo in metadata.
+
+Volume guidance (summarized — verify live NGB/LTAD):
+- Youth: limit consecutive max jumps; rotate shadow vs live hits; more water breaks.
+- Adult club: periodize jump-heavy days vs serve-receive focused days.
+
+Do not reproduce copyrighted pitch-count-style tables; point coaches to federation LTAD pages in SOURCE_MANIFEST.
+
+---
+
+## 5. Jump serve segment (10 min, optional)
+
+- Progression: standing serve → approach serve without jump → full jump serve.
+- Body-only feedback on leg-then-strike sequencing (jump-early-reach, arm-only-swing).
+- Toss quality coached traditionally; app does not score toss.
+
+---
+
+## 6. Block and pass (glossary practice — no v1 automated findings)
+
+- Block jumps: film for future pack; use general landing-soft cues.
+- Pass platform: shoulder angle and hip hinge coached manually; taxonomy concept forearm_pass only.
+
+---
+
+## 7. Cool-down (5–8 min)
+
+- Walk court edges; static calf/hip flexor brief holds.
+- Team review: one phase label quiz (what happens in `plant` vs `takeoff`?) reinforces RAG vocabulary.
+
+---
+
+## 8. Weekly structure example (high school club)
+
+| Day | Emphasis | CeRebel focus |
+|-----|----------|---------------|
+| Mon | Serve + pass | serve variant timing |
+| Tue | Approach footwork | penultimate, plant checkpoints |
+| Wed | Off or lift | — |
+| Thu | Hit lines | COM–wrist timing |
+| Fri | Scrimmage | landing absorption spot checks |
+
+Adjust for tournament weeks — reduce max-effort jump rep targets.
+
+---
+
+## 9. Using phase scrub in film review
+
+1. Scrub to `plant` — check knee flex together as team.
+2. Scrub to `contact` — note wrist peak frame vs `takeoff` COM rise in timeline overlay (when UI available).
+3. Assign drill from Coaching/002 matching single finding; re-record 3 reps.
+
+---
+
+## 10. Safety and inclusion
+
+- Pain → remove from jump lines; clinician evaluation.
+- Athletes with prior ACL reconstruction: follow medical clearance; app does not clear athletes.
+- Mixed skill groups: pair by approach pattern not jump height to reduce comparison anxiety.
+
+Sources: USA Volleyball coaching education themes (B); Volleyball Canada LTAD (B); ACSM youth activity context (A summary).

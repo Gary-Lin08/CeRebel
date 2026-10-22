@@ -1,0 +1,378 @@
+# Weightlifting — Concept Relations (v0.1)
+# Aligns: brain_plan phase IDs, Schema/001_ontology.txt
+
+## Lift family → phase membership
+
+relation: has_phase
+subject: lift_family_squat
+object: phase_sq_setup
+
+relation: has_phase
+subject: lift_family_squat
+object: phase_sq_brace
+
+relation: has_phase
+subject: lift_family_squat
+object: phase_sq_descent
+
+relation: has_phase
+subject: lift_family_squat
+object: phase_sq_bottom
+
+relation: has_phase
+subject: lift_family_squat
+object: phase_sq_ascent
+
+relation: has_phase
+subject: lift_family_squat
+object: phase_sq_lockout
+
+relation: has_phase
+subject: lift_family_squat
+object: phase_sq_rerack
+
+relation: has_phase
+subject: lift_family_hinge
+object: phase_dl_setup
+
+relation: has_phase
+subject: lift_family_hinge
+object: phase_dl_brace
+
+relation: has_phase
+subject: lift_family_hinge
+object: phase_dl_break
+
+relation: has_phase
+subject: lift_family_hinge
+object: phase_dl_knee_pass
+
+relation: has_phase
+subject: lift_family_hinge
+object: phase_dl_lockout
+
+relation: has_phase
+subject: lift_family_hinge
+object: phase_dl_lower
+
+relation: has_phase
+subject: lift_family_hinge
+object: phase_dl_reset
+
+relation: has_phase
+subject: lift_family_press
+object: phase_pr_setup
+
+relation: has_phase
+subject: lift_family_press
+object: phase_pr_unrack
+
+relation: has_phase
+subject: lift_family_press
+object: phase_pr_eccentric
+
+relation: has_phase
+subject: lift_family_press
+object: phase_pr_drive
+
+relation: has_phase
+subject: lift_family_press
+object: phase_pr_lockout
+
+relation: has_phase
+subject: lift_family_press
+object: phase_pr_rerack
+
+## Squat phase ordering (strict)
+
+relation: precedes
+subject: phase_sq_setup
+object: phase_sq_brace
+
+relation: precedes
+subject: phase_sq_brace
+object: phase_sq_descent
+
+relation: precedes
+subject: phase_sq_descent
+object: phase_sq_bottom
+
+relation: precedes
+subject: phase_sq_bottom
+object: phase_sq_ascent
+
+relation: precedes
+subject: phase_sq_ascent
+object: phase_sq_lockout
+
+relation: precedes
+subject: phase_sq_lockout
+object: phase_sq_rerack
+
+## Hinge phase ordering (strict)
+
+relation: precedes
+subject: phase_dl_setup
+object: phase_dl_brace
+
+relation: precedes
+subject: phase_dl_brace
+object: phase_dl_break
+
+relation: precedes
+subject: phase_dl_break
+object: phase_dl_knee_pass
+
+relation: precedes
+subject: phase_dl_knee_pass
+object: phase_dl_lockout
+
+relation: precedes
+subject: phase_dl_lockout
+object: phase_dl_lower
+note: optional if eccentric not in clip
+
+relation: precedes
+subject: phase_dl_lower
+object: phase_dl_reset
+
+## Press phase ordering (strict)
+
+relation: precedes
+subject: phase_pr_setup
+object: phase_pr_unrack
+
+relation: precedes
+subject: phase_pr_unrack
+object: phase_pr_eccentric
+
+relation: precedes
+subject: phase_pr_eccentric
+object: phase_pr_drive
+
+relation: precedes
+subject: phase_pr_drive
+object: phase_pr_lockout
+
+relation: precedes
+subject: phase_pr_lockout
+object: phase_pr_rerack
+
+## Event anchoring
+
+relation: marks
+subject: event_sq_bottom
+object: phase_sq_bottom
+
+relation: marks
+subject: event_sq_lockout
+object: phase_sq_lockout
+
+relation: detected_by
+subject: event_sq_bottom
+object: series_knee_flex_bilateral
+rule: argmax mean(knee_angle_l, knee_angle_r) in rep window
+
+relation: detected_by
+subject: event_dl_break_floor
+object: series_pelvis_height
+fallback: hand vertical velocity peak after stillness
+
+relation: detected_by
+subject: event_pr_drive_peak
+object: series_elbow_flex_bilateral
+note: paired with hand vertical velocity proxy
+
+## Safety gates (block form coaching)
+
+relation: blocks
+subject: finding_safety_pain_stop
+object: finding_sq_good_morning
+
+relation: blocks
+subject: finding_safety_pain_stop
+object: finding_dl_lumbar_flexion
+
+relation: blocks
+subject: finding_safety_pain_stop
+object: finding_sq_knee_valgus
+
+relation: blocks
+subject: finding_safety_pain_stop
+object: finding_dl_hips_shoot
+
+relation: blocks
+subject: finding_safety_pain_stop
+object: finding_pr_excessive_arch
+
+relation: blocks_all_form_findings
+subject: concept safety_first_coaching
+object: finding_safety_pain_stop
+note: product evaluates safety gate first
+
+relation: precedes_in_ux
+subject: finding_safety_environment_unknown
+object: finding_sq_good_morning
+note: safety prompts before form findings in Coaching/001 order
+
+## Finding → phase affinity
+
+relation: manifests_in
+subject: finding_sq_good_morning
+object: phase_sq_ascent
+
+relation: manifests_in
+subject: finding_sq_knee_valgus
+object: phase_sq_ascent
+
+relation: manifests_in
+subject: finding_sq_heel_rise
+object: phase_sq_bottom
+
+relation: manifests_in
+subject: finding_sq_bounce_bottom
+object: phase_sq_bottom
+
+relation: manifests_in
+subject: finding_sq_depth_shallow
+object: phase_sq_bottom
+
+relation: manifests_in
+subject: finding_sq_rush_descent
+object: phase_sq_brace
+
+relation: manifests_in
+subject: finding_sq_rush_descent
+object: phase_sq_descent
+
+relation: manifests_in
+subject: finding_dl_lumbar_flexion
+object: phase_dl_break
+
+relation: manifests_in
+subject: finding_dl_lumbar_flexion
+object: phase_dl_knee_pass
+
+relation: manifests_in
+subject: finding_dl_hips_shoot
+object: phase_dl_break
+
+relation: manifests_in
+subject: finding_dl_hyperextension_lockout
+object: phase_dl_lockout
+
+relation: manifests_in
+subject: finding_pr_excessive_arch
+object: phase_pr_drive
+
+relation: manifests_in
+subject: finding_pr_incomplete_lockout
+object: phase_pr_lockout
+
+relation: manifests_in
+subject: finding_pr_elbow_flare
+object: phase_pr_drive
+
+relation: manifests_in
+subject: finding_lift_bilateral_asymmetry
+object: phase_sq_ascent
+
+relation: manifests_in
+subject: finding_lift_bilateral_asymmetry
+object: phase_dl_lockout
+
+## Checkpoint → finding (failTriggers seed)
+
+relation: fail_triggers
+subject: cp_sq_chest_hip_sync
+object: finding_sq_good_morning
+
+relation: fail_triggers
+subject: cp_sq_knee_tracking
+object: finding_sq_knee_valgus
+
+relation: fail_triggers
+subject: cp_dl_lumbar_neutral_break
+object: finding_dl_lumbar_flexion
+
+relation: fail_triggers
+subject: cp_dl_hip_shoulder_sync
+object: finding_dl_hips_shoot
+
+relation: fail_triggers
+subject: cp_pr_rib_pelvis_stack
+object: finding_pr_excessive_arch
+
+relation: fail_triggers
+subject: cp_safety_pain_gate
+object: finding_safety_pain_stop
+
+relation: fail_triggers
+subject: cp_sq_depth_band_adult
+object: finding_sq_depth_shallow
+
+relation: fail_triggers
+subject: cp_bilateral_symmetry
+object: finding_lift_bilateral_asymmetry
+
+## Series measured in phase (occursIn for observations)
+
+relation: primary_in
+subject: series_knee_flex_bilateral
+object: phase_sq_descent
+
+relation: primary_in
+subject: series_knee_flex_bilateral
+object: phase_sq_bottom
+
+relation: primary_in
+subject: series_lumbar_extension
+object: phase_dl_break
+
+relation: primary_in
+subject: series_lumbar_extension
+object: phase_pr_drive
+
+relation: primary_in
+subject: series_trunk_lean_proxy
+object: phase_sq_descent
+
+relation: primary_in
+subject: series_elbow_flex_bilateral
+object: phase_pr_eccentric
+
+relation: primary_in
+subject: series_elbow_flex_bilateral
+object: phase_pr_lockout
+
+## Cross-family shared concepts
+
+relation: applies_to
+subject: spinal_neutrality_proxy
+object: lift_family_squat
+
+relation: applies_to
+subject: spinal_neutrality_proxy
+object: lift_family_hinge
+
+relation: applies_to
+subject: bracing
+object: lift_family_squat
+
+relation: applies_to
+subject: bracing
+object: lift_family_hinge
+
+relation: applies_to
+subject: bracing
+object: lift_family_press
+
+relation: audience_modifier
+subject: audience_youth
+object: finding_sq_depth_shallow
+note: downgrade severity; no forced depth cues
+
+relation: audience_modifier
+subject: audience_youth
+object: finding_pr_excessive_arch
+note: mobility-safe cues only; no max-load arch fighting

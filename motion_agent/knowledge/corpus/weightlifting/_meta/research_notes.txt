@@ -1,0 +1,210 @@
+# weightlifting Sport Pack — Research Notes (search agent)
+# Product: CeRebel body-first coaching (OpenSim / visible joints; bar optional, no bar tracking required)
+# Retrieved: 2026-10-21
+# Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+0. SCOPE & EVIDENCE USE
+================================================================================
+
+- Pack covers: back/front/overhead squat patterns, conventional/sumo deadlift, and
+  Olympic-style snatch / clean & jerk progressions used in S&C (body-first phases).
+- Measurable on body: hip/knee/ankle flexion, trunk-tibia angle, lumbar neutrality,
+  shoulder/elbow/wrist in rack and overhead catch, split vs squat receiving stance.
+- Do NOT productize as medical load limits, 1RM prediction, or competition legality
+  (platform rules) without A+ rule citations and disclaimer.
+- Pooled lab cohorts (elite lifters, trained women, healthy adults) are not user-specific
+  targets; phrase findings as "typical in published cohorts."
+- Separate: powerlifting squat depth norms vs Olympic receiving squat vs clinical rehab squat.
+
+================================================================================
+1. FEDERATION — IWF (OLYMPIC WEIGHTLIFTING) A+
+================================================================================
+
+Authority A+ | License: © International Weightlifting Federation (TCRR); summarize only
+URL (current TCRR PDF): https://iwf.sport/wp-content/uploads/downloads/2025/11/IWF-TCRR-2025-as-of-05-November-2025.pdf
+Download hub: https://iwf.sport/downloads/
+
+Body-relevant competition definitions (not automated officiating):
+- Snatch: bar pulled in one motion to arms extended overhead; may recover from split or
+  squat; bar may slide along thighs; feet only may touch platform until recovery.
+- Clean & jerk: clean to shoulders/clavicles (not chest-before-stop); legs extended before
+  jerk; jerk to locked arms overhead; hook grip permitted.
+- "No lift" if bar does not pass knee height on unfinished attempt (2.4.2).
+- Product phase labels can mirror: pull from floor → turnover → catch → recovery → overhead
+  fixation (snatch/C&J) using visible joint events, not barbell weight.
+
+Coaching materials hub (open federation research summaries) B+
+URL: https://iwf.sport/coaching/
+License: IWF-hosted reports; no explicit CC on PDFs — short summaries + URL; do not bulk
+  republish PDF text in RAG chunks.
+
+IWF scientific reports (barbell trajectory / success factors):
+- 2018 WWC snatch kinematics (JWA/JISS): https://iwf.sport/wp-content/uploads/downloads/2026/01/2018-WWC_Scientific-Report-JAPAN.pdf
+- 2019 JWC snatch kinematics: https://iwf.sport/wp-content/uploads/downloads/2026/01/2019-JWC_Scientific-Report-JAPAN.pdf
+- 2020 success vs unsuccessful snatch (listed on coaching page; peer-reviewed twin):
+  Nagao et al., Sports Biomechanics 2020; DOI https://doi.org/10.1080/14763141.2020.1787498
+  PubMed: https://pubmed.ncbi.nlm.nih.gov/32894607/
+
+Key IWF/JISS report facts (2018–2019 snatch cohorts):
+- 2D sagittal bar end tracked (50–60 Hz); plate diameter 0.45 m scale reference.
+- Event labels A–F from bar height/velocity (e.g. max vertical velocity, max height).
+- Top performers vs bottom 30%: superior lifters often catch lower relative to bar peak;
+  backward bar displacement and timing differ by weight class in men’s snatch.
+- Reports intended as training reference trajectories for developing lifters, not individual
+  prescription.
+
+Nagao 2020 (successful vs frontward drop failures, same weight attempts):
+- Greater backward bar displacement turnover→catch (DxL) and peak backward bar velocity
+  (pVx-) in successful lifts; excessive backward COM lean in turnover linked to failures.
+- Maximum bar height (Dy1) did not differ between success and frontward drop failures in
+  that elite male sample.
+
+Additional reading links (IWF): https://iwf.sport/wp-content/uploads/downloads/2020/09/Coaching-additional-reading-links.pdf
+
+USA Weightlifting (NGB, USOPC) B — certification content is paid/membership; public pages only
+Level 1 overview: https://www.usaweightlifting.org/usaw-level-1-coaches-course
+Public course descriptor PDF: https://assets.contentstack.io/v3/assets/blteb7d012fc7ebef7f/bltdde4067071cd768c/649cb1f705ac385f0eaec148/USAW_L1_Info_Packet_for_CEUs_2020.pdf
+Facts for pack planning (not manual paste):
+- Five-stage teaching progressions for snatch and clean & jerk; prerequisites include
+  front squat, clean-grip deadlift, RDL, vertical jump competency checks.
+- Course materials live in USAW Learning Academy; no full downloadable manual — summarize
+  with links.
+
+================================================================================
+2. NSCA PUBLIC COACHING (S&C AUTHORITY B)
+================================================================================
+
+General license note: NSCA.com Kinetic Select excerpts are from Human Kinetics books
+(© Human Kinetics); NSCA Coach PDFs are © NSCA. Use coaching cues and phase names in
+original wording; no long verbatim paste. Public videos: site terms apply.
+
+Squat technique (stance, heels, head, depth cues):
+https://www.nsca.com/education/videos/bridge-series/bridge-optimizing-squat-technique/
+
+Deadlift exercise technique video:
+https://www.nsca.com/education/videos/exercise-technique-deadlift/
+
+Romanian deadlift (RDL) — starting position, hip hinge, bar close to body:
+https://www.nsca.com/education/articles/kinetic-select/romanian-deadlift-rdl/
+
+Lifting from floor safely (back squat setup, neutral spine, foot balance):
+https://www.nsca.com/education/articles/kinetic-select/anaerobic-and-muscle-endurance-development/
+
+Power snatch / power clean phase vocabulary (aligns with IWF pull phases):
+https://www.nsca.com/education/articles/kinetic-select/power-snatch/
+https://www.nsca.com/education/articles/kinetic-select/power-clean/
+
+NSCA Coach — clean progressions for S&C (open PDF on nsca.com):
+https://www.nsca.com/contentassets/d29cb11c8dd84c209dd8377fb3c71b3d/nsca-coach-10.1.1-integration-of-clean-variations-progressions-and-application.pdf
+Phases named: start, first pull, transition (second knee bend), second pull, triple
+extension, pull-under, catch, recovery. Pre-req tests: front squat rack, clean-grip
+deadlift, SLDL/RDL, countermovement jump.
+
+Olympic lifts in sport S&C (overview):
+https://www.nsca.com/education/articles/nsca-coach/implementing-olympic-style-weightlifting-in-strength-training-for-sport
+
+================================================================================
+3. SQUAT BIOMECHANICS — PUBMED / PMC (AUTHORITY A / B+)
+================================================================================
+
+3A. Clinical commentary — modifiable squat parameters (trunk, tibia, stance, depth)
+Straub & Powers, Int J Sports Phys Ther 2024 (PMC10987311)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC10987311/
+License: CC BY-NC 4.0 — non-commercial reuse with attribution; commercial RAG = summarize.
+Body-first relationships (for fault cards, not single "correct" angles):
+- Forward trunk ↑ hip flexion moment, ↓ knee flexion moment; upright trunk opposite.
+- Forward trunk via lumbar flexion vs hip hinge changes spinal load tolerance.
+- Forward tibia (dorsiflexion or heel lift) ↑ knee flexion moment / quadriceps demand.
+- Toes out ~30° ↓ knee valgus moment in reported studies; wide stance ↑ frontal-plane
+  knee/hip moments vs narrow in some protocols.
+- Deep squat limited by hip flexion; posterior pelvic tilt at end range couples lumbar flexion.
+- Trunk–tibia angle at peak knee flexion predicts hip- vs knee-extensor bias (Barrack et al.
+  cited): ~10° thresholds for bias classification in that model.
+
+3B. COM and joint coordination during parallel squat (healthy adults)
+Kasahara et al., J Hum Kinet 2024 (PMC11307177) | CC BY 4.0
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC11307177/
+- Ankle reaches max dorsiflexion earliest; knee motion correlates with squat depth; hip/ankle
+  relate to anteroposterior COM displacement in regression models.
+
+3C. Squat depth vs sagittal timing (60 participants, bodyweight)
+Zawadka et al., J Sports Sci Med 2020 (PMC7429430)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC7429430/
+License: PMC hosted; © journal — summarize with citation.
+- Knee ROM most correlated with depth (r≈0.92); earlier ankle/pelvis timing associated with
+  depth in that cohort.
+
+3D. Method reference (overhead squat — markerless validity, not coaching norms)
+Bae et al., PMC11603033 — useful for CeRebel measurement limits, not lift standards.
+
+================================================================================
+4. DEADLIFT BIOMECHANICS — PUBMED / PMC
+================================================================================
+
+4A. Conventional vs sumo (3D kinematics/kinetics/EMG, 85% 1RM, n=30 males)
+Hanen et al., Front Bioeng Biotechnol 2025 (PMC12148905) | CC BY 4.0
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC12148905/
+- CDL: more hip flexion, ankle DF, hip extension moments, posterior-chain EMG emphasis.
+- SDL: more frontal/transverse ROM and moments; more vastus lateralis in phase 1 in that study.
+- Three events often used in literature: lift-off, bar passes knees, lockout upright.
+
+4B. Deadlift vs good morning (sagittal moments, 25–50% BW loads)
+Schellenberg et al., BMC Sports Sci Med Rehabil 2013 (PMC3878967) | CC BY 2.0
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC3878967/
+- DL: large knee flexion; GM: minimal knee flexion, different hip/spine moment profile.
+
+4C. Load effect on technique (strength-trained women, 70/90/100% 3RM)
+Gundersen et al. (PMC12591051) | CC BY (PMC)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC12591051/
+- Maximal attempts: more thoracic flexion and erector spinae EMG vs submax; hip net joint
+  moments lower at 70% vs 90–100% in that sample — caution linking max-load form to training loads.
+
+4D. Olympic pulls and lumbar loading model (hang clean/snatch/deadlift context)
+Rossi et al. / spine model with Olympic lifts (PMC4925752)
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC4925752/
+- Reports peak L5 shear/compression/bending during pulls at submax loads in modeled cohort;
+  PMC copyright — summarize; do not treat as injury thresholds for product.
+
+4E. Heavy deadlift simulation (single subject musculoskeletal model)
+Ramirez et al., Int J Numer Meth Biomed Eng 2023 (Wiley OA)
+DOI: https://doi.org/10.1002/cnm.3680
+- High L5-S1 compression/shear in one heavy trial — research model, not coaching prescription.
+
+================================================================================
+5. PHASE MODEL SEEDS (RECONCILE IN brain_plan / Phases/)
+================================================================================
+
+5A. Squat (general S&C / front squat for weightlifting)
+Suggested visible events: setup → descent (hip/knee flex) → bottom (max knee flex or hip
+limit) → ascent → lockout (hip/knee extension). Optional: trunk-tibia classification at bottom.
+
+5B. Deadlift
+Setup (hip hinge, neutral spine) → break floor → knee pass → lockout (hip/knee extended,
+scapular set in literature).
+
+5C. Power clean / snatch (NSCA + IWF aligned)
+Start → first pull (torso angle stable) → transition (double knee bend) → second pull /
+triple extension → pull-under → catch (front rack or overhead) → recovery.
+
+5D. Clean & jerk (competition)
+Clean phases as above → jerk dip → drive → split or squat under → fixation.
+
+================================================================================
+6. SAFETY & PRODUCT GUARDRAILS
+================================================================================
+
+- Acute back/knee pain, numbness, or loss of control → stop; licensed care (mirror Disclaimer).
+- Do not infer bar load or spine force from monocular body IK; no "safe load" numbers in UI.
+- Youth: use lighter progressions; no adult elite trajectory numbers for juniors.
+- CC BY-NC sources (squat clinical review): attribute; avoid treating NC as commercial corpus paste.
+
+================================================================================
+7. GAPS FOR DOWNSTREAM AGENTS
+================================================================================
+
+- brain_plan.txt: ontology for squat vs pull vs jerk; map to sport pack detectors.
+- Findings: early heel rise, lumbar flexion on pull, knee cave, forward bar drift (proxy via
+  wrist/hands if no bar), premature arm pull, soft overhead elbow.
+- Ingest: prioritize PMC CC BY deadlift/squat papers; IWF PDFs if download script gets 200;
+  NSCA PDFs summarize-only.

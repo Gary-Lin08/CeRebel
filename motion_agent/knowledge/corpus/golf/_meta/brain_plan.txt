@@ -1,0 +1,361 @@
+# CeRebel Golf Full-Swing KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: golf | sport_id: golf
+# Aligns: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Product: body-first OpenSim coaching; NO launch-monitor or ball-flight tracking required
+# Registry blurb (target): "Full-swing body sequencing, posture, and ground interaction."
+
+================================================================================
+0. EXISTING CORPUS INVENTORY (DO NOT DELETE)
+================================================================================
+
+Current layout under motion_agent/knowledge/corpus/golf/ (FIS-style ingest, 14 docs + _meta).
+All paths below STAY in place; Sport Pack folders are ADDITIVE.
+
+| Existing path | Role today | Authority / evidence | Sport Pack alignment |
+|---------------|------------|----------------------|----------------------|
+| Rules/001–004 | R&A / USGA rules, clarifications, local rules | A+ RuleFact | Out of coaching phase model; RAG for rules Q&A only |
+| Handicap/001 | WHS / Rules of Handicapping | A+ RuleFact | Same; not indexed as swing mechanics |
+| Equipment/001–002 | Equipment Rules + conforming ball list | A+ RuleFact | Same; refresh monthly for balls |
+| Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt | GRF, CoP ↔ CHS / skill (full text) | B+ ResearchFinding | SOURCE for Biomechanics/001_overview.txt § ground forces |
+| Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt | Kinematics methods, X-factor, sequence | B+ ResearchFinding | SOURCE for Biomechanics/001_overview.txt § kinematics |
+| Schema/001_golf-ontology.txt | JSON-LD entity + evidence types | meta | EXTEND → also ship Schema/001_ontology.txt (copy+expand); keep original file |
+| Taxonomy/001_concepts.txt | Bilingual CSV concepts (rules, measures, swing_event) | mixed | MERGE swing_event rows into phase/finding concepts in build |
+| Taxonomy/002_relations.txt | precedes chain address→follow_through; GRF↔club_speed | B+ | EXPAND with phase IDs, finding occursIn, checkpoint failTriggers |
+| Docs/001_ARCHITECTURE.txt | 4-layer KB + evidence types | meta | KEEP; add cross-link to Sport Pack coaching scope in build |
+| Docs/002_ecosystem_research_zh.txt | Ecosystem / source research (ZH) | meta | KEEP; optional pointer in research_notes |
+| _meta/SOURCE_MANIFEST.txt, pack_readme.txt, README.txt, reports | Provenance | meta | KEEP; update after build agent writes new files |
+
+Sibling seed packs (also indexed, not under golf/):
+  knowledge/corpus/golf_swing_vocab.txt          → phase names + coaching language (section 4)
+  knowledge/corpus/golf_biomechanics_conventions.txt → OpenSim/GRF uncertainty, lead/trail (section 2, 6)
+
+Missing vs SPORT_PACK_KB_SPEC (build agent creates; brain defines map):
+  Docs/002_DISCLAIMER.txt
+  Schema/001_ontology.txt (canonical name; derived from 001_golf-ontology.txt)
+  Phases/001_phase_model.txt
+  Quality/001_quality_definition.txt, Quality/002_checkpoints.txt
+  Findings/001_common_faults.txt
+  Coaching/001_cues.txt, Coaching/002_drills.txt
+  Biomechanics/001_overview.txt (new summary layer; full reviews remain)
+  Training/001_team_practice.txt
+  _meta/research_notes.txt, review_report.txt (optional until search/review agents run)
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for **full-swing body mechanics** detectable from monocular /
+OpenSim reconstruction:
+
+- Posture and spinal angle through address → impact window
+- Pelvis and thorax rotation, separation (X-factor coaching language)
+- Weight shift / CoM drift (qualitative + estimated GRF patterns)
+- Kinematic sequencing (proximal-to-distal timing proxies)
+- Balance through finish
+
+v1 swing family: **driver / full iron full swing** (shared phase chain). Chip, pitch, putt:
+glossary only in Taxonomy; separate phase models are stretch goals.
+
+Out of scope v1:
+- Ball flight, spin, launch angle, carry, curve prediction
+- Clubface angle, club path, AoA as **required** product signals (may cite as vendor vocabulary only)
+- Rules adjudication as coaching findings (use Rules/ corpus separately)
+- Medical diagnosis, return-to-play after back/hip/elbow injury
+- Verbatim NGB / TPI proprietary curriculum
+
+Build agent writes full Phases/Quality/Findings/Coaching/Training bodies from this map;
+brain agent does not.
+
+================================================================================
+2. PRODUCT CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+- Measurable claims tie to reconstructed body: joint angles, segment rotations, CoM,
+  estimated GRF direction/magnitude trends — not force-plate or TrackMan ground truth.
+- **Impact** in product copy means **impact_proxy**: analysis-window event aligned to
+  maximum lead-wrist or hand speed toward target (± brief span), NOT verified club–ball contact.
+- UI phase scrub bar MUST use the seven phase IDs in section 4 (stable contract when
+  golf pack ships in sport_analysis).
+- Each user-facing finding MUST map to: phase window, series_id, feel cue, 30–90s drill.
+- Youth vs adult numeric bands: separate in Biomechanics/001_overview; never apply adult
+  CHS/GRF cohort stats to junior copy.
+- Authority: B+ minimum for checkpoint thresholds; A+ only for rules/equipment; no C in findings.
+- Handedness: lead/trail language per golf_biomechanics_conventions.txt (confirm from video).
+- Disclaimer: Coaching/Findings footers reference Docs/002_DISCLAIMER.txt (build).
+
+================================================================================
+3. SWING FAMILY (TAXONOMY ROOT)
+================================================================================
+
+| swing_family_id     | label_en              | label_zh   | v1 priority |
+|---------------------|-----------------------|------------|-------------|
+| full_swing_tee_iron | Full swing (tee/iron) | 全挥杆     | primary     |
+
+Future: chip_pitch, bunker — do not block v1.
+
+Existing Taxonomy swing_event concepts (golf:address … golf:follow_through) map to phases
+below; build adds golf:takeaway, golf:transition, golf:top_of_backswing, golf:finish and
+reconciles golf:backswing span vs takeaway sub-phase in Phases/001 copy.
+
+================================================================================
+4. PHASE MODEL (UI + DETECTOR ALIGNMENT)
+================================================================================
+
+Phase IDs (exact — target contract for future _golf_window):
+
+| id            | label_en        | label_zh     | maps_from_existing_taxonomy |
+|---------------|-----------------|--------------|-----------------------------|
+| address       | Address         | 站位         | golf:address                |
+| takeaway      | Takeaway        | 起杆         | (new; early backswing)      |
+| backswing     | Backswing       | 上杆         | golf:backswing (top segment)|
+| transition    | Transition      | 转换         | (new)                       |
+| downswing     | Downswing       | 下杆         | golf:downswing              |
+| impact_proxy  | Impact window   | 触球窗口     | golf:impact (proxy event)   |
+| finish        | Finish          | 收杆         | golf:follow_through         |
+
+Event definitions (body-only, OpenSim-friendly):
+
+- impact_proxy_event: argmax ||v(lead_wrist)|| or hand cluster speed toward target line
+  in analysis window (fallback: peak thorax rotational velocity toward target if wrist noisy).
+- top_of_backswing: local min lead_arm elevation velocity OR max trail_shoulder external
+  rotation before reversal (fallback: impact_proxy − 45% window span).
+- transition_start: first sustained reversal of pelvis yaw velocity after top_of_backswing.
+- takeaway_start: first frame club-side hand speed exceeds address baseline (or clip start + 5% if static).
+- address_end / takeaway_start: same event.
+- downswing_start: transition_start (lower body leads cueing references this window).
+- finish_event: lead_foot stable + thorax rotation velocity < 25% of downswing peak for
+  ≥ 10% window span OR clip end.
+
+Phase spans (defaults when events missing):
+- address: clip start → takeaway_start
+- takeaway: takeaway_start → 25% of backswing duration to top
+- backswing: end takeaway → top_of_backswing
+- transition: top_of_backswing → downswing_start (min 30 ms)
+- downswing: downswing_start → impact_proxy_event
+- impact_proxy: impact_proxy_event ± 4% window span (min 30 ms)
+- finish: end(impact_proxy) → finish_event
+
+Capture: down-the-line (DTl) preferred for rotation and sway; face-on (FO) supplements
+vertical posture and hip height. Oblique reduces separation fidelity — Quality gates apply.
+
+Phases/001_phase_model.txt (build): expand events, fallbacks, EN/ZH scrub copy, handedness notes.
+
+Seed vocabulary alignment: golf_swing_vocab.txt phases (Address … Follow-through) → table above;
+"Transition" and "Takeaway" explicit in product IDs.
+
+================================================================================
+5. FULL-SWING MECHANICS (COACHING + MEASUREMENT FOCUS)
+================================================================================
+
+Document in Biomechanics/001_overview.txt; cite Bourgain et al. 2022 + Watson et al. 2026
+(summaries only — full PDF text stays in Biomechanics/00*_*.txt).
+
+Themes to cover (body-first):
+- **Setup**: hip hinge, knee flex, spine angle; avoid prescribing absolute ° as medical norm.
+- **Turn**: pelvis then thorax in backswing; separation peak timing (X-factor language).
+- **Transition**: pelvis leads reversal before peak hand speed (kinematic sequence proxy).
+- **Ground interaction**: trail-side load in backswing → lead-side bracing into impact_proxy;
+  qualitative CoP shift (Watson review — timing matters, not magnitude alone).
+- **Posture maintenance**: hip/spine flexion loss (early extension proxy) from address to impact_proxy.
+- **Finish**: balanced rotation onto lead side, belt buckle toward target (coaching language).
+
+Limitations block (mandatory): monocular depth error, estimated GRF ≠ force plate, no CHS
+in checkpoints unless externally measured and tagged.
+
+================================================================================
+6. MEASUREMENT SURFACE (CODE ↔ KB)
+================================================================================
+
+| series_id              | signal                                      | unit | primary phases              |
+|------------------------|---------------------------------------------|------|-----------------------------|
+| spine_flexion          | trunk flexion vs vertical (sagittal)        | °    | address, downswing, impact  |
+| pelvis_rotation        | pelvis yaw vs address / target              | °    | backswing, transition, down |
+| thorax_rotation        | thorax yaw vs address / target              | °    | backswing, downswing        |
+| separation             | thorax_rotation − pelvis_rotation           | °    | backswing top, transition   |
+| com_lateral            | CoM mediolateral vs address                 | cm   | backswing, downswing        |
+| com_ap_shift           | CoM AP toward target                        | cm   | transition, impact_proxy    |
+| lead_hip_flex          | lead hip flexion                            | °    | address, impact_proxy       |
+| hand_speed_lead        | \|\|v(lead_wrist)\|\|                        | m/s  | downswing, impact_proxy     |
+| pelvis_rot_vel         | d(pelvis_rotation)/dt                       | °/s  | transition, downswing       |
+| thorax_rot_vel         | d(thorax_rotation)/dt                       | °/s  | downswing, impact_proxy     |
+| grf_vertical_est       | estimated vertical GRF (lead/trail)         | N    | downswing, impact_proxy     | qual only |
+| finish_balance         | CoM over lead foot proxy                    | —    | finish                      |
+
+Future: crunch factor, swing plane — only after ISB-aligned joint defs (Bourgain caution).
+
+================================================================================
+7. CLINICAL / COACHING NORMS (EVIDENCE-BANDED)
+================================================================================
+
+Wording: "typical in published cohorts" / "coaching consensus" — NOT personal medical advice.
+
+ADULT full swing (B+; Bourgain 2022, Watson 2026, open kinematics literature):
+- Separation peak often occurs before impact_proxy; collapse before impact associated with
+  power loss in reviews (do not state causal injury claims).
+- Skilled cohorts: higher GRF magnitude AND better timing vs less skilled (Watson).
+- Methodological variance for X-factor definitions — product uses consistent internal series only.
+
+YOUTH (B / B+ coaching; no adult CHS tables in findings):
+- Shorter backswing amplitude; prioritize balance and rotation quality over speed cues.
+- Avoid adult "ground force" max-out language; down-weight GRF magnitude checkpoints.
+- Separate audience tag: youth | adult | all in ontology.
+
+Exclude from checkpoints: club_speed, ball_speed, smash factor, launch angle, spin rate
+(Taxonomy measurement concepts remain for glossary / future authorized sensor ingest).
+
+================================================================================
+8. QUALITY MODEL
+================================================================================
+
+Quality/001_quality_definition.txt (build):
+
+- Dimensions: (1) setup stability, (2) turn & separation, (3) transition sequencing,
+  (4) posture through impact window, (5) weight shift & finish balance.
+- v1: checkpoint pass/fail grid, not a single "swing score".
+
+Quality/002_checkpoints.txt — seed checkpoint table:
+
+checkpoint_id           | phase(s)              | series/signal     | rule (summary)                              | fail→finding_id          | evidence
+------------------------|-----------------------|-------------------|---------------------------------------------|--------------------------|----------
+cp_setup_stable         | address               | com_lateral       | lateral drift < band vs address             | sway-off-ball            | B+
+cp_spine_angle_set      | address               | spine_flexion     | extreme flex/extend vs cohort band          | posture-c-posture        | B+
+cp_turn_pelvis          | backswing             | pelvis_rotation   | pelvis turn ≥ conservative min by top       | limited-hip-turn         | B+
+cp_separation_top       | backswing, transition | separation        | separation at top ≥ band (internal cal)   | xfactor-collapse-early   | B+
+cp_transition_lower     | transition            | pelvis_rot_vel    | pelvis reverses before hand_speed peak      | upper-body-first         | B+
+cp_posture_maintain     | downswing, impact     | spine_flexion     | flexion loss > band vs address              | early-extension          | B+
+cp_slide_not_turn       | downswing             | com_lateral       | excessive lateral without rotation gain     | lateral-slide            | B+
+cp_weight_lead          | impact_proxy          | com_ap_shift      | CoM not progressing to lead side            | hang-back                | B+
+cp_finish_balance       | finish                | finish_balance    | unstable finish / fall back                 | finish-fall-back         | B+
+cp_capture_dtl          | all                   | (meta)            | DTl visibility gate                         | capture-poor-dtl         | B+ product
+
+cp_posture-s-posture    | address               | spine_flexion     | excessive lumbar arch at setup              | posture-s-posture        | B+ coaching
+
+================================================================================
+9. FINDING CATALOG (STABLE IDs)
+================================================================================
+
+Format for build agent (Findings/001 + Coaching/001–002): full cards per SPORT_PACK spec
+(id, headline, phases, body signal, why, feel cue, drill 30–90s, sources, authority).
+
+| finding_id              | headline_en (short)              | primary_phases              | body signal (measurable)                          |
+|-------------------------|----------------------------------|-----------------------------|---------------------------------------------------|
+| sway-off-ball           | Excess sway in setup/backswing   | address, takeaway, backswing| com_lateral oscillation high                      |
+| limited-hip-turn        | Hips don't turn enough           | backswing                   | pelvis_rotation low at top                        |
+| xfactor-collapse-early  | Shoulders and hips turn together | transition, downswing       | separation drops before impact_proxy              |
+| upper-body-first        | Arms fire before lower body      | transition, downswing       | hand_speed peak before pelvis_rot_vel reversal    |
+| early-extension         | Stand up through the hit         | downswing, impact_proxy     | spine_flexion decreases vs address                |
+| lateral-slide           | Slide without rotation           | downswing                   | com_lateral high, pelvis_rotation low             |
+| hang-back               | Weight stays on trail side       | impact_proxy                | com_ap_shift low; lead_hip_flex high              |
+| reverse-pivot           | Weight wrong way in backswing    | backswing                   | com_ap_shift toward target in backswing           |
+| posture-c-posture       | Too much bend at address         | address                     | spine_flexion high vs band                        |
+| posture-s-posture       | Excess arch at address           | address                     | spine_flexion low / extended                      |
+| finish-fall-back        | Fall backward after swing        | finish                      | finish_balance fail; com_ap_shift rearward        |
+| overswing-depth         | Backswing too long for balance   | backswing, transition       | thorax_rotation very high + com_lateral           |
+| cast-release-early      | Early release (proxy)            | downswing                   | hand_speed peak early vs thorax_rot_vel peak      |
+| capture-poor-dtl        | Camera angle limits rotation     | all                         | meta gate only — severity info                    |
+
+Each finding card MUST NOT require club or ball tracks. Optional enrichments tagged separately.
+
+================================================================================
+10. ONTOLOGY CLASSES (Schema/001_ontology.txt)
+================================================================================
+
+Namespace prefix: golf: (keep existing URIs in 001_golf-ontology.txt)
+
+Retain from existing graph:
+- GolfEntity, Rule*, Golfer, Course, Shot, SwingEvent, BiomechObservation, CoachingConcept
+- Evidence hierarchy (RuleFact … CommunityOpinion)
+
+Add for Sport Pack (mirror soccer/basketball packs):
+- golf:SwingDelivery (single swing motion instance)
+- golf:SwingFamily — full_swing_tee_iron
+- golf:SwingPhase — seven phase ids in section 4
+- golf:SwingEvent — impact_proxy_peak_hand, top_of_backswing, transition_start
+- golf:Finding (subClassOf CoachingConcept)
+- golf:Checkpoint
+- golf:PopulationNote (youth | adult | all)
+
+Key properties (build expands):
+- golf:precedes (phase → phase) — extend Taxonomy/002 beyond current 4-edge chain
+- golf:occursIn (finding|checkpoint → phase)
+- golf:measuredOn (observation → series_id)
+- golf:failTriggers (checkpoint → finding)
+- golf:requiresBallTrack (default false)
+- golf:requiresClubTrack (default false)
+
+Build: write Schema/001_ontology.txt as superset; DO NOT remove Schema/001_golf-ontology.txt.
+
+================================================================================
+11. TAXONOMY STUBS (Taxonomy/001_concepts, 002_relations)
+================================================================================
+
+Keep all existing CSV rows (rules, handicap, measurements).
+
+Build agent adds:
+- Concepts for each phase id, swing_family, series_id, finding_id, checkpoint_id
+- Relations: full precedes chain address→takeaway→…→finish
+- finding → occursIn → phase; checkpoint → failTriggers → finding
+- Measurement concepts (club_speed, attack_angle, …) tagged glossary-only for v1 coaching
+
+Cross-link measurement concepts to impact event with golf:measuredAt ONLY in glossary —
+not as product checkpoint dependencies.
+
+================================================================================
+12. REQUIRED DOC OUTLINES (BUILD AGENT)
+================================================================================
+
+Docs/001_ARCHITECTURE.txt — KEEP; append Sport Pack coaching layer + impact_proxy note
+Docs/002_DISCLAIMER.txt — not medical advice; monocular + estimated GRF uncertainty; youth
+Phases/001_phase_model.txt — section 4 full detail
+Quality/001 + 002 — section 8
+Findings/001 — section 9 cards
+Coaching/001 cues + 002 drills per finding_id
+Biomechanics/001_overview.txt — section 5–7 summaries + pointers to:
+  Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt
+  Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt
+Training/001_team_practice.txt — range stations, body-only drills, junior volume awareness
+  (summarize open federation / ACSM-style activity guidance with URLs in SOURCE_MANIFEST;
+  no proprietary TPI copies)
+
+Rules/, Handicap/, Equipment/ — unchanged; indexed as separate categories (RuleFact A+).
+
+================================================================================
+13. SOURCE PRIORITY
+================================================================================
+
+A+: R&A / USGA rules & equipment (existing Rules/, Equipment/, Handicap/)
+A: (future) peer-reviewed clinical consensus on golf injury prevention — not yet in corpus
+B+: Bourgain et al. 2022; Watson et al. 2026 (in Biomechanics/)
+B: golf_swing_vocab.txt, golf_biomechanics_conventions.txt (CeRebel seed)
+B: NGB / Olympic open coaching summaries when added to research_notes (summarize only)
+C: forums, GolfDB community — never used for findings thresholds
+
+TrackMan / launch monitor URLs in SOURCE_MANIFEST: glossary reference only for v1 coaching pack.
+
+================================================================================
+14. BUILD ORDER
+================================================================================
+
+1. Schema/001_ontology.txt + Taxonomy expansions (brain stubs in this file)
+2. Docs/002_DISCLAIMER.txt; update Docs/001 cross-links
+3. Phases/001_phase_model.txt
+4. Biomechanics/001_overview.txt (summaries; leave 001_/002_ review files intact)
+5. Quality/001–002
+6. Findings/001, Coaching/001–002
+7. Training/001
+8. _meta/SOURCE_MANIFEST.txt (coaching sources), research_notes.txt, review_report.txt, build_report.txt
+9. rebuild_knowledge_index.py
+
+================================================================================
+15. ACCEPTANCE CRITERIA (PACK v1 COACHING LAYER)
+================================================================================
+
+- Every finding_id in section 9 has Findings card + cue + drill
+- Phase ids exactly: address, takeaway, backswing, transition, downswing, impact_proxy, finish
+- No ball flight / clubface / path required for any checkpoint or finding
+- Existing 14 ingest files + Rules/Equipment/Handicap trees still present unchanged
+- Biomechanics/001_overview.txt exists; long-form reviews remain in Biomechanics/00*_*.txt
+- Docs/002_DISCLAIMER.txt referenced from Coaching/ and Findings/
+- Youth/adult separation in Biomechanics/001_overview
+
+End brain_plan v0.1

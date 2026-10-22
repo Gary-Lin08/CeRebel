@@ -1,0 +1,355 @@
+# Tennis Sport Pack — Short drills (30–90 seconds)
+
+Drills link to finding IDs. Equipment-minimal; body-first shadows unless noted.
+
+---
+
+## drill_fault_serve_knee_lock
+**targets:** fault_serve_knee_lock
+**duration:** 60s
+**setup:** Baseline or open space; racket optional.
+**steps:**
+1. Athlete holds athletic stance, racket face neutral.
+2. 4 slow trophy poses with visible knee bend (2s hold each).
+3. 4 continuous shadow serves emphasizing push from legs then upward drive.
+**body focus:** Knee flexion at S_TROPHY_LOAD; extension before S_CONTACT_PROXY.
+**sources:** USTA leg-drive serve progressions (B).
+
+---
+
+## drill_fault_serve_toss_arm_drift
+**targets:** fault_serve_toss_arm_drift
+**duration:** 75s
+**setup:** No ball required.
+**steps:**
+1. 30s non-racket arm only: vertical lift to eye level, control descent.
+2. 30s racket on hip; toss arm repeats while shoulders stay level.
+3. 15s both arms — toss arm up as racket-side elbow lifts to trophy.
+**body focus:** Non-racket wrist path stays near midline on front camera.
+**sources:** ITF serve preparation drills summarized (B+).
+
+---
+
+## drill_fault_serve_shoulder_tilt_flat
+**targets:** fault_serve_shoulder_tilt_flat
+**duration:** 45s
+**setup:** Stand sideways to wall, racket-side toward wall.
+**steps:**
+1. Trophy pose with racket-side elbow at shoulder height without touching wall.
+2. 6 slow serve shadows maintaining shoulder tilt through S_TROPHY_LOAD.
+**body focus:** Asymmetric shoulder line side view.
+**sources:** LTA serve shape drills (B).
+
+---
+
+## drill_fault_serve_elbow_low
+**targets:** fault_serve_elbow_low
+**duration:** 60s
+**steps:**
+1. Trophy freeze: elbow at shoulder height 2s ×4.
+2. Slow drop-and-drive shadows ×6 keeping elbow path high into drop.
+**body focus:** Elbow height S_TROPHY_LOAD → S_RACKET_DROP.
+**sources:** USTA serve shape (B).
+
+---
+
+## drill_fault_serve_poor_leg_sync
+**targets:** fault_serve_poor_leg_sync
+**duration:** 75s
+**steps:**
+1. Count “legs… then arm” on each shadow serve.
+2. Reset if wrist accelerates before knee extension begins.
+3. 8 quality reps.
+**body focus:** Knee extension onset before S_CONTACT_PROXY.
+**sources:** PMC kinetic-chain themes (B+).
+
+---
+
+## drill_fault_serve_excessive_arch
+**targets:** fault_serve_excessive_arch
+**duration:** 60s
+**setup:** Optional light band around lower ribs for feedback.
+**steps:**
+1. Practice upright reach overhead without back bend (10 reps).
+2. 4 shadow serves cued “ribs down, reach up.”
+**body focus:** Trunk stack during S_DRIVE_UP.
+**sources:** Core control in overhead sport (A/B coaching synthesis).
+
+---
+
+## drill_fault_serve_poor_decel
+**targets:** fault_serve_poor_decel
+**duration:** 60s
+**setup:** Half-kneel (inside knee down) to isolate finish.
+**steps:**
+1. 8 slow shadow serves from half-kneel.
+2. Exaggerated cross-body finish; pause 1s at end range.
+**body focus:** Smooth wrist speed decay S_DECEL.
+**sources:** PMC serve follow-through themes (B+).
+
+---
+
+## drill_fault_serve_landing_imbalance
+**targets:** fault_serve_landing_imbalance
+**duration:** 60s
+**steps:**
+1. Shadow serve into court.
+2. Mandatory 1s balanced stick on lead foot.
+3. Walk back; repeat ×6.
+**body focus:** Lead-foot accept weight after S_CONTACT_PROXY.
+**sources:** USTA serve landing (B).
+
+---
+
+## drill_fault_serve_rhythm_rush
+**targets:** fault_serve_rhythm_rush, fault_double_fault_rhythm_rush
+**duration:** 90s
+**setup:** Phone metronome 50–60 BPM.
+**steps:**
+1. Beat 1: bounce/ready (S_READY).
+2. Beat 2: trophy load (S_TROPHY_LOAD).
+3. Beat 3: drive and contact proxy (S_DRIVE_UP → S_CONTACT_PROXY).
+4. Repeat 10 cycles; last 30s remove metronome but keep same internal tempo.
+**body focus:** Whole-chain duration and visible trophy window.
+**sources:** ITF routine and rhythm coaching (B).
+
+---
+
+## drill_fault_serve_short_finish_youth
+**targets:** fault_serve_short_finish_youth
+**duration:** 45s
+**audience:** youth
+**steps:**
+1. Half-speed serve shadows.
+2. 1s finish hold to opposite pocket.
+3. Stop immediately on discomfort.
+**body focus:** Complete soft finish without slam-stop.
+**sources:** USTA 10U serve progressions (B).
+
+---
+
+## drill_fault_serve_abbreviated_drop
+**targets:** fault_serve_abbreviated_drop
+**duration:** 60s
+**steps:**
+1. “Scratch then throw” — 2s drop hold.
+2. Drive up ×8.
+**body focus:** Visible S_RACKET_DROP before upward wrist velocity.
+**sources:** ITF serve path (B).
+
+---
+
+## drill_fault_forehand_late_unit_turn
+**targets:** fault_forehand_late_unit_turn, fault_groundstroke_late_unit_turn
+**duration:** 45s
+**steps:**
+1. Full turn to back fence, count “one,” swing on “two.”
+2. 6 repetitions.
+**body focus:** G_UNIT_TURN completes before G_FORWARD_SWING.
+**sources:** LTA preparation timing (B).
+
+---
+
+## drill_fault_forehand_all_arm
+**targets:** fault_forehand_all_arm, fault_groundstroke_all_arm
+**duration:** 60s
+**steps:**
+1. 20s unit turn only — hands on shoulders, pelvis rotates.
+2. 20s turn then pause, then arm swing separately.
+3. 20s continuous “hips start, hand follows.”
+**body focus:** Trunk yaw before racket-side wrist acceleration.
+**sources:** USTA groundstroke rotation (B).
+
+---
+
+## drill_fault_forehand_flying_elbow
+**targets:** fault_forehand_flying_elbow
+**duration:** 60s
+**steps:**
+1. Towel under racket-side armpit.
+2. Shadow FH; towel must stay through mid-swing ×8.
+**body focus:** Elbow slot vs shoulder plane.
+**sources:** USTA FH preparation (B).
+
+---
+
+## drill_fault_forehand_open_no_load
+**targets:** fault_forehand_open_no_load, fault_groundstroke_wide_stance_stuck
+**duration:** 60s
+**setup:** Open stance forehand position.
+**steps:**
+1. 5 lateral mini-squats on load leg.
+2. 5 shadow swings immediately after squat.
+**body focus:** Knee flexion at G_LOAD with wide feet.
+**sources:** Tennis Australia open-stance movement (B).
+
+---
+
+## drill_fault_forehand_over_rotate_finish
+**targets:** fault_forehand_over_rotate_finish
+**duration:** 45s
+**steps:**
+1. Shadow FH wrap; freeze 1s checking feet still under hips.
+2. Two recovery steps; repeat ×6.
+**body focus:** Finish balance without spin-out.
+**sources:** USTA finish/recovery (B).
+
+---
+
+## drill_fault_forehand_upright_recovery
+**targets:** fault_forehand_upright_recovery, fault_groundstroke_upright_recovery
+**duration:** 60s
+**steps:**
+1. Each shadow stroke: mandatory 1s finish hold at G_FOLLOW.
+2. Recovery steps only after hold.
+**body focus:** Trunk angle through finish; no early head pop-up.
+**sources:** USTA recovery footwork (B).
+
+---
+
+## drill_fault_backhand1_dropped_shoulder
+**targets:** fault_backhand1_dropped_shoulder
+**duration:** 60s
+**steps:**
+1. Side-fence 1HBH load: hold elevated lead shoulder 1s.
+2. Slow swing ×6.
+**body focus:** Lead shoulder height through contact proxy.
+**sources:** LTA 1HBH fundamentals (B).
+
+---
+
+## drill_fault_backhand1_reaching
+**targets:** fault_backhand1_reaching
+**duration:** 60s
+**steps:**
+1. Feet glued closed stance.
+2. Force trunk rotation into shadow 1HBH ×8 — no step to “ball.”
+**body focus:** Elbow–trunk distance at G_CONTACT_PROXY.
+**sources:** ITF BH rotation (B).
+
+---
+
+## drill_fault_backhand1_late_prep
+**targets:** fault_backhand1_late_prep
+**duration:** 45s
+**steps:**
+1. Unit-turn freeze with racket tip back.
+2. Pause, then slow swing ×6.
+**body focus:** Early racket take-back with G_UNIT_TURN.
+**sources:** LTA BH prep (B).
+
+---
+
+## drill_fault_backhand2_bottom_hand_only
+**targets:** fault_backhand2_bottom_hand_only
+**duration:** 60s
+**steps:**
+1. 4 top-hand-only shadow swings (light).
+2. 6 both-hands swings emphasizing top-hand push.
+**body focus:** Dual-arm contribution at G_FORWARD_SWING.
+**sources:** USTA 2HBH fundamentals (B).
+
+---
+
+## drill_fault_backhand2_tight_shoulders_youth
+**targets:** fault_backhand2_tight_shoulders_youth
+**duration:** 45s
+**audience:** youth
+**steps:**
+1. Gentle 2HBH turns with pause — no forced stretch.
+2. 6 slow swings.
+**body focus:** Modest trunk yaw increase vs baseline.
+**sources:** USTA youth GS themes (B).
+
+---
+
+## drill_fault_backhand_wide_stance_stuck
+**targets:** fault_backhand_wide_stance_stuck
+**duration:** 60s
+**steps:**
+1. Load-leg mini-squats into shadow BH ×8.
+**body focus:** Knee flex + transfer at G_LOAD.
+**sources:** Tennis Australia movement (B).
+
+---
+
+## drill_fault_volley_arm_stab
+**targets:** fault_volley_arm_stab
+**duration:** 60s
+**steps:**
+1. Split, step, block with ~15 cm hand travel only ×10.
+**body focus:** Short V_FORWARD_BLOCK; trunk behind racket.
+**sources:** USTA/ITF volley fundamentals (B).
+
+---
+
+## drill_fault_volley_feet_stuck
+**targets:** fault_volley_feet_stuck
+**duration:** 45s
+**steps:**
+1. Split-step + step-in without swing ×6.
+2. Add short block ×6.
+**body focus:** Lead-foot advance before V_CONTACT_PROXY.
+**sources:** USTA net footwork (B).
+
+---
+
+## drill_fault_split_step_late
+**targets:** fault_split_step_late
+**duration:** 60s
+**steps:**
+1. Coach claps random interval.
+2. Athlete hop → freeze athletic stance ×12.
+**body focus:** Bilateral ankle micro-peak; soft knee land.
+**sources:** USTA footwork primers (B).
+
+---
+
+## drill_fault_recovery_slow_recenter
+**targets:** fault_recovery_slow_recenter
+**duration:** 90s
+**steps:**
+1. Alternate shadow FH/BH to side marks.
+2. After each finish, two shuffles to center mark before next.
+**body focus:** Pelvis recenter time after G_FOLLOW.
+**sources:** USTA recovery coaching (B).
+
+---
+
+## drill_fault_unit_turn_incomplete_open
+**targets:** fault_unit_turn_incomplete_open
+**duration:** 60s
+**steps:**
+1. Feet open, shoulders turned to side fence, pause.
+2. Swing ×8.
+**body focus:** Shoulder line vs open feet at G_UNIT_TURN.
+**sources:** USTA/TA open-stance unit turn (B).
+
+---
+
+## drill_general_split_reaction
+**targets:** fault_split_step_late
+**duration:** 45s
+**phases:** G_SPLIT
+**steps:** Athlete repeats split-step hop + freeze in athletic stance; coach claps random interval.
+**body focus:** Ankle micro-peak and knee soft landing.
+**sources:** USTA footwork primers (B).
+
+---
+
+## drill_youth_serve_throw_progression
+**targets:** fault_serve_knee_lock, fault_serve_short_finish_youth
+**duration:** 60s
+**audience:** youth
+**setup:** Soft ball or no ball; throw motion emphasis legal for age group.
+**steps:**
+1. Throw imaginary ball overhand from trophy position — feet move naturally.
+2. Link throw feeling to racket shadow without full adult knee depth.
+**body focus:** Sequential leg → trunk → arm like throwing sports.
+**sources:** USTA 10U serve progressions (B); Pitch Smart throwing parallels summarized (B, cross-sport).
+
+---
+
+## Practice safety
+
+Stop drills if pain occurs. Drills are not rehabilitation exercises. See Docs/002_DISCLAIMER.txt.

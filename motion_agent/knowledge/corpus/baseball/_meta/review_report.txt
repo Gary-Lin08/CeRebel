@@ -1,0 +1,86 @@
+# Baseball Sport Pack — Review Report (v2 depth audit)
+Generated: 2026-10-23
+Corpus path: motion_agent/knowledge/corpus/baseball/
+Product: CeRebel body-first pitching coaching (no ball tracking)
+Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+
+================================================================================
+EXECUTIVE SUMMARY
+================================================================================
+
+| Area              | Verdict     | Notes |
+|-------------------|-------------|-------|
+| Spec layout       | PASS        | Full tree + SOURCE_MANIFEST + DISCLAIMER from prior build |
+| Finding cards     | PASS v2     | 28 canonical `fault_*` cards; kebab legacy_id retained |
+| Coaching          | PASS v2     | ≥20 cues + ≥15 drills citing fault_* |
+| Taxonomy relations| PASS v2     | ≥15 rows; legacy aliases + coaching remediates |
+| Phase model       | PASS v2     | 6 UI phases with detector_events + fault_links |
+| Safety            | PASS        | No diagnostic injury claims; youth pitch-count = education only |
+| Scope             | PASS        | Overhand pitching focus; softball windmill out of scope |
+
+Prior 2026-10-21 review found empty corpus. Subsequent build filled the pack; this audit confirms
+v2 depth after fault id migration and expansion to 28 cards.
+
+================================================================================
+1. FINDINGS DEPTH
+================================================================================
+
+Findings/001_common_faults.txt — 28 cards in canonical shape with optional legacy_id.
+
+Migrated (13) kebab → fault_snake_case:
+  back-leg-soft → fault_back_leg_soft
+  separation-low → fault_separation_low
+  front-knee-collapse → fault_front_knee_collapse
+  stride-short/long, mer-insufficient, glove-flyout, head-pull, pelvis-drift,
+  trunk-late-rotate, arm-path-wide, set-rush, sport-mismatch-golf
+
+Added (15): early_trunk_rotation, closed_stride_landing, open_stride_landing,
+  soft_drive_leg_balance, arm_drag_late, arm_path_inverted_w, glove_side_collapse,
+  posture_lean_back, posture_collapse_forward, tempo_rush_delivery, finish_fall_off,
+  incomplete_deceleration, lead_foot_closed_toe, arm_slot_inconsistent,
+  youth_pitch_count_awareness
+
+Youth pitch-count card: coaching/load awareness with Pitch Smart / NGB sources — not medical
+stop/play orders; suppressed without session metadata (confidence_note).
+
+================================================================================
+2. COACHING / TAXONOMY / PHASES
+================================================================================
+
+- Coaching/001_cues.txt: finding_ids updated to fault_*; new cues for drive leg, gate, pitch count.
+- Coaching/002_drills.txt: `targets: fault_*`; new rocker drive-leg, lift balance, stack posture drills.
+- Taxonomy/002_relations.txt: occurs_in / failTriggers / addresses / remediates / legacy_of (≥15).
+- Phases/001_phase_model.txt: detector_events + fault_links per phase; session findings noted.
+
+================================================================================
+3. SAFETY
+================================================================================
+
+- Docs/002_DISCLAIMER.txt present.
+- Separation labeled as lumbar_rotation proxy — not lab hip-shoulder separation.
+- Inverted-W and deceleration cards use coaching/load framing only.
+- Anti-patterns list prohibits Tommy John / tissue diagnosis language.
+
+================================================================================
+4. GAPS (non-blocking for v2 coaching depth)
+================================================================================
+
+- mer / glove / trunk sequence checkpoints remain future until coords validated in code.
+- Softball / hitting still out of scope — pack_readme should keep “overhand pitch only.”
+- OBI NC dataset still not ingested (correct); cite OA papers only.
+
+================================================================================
+5. REVIEWER SIGN-OFF
+================================================================================
+
+| Check | Status |
+|-------|--------|
+| Spec-complete coaching layers | Yes |
+| ≥25 finding cards canonical | Yes (28) |
+| Kebab → fault_* migration | Yes + legacy_id |
+| Cues/drills cite fault_* | Yes |
+| Relations ≥15 | Yes |
+| Phase detector_events + fault_links | Yes |
+| Safe for body-first pitching RAG | Yes (with disclaimer) |
+
+VERDICT: APPROVED_V2 — Baseball pitching KB meets v2 depth with 28 fault_* cards, legacy kebab aliases, and youth pitch-count coaching (non-medical).

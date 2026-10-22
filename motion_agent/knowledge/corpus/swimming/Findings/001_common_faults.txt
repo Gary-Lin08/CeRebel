@@ -1,0 +1,332 @@
+# Freestyle — Common Faults (finding cards)
+
+Authority: B / B+ summarized open literature and NGB coaching; not diagnostic. See Docs/002_DISCLAIMER.txt.
+
+---
+
+---
+
+finding_id: fault_dropped_elbow
+headline_en: Dropped elbow during catch or pull
+phases: swim_phase_catch, swim_phase_pull
+body_signal: Pulling elbow drops below or level with wrist in side view during underwater phase; elbow flexion may appear but forearm not vertical relative to backward pull direction.
+why_it_matters: Often associated with reduced propulsive surface area and higher shoulder stress in biomechanics summaries; swimmers may slip water and add shoulder workload over long sessions.
+feel_cue: "Lead with your elbow; point fingers down and set the forearm like a paddle before you pull."
+drill: 60 s sculling at catch depth, then 25 m fist drill focusing on forearm angle (see Coaching/002_drills.txt drill_sculling_front, drill_fist_drill).
+severity_default: medium
+sources: PMC freestyle kinematic reviews; USA Swimming skill progression summaries (B+ / B)
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_low_elbow_recovery
+headline_en: Low elbow during arm recovery
+phases: swim_phase_recovery
+body_signal: Wrist at or above elbow height during recovery; arm swings wide or drags near water surface with elbow leading downward.
+why_it_matters: Can increase frontal drag in some models and setup crossover entry; may reflect shoulder mobility limits or fatigue.
+feel_cue: "Brush your elbow past your ribs; hand relaxed, elbow points mostly to the side."
+drill: 4 × 25 m finger-tip drag recovery drill with pause at entry.
+severity_default: low
+sources: Coaching consensus B; distance freestyle models
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_crossover_entry
+headline_en: Hand crosses centerline at entry
+phases: swim_phase_entry
+body_signal: Pulling wrist crosses midline of trunk proxy at or immediately after E_ENTRY.
+why_it_matters: Associated with snaking hips and shoulder impingement risk language in clinical reviews; reduces stable catch platform.
+feel_cue: "Enter at your shoulder width — hand in front of shoulder, not in front of nose."
+drill: Single-arm freestyle with opposite hand on board; 6 × 25 m focusing entry target.
+severity_default: medium
+sources: B+ shoulder load discussions; NGB learn-to-swim B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_overreach_entry
+headline_en: Overreaching at entry
+phases: swim_phase_entry
+body_signal: Excessive forward reach with elbow hyperextension proxy before catch; entry far ahead of stable roll position.
+why_it_matters: May increase shoulder extension load and weaken immediate catch connection in coaching models.
+feel_cue: "Slide the hand in and catch underneath — don't reach for the wall."
+drill: Catch-up drill with pause at entry, 8 × 50 m moderate.
+severity_default: low
+sources: B biomechanics summaries
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_flat_hand_entry
+headline_en: Flat or palm-first entry (visual)
+phases: swim_phase_entry
+body_signal: Hand orientation appears parallel to surface at entry; splash or slapping sound if audio available (optional).
+why_it_matters: Coaching texts link poor entry angle to bubbles on hand and missed catch timing; body-only confidence limited.
+feel_cue: "Knife in fingers first, then wrist, then elbow."
+drill: 10 × 25 m entry-only scull: enter and pause at extension.
+severity_default: low
+confidence_note: Requires clear hand visibility
+sources: B coaching
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_pause_at_catch
+headline_en: Pause or glide at catch
+phases: swim_phase_catch
+body_signal: Wrist speed local minimum lasting >0.12 s between E_ENTRY and E_PULL_PEAK without corresponding roll adjustment.
+why_it_matters: Breaks continuous propulsion; common when swimmers over-glide distance sets.
+feel_cue: "Don't hang — bend the elbow and start moving water backward immediately."
+drill: Tempo trainer sets (+2 SPM) for 4 × 100 m focusing continuous catch.
+severity_default: medium
+sources: B+ propulsion timing reviews
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_sculling_outside
+headline_en: Outward scull instead of backward pull
+phases: swim_phase_catch
+body_signal: Lateral wrist path exceeds backward component in catch window; elbows wide from trunk.
+why_it_matters: Reduces forward propulsion efficiency in steady-state freestyle models.
+feel_cue: "Pull past your suit logo — hand tracks under your body."
+drill: Pull buoy optional: 6 × 25 m pull with band (if coach approves equipment).
+severity_default: medium
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_wide_pull
+headline_en: Pull path too wide of body
+phases: swim_phase_pull
+body_signal: Pulling wrist lateral offset from trunk exceeds calibrated wide threshold at E_PULL_PEAK.
+why_it_matters: Shortens effective lever and can increase shoulder abduction moment in summaries.
+feel_cue: "Keep the pull in your pocket — elbow brushes your side."
+drill: 8 × 25 m one-arm drill with opposite arm at side.
+severity_default: medium
+sources: B+
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_short_push
+headline_en: Hand exits before finishing push
+phases: swim_phase_push
+body_signal: E_EXIT occurs before wrist passes hip keypoint proxy; shortened elbow extension phase.
+why_it_matters: Leaves propulsive phase incomplete; common in fatigue or high-rate sprint without matching strength.
+feel_cue: "Push water to your thigh — full extension behind you."
+drill: 4 × 50 m exaggerate finish drill (coach monitor shoulder comfort).
+severity_default: medium
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_wide_exit
+headline_en: Wide hand exit away from hip
+phases: swim_phase_push, swim_phase_recovery
+body_signal: Lateral wrist displacement at E_EXIT large; recovery swings outward.
+why_it_matters: Can increase drag entering recovery and disrupt roll timing.
+feel_cue: "Exit thumb first near your hip pocket."
+drill: 6 × 25 m with pause at exit checking hand position.
+severity_default: low
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_excessive_head_lift
+headline_en: Head lifts straight up to breathe
+phases: swim_phase_breathe
+body_signal: Head vertical displacement dominates over yaw at E_BREATHE; hips may drop in side view.
+why_it_matters: Increases drag and breaks body line in pool models; neck extension load increases.
+feel_cue: "One goggle in the water — rotate to the wall, don't lift to the ceiling."
+drill: 3 × 100 m bilateral breathing every 3; 25 m no-breath focus on rotation.
+severity_default: medium
+sources: B NGB; B+ drag/posture summaries
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_late_breath_timing
+headline_en: Breathing too late in pull on same side
+phases: swim_phase_breathe, swim_phase_pull
+body_signal: E_BREATHE aligns within ±0.10 s of E_PULL_PEAK on breathing-side arm.
+why_it_matters: Can compromise pull force and body line at critical propulsive instant.
+feel_cue: "Breathe early in the stroke — begin rotation as recovery arm passes."
+drill: 8 × 25 m breathe-at-recovery emphasis with snorkel comparison sets.
+severity_default: low
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_hold_breath_tension
+headline_en: Visible breath-holding tension (rhythm)
+phases: swim_phase_breathe
+body_signal: Multiple non-breath cycles with no head motion then abrupt large breath; stroke rate irregularity.
+why_it_matters: Coaching concern for CO2 buildup and rhythm breakdown in learning swimmers — not a medical diagnosis.
+feel_cue: "Exhale underwater — bubble bubble breathe."
+drill: 10 × 25 m exhale-focus drill humming underwater.
+severity_default: info
+sources: B learn-to-swim
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_flat_swim
+headline_en: Insufficient body roll
+phases: swim_phase_body_roll
+body_signal: Shoulder tilt peak-to-peak below athlete baseline or below generic minimum for skill level.
+why_it_matters: May limit reach and encourage straight-arm pull patterns in coaching progressions.
+feel_cue: "Roll to your armpit — show your shoulder to the ceiling each stroke."
+drill: 6 × 50 m 6-kick switch drill (see Coaching/002_drills.txt).
+severity_default: low
+sources: B+
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_over_rotation
+headline_en: Excessive body roll
+phases: swim_phase_body_roll, swim_phase_entry
+body_signal: Shoulder tilt exceeds upper band; often co-occurs with crossover entry.
+why_it_matters: Can destabilize line and delay catch on weak side.
+feel_cue: "Roll enough to breathe — not enough to fall over."
+drill: Pull buoy 4 × 100 m focusing 35° roll cue (qualitative).
+severity_default: low
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_snaking_hips
+headline_en: Hips fishtail side to side
+phases: swim_phase_body_roll, swim_phase_pull
+body_signal: Pelvis lateral displacement out of phase with shoulders; large lateral kick spread.
+why_it_matters: Increases drag; often linked to crossover or wide kick.
+feel_cue: "Swim inside a narrow tube — hips follow shoulders."
+drill: 8 × 25 m band around ankles (coach supervised) or noodle between thighs for alignment.
+severity_default: medium
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_bicycle_kick
+headline_en: Excessive knee bend in kick (bicycle kick)
+phases: swim_phase_kick
+body_signal: Knee flexion amplitude high; kick originates from knee not hip proxy.
+why_it_matters: Common beginner pattern; increases drag and reduces propulsive kick contribution.
+feel_cue: "Kick from the hip with floppy ankles — like a whip."
+drill: 4 × 25 m vertical kick at wall, arms out of water.
+severity_default: medium
+sources: B NGB
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_wide_kick
+headline_en: Kick wider than body line
+phases: swim_phase_kick
+body_signal: Ankle lateral separation exceeds hip width threshold repeatedly.
+why_it_matters: Increases frontal area; may indicate poor core engagement or ankle mobility compensations.
+feel_cue: "Hide your feet behind your shadow."
+drill: 6 × 50 m kick on side with bottom arm extended — narrow kick focus.
+severity_default: low
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_surface_kick_splash
+headline_en: Feet break surface excessively
+phases: swim_phase_kick
+body_signal: Ankle trajectory crosses water surface Y repeatedly with splash proxy.
+why_it_matters: Efficiency concern in distance models; may be acceptable in sprint contexts.
+feel_cue: "Kick underwater — small bubbles behind you."
+drill: 8 × 25 m streamline kick with board, eyes down.
+severity_default: info
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_asymmetric_cycle_timing
+headline_en: Left/right stroke timing uneven
+phases: full_cycle
+body_signal: Cycle period difference between arms exceeds asymmetry threshold across ≥4 cycles.
+why_it_matters: May indicate breathing-side bias, injury avoidance, or inconsistent catch on one side.
+feel_cue: "Same rhythm both sides — metronome in your head."
+drill: 5 × 100 m alternate bilateral every 3 and every 5.
+severity_default: medium
+sources: ProductLogic + B coaching
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_asymmetric_pull_power
+headline_en: Pull speed peak much stronger on one side
+phases: swim_phase_pull
+body_signal: E_PULL_PEAK magnitude imbalance L/R beyond threshold with adequate cycles.
+why_it_matters: Performance and load asymmetry; investigate breathing preference and shoulder comfort off-app.
+feel_cue: "Match the pull on your weak side — same pressure, same path."
+drill: Weak-side single-arm 8 × 25 m with drill paddle only if coach approves.
+severity_default: medium
+sources: B+
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_shoulder_hike_entry
+headline_en: Hiking shoulder into entry
+phases: swim_phase_entry
+body_signal: Pulling shoulder elevates toward ear at entry; neck shrinks on that side.
+why_it_matters: May reduce lat engagement and precede dropped elbow compensations in coaching observations.
+feel_cue: "Relax the shoulder — reach long from your ribs."
+drill: 6 × 25 m catch-up with shoulder blade set cue post-entry.
+severity_default: low
+sources: B clinical context A for pain — not this finding alone
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_double_peaked_pull
+headline_en: Two speed peaks in one pull
+phases: swim_phase_pull
+body_signal: Bimodal wrist speed curve underwater.
+why_it_matters: Suggests lost connection mid-pull or corrective scull; reduces smooth propulsion.
+feel_cue: "One smooth accelerator — no restart mid-pull."
+drill: 4 × 50 m pull buoy slow tempo continuous pull.
+severity_default: low
+sources: B+
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_upward_exit
+headline_en: Hand exits upward toward surface early
+phases: swim_phase_push
+body_signal: Wrist vertical velocity upward before backward push completes.
+why_it_matters: Shortens push phase; common when swimmers rush stroke rate.
+feel_cue: "Exit low at your hip — don't lift the hand out early."
+drill: 8 × 25 m finish-touch thigh drill ( tactile cue at pool edge practice ).
+severity_default: low
+sources: B
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_early_breath_drop
+headline_en: Head drops abruptly after breath interrupting body line
+phases: swim_phase_breathe, swim_phase_entry
+body_signal: After E_BREATHE, head pitch returns with high angular velocity while recovering wrist still mid-recovery; hips may spike then drop in side view.
+why_it_matters: Abrupt head drop can break streamline and delay next catch in coaching models (performance / drag framing).
+feel_cue: Return the head smooth — cheek to water, then eyes down, no slam.
+drill: 6 × 25 m breathe every 3 with slow head return emphasis; compare to snorkel set.
+severity_default: low
+sources: NGB freestyle breathing progressions (B); posture/drag summaries (B+)
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_thumb_first_exit_extreme
+headline_en: Extreme thumb-first twist at exit collapses elbow
+phases: swim_phase_push, swim_phase_recovery
+body_signal: At E_EXIT, forearm pronates sharply with elbow flexion spike; wrist path rises medial before recovery elbow leads.
+why_it_matters: Mild thumb-first exit is coached; extreme twist can shorten push and stress recovery path (coaching — not diagnosis).
+feel_cue: "Finish long, then pinky-to-thumb soft — don't corkscrew the elbow out."
+drill: 8 × 25 m exaggerate finish to thigh then quiet recovery; coach watches exit only.
+severity_default: low
+sources: Stroke-exit coaching consensus (B)
+confidence_note: Needs clear side or 45° view of exit hand
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.
+---
+
+finding_id: fault_dead_hip_kick
+headline_en: Hips stay rigid with minimal kick contribution
+phases: swim_phase_kick, swim_phase_body_roll
+body_signal: Ankle vertical oscillation amplitude near zero across ≥3 cycles while arm cycle continues; pelvis pitch variance flat.
+why_it_matters: Kick supports body line and timing in freestyle models; dead hips often pair with sinking legs and rushed arms (performance).
+feel_cue: "Wake up the hips — small constant flutter from the hip hinges."
+drill: 4 × 25 m kickboard then 25 m swim matching same hip rhythm; optional vertical kick 30 s.
+severity_default: medium
+sources: Kick contribution coaching (B); freestyle coordination reviews (B+)
+youth_note: Continuous catch and breath timing; avoid race-pace kick volume cues for beginners.

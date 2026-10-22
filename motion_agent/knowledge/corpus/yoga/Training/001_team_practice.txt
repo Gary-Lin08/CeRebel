@@ -1,0 +1,179 @@
+# Yoga — Group Class, Studio, and Team Practice (capture + coaching workflow)
+
+Body-first alignment sessions for studios, school programs, athletic teams using yoga as cross-training,
+and corporate wellness groups. Authority: B coaching consensus; safety themes align with NCCIH consumer
+summaries (A) cited in `_meta/SOURCE_MANIFEST.txt`. This is **not** medical screening or load prescription.
+
+See Docs/002_DISCLAIMER.txt: modifications are coaching options, not diagnosis or eligibility tests.
+
+---
+
+## 1. Why film holds in a group setting
+
+Group yoga differs from solo home practice:
+
+- **Teacher attention is split** — short clips give each practitioner one or two actionable cues per week.
+- **Flow classes** mix entry, hold, and transition; CeRebel v1 prioritizes **steady hold windows** (Y_ALIGN, Y_HOLD).
+- **Line-of-sight** varies by mat placement; standardize camera angle per room when possible.
+
+Session goal: one **repeatable capture setup**, one **pose family** per filming block, and **homework**
+(one drill from Coaching/002 per person) rather than correcting every fault in one class.
+
+---
+
+## 2. Pre-class movement prep (before recording)
+
+Typical 8–12 minute warm-up before filming alignment holds (B studio practice patterns):
+
+1. **Breath and neutral stand** (1–2 min): Mountain pose — establish baseline; do not film until stillness.
+2. **Joint mobility**: wrist circles, shoulder rolls, cat–cow at tabletop pace (not max range contests).
+3. **Progressive load**: puppy or wall dog → plank on knees → full plank only if line holds.
+4. **Balance prep**: tree at wall or chair fingertip touch — film only when practitioner opts in without forcing depth.
+
+Youth / school groups: shorten to 5–8 minutes; emphasize playful balance and **no pain** language.
+Prenatal or postpartum participants: **do not** use automated findings as clearance; refer to qualified prenatal teacher.
+
+Avoid filming the first minute after cold entry from outdoors — stiffness skews fold and dog shapes.
+
+---
+
+## 3. Camera setup for studios and gyms
+
+**Downward dog, plank, chaturanga (sagittal preferred)**:
+- Camera at **hip height**, **perpendicular** to long edge of mat, 2.5–4 m away.
+- Full body in frame including hands and feet; avoid cropping heels in dog.
+- Practitioner sideways to camera (profile) for lumbar and hip sag visibility.
+
+**Warrior I / II, triangle, chair (45° or frontal)**:
+- **45° front-diagonal** improves knee–ankle tracking vs pure frontal foreshortening.
+- For warrior I pelvis “squareness,” add a **second short clip** from side if product supports multi-clip compare.
+
+**Tree and single-leg balance**:
+- Frontal camera centered on pelvis; wall support visible in frame is acceptable (note in session log).
+
+**Cobra / low bridge (prone)**:
+- Low camera at mat level, side view; head neutral — neck extension findings downgrade when face turns away.
+
+**Room constraints**:
+- Minimize mirrors doubling skeleton noise if pose backend allows mirror masking; else angle away from mirrors.
+- Even lighting on mat; backlit windows reduce edge confidence on wrists and ankles.
+
+Multiple practitioners: **one mat lane at a time** for v1 analysis quality; queue others in parallel breath work.
+
+---
+
+## 4. Class formats mapped to capture strategy
+
+| Format | Capture approach | Phase emphasis |
+|--------|------------------|----------------|
+| Slow flow / alignment | Pause 3–5 breaths in target pose | Y_ALIGN, Y_HOLD |
+| Vinyasa | Isolate **one** pose per week for homework film | Y_HOLD only in clip |
+| Yin / restorative | Long holds — good for steadiness (com_drift) | Y_HOLD |
+| Power / heated | Film early block before fatigue sag dominates | Y_ALIGN early |
+| Team cross-training | Plank, low lunge, dog as mobility screen | F_TABLETOP_CORE, F_INVERTED_V |
+
+Athletic teams: treat yoga as **supplemental** mobility — one finding per athlete per microcycle;
+coordinate with AT/PT staff; never override medical hold orders with app cues.
+
+---
+
+## 5. Coach / teacher workflow with phase scrub
+
+Target UX for studio owners using CeRebel review:
+
+1. Tag clip: **pose_id**, **experience band** (youth | adult), **prop use** (wall, block, chair).
+2. Review clip-level **hold steadiness** and top severity finding (form vs load hint).
+3. Scrub to **Y_ALIGN** window (see Phases/001) for stacking faults (knee, lumbar, shoulders).
+4. Assign **one cue** (Coaching/001) + **one 30–90 s drill** (Coaching/002) including modification if linked.
+5. Re-film same pose after 2–3 weeks at same camera geometry — qualitative compare, not competition on depth.
+
+Language in group feedback: use **feel** and **option** framing (“many practitioners bend knees here”),
+not diagnostic labels (“your disc is at risk”).
+
+---
+
+## 6. Drill rotation aligned to common studio needs
+
+Link to finding slugs in Findings/001 and drills in Coaching/002:
+
+| Studio theme | Drill family | Example finding links |
+|--------------|--------------|------------------------|
+| Shoulder sustainability | Wall dog, puppy, serratus prep | fault_dog_shoulder_elevation, fault_chaturanga_shoulder_dip |
+| Core line in vinyasa | Knee plank, hollow body prep | fault_plank_hip_sag, fault_plank_hip_pike |
+| Safe forward fold | Chair / micro-bend uttanasana | fault_fold_rounded_lumbar |
+| Lunge stability | Short stance warrior, block under hands | fault_warrior_knee_tracking |
+| Backbend distribution | Low cobra, hands light | fault_cobra_lumbar_only |
+| Balance confidence | Tree at wall, gaze fixed | fault_tree_hip_drop, fault_tree_knee_valgus |
+
+Keep **volume low** during exam or performance weeks for student athletes — one maintenance drill weekly.
+
+---
+
+## 7. Props and modifications in team context
+
+Props are **optional coaching tools**, not requirements for detection:
+
+- **Wall**: dog, half-forward fold, tree — reduces fear and improves capture repeatability.
+- **Chair**: uttanasana, warrior II hands — youth and tight hamstrings.
+- **Blocks**: under hands in dog/plank — wrist angle changes; note prop in clip metadata.
+- **Knees down**: plank/chaturanga progression — valid modification, not “failed” rep.
+
+Document prop use so findings that assume mat-level hands are interpreted with lower confidence.
+
+Caution entities (brain_plan §6): if participant reports acute wrist or low-back sensitivity, skip automated
+“deeper” cues; offer modification_ids from Coaching/002 and suggest qualified in-person teacher review.
+
+---
+
+## 8. Weekly structure (illustrative — not prescriptive load)
+
+This pack does **not** set minutes on mat or intensity for medical populations.
+
+General B-pattern for alignment-focused groups:
+
+- **Week A**: Inverted V family film block (dog) + homework pedaling dog.
+- **Week B**: Tabletop / plank family + knee plank drill.
+- **Week C**: Standing lunge family (warrior I/II) + short stance cue.
+- **Week D**: Fold + gentle extension (uttanasana, cobra) + micro-bend emphasis.
+
+Youth classes: rotate games that embed balance and plank **without** max-depth contests.
+Corporate wellness: 20-minute capture-friendly subset (mountain, chair, dog at wall, tree at wall).
+
+---
+
+## 9. Privacy, consent, and inclusion
+
+- Obtain **photo/video consent** per studio policy before filming for analysis.
+- Avoid single-athlete public shaming; share findings privately or via coach dashboard.
+- Body diversity: alignment heuristics vary; widen interpretation bands and prioritize comfort language.
+- Gender-neutral cueing; avoid assuming hip structure from pose shape alone.
+
+---
+
+## 10. Integration with other CeRebel packs
+
+Teams that also run **running** or **weightlifting** may share themes (hip hinge, shoulder depression).
+Cross-link at coach discretion — yoga pack cautions against aggressive end-range pushing for lifters with
+fatigue. No automatic merging of findings across sports in v1.
+
+---
+
+## 11. Session log fields (recommended)
+
+For reproducible re-film:
+
+- date, room, instructor_id
+- pose_id, hold duration (breaths or seconds)
+- camera side (L/R profile), distance estimate
+- prop flags, youth/adult band
+- top finding_id reviewed, drill_id assigned
+
+---
+
+## 12. Limits of group practice analysis
+
+- Cannot detect breath retention, dizziness, or pain — participants must self-report and stop.
+- Cannot replace hands-on assists or therapeutic assessment.
+- Multi-person frames: analyze one skeleton only per clip in v1.
+
+End of Training/001 — align with Phases/001 phase ids Y_ENTRY through Y_EXIT.

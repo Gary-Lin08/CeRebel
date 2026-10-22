@@ -1,0 +1,215 @@
+# Yoga Biomechanics — Overview (open literature summaries)
+# Authority: B+ primary; B for coaching crossover | Not prescriptive medicine
+# Product use: qualitative relationships for RAG; no universal degree norms
+
+================================================================================
+1. SCOPE AND METHOD
+================================================================================
+
+This document summarizes **peer-reviewed and widely cited open-access reviews** on yoga-related
+musculoskeletal mechanics, plus established exercise-science relationships applied to common mat poses.
+CeRebel uses these relationships to **explain why coaching cues exist**, not to diagnose injury or assign
+“correct” angles to every body.
+
+Key methodological limits for video pose estimation:
+- 2D projection error dominates sagittal “stacking” and knee–toe alignment.
+- Surface markers approximate joint centers; yoga alignment is often taught in 3D while camera is 2D.
+- Passive vs active range cannot be distinguished from shape alone.
+
+================================================================================
+2. SPINE — FLEXION, EXTENSION, AXIAL LOAD
+================================================================================
+
+2.1 Standing and seated forward folds (Uttanasana, Paschimottanasana)
+
+Biomechanical theme: **hip flexion** should contribute substantially to forward bending; **lumbar flexion**
+increases compressive and shear loads on vertebral segments in cadaveric and modeling studies of flexion
+(general spine biomechanics, not yoga-specific trials alone).
+
+Yoga therapy and LBP systematic reviews (Cramer et al., multiple Cochrane-adjacent summaries, B+) report
+**benefit for some chronic low back pain cohorts** with supervised, modified yoga — individual response varies;
+pain during movement is typically a stop signal in clinical yoga protocols.
+
+Product mapping:
+- fault_forward_fold_spine_round — visible lumbar flexion dominance before hip hinge.
+- Checkpoints emphasize hip hinge and props; osteoporosis disclaimer overrides depth messaging.
+
+2.2 Downward-Facing Dog — mixed chain
+
+Down Dog is **not a pure forward fold** nor a handstand. Kinematically it combines:
+- Shoulder flexion often 130–180° depending on mobility (literature ranges vary by measurement method).
+- Hip flexion with posterior weight shift; knee flexion modulates hamstring tension.
+- Wrist extension load in closed kinetic chain.
+
+Shoulder girdle: serratus anterior and lower trapezius contribute to upward rotation and scapular stability
+in weight-bearing shoulder flexion (push-up/plank EMG literature, B+). **Shrugging** (upper trap dominance)
+is a common compensation when hamstrings or shoulders are limited — maps to fault_dog_shoulder_elevation.
+
+Lumbar: instructors often cue **anteverted pelvis with long spine** vs **sagging** between shoulder and hip
+hyperextension — product uses qualitative sagittal line, not single pelvic tilt degree.
+
+2.3 Backbends — Cobra, Upward Dog
+
+Extension distributes across thoracic and lumbar segments; **lumbar-dominant extension** shows larger local
+angles when thoracic region is stiff (clinical observation + spine extension studies, B+).
+
+Up Dog adds **lower extremity load** (knees lifted, tops of feet) and **wrist extension** with body mass
+over hands — shoulder position relative to wrist alters joint moments similar to plank family.
+
+Cervical extension additive to thoracic extension increases **regional cervical load** — coaching neutral neck
+aligns with conservative PT yoga modifications (B).
+
+2.4 Twists (supine twist in common set)
+
+Spinal rotation couples with subtle lateral flexion; **forced end-range twist** under load is discouraged
+for osteoporosis and acute disc presentations in clinical yoga guidelines (B+). Product v1 includes gentle
+supine twist in taxonomy with checkpoint on shoulder grounding — not aggressive bind poses.
+
+================================================================================
+3. LOWER EXTREMITY — KNEE, HIP, ANKLE
+================================================================================
+
+3.1 Lunges and Warrior family
+
+Front knee flexion in lunge/Warrior II increases **patellofemoral joint contact stress** with flexion angle
+in biomechanical models (squat/lunge literature, B+). Hence cues for **knee over ankle** and **tracking over
+toes** — not because a single angle is universal, but because extreme forward knee translation with deep flexion
+raises modeled PFJ load.
+
+Frontal plane: **dynamic knee valgus** (knee medial to hip–foot line) is associated with increased valgus
+moment in drop-jump studies; yoga applies analogous visual cue in Warrior — fault_warrior_knee_collapse.
+
+Hip **external rotation and abduction** demands differ Warrior II (open pelvis) vs Warrior I (square cue).
+Skeletal **femoral anteversion/version** limits apparent “square hips” — anatomical variation (B+) must be
+acknowledged to avoid harmful shame-based alignment (fault_w1_hip_open low severity).
+
+3.2 Chair Pose (Utkatasana)
+
+Resembles partial squat with torso inclined; quadriceps eccentric/concentric load high. Knee valgus same
+concern as squat — fault_chair_knee_collapse.
+
+3.3 Tree and single-leg stance
+
+Pelvic **Trendelenburg** (contralateral hip drop) indicates hip abductor insufficiency or fatigue in clinical
+gait analysis; in Tree appears as fault_balance_hip_drop / fault_tree_hip_jut.
+
+Knee **hyperextension** in standing increases passive ligament stress in recurvatum populations — micro-bend
+cue (fault_locked_knee_balance).
+
+3.4 Down Dog heels and ankle
+
+Ankle dorsiflexion limits affect heel height; **forcing heels down** is not a biomechanical requirement for
+spine length — primarily gastrocnemius/soleus extensibility. Product does not fail short dorsiflexion.
+
+================================================================================
+4. UPPER EXTREMITY — SHOULDER, ELBOW, WRIST
+================================================================================
+
+4.1 Plank and Chaturanga
+
+Plank maintains **scapular protraction/retraction balance**; sagging hips often coincide with scapular winging
+or lumbar extension (fault_plank_hip_sag).
+
+Chaturanga is a **closed-chain push-up** with high elbow and shoulder demand. Biomechanical push-up studies show:
+- Elbow flare increases shoulder abduction angle and may alter subacromial space dynamics in some models (debated, B+).
+- **Shoulders below elbows** (fault_chaturanga_shoulder_drop) is discouraged in yoga transition safety articles
+  citing shoulder impingement risk in repetitive vinyasa (mechanism plausible, individual risk varies).
+
+Eccentric control reduces peak rate of loading — fault_flow_uncontrolled_drop.
+
+4.2 Wrist extension in weight-bearing poses
+
+Extended wrist angles in Dog, Plank, Up Dog increase **wrist extension moment**. Modifications (fists, blocks,
+forearm dog) redistribute load — coaching props, not tracked.
+
+4.3 Overhead reach (Upward Salute, Chair arms)
+
+Shoulder flexion with **rib cage extension** (fault_upward_salute_rib_flare) reflects limited thoracic extension
+or habitual lumbar compensation in overhead patterns seen in strength & conditioning literature (B).
+
+================================================================================
+5. CORE AND INTRATHORACIC PRESSURE (QUALITATIVE)
+================================================================================
+
+“Core engagement” in plank/chair reduces lumbar shear in some trunk modeling (B+). Product does not measure IAP
+or breath holding; **breath-holding during effort** is discouraged in general exercise safety (B).
+
+Ujjayi and other pranayama are **out of scope** for pose-only pipeline.
+
+================================================================================
+6. LOAD, FREQUENCY, AND ADAPTATION
+================================================================================
+
+Yoga practice spans restorative (low load) to power/vinyasa (moderate–high repetitive wrist/shoulder/knee load).
+Systematic reviews note **dose-response** is study-dependent; 1–3 sessions/week supervised often appear in trials
+for LBP and balance in older adults (B+).
+
+Adaptation targets:
+- **Neuromuscular**: balance, proprioception (Tree, Warrior III prep).
+- **Mobility**: active ROM with control, not passive end-range forcing.
+- **Strength**: isometric holds (Plank, Chair, Warrior), eccentric chaturanga.
+
+Youth: growth plates and apophyseal sites — high repetitive end-range jump-back vinyasa less emphasized in
+youth training content; prefer short holds and games.
+
+Older adults: fall prevention evidence for balance components of yoga/tai chi class comparisons (B+); chair
+support and wall use increase safety.
+
+================================================================================
+7. HYPERMOBILITY
+================================================================================
+
+Generalized joint hypermobility (including hEDS spectrum) predisposes to **passive range without muscular control**.
+Yoga culture “deeper is better” conflicts with PT guidance favoring **mid-range stability** (A/B+ clinical consensus
+summaries). Product findings that reward “more angle” are avoided; drift and end-range collapse prioritized.
+
+================================================================================
+8. EVIDENCE TABLE (SELECTED THEMES)
+================================================================================
+
+| theme                         | typical evidence | authority | product use |
+|-------------------------------|------------------|-----------|-------------|
+| Yoga for chronic LBP          | RCTs + reviews   | B+        | hinge cues, pain stop |
+| Knee valgus in lunges         | biomech models   | B+        | warrior checkpoints |
+| Plank trunk endurance         | EMG/kinematics   | B+        | sagittal line |
+| Push-up shoulder mechanics    | sports science   | B+        | chaturanga cues |
+| Balance in older adults       | trials/reviews   | B+        | tree, warrior |
+| Wrist load WB flexion         | clinical yoga PT | B         | prop suggestions |
+| Injury surveys in yoga        | self-report      | B+        | controlled transition |
+
+Representative open sources (URLs in SOURCE_MANIFEST): PubMed systematic reviews on yoga for low back pain;
+American College of Sports Medicine position stands on exercise progression; NHS exercise guidance; Yoga Alliance
+scope documents; peer-reviewed yoga injury prevalence surveys (e.g., BJSM-related commentaries — verify at ingest).
+
+================================================================================
+9. MAPPING TO CErebel FINDINGS (SUMMARY)
+================================================================================
+
+| biomech theme              | finding ids (sample) |
+|----------------------------|----------------------|
+| lumbar flexion load        | fault_forward_fold_spine_round |
+| lumbar extension sag     | fault_dog_lumbar_sag, fault_plank_hip_sag |
+| PFJ/lunge flexion          | fault_warrior_knee_past_toes, fault_warrior_knee_collapse |
+| shoulder girdle WB flexion | fault_dog_shoulder_elevation, fault_chaturanga_shoulder_drop |
+| push-up elbow angle        | fault_chaturanga_elbow_flare |
+| single-leg pelvic control  | fault_balance_hip_drop, fault_tree_hip_jut |
+| cervical extension         | fault_backbend_neck_hyperextension |
+| eccentric loading rate     | fault_flow_uncontrolled_drop |
+
+================================================================================
+10. WHAT WE DO NOT CLAIM
+================================================================================
+
+- Specific joint angles as medical norms for all bodies.
+- That correcting a visible fault reduces injury probability in an individual.
+- That yoga replaces strength training or PT for pathological conditions.
+- Breath, mental health, or spiritual outcomes from pose shape alone.
+
+See Docs/002_DISCLAIMER.txt for product-safe language.
+
+================================================================================
+11. FUTURE BIOMECH DOCS (PLACEHOLDER)
+================================================================================
+
+Optional v2 splits: 002_shoulder_wrist_load.txt, 003_spine_flexion_extension.txt, 004_balance_hip_abductors.txt
+when pack ingests full open-access PDFs into Biomechanics/ like golf pack.

@@ -10,6 +10,10 @@ from pathlib import Path
 from typing import Any, Callable
 
 from motion_agent.knowledge import source_matches
+from motion_agent.knowledge.sport_sources import (
+    SPORT_KB_SOURCES,
+    default_kb_sources as _default_kb_sources_map,
+)
 from motion_agent.llm.prompts import (
     compose_system_prompt,
     get_preset_prompt,
@@ -229,8 +233,11 @@ def _build_user_content(
 GOLF_FIRST_QUESTION = "Divide this video into golf swings and phases."
 
 # Default RAG source filters when the model omits sources= (prefix / glob).
-GOLF_KB_SOURCES = ["golf/", "golf_*.txt"]
-SNOWBOARD_KB_SOURCES = ["fis/", "snowboard_*.txt"]
+# Canonical map: motion_agent.knowledge.sport_sources.SPORT_KB_SOURCES
+GOLF_KB_SOURCES = list(SPORT_KB_SOURCES["golf"])
+SNOWBOARD_KB_SOURCES = list(SPORT_KB_SOURCES["snowboarding"])
+BASEBALL_KB_SOURCES = list(SPORT_KB_SOURCES["baseball"])
+HUMAN_KB_SOURCES = list(SPORT_KB_SOURCES["general"])
 
 # Heuristic: questions that should draw from the golf knowledge pack, not phases alone.
 _GOLF_KB_HINTS = (
@@ -269,11 +276,7 @@ def _is_snowboard_mode(prompt_mode: str | None) -> bool:
 
 
 def _default_kb_sources(prompt_mode: str | None) -> list[str] | None:
-    if _is_golf_mode(prompt_mode):
-        return list(GOLF_KB_SOURCES)
-    if _is_snowboard_mode(prompt_mode):
-        return list(SNOWBOARD_KB_SOURCES)
-    return None
+    return _default_kb_sources_map(prompt_mode)
 
 
 def _golf_question_needs_kb(question: str) -> bool:
@@ -936,12 +939,34 @@ def get_sport_analysis(
         session_dir = newest_ready_session_dir(data_dir)
     if session_dir is None or not session_dir.is_dir():
         return {"error": True, "type": "NO_SESSION", "message": "No preprocessed video session found."}
+    key = (sport or "golf").strip().lower()
+    # Refuse to dress a golf swing as a pitch (consumer trust).
+    if key == "baseball":
+        try:
+            from motion_agent.app.product_session import session_looks_like_golf
+
+            is_golf, conf, _ = session_looks_like_golf(
+                session_dir, video_id=session_dir.name, data_dir=data_dir
+            )
+            if is_golf:
+                return {
+                    "error": True,
+                    "type": "SPORT_MISMATCH",
+                    "message": (
+                        "This capture looks like a golf swing "
+                        f"(confidence {conf:.2f}), not a baseball pitch."
+                    ),
+                    "detected_sport": "golf",
+                    "sport_confidence": round(conf, 3),
+                }
+        except Exception:  # noqa: BLE001
+            LOG.exception("sport mismatch check failed")
     try:
         seq = adapt_session(session_dir)
         result = execute_tool(
             seq,
             "build_sport_analysis",
-            {"sport": sport, "handedness": handedness},
+            {"sport": key, "handedness": handedness},
         )
     except Exception as exc:  # noqa: BLE001
         LOG.exception("sport analysis prefetch failed")
@@ -989,9 +1014,18 @@ def get_golf_phase_cards(
     return summary
 
 
-def get_current_session_info(data_dir: Path | None = None) -> dict[str, Any]:
+def get_current_session_info(
+    data_dir: Path | None = None,
+    *,
+    session_id: str | None = None,
+) -> dict[str, Any]:
     data_dir = data_dir or Path(os.environ.get("CEREBEL_DATA_DIR", "/root/CerebelServer/data"))
-    session_dir = newest_ready_session_dir(data_dir)
+    if session_id:
+        session_dir = data_dir / "sessions" / str(session_id)
+        if not session_dir.is_dir():
+            return {"error": True, "type": "NO_SESSION", "message": "Capture not found", "session_id": session_id}
+    else:
+        session_dir = newest_ready_session_dir(data_dir)
     if session_dir is None:
         return {"error": True, "type": "NO_SESSION", "message": "No ready session"}
     summary = session_summary(session_dir)

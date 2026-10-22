@@ -1,0 +1,88 @@
+# Yoga Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel yoga content summarizes **open exercise science, yoga therapy research reviews, and widely published
+teaching cues**. It is **not** a substitute for licensed medical care, physical therapy, diagnosis, or treatment of
+spine, joint, nerve, cardiovascular, or mental-health conditions.
+
+- Pain, numbness, tingling, dizziness, headache, or sharp joint symptoms during or after practice require evaluation
+  by a qualified clinician — do not rely on an app finding to “push through” discomfort.
+- Yoga is exercise; intensity varies by style (restorative vs power). Match style to your health status with a
+  qualified teacher or clinician when you have chronic conditions.
+
+## High-risk populations (refer out — no automated override)
+
+Automated alignment feedback is **coaching support**, not clearance to practice. Seek professional guidance before
+mat work if you have or are recovering from:
+
+- Pregnancy or postpartum (especially new to inversion or deep twist progressions).
+- Osteoporosis or low bone density (flexion-loaded spine postures, aggressive forward fold).
+- Glaucoma or uncontrolled hypertension (inversion prep, breath retention — not visible in pose-only analysis).
+- Recent surgery, joint replacement, or acute disc/radicular symptoms.
+- Hypermobility spectrum or Ehlers–Danlos — “deeper” is not “better”; stability over range.
+
+The product may surface **general** caution text from this pack; it cannot know your full history.
+
+## Not a certification or lineage authority
+
+This pack does not replace RYT training, Iyengar / Ashtanga / Viniyoga certification, or studio liability policies.
+Sanskrit names and common alignments are **pedagogical summaries**, not definitive scripture or guru instruction.
+
+## Body tracking limitations
+
+Single-camera 2D pose estimation can mis-estimate:
+
+- Lumbar curvature and pelvic tilt when the trunk is flexed or the camera is oblique.
+- Knee–toe relationship in lunges when the front leg is foreshortened.
+- Shoulder flexion and scapular upward rotation in Down Dog when arms align with the camera plane.
+- Neck extension in Cobra/Up Dog when the head is turned.
+- Hip “squareness” in Warrior I when capture is purely frontal without 45° view.
+
+Findings describe **visible tendencies** with confidence downgrades for occlusion, baggy clothing, long hair over
+shoulders, and low frame rate on fast vinyasa transitions.
+
+## Flexibility and “correct” shape
+
+Open literature and teaching traditions emphasize **individual variation** in bone structure (hip socket orientation,
+femoral neck angle) limiting squat depth, split angle, or “hips square” appearance. Automated feedback must not
+shame natural anthropometry or equate aesthetic Instagram shapes with safety.
+
+## Breath and nervous system
+
+Pranayama, breath retention (kumbhaka), and psychological triggers are **out of scope** for pose-only analysis.
+Do not infer breath quality from stillness of the rib cage in 2D pose.
+
+## Injury prevention limits
+
+Population studies link certain movement patterns with load; **individual injury risk cannot be predicted** from a
+single clip. Knee valgus, end-range passive stretch, and cervical hyperextension findings are **coaching hints**,
+not diagnoses of meniscus, labrum, or disc pathology.
+
+## Youth
+
+Growing athletes and children need age-appropriate duration, load, and supervision. Competitive “deepest pose”
+culture is discouraged in youth coaching content in this pack.
+
+## Coaching relationship
+
+Automated briefs support practitioners who already study with a qualified teacher. Beginners learning inversions
+or deep backbends need in-person spotting and progressions.
+
+## Emergency
+
+For acute injury, syncope, or chest pain during practice, stop immediately and follow venue emergency procedures.
+
+## Product behavior
+
+- Yoga pack features may be gated as “coming_soon” until hold-window validation — absence of a finding is not proof
+  of optimal alignment.
+- Mislabeled `pose_id` (user selects Warrior II but performs Triangle) reduces accuracy; product should downgrade confidence.
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` with authority levels. Research consensus evolves; retrieval dates matter.
+
+## User-facing short disclaimer (for UI copy)
+
+“Movement tips from video analysis — not medical advice. Stop if you feel pain, numbness, or dizziness. Work with a qualified teacher for your body.”

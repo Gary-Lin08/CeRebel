@@ -1,0 +1,68 @@
+# Volleyball Approach — Quality Definition (v1)
+
+## Purpose
+
+Define what "good" attack approach quality means in **body-measurable terms** for CeRebel coaching UX.
+v1 does not emit a single numeric quality score; coaches see **checkpoint pass/fail** with linked findings.
+
+## Quality dimensions
+
+### 1. Approach rhythm and length (approach, plant)
+
+Forward speed builds on the last steps; penultimate step loads the jump; total approach distance fits athlete
+stature and set tempo. Failures: slow-approach, short-approach, penultimate-flat.
+
+Evidence: coaching consensus (B); approach cadence in open kinematics (B+).
+
+### 2. Plant and vertical impulse (plant, takeoff)
+
+Plant leg accepts force with adequate knee flexion then extends into takeoff; COM rises after plant, not during
+only arm motion. Failures: soft-plant, arm-only-swing.
+
+Evidence: B+ jump-spike reviews; B NGB footwork progressions.
+
+### 3. Trunk–arm sequencing (takeoff, swing, contact)
+
+Trunk rotation and opening contribute before or with rapid hand acceleration; not a late afterthought.
+Failures: late-trunk-open, arm-only-swing.
+
+Evidence: B+ proximal-to-distal hitting literature.
+
+### 4. Jump–contact timing proxy (swing, contact)
+
+Relationship between COM peak and wrist speed peak within age-banded heuristics — supports answering
+"jumping under vs behind" without ball track. Failures: jump-behind-contact, jump-early-reach.
+
+Evidence: B product heuristic; B+ variability in elite cohorts (no single ms target).
+
+### 5. Takeoff symmetry (takeoff, swing)
+
+Left and right ankles leave ground within reasonable window; excessive stagger may reduce power transfer.
+Failures: asymmetric-takeoff, narrow-plant, wide-plant.
+
+Evidence: B coaching; camera angle sensitivity noted.
+
+### 6. Landing absorption (landing)
+
+Knees and hips flex on landing; trunk stays relatively quiet. Failures: landing-stiff.
+
+Evidence: A/B+ landing load literature (general athletics); not injury prediction.
+
+## Age bands
+
+- **youth**: middle school through early HS; lower speed and COM rise expectations.
+- **adult**: club college and open; standard bands in Quality/002.
+- Session metadata `ageBand` overrides default adult when set.
+
+## Confidence modifiers
+
+Reduce confidence when:
+- Camera primarily head-on (poor sagittal knee angles).
+- Clip trimmed missing plant or landing.
+- Single-foot takeoff style tagged by coach (some hitters use left-right stagger by design).
+
+## Links
+
+Detailed rules: Quality/002_checkpoints.txt
+Fault narratives: Findings/001_common_faults.txt
+Remediation: Coaching/001_cues.txt, Coaching/002_drills.txt

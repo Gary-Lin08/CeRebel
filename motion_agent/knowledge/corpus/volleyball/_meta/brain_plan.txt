@@ -1,0 +1,212 @@
+# CeRebel Volleyball KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: volleyball (indoor / beach shared body logic v1)
+# Aligns: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Product: body-first OpenSim coaching; NO ball tracking; NO trajectory / flight path
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+RAG-ready knowledge for three coach-facing skill families (v1):
+
+1. SPIKE_APPROACH — multi-step approach, penultimate plant, vertical jump, hitting-arm swing
+2. SERVE — standing / jump serve body chain (toss-arm and strike-arm proxies only)
+3. PASS_PLATFORM — ready posture, movement to ball, forearm platform, extension and recovery
+
+Shared assumptions:
+- Contact timing uses **contact proxy** (argmax hitting-side or strike-side wrist speed), not ball touch.
+- Setters, blocks, digs (non-platform), and beach tactics: glossary-only in v1 taxonomy.
+- Medical diagnosis and return-to-play: out of scope; redirect in Docs/002_DISCLAIMER.
+
+Build agent writes full Findings/Coaching bodies from this map; brain agent does not.
+
+================================================================================
+2. PRODUCT CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+- All measurable claims tie to reconstructed body: joint angles, segment speeds, COM height,
+  ankle step rhythm, forearm platform orientation proxy (elbow–wrist segment vs trunk).
+- Never require ball position, spin, net height, line calls, or court calibration for findings.
+- Each user-facing finding maps to: phase window, body signal, feel cue, 30–90s drill, sources.
+- Youth vs adult numeric norms: separate bands; never present youth numbers as adult targets.
+- Authority: A/A+ for federation safety & volume; B+ for biomech reviews; B for NGB coaching;
+  no C-tier thresholds in product findings.
+
+================================================================================
+3. SKILL FAMILIES & PHASE MODELS (5–8 PHASES EACH)
+================================================================================
+
+--- 3A. SPIKE APPROACH (prefix SP_) ---
+
+| id            | label_en        | label_zh   | body role |
+|---------------|-----------------|------------|-----------|
+| SP_READY      | Ready / prep    | 预备       | Athletic stance, minimal COM drift |
+| SP_APPROACH   | Approach steps  | 助跑       | Step rhythm; ankles accelerate forward |
+| SP_PENULT     | Penultimate     | 倒数第二步 | Low COM, knee flex load before plant |
+| SP_PLANT      | Plant           | 制动步     | Lead foot decel; hips open into jump |
+| SP_TAKEOFF    | Takeoff / jump  | 起跳       | COM rise; bilateral or asymmetric push |
+| SP_SWING      | Arm swing       | 挥臂       | Trunk rotation; hitting-side wrist speed ↑ |
+| SP_CONTACT    | Contact proxy   | 击球瞬间   | Peak hitting-side wrist speed in clip |
+| SP_LANDING    | Landing         | 落地       | Decel, knee flexion, balance |
+
+Event definitions (body-only):
+- contact_proxy_sp: argmax ||v(hitting_wrist)|| in analysis window.
+- plant_event: local max deceleration of lead_ankle speed before takeoff_event.
+- takeoff_event: max positive vertical velocity of COM (or pelvis) after plant_event.
+- penult_window: ~1 step before plant_event via ankle velocity cadence.
+
+Handedness: hitting_side = dominant spike hand (RH attacker: right wrist = hitting_wrist).
+
+--- 3B. SERVE (prefix SV_) ---
+
+| id            | label_en        | label_zh   | body role |
+|---------------|-----------------|------------|-----------|
+| SV_READY      | Ready           | 准备       | Platform or pin-point foot stance; quiet COM |
+| SV_LOAD       | Load / coil      | 蓄力       | Knee flex, trunk slight counter-rotation |
+| SV_TOSS_ARM   | Toss-arm rise   | 抛球手     | Non-strike arm elevation (no ball track) |
+| SV_DRAW       | Draw / backswing| 引拍       | Strike-side elbow/wrist drops behind torso |
+| SV_STRIKE     | Strike proxy    | 击球       | Peak strike-side wrist speed |
+| SV_FOLLOW     | Follow-through  | 随挥       | Deceleration across body |
+
+Variant tags (same chain v1): standing_float, jump_float, jump_topspin.
+Toss accuracy and net clearance: OUT OF SCOPE for automated findings.
+
+--- 3C. PASS PLATFORM (prefix PS_) ---
+
+| id            | label_en        | label_zh   | body role |
+|---------------|-----------------|------------|-----------|
+| PS_READY      | Ready position  | 准备姿势   | Neutral athletic base, platform arms ready |
+| PS_MOVE       | Move to ball    | 移动       | Lateral / forward COM; low stable hips |
+| PS_PLATFORM   | Platform form   | 平台       | Forearms joined; elbow angle; shoulders forward |
+| PS_CONTACT    | Contact proxy   | 触球瞬间   | Platform segment stable; minimal wrist flick |
+| PS_EXTEND     | Extension       | 延伸       | Leg drive + trunk angle toward target proxy |
+| PS_RECOVER    | Recovery        | 还原       | Return to base; no sustained lean |
+
+Platform angle proxy: forearm segment (mid-elbows to mid-wrists) vs horizontal in sagittal view.
+
+================================================================================
+4. DETECTOR PLACEHOLDERS (FUTURE volleyball pack)
+================================================================================
+
+| Event              | Body proxy (no ball) |
+|--------------------|----------------------|
+| SP_CONTACT         | argmax hitting_wrist speed |
+| SP_PLANT             | lead_ankle speed min before takeoff |
+| SP_TAKEOFF           | argmax COM vertical velocity |
+| SV_STRIKE            | argmax strike_wrist speed |
+| SV_TOSS_ARM peak     | argmax non-strike wrist height early window |
+| PS_CONTACT           | platform segment angular stability at pass window |
+| skill_classifier     | step count + jump vs no jump + low platform posture |
+
+================================================================================
+5. MEASUREMENT SURFACE (CODE ↔ KB, PLANNED)
+================================================================================
+
+| series_id           | signal                              | unit | primary phases        |
+|---------------------|-------------------------------------|------|------------------------|
+| approach_stride     | lead–trail ankle AP separation      | cm   | SP_APPROACH, SP_PLANT  |
+| penult_knee_flex    | knee_angle_lead (penultimate step)  | °    | SP_PENULT              |
+| jump_height_proxy   | COM or pelvis vertical displacement | cm   | SP_TAKEOFF, SP_SWING   |
+| trunk_rotation_sp   | lumbar / thorax yaw vs start        | °    | SP_PLANT, SP_SWING     |
+| hitting_hand_speed  | ||v(hitting_wrist)||                 | m/s  | SP_SWING, SP_CONTACT   |
+| serve_knee_load     | bilateral knee flex at SV_LOAD        | °    | SV_LOAD, SV_DRAW       |
+| toss_arm_height     | non-strike wrist height vs shoulder   | norm | SV_TOSS_ARM            |
+| strike_hand_speed   | ||v(strike_wrist)||                   | m/s  | SV_STRIKE              |
+| platform_angle      | forearm segment vs horizontal       | °    | PS_PLATFORM, PS_CONTACT|
+| platform_symmetry   | left vs right elbow height delta      | cm   | PS_PLATFORM            |
+| pass_trunk_lean     | trunk flexion / forward lean          | °    | PS_EXTEND              |
+
+================================================================================
+6. CLINICAL / COACHING NORMS (EVIDENCE-BANDED — NOT MEDICAL ADVICE)
+================================================================================
+
+ADULT (college / open; B+ / A kinematic reviews):
+- Spike: penultimate COM lowering; arm swing peak often near COM height peak (sequencing, B+).
+- Hip–shoulder separation before arm swing (B+/A theme); flag early arm if wrist peak before trunk peak.
+- Landing knee flexion for load absorption (A clinical theme); stiff landing heuristic B+.
+- Serve: knee flex in load; jump serves show COM rise before strike proxy (B+).
+- Pass: platform in front of torso; move-through with leg drive (B+ coaching).
+
+YOUTH (U14; B+ / federation safety):
+- Lower jump and arm speed peaks — no adult speed thresholds.
+- Serve: body pattern over power; float progressions.
+- Pass: wider base; down-weight form severity unless pain language.
+- Volume: federation load guidance (A+ summaries); no max plyo prescriptions in KB.
+
+================================================================================
+7. QUALITY CHECKPOINTS (Quality/002 — SUMMARY)
+================================================================================
+
+checkpoint_id              | phase(s)           | series/signal           | fail→finding_id              | evidence
+---------------------------|--------------------|-------------------------|------------------------------|----------
+cp_sp_penult_load          | SP_PENULT          | penult_knee_flex        | fault_spike_no_penult_load   | B+
+cp_sp_plant_before_swing   | SP_PLANT→SP_SWING  | trunk vs wrist peaks    | fault_spike_early_arm        | B+
+cp_sp_jump_before_contact  | SP_TAKEOFF→SP_CONTACT | jump_height + timing | fault_spike_late_jump        | B+
+cp_sp_landing_flex         | SP_LANDING         | knee flexion            | fault_spike_stiff_landing    | B+
+cp_sv_knee_load            | SV_LOAD            | serve_knee_load         | fault_serve_knee_lock        | B+
+cp_sv_toss_arm_stable      | SV_TOSS_ARM        | toss_arm_height drift   | fault_serve_toss_arm_drift   | B+
+cp_sv_follow_decel         | SV_FOLLOW          | strike_wrist decel      | fault_serve_poor_decel       | B+
+cp_ps_platform_level       | PS_PLATFORM        | platform_angle          | fault_pass_broken_platform   | B+
+cp_ps_move_through         | PS_EXTEND          | pass_trunk_lean + COM   | fault_pass_absorb_only       | B+
+cp_ps_ready_base_youth     | PS_READY           | stance width            | fault_pass_narrow_base       | B+
+
+================================================================================
+8. FINDING CATALOG (11 STABLE IDs)
+================================================================================
+
+| finding_id                  | headline_en (short)              | primary_phases        | skill |
+|-----------------------------|----------------------------------|-----------------------|-------|
+| fault_spike_no_penult_load  | No load on penultimate step      | SP_PENULT             | spike |
+| fault_spike_short_approach  | Approach looks cut short         | SP_APPROACH           | spike |
+| fault_spike_early_arm       | Arm swings before trunk opens    | SP_SWING              | spike |
+| fault_spike_late_jump       | Jump after arm already fast      | SP_TAKEOFF, SP_SWING  | spike |
+| fault_spike_stiff_landing   | Stiff landing                    | SP_LANDING            | spike |
+| fault_serve_knee_lock         | Legs stay straight in load       | SV_LOAD               | serve |
+| fault_serve_toss_arm_drift    | Toss arm drifts sideways         | SV_TOSS_ARM           | serve |
+| fault_serve_poor_decel        | Abrupt stop after serve          | SV_FOLLOW             | serve |
+| fault_pass_broken_platform  | Platform arms not level          | PS_PLATFORM           | pass  |
+| fault_pass_absorb_only        | Body stops at contact            | PS_EXTEND             | pass  |
+| fault_pass_narrow_base        | Base too narrow in ready         | PS_READY, PS_MOVE     | pass  |
+
+Each finding card: id, headline, phases, body signal, why, feel cue, drill 30–90s, sources, authority.
+
+================================================================================
+9. ONTOLOGY & TAXONOMY
+================================================================================
+
+Schema/001_ontology.txt — entities: Player, SkillFamily, VolleyballPhase, Finding, Checkpoint, series_id.
+Taxonomy/001_concepts.txt — skill families, phases, body landmarks, synonyms for RAG.
+Taxonomy/002_relations.txt — precedes chains, finding anchors, checkpoint failTriggers.
+
+================================================================================
+10. RAG CROSS-LINKS
+================================================================================
+
+- Findings/001 + Coaching/001 share fault_* ids
+- Quality/002 uses phase IDs and series_id from section 5
+- Biomechanics/001: relationships (B+), youth/adult bands, no ball dependency
+
+================================================================================
+11. OUT OF SCOPE (v1)
+================================================================================
+
+Ball trajectory, set accuracy, block vs hitter timing, rotation violations, libero rules,
+net touch, radar serve speed, court positioning tactics.
+
+================================================================================
+12. BUILD ORDER
+================================================================================
+
+Schema + Taxonomy → Docs → Phases/001 (three chains) → Biomechanics → Quality →
+Findings → Coaching → Training → SOURCE_MANIFEST, research_notes, review_report, build_report
+
+================================================================================
+13. ACCEPTANCE CRITERIA (PACK v1)
+================================================================================
+
+- Three skill families, each 5–8 phases with body-only event definitions
+- Every finding_id in section 8 → Findings card + cue + drill (build agent)
+- No ball-tracking dependency in pack content
+- Phase IDs stable: SP_*, SV_*, PS_*
+
+End brain_plan v0.1

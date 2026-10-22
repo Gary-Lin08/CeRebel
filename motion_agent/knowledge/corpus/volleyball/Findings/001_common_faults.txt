@@ -1,0 +1,356 @@
+# Volleyball — Common Faults (finding cards)
+# Authority: B / B+ open biomechanics + NGB coaching. Not diagnosis.
+# See Docs/002_DISCLAIMER.txt. Body-first; E_CONTACT = hitting-hand speed peak (no ball).
+# ACL / knee language is load-awareness only — never diagnostic.
+
+---
+
+finding_id: fault_jump_behind_contact
+legacy_id: jump-behind-contact
+headline_en: You may be peaking your jump before your swing finishes
+phases: swing, contact, SP_SWING, SP_CONTACT
+body_signal: E_COM_PEAK occurs substantially earlier than E_CONTACT (e.g. >10 frames at 60 fps adult band). COM height may fall while trail_wrist speed is still rising toward peak.
+why_it_matters: Hitting while descending can reduce reachable window and timing margin on higher sets (performance). Athletes often report "jumping behind the ball" when this pattern appears — body proxy without ball track.
+feel_cue: "Stay tall through the swing — punch the hand up at the top of your jump, not on the way down."
+drill: 60s approach-jump reach-and-hold: at peak jump, freeze hitting hand high for 1 s before landing (no ball); 4 reps.
+severity_default: medium
+sources: USA Volleyball approach timing coaching summaries (B); PMC spike sequencing reviews (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_jump_early_reach
+legacy_id: jump-early-reach
+headline_en: Hand speed peaks before you fully rise
+phases: takeoff, swing, contact, SP_TAKEOFF, SP_SWING
+body_signal: E_CONTACT precedes E_COM_PEAK by more than youth/adult band in Quality/002. Wrist speed peak during early takeoff; limited COM rise amplitude.
+why_it_matters: Early arm fire often cuts leg drive contribution — common on rushed sets (performance).
+feel_cue: "Legs first, hand second — let the floor push you up, then whip the arm."
+drill: 45s pause takeoff: plant → jump without arm swing → add arm only after pelvis rises; 5 slow reps.
+severity_default: medium
+sources: Open kinematic chain reviews volleyball/baseball overhead (B+); coaching progressions (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_arm_only_swing
+legacy_id: arm-only-swing
+headline_en: Swing looks mostly arm-driven with little jump
+phases: takeoff, swing, contact, SP_TAKEOFF, SP_SWING
+body_signal: Low COM rise with high wrist speed ratio OR weak E_COM_RISE near-simultaneous with wrist acceleration only; minimal pelvis height change plant→peak.
+why_it_matters: Reduces power from legs and trunk; increases relative shoulder demand in high-volume training (load awareness, not diagnosis).
+feel_cue: "Jump like the floor is hot — push the ground away before you open the shoulder."
+drill: 90s approach touch: last two steps → jump to touch hitting-side hand on a target tape above reach; 6 reps.
+severity_default: high
+sources: PMC spike kinetic chain summaries (B+); NSCA-style plyometric literacy (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_soft_plant
+legacy_id: soft-plant
+headline_en: Plant leg looks straight or weak at takeoff
+phases: plant, takeoff, SP_PLANT, SP_TAKEOFF
+body_signal: plant_knee flex at E_PLANT below checkpoint band (< 22° adult proxy). Limited knee flex change from approach to plant.
+why_it_matters: Insufficient load on plant step reduces elastic contribution to vertical jump (performance).
+feel_cue: "Sit into the last step — big knee bend, then explode up."
+drill: 60s penultimate–plant exaggeration: walk-in last two steps only; 8 reps.
+severity_default: medium
+sources: Volleyball coaching footwork progressions (B); jump mechanics reviews (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_short_approach
+legacy_id: short-approach
+headline_en: Approach distance looks short for a full attack
+phases: approach, plant, SP_APPROACH, SP_PLANT
+body_signal: Horizontal pelvis displacement E_APPROACH_START→E_PLANT below adult/youth band in Quality/002. May co-occur with low approach_speed peak.
+why_it_matters: Short approaches limit built-up horizontal momentum; may suit quick sets but reduces power on high balls (context-dependent).
+feel_cue: "Start farther back — let the first step be small so the last two can be big."
+drill: 60s cone ladder: 4-step approach must pass second cone at plant; 5 shadow spikes.
+severity_default: low
+sources: NCAA/USA coaching footwork summaries (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_penultimate_flat
+legacy_id: penultimate-flat
+headline_en: Penultimate step lacks a loading bend
+phases: approach, plant, SP_APPROACH, SP_PENULT, SP_PLANT
+body_signal: penultimate_knee flex below band or Δflex from prior step < threshold at E_PENULTIMATE.
+why_it_matters: The penultimate step is a primary load step in classic 3/4-step models; flat step reduces rhythm and jump prep (coaching B+).
+feel_cue: "Make the second-to-last step your longest and deepest."
+drill: 45s last-two only: penultimate→plant→mini hop without full swing; 10 reps side view.
+severity_default: medium
+sources: USA Volleyball approach teaching points (B); biomechanics reviews penultimate GRF (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_asymmetric_takeoff
+legacy_id: asymmetric-takeoff
+headline_en: Takeoff timing differs a lot left vs right foot
+phases: takeoff, swing, SP_TAKEOFF
+body_signal: |t_left_airborne - t_right_airborne| > symmetry checkpoint frames. Large stagger may be stylistic but extreme asymmetry flags review.
+why_it_matters: Uneven takeoff can skew trunk path and landing stress (performance/load awareness).
+feel_cue: "Push off both feet together — imagine a pane of glass under your shoes."
+drill: 60s two-foot hop series: from plant stance, 6 consecutive two-foot hops forward without pause.
+severity_default: medium
+sources: Coaching symmetry cues (B); capture noise caveat in Architecture (ProductLogic)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_late_trunk_open
+legacy_id: late-trunk-open
+headline_en: Trunk rotation peaks after the arm accelerates
+phases: swing, contact, SP_SWING, SP_CONTACT
+body_signal: trunk_rotation rate peak after wrist acceleration onset by >2 frames (cp_trunk_before_wrist fail).
+why_it_matters: Late trunk opening limits transfer from core to hitting arm (B+ sequencing literature).
+feel_cue: "Open the chest to the net before you snap the elbow."
+drill: 60s med-ball or shadow: side-on small hop, trunk first then arm; 6 reps.
+severity_default: medium
+sources: PMC proximal-to-distal reviews (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_landing_stiff
+legacy_id: landing-stiff
+headline_en: Landing looks stiff in the knees
+phases: landing, SP_LANDING
+body_signal: Knee flex increase within 8 frames of E_LAND below band (cp_landing_knee_flex fail). Upright torso with minimal hip/knee give.
+why_it_matters: Stiff landings increase impact rates in population landing literature (load awareness); recovery for next play may suffer. Not an ACL diagnosis.
+feel_cue: "Land quiet — bend like a spring, not a stick."
+drill: 45s soft landing sticks: approach jump land on two feet hold 2 s with knees visibly flexed; 5 reps.
+severity_default: high
+sources: ACL/landing literature general athletics (A/B+ awareness); volleyball coaching soft-landing drills (B)
+youth_note: Prefer lower jump volume and emphasize quiet landings; follow club jump-count policies.
+
+---
+
+finding_id: fault_slow_approach
+legacy_id: slow-approach
+headline_en: Approach foot speed stays low
+phases: approach, SP_APPROACH
+body_signal: approach_speed peak below youth/adult checkpoint vs baseline.
+why_it_matters: Without approach speed, jump and swing must compensate (performance).
+feel_cue: "Accelerate to the net — each step faster than the last."
+drill: 60s speed build: 3-step approach with clap on plant; 6 reps increase cadence.
+severity_default: low
+sources: Coaching tempo drills (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_narrow_plant
+legacy_id: narrow-plant
+headline_en: Feet look too close together at plant
+phases: plant, takeoff, SP_PLANT, SP_TAKEOFF
+body_signal: step_width at E_PLANT below narrow threshold in Quality/002.
+why_it_matters: Very narrow base can limit stability and power direction (coaching B).
+feel_cue: "Plant on a skateboard width — not on a tightrope."
+drill: 45s tape lines: plant with each foot on parallel tape lines shoulder-width apart; 8 shadow approaches.
+severity_default: medium
+sources: Footwork fundamentals (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_wide_plant
+legacy_id: wide-plant
+headline_en: Base looks too wide at plant
+phases: plant, takeoff, SP_PLANT, SP_TAKEOFF
+body_signal: step_width above wide threshold at E_PLANT.
+why_it_matters: Excessive width can block vertical drive and slow arm timing (coaching B).
+feel_cue: "Bring the last step home — powerful but under your hips."
+drill: 45s hoop target: plant both feet inside a 24-inch circle on floor; 8 reps.
+severity_default: medium
+sources: Footwork fundamentals (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_spike_no_penult_load
+headline_en: No load on the penultimate step (detector id)
+phases: SP_PENULT, plant
+body_signal: Same family as fault_penultimate_flat: penult knee flex below cp_sp_penult_load band at E_PENULTIMATE.
+why_it_matters: Stable product key for Quality/002 fail_triggers; coaching same as deep penultimate load (B+).
+feel_cue: "Long-deep second-to-last — drop the hips, then spring on plant."
+drill: 45s last-two only with exaggerated penult bend; 8 reps.
+severity_default: medium
+sources: USA Volleyball approach teaching points (B); Quality/002 cp_sp_penult_load (B product)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_spike_short_approach
+headline_en: Spike approach looks cut short (detector id)
+phases: SP_APPROACH
+body_signal: Horizontal pelvis travel E_APPROACH_START→E_PLANT below band; alias family of fault_short_approach.
+why_it_matters: Detector-facing id for short approach checkpoints (B coaching).
+feel_cue: "Start farther back — build the runway."
+drill: 60s cone depth approach; 5 reps.
+severity_default: low
+sources: NCAA/USA footwork summaries (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_spike_early_arm
+headline_en: Arm swings before the trunk opens on the spike
+phases: SP_PLANT, SP_SWING, swing
+body_signal: Wrist acceleration onset before trunk rotation rate rise; fails cp_sp_plant_before_swing / related trunk-before-wrist checks.
+why_it_matters: Early arm vs trunk sequencing limits kinetic-chain transfer (B+); overlaps coaching for fault_late_trunk_open from the arm-first side.
+feel_cue: "Chest to net first — then snap the elbow."
+drill: 60s plant-hold: freeze plant with arm still back 1s, then jump-swing; 5 reps.
+severity_default: medium
+sources: PMC proximal-to-distal reviews (B+); USA Volleyball swing progressions (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_spike_late_jump
+headline_en: Jump rises after the arm is already fast
+phases: SP_TAKEOFF, SP_SWING, takeoff, swing
+body_signal: E_COM_RISE / E_COM_PEAK after wrist speed already high; related to fault_jump_early_reach and fault_jump_behind_contact timing family.
+why_it_matters: Late vertical impulse relative to arm fire cuts jump contribution (performance).
+feel_cue: "Floor first — jump on time, swing at the top."
+drill: 45s delayed-arm takeoff; 5 slow reps.
+severity_default: medium
+sources: Spike sequencing reviews (B+); coaching timing (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_spike_stiff_landing
+headline_en: Stiff landing after the spike (detector id)
+phases: SP_LANDING, landing
+body_signal: Knee flex increase post E_LAND below cp_sp_landing_flex; same family as fault_landing_stiff.
+why_it_matters: Load-awareness landing cue for detector fail_triggers; not ACL diagnosis.
+feel_cue: "Quiet feet — bend like a spring."
+drill: 45s soft stick landings; 5 reps.
+severity_default: high
+sources: Landing literature (A/B+ awareness); volleyball soft-landing coaching (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_approach_crossover_chaotic
+headline_en: Approach steps cross or weave instead of a straight runway
+phases: approach, SP_APPROACH
+body_signal: Lateral pelvis path oscillation large during E_APPROACH_START→E_PLANT; successive ankle placements cross midline repeatedly; plant not aligned under COM path.
+why_it_matters: Chaotic footwork wastes horizontal momentum and misaligns plant (B footwork coaching).
+feel_cue: "Run a straight line to the plant — steps under your hips."
+drill: 60s tape runway: approach must stay between parallel floor tapes; 6 shadow approaches.
+severity_default: medium
+sources: USA Volleyball approach lane teaching (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_approach_last_step_overreach
+headline_en: Last plant step reaches too far ahead of the hips
+phases: plant, SP_PLANT
+body_signal: Plant ankle well ahead of pelvis at E_PLANT; trunk leans back; delayed E_COM_RISE.
+why_it_matters: Overreaching plant can brake COM and delay vertical drive (B+ jump mechanics themes).
+feel_cue: "Plant under you — last step powerful, not a lunge past your hips."
+drill: 45s plant-under-hips marks: place plant foot on a mark under pelvis line; 8 reps.
+severity_default: medium
+sources: Jump plant mechanics summaries (B+); coaching footwork (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_arm_swing_elbow_lead
+headline_en: Elbow leads the hand early — swing lacks a high elbow slot
+phases: swing, SP_SWING, contact
+body_signal: Hitting elbow ahead of wrist in forward path during early swing; elbow height below shoulder before E_CONTACT; “push” rather than whip path.
+why_it_matters: Coaching models prefer high elbow / bow-and-arrow prep into a whip (B); elbow-lead pushes reduce hand speed potential (performance).
+feel_cue: "Elbow high like a bow — then throw the hand past the elbow."
+drill: 60s shadow spikes from stand: exaggerate high-elbow draw then whip ×8.
+severity_default: medium
+sources: USA Volleyball arm-swing teaching points (B); overhead whip reviews (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_swing_no_draw
+headline_en: Hitting arm never draws back — no bow-and-arrow prep
+phases: plant, takeoff, swing, SP_PLANT, SP_TAKEOFF, SP_SWING
+body_signal: Trail wrist stays near hip/chest through plant→takeoff; no posterior wrist path before forward acceleration; both elbows stay forward.
+why_it_matters: Missing draw shortens acceleration path into contact proxy (B coaching).
+feel_cue: "Pull the hitting elbow back like drawing a bow before you jump."
+drill: 60s draw-hold: plant with elbow back 1s freeze, then jump-swing ×6.
+severity_default: medium
+sources: USA Volleyball bow-and-arrow progressions (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_hitting_shoulder_open_early
+headline_en: Hitting shoulder opens to the net too early
+phases: takeoff, swing, SP_TAKEOFF, SP_SWING
+body_signal: Hitting-side shoulder yaw toward net before E_COM_PEAK; trunk square early; limited coil visible at plant.
+why_it_matters: Early shoulder opening can dump stored trunk rotation before hand speed peak (B+ sequencing).
+feel_cue: "Keep your hitting shoulder closed until you’re rising — then open and swing."
+drill: 60s closed-shoulder plant jumps: hold closed chest through first half of jump ×6.
+severity_default: medium
+sources: Spike sequencing / trunk-shoulder timing reviews (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_landing_single_leg_dominant
+headline_en: Landing accepts weight mostly on one leg
+phases: landing, SP_LANDING
+body_signal: Large left–right knee flex or ankle load asymmetry in first 8 frames after E_LAND; one foot contacts markedly later.
+why_it_matters: Uneven landings redistribute impact and may affect next-step readiness (load awareness, not diagnosis).
+feel_cue: "Two feet together — share the landing."
+drill: 45s two-foot stick landings from small approach hops; 6 reps.
+severity_default: medium
+sources: Landing symmetry coaching (B); athletic landing reviews (B+)
+youth_note: Reduce height if athlete cannot stick two-foot landings quietly.
+
+---
+
+finding_id: fault_landing_forward_fall
+headline_en: Landing falls forward with little hip hinge
+phases: landing, SP_LANDING
+body_signal: After E_LAND, trunk pitch forward large while knee flex stays shallow; COM travels ahead of base rapidly; arms flail forward.
+why_it_matters: Forward-fall landings reduce controlled absorption and delay recovery (B coaching / B+ landing themes). Not diagnostic.
+feel_cue: "Sit back into the landing — hips and knees share the bend."
+drill: 45s stick landings with light hip hinge hold 2s; 5 reps.
+severity_default: medium
+sources: Soft-landing coaching (B); general landing biomechanics (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_block_ready_upright
+headline_en: Block-ready posture is upright and stiff (body-only)
+phases: ready, SP_READY
+body_signal: In block-ready or transition freeze: knees near extension; pelvis high; weight on heels; shoulders shrugged up without athletic flex.
+why_it_matters: Athletic ready posture improves reactive jump timing for block or transition attack (B coaching). No ball or net touch required to score posture.
+feel_cue: "Athletic ready — soft knees, weight forward, hands ready at shoulders."
+drill: 45s ready freezes on coach clap: drop into athletic base and hold 2s ×8.
+severity_default: low
+sources: USA Volleyball ready-position / block footwork primers (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_block_arms_low
+headline_en: Block-ready arms hang low instead of loaded at shoulder height
+phases: ready, SP_READY
+body_signal: Wrists below hip or mid-torso in ready; elbows locked long; no pre-load flexion before simulated block jump.
+why_it_matters: Low arms delay hand penetration timing on block jumps in coaching models (B); body-only readiness cue.
+feel_cue: "Hands at shoulder shelves — ready to press up, not hanging by your sides."
+drill: 60s shadow block jumps from ready: hands start at shoulders, press up at peak ×6.
+severity_default: low
+sources: Block readiness coaching summaries (B)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_jump_timing_rushed
+headline_en: Whole approach-to-swing chain is rushed — no plant settle
+phases: approach, plant, takeoff, SP_APPROACH, SP_PLANT, SP_TAKEOFF
+body_signal: Short duration E_APPROACH_START→E_CONTACT; plant knee flex window < band; arm already accelerating during first plant frame.
+why_it_matters: Rushed timing often produces early-arm and soft-plant co-faults (B coaching).
+feel_cue: "Approach… plant… then jump — give the plant one beat."
+drill: 90s metronome approaches: one beat approach steps, one beat plant hold, one beat jump; 6 cycles.
+severity_default: medium
+sources: Approach rhythm coaching (B); sequencing reviews (B+)
+youth_note: Soft landing and approach rhythm over jump-height comparisons.
+---
+
+finding_id: fault_com_wrist_desync
+headline_en: COM peak and hand-speed peak are poorly synchronized
+phases: takeoff, swing, contact, SP_TAKEOFF, SP_SWING, SP_CONTACT
+body_signal: |t(E_COM_PEAK) − t(E_CONTACT)| outside youth/adult timing band (both early-reach and behind-contact extremes).
+why_it_matters: Umbrella timing finding for detectors that score COM–wrist sync as a single quality dimension (B+ heuristic / product).
+feel_cue: "Meet the swing at the top of your jump — rise and whip together."
+drill: 60s reach-and-hold plus delayed-arm mix: 2 hold reps + 2 delayed-arm reps.
+severity_default: medium
+sources: CeRebel COM–wrist heuristic (B product); PMC spike timing reviews (B+)
+confidence_note: Band calibration required; monocular COM height noisy.
+youth_note: Soft landing and approach rhythm over jump-height comparisons.

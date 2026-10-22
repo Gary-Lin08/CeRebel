@@ -1,0 +1,88 @@
+# Human (General Motion) Sport Pack — Research Notes (with URLs)
+# Build agent retrieved: 2026-10-21
+# Facts below support Biomechanics/001, Findings/, and Quality/ checkpoints — summarized, not quoted at length.
+
+## Postural control and balance
+
+- Systematic and narrative reviews on quiet standing and single-leg sway describe increased sway path with age
+  and after fatigue; mediolateral sway particularly sensitive on narrow base.
+  Search hub: https://pmc.ncbi.nlm.nih.gov/?term=postural+control+sway+balance
+  Authority: B+
+  Product use: single_leg_balance_wobble; com_sway checkpoint; not clinical BESS replacement.
+
+## Trunk–pelvis coordination
+
+- Open-access articles in Gait & Posture corpus on pelvis–thorax coupling during locomotion and rotational sports.
+  Search hub: https://pmc.ncbi.nlm.nih.gov/?term=trunk+pelvis+coordination+kinematics
+  Authority: B+
+  Product use: arms_fight_torso, posture_stack_break narrative; phase model prep/action windows.
+
+## Forward head posture (proxy themes)
+
+- Neck extensor activity and upper quarter kinematics with forward head positions in laboratory studies;
+  effect sizes vary; sedentary population prevalence high.
+  Search hub: https://pubmed.ncbi.nlm.nih.gov/?term=forward+head+posture+neck+kinematics
+  Authority: B+
+  Product use: forward_head finding; sagittal camera gating; no cervical diagnosis.
+
+## Lumbopelvic rhythm and hip hinge
+
+- Movement screening literature discusses hip vs lumbar flexion share during forward bend and squat patterns.
+  Search hub: https://pubmed.ncbi.nlm.nih.gov/?term=lumbopelvic+rhythm+hip+hinge
+  Authority: B+
+  Product use: stiff_spine_no_hip_hinge; hip_vs_lumbar_flex series heuristic.
+
+## Dynamic knee valgus and neuromuscular training
+
+- Meta-analyses on neuromuscular training reducing dynamic knee valgus in jump tasks (ACL prevention programs).
+  Example search: https://pmc.ncbi.nlm.nih.gov/?term=neuromuscular+training+knee+valgus
+  Authority: B+
+  Product use: knee_valgus_visible; drill_mini_squat_knee_track; frontal camera required.
+
+## Pelvic drop / frontal plane hip stability
+
+- Trendelenburg and pelvic drop themes in hip abductor weakness and running gait — overlap with running pack.
+  Search hub: https://pubmed.ncbi.nlm.nih.gov/?term=pelvic+drop+stance+hip
+  Authority: A/B+ for association themes
+  Product use: lateral_pelvis_drop finding in general single-leg tasks.
+
+## Bilateral asymmetry
+
+- Motor control studies on inter-limb asymmetry in healthy and athletic populations; wide normal variation.
+  Search hub: https://pubmed.ncbi.nlm.nih.gov/?term=limb+asymmetry+motor+control
+  Authority: B+
+  Product use: limb_rom_asymmetry, shoulder_height_asymmetry; youth widened bands.
+
+## Physical activity public health framing
+
+- WHO fact sheets on physical activity benefits and general safety.
+  URL: https://www.who.int/news-room/fact-sheets/detail/physical-activity
+  Authority: A+
+  Product use: Disclaimer and Training safety context; not posture prescription.
+
+## ACSM activity guidelines
+
+- ACSM physical activity guidelines for population health.
+  URL: https://www.acsm.org/education-resources/trending-topics-resources/physical-activity-guidelines
+  Authority: A
+  Product use: general movement encouragement; pain referral themes.
+
+## OpenSim / measurement policy (method, not evidence)
+
+- Internal corpus opensim_motion_tools.txt — Y-up coordinates, SMPL-X naming, tool vs inference policy.
+  Path: motion_agent/knowledge/corpus/opensim_motion_tools.txt
+  Authority: B (method)
+  Product use: Architecture, Biomechanics §9, SOURCE_MANIFEST cross-link.
+
+## Product internal
+
+- HumanMotionPack: motion_agent/sports/packs/human.py — fallback brief human_posture.
+  Authority: B (product)
+
+## Gaps for future research agent passes
+
+- Add specific PMC OA paper IDs per finding when detector thresholds calibrated.
+- Masters audience checkpoint rows (optional).
+- Integration tests when general pack checkpoint engine ships in code.
+
+End research_notes

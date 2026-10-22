@@ -1,0 +1,88 @@
+# Yoga — Quality Definition (body-first)
+
+## What “quality” means in CeRebel
+
+For this pack, **pose quality** is not aesthetic perfection or “deepest stretch.” It is the degree to which visible
+body mechanics align with patterns associated in open literature and reputable teaching with:
+
+1. **Sustainable stacking** — load-bearing joints aligned so muscular support, not passive ligament stress, carries
+   the pose (within capture limits).
+2. **Stable hold** — after entry, center-of-mass and key segment angles remain controlled with breath-scale motion only.
+3. **Appropriate range** — movement stays within active range the practitioner can control without compensatory
+   collapse at adjacent joints (spine, knees, shoulders).
+4. **Symmetric effort** — left–right differences within expected bounds for asymmetric poses (Warrior) vs unintended
+   collapse (Tree hip drop, Plank shoulder shrug asymmetry).
+5. **Controlled transitions** — in flow mode, peak-load joints (elbows, lumbar spine, front knee) show deceleration
+   into arrival rather than uncontrolled drop.
+
+Quality scores in product code (future) combine checkpoint pass rate, pose_id confidence, phase confidence, and capture
+quality flags — not a single “Instagram shape” template.
+
+## Dimensions
+
+| dimension_id       | plain label                 | primary phases        | mode      |
+|----------------------|-----------------------------|-----------------------|-----------|
+| stack_neutral        | Neutral spine stacking      | hold_anchor           | hold      |
+| shoulder_integrity   | Shoulder girdle control     | hold_anchor, peak_load| hold, flow|
+| hip_hinge_quality    | Hip hinge vs spine flexion  | hold_anchor, entry    | hold      |
+| knee_tracking        | Knee–hip–ankle tracking     | hold_anchor, peak_load| hold, flow|
+| balance_stability    | Pelvis level / sway         | hold_early–late       | hold      |
+| core_line            | Sagittal line (Plank, Dog)  | hold_anchor           | hold      |
+| cervical_neutral     | Neck vs thoracic extension  | hold_anchor           | hold      |
+| transition_control   | Smooth load in vinyasa      | weight_transfer–arrival| flow     |
+| breath_stillness     | Gross fidget vs stillness   | hold_late             | hold      |
+
+Each dimension maps to checkpoints in `002_checkpoints.txt`. A hold can be “high core_line, moderate balance_stability”
+— product copy should show dimension breakdown, not one grade.
+
+## Pose-family emphasis
+
+| pose family        | top dimensions                          |
+|--------------------|-----------------------------------------|
+| inversion_prep     | shoulder_integrity, stack_neutral, hip_hinge (Down Dog) |
+| standing_lunge     | knee_tracking, hip_hinge_quality, balance |
+| standing_balance   | balance_stability, knee_tracking        |
+| prone_backbend     | cervical_neutral, stack_neutral         |
+| seated_forward     | hip_hinge_quality, stack_neutral        |
+| arm_support        | shoulder_integrity, core_line           |
+
+## Evidence basis
+
+- Systematic reviews on yoga for musculoskeletal health and low back pain (B+): emphasis on individualization,
+  modified poses, and avoiding pain-provoking end range.
+- Biomechanics of plank, push-up, and lunge kinematics (B+): scapular and trunk role, patellofemoral load with knee
+  flexion angle — qualitative use only in product.
+- Teaching lineage consensus (B): micro-bend at knee, hip hinge, “length before depth,” props — translated to body signals.
+- Hypermobility clinical guidance (A/B+): stability and control over passive range — referenced for severity on
+  end-range faults, not diagnosis.
+
+## Youth vs adult quality framing
+
+**Youth (approx. ≤14):** prioritize balance play, shorter holds (15–30 s), and fun stability over deep forward fold
+or aggressive backbend shape. Larger sway in Tree is normal; coach foot placement away from knee.
+
+**Adult:** same dimensions; allow greater ROM when checkpoints pass and no drift into fault patterns.
+
+**Older adult / low bone density tag (user-declared):** downgrade depth checkpoints for forward fold and twist;
+ emphasize spinal neutral and prop use in coaching copy — automated pack reads disclaimer flag if product adds it.
+
+Never tell users to force heels down in Down Dog or full split in Triangle as universal quality markers.
+
+## Capture quality gates
+
+Downgrade or suppress findings when:
+
+- Camera purely overhead or behind practitioner for sagittal-line poses (Plank, Dog).
+- Legs occluded in seated forward fold.
+- Baggy clothing hides knee alignment.
+- Frame rate < 24 fps on flow transitions (misses E_PEAK_LOAD).
+- User `pose_id` mismatch vs classifier (confidence < threshold).
+
+## Relationship to findings
+
+Checkpoints pass/fail/unclear at phase windows. Findings fire when checkpoints fail with confidence or fault-specific
+rules in Findings/001 trigger. Quality definition states the positive model; Findings name common deviations.
+
+## Disclaimer pointer
+
+All quality language is coaching support, not medical clearance. See Docs/002_DISCLAIMER.txt.

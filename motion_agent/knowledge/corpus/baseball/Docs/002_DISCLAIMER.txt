@@ -1,0 +1,65 @@
+# Baseball Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel baseball content summarizes **open coaching literature, biomechanics reviews, and federation training
+guidelines**. It is **not** a substitute for licensed medical care, physical therapy diagnosis, or individualized
+return-to-throw protocols.
+
+- Pain, swelling, numbness, or sudden loss of velocity with shoulder or elbow symptoms require evaluation by a
+  qualified clinician — do not rely on an app finding to “push through.”
+- Youth athletes have different bone, growth plate, and workload tolerance than adults; follow league pitch-count
+  and rest rules from your governing body (Little League, Baseball Canada, etc.).
+
+## Not a pitch-count enforcement tool
+
+Pitch Smart and NGB tables in this pack are **educational summaries**. Official game limits are enforced by
+umpires, coaches, and league software — not by body tracking alone. Always verify the current rule set on the
+publisher website listed in SOURCE_MANIFEST.
+
+## Body tracking limitations
+
+Single-camera 2D pose estimation can mis-estimate:
+
+- Shoulder rotation in the plane of the camera.
+- Elbow flexion when the arm crosses the torso.
+- Foot angle at landing when occluded by the mound or uniform.
+
+Findings describe **visible tendencies**, not laboratory-grade kinematics. Confidence should be lower when
+joints are occluded or frame rate is low.
+
+## No guaranteed performance outcomes
+
+Mechanics cues may support efficient movement patterns discussed in research, but **velocity, command, and health
+outcomes depend on many factors** (training history, sleep, nutrition, cumulative workload, genetics, etc.).
+Do not promise velocity gains from a single drill or cue.
+
+## Biomechanical “norms”
+
+Open literature reports **ranges and group averages**, not one correct pose for every pitcher. Tall vs short
+pitchers, sidearm vs overhand, and mobility differences all change appearance. This pack avoids presenting
+arbitrary degree targets as universal rules.
+
+## Coaching relationship
+
+Automated briefs support coaches, parents, and athletes who already have a training plan. They do not replace
+in-person supervision, especially for beginners learning basic throwing mechanics.
+
+## Emergency
+
+For acute injury on the field, follow venue emergency procedures and seek immediate medical attention when needed.
+
+## Product behavior
+
+- The system may **refuse** to analyze a clip that appears to be another sport (e.g., golf swing labeled as pitch).
+- Baseball pack features may be gated as “coming soon” until detector validation completes — absence of a finding
+  is not proof of safe mechanics.
+
+## Authority and updates
+
+Sources are listed in `_meta/SOURCE_MANIFEST.txt` with authority levels. Federation rules and Pitch Smart tables
+change; retrieval dates matter. When in doubt, cite the live official source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Coaching tips from motion analysis — not medical advice. Stop if you feel pain. Follow your league’s pitch limits.”

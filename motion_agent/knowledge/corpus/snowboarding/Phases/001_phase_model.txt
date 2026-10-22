@@ -1,0 +1,225 @@
+# Snowboarding — Phase Model (v1)
+# Scope: alpine linked turn (family=alpine_turn) and basic jump (family=air_jump)
+# Aligns: body-only OpenSim / pose keypoints; board not required
+# Stable phase IDs — do not rename without migration note in _meta/pack_readme.txt
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Two motion families share ontology but use different phase chains. Most resort coaching clips map to
+**alpine_turn** (carving or skidded linked turns). **air_jump** covers ollies, small kickers, and park jumps
+where takeoff and landing are visible.
+
+Stance convention:
+- **Regular**: left foot lead (forward), right foot trail.
+- **Goofy**: right foot lead, left foot trail.
+- **Unknown stance**: use “lead leg” / “trail leg” in copy; mirror joint names when stance is set in metadata.
+
+Handedness is irrelevant; lead/trail and frontside/backside rotation language follow snowboard convention
+(see snowboard_aerial_vocab.txt for aerial terms).
+
+================================================================================
+PHASE TABLE — ALPINE LINKED TURN (family=alpine_turn)
+================================================================================
+
+| phase_id      | label_en              | start event           | end event             |
+|---------------|-----------------------|-----------------------|-----------------------|
+| traverse      | Traverse / setup      | clip_start or E_TRAVERSE_STABLE | E_TURN_INIT |
+| anticipation  | Anticipation / preload| E_TURN_INIT           | E_EDGE_ENGAGE         |
+| initiation    | Turn initiation       | E_EDGE_ENGAGE         | E_STEER_MID           |
+| steering      | Steering / control    | E_STEER_MID           | E_TURN_APEX           |
+| apex          | Turn apex             | E_TURN_APEX           | E_UNWEIGHT_START      |
+| transition    | Transition / cross-over | E_UNWEIGHT_START    | E_NEW_EDGE            |
+| completion    | Completion / re-center| E_NEW_EDGE            | E_TRAVERSE_STABLE or clip_end |
+
+Typical duration: 1.5–4.0 s per turn depending on speed and turn shape (coaching literature, B).
+
+================================================================================
+PHASE TABLE — AIR JUMP (family=air_jump)
+================================================================================
+
+| phase_id      | label_en              | start event           | end event             |
+|---------------|-----------------------|-----------------------|-----------------------|
+| approach      | Approach              | clip_start            | E_PRELOAD_START       |
+| preload       | Preload / compression | E_PRELOAD_START       | E_TAKEOFF             |
+| takeoff       | Takeoff / extension   | E_TAKEOFF - 2 frames  | E_AIR_PEAK            |
+| flight        | Flight                | E_AIR_PEAK            | E_LAND_CONTACT        |
+| landing       | Landing absorption    | E_LAND_CONTACT        | E_LAND_STABLE         |
+| recover       | Recovery              | E_LAND_STABLE         | clip_end              |
+
+================================================================================
+EVENT DEFINITIONS — ALPINE (body-only)
+================================================================================
+
+E_TRAVERSE_STABLE
+  Definition: rolling std of pelvis speed and knee flexion rate below threshold for ≥10 frames.
+  Fallback: first frame of clip.
+  Use: trim dead time before turn; completion phase end when stable re-achieved.
+
+E_TURN_INIT
+  Definition: horizontal COM path curvature increases AND lead-knee flexion begins eccentric phase before apex.
+  Proxy: sign change in lateral COM acceleration + d(knee_flex_lead)/dt < -threshold for 3 frames.
+  Fallback: 15% of clip duration from start if no clear traverse.
+
+E_EDGE_ENGAGE
+  Definition: trunk lean proxy (shoulder midpoint vs pelvis lateral offset) exceeds turn-specific baseline.
+  Proxy: |offset_x(shoulders - pelvis)| crosses upper quartile of pre-turn window.
+  Note: not true edge angle — camera-dependent; flag low confidence on head-on camera.
+
+E_STEER_MID
+  Definition: midpoint between E_EDGE_ENGAGE and E_TURN_APEX by COM path arc length (planar proxy).
+  Fallback: temporal midpoint if path noisy.
+
+E_TURN_APEX
+  Definition: local maximum of lateral lean proxy OR local minimum turn radius proxy on COM path.
+  Proxy: argmax |shoulder_pelvis_lateral_offset| in [E_EDGE_ENGAGE, E_UNWEIGHT_START].
+
+E_UNWEIGHT_START
+  Definition: knee extension rate increases on both legs with decreasing lean magnitude (unweighting for edge change).
+  Proxy: d(avg_knee_angle)/dt > +threshold while |lean| decreases for 3 frames.
+
+E_NEW_EDGE
+  Definition: lean proxy sign crosses zero OR lead/trail knee flexion pattern inverts relative to apex window.
+  Marks start of completion phase toward next traverse.
+
+================================================================================
+EVENT DEFINITIONS — AIR (body-only)
+================================================================================
+
+E_PRELOAD_START
+  Definition: approach segment with relatively steady COM speed followed by increasing knee/hip flexion.
+  Proxy: avg knee flexion increases monotonically for ≥5 frames before takeoff.
+
+E_TAKEOFF
+  Definition: argmax vertical velocity of pelvis/COM in analysis window.
+  Primary timing anchor for air family.
+  Note: without board contact model, this proxies pop off snow or kicker lip.
+
+E_AIR_PEAK
+  Definition: local maximum COM height after E_TAKEOFF.
+  Proxy: argmax pelvis_y in [E_TAKEOFF, E_LAND_CONTACT].
+
+E_LAND_CONTACT
+  Definition: first frame after E_AIR_PEAK where vertical COM velocity becomes strongly negative and knee flexion
+  rate spikes (impact absorption onset).
+  Proxy: min COM_y in landing window OR max d(knee_flex)/dt after peak.
+  Fallback: E_AIR_PEAK + 40% of remaining clip.
+
+E_LAND_STABLE
+  Definition: E_LAND_CONTACT + frames until COM speed and knee flexion rate settle below threshold.
+  Used for landing balance findings.
+
+================================================================================
+DETECTOR EVENT MAP (future sport_analysis)
+================================================================================
+
+| product_event_id     | maps_to        | family      | priority |
+|----------------------|----------------|-------------|----------|
+| turn_init_com_curve  | E_TURN_INIT    | alpine_turn | P1       |
+| turn_apex_lean       | E_TURN_APEX    | alpine_turn | P1       |
+| edge_transition      | E_NEW_EDGE     | alpine_turn | P2       |
+| jump_takeoff_com     | E_TAKEOFF      | air_jump    | P0       |
+| jump_apex_height     | E_AIR_PEAK     | air_jump    | P1       |
+| jump_landing_absorb  | E_LAND_CONTACT | air_jump    | P1       |
+
+Phase scrub bar (UI):
+- alpine: traverse | anticipation | initiation | steering | apex | transition | completion
+- air: approach | preload | takeoff | flight | landing | recover
+
+================================================================================
+TIMING RELATIONSHIPS (qualitative, B+ / B literature)
+================================================================================
+
+Alpine:
+- Skilled riders often show progressive lead-leg loading into initiation, then symmetric or counter-rotated
+  upper body through steering (style-dependent).
+- Transition phases are brief; excessive upper-body rotation early can precede washed-out turns (coaching B).
+
+Air:
+- Preload depth and timing correlate with takeoff height in training populations (B+); product flags timing and
+  symmetry, not absolute air time without calibration.
+- Landing absorption: peak knee flexion typically occurs within ~100–300 ms of contact proxy (frame-rate dependent).
+
+Youth: smaller amplitude in preload and landing; shorter flight — use youth-tagged checkpoints in Quality/002.
+
+================================================================================
+CLIP TRIMMING GUIDANCE
+================================================================================
+
+- Alpine: include full turn from stable traverse through re-center; avoid clipping only apex unless comparing apex shape.
+- Air: include approach ≥0.5 s before preload when possible; include recover ≥0.3 s after landing.
+- Switch riding: same events; metadata tag `switch=true` for cue copy only in v1.
+
+================================================================================
+CAPTURE ANGLES
+================================================================================
+
+| angle              | alpine confidence | air confidence |
+|--------------------|-------------------|----------------|
+| Side / fall line   | High              | High           |
+| Front / back       | Low (lean hidden) | Moderate       |
+| Follow-cam         | Moderate          | High for takeoff/land |
+
+Downgrade or mark unclear when feet overlap or snow spray occludes knees at landing.
+
+## V2 PHASE LINK INDEX (auto)
+
+# detector_events + fault_links per phase
+
+phase_id: air
+detector_events: E_TAKEOFF, E_LAND_PROXY
+fault_links: fault_hands_behind_hips_air
+
+phase_id: anticipation
+detector_events: E_TURN_INIT, E_EDGE_ENGAGE
+fault_links: fault_rushed_entry, fault_no_lead_load, fault_collapsed_torso
+
+phase_id: apex
+detector_events: E_APEX
+fault_links: fault_upright_skid, fault_straight_leg_apex, fault_head_misaligned, fault_counter_rotate_excess, fault_asymmetric_knee_apex
+
+phase_id: approach
+detector_events: E_APPROACH, E_TAKEOFF
+fault_links: fault_off_balance_approach, fault_spotting_look_down
+
+phase_id: completion
+detector_events: E_TURN_END
+fault_links: fault_stuck_in_turn
+
+phase_id: flight
+detector_events: E_TAKEOFF, E_LAND_PROXY
+fault_links: fault_loose_trunk_air
+
+phase_id: initiation
+detector_events: E_TURN_INIT, E_EDGE_ENGAGE
+fault_links: fault_no_lead_load, fault_shoulder_leads_turn, fault_edge_change_late, fault_early_unweight_hop
+
+phase_id: landing
+detector_events: E_LAND_PROXY, E_LAND_STABLE
+fault_links: fault_stiff_leg_landing, fault_one_foot_landing, fault_landing_backseat, fault_hands_behind_hips_air, fault_rigid_ankles_landing
+
+phase_id: preload
+detector_events: E_PRELOAD_MIN, E_TAKEOFF
+fault_links: fault_collapsed_torso, fault_no_preload, fault_overcollapsed_preload, fault_asymmetric_arm_preload
+
+phase_id: recover
+detector_events: E_LAND_STABLE
+fault_links: fault_landing_backseat
+
+phase_id: steering
+detector_events: E_EDGE_ENGAGE, E_APEX
+fault_links: fault_shoulder_leads_turn, fault_upright_skid, fault_head_misaligned, fault_edge_change_late, fault_counter_rotate_excess, fault_asymmetric_knee_apex
+
+phase_id: takeoff
+detector_events: E_TAKEOFF
+fault_links: fault_weak_extension_takeoff, fault_spotting_look_down
+
+phase_id: transition
+detector_events: E_EDGE_ENGAGE
+fault_links: fault_hoppy_transition
+
+phase_id: traverse
+detector_events: E_TURN_INIT
+fault_links: fault_locked_legs_traverse, fault_arm_flail_traverse, fault_rushed_entry, fault_backseat_traverse
+

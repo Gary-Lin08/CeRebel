@@ -1,0 +1,73 @@
+# Soccer Sport Pack — Disclaimer and Safe Use
+
+## Not medical advice
+
+CeRebel soccer content summarizes **open coaching literature, biomechanics reviews, and federation training
+science**. It is **not** a substitute for licensed medical care, physical therapy diagnosis, or individualized
+return-to-play protocols after groin, hamstring, knee, or ankle injury.
+
+- Pain, swelling, locking, or giving-way in the hip, knee, or ankle during or after kicking require evaluation by
+  a qualified clinician — do not rely on an app finding to continue high-volume shooting.
+- Youth athletes differ in bone maturity, growth-related flexibility, and weekly load tolerance; follow your
+  national governing body (NGB) and club medical staff for training volume.
+
+## Not a substitute for qualified coaching
+
+Automated briefs support athletes and coaches who already have technical supervision. They do not replace
+in-person instruction for beginners learning approach angles, plant-foot placement, or heading safety.
+
+## Body tracking limitations
+
+Single-camera 2D pose estimation can mis-estimate:
+
+- Hip rotation and “open vs closed” plant foot when the camera is not perpendicular to the kick plane.
+- Knee flexion when the kicking leg crosses the support leg or is occluded by the torso.
+- Trunk lean when the athlete wears loose kit or the camera is elevated.
+
+Findings describe **visible tendencies**, not laboratory-grade kinematics. Lower confidence when joints are
+occluded, frame rate is below ~24 fps, or the clip is heavily cropped.
+
+## No ball required — and no ball guarantees
+
+This pack is designed for **body-only** analysis. Without ball tracking, “contact” is approximated by kicking-foot
+speed peaks and timing relative to plant events. Cues may support movement patterns discussed in research, but
+**accuracy, power, and injury outcomes depend on many factors** (fitness, sleep, cumulative load, prior injury,
+playing surface, etc.). Do not promise goal-scoring or velocity gains from a single drill.
+
+## Biomechanical “norms”
+
+Published studies report **group averages and ranges**, not one correct pose for every player. Striker vs
+midfielder styles, limb length, and mobility all change appearance. This pack avoids presenting arbitrary degree
+targets as universal medical rules. Youth bands are separated from adult bands where literature differs.
+
+## Heading and contact sports risk
+
+This v1 pack focuses on **kicking**. Heading technique and aerial duel safety involve concussion protocols and
+age-specific federation guidance — follow current IFAB/FIFA and your NGB; do not use kicking findings to justify
+unsafe heading volume.
+
+## Surface and equipment
+
+Kicking on hard pavement, frozen ground, or with worn cleats changes load. Product text cannot see footwear or
+surface; coaches must manage cumulative striking load especially in multi-sport youth schedules.
+
+## Emergency
+
+For acute injury on the field, follow venue emergency procedures and seek immediate medical attention when needed.
+
+## Product behavior
+
+- Soccer pack features may be gated as **coming soon** until detector validation completes — absence of a finding
+  is not proof of safe mechanics.
+- The system may refuse to analyze clips that appear to be another sport when a live pack detector is confident
+  elsewhere.
+
+## Authority and updates
+
+When `_meta/SOURCE_MANIFEST.txt` is present, it lists sources with authority levels. Federation curricula and
+consensus statements change; retrieval dates matter. When in doubt, cite the live official source.
+
+## User-facing short disclaimer (for UI copy)
+
+“Coaching tips from motion analysis — not medical advice. Stop if you feel pain. Follow your coach and club
+load guidelines.”

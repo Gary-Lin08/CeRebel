@@ -1,0 +1,31 @@
+# build_report — volleyball
+# Generated after multi-agent Sport Pack fill
+
+Biomechanics/001_overview.txt	128 lines	5301 bytes
+Coaching/001_cues.txt	77 lines	2222 bytes
+Coaching/002_drills.txt	103 lines	3521 bytes
+Docs/001_ARCHITECTURE.txt	96 lines	4509 bytes
+Docs/002_DISCLAIMER.txt	37 lines	1788 bytes
+Findings/001_common_faults.txt	287 lines	10179 bytes
+Phases/001_phase_model.txt	120 lines	5713 bytes
+Quality/001_quality_definition.txt	68 lines	2601 bytes
+Quality/002_checkpoints.txt	141 lines	3958 bytes
+Schema/001_ontology.txt	152 lines	3849 bytes
+Taxonomy/001_concepts.txt	120 lines	3297 bytes
+Taxonomy/002_relations.txt	214 lines	3534 bytes
+Training/001_team_practice.txt	115 lines	4280 bytes
+_meta/SOURCE_MANIFEST.txt	38 lines	9200 bytes
+_meta/brain_plan.txt	212 lines	13602 bytes
+_meta/pack_readme.txt	31 lines	1293 bytes
+_meta/research_notes.txt	232 lines	14377 bytes
+_meta/review_report.txt	60 lines	2438 bytes
+
+---
+## v2 depth pass — 2026-10-23
+
+Migrated 12 kebab-case findings to fault_* with legacy_id; expanded Findings to 28 canonical cards
+(approach footwork, arm swing, landing, block-ready, jump timing + detector-facing spike_* ids).
+Rewrote Coaching/001_cues.txt and Coaching/002_drills.txt for fault_* coverage.
+Phases/001_phase_model.txt: detector_events / fault_links per phase + SP_* aliases.
+Taxonomy/002_relations.txt: legacy aliases + new attack/block anchors (≥15 relations).
+Review: APPROVED_V2. Disclaimer unchanged.

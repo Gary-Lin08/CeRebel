@@ -1,0 +1,84 @@
+{
+  "sport_id": "basketball",
+  "build_agent": "sport_pack_build",
+  "generated_at": "2026-10-21T00:00:00+08:00",
+  "spec": "motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt",
+  "focus": "jump_shot_and_free_throw",
+  "pack_status": "content_ready_detector_pending",
+  "files_written": [
+    "Docs/001_ARCHITECTURE.txt",
+    "Docs/002_DISCLAIMER.txt",
+    "Schema/001_ontology.txt",
+    "Taxonomy/001_concepts.txt",
+    "Taxonomy/002_relations.txt",
+    "Phases/001_phase_model.txt",
+    "Quality/001_quality_definition.txt",
+    "Quality/002_checkpoints.txt",
+    "Findings/001_common_faults.txt",
+    "Coaching/001_cues.txt",
+    "Coaching/002_drills.txt",
+    "Biomechanics/001_overview.txt",
+    "Training/001_team_practice.txt",
+    "_meta/pack_readme.txt",
+    "_meta/SOURCE_MANIFEST.txt",
+    "_meta/brain_plan.txt",
+    "_meta/research_notes.txt",
+    "_meta/review_report.txt",
+    "_meta/build_report.txt"
+  ],
+  "counts": {
+    "phases": 7,
+    "events": 11,
+    "checkpoints": 18,
+    "finding_cards": 18,
+    "cues": 16,
+    "drills": 10,
+    "taxonomy_concepts": 35,
+    "taxonomy_relations": 42
+  },
+  "authority_mix": {
+    "A_plus": 0,
+    "A": "landing education references only",
+    "B_plus": "biomechanics sequencing, FT routine research summaries",
+    "B": "coaching cues, drills, practice templates",
+    "C": 0
+  },
+  "indexing_note": "_meta/ excluded from RAG index per product policy",
+  "next_steps": [
+    "Implement basketball.py pack + shot-likeness in motion_agent/sports/packs/",
+    "Calibrate knee flex and COM thresholds on labeled jump/FT clips",
+    "Ingest txt corpus to chunks.jsonl / sport KB sqlite when pipeline runs"
+  ],
+  "documents": [
+    {
+      "id": "internal_basketball_kb_v1",
+      "status": "ok",
+      "format": "txt",
+      "category": "coaching_biomech",
+      "authority_level": "B/B+",
+      "notes": "Authored summaries; see SOURCE_MANIFEST for external URLs"
+    }
+  ]
+}
+
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+build_agent: corpus_v2_consistency_upgrade
+sports_batch: basketball, boxing, snowboarding, weightlifting, swimming, yoga
+
+Actions:
+- Migrated Findings/001_common_faults.txt to canonical `---` + finding_id: fault_* cards
+  with headline_en, phases, body_signal, why_it_matters, feel_cue, drill, severity_default, sources
+- Findings count now: 28
+- Ensured Coaching cues/drills cite fault_* (cues≈22, drills≈15)
+- Confirmed Taxonomy/002_relations.txt rows ≥15 (count≈39)
+- Added Phases V2 PHASE LINK INDEX with detector_events + fault_links
+- Rewrote _meta/review_report.txt (stale missing-DISCLAIMER claims corrected)
+- Appended this build_report section
+
+Sport-specific notes:
+- Added FT rhythm + catch-and-shoot footwork findings/cues/drills; landing retained.
+build_status: v2_upgrade_complete
+VERDICT_REF: APPROVED_V2

@@ -1,0 +1,114 @@
+# Golf Sport Pack — Checkpoints catalog
+
+Checkpoints are **pass/fail body observations** tied to phase IDs from Phases/001_phase_model.txt and detector ids in
+`golf_phases.py`. Wording is qualitative; no universal degree targets. Fail links reference Findings/001_common_faults.txt.
+
+---
+
+## Setup & takeaway
+
+### checkpoint_id: golf_setup_athletic_flex
+**Phase:** address
+**Dimension:** setup_balance
+**Pass:** Knees show flexion vs straight lock; feet stable; pelvis between ankles on face-on when visible.
+**Fail link:** fault_setup_locked_legs
+**Measure proxy:** Knee angle trend vs extended reference; ankle speed near zero.
+**Youth:** Pass with higher posture and narrower stance if balanced.
+
+### checkpoint_id: golf_takeaway_one_piece
+**Phase:** takeaway
+**Dimension:** takeaway_connection
+**Pass:** Trail wrist motion begins with visible torso rotation or stable spine — not isolated wrist lift only.
+**Fail link:** fault_wrist_only_takeaway
+**Measure proxy:** Torso yaw rate non-zero in same window as wrist speed rise.
+
+### checkpoint_id: golf_backswing_turn
+**Phase:** backswing
+**Dimension:** backswing_turn_and_width
+**Pass:** Shoulder line rotates away from target on DTL; backswing duration non-trivial vs takeaway.
+**Fail link:** fault_short_arm_swing
+**Measure proxy:** Shoulder yaw change address→top key_time.
+
+---
+
+## Top & transition
+
+### checkpoint_id: golf_top_stable_posture
+**Phase:** backswing (top key_time)
+**Dimension:** spine_angle_maintenance
+**Pass:** Forward spine tilt from address largely preserved at top on DTL; no major early pelvis thrust toward ball.
+**Fail link:** fault_early_extension (if thrust begins before downswing)
+**Measure proxy:** Pelvis–head line angle change vs address.
+
+### checkpoint_id: golf_transition_lower_first
+**Phase:** transition
+**Dimension:** transition_sequence
+**Pass:** Pelvis rotation toward target begins while shoulders still partially closed vs target line.
+**Fail link:** fault_over_the_top_transition, fault_cast_from_top
+**Measure proxy:** Pelvis yaw velocity sign flip before peak shoulder yaw toward target.
+
+### checkpoint_id: golf_no_top_freeze_rush
+**Phase:** transition → downswing
+**Dimension:** rhythm_tempo
+**Pass:** Motion continues from top without prolonged static wrists then single-frame explosion.
+**Fail link:** fault_tempo_hitch_at_top
+**Measure proxy:** Wrist speed near-zero duration at top window.
+
+---
+
+## Downswing & impact proxy
+
+### checkpoint_id: golf_downswing_ground_shift
+**Phase:** downswing
+**Dimension:** ground_force_use
+**Pass:** Weight shift toward lead side visible; lead hip clears before impact proxy; trail foot not static only.
+**Fail link:** fault_hanging_back, fault_sway_not_turn
+**Measure proxy:** Ankle/pelvis horizontal shift toward target; lead knee extension trend.
+
+### checkpoint_id: golf_maintain_spine_tilt
+**Phase:** downswing through impact
+**Dimension:** spine_angle_maintenance
+**Pass:** Spine angle from DTL does not dramatically increase (stand up) before impact proxy frame.
+**Fail link:** fault_early_extension
+**Measure proxy:** Trunk flexion angle trend downswing→impact.
+
+### checkpoint_id: golf_impact_lead_side_firm
+**Phase:** impact
+**Dimension:** impact_posture_proxy
+**Pass:** Lead leg appears braced; pelvis open; excessive trail-side lean absent on face-on.
+**Fail link:** fault_hanging_back, fault_slide_excessive
+**Measure proxy:** Lead knee flexion stable; pelvis position vs address.
+
+---
+
+## Finish
+
+### checkpoint_id: golf_finish_weight_lead
+**Phase:** follow_through
+**Dimension:** follow_through_balance
+**Pass:** Lead foot bears weight; trail foot light or on toe; athlete holds finish briefly.
+**Fail link:** fault_fall_back_finish, fault_chicken_wing_stop
+**Measure proxy:** Center of mass over lead ankle proxy; wrist speed smooth decay.
+
+### checkpoint_id: golf_decel_smooth
+**Phase:** follow_through
+**Dimension:** follow_through_balance
+**Pass:** Trail wrist speed decreases progressively after impact proxy without sharp hitch.
+**Fail link:** fault_abrupt_deceleration
+**Measure proxy:** Jerk on wrist speed post-peak.
+
+---
+
+## Short game note (future extension)
+
+Pitch/chip clips may skip full backswing top valley; checkpoints above apply to **full swing** windows only.
+Partial swings: use setup_balance and follow_through_balance only.
+
+---
+
+## Registry hooks
+
+Each checkpoint_id is stable for coach briefs and future rule engine. Phase ids must match: address, takeaway,
+backswing, transition, downswing, impact, follow_through.
+
+Sources: CeRebel golf phase detector (product); open coaching checkpoints summarized (B); biomechanics themes (B+).

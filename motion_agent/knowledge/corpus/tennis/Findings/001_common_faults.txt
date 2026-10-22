@@ -1,0 +1,394 @@
+# Tennis — Common Faults (finding cards)
+# Authority: B / B+ open biomechanics + NGB coaching summaries. Not diagnosis.
+# See Docs/002_DISCLAIMER.txt. Body-first; contact = wrist-speed proxy when no ball track.
+
+---
+
+finding_id: fault_serve_knee_lock
+headline_en: Serve loads with straight legs — power coming mostly from the arm
+phases: S_TROPHY_LOAD, S_DRIVE_UP
+body_signal: Knee flexion at S_TROPHY_LOAD similar to S_READY; little knee extension before S_CONTACT_PROXY; racket-side wrist speed peak still present (arm-dominant serve).
+why_it_matters: Open biomechanics literature links leg drive to trunk rotation on the serve; arm-only patterns often coincide with higher shoulder demand and inconsistent pace for many recreational players (performance/load awareness, not injury prediction).
+feel_cue: "Sit into a slight squat before you throw the racket up — push the ground first."
+drill: 60s shadow serves holding a light squat at trophy, then explode up on one counted “up” (no ball required).
+severity_default: medium
+sources: PMC tennis serve biomechanics reviews (B+); USTA player development leg-drive coaching themes (B)
+youth_note: Use smaller squat amplitude than adult elite models; prioritize rhythm over depth.
+
+---
+
+finding_id: fault_serve_toss_arm_drift
+headline_en: Toss arm drifts sideways away from the body at the trophy load
+phases: S_TOSS_RISE, S_TROPHY_LOAD
+body_signal: Non-racket wrist lateral offset from midline increases at S_TROPHY_LOAD; racket-side shoulder may counter-lean; arm timing looks disconnected.
+why_it_matters: Disorganized toss-arm path often disrupts serve rhythm and shoulder alignment cues used in NGB coaching (B); body-only check cannot score toss height without ball.
+feel_cue: "Lift the front arm straight up like an elevator, then let it fall as the racket side goes up."
+drill: 45s toss-arm-only reps: non-racket arm up-down while racket hand stays on hip; then 45s both arms without racket.
+severity_default: medium
+sources: ITF coaching articles on serve preparation (B+); LTA serve fundamentals summaries (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_serve_shoulder_tilt_flat
+headline_en: Shoulders stay level in the trophy load — racket side never gets “under” the path
+phases: S_TROPHY_LOAD
+body_signal: Racket-side and lead shoulder heights nearly equal on side view; elbow may push forward instead of lifting; limited asymmetric shoulder line.
+why_it_matters: Coaching frameworks emphasize racket-side elevation for organized overhead path (B); elite joint angles vary widely — qualitative pattern only.
+feel_cue: "Show your racket-side shoulder to the sky before you scratch the back."
+drill: 60s wall-side trophy holds: stand sideways, lift racket-side elbow to shoulder height without hitting wall behind.
+severity_default: medium
+sources: USTA serve progression resources (B); open serve kinematics reviews (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_serve_elbow_low
+headline_en: Hitting elbow stays low through trophy and racket drop
+phases: S_TROPHY_LOAD, S_RACKET_DROP
+body_signal: Racket-side elbow below shoulder height proxy through coil; wrist path stays near ear height without elbow lift; abbreviated “scratch” loop.
+why_it_matters: Low elbow coil often shortens the acceleration path into contact proxy and is flagged in serve teaching progressions (B); not a medical diagnosis of shoulder pathology.
+feel_cue: "Elbow up like a waiter’s tray — then drop the racket behind your back."
+drill: 60s trophy freeze: hold elbow at shoulder height 2s, then slow drop-and-drive shadows ×6.
+severity_default: medium
+sources: USTA/ITF serve shape coaching (B); serve kinematics reviews (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_serve_poor_leg_sync
+headline_en: Legs extend after the arm has already peaked
+phases: S_DRIVE_UP, S_CONTACT_PROXY
+body_signal: Knee extension onset after racket-side wrist speed is already near peak; ankle push-off lags S_CONTACT_PROXY by more than a short adult band.
+why_it_matters: Proximal-to-distal sequencing summaries associate late leg drive with arm-dominant loading on the serve (B+ performance/load framing).
+feel_cue: "Push the floor first — the racket rides the legs up."
+drill: 75s shadow serves counting “legs… then arm”; pause if arm fires first, reset.
+severity_default: medium
+sources: PMC kinetic-chain serve reviews (B+); USTA adult development notes (B)
+youth_note: Adult checkpoint primarily; youth focus on visible knee bend before upward swing, not elite delay numbers.
+
+---
+
+finding_id: fault_serve_excessive_arch
+headline_en: Excessive low-back arch during the upward drive
+phases: S_DRIVE_UP
+body_signal: Pelvis thrusts forward, rib cage flares, trunk hyperextension visible on side view while head lags; legs may not extend in sync.
+why_it_matters: Excessive lumbar extension is a coaching red flag for core control (B); not diagnosable as injury from video alone.
+feel_cue: "Grow tall through the belly, then reach up — don’t bend backward to the fence."
+drill: 45s serve shadows with hand on lower ribs: keep ribs stacked over pelvis through drive-up.
+severity_default: high
+sources: Clinical core control in overhead athletes themes (A summarized); ITF sport science coaching notes (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_serve_poor_decel
+headline_en: Abrupt stop or hitch right after the serve hit — arm slams without a full finish
+phases: S_DECEL
+body_signal: Racket-side wrist speed drops sharply within 2–3 frames post S_CONTACT_PROXY then spikes again OR arm recoils backward toward net without crossing body; trunk may jerk.
+why_it_matters: Smooth deceleration distributes momentum after contact proxy; harsh stops are associated with higher shoulder/elbow stress language in coaching literature (B+ awareness, not diagnosis).
+feel_cue: "Throw the racket into your opposite pocket — let the arm slow across your body."
+drill: 60s kneeling serve shadows emphasizing slow cross-body finish (half-kneel reduces leg noise).
+severity_default: high
+sources: PMC reviews on serve kinetics (B+); USTA deceleration coaching points (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_serve_landing_imbalance
+headline_en: Unstable landing after the serve — lateral fall or stuck rear foot
+phases: S_DECEL
+body_signal: Lead ankle fails to accept weight after S_CONTACT_PROXY; pelvis drifts sideways; rear foot stays planted while trunk tips; recovery step late or missing.
+why_it_matters: Landing balance affects next-shot readiness and is a common USTA movement checkpoint (B); extreme imbalance may elevate lower-limb load awareness without diagnosing injury.
+feel_cue: "Step into the court on a soft front foot — land like a gymnast stick, then recover."
+drill: 60s shadow serves with mandatory 1s balanced stick on lead foot before walk-back.
+severity_default: medium
+sources: USTA serve landing / movement summaries (B); open landing biomechanics themes (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_serve_rhythm_rush
+legacy_id: fault_double_fault_rhythm_rush
+headline_en: Rushed serve tempo — trophy load skipped or compressed
+phases: S_READY, S_TROPHY_LOAD, S_CONTACT_PROXY
+body_signal: Short total duration from ready to contact proxy; wrists accelerate early without visible S_TROPHY_LOAD window; knees never flex.
+why_it_matters: Rhythm issues correlate with second-serve inconsistency in coaching experience (B); body timing easier to fix than outcome stats without ball data.
+feel_cue: "Bounce… set… up — three beats before you fire."
+drill: 90s metronome shadows at 60 BPM: one phase per beat from ready to contact proxy.
+severity_default: medium
+sources: ITF coaching rhythm and routine articles (B); internal phase model (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_serve_short_finish_youth
+headline_en: Abbreviated follow-through after contact proxy (youth volume awareness)
+phases: S_DECEL
+body_signal: Racket-side arm stops near head height without crossing body; wrist speed decays in <3 frames; trunk rotation incomplete vs athlete’s own longer-finish clips.
+why_it_matters: Coaching frameworks encourage complete but controlled finishes for juniors while managing overhead volume (B); informational flag — not a medical stop.
+feel_cue: "Finish long and soft to the opposite pocket — no slam-stop."
+drill: 45s half-speed serve shadows with 1s finish hold; stop if any shoulder discomfort.
+severity_default: low
+sources: USTA 10U / junior development serve progressions (B)
+youth_note: Primary audience youth; adults use fault_serve_poor_decel for harsh hitch instead.
+
+---
+
+finding_id: fault_serve_abbreviated_drop
+headline_en: Racket drop skipped — arm pushes forward from trophy without a back loop
+phases: S_RACKET_DROP, S_DRIVE_UP
+body_signal: From S_TROPHY_LOAD, racket-side wrist rises immediately without descending behind trunk; elbow never moves behind shoulder plane on side view.
+why_it_matters: Abbreviated drop shortens the acceleration path used in classic serve models (B coaching); may suit some modern abbreviated styles — flag when paired with low pace and arm-only drive.
+feel_cue: "Scratch your back lightly, then throw up — feel the loop before the lift."
+drill: 60s “scratch then throw” shadows: 2s drop hold, then drive ×8.
+severity_default: low
+sources: ITF serve path progressions (B); serve kinematics reviews noting drop variability (B+)
+confidence_note: Some high-level abbreviated serves are intentional; score vs athlete baseline, not pro template.
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_forehand_late_unit_turn
+headline_en: Late unit turn on the forehand — chest still opening during the forward swing
+phases: G_UNIT_TURN, G_FORWARD_SWING
+body_signal: Trunk yaw rate peak coincident with or after G_CONTACT_PROXY; racket-side wrist already moving forward while shoulders still rotating back.
+why_it_matters: Late preparation compresses timing window; common on late-contact defensive shots (B coaching).
+feel_cue: "Finish the turn to the fence before the hand goes forward."
+drill: 45s split-stance freeze: turn fully, pause one second, then swing slowly.
+severity_default: medium
+sources: LTA groundstroke preparation guides (B); biomechanics timing themes (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_forehand_all_arm
+headline_en: Forehand fires the arm before the trunk turns
+phases: G_FORWARD_SWING, G_UNIT_TURN
+body_signal: Racket-side wrist horizontal speed rises while pelvis/shoulder yaw proxy flat; little hip–shoulder separation; elbow leads trunk.
+why_it_matters: Biomechanics reviews emphasize trunk rotation contribution to racket speed on groundstrokes (B+); all-arm swings often lose depth control for intermediates.
+feel_cue: "Turn your shirt buttons away first, then whip the arm."
+drill: 60s shadow forehands with hands on hips for first half turn, then swing — body-only.
+severity_default: medium
+sources: PMC groundstroke rotation reviews (B+); USTA groundstroke fundamentals (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_forehand_flying_elbow
+headline_en: Hitting elbow lifts high and away from the torso on the forehand
+phases: G_LOAD, G_FORWARD_SWING
+body_signal: Racket-side elbow rises above shoulder plane early in G_LOAD or G_FORWARD_SWING; large lateral elbow offset from trunk; wrist path loops high.
+why_it_matters: Flying elbow is a common preparation fault in coaching literature that can disrupt slot and contact height consistency (B); not diagnostic of elbow pathology.
+feel_cue: "Keep the elbow soft and in your pocket — then extend through the hit."
+drill: 60s shadow FH with towel under racket-side armpit for first half of swing (drop if flies).
+severity_default: medium
+sources: USTA forehand preparation themes (B); open FH kinematics summaries (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_forehand_open_no_load
+headline_en: Open-stance forehand without loading the outside leg
+phases: G_LOAD
+body_signal: Feet oriented open to net; ankle distance wide at G_LOAD but knee flexion minimal on outside leg; pelvis drops sideways not into legs.
+why_it_matters: Open stance requires leg load to rotate; wide-planted stiff legs limit trunk uncoil (B coaching).
+feel_cue: "Wide feet, but sit on the outside hip — then push the ground to rotate."
+drill: 60s lateral squat to shadow swing: one slow squat per rep before hand moves.
+severity_default: medium
+sources: Tennis Australia open-stance movement fundamentals (B); open-stance FH coaching literature (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_forehand_over_rotate_finish
+headline_en: Excessive trunk spin past balance on the forehand finish
+phases: G_FOLLOW, G_RECOVERY
+body_signal: After G_CONTACT_PROXY, trunk yaw continues past stable base; outside foot spins or lifts; head turns fully to back fence while pelvis drifts.
+why_it_matters: Over-rotation can delay recovery and reduce ready position for the next ball (B coaching).
+feel_cue: "Finish with belt buckle to the side fence — stop the spin, then recover."
+drill: 45s finish-hold shadows: freeze 1s at wrap, check balance, then two recovery steps.
+severity_default: low
+sources: USTA finish and recovery summaries (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_forehand_upright_recovery
+headline_en: Upright bolt after forehand contact — no balanced follow-through
+phases: G_FOLLOW, G_RECOVERY
+body_signal: Trunk pops vertical immediately after G_CONTACT_PROXY; racket-side arm does not wrap; head rises before feet reset.
+why_it_matters: Rushed recovery reduces ready position for next ball (B coaching).
+feel_cue: "Hold your finish for one second — belt buckle still facing the side fence."
+drill: 60s shadow rallies: each shot hold finish 1s before recovery steps.
+severity_default: medium
+sources: USTA footwork and recovery summaries (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_backhand1_dropped_shoulder
+headline_en: Lead shoulder collapses on the one-handed backhand
+phases: G_LOAD, G_FORWARD_SWING
+body_signal: Lead shoulder height drops relative to racket-side through G_LOAD→G_CONTACT_PROXY; trunk leans away from ball path proxy; hitting elbow rises compensatorily.
+why_it_matters: Dropped lead shoulder is a common 1HBH preparation fault in NGB coaching (B); associated with inconsistent contact height in teaching models.
+feel_cue: "Keep the front shoulder high — chin near the front shoulder through contact."
+drill: 60s 1HBH shadows facing side fence: hold lead shoulder elevated 1s at load, then swing.
+severity_default: medium
+sources: LTA/ITF one-handed backhand fundamentals (B); BH kinematics summaries (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_backhand1_reaching
+headline_en: One-handed backhand reaches with the arm instead of rotating through
+phases: G_FORWARD_SWING, G_CONTACT_PROXY
+body_signal: Large elbow–trunk distance at G_CONTACT_PROXY; trunk yaw rate low while wrist extends; athlete leans toward contact proxy.
+why_it_matters: Reach-dominant 1HBH patterns reduce trunk contribution and timing margin (B coaching / B+ sequencing themes).
+feel_cue: "Rotate the chest past the ball path — don’t stab with a straight arm."
+drill: 60s closed-stance 1HBH shadows with feet glued; force rotation without stepping to the ball.
+severity_default: medium
+sources: ITF backhand rotation coaching (B); open BH biomechanics (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_backhand1_late_prep
+headline_en: Late preparation on the one-handed backhand — racket lags the unit turn
+phases: G_UNIT_TURN
+body_signal: Trunk yaw begins while racket-side wrist still in front of hip; backswing incomplete at G_LOAD onset; forward swing rushes.
+why_it_matters: Late racket prep compresses the forward swing window (B coaching).
+feel_cue: "Take the racket back with the turn — tip points to the back fence early."
+drill: 45s unit-turn freezes: turn + racket tip back, pause, then slow swing ×6.
+severity_default: medium
+sources: LTA backhand preparation guides (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_backhand2_bottom_hand_only
+headline_en: Two-handed backhand pulls with the bottom hand only — top hand inactive
+phases: G_FORWARD_SWING, G_CONTACT_PROXY
+body_signal: Dominant (bottom) elbow extends early while non-dominant (top) elbow stays flexed/passive; top wrist speed lag vs bottom; trunk opens late.
+why_it_matters: Coaching consensus treats the top hand as a driver on modern 2HBH (B); bottom-hand-only pulls often lose topspin and control for intermediates.
+feel_cue: "Top hand pushes the racket face through — both hands finish together."
+drill: 60s 2HBH shadows emphasizing top-hand push; optional top-hand-only shadow ×4 then both hands.
+severity_default: medium
+sources: USTA two-handed backhand fundamentals (B); 2HBH coaching literature (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_backhand2_tight_shoulders_youth
+headline_en: Limited unit turn on the two-handed backhand (youth mobility-safe cue)
+phases: G_LOAD, G_UNIT_TURN
+body_signal: Small trunk yaw amplitude vs athlete baseline; both elbows hug ribs; shoulders stay square to net through load.
+why_it_matters: Juniors often under-rotate; cue more turn without forcing end-range stretch (B youth coaching). Not a flexibility diagnosis.
+feel_cue: "Turn so your back sees the side fence a little — stay soft in the shoulders."
+drill: 45s gentle 2HBH turns with pause; no forced stretch; 6 slow swings.
+severity_default: low
+sources: USTA youth development / 10U groundstroke themes (B)
+youth_note: Primary audience youth; avoid prescribing adult elite separation angles.
+
+---
+
+finding_id: fault_backhand_wide_stance_stuck
+headline_en: Wide backhand base without flex or weight transfer
+phases: G_LOAD
+body_signal: Ankle distance wide at G_LOAD; minimal knee flexion; pelvis static; slow transition into G_FORWARD_SWING.
+why_it_matters: Wide stuck stance limits rotation into either 1H or 2H backhand (B movement coaching).
+feel_cue: "Wide is fine — but bend and push the ground to start the swing."
+drill: 60s load-leg mini-squats into shadow BH ×8.
+severity_default: medium
+sources: Tennis Australia movement fundamentals (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_groundstroke_all_arm
+headline_en: Groundstroke fires the arm before the trunk turns (shared FH/BH)
+phases: G_FORWARD_SWING
+body_signal: Racket-side wrist horizontal speed rises while pelvis/shoulder yaw proxy flat; little G_UNIT_TURN separation; elbow leads trunk.
+why_it_matters: Same kinetic-chain theme as stroke-specific all-arm cards; retained for shared groundstroke detectors (B+).
+feel_cue: "Turn your shirt buttons away first, then whip the arm."
+drill: 60s shadow strokes with hands on hips for first half turn, then swing.
+severity_default: medium
+sources: PMC groundstroke rotation reviews (B+); USTA groundstroke fundamentals (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_groundstroke_late_unit_turn
+headline_en: Late unit turn on groundstrokes (shared FH/BH)
+phases: G_UNIT_TURN, G_FORWARD_SWING
+body_signal: Trunk yaw rate peak coincident with or after G_CONTACT_PROXY; preparation overlaps forward swing.
+why_it_matters: Late prep compresses timing on either wing (B coaching).
+feel_cue: "Finish the turn to the fence before the hand goes forward."
+drill: 45s split-stance freeze: turn fully, pause one second, then swing slowly.
+severity_default: medium
+sources: LTA groundstroke preparation guides (B); biomechanics timing themes (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_groundstroke_upright_recovery
+headline_en: Upright bolt after groundstroke contact — no balanced follow-through
+phases: G_FOLLOW, G_RECOVERY
+body_signal: Trunk pops vertical immediately after G_CONTACT_PROXY; arm does not wrap; head rises before feet reset.
+why_it_matters: Rushed recovery reduces ready position for next ball (B coaching).
+feel_cue: "Hold your finish for one second — belt buckle still facing the side fence."
+drill: 60s shadow rallies: each shot hold finish 1s before recovery steps.
+severity_default: medium
+sources: USTA footwork and recovery summaries (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_groundstroke_wide_stance_stuck
+headline_en: Wide stance without loading — stuck on the outside leg
+phases: G_LOAD
+body_signal: Ankle distance wide at G_LOAD but knee flexion minimal; pelvis drops sideways not into legs; slow G_RECOVERY.
+why_it_matters: Open or wide stances need leg load to rotate (B coaching).
+feel_cue: "Wide feet, but sit on the outside hip — then push the ground to rotate."
+drill: 60s lateral squat to shadow swing: one slow squat per rep before hand moves.
+severity_default: medium
+sources: Tennis Australia movement fundamentals (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_volley_arm_stab
+headline_en: Volley stabs with the arm — no short unit or block with the body
+phases: V_READY, V_FORWARD_BLOCK, V_CONTACT_PROXY
+body_signal: Large elbow extension toward net with minimal trunk lean or step; racket-side wrist speed spike without prior split; shoulders stay square and upright.
+why_it_matters: NGB volley models emphasize a firm block with body behind the racket rather than a long swing (B); arm stabs reduce control at net.
+feel_cue: "Meet the ball with your chest behind the strings — short punch, not a swing."
+drill: 60s shadow volleys: split, step, block with 15 cm hand travel only ×10.
+severity_default: medium
+sources: USTA/ITF volley fundamentals (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_volley_feet_stuck
+headline_en: Feet stuck on the volley — no step into the block
+phases: V_SPLIT, V_FORWARD_BLOCK
+body_signal: After split hop, ankles stay planted; no forward step of lead foot before V_CONTACT_PROXY; pelvis does not advance.
+why_it_matters: Stepping into the volley is a core footwork cue in federation coaching (B); stuck feet often produce late, arm-only contacts.
+feel_cue: "Split, then step to the ball path — feet first, hands second."
+drill: 45s split-step + crossover/step-in shadows without swing, then add short block ×8.
+severity_default: medium
+sources: USTA net footwork primers (B); LTA volley movement (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_split_step_late
+headline_en: Late or missing split-step before the groundstroke or volley
+phases: G_SPLIT, V_SPLIT
+body_signal: No bilateral ankle micro-peak before G_UNIT_TURN / V_FORWARD_BLOCK; first motion is a reach or turn from flat feet; knees stay locked.
+why_it_matters: Split-step timing sets reactive readiness in movement literature and NGB footwork teaching (B); late splits delay preparation.
+feel_cue: "Light hop as the opponent swings — land soft, then move."
+drill: 60s clap-timed split hops: coach claps → hop → freeze athletic stance ×12.
+severity_default: medium
+sources: USTA footwork primers (B); open tennis movement reviews (B+)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_recovery_slow_recenter
+headline_en: Slow recovery to center after the stroke
+phases: G_RECOVERY, V_RECOVERY
+body_signal: After G_FOLLOW / volley finish, pelvis remains outside midline >1 s; no crossover or shuffle toward center; racket stays out wide.
+why_it_matters: Recovery speed determines court coverage for the next ball (B coaching); body-only metric uses recenter time, not ball outcome.
+feel_cue: "Finish, then beat your shadow back to the middle — small quick steps."
+drill: 90s shadow FH/BH alternating sides with mandatory two recovery shuffles to a center mark after each.
+severity_default: low
+sources: USTA recovery and court geometry coaching (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.
+---
+
+finding_id: fault_unit_turn_incomplete_open
+headline_en: Incomplete unit turn on open-stance groundstrokes
+phases: G_UNIT_TURN, G_LOAD
+body_signal: Open foot orientation but shoulder line remains nearly square to net; racket tip barely past hip; hip–shoulder separation near zero.
+why_it_matters: Open stance without turn is a common intermediate pattern that loses power and timing (B); distinct from loaded open stance (fault_forehand_open_no_load).
+feel_cue: "Even open, turn your chest to the side fence first."
+drill: 60s open-stance freezes: feet open, shoulders turned, pause, then swing ×8.
+severity_default: medium
+sources: Tennis Australia / USTA open-stance unit-turn themes (B)
+youth_note: Serve rhythm and recovery over trophy depth vs tour players.

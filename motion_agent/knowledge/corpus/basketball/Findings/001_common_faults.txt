@@ -1,0 +1,347 @@
+# Basketball Shooting — Common Faults (finding cards)
+# Canonical v2. Body-first; see Docs/002_DISCLAIMER.txt. Authority B/B+ unless noted.
+# Scope: jump shot + free throw + catch-and-shoot footwork; landing included.
+
+---
+
+finding_id: fault_arm_only_shot
+headline_en: Shot rises mostly from the arm before the legs drive
+phases: drive, transfer
+body_signal: E_RELEASE occurs before E_COM_RISE or COM vertical displacement < threshold while shooting-wrist speed peak is high; knee extension lags wrist acceleration.
+why_it_matters: Jump-shot literature links leg–trunk contribution to stable release height and timing under fatigue; arm-dominant patterns may shorten range and increase shoulder/wrist reliance (performance and load — not individual injury prediction).
+feel_cue: "Ground first, then hands — feel the floor push your chest up before you extend the arm."
+drill: 60s wall-leg-drive: stand 30 cm from wall, hands at set point without ball, dip and drive so hips touch wall lightly before arm extends (body-only).
+severity_default: medium
+sources: Knudson & Elliott basketball shooting kinematics summaries (B+); USA Basketball skill concepts (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_no_load
+headline_en: Minimal knee bend before the jump
+phases: dip
+body_signal: Knee flexion change from setup to E_DIP_MIN < ~10° (scale-normalized; youth smaller band).
+why_it_matters: Without eccentric load, vertical rise may be insufficient for contested release height; timing can feel rushed.
+feel_cue: "Sit into your shoes, then spring — small hop, not a straight-leg lift."
+drill: 45s chair-height dip: hips drop one hand-width, pause 1 count, then rise without ball.
+severity_default: medium
+sources: Okazaki et al. jump shot biomechanics (B+); NGB form-shooting (B)
+youth_note: Shallower dip acceptable; prioritize balance.
+
+---
+
+finding_id: fault_excessive_dip
+headline_en: Deep squat-like dip slows the shot
+phases: dip, drive
+body_signal: Knee flexion at E_DIP_MIN approaches squat depth with delayed E_COM_RISE (>300 ms at 60 fps from dip min to rise).
+why_it_matters: Excessive load can delay release against closing defenders and disrupt upper-body rhythm.
+feel_cue: "Load the ankles and knees, not the hips to the floor — quick sit, quick go."
+drill: 90s metronome dip-rise at 80 BPM without shooting, then add arm at set on beat 2.
+severity_default: medium
+sources: Catch-and-shoot tempo coaching (B); skilled vs novice kinematics (B+)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_asymmetric_dip
+headline_en: One leg loads more than the other in the dip
+phases: dip
+body_signal: Knee flexion difference L vs R at E_DIP_MIN > threshold; COM shifts laterally toward one ankle during dip.
+why_it_matters: Asymmetric loading can carry into landing and reduce balance on off-target misses.
+feel_cue: "Both shoelaces press the floor equally in the dip."
+drill: 60s line drill: tape between feet; dip without tipping COM off center (front camera).
+severity_default: medium
+sources: Bilateral prep biomechanics (B); coaching balance drills (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_flyaway_elbow
+headline_en: Shooting elbow drifts outward at the set point
+phases: set, release
+body_signal: Shooting elbow lateral to wrist in frontal view at E_SET_START; upper arm abduction elevated vs trunk.
+why_it_matters: Outward elbow can reduce consistent release direction in pose-visible plane; common coaching correction.
+feel_cue: "Elbow points at the rim, wrist follows — tuck the elbow under the ball line."
+drill: 75s one-hand form: shooting hand only at set, elbow above hip, extend to finish (no ball or light sock).
+severity_default: medium
+sources: Knudson free throw / shooting form reviews (B+); coaching elbow-in cue (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_low_set_point
+headline_en: Set point starts too low in front of the body
+phases: set
+body_signal: Shooting wrist below elbow at E_SET_START; wrist height below chin proxy landmark.
+why_it_matters: Low set can turn the shot into a push and reduce arc for a given release timing (performance).
+feel_cue: "Lift the gift to your forehead, then extend upward."
+drill: 60s set-point freeze: rise to set, hold 2 s with wrist above elbow, then extend.
+severity_default: medium
+sources: Shooting skill progressions (B); kinematic set-point studies (B+)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_guide_hand_push
+headline_en: Guide hand adds force at release
+phases: set, release
+body_signal: Off-hand wrist speed spike within ±3 frames of E_RELEASE; off-hand wrist moves toward basket with shooting hand.
+why_it_matters: Two-handed force at release adds lateral spin and inconsistent direction (coaching consensus).
+feel_cue: "Guide hand is a shelf, not a push — it opens on the way up."
+drill: 90s guide-hand tap-off: at release, guide hand opens; filming confirms off-hand still.
+severity_default: medium
+sources: Coaching manuals summarized (B); biomechanics off-hand role (B+)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_short_arm_release
+headline_en: Elbow stays bent through the release peak
+phases: release
+body_signal: Shooting elbow flexion > ~45° at E_RELEASE (camera-dependent; use relative change vs set).
+why_it_matters: Incomplete extension often correlates with flat arc and short distance on jump shots in skill comparisons.
+feel_cue: "Reach into the cookie jar on the top shelf — full reach, soft wrist."
+drill: 45s wall reach: finish knuckles toward target wall; elbow straightens without painful lock.
+severity_default: medium
+sources: Free throw extension kinematics (B+); youth form shooting (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_wrist_only_release
+headline_en: Wrist flicks without shoulder–elbow line through release
+phases: release
+body_signal: Wrist ahead of elbow in line-of-sight with minimal shoulder elevation change through release window.
+why_it_matters: Isolated wrist flick reduces power transfer from trunk on longer jump shots.
+feel_cue: "Push the palm through the hoop, not just snap the fingers."
+drill: 60s towel whip vs arm: compare full-arm extend vs wrist-only.
+severity_default: medium
+sources: Sequential kinetic chain summaries (B+); coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_collapsed_setup
+headline_en: Hunched trunk at the start of the motion
+phases: setup
+body_signal: Forward trunk lean with head anterior to pelvis; rounded thoracic proxy in side view.
+why_it_matters: Poor setup posture can limit upward extension path and eye-target stability.
+feel_cue: "Long spine, soft knees — eyes up."
+drill: 45s posture reset: wall stand then step to shooting stance maintaining length.
+severity_default: low
+sources: Posture in FT routine studies (B); general coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_narrow_base
+headline_en: Feet too close together for balance
+phases: setup, follow
+body_signal: Ankle separation / shoulder width ratio below checkpoint threshold.
+why_it_matters: Narrow base increases sway and landing instability in jump shots.
+feel_cue: "Feet under your hips, not under your nose."
+drill: 60s stance holds: hold setup 10 s without sway; film sway.
+severity_default: medium
+sources: Balance training literature (B+); coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_stiff_landing
+headline_en: Legs stay straight at landing
+phases: follow
+body_signal: Knee flexion at E_LAND increases < ~15° from flight posture.
+why_it_matters: Stiff landings increase ground reaction forces (biomechanics consensus); coaching aims for soft absorption — not a personal diagnosis.
+feel_cue: "Land quiet — bend like a spring, not a stick."
+drill: 90s drop-stick landing: small hop, land with knees flexing soft on mat.
+severity_default: high
+sources: Landing mechanics reviews (A/B+); basketball S&C summaries (B)
+youth_note: Prioritize soft knees over hop height.
+
+---
+
+finding_id: fault_asymmetric_landing
+headline_en: One leg absorbs most of the landing
+phases: follow
+body_signal: Knee flexion difference L vs R at E_LAND_STABLE > threshold; COM shifted over one foot.
+why_it_matters: Asymmetric landings may reflect drift during shot and can increase unilateral load over repeated jumps (population trends only).
+feel_cue: "Land on two feet the same depth."
+drill: 60s stick landing after form shot: knees match depth.
+severity_default: high
+sources: ACL/landing literature (A) summarized for coaching; not diagnostic.
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_lateral_leak
+headline_en: Hips drift sideways during the drive
+phases: drive
+body_signal: Lateral COM displacement toward non-shooting side during E_DIP_MIN to E_COM_PEAK.
+why_it_matters: Lateral leak reduces vertical transfer and can pull shooting shoulder off line.
+feel_cue: "Jump straight up through the ceiling, not the sideline."
+drill: 75s channel jump: narrow tape channel, dip-drive without touching tape (no ball).
+severity_default: medium
+sources: Vertical jump mechanics (B+); coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_chicken_wing_finish
+headline_en: Shooting arm snaps down immediately after release
+phases: follow
+body_signal: Shooting wrist drops below shoulder within 5 frames post E_RELEASE.
+why_it_matters: Short follow-through correlates with inconsistent release timing in practice observations (coaching).
+feel_cue: "Hold the gooseneck — wrist relaxed, arm up."
+drill: 60s finish hold count: after each form rep, hold finish 2 s.
+severity_default: low
+sources: FT routine coaching (B); motor learning hold feedback (B+)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_rushed_free_throw
+headline_en: Free throw begins without a stable routine pause
+phases: setup
+body_signal: Wrist or COM motion begins within <1 s of clip start without low-velocity setup window; high trunk sway rate in setup.
+why_it_matters: Routine consistency is associated with FT performance in observational studies (not causal guarantee).
+feel_cue: "Breathe, set, shoot — same clock every time."
+drill: 90s routine rehearsal: 3 dribbles, breath, set — no shot; repeat 5× then add shot.
+severity_default: medium
+sources: FT routine timing research (B+); public coaching clips summarized (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_head_jerk_release
+headline_en: Head pulls away or dips sharply at release
+phases: release
+body_signal: Rapid head pitch or yaw change in ±2 frames of E_RELEASE.
+why_it_matters: Head movement can disrupt visual targeting and trunk stability through release.
+feel_cue: "Eyes stay on the rim through the kiss of the wrist."
+drill: 45s eyes-on-target: partner holds finger at rim line; maintain eye line through finish.
+severity_default: low
+sources: Visual attention in shooting (B+); coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_feet_misaligned
+headline_en: Feet turned awkwardly relative to hips at setup
+phases: setup
+body_signal: Foot angle asymmetry with knee valgus proxy at setup.
+why_it_matters: Extreme misalignment can limit hip rotation and balance through transfer.
+feel_cue: "Toes point where you want force to go — usually rim or slight turn for comfort."
+drill: 60s footprint paint: outline feet, step out and back into outline before each rep.
+severity_default: low
+sources: Coaching footwork basics (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_over_wide_base
+headline_en: Stance so wide that rise is slow
+phases: setup, drive
+body_signal: Ankle width > ~1.5× shoulder width with delayed E_COM_RISE.
+why_it_matters: Very wide bases can slow jump shot tempo off screens.
+feel_cue: "Athletic width — jump rope stance."
+drill: 45s width find: adjust until two hops feel quick, mark floor.
+severity_default: low
+sources: Coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_ft_rhythm_break
+headline_en: Free-throw rhythm breaks between routine and release
+phases: setup, transfer, release
+body_signal: Setup low-velocity window duration varies >30% across FT reps, or E_RELEASE occurs without consistent pause after last bounce/breath proxy.
+why_it_matters: Routine timing consistency associates with FT performance in observational studies; broken rhythm often precedes rushed or arm-only pushes (performance).
+feel_cue: "Same clock every shot — bounce, breathe, set, shoot on the same beat."
+drill: 90s metronome FT shadow: personal routine on 4 even beats, hold finish 2 s; 5 reps.
+severity_default: medium
+sources: FT routine timing research (B+); NGB FT progressions (B)
+youth_note: Shorten routine but keep fixed order.
+
+---
+
+finding_id: fault_ft_early_arm
+headline_en: Free-throw arm extends before legs finish quiet push
+phases: transfer, set, release
+body_signal: E_RELEASE wrist-speed peak precedes knee/hip extension completion in FT window; COM rise stays below jump threshold while elbow extends early.
+why_it_matters: FT coaching models prefer coordinated leg–arm timing for repeatable arc; early arm push is a common novice pattern.
+feel_cue: "Legs finish first — the ball rides the quiet push, then the arm opens."
+drill: 60s FT no-ball: soft knee bend then rise; only after hips rise, extend shooting arm to gooseneck.
+severity_default: medium
+sources: Knudson free-throw kinematics (B+); coaching consensus (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_catch_shoot_late_pivot
+headline_en: Catch-and-shoot feet square late after the catch
+phases: setup, dip
+body_signal: After catch proxy (hands rise), foot yaw toward basket completes late vs E_DIP_START; hips still rotating while dip begins.
+why_it_matters: Catch-and-shoot progressions teach early foot plant so dip can be short and vertical; late square often forces excessive dip or arm-only rush.
+feel_cue: "Feet land ready — catch on a loaded athletic stance, not a turn-after-catch."
+drill: 75s partner toss catch-plant: catch, freeze feet 1 count square to rim, then dip-rise form shot; 8 reps.
+severity_default: medium
+sources: USA Basketball catch-and-shoot footwork themes (B); skill acquisition (B+)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_catch_shoot_hop_back
+headline_en: Hop-back on catch creates rearward COM leak before dip
+phases: setup, dip
+body_signal: Pelvis COM shifts posterior > threshold between catch and E_DIP_MIN; ankles drift away from basket while hands rise to set.
+why_it_matters: Uncontrolled hop-back lengthens path to release; deliberate step-back is a separate skill.
+feel_cue: "Catch and sit — soft knees under you, not a reverse hop."
+drill: 60s line catch: tape at toes; catch-dip without heels sliding behind line; 8 body-only reps.
+severity_default: medium
+sources: Catch-and-shoot tempo coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_inside_pivot_collapse
+headline_en: Inside foot collapses or spins out on catch plant
+phases: setup, dip
+body_signal: Inside ankle rolls or foot angle flips outward at plant while opposite knee flexes into dip; frontal knee valgus proxy may appear.
+why_it_matters: Unstable plant reduces bilateral load into the shot and can carry into landing asymmetry (coaching / load education — not diagnosis).
+feel_cue: "Plant like a tripod — big toe, little toe, heel own the floor before you dip."
+drill: 45s plant-stick: step into setup, freeze 2 s, then one dip-rise.
+severity_default: medium
+sources: Footwork and balance coaching (B)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_set_behind_head
+headline_en: Set point drifts behind the head
+phases: set, release
+body_signal: Shooting wrist posterior to ear/shoulder line at E_SET_START in side view; excessive shoulder extension before E_RELEASE.
+why_it_matters: Deep behind-head sets can delay release and increase shoulder demand on contested jumpers (coaching / load framing).
+feel_cue: "Set in front of your forehead — see the rim over the ball, not through your elbow."
+drill: 60s forehead set freeze: hold set with wrist above brow plane 2 s, then extend; 8 reps.
+severity_default: low
+sources: Shooting set-point coaching (B); kinematic set studies (B+)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_lean_back_release
+headline_en: Trunk leans back through release on jump shot
+phases: drive, transfer, release
+body_signal: Thorax pitch increases posteriorly through E_RELEASE; COM projects behind mid-foot at release vs setup.
+why_it_matters: Uncontrolled lean-back changes release angle and can stress landing balance; fadeaways are intentional variants — flag when unplanned.
+feel_cue: "Chest stays over the toes through the shot — jump up, not away."
+drill: 75s wall-chest check: light wall contact behind hips only; form shoot without peeling chest off vertical.
+severity_default: medium
+sources: Jump-shot balance coaching (B); COM path summaries (B+)
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_offhand_thumb_over
+headline_en: Guide-hand thumb rides over the ball at release
+phases: set, release
+body_signal: Off-hand thumb knuckle dips toward shooting-hand path within ±3 frames of E_RELEASE; off-hand wrist pronates toward basket.
+why_it_matters: Thumb-over guide contact is a common source of side spin in coaching observations (performance).
+feel_cue: "Thumb points to the sky on the shelf — it never pushes the ball."
+drill: 60s thumb-up hold: at set, freeze with guide thumb vertical, then open hand on extend; 10 slow reps.
+severity_default: low
+sources: Guide-hand role coaching (B)
+confidence_note: Needs clear frontal or 45° view of both hands
+youth_note: Landing education and free-throw routine over dip depth vs elite jumpers.
+---
+
+finding_id: fault_landing_forward_lunge
+headline_en: Landing steps forward into a lunge after the shot
+phases: follow
+body_signal: After E_LAND, one foot travels forward >~0.5× shoulder width before E_LAND_STABLE; asymmetric knee flex with forward COM.
+why_it_matters: Forward lunge landings often follow lean or fade and reduce stick-balance quality taught in form shooting.
+feel_cue: "Land in your footprints — two feet, soft knees, no step toward the rim."
+drill: 90s footprint landing: chalk takeoff feet; land back in marks after form jumper; 6 reps.
+severity_default: medium
+sources: Landing balance progressions (B); soft-landing education (A/B+ summarized)
+youth_note: Prioritize soft knees over footprint perfection.
+
+# Severity: high — stiff/asymmetric landing (education not fear); medium — arm-only, elbow, FT rhythm, catch-shoot plant; low — head jerk, set-behind, thumb-over.
+# Youth: down-weight dip-depth; up-weight FT rhythm and landing softness.

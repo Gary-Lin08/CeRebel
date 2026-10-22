@@ -1,0 +1,178 @@
+# Tennis Sport Pack — Phase model (v2)
+
+Body-first phase definitions for OpenSim-compatible skeleton tracking. Events are defined by **visible body
+signals**; ball contact is approximated by **CONTACT_PROXY** (racket-side wrist speed maximum) when no ball track exists.
+
+Handedness: examples below assume **right-handed** player. Mirror left/right joint names for left-handed athletes.
+
+---
+
+## Serve phase chain (7 phases)
+
+### S_READY
+**Start:** Athlete still or minimal bounce at baseline; racket-side and non-racket hands below shoulder level.
+**End:** Non-racket wrist begins sustained upward motion (toss preparation) OR racket-side wrist lifts above shoulder.
+**Body signals:** Low wrist speeds; feet planted or small adjustment steps; neutral trunk facing roughly toward net.
+**detector_events:** E_SERVE_READY, clip_start fallback
+**fault_links:** fault_serve_rhythm_rush
+**Detector note:** Clip may begin mid-motion; if toss already high, merge into S_TOSS_RISE.
+
+### S_TOSS_RISE
+**Start:** Non-racket arm elevates (toss arm); elbow extends toward overhead zone.
+**End:** Non-racket wrist reaches local maximum height OR begins downward drift before racket-side peak speed.
+**Body signals:** Non-racket wrist height increasing; slight knee flex may begin; racket arm may counter-move backward.
+**detector_events:** E_TOSS_ARM_RISE, E_TOSS_ARM_PEAK
+**fault_links:** fault_serve_toss_arm_drift
+**Without ball:** Coach toss quality is **not** scored; only arm path, timing relative to leg load, and lateral drift.
+
+### S_TROPHY_LOAD
+**Start:** Racket-side shoulder elevated; elbow bent; legs loading (knee flexion increasing or held deep).
+**End:** Racket-side wrist begins downward loop into S_RACKET_DROP OR upward drive if loop is abbreviated.
+**Body signals:** Asymmetric shoulder height (racket side higher); hip tilt; knee flexion local minimum often near end of phase.
+**detector_events:** E_TROPHY, E_KNEE_FLEX_MIN
+**fault_links:** fault_serve_knee_lock, fault_serve_shoulder_tilt_flat, fault_serve_elbow_low, fault_serve_rhythm_rush
+**Youth note:** Depth of knee bend and shoulder lift are smaller than elite adults; compare to athlete’s prior clips, not pro templates.
+
+### S_RACKET_DROP
+**Start:** Racket-side elbow drops behind trunk plane; wrist moves below shoulder behind body (scratch).
+**End:** Racket-side wrist vertical velocity turns strongly positive (upward drive).
+**Body signals:** Racket-side wrist behind pelvis on side view; elbow flexion then extension sequence.
+**detector_events:** E_RACKET_DROP_MIN
+**fault_links:** fault_serve_elbow_low, fault_serve_abbreviated_drop
+**Camera caveat:** Foreshortening when camera faces server frontally.
+
+### S_DRIVE_UP
+**Start:** Leg extension and trunk upward rotation; racket-side wrist accelerates upward toward contact zone.
+**End:** S_CONTACT_PROXY frame.
+**Body signals:** Ankle push-off; knee extension; trunk lean away from net (side view); racket-side wrist speed rising.
+**detector_events:** E_LEG_DRIVE_ONSET, E_TRUNK_UP
+**fault_links:** fault_serve_knee_lock, fault_serve_poor_leg_sync, fault_serve_excessive_arch
+
+### S_CONTACT_PROXY
+**Event (instant):** Frame of **maximum racket-side wrist speed** in the serve window (proxy for contact).
+**Body signals:** Peak wrist speed; racket-side arm near full extension overhead; non-racket arm typically folded or dropped.
+**detector_events:** E_CONTACT_PROXY (= argmax racket-side wrist speed)
+**fault_links:** fault_serve_poor_leg_sync, fault_serve_rhythm_rush
+**Not measured:** Racket face angle, ball impact height, pronation magnitude without multi-view.
+
+### S_DECEL
+**Start:** Frame after S_CONTACT_PROXY.
+**End:** Wrist speeds return toward baseline OR athlete initiates landing step into court.
+**Body signals:** Racket-side arm crosses body or finishes to opposite hip; trunk rotation decelerates; lead leg steps into court.
+**detector_events:** E_DECEL_START, E_LAND_STEP
+**fault_links:** fault_serve_poor_decel, fault_serve_landing_imbalance, fault_serve_short_finish_youth
+**Quality focus:** Smooth speed decay vs abrupt hitch (load and control awareness).
+
+---
+
+## Groundstroke phase chain (7 phases)
+
+Applies to forehand and backhand; two-handed backhand uses both arms in G_FORWARD_SWING with lead arm prominent.
+
+### G_SPLIT
+**Start:** Clip onset or recognizable hop as opponent strikes (may be absent if clip trimmed).
+**End:** Pelvis begins significant rotation into preparation.
+**Body signals:** Brief bilateral ankle velocity spike; feet wider than walking stance; knees flexed.
+**detector_events:** E_SPLIT_HOP
+**fault_links:** fault_split_step_late
+
+### G_UNIT_TURN
+**Start:** Trunk and pelvis rotate together away from net; racket-side arm begins backswing path.
+**End:** Forward swing initiation — racket-side wrist velocity reverses toward net.
+**Body signals:** Shoulder line rotates; racket-side wrist moves behind hip plane on side view.
+**detector_events:** E_UNIT_TURN_PEAK_YAW
+**fault_links:** fault_forehand_late_unit_turn, fault_groundstroke_late_unit_turn, fault_backhand1_late_prep, fault_unit_turn_incomplete_open, fault_backhand2_tight_shoulders_youth
+
+### G_LOAD
+**Start:** Weight shifts to loaded leg (often outside leg for open stance forehand).
+**End:** G_FORWARD_SWING begins.
+**Body signals:** Knee flexion on load leg; pelvis stable or coiling; racket-side elbow away from torso.
+**detector_events:** E_LOAD_KNEE_FLEX
+**fault_links:** fault_forehand_open_no_load, fault_forehand_flying_elbow, fault_groundstroke_wide_stance_stuck, fault_backhand_wide_stance_stuck, fault_backhand1_dropped_shoulder
+
+### G_FORWARD_SWING
+**Start:** Racket-side wrist accelerates toward net; trunk uncoils.
+**End:** G_CONTACT_PROXY.
+**Body signals:** Trunk yaw rate peak often just before contact proxy; racket-side wrist horizontal speed rising.
+**detector_events:** E_SWING_ACCEL
+**fault_links:** fault_forehand_all_arm, fault_groundstroke_all_arm, fault_backhand2_bottom_hand_only, fault_backhand1_reaching, fault_forehand_flying_elbow
+
+### G_CONTACT_PROXY
+**Event:** **Maximum racket-side wrist speed** during groundstroke swing (proxy for ball contact).
+**Body signals:** Arm extended toward net; opposite arm often counter-rotated for balance.
+**detector_events:** E_CONTACT_PROXY
+**fault_links:** fault_backhand1_reaching
+
+### G_FOLLOW
+**Start:** Post contact-proxy frames.
+**End:** Wrist speed drops below 50% of peak OR racket-side hand crosses shoulder line on finish.
+**Body signals:** Racket-side arm wraps over opposite shoulder or finishes high; trunk continues rotation moderately.
+**detector_events:** E_FOLLOW_WRAP
+**fault_links:** fault_forehand_upright_recovery, fault_groundstroke_upright_recovery, fault_forehand_over_rotate_finish
+
+### G_RECOVERY
+**Start:** Finish completes.
+**End:** Athlete recenters toward ready position or clip ends.
+**Body signals:** Feet adjust; racket returns to center; split-step prep may repeat.
+**detector_events:** E_RECENTER
+**fault_links:** fault_recovery_slow_recenter, fault_forehand_upright_recovery, fault_groundstroke_upright_recovery
+
+---
+
+## Volley / net phase chain (5 phases) — v2 skill line
+
+Body-first net play; no ball required. Contact proxy = short peak of racket-side wrist speed with limited hand travel.
+
+### V_READY
+**Start:** Athletic ready at net or transition; racket head above wrist, elbows soft.
+**End:** Split hop or first step toward contact path.
+**Body signals:** Knees flexed; racket centered; weight on forefoot.
+**detector_events:** E_VOLLEY_READY
+**fault_links:** fault_volley_arm_stab
+
+### V_SPLIT
+**Start:** Brief bilateral hop or weight unload.
+**End:** Feet accept landing; preparation step begins.
+**Body signals:** Bilateral ankle micro-peak; soft knee land.
+**detector_events:** E_SPLIT_HOP
+**fault_links:** fault_split_step_late, fault_volley_feet_stuck
+
+### V_FORWARD_BLOCK
+**Start:** Lead foot steps toward contact path; short forward hand path begins.
+**End:** V_CONTACT_PROXY.
+**Body signals:** Trunk leans slightly into shot; hand travel short vs groundstroke; shoulders relatively square.
+**detector_events:** E_VOLLEY_STEP, E_BLOCK_ONSET
+**fault_links:** fault_volley_feet_stuck, fault_volley_arm_stab
+
+### V_CONTACT_PROXY
+**Event:** Local max racket-side wrist speed in volley window (typically lower amplitude than GS).
+**Body signals:** Firm elbow angle; wrist stable; short punch.
+**detector_events:** E_CONTACT_PROXY
+**fault_links:** fault_volley_arm_stab
+
+### V_RECOVERY
+**Start:** Post-block.
+**End:** Recenter or ready for next volley.
+**Body signals:** Feet shuffle; racket returns to center chest height.
+**detector_events:** E_RECENTER
+**fault_links:** fault_recovery_slow_recenter
+
+---
+
+## Cross-stroke timing metrics (for detectors)
+
+- serve_tempo_ms: S_READY to S_CONTACT_PROXY duration
+- groundstroke_prep_ms: G_UNIT_TURN start to G_CONTACT_PROXY
+- leg_arm_delay: knee extension onset before S_CONTACT_PROXY or G_CONTACT_PROXY
+- decel_smoothness: jerk proxy on racket-side wrist speed after contact proxy
+- recenter_ms: G_FOLLOW / V_RECOVERY end to pelvis near midline
+- split_to_turn_ms: E_SPLIT_HOP to G_UNIT_TURN onset
+
+---
+
+## Mapping to registry product copy
+
+Catalog blurb: “Serve, groundstroke, and net timing on the body.”
+Example question: “Is my toss lined up with my trophy pose?” — body proxy: non-racket wrist lateral position vs shoulder line at S_TROPHY_LOAD (no ball required).
+
+Sources: summarized from open serve and groundstroke biomechanics reviews (B+); coaching phase names align with ITF/USTA coaching vocabulary (B). See SOURCE_MANIFEST.

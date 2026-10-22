@@ -1,0 +1,44 @@
+# build_report — yoga
+# Generated after multi-agent Sport Pack fill
+
+Biomechanics/001_overview.txt	215 lines	12429 bytes
+Coaching/001_cues.txt	262 lines	9353 bytes
+Coaching/002_drills.txt	195 lines	6570 bytes
+Docs/001_ARCHITECTURE.txt	145 lines	7684 bytes
+Docs/002_DISCLAIMER.txt	88 lines	4527 bytes
+Findings/001_common_faults.txt	408 lines	20269 bytes
+Phases/001_phase_model.txt	165 lines	8431 bytes
+Quality/001_quality_definition.txt	88 lines	5122 bytes
+Quality/002_checkpoints.txt	317 lines	11973 bytes
+Schema/001_ontology.txt	178 lines	4512 bytes
+Taxonomy/001_concepts.txt	26 lines	1880 bytes
+Taxonomy/002_relations.txt	44 lines	2128 bytes
+Taxonomy/003_common_poses_set.txt	214 lines	6536 bytes
+Training/001_team_practice.txt	179 lines	8506 bytes
+_meta/SOURCE_MANIFEST.txt	22 lines	2147 bytes
+_meta/brain_plan.txt	54 lines	2255 bytes
+_meta/pack_readme.txt	4 lines	227 bytes
+_meta/research_notes.txt	40 lines	1873 bytes
+_meta/review_report.txt	29 lines	1388 bytes
+
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+build_agent: corpus_v2_consistency_upgrade
+sports_batch: basketball, boxing, snowboarding, weightlifting, swimming, yoga
+
+Actions:
+- Migrated Findings/001_common_faults.txt to canonical `---` + finding_id: fault_* cards
+  with headline_en, phases, body_signal, why_it_matters, feel_cue, drill, severity_default, sources
+- Findings count now: 33
+- Ensured Coaching cues/drills cite fault_* (cues≈28, drills≈18)
+- Confirmed Taxonomy/002_relations.txt rows ≥15 (count≈4)
+- Added Phases V2 PHASE LINK INDEX with detector_events + fault_links
+- Rewrote _meta/review_report.txt (stale missing-DISCLAIMER claims corrected)
+- Appended this build_report section
+
+Sport-specific notes:
+- Canonical field migration; kept 33 cards (≤40); VERDICT updated.
+build_status: v2_upgrade_complete
+VERDICT_REF: APPROVED_V2

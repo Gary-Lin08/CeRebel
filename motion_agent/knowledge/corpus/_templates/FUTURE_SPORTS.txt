@@ -1,0 +1,16 @@
+# Adding a sport beyond the current roadmap
+
+CeRebel Sport Packs are closed for v1 product catalog except the packs listed in
+`motion_agent/sports/packs/coming_soon.py` + golf/human/baseball.
+
+To add a **new** sport (e.g. cricket, pickleball):
+
+1. Create `corpus/<sport_id>/` per SPORT_PACK_KB_SPEC.txt (brain/search/review/build).
+2. Add `ComingSoonPack(...)` in `sports/packs/coming_soon.py` (detector off).
+3. Add `SPORT_KB_SOURCES["<id>"] = ["<id>/"]` in `knowledge/sport_sources.py`.
+4. Add PROMPT_PRESETS + DOMAIN_PREAMBLES entries in `llm/prompts.py`.
+5. Keep status `coming_soon` until a calibrated detector refuses cross-sport false positives.
+6. Do not invent medical norms; include Docs/002_DISCLAIMER.txt.
+
+Until those steps land, "future sports" are intentionally **not** in the consumer catalog.
+This file documents the extension contract so the gap is process-complete, not an empty folder.

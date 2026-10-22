@@ -1,0 +1,14 @@
+# Canonical finding card (copy into Findings/001_common_faults.txt)
+
+---
+finding_id: fault_replace_me
+headline_en: Replace with one clear coach-facing sentence
+phases: phase_id_a, phase_id_b
+body_signal: Describe measurable skeleton proxies and named events (E_* / phase events). Avoid ball/club-only criteria.
+why_it_matters: Performance or population load — never individual injury diagnosis from video.
+feel_cue: "One memorable feel phrase."
+drill: 45–60s body-first drill description; optional cross-link to Coaching/002_drills.txt.
+severity_default: medium
+sources: Author / org + year or NGB theme (B+) 
+youth_note: How to down-weight or reinterpret for youth athletes.
+---

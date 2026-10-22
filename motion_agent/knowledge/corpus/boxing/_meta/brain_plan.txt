@@ -1,0 +1,249 @@
+# CeRebel Boxing KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: boxing (shadowboxing / bagless form coaching)
+# Aligns: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Product: body-first OpenSim coaching; NO opponent, NO bag/glove tracking required
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for **technique coaching** in boxing fundamentals:
+orthodox/southpaw **stance**, **guard**, **jab**, **cross**, **footwork**, and
+**shadowboxing form** (solo movement quality). Emphasis on balance, segment
+sequencing, retraction, and safe deceleration — not combat outcomes.
+
+In scope v1:
+- Straight punches (lead jab, rear cross) as body patterns
+- Stance width, weight distribution, guard hand position (body-visible)
+- Basic footwork: step-in, step-out, pivot on lead foot for cross (coaching heuristics)
+- Shadowboxing rhythm: guard → prep → extension proxy → retract → reset
+
+Out of scope (do NOT author in this pack):
+- Fight tactics, targeting vulnerable areas, hurting opponents, sparring strategy
+- Clinch, illegal blows, referee rules except brief glossary for RAG disambiguation
+- Medical diagnosis, concussion return-to-sport (redirect to licensed providers)
+- Heavy bag / pad timing that requires equipment contact detection
+- Advanced combinations beyond jab–cross form chains (future extension only as glossary stubs)
+
+Build agent writes full Findings/Coaching bodies from this map; brain agent does not.
+
+================================================================================
+2. PRODUCT CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+- All measurable claims tie to reconstructed body: joint angles, segment speeds,
+  COM over base, hand height relative to head/shoulders.
+- No requirement for gloves, mitts, opponent silhouette, or impact events.
+- **Extension proxy** = argmax ||v(striking_hand_wrist)|| in punch window (not contact).
+- Youth vs adult: separate audience bands for volume/load language; no adult power
+  cues for youth shadowboxing.
+- Authority: B+ / B for NGB coaching consensus; A/A+ only for clinical load/volume
+  when cited in Biomechanics; no C in findings thresholds.
+- Coaching tone: fitness and skill development; never instruct how to inflict harm.
+
+================================================================================
+3. MOTION FAMILIES (TOP-LEVEL)
+================================================================================
+
+1. STANCE_GUARD — static or micro-movement ready position
+2. JAB — lead-hand straight extension from guard (orthodox: left jab default copy)
+3. CROSS — rear-hand straight with hip/trunk rotation (orthodox: right cross default)
+4. FOOTWORK — stepping and pivot patterns between punches (shadowboxing travel)
+5. SHADOW_ROUND — repeating guard–punch–reset cycles without equipment (future combo tags)
+
+Handedness: **lead** = jab side; **rear** = cross side. Default corpus labels
+orthodox (RH lead = left). Southpaw: mirror lateral language in product logic.
+
+================================================================================
+4. PHASE MODEL (5–8 PHASES, BODY-ONLY EVENTS)
+================================================================================
+
+Shared punch chain (jab and cross reuse IDs; family tag distinguishes copy):
+
+| phase_id   | label_en        | label_zh (build) | role |
+|------------|-----------------|------------------|------|
+| B_GUARD    | Guard           | 抱架/预备        | Hands high; stable base; minimal COM drift |
+| B_PREP     | Preparation     | 蓄力/转髋准备    | Weight shift, hip/trunk coil before extension |
+| B_EXTEND   | Extension       | 出拳/伸展        | Striking wrist speed peak (extension proxy) |
+| B_RETRACT  | Retraction      | 收拳             | Hand returns toward guard; deceleration phase |
+| B_RESET    | Reset           | 还原             | Return to B_GUARD posture; foot replant if stepped |
+
+Footwork overlay (optional sub-chain between resets):
+
+| phase_id   | label_en        | role |
+|------------|-----------------|------|
+| F_PLANT    | Base plant      | Both feet under hips; no crossed stance |
+| F_STEP     | Step            | Lead or trail ankle displacement toward/away |
+| F_PIVOT    | Pivot           | Trail foot rotates on ball for cross power (heuristic) |
+
+Shadowboxing clip (typical 3–8 s): B_GUARD → (F_STEP optional) → B_PREP → B_EXTEND →
+B_RETRACT → B_RESET → B_GUARD …
+
+Event definitions (OpenSim-friendly, no opponent):
+
+- extend_event: argmax ||v(striking_wrist)|| in analysis window.
+- prep_start: local min striking-wrist speed after guard + rising hip rotation rate (future).
+- retract_end: striking wrist returns within guard volume proxy (height between chin and brow band).
+- guard_stable: both wrists above elbow height proxy and COM within base (heuristic).
+
+Phases/001_phase_model.txt (build): expand events, fallbacks, EN/ZH labels, scrub UX.
+
+================================================================================
+5. MEASUREMENT SURFACE (CODE ↔ KB)
+================================================================================
+
+Planned analysis board series (define norms in Biomechanics/001):
+
+| series_id        | signal                              | unit | primary phases      |
+|------------------|-------------------------------------|------|---------------------|
+| lead-wrist-spd   | ||v(lead_wrist)||                    | m/s  | B_EXTEND (jab)      |
+| rear-wrist-spd   | ||v(rear_wrist)||                    | m/s  | B_EXTEND (cross)    |
+| guard-height     | wrist height vs shoulder (both)     | norm | B_GUARD, B_RETRACT  |
+| rear-hand-drop   | rear wrist height during jab        | norm | B_EXTEND (jab)      |
+| hip-rotation     | pelvis yaw / trunk yaw proxy        | °    | B_PREP, B_EXTEND    |
+| stance-width     | ankle mediolateral separation       | norm | B_GUARD, F_PLANT    |
+| com-sway         | COM lateral vs ankle midpoint       | cm   | B_GUARD, F_STEP       |
+| knee-flex        | bilateral knee flexion mean         | °    | B_GUARD, B_PREP     |
+
+Future: elbow extension angle at B_EXTEND, chin–sternum flexion (posture only, non-diagnostic).
+
+================================================================================
+6. COACHING NORMS (EVIDENCE-BANDED — NOT MEDICAL ADVICE)
+================================================================================
+
+Wording for build: "typical in coaching literature" / "common teaching emphasis".
+Do not prescribe degrees as injury prevention guarantees.
+
+ADULT (fitness / amateur boxing fundamentals; B+ coaching consensus unless noted):
+
+- Guard: both hands between chin and forehead band; elbows in (not flared wide).
+- Jab: extension from shoulder; full retract before next punch; rear hand stays home.
+- Cross: hip and trunk rotate before or with rear shoulder; weight transfers through
+  mid-foot; retract rear hand to guard.
+- Stance: feet shoulder-width or slightly wider; knees soft (~15–30° flex heuristic);
+  weight balanced or slightly forward on balls of feet — not rigid upright.
+- Footwork: avoid crossing feet; step length proportional to leg length (normalize).
+
+YOUTH (non-contact shadowboxing emphasis; B / B+):
+
+- Shorter steps; emphasis on form and control over speed.
+- No cueing "hit harder" or power-max language; use "sharp extension" / "snap back".
+- Volume caps: reference general youth PA guidelines in Training/ — not fight prep.
+
+================================================================================
+7. QUALITY MODEL (STUB FOR BUILD)
+================================================================================
+
+Dimensions (Quality/001):
+(1) guard integrity, (2) punch path & retraction, (3) hip/trunk sequencing,
+(4) base & footwork, (5) rhythm & reset consistency.
+
+Quality/002 checkpoint seeds:
+
+checkpoint_id           | phase(s)     | series/signal        | rule (summary)                         | fail→finding_id           | evidence
+------------------------|--------------|----------------------|----------------------------------------|-----------------------------|----------
+cp_guard_hands_high     | B_GUARD      | guard-height         | both wrists above elbow proxy          | fault_guard_low_hands       | B+
+cp_jab_rear_hand_home   | B_EXTEND     | rear-hand-drop       | rear wrist not below guard band on jab | fault_jab_rear_hand_drop    | B+
+cp_jab_retract          | B_RETRACT    | lead-wrist-spd       | hand returns before next prep peak     | fault_jab_no_retract        | B+
+cp_cross_hip_drive      | B_PREP→EXTEND| hip-rotation         | hip yaw peak before/at rear wrist peak | fault_cross_no_hip        | B+
+cp_cross_all_arm        | B_EXTEND     | hip-rotation         | wrist peak without hip rotation rise   | fault_cross_all_arm         | B+
+cp_stance_base          | B_GUARD      | stance-width         | width below narrow band                | fault_stance_narrow         | B+
+cp_stance_crossed_feet  | F_STEP       | ankle line proxy     | lead/trail feet crossed on AP view     | fault_footwork_crossed      | B+
+cp_com_over_base        | B_GUARD,F_STEP| com-sway            | excessive lateral COM outside feet     | fault_balance_sway          | B+
+cp_elbow_flare_jab      | B_EXTEND     | elbow abduction proxy| lead elbow wide at extension           | fault_jab_elbow_flare       | B+
+cp_chin_stack           | B_GUARD      | head vs trunk        | excessive neck extension (posture)     | fault_posture_chin_up       | B
+
+================================================================================
+8. FINDING CATALOG (STABLE IDs)
+================================================================================
+
+| finding_id              | headline_en (short)              | primary_phases   | body signal (measurable)                    | severity |
+|-------------------------|----------------------------------|------------------|---------------------------------------------|----------|
+| fault_guard_low_hands   | Hands drift below guard          | B_GUARD          | wrist height low vs shoulders               | form     |
+| fault_jab_rear_hand_drop| Rear hand drops on jab           | B_EXTEND (jab)   | rear wrist drops during lead extension      | form     |
+| fault_jab_no_retract    | Jab stays extended               | B_RETRACT        | lead wrist speed stays high; no return      | form     |
+| fault_jab_elbow_flare   | Elbow flares on jab              | B_EXTEND (jab)   | lead elbow abduction wide                   | form     |
+| fault_cross_no_hip        | Cross without hip turn           | B_PREP, B_EXTEND | low hip rotation with rear wrist peak       | form     |
+| fault_cross_all_arm     | Arm-only cross                   | B_EXTEND (cross) | rear wrist peak before hip rotation         | form/load|
+| fault_cross_no_retract  | Cross not brought back           | B_RETRACT        | rear hand lingers forward                   | form     |
+| fault_stance_narrow     | Stance too narrow                | B_GUARD          | ankle separation below band                 | balance  |
+| fault_stance_weight_back| Weight stuck on heels            | B_GUARD, B_PREP  | COM posterior; upright stiff legs           | form     |
+| fault_footwork_crossed  | Feet cross when stepping         | F_STEP           | feet line crossed                           | balance  |
+| fault_footwork_heel_lift| Pivot on flat foot               | F_PIVOT          | trail heel not rotating on ball (heuristic) | form     |
+| fault_balance_sway      | Upper body sways off base        | F_STEP, B_EXTEND | COM lateral excursion                       | balance  |
+| fault_posture_chin_up   | Chin lifted / neck extended      | B_GUARD          | head extension vs trunk (posture cue)       | form     |
+| fault_shadow_rushed_reset| Punches blur without reset      | B_RESET          | next B_PREP before B_RETRACT completes      | rhythm   |
+
+Each finding card MUST include: id, headline, phases, signal, why (performance/balance/load
+— cautious), feel cue, drill 30–90s, sources[], authority level.
+
+================================================================================
+9. ONTOLOGY CLASSES (Schema/001_ontology.txt)
+================================================================================
+
+Namespace prefix: boxing:
+
+- BoxingEntity (root)
+- Boxer (Person role)
+- ShadowSession | PunchInstance (motion instance)
+- PunchType: jab | cross | (future: hook_glossary_only)
+- BoxingPhase — B_GUARD, B_PREP, B_EXTEND, B_RETRACT, B_RESET, F_PLANT, F_STEP, F_PIVOT
+- PhaseEvent — extend_peak_wrist, guard_stable, retract_complete
+- BodySegment, JointAngle, SegmentSpeed (measurement definitions)
+- CoachingConcept (Cue, Drill)
+- Finding, Checkpoint, Evidence
+- StanceStyle: orthodox | southpaw
+
+Properties: boxing:precedes, boxing:occursIn, boxing:measuredOn, boxing:failTriggers,
+boxing:authorityLevel, boxing:ageBand (youth|adult), boxing:strikingHand (lead|rear).
+
+================================================================================
+10. TAXONOMY STUBS (Taxonomy/001_concepts, 002_relations)
+================================================================================
+
+Build agent expands rows; brain seeds punch/stance/footwork concepts and
+precedes / anchored_in / maps_to edges. See written stub files.
+
+================================================================================
+11. RAG CROSS-LINKS
+================================================================================
+
+- Every finding_id in Findings/001 repeats in Coaching/001 with matching fault_* id
+- Quality/002 checkpoints reference phase IDs and series_id
+- Biomechanics/001 cites kinetic chain (legs → hips → trunk → shoulder → arm) as B+
+  relationships, not prescriptive medical angles
+- Docs/002_DISCLAIMER: not combat instruction; fitness/skill; stop on pain
+
+================================================================================
+12. SOURCE PRIORITY (SEARCH / MANIFEST AGENTS)
+================================================================================
+
+A+: National governing body safety bulletins (concussion awareness summaries only)
+A: Sports medicine reviews on striking load (summarize, no diagnosis)
+B+: USA Boxing / AIBA open coaching fundamentals (stance, jab, cross — summarized)
+B: Reputable boxing fitness certifications (technique modules)
+Exclude C from checkpoint thresholds.
+
+================================================================================
+13. BUILD ORDER (SUGGESTED)
+================================================================================
+
+1. Schema + Taxonomy (stubs done)
+2. Docs/001–002, Phases/001
+3. Biomechanics/001 (limitations + chain overview)
+4. Quality/001–002
+5. Findings/001 then Coaching/001–002
+6. Training/001 (shadowboxing rounds, mirror work, youth-safe volume)
+7. SOURCE_MANIFEST, research_notes, review_report
+
+================================================================================
+14. ACCEPTANCE CRITERIA (PACK v1)
+================================================================================
+
+- Phase ids include B_GUARD through B_RESET and footwork F_* as documented
+- 10+ finding cards with cue + drill; no opponent-targeting language
+- No ball/glove/opponent tracking dependency
+- Youth/adult band separation in Training and Biomechanics
+- Explicit exclusion of fight tactics and harm-oriented coaching in review_report
+
+End brain_plan v0.1

@@ -1,0 +1,262 @@
+# Yoga — Coaching Cues (linked to fault_* ids)
+# Format: cue_id | fault_id | pose_id | phase | cue_text | breath_note | authority
+
+================================================================================
+DOWNWARD-FACING DOG
+================================================================================
+
+cue_dog_length_over_heels
+  fault_id: fault_dog_lumbar_sag, fault_dog_rounded_spine
+  pose_id: pose_down_dog
+  phase: hold_anchor
+  cue_text: "Long spine first; heels toward the floor only if they go without losing length."
+  breath_note: Exhale soften knees; inhale lift sit bones.
+  authority: B
+
+cue_dog_push_floor
+  fault_id: fault_dog_shoulder_elevation
+  pose_id: pose_down_dog
+  phase: hold_anchor
+  cue_text: "Push the mat forward with your hands; shoulder blades slide toward your hips."
+  breath_note: Steady nasal breath; avoid holding breath in shoulders.
+  authority: B
+
+cue_dog_soft_knees
+  fault_id: fault_dog_locked_knees, fault_dog_rounded_spine
+  pose_id: pose_down_dog
+  phase: entry, hold_anchor
+  cue_text: "Bend knees enough that your back can lengthen like a hammock tied high."
+  breath_note: One breath per pedaling foot if using heel lift variation.
+  authority: B
+
+cue_dog_hand_width
+  fault_id: fault_dog_narrow_base
+  pose_id: pose_down_dog
+  phase: entry
+  cue_text: "Hands shoulder-width; outer edges of hands parallel to mat edge."
+  breath_note: Set hands on exhale before stepping back.
+  authority: B
+
+================================================================================
+PLANK / CHATURANGA
+================================================================================
+
+cue_plank_one_line
+  fault_id: fault_plank_hip_sag, fault_plank_hip_pike
+  pose_id: pose_plank, pose_chaturanga_low
+  phase: hold_anchor, peak_load
+  cue_text: "One line from crown to heels — hips neither drip nor pike."
+  breath_note: Exhale engage core; do not breath-hold until dizzy.
+  authority: B
+
+cue_plank_shoulder_stack
+  fault_id: fault_plank_shoulder_forward, fault_chaturanga_shoulder_drop
+  pose_id: pose_plank, pose_chaturanga_low
+  phase: hold_anchor
+  cue_text: "Shoulders over wrists; chest broad, not collapsed between arms."
+  breath_note: Inhale prep; exhale lower in chaturanga only if line holds.
+  authority: B
+
+cue_chaturanga_elbows_in
+  fault_id: fault_chaturanga_elbow_flare
+  pose_id: pose_chaturanga_low
+  phase: peak_load
+  cue_text: "Elbows skim your ribs — upper arms about 45 degrees from your sides."
+  breath_note: Exhale on lowering; stop above shoulder-drop point.
+  authority: B
+
+cue_plank_neutral_gaze
+  fault_id: fault_plank_neck_crunch
+  pose_id: pose_plank
+  phase: hold_anchor
+  cue_text: "Eyes to mat edge; back of neck long."
+  breath_note: Soft jaw.
+  authority: B
+
+================================================================================
+WARRIOR FAMILY
+================================================================================
+
+cue_warrior_knee_track
+  fault_id: fault_warrior_knee_collapse, fault_warrior_knee_past_toes
+  pose_id: pose_warrior_2, pose_warrior_1
+  phase: hold_anchor
+  cue_text: "Front knee points over second toe; widen stance if knee dives forward."
+  breath_note: Inhale lengthen spine; exhale sink into legs mindfully.
+  authority: B
+
+cue_warrior_arms_active
+  fault_id: fault_warrior_arm_drop
+  pose_id: pose_warrior_2
+  phase: hold_anchor
+  cue_text: "Arms reach to opposite walls; energy through fingertips, shoulders down."
+  breath_note: Hold 5–8 breaths max for beginners before rest.
+  authority: B
+
+cue_w1_hip_mod
+  fault_id: fault_w1_hip_open
+  pose_id: pose_warrior_1
+  phase: hold_anchor
+  cue_text: "Turn back foot in enough that both hip bones feel forward without pinching."
+  breath_note: Modify to crescent lunge if back hip protests.
+  authority: B
+
+================================================================================
+BALANCE — TREE
+================================================================================
+
+cue_tree_safe_foot
+  fault_id: fault_tree_foot_on_knee
+  pose_id: pose_tree
+  phase: entry
+  cue_text: "Place foot on calf or inner thigh — never on the knee joint."
+  breath_note: Steady gaze on one point.
+  authority: B
+
+cue_tree_level_hips
+  fault_id: fault_tree_hip_jut, fault_balance_hip_drop
+  pose_id: pose_tree
+  phase: hold_anchor
+  cue_text: "Level your hips like a bowl of water — don’t spill to the standing side."
+  breath_note: Sway is normal; rebalance on exhale.
+  authority: B
+
+cue_micro_bend_standing_knee
+  fault_id: fault_locked_knee_balance
+  pose_id: pose_tree, pose_mountain
+  phase: hold_anchor
+  cue_text: "Standing knee soft — not locked."
+  breath_note: Inhale grow tall; exhale root foot.
+  authority: B
+
+================================================================================
+CHAIR
+================================================================================
+
+cue_chair_sit_back
+  fault_id: fault_chair_collapse_forward, fault_chair_knee_collapse
+  pose_id: pose_chair
+  phase: hold_anchor
+  cue_text: "Sit back as if to a high stool; knees track over ankles."
+  breath_note: Exhale sit; inhale lift chest.
+  authority: B
+
+================================================================================
+BRIDGE / BACKBEND
+================================================================================
+
+cue_bridge_knees_hip_width
+  fault_id: fault_bridge_knee_splay
+  pose_id: pose_bridge
+  phase: hold_anchor
+  cue_text: "Knees hip-width; press feet down evenly."
+  breath_note: Exhale lift; inhale hold; exhale lower slowly.
+  authority: B
+
+cue_backbend_thoracic
+  fault_id: fault_backbend_lumbar_dominant
+  pose_id: pose_cobra, pose_up_dog
+  phase: hold_anchor
+  cue_text: "Lift from upper back; keep lower back spacious."
+  breath_note: Long exhales; avoid forcing inhale into backbend.
+  authority: B
+
+cue_backbend_neutral_neck
+  fault_id: fault_backbend_neck_hyperextension
+  pose_id: pose_cobra, pose_up_dog
+  phase: hold_anchor
+  cue_text: "Neck follows spine — gaze forward, not at ceiling."
+  breath_note: Stop if dizzy.
+  authority: B
+
+================================================================================
+FORWARD FOLD / SEATED
+================================================================================
+
+cue_hinge_not_round
+  fault_id: fault_forward_fold_spine_round
+  pose_id: pose_forward_fold_standing, pose_seated_forward_fold
+  phase: hold_anchor
+  cue_text: "Fold from hip creases; back long like a table tilting forward."
+  breath_note: Exhale fold; micro-bend knees standing if needed.
+  authority: B+
+
+cue_sit_bones_root
+  fault_id: fault_seated_slump
+  pose_id: pose_seated_forward_fold, pose_staff
+  phase: entry, hold_anchor
+  cue_text: "Root sit bones; lift crown — spine like a staff."
+  breath_note: Sit on blanket if pelvis tucks under.
+  authority: B
+
+================================================================================
+TRIANGLE
+================================================================================
+
+cue_triangle_micro_knee
+  fault_id: fault_triangle_knee_hyperextend
+  pose_id: pose_triangle
+  phase: hold_anchor
+  cue_text: "Front leg strong with a micro-bend; rotate outer hip back."
+  breath_note: Inhale lengthen both sides; exhale revolve chest open.
+  authority: B
+
+================================================================================
+OVERHEAD ARMS
+================================================================================
+
+cue_ribs_down_arms_up
+  fault_id: fault_upward_salute_rib_flare
+  pose_id: pose_upward_salute, pose_chair
+  phase: hold_anchor
+  cue_text: "Arms rise; lower ribs knit in — avoid leaning back."
+  breath_note: Inhale arms; exhale settle ribs.
+  authority: B
+
+================================================================================
+FLOW / GENERAL
+================================================================================
+
+cue_controlled_transition
+  fault_id: fault_flow_uncontrolled_drop
+  pose_id: pose_chaturanga_low, pose_plank
+  phase: peak_load, decel
+  cue_text: "Move as if through honey — control beats depth."
+  breath_note: Match breath to movement or pause breath if learning form.
+  authority: B
+
+cue_steady_drishiti
+  fault_id: fault_hold_wandering
+  pose_id: *
+  phase: hold_late
+  cue_text: "Pick one gaze point; return there when you wobble."
+  breath_note: Count equal-length inhales and exhales.
+  authority: B
+
+cue_child_rest
+  fault_id: fault_child_compressed_neck
+  pose_id: pose_child
+  phase: hold_anchor
+  cue_text: "Forehead supported; knees wide enough for easy breath."
+  breath_note: 8–10 slow breaths.
+  authority: B
+
+================================================================================
+PROP MODIFICATIONS (coaching only — not tracked)
+================================================================================
+
+cue_blocks_under_hands
+  fault_id: fault_dog_rounded_spine, fault_forward_fold_spine_round
+  pose_id: pose_down_dog, pose_forward_fold_standing
+  phase: entry
+  cue_text: "Use blocks under hands to raise floor — same hip hinge, less strain."
+  breath_note: n/a
+  authority: B
+
+cue_strap_seated_fold
+  fault_id: fault_forward_fold_spine_round
+  pose_id: pose_seated_forward_fold
+  phase: hold_anchor
+  cue_text: "Strap around feet; keep spine long before pulling."
+  breath_note: Exhale gentle tension on strap.
+  authority: B

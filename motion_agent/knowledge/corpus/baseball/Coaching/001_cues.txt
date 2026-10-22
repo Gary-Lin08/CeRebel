@@ -1,0 +1,254 @@
+# Baseball Pitching — Coaching Cues (feel language)
+
+Cues are internal-focus phrases linked to `fault_*` findings and phases. Avoid over-cueing youth with simultaneous
+instructions; one cue per rep is preferred.
+
+Disclaimer: See Docs/002_DISCLAIMER.txt — not medical advice. Youth pitch-count cues are load-awareness education only.
+
+---
+
+## cue_stay_closed_longer
+
+finding_ids: fault_separation_low, fault_pelvis_drift, fault_trunk_late_rotate, fault_early_trunk_rotation
+phases: stride, landing
+language_en: “Keep your chest pointed slightly away from the catcher until your front foot lands.”
+language_alt: “Show your back pocket to the plate longer.”
+avoid: “Twist harder” — often increases early rotation.
+authority: CoachingAdvice B
+source_ids: pmc_pitching_biomech_review
+
+---
+
+## cue_brace_front_leg
+
+finding_ids: fault_front_knee_collapse, fault_separation_low, fault_posture_collapse_forward
+phases: landing
+language_en: “Land on a strong front leg — firm, not sinking.”
+language_alt: “Front knee stays over shoelaces, not collapsing inside.”
+avoid: “Lock the knee straight” — causes stiff landing.
+authority: B
+source_ids: asmi_youth_position
+
+---
+
+## cue_stride_to_target
+
+finding_ids: fault_stride_short, fault_stride_long, fault_closed_stride_landing, fault_open_stride_landing
+phases: stride, landing
+language_en: “Stride toward the catcher’s mitt, not the dugout or sky.”
+language_alt: “Foot lands on a railroad track to home plate.”
+progression: combine with stride line drill before adding speed.
+authority: B
+
+---
+
+## cue_athletic_stride
+
+finding_ids: fault_stride_long
+phases: stride
+language_en: “Stride like you’re hopping a small puddle — quick and athletic.”
+avoid: “Reach as far as you can.”
+authority: B
+
+---
+
+## cue_pause_at_top
+
+finding_ids: fault_set_rush, fault_tempo_rush_delivery, fault_soft_drive_leg_balance
+phases: set, lift
+language_en: “Lift the leg, pause one heartbeat, then deliver.”
+youth_note: Shorter pause for advanced athletes; avoid robotic full windup if stretch is game style.
+authority: B
+
+---
+
+## cue_smell_the_glove
+
+finding_ids: fault_head_pull, fault_glove_flyout
+phases: release, follow
+language_en: “Keep your head still enough to ‘smell’ the glove until the hand goes forward.”
+language_alt: “Chin stays on the target line.”
+avoid: “Don’t move your head at all” — some natural motion is fine.
+authority: B
+
+---
+
+## cue_tall_shoulder
+
+finding_ids: fault_mer_insufficient, fault_arm_path_wide, fault_arm_path_inverted_w
+phases: release
+language_en: “Stay tall through the throwing shoulder without shrugging the neck.”
+coach_note: Intentional sidearm pitchers may ignore after coach review.
+authority: B
+
+---
+
+## cue_tall_finish
+
+finding_ids: fault_arm_path_wide, fault_incomplete_deceleration, fault_finish_fall_off
+phases: follow
+language_en: “Finish with chest toward the ground, arm loose across the body.”
+language_alt: “Buttons to the dirt.”
+authority: B
+clinical_context: deceleration emphasis summarized from open clinical reviews — not diagnostic.
+
+---
+
+## cue_long_arm_short_body
+
+finding_ids: fault_trunk_late_rotate, fault_back_leg_soft, fault_arm_drag_late
+phases: release, landing
+language_en: “Let the body turn first, hand fires last.”
+language_alt: “Short body rotation, long arm whip through the window.”
+authority: B+ sequencing concept
+
+---
+
+## cue_continuous_circle
+
+finding_ids: fault_mer_insufficient, fault_arm_path_wide, fault_arm_path_inverted_w, fault_arm_slot_inconsistent
+phases: lift, release
+language_en: “One smooth circle with the hand — no pause behind you.”
+authority: B
+
+---
+
+## cue_fielding_ready
+
+finding_ids: fault_set_rush, fault_finish_fall_off
+phases: follow
+language_en: “Finish balanced enough to field a line drive back at you.”
+authority: B
+
+---
+
+## cue_stay_stack
+
+finding_ids: fault_head_pull, fault_posture_lean_back, fault_posture_collapse_forward
+phases: release
+language_en: “Stay stacked — head over your back leg through release.”
+authority: B
+
+---
+
+## cue_rhythm_breath
+
+finding_ids: fault_tempo_rush_delivery
+phases: all
+language_en: “Exhale as you drive; don’t hold your breath through the windup.”
+audience: youth — reduces tension spikes.
+authority: B
+
+---
+
+## cue_glove_leads
+
+finding_ids: fault_glove_flyout, fault_separation_low, fault_glove_side_collapse, fault_early_trunk_rotation
+phases: stride through release
+language_en: “Glove points at the target until the front foot lands.”
+pairs_with: drill_glove_lead_target
+authority: B
+
+---
+
+## cue_hand_behind_ball
+
+finding_ids: fault_trunk_late_rotate, fault_arm_drag_late
+phases: release
+language_en: “Fingers stay behind the ball through the window — snap at the end.”
+audience: adult/advanced; avoid with beginners learning basic throw.
+authority: B
+
+---
+
+## cue_push_rubber_away
+
+finding_ids: fault_back_leg_soft, fault_soft_drive_leg_balance
+phases: stride, landing
+language_en: “Push the rubber away — drive leg extends before front foot lands.”
+authority: B
+
+---
+
+## cue_open_the_gate
+
+finding_ids: fault_closed_stride_landing, fault_lead_foot_closed_toe
+phases: landing
+language_en: “Open the gate — front toes toward the catcher on plant.”
+authority: B
+
+---
+
+## cue_railroad_track
+
+finding_ids: fault_open_stride_landing, fault_stride_long
+phases: landing
+language_en: “Land on the railroad track to home — don’t flare the toes to the dugout.”
+authority: B
+
+---
+
+## cue_hands_lead_elbows
+
+finding_ids: fault_arm_path_inverted_w
+phases: lift, stride
+language_en: “Hands lead the elbows up — soft elbows, long circle.”
+authority: B
+youth_note: Path feel only; no tissue-risk language.
+
+---
+
+## cue_fold_glove_on_turn
+
+finding_ids: fault_glove_side_collapse, fault_glove_flyout
+phases: landing, release
+language_en: “Point the glove, then fold it to your chest as you turn — not before the foot lands.”
+authority: B
+
+---
+
+## cue_same_slot
+
+finding_ids: fault_arm_slot_inconsistent
+phases: release
+language_en: “Same window every pitch — find your slot and repeat it.”
+authority: B
+
+---
+
+## cue_pitch_count_aware
+
+finding_ids: fault_youth_pitch_count_awareness
+phases: n/a
+language_en: “Know your pitch count and rest days — quality reps beat empty volume.”
+audience: youth / parent / coach education
+avoid: Medical stop/play orders from the app alone.
+authority: A/B — Pitch Smart / NGB public tables
+pairs_with: drill_pitch_smart_rest_day
+
+---
+
+## Cue selection rules for CeRebel briefs
+
+1. Pick **one** cue matching highest-severity finding in the active phase window.
+2. If capture_quality fails, cue = “Recapture side view with feet and arm visible.”
+3. Never pair workload advice with a cue unless youth pitch count context is present in session metadata.
+4. For fault_sport_mismatch_golf, suppress mechanics cues; instruct recapture only.
+
+---
+
+## Anti-patterns (do not use in product copy)
+
+- “Throw as hard as you can every pitch” — conflicts with Pitch Smart youth guidance.
+- “Snap the curve with your wrist” — pitch-type specific, out of scope v1.
+- Exact elbow angle targets (“90 degrees at MER”) — not supported as universal norms.
+- “This pattern causes Tommy John” — prohibited diagnostic language.
+
+---
+
+## Sources
+
+- Baseball Canada development language (summarized) — baseball_canada_pitch_counts
+- PMC3764822 — separation timing concepts
+- MLB Pitch Smart public guidelines — youth volume education
+- Internal finding map — Findings/001_common_faults.txt

@@ -1,0 +1,214 @@
+# Yoga — Common Poses Set (v1 CeRebel scope)
+# Canonical pose_id values for RAG tags, findings, and coaching cross-links
+# Sanskrit + English aliases for retrieval
+
+================================================================================
+STANDING — FOUNDATION
+================================================================================
+
+pose_mountain
+  sanskrit: Tadasana
+  english: Mountain Pose
+  family: standing
+  mode: hold
+  notes: Reference upright stacking; feet hip-width; neutral spine baseline for other standing poses.
+
+pose_upward_salute
+  sanskrit: Urdhva Hastasana
+  english: Upward Salute / Raised Arms
+  family: standing
+  mode: hold, flow_node
+  notes: Shoulder flexion overhead; rib flare checkpoint; common in Sun Salutation.
+
+pose_forward_fold_standing
+  sanskrit: Uttanasana
+  english: Standing Forward Fold
+  family: standing
+  mode: hold, flow_node
+  notes: Hip hinge vs spine round; knee micro-bend allowed; osteoporosis caution in disclaimer.
+
+pose_chair
+  sanskrit: Utkatasana
+  english: Chair Pose
+  family: standing
+  mode: hold
+  notes: Knee flexion load; torso angle; arms forward or overhead variants.
+
+pose_warrior_1
+  sanskrit: Virabhadrasana I
+  english: Warrior I
+  family: standing
+  mode: hold, flow_node
+  notes: Hip square toward front foot vs rear foot; back heel down; lunge depth.
+
+pose_warrior_2
+  sanskrit: Virabhadrasana II
+  english: Warrior II
+  family: standing
+  mode: hold
+  notes: Open hips; front knee over ankle line; arms abducted 90°.
+
+pose_warrior_3_prep
+  sanskrit: Virabhadrasana III (preparation)
+  english: Warrior III prep / balancing lunge
+  family: standing_balance
+  mode: hold
+  notes: v1 scores hip hinge and standing-leg alignment; full parallel-to-floor Warrior III optional future.
+
+pose_triangle
+  sanskrit: Utthita Trikonasana
+  english: Extended Triangle Pose
+  family: standing
+  mode: hold
+  notes: Front leg straight or micro-bend; side bend at hips; avoid collapsing into knee.
+
+pose_tree
+  sanskrit: Vrksasana
+  english: Tree Pose
+  family: standing_balance
+  mode: hold
+  notes: Foot above or below knee (not on knee joint); pelvis level; sway normal within checkpoint.
+
+================================================================================
+KNEELING / QUADRUPED / CORE
+================================================================================
+
+pose_tabletop
+  sanskrit: Bharmanasana
+  english: Tabletop / All Fours
+  family: kneeling
+  mode: hold, flow_node
+  notes: Neutral spine baseline for Cat-Cow.
+
+pose_cat_cow
+  sanskrit: Marjaryasana-Bitilasana
+  english: Cat-Cow
+  family: kneeling
+  mode: flow
+  notes: Repeated flexion-extension; not scored as static hold; phase model uses flow per cycle.
+
+pose_child
+  sanskrit: Balasana
+  english: Child's Pose
+  family: kneeling
+  mode: hold
+  notes: Hips to heels; arms extended or by sides; knee pain modifications via props (coaching only).
+
+pose_low_lunge
+  sanskrit: Anjaneyasana
+  english: Low Lunge / Crescent lunge (knee down)
+  family: kneeling
+  mode: hold, flow_node
+  notes: Front knee over ankle; rear hip extension; common knee-over-toe coaching zone.
+
+pose_plank
+  sanskrit: Phalakasana
+  english: Plank
+  family: prone
+  mode: hold, flow_node
+  notes: Sagittal line; scapular protraction; core engagement.
+
+pose_chaturanga_low
+  sanskrit: Chaturanga Dandasana
+  english: Four-Limbed Staff (low)
+  family: prone
+  mode: hold, flow_node
+  notes: Elbow flex ~90°; shoulder not below elbow height coaching rule; high load transition.
+
+================================================================================
+PRONE / BACKBEND
+================================================================================
+
+pose_cobra
+  sanskrit: Bhujangasana
+  english: Cobra
+  family: prone
+  mode: hold, flow_node
+  notes: Pelvis on floor; thoracic extension; minimal arm straightening for beginners.
+
+pose_up_dog
+  sanskrit: Urdhva Mukha Svanasana
+  english: Upward-Facing Dog
+  family: prone
+  mode: hold, flow_node
+  notes: Thighs lifted; shoulders over wrists; lumbar contribution monitored.
+
+pose_down_dog
+  sanskrit: Adho Mukha Svanasana
+  english: Downward-Facing Dog
+  family: inversion_prep
+  mode: hold, flow_node
+  notes: Hip hinge; shoulder flexion; heel reach secondary to spine length.
+
+pose_locust_prep
+  sanskrit: Salabhasana (preparation)
+  english: Locust preparation
+  family: prone
+  mode: hold
+  notes: Gentle spinal extension; arms by sides; gazing down.
+
+================================================================================
+SUPINE / SEATED
+================================================================================
+
+pose_bridge
+  sanskrit: Setu Bandhasana
+  english: Bridge Pose
+  family: supine
+  mode: hold
+  notes: Knee–hip–ankle alignment; avoid knee splay.
+
+pose_supine_twist
+  sanskrit: Supta Matsyendrasana
+  english: Supine Spinal Twist
+  family: supine
+  mode: hold
+  notes: Both shoulders toward floor coaching cue; knee stack.
+
+pose_seated_forward_fold
+  sanskrit: Paschimottanasana
+  english: Seated Forward Fold
+  family: seated
+  mode: hold
+  notes: Hip hinge priority; strap modification in coaching.
+
+pose_staff
+  sanskrit: Dandasana
+  english: Staff Pose
+  family: seated
+  mode: hold
+  notes: Seated neutral spine reference.
+
+pose_easy_seated
+  sanskrit: Sukhasana
+  english: Easy Pose
+  family: seated
+  mode: hold
+  notes: Cross-legged; hip elevation prop cue.
+
+pose_corpses
+  sanskrit: Savasana
+  english: Corpse Pose
+  family: supine
+  mode: hold
+  notes: Stillness; minimal alignment findings except gross asymmetry or fidgeting (low priority).
+
+================================================================================
+RELATIONS (summary — see 002_relations.txt when present)
+================================================================================
+
+Sun Salutation A nodes (typical order):
+  pose_upward_salute → pose_forward_fold_standing → pose_low_lunge (or high lunge variant) →
+  pose_plank → pose_chaturanga_low → pose_up_dog → pose_down_dog → (repeat)
+
+Peak load poses for flow mode: pose_chaturanga_low, pose_chair, pose_warrior_1, pose_bridge
+
+Balance priority poses: pose_tree, pose_warrior_3_prep
+
+Down-regulation / rest: pose_child, pose_corpses, pose_easy_seated
+
+================================================================================
+POSE_ID STABILITY
+================================================================================
+
+Do not rename pose_id slugs without migration. Add new poses as new slugs; link synonyms in this file only.

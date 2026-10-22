@@ -1,0 +1,103 @@
+# Weightlifting — Training & Practice Structure
+# Scope: squat, deadlift, OHP in gym / team S&C settings
+# authority: B (coaching progressions) + A (supervision/youth consensus)
+
+================================================================================
+SESSION ARCHITECTURE (typical 60–75 min)
+================================================================================
+
+1. General warm-up (5–8 min): brisk walk, row, or bike; dynamic hip/ankle/shoulder mobility.
+2. Movement prep (10 min): empty-bar or PVC complex linking hinge, squat, and press patterns.
+3. Primary lift (20–30 min): one main squat OR deadlift OR OHP day — technique focus at submaximal RPE.
+4. Accessory (10–15 min): unilateral work, core bracing, upper-back for DL, shoulder stability for OHP.
+5. Cool-down (5 min): easy breathing, optional light stretch — not forced static stretch before lifting heavy.
+
+CeRebel use: capture 1–3 technique reps during primary lift at working warm-up weight, not every max attempt.
+
+================================================================================
+LIFT DAY TEMPLATES
+================================================================================
+
+squat_day
+  primary: back squat 3–5 sets × 3–8 reps @ technique-focused load (coach prescribes)
+  prep_drills: drill_band_knee_spread, drill_tempo_321_squat (from Coaching/002)
+  accessories: split squat, goblet squat, core brace holds
+  video_capture_window: warm-up sets 2–3, same camera angle each week for comparison
+
+deadlift_day
+  primary: conventional deadlift 3–5 × 3–5
+  prep_drills: drill_wall_hip_hinge, drill_lat_activation_setup
+  accessories: RDL, row variation, hip thrust or glute bridge
+  notes: avoid max singles without spotter/familiar platform; film side view
+
+ohp_day
+  primary: strict standing press 3–5 × 5–8
+  prep_drills: drill_seated_strict_press, drill_z_press
+  accessories: lateral raise light, face pull, unilateral dumbbell press
+  notes: strict variant only for v1 phase model — tag push press separately if filmed
+
+================================================================================
+PROGRESSION PRINCIPLES (non-prescriptive)
+================================================================================
+
+- Technique stability before load increase (B).
+- Add load in small steps when checkpoints pass consistently across 2+ sessions (coach judgment).
+- Deload weeks for teams in-season — reduce volume, keep movement quality filming.
+- Never test 1RM without qualified supervision and platform safety (A/B consensus).
+
+Youth teams:
+- Emphasize bodyweight and light implement mastery; limit competition max testing.
+- Session length shorter (45–50 min); more coaching feedback, fewer heavy sets.
+- Parent/coach present per organizational policy — not encoded here.
+
+================================================================================
+WARM-UP COMPLEX (empty bar, 90s)
+================================================================================
+
+From Coaching/002 drill_barbell_complex_empty:
+  5 RDL (hinge pattern)
+  5 muscle-clean grip squats (front rack mobility — not Olympic catch)
+  5 strict presses
+  5 back squats
+
+Cues: cue_brace_360, cue_midfoot_balance, cue_ohp_quiet_legs
+
+================================================================================
+FILMING FOR MOTION ANALYSIS
+================================================================================
+
+Camera:
+- Side or 45° for squat/deadlift trunk and depth proxies.
+- Oblique front for knee tracking (squat) — second angle optional.
+- Full body in frame including feet at setup and lockout.
+
+Clip length:
+- Single rep or 3-rep set trimmed per Phases/001 guidance.
+- Label lift_variant in session metadata when product supports it.
+
+Avoid:
+- Filming only from behind for OHP (elbow flare faults need oblique/front).
+- Cropping feet during deadlift pull.
+
+================================================================================
+TEAM PERIODIZATION (high level, no numbers)
+================================================================================
+
+Off-season: higher volume technique blocks, frequent video review.
+In-season: maintain strength with reduced volume; prioritize recovery and fault monitoring on primary lifts.
+Pre-competition (powerlifting team): opener-focused doubles — film openers not third attempts unless safe.
+
+================================================================================
+INTEGRATION WITH FINDINGS
+================================================================================
+
+Weekly coach workflow:
+1. Review top 1–2 faults from latest capture (fault priority in Findings/001).
+2. Assign one linked drill from Coaching/002 for next practice.
+3. Re-film same angle after 2 sessions to compare phase timing (E_BOTTOM, E_LOCKOUT stability).
+
+================================================================================
+DISCLAIMER
+================================================================================
+
+Not a replacement for certified S&C programming. See Docs/002_DISCLAIMER.txt.

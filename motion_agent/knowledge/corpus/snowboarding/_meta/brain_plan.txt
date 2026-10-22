@@ -1,0 +1,301 @@
+# CeRebel Snowboarding KB — Brain Plan (v0.1)
+# Agent: BRAIN | Sport: snowboarding (alpine / freeride fundamentals)
+# Generated: 2026-10-21 | Aligns: corpus/_templates/SPORT_PACK_KB_SPEC.txt
+# Product: body-first OpenSim coaching; NO board edge / snow contact tracking required
+# RAG peers: knowledge/corpus/fis/ (rules, glossary, helmet standards)
+
+================================================================================
+1. PURPOSE & SCOPE
+================================================================================
+
+Deliver RAG-ready knowledge for **beginner–intermediate alpine riding** on groomed
+terrain: **stance**, **linked turns**, **edge control**, and **body mechanics**
+(angulation, flex/extension, upper–lower body separation). Safety content covers
+**falls**, **falling technique awareness**, and **helmet / protective equipment**
+(FIS-aligned where competition equipment is cited).
+
+In scope v1:
+- Regular / goofy stance identification (body-facing copy; binding angles not required)
+- Heel-side and toe-side turn chains as body patterns (no edge sensor)
+- Traverse, initiation, apex, release, transition between turns
+- Athletic stance: knee flex, hip position, quiet upper body, head/eyes level
+- Static or slow-gliding stance checks in short clips
+
+Out of scope v1 (glossary / future only):
+- Halfpipe, slopestyle, big air trick catalog (see fis/ + snowboard_aerial_vocab.txt)
+- Board tuning, wax, sidecut radius, binding DIN (equipment not visible reliably)
+- Avalanche, backcountry route planning, tree-well rescue
+- Medical diagnosis, concussion return-to-sport (redirect in Docs/002_DISCLAIMER)
+- Judging scores, race gates, SBX start mechanics
+
+Build agent writes full Findings/Coaching bodies from this map; brain agent does not.
+
+================================================================================
+2. PRODUCT CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+- Measurable claims tie to reconstructed body: knee/hip flexion, trunk lean, pelvis
+  rotation, ankle/knee asymmetry proxies, COM over feet, head stability.
+- **No snowboard edge angle** from video alone — use body proxies (knee angulation,
+  hip lead, lateral trunk inclination vs fall line proxy from global motion).
+- **Turn apex proxy** = frame of max lateral trunk inclination or max knee flexion
+  asymmetry mid-clip (detector TBD; document in Phases/001).
+- Youth vs adult: separate audience bands for speed/terrain language; no adult
+  "charge hard" cues for youth learners.
+- Authority: B+ / B for NGB and open coaching consensus; **A+ for FIS helmet rules**
+  when citing competition equipment; no C in finding thresholds.
+- Never invent clinical angle norms as injury prevention guarantees.
+
+================================================================================
+3. MOTION FAMILIES (TOP-LEVEL)
+================================================================================
+
+1. STANCE_SETUP — athletic ready position on flat or very slow glide
+2. LINKED_TURN — heel-side or toe-side turn cycle on gentle pitch (primary v1)
+3. TRAVERSE — cross-hill travel between turns (optional clip type)
+4. STOP_FALL_LINE — hockey stop / speed control (future extension; phase stubs only)
+
+Foot orientation (product copy):
+- **regular**: left foot forward (default corpus lateral labels)
+- **goofy**: right foot forward — mirror "lead/trail" leg language in UI logic
+
+Turn direction vocabulary (FIS glossary — RAG disambiguation, not auto-detected):
+- **frontside** / **backside** relative to rider orientation; linked to heel/toe edge
+  in coaching text only unless future metadata tag present.
+
+================================================================================
+4. PHASE MODEL (7 PHASES, BODY-ONLY EVENTS)
+================================================================================
+
+Linked-turn chain (reuse for heel-side and toe-side; tag edge_side in copy):
+
+| phase_id      | label_en        | label_zh (build) | role |
+|---------------|-----------------|------------------|------|
+| T_TRAVERSE    | Traverse / setup| 横滑/预备        | Cross-hill or pre-turn balance; knees soft |
+| T_INITIATE    | Initiation      | 入弯/换刃准备    | Begin edge engagement; pressure into lead leg |
+| T_BUILD       | Edge build      | 加压/立刃        | Increasing angulation; board curve proxy via body |
+| T_APEX        | Apex            | 弯心             | Max edge / max turn force (body proxy peak) |
+| T_RELEASE     | Release         | 释压/出弯        | Reduce edge pressure; extend through legs |
+| T_EXIT        | Exit            | 出弯完成         | Turn complete; prepare next direction |
+| T_TRANSITION  | Transition      | 换刃过渡         | Flatten or edge change between turns |
+
+Static stance chain (short clips, no full turn):
+
+| phase_id   | label_en     | role |
+|------------|--------------|------|
+| S_READY    | Ready stance | Athletic flex; hands quiet; gaze forward |
+
+Typical clip (3–10 s turn): T_TRAVERSE → T_INITIATE → T_BUILD → T_APEX → T_RELEASE
+→ T_EXIT → (T_TRANSITION if linked) → …
+
+Event definitions (OpenSim-friendly, no board track):
+
+- apex_event: argmax |lateral_trunk_inclination| OR max (|knee_flex_lead − knee_flex_trail|)
+  in turn window (build picks one primary in Phases/001).
+- initiate_event: first sustained increase in lead-knee flexion after traverse stability.
+- transition_event: local minimum in lateral trunk inclination between apex peaks (linked turns).
+
+Phases/001_phase_model.txt (build): expand events, fallbacks, EN/ZH labels, scrub UX,
+camera caveats (foreshortening when camera is uphill/downhill).
+
+================================================================================
+5. MEASUREMENT SURFACE (CODE ↔ KB)
+================================================================================
+
+Planned analysis board series (norms in Biomechanics/001):
+
+| series_id           | signal                                    | unit | primary phases        |
+|---------------------|-------------------------------------------|------|------------------------|
+| knee-flex-mean      | mean(knee_angle_lead, knee_angle_trail)   | °    | S_READY, T_BUILD       |
+| knee-angulation     | |knee_flex_lead − knee_flex_trail|         | °    | T_APEX, T_BUILD        |
+| hip-flex            | hip flexion proxy (pelvis vs thigh)       | °    | S_READY, T_INITIATE    |
+| trunk-inclination   | lateral lean vs vertical (side camera)    | °    | T_APEX, T_TRAVERSE     |
+| pelvis-rotation     | pelvis yaw vs travel direction proxy      | °    | T_INITIATE, T_APEX     |
+| shoulder-vs-pelvis  | thorax yaw minus pelvis yaw (separation)  | °    | T_INITIATE, T_BUILD    |
+| head-stability      | head roll/pitch variance vs trunk         | norm | all phases             |
+| ankle-width         | mediolateral ankle separation             | norm | S_READY, T_TRAVERSE    |
+| com-over-base       | COM lateral vs midpoint(ankles)           | cm   | T_TRAVERSE, T_TRANSITION|
+
+Future: lead/trail assignment from goofy/regular metadata; without it, use "downhill
+leg" heuristic from global velocity (build documents limitation).
+
+================================================================================
+6. COACHING NORMS (EVIDENCE-BANDED — NOT MEDICAL ADVICE)
+================================================================================
+
+Wording: "common teaching emphasis" / "typical in open coaching literature" (B+).
+Do not cite exact edge angles in degrees on the snowboard — not observable in v1.
+
+ADULT (groomed green–blue terrain; B+ unless noted):
+
+- Stance width: roughly shoulder-width between feet (binding stance proxy via ankle
+  separation when visible); avoid extreme narrow or wide without purpose.
+- Knees: soft athletic flex (~15–40° band heuristic on model knees); avoid locked
+  legs in turns and traverses.
+- Hips: centered over board (COM between ankles); avoid persistent "back seat" with
+  hips far behind ankles and stiff uphill leg.
+- Upper body: quiet chest; shoulders roughly parallel to board direction proxy;
+  head up, eyes toward intended path — not buried in snow or sky-gazing.
+- Turn initiation: lower body leads (knees/hips); avoid shoulders rotating into turn
+  before pelvis (upper-body rotation fault).
+- Edge control feel: pressure through whole foot; flex to absorb; extend to release
+  (coaching language — not measured edge pressure).
+
+YOUTH (lessons / family terrain; B / B+):
+
+- Smaller turns, slower speed emphasis; shorter traverse segments.
+- No "send it" / cliff / park progression in product findings.
+- Helmet always for on-snow activity (see safety section); wrist guards optional
+  community guidance — mark B, not product threshold.
+
+================================================================================
+7. SAFETY (FALLS, HELMET — NOT OPTIONAL IN COPY)
+================================================================================
+
+Product treats safety as first-class RAG concepts (Schema: SafetyGuideline, LoadConcern).
+
+| concept_id              | type              | summary |
+|-------------------------|-------------------|---------|
+| safety_helmet_on_snow   | SafetyGuideline   | Wear certified snow helmet; FIS comp = compulsory crash helmets (A+) |
+| safety_terrain_match    | SafetyGuideline   | Match speed and turn size to ability and visibility (B+) |
+| safety_fall_awareness   | SafetyGuideline   | If falling: avoid bracing with straight wrists/locked elbows; protect head; stay clear of traffic (B coaching — not medical protocol) |
+| concern_fall_stiff_brace| Finding (form)    | Visible pre-fall stiff upright posture / locked knees (clip-dependent) |
+| load_concussion_redirect| LoadConcern       | Head impact or confusion → stop, seek licensed care (A clinical consensus summary in Disclaimer only) |
+
+FIS source hooks (build cites in SOURCE_MANIFEST, summarize — do not paste manuals):
+- fis/Rules/* crash helmet compulsory; CE / ASTM F2040 / EN 1077 references
+- fis/Guidelines_Information/031_* fall / full crash glossary for competition context
+
+Docs/002_DISCLAIMER MUST state: not medical advice; lessons with certified instructor;
+helmet does not eliminate concussion risk.
+
+================================================================================
+8. QUALITY MODEL (STUB FOR BUILD)
+================================================================================
+
+Dimensions (Quality/001):
+(1) stance & balance, (2) lower-body lead & angulation, (3) flex/extension timing,
+(4) upper-body quietness & separation, (5) transition smoothness.
+
+Quality/002 checkpoint seeds:
+
+checkpoint_id            | phase(s)        | series/signal        | rule (summary)                          | fail→finding_id              | evidence
+-------------------------|-----------------|----------------------|-----------------------------------------|--------------------------------|----------
+cp_stance_knees_soft     | S_READY         | knee-flex-mean       | knees not locked (< low flex band)      | fault_stance_locked_knees    | B+
+cp_stance_width_band     | S_READY         | ankle-width          | width outside narrow/wide band        | fault_stance_width           | B+
+cp_stance_hips_centered  | S_READY,T_TRAVERSE | com-over-base     | COM persistently behind ankle midpoint  | fault_stance_back_seat       | B+
+cp_turn_lower_lead       | T_INITIATE      | shoulder-vs-pelvis   | shoulders rotate before pelvis proxy    | fault_turn_shoulders_first   | B+
+cp_turn_knee_flex_apex   | T_APEX          | knee-flex-mean       | apex with near-straight knees           | fault_turn_stiff_legs        | B+
+cp_edge_angulation       | T_APEX          | knee-angulation      | low asymmetry at apex (skid proxy)      | fault_edge_flat_skid         | B+
+cp_upper_quiet           | T_BUILD         | pelvis-rotation      | excessive thorax twist vs pelvis        | fault_turn_upper_body_rotate | B+
+cp_transition_smooth     | T_TRANSITION    | trunk-inclination    | abrupt head/trunk snap between turns    | fault_transition_abrupt      | B+
+cp_traverse_balance      | T_TRAVERSE      | com-over-base        | large lateral sway off base             | fault_traverse_off_balance     | B+
+cp_head_eyes_path        | T_TRAVERSE,T_APEX | head-stability     | head pitch extreme (down/up)            | fault_head_not_level         | B+
+
+Safety checkpoint (informational — not a "fail score" in v1 UI):
+cp_helmet_reminder       | S_READY (meta)  | n/a                  | coaching copy: helmet before snow       | (links safety_helmet_on_snow)  | A+
+
+================================================================================
+9. FINDING CATALOG (STABLE IDs)
+================================================================================
+
+| finding_id                   | headline_en (short)              | primary_phases   | body signal (measurable)                         | severity |
+|------------------------------|----------------------------------|------------------|--------------------------------------------------|----------|
+| fault_stance_locked_knees    | Legs locked / stiff              | S_READY          | knee-flex-mean below soft band                   | form     |
+| fault_stance_width           | Stance too narrow or wide        | S_READY          | ankle-width outside band                         | balance  |
+| fault_stance_back_seat       | Hips back / back-seat posture    | S_READY, T_TRAVERSE | COM posterior vs ankles                       | form     |
+| fault_stance_hunched         | Rounded upper back only          | S_READY          | thoracic flex without hip flex (posture proxy)   | form     |
+| fault_turn_shoulders_first   | Shoulders lead the turn          | T_INITIATE       | shoulder-vs-pelvis leads pelvis rotation         | form     |
+| fault_turn_stiff_legs        | Stiff legs through turn          | T_APEX           | low knee-flex-mean at apex                       | form/load|
+| fault_turn_upper_body_rotate | Upper body spins with turn       | T_BUILD,T_APEX   | high thorax yaw without hip lead                 | form     |
+| fault_edge_flat_skid         | Skiddy turn (low angulation)     | T_APEX           | low knee-angulation at apex                      | form     |
+| fault_edge_uphill_leg_straight | Uphill leg straight in turn    | T_APEX           | trail/uphill knee extension vs lead flex         | form     |
+| fault_transition_abrupt      | Abrupt edge change               | T_TRANSITION     | rapid trunk/head snap; COM spike                 | balance  |
+| fault_traverse_off_balance   | Off-balance traverse             | T_TRAVERSE       | com-over-base excursion                          | balance  |
+| fault_head_not_level         | Head down or leaning wrong way   | T_TRAVERSE,T_APEX| head pitch/roll vs trunk                         | form     |
+| concern_fall_stiff_brace     | Stiff bracing before fall        | T_* (any)        | sudden full knee/elbow extension pre instability | safety   |
+
+Each finding card MUST include: id, headline, phases, signal, why (performance/balance/
+load — cautious), feel cue, drill 30–90s, sources[], authority level.
+
+Safety findings use cautious wording; no guarantee that "soft fall" prevents injury.
+
+================================================================================
+10. ONTOLOGY CLASSES (Schema/001_ontology.txt)
+================================================================================
+
+Namespace prefix: snowboard:
+
+- SnowboardEntity (root)
+- Rider (Person role)
+- RideInstance (single clip / run segment)
+- StanceOrientation: regular | goofy | unknown
+- TurnFamily: heel_side | toe_side | linked | unknown
+- SnowboardPhase — S_READY, T_TRAVERSE … T_TRANSITION
+- PhaseEvent — apex_body_proxy, initiate_knee_flex, transition_flatten_proxy
+- BodySegment, JointAngle, SegmentSpeed (measurement definitions)
+- CoachingConcept (Cue, Drill)
+- Finding, Checkpoint, Evidence
+- SafetyGuideline — helmet, terrain, fall awareness
+- LoadConcern — concussion redirect, youth speed
+- EquipmentRule — FIS helmet standards (reference fis/ corpus)
+
+Properties: snowboard:precedes, snowboard:occursIn, snowboard:measuredOn,
+snowboard:failTriggers, snowboard:authorityLevel, snowboard:ageBand,
+snowboard:leadFoot (left|right), snowboard:supportedByFIS (boolean metadata for RAG).
+
+================================================================================
+11. TAXONOMY STUBS (Taxonomy/001_concepts, 002_relations)
+================================================================================
+
+Build agent expands rows; brain seeds stance/turn/edge/safety concepts and
+precedes / anchored_in / maps_to / supported_by edges. See written stub files.
+
+================================================================================
+12. RAG CROSS-LINKS
+================================================================================
+
+- Every finding_id in Findings/001 repeats in Coaching/001 with matching fault_* id
+- Quality/002 checkpoints reference phase IDs and series_id
+- Biomechanics/001: angulation, flex/extension, upper–lower separation (B+ themes)
+- Docs/002_DISCLAIMER: not medical advice; helmet; lessons; pain/stop
+- Agent retrieval: llm/agent.py SNOWBOARD_KB_SOURCES includes fis/, snowboard_*.txt;
+  this pack lives under snowboarding/ — build agent ensures ingest paths documented
+  in Docs/001_ARCHITECTURE
+
+================================================================================
+13. SOURCE PRIORITY (SEARCH / MANIFEST AGENTS)
+================================================================================
+
+A+: FIS ICR / equipment rules (helmet compulsory), official glossary (turn terms)
+A: Clinical consensus summaries on head injury in snow sports (summarize in Disclaimer)
+B+: PSIA-AASI open teaching concepts (stance, turns — summarized with URLs)
+B: USSA / national snowboard curriculum public materials; CSIA open tips
+C: forum technique threads — glossary only, never thresholds
+
+Cross-pack: knowledge/corpus/fis/, snowboard_aerial_vocab.txt, snowboard_flip_conventions.txt
+
+================================================================================
+14. BUILD ORDER (SUGGESTED)
+================================================================================
+
+1. Schema + Taxonomy (stubs done)
+2. Docs/001–002, Phases/001
+3. Biomechanics/001 (proxies + limitations — no board edge angle)
+4. Quality/001–002
+5. Findings/001 then Coaching/001–002 (include safety_helmet cues in Coaching)
+6. Training/001 (lesson progressions: garland, J-turn, linked turns, fall practice on mat off-snow)
+7. SOURCE_MANIFEST, research_notes, review_report, build_report
+
+================================================================================
+15. ACCEPTANCE CRITERIA (PACK v1)
+================================================================================
+
+- Phase ids T_TRAVERSE through T_TRANSITION documented in Phases/001
+- 12+ finding cards with cue + drill; safety helmet content in Docs + Coaching
+- No dependency on board edge sensors or snow contact detection
+- Youth/adult band separation in Training and Biomechanics
+- FIS helmet rule cited at A+ in safety_helmet_on_snow (manifest URL)
+- Stance, turns, edge control body mechanics covered in Findings map
+
+End brain_plan v0.1

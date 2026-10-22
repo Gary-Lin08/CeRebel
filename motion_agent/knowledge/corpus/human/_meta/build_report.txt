@@ -1,0 +1,106 @@
+# Human (General Motion) Sport Pack — Build Report (Build Agent)
+Generated: 2026-10-21T00:00:00+00:00
+Spec: motion_agent/knowledge/corpus/_templates/SPORT_PACK_KB_SPEC.txt
+Status: content build complete — ready for RAG chunk ingest
+
+================================================================================
+SUMMARY
+================================================================================
+
+Corpus sport id: human
+Product pack id: general (HumanMotionPack)
+Language: English (primary RAG)
+Finding IDs: 14
+Phase IDs: 7 (setup, prep, load, action, follow_through, recover, reset)
+Checkpoint rows: 17 (Quality/002_checkpoints.txt, incl. 2 youth variants)
+Authority mix: A/A+ for public health framing; B+ for postural control and knee themes; B for cues/drills
+Sibling corpus cross-link: motion_agent/knowledge/corpus/opensim_motion_tools.txt (SOURCE_MANIFEST)
+
+================================================================================
+FILES WRITTEN — LINE COUNTS (wc -l, 2026-10-21)
+================================================================================
+
+Docs/001_ARCHITECTURE.txt                    126
+Docs/002_DISCLAIMER.txt                       90
+Schema/001_ontology.txt                       86
+Taxonomy/001_concepts.txt                    125
+Taxonomy/002_relations.txt                    93
+Phases/001_phase_model.txt                   107
+Quality/001_quality_definition.txt           116
+Quality/002_checkpoints.txt                     96
+Findings/001_common_faults.txt                 339
+Coaching/001_cues.txt                          153
+Coaching/002_drills.txt                        212
+Biomechanics/001_overview.txt                  156
+Training/001_team_practice.txt                 132
+
+_meta/pack_readme.txt                           22
+_meta/SOURCE_MANIFEST.txt                       23
+_meta/brain_plan.txt                           163
+_meta/research_notes.txt                        88
+_meta/review_report.txt                         69
+_meta/build_report.txt                         (this file)
+
+Content subtotal (excluding _meta):           1745 lines
+Grand total (all human/ .txt):                2217 lines
+
+================================================================================
+ACCEPTANCE CHECKLIST (brain_plan §12)
+================================================================================
+
+[x] Every finding_id has Findings card + cue + drill
+[x] Every checkpoint references evidence level and phase id
+[x] Phase ids match Phases/001_phase_model.txt
+[x] No sport-implement dependency for findings
+[x] Youth/adult separation in Biomechanics/001 and youth checkpoint rows
+[x] Disclaimer in Docs/002
+[x] opensim_motion_tools.txt in SOURCE_MANIFEST as sibling root corpus file
+[x] pack_readme status content build complete
+
+================================================================================
+INGEST NOTES
+================================================================================
+
+- Chunk with metadata: sport=human, product_pack=general, authority_level from manifest.
+- Repeat finding slugs in Findings + Coaching for retrieval cross-link.
+- Optionally attach corpus_root_tools=true when chunking opensim cross-references from Architecture.
+- Do not index _meta/build_report.txt as coaching truth.
+
+================================================================================
+NEXT STEPS (engineering, not corpus)
+================================================================================
+
+1. Run corpus chunker on human/ (exclude _meta/)
+2. Wire general checkpoint engine to HumanMotionPack.build_briefs
+3. Keep sport packs higher priority in detect() ordering
+
+End build_report
+
+================================================================================
+V2 UPGRADE APPEND — 2026-10-23
+================================================================================
+
+Agent: build (v2 depth upgrade)
+Sport ID: human (product id: general)
+
+Changes:
+  Findings/001_common_faults.txt — canonical format; ~15→28 cards; bare→fault_* with legacy_id
+  Coaching/001_cues.txt — 28 cue blocks citing fault_*
+  Coaching/002_drills.txt — 29 drills with targets: fault_*
+  Phases/001_phase_model.txt — 7 phases with detector_events + fault_links
+  Taxonomy/002_relations.txt — fault_* edges + legacy sameAs
+  _meta/review_report.txt — rewritten; VERDICT APPROVED_V2
+
+Finding count: 28
+Migration: bare labels → fault_* (e.g. forward_head→fault_forward_head)
+New themes: rounded shoulders, thoracic ext, squat depth/heels/trunk/hip shift,
+  reach hike, OH lumbar, gait lean/step, knee-dom hinge, scap wing proxy, narrow BOS
+
+Acceptance (v2):
+  [x] ≥25 finding cards full fields
+  [x] ≥20 cues / ≥15 drills citing fault_*
+  [x] ≥15 taxonomy relations
+  [x] 5–8 phases with detector_events + fault_links
+  [x] review ends VERDICT: APPROVED_V2
+
+End v2 append

@@ -1,0 +1,64 @@
+# Soccer Sport Pack — Review Report (Review Agent)
+Generated: 2026-10-23
+Corpus path: motion_agent/knowledge/corpus/soccer/
+Product: CeRebel body-first coaching (no ball tracking)
+Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt (v2 depth)
+
+================================================================================
+1. CORPUS STATE REVIEWED
+================================================================================
+
+Content build complete at review time:
+
+  Docs/001_ARCHITECTURE.txt, Docs/002_DISCLAIMER.txt
+  Schema/001_ontology.txt
+  Taxonomy/001_concepts.txt, Taxonomy/002_relations.txt (≥15 relations; fault_* edges)
+  Phases/001_phase_model.txt (7 phases with detector_events + fault_links)
+  Quality/001_quality_definition.txt, Quality/002_checkpoints.txt
+  Findings/001_common_faults.txt (28 finding cards, canonical fault_* shape)
+  Coaching/001_cues.txt (≥20 cues citing fault_*), Coaching/002_drills.txt (≥15 drills with targets:)
+  Biomechanics/001_overview.txt
+  Training/001_team_practice.txt
+  _meta/pack_readme.txt, brain_plan.txt, SOURCE_MANIFEST.txt, research_notes.txt, build_report.txt
+
+Product code state:
+  - Soccer catalog coming_soon; SoccerPack detector not shipped.
+  - E_KICK_PEAK remains foot-speed contact proxy (no ball track).
+
+================================================================================
+2. SAFETY — MEDICAL / INJURY LANGUAGE
+================================================================================
+
+  [S-1] PASS — Findings use performance/load awareness language; no ACL/tissue diagnosis.
+  [S-2] PASS — Disclaimer + drill stop-if-pain present.
+  [S-3] PASS — Youth notes on side-foot windup, weak-foot, phase timing.
+  [S-4] PASS — Weak-foot card is bilateral practice guidance, not pathology.
+
+================================================================================
+3. ACCURACY / EVIDENCE
+================================================================================
+
+  [E-1] PASS — Lees/Nolan, Kellis/Katis, Nunome themes cited at B+.
+  [E-2] PASS — Body-only plant/swing proxies; ball contact not claimed.
+  [E-3] WARN — Hip-open and volley tags need camera / intent confidence in product code.
+  [E-4] PASS — Per-card sources with authority tags; no C sources for findings.
+
+================================================================================
+4. SPEC COMPLIANCE (v2)
+================================================================================
+
+  [C-1] PASS — Required layout; DISCLAIMER + SOURCE_MANIFEST exist (prior FAIL cleared).
+  [C-2] PASS — 28 cards with body_signal, feel_cue, drill, severity_default, sources.
+  [C-3] PASS — Kebab ids migrated to fault_* with legacy_id.
+  [C-4] PASS — 7 phases with detector_events + fault_links; instep + side-foot + volley body notes.
+  [C-5] PASS — Coaching/taxonomy depth targets met.
+
+================================================================================
+5. MIGRATION NOTES
+================================================================================
+
+  - plant-foot-closes-hip → fault_plant_foot_closes_hip (etc. for all 14 kebab ids).
+  - Expanded 14 → 28: approach gather, plant toe/heel, hip timing, non-kicking arm,
+    follow path, ankle lock, side-foot windup, weak-foot, volley trunk/plant, swing path, shoulders.
+
+VERDICT: APPROVED_V2 — 28 fault_* soccer kick cards with full fields, phase fault_links, and coaching/taxonomy meet SPORT_PACK_KB_SPEC v2.

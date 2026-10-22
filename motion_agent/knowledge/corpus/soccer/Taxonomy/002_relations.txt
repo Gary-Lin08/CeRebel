@@ -1,0 +1,67 @@
+# Soccer Kick — Concept Relations (v2)
+
+Format: subject,predicate,object,evidence_type,source_hint
+
+## Phase precedence
+
+soccer:phase_setup,precedes,soccer:phase_approach,CoachingConsensus,v2 phase chain
+soccer:phase_approach,precedes,soccer:phase_plant,CoachingConsensus,v2 phase chain
+soccer:phase_plant,precedes,soccer:phase_cocking,CoachingConsensus,v2 phase chain
+soccer:phase_cocking,precedes,soccer:phase_strike,CoachingConsensus,v2 phase chain
+soccer:phase_strike,precedes,soccer:phase_follow,CoachingConsensus,v2 phase chain
+soccer:phase_follow,precedes,soccer:phase_recovery,CoachingConsensus,v2 phase chain
+
+## Skill lines
+
+soccer:phase_approach,belongsToFamily,soccer:kick_instep_drive,CoachingConsensus,shared chain
+soccer:phase_approach,belongsToFamily,soccer:kick_side_foot_pass,CoachingConsensus,shared chain
+soccer:phase_strike,belongsToFamily,soccer:kick_instep_drive,CoachingConsensus,instep emphasis
+soccer:phase_strike,belongsToFamily,soccer:kick_side_foot_pass,CoachingConsensus,push pass
+soccer:phase_cocking,belongsToFamily,soccer:kick_volley_body,CoachingConsensus,volley body shape
+
+## Findings → phases
+
+fault_plant_foot_closes_hip,occursIn,soccer:phase_plant,CoachingAdvice,migrated from plant-foot-closes-hip
+fault_plant_too_close,occursIn,soccer:phase_plant,CoachingAdvice,legacy plant-too-close
+fault_plant_too_far,occursIn,soccer:phase_plant,CoachingAdvice,legacy plant-too-far
+fault_leaning_back,occursIn,soccer:phase_strike,CoachingAdvice,legacy leaning-back
+fault_hips_stay_square,occursIn,soccer:phase_cocking,ResearchFinding,pelvis timing
+fault_backswing_short,occursIn,soccer:phase_cocking,ResearchFinding,cocking ROM
+fault_plant_knee_soft,occursIn,soccer:phase_plant,ResearchFinding,support knee
+fault_approach_rushed,occursIn,soccer:phase_approach,CoachingAdvice,legacy approach-rushed
+fault_follow_through_cut,occursIn,soccer:phase_follow,CoachingAdvice,legacy follow-through-cut
+fault_arms_collapsed,occursIn,soccer:phase_approach,CoachingAdvice,legacy arms-collapsed
+fault_knee_stiff_strike,occursIn,soccer:phase_strike,CoachingAdvice,legacy knee-stiff-strike
+fault_plant_collapse,occursIn,soccer:phase_recovery,CoachingAdvice,legacy plant-collapse
+fault_approach_wide,occursIn,soccer:phase_approach,CoachingAdvice,legacy approach-wide
+fault_strike_no_acceleration,occursIn,soccer:phase_strike,MeasurementDefinition,foot speed burst
+fault_approach_short_steps,occursIn,soccer:phase_approach,CoachingAdvice,v2
+fault_hip_opens_late,occursIn,soccer:phase_cocking,ResearchFinding,v2 sequence
+fault_non_kicking_arm_passive,occursIn,soccer:phase_strike,CoachingAdvice,v2
+fault_weak_foot_plant_mismatch,occursIn,soccer:phase_plant,ResearchFinding,v2 bilateral
+fault_volley_trunk_upright,occursIn,soccer:phase_strike,CoachingAdvice,v2 volley
+fault_volley_plant_late,occursIn,soccer:phase_plant,CoachingAdvice,v2 volley
+
+## Measurements
+
+soccer:kicking_foot_speed,measuredAt,soccer:phase_strike,MeasurementDefinition,series_kicking_foot_speed
+soccer:trunk_lean,measuredAt,soccer:phase_strike,MeasurementDefinition,series_trunk_lean
+soccer:plant_knee_flex,measuredAt,soccer:phase_plant,MeasurementDefinition,series_plant_knee
+soccer:approach_speed,measuredAt,soccer:phase_approach,MeasurementDefinition,series_approach_speed
+soccer:plant_offset,measuredAt,soccer:phase_plant,MeasurementDefinition,series_plant_offset
+
+## Checkpoints → findings
+
+cp_hip_open_proxy,failTriggers,fault_plant_foot_closes_hip,Quality,v2
+cp_plant_distance_band,failTriggers,fault_plant_too_close,Quality,v2
+cp_trunk_lean_forward,failTriggers,fault_leaning_back,Quality,v2
+cp_approach_control,failTriggers,fault_approach_rushed,Quality,v2
+cp_follow_through_length,failTriggers,fault_follow_through_cut,Quality,v2
+cp_foot_speed_burst,failTriggers,fault_strike_no_acceleration,Quality,v2
+
+## Legacy aliases
+
+plant-foot-closes-hip,sameAs,fault_plant_foot_closes_hip,Migration,v2
+leaning-back,sameAs,fault_leaning_back,Migration,v2
+hips-stay-square,sameAs,fault_hips_stay_square,Migration,v2
+approach-rushed,sameAs,fault_approach_rushed,Migration,v2

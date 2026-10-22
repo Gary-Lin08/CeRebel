@@ -1,0 +1,104 @@
+# Running Gait — Quality Definition (body-first)
+
+## What “good running form” means in CeRebel
+
+Quality is **not** a single score in v1. The product describes how well visible stride mechanics align with
+checkpoints derived from open biomechanics and coaching literature — without claiming optimal form for every
+individual or race distance.
+
+Quality is evaluated in five dimensions. Each dimension links to checkpoints in `002_checkpoints.txt` and may
+trigger finding IDs when failed.
+
+### Dimension 1 — Contact and stride length
+
+**Intent**: Foot arrives near the body’s center of mass with acceptable braking, not excessively ahead of the pelvis.
+
+Body signals:
+- Horizontal foot–pelvis relationship at contact proxy (overstride_proxy)
+- Cadence and stride time consistency across cycles
+- Stance duration proportion of stride period
+
+Failed checkpoints may trigger: `overstride`, `low_cadence_overstride`, `stride_asymmetry`.
+
+Evidence band: B+ (braking impulse and step-rate literature); coaching heuristics B.
+
+### Dimension 2 — Posture and trunk control
+
+**Intent**: Trunk supports stable head and pelvis alignment; neither collapsing backward nor hunching excessively forward.
+
+Body signals:
+- Trunk angle vs vertical in sagittal view at midstance and propulsion
+- Head position relative to shoulders (when landmarks stable)
+
+Failed checkpoints may trigger: `trunk_lean_back`, `trunk_lean_excess_fwd`.
+
+Evidence band: B+ for energy cost and ground reaction force themes; B for cueing.
+
+### Dimension 3 — Hip and pelvis stability
+
+**Intent**: Pelvis stays relatively level during single-leg support; knees track without extreme inward collapse on
+visible camera plane.
+
+Body signals:
+- Pelvis obliquity at midstance (hip_drop)
+- Frontal-plane knee angle proxy when camera allows (knee_valgus_load)
+- Crossover: foot medial to contralateral hip line (crossover_gait)
+
+Failed checkpoints may trigger: `hip_drop`, `knee_valgus_load`, `crossover_gait`.
+
+Evidence band: A/B+ for hip stabilizer weakness themes in literature; product thresholds conservative (B+).
+
+### Dimension 4 — Arm swing and trunk rotation
+
+**Intent**: Arms counterbalance leg motion with roughly symmetric range; trunk rotation supports forward drive
+without excessive twist.
+
+Body signals:
+- Shoulder flexion/extension ROM per cycle, left vs right
+- Thorax yaw amplitude relative to pelvis
+
+Failed checkpoints may trigger: `arm_swing_asymmetry`, `excessive_trunk_rotation`.
+
+Evidence band: B+ for arm swing and metabolic cost; B for asymmetry coaching.
+
+### Dimension 5 — Rhythm and repeatability
+
+**Intent**: Stride timing and key angles repeat across cycles unless fatigue narrative is explicit.
+
+Body signals:
+- Coefficient of variation of stride period left and right
+- Drift in vertical oscillation or cadence over clip
+
+Failed checkpoints may trigger: `stride_asymmetry`, `excessive_bounce` when combined with high oscillation variance.
+
+Evidence band: B coaching; B+ for variability-injury association themes (non-diagnostic).
+
+## Youth vs adult quality interpretation
+
+Youth:
+- Higher cadence and shorter contact times are normal.
+- Mild asymmetry may appear during growth; down-weight severity unless large or paired with pain language.
+
+Adult:
+- Apply adult checkpoint bands in 002; masters runners may show longer contact times — product may add
+  `audience=masters` in future without changing phase IDs.
+
+## Relationship to findings severity
+
+Checkpoints produce **coaching priorities**, not medical grades. A failed hip-drop checkpoint suggests
+stability work and film review; it does not diagnose glute med pathology.
+
+## Repeatability and capture quality
+
+Quality analysis confidence drops when:
+- FPS < 24, heavy motion blur, or occluded ankles
+- Camera not approximately sagittal for overstride/trunk claims
+- Clip shorter than two stride cycles per leg
+
+Document low-confidence state in coach briefs (product logic); KB defines the concepts only.
+
+## Cross-references
+
+- Phases/001_phase_model.txt — when each dimension is measured in the cycle
+- Findings/001_common_faults.txt — user-facing fault cards
+- Biomechanics/001_overview.txt — literature-backed relationships, not prescriptions

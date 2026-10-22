@@ -1,0 +1,71 @@
+# Boxing Shadowboxing — Quality Definition (body-first)
+
+## What “quality” means in CeRebel
+
+For this pack, **shadow form quality** is not fight effectiveness or pad power. It is the degree to which visible
+body mechanics align with patterns associated in open literature and reputable coaching with:
+
+1. **Stable athletic base** — balanced stance width, knees softly flexed, weight ready to shift without crossing feet.
+2. **Guard discipline** — hands return to a protective zone between strikes; head stays relatively neutral when not
+   slipping by design.
+3. **Kinetic sequencing** — lower-body and trunk contribution visible before or with hand acceleration on rear-hand
+   and power punches; jab may be lighter but still connected to weight shift.
+4. **Controlled extension and recoil** — full but not hyperextended elbows on straights; hands retract along tight
+   paths after E_EXTENSION_PEAK.
+5. **Rhythm and repeatability** — similar event ordering (prep → peak → guard return) across reps in a clip when
+   comparing cycles.
+
+Quality scores in product code (future) should combine checkpoint pass rate, phase confidence, stance tag correctness,
+and capture quality (occlusion flags) — not a single “pro template” silhouette.
+
+## Dimensions
+
+| dimension_id       | plain label                 | primary phases        |
+|--------------------|-----------------------------|------------------------|
+| base_stability     | Stance and balance          | stance, footwork       |
+| guard_discipline   | Hands home between strikes  | guard, recovery        |
+| weight_transfer    | Shift with the punch        | prep, extension        |
+| trunk_rotation     | Hip-shoulder line on power  | prep, extension, drive |
+| extension_control  | Reach without winging       | extension, drive       |
+| recoil_habit       | Retract after peak          | recoil, recovery       |
+| head_neutral       | Chin not floating up        | guard, extension       |
+| footwork_order     | Step then punch or clear reset | footwork, prep      |
+
+Each dimension maps to checkpoints in `002_checkpoints.txt`. A cycle can be “high guard_discipline, moderate
+trunk_rotation” — product copy should avoid single-number grades without dimension breakdown.
+
+## Evidence basis
+
+- Biomechanics of punching and martial-arts striking kinematics (B+): role of lower limb and trunk in hand speed.
+- Boxing coach-education syllabi and amateur boxing skill frameworks (B): guard, foot placement, shadow rounds.
+- Clinical consensus on neck loading (A): avoid extreme end-range head postures during high-volume shadow — referenced
+  for head_neutral severity, not individual injury prediction.
+
+## Youth vs adult quality framing
+
+**Youth (approx. ≤14U):** prioritize guard return, short combinations (2–3 punches), and slow tempo over maximum hand
+speed or deep slips. Stance may be slightly wider for balance; that is not automatically a fault.
+
+**Adult / post-puberty:** same dimensions; allow greater rotation amplitude and faster combos without labeling
+“excessive” unless combined with loss of guard or base (e.g., feet crossed, hands down between strikes).
+
+Never tell youth to mimic elite professional combination speed or deep head movement volume without coach supervision.
+
+## Capture quality gates
+
+Downgrade or suppress findings when:
+
+- Punching arm parallel to image plane (foreshortening).
+- Frame rate < 24 fps for fast double combinations (misses E_EXTENSION_PEAK ordering).
+- Feet or hips occluded during rotation.
+- Clip labeled `stance=southpaw` but lead hand inconsistent (tag mismatch).
+
+## Relationship to findings
+
+Checkpoints **pass/fail/unclear** at phase windows. Findings fire when checkpoints fail with sufficient confidence
+or when fault-specific rules in Findings/001 trigger. Quality definition does not duplicate fault headlines — it
+states the positive model.
+
+## Disclaimer pointer
+
+All quality language is coaching support, not medical clearance. See Docs/002_DISCLAIMER.txt.

@@ -1,0 +1,48 @@
+# Snowboarding Sport Pack — Review Report (v2 re-audit)
+Generated: 2026-10-23
+Corpus path: motion_agent/knowledge/corpus/snowboarding/
+Spec: corpus/_templates/SPORT_PACK_KB_SPEC.txt (v2)
+
+## Executive summary
+
+| Area | Verdict | Notes |
+|------|---------|-------|
+| Corpus readiness | READY_V2 | Full spec tree present including Docs, Findings, Coaching, Phases, Taxonomy, Quality |
+| Disclaimer | PASS | Docs/002_DISCLAIMER.txt present — prior "missing DISCLAIMER" claims are obsolete |
+| SOURCE_MANIFEST | PASS | _meta/SOURCE_MANIFEST.txt present |
+| Finding cards | PASS | 28 canonical `fault_*` cards with required v2 fields |
+| Coaching links | PASS | Cues cite fault_* (≈29 blocks); drills cite fault_* (≈30 drill_ids) |
+| Taxonomy relations | PASS | 17 non-empty relation rows (≥15 required) |
+| Phase model | PASS | detector_events + fault_links indexed per phase (V2 PHASE LINK INDEX) |
+| Safety / scope | PASS | Product constraints respected for this sport (see Safety) |
+| Licensing | PASS | Summarize-only posture; authority tags B/B+/A as applicable |
+
+## Accuracy
+
+PASS: Finding headlines and body signals are body-first (pose/OpenSim proxies) without requiring ball/board/opponent tracking beyond documented proxies.
+PASS: Authority tags preserved at B / B+ / A summarized open sources — no C-tier product findings.
+PASS: No fabricated universal medical angle norms presented as diagnosis.
+FOLLOW-UP: Numeric bands remain heuristic until labeled capture validation.
+
+## Safety
+
+PASS: Docs/002_DISCLAIMER.txt present and must not be weakened.
+PASS: No diagnostic claims from video (injury labels, RTP clearance, pathology).
+PASS: Sport-specific safety framing retained:
+  - Helmet and wrist-guard education framing retained in disclaimer references; landing faults use load education not scare diagnosis.
+
+## Gaps (non-blocking for v2 corpus)
+
+- Live detector wiring may remain coming_soon / beta in registry — expected.
+- Labeled video validation suite not yet attached.
+- Non-English coach copy not required for this v2 pass.
+
+## Copyright / license
+
+PASS: No long verbatim commercial manual excerpts; SOURCE_MANIFEST lists summarize-only sources.
+
+## Recommendation
+
+Index for RAG. Prior review FAIL/NOT READY claims about missing DISCLAIMER or empty corpus are **stale and superseded** by this re-audit.
+
+VERDICT: APPROVED_V2 — Alpine turn + park jump body cues with helmet/wrist disclaimer framing; 28 findings.

@@ -1,0 +1,161 @@
+# Soccer Kick — Drills (30–90 s) — v2
+
+Each drill lists targets: fault_*. Youth variants avoid maximal-effort repetition.
+See Docs/002_DISCLAIMER.txt.
+
+---
+
+drill_id: drill_plant_cone_window
+targets: fault_plant_foot_closes_hip
+duration: 60 s
+description: Cone on target side of ball; plant so inside arch faces cone; 3 slow + 2 firm passes. Youth: 3 slow only.
+
+drill_id: drill_plant_two_line
+targets: fault_plant_too_close
+duration: 45 s
+description: Mark plant line one shoe-width from ball line; five instep strikes to wall.
+
+drill_id: drill_plant_gate
+targets: fault_plant_too_far
+duration: 45 s
+description: Forward cone marks max plant reach; plant between ball-line and forward cone; 4 reps.
+
+drill_id: drill_lean_pole_bow
+targets: fault_leaning_back, fault_shoulders_closed_target
+duration: 60 s
+description: Light stick across shoulders; bow trunk toward target during swing; 3 slow, 2 full speed.
+
+drill_id: drill_hips_band_turn
+targets: fault_hips_stay_square, fault_hip_opens_late
+duration: 90 s
+description: Band at pelvis; 8 seated rotations toward target, then 3 standing kicks linking rotation.
+
+drill_id: drill_backswing_heel_tap
+targets: fault_backswing_short
+duration: 45 s
+description: Plant, tap heel to glute three times, full swing on fourth; 3 cycles per foot.
+
+drill_id: drill_plant_post_hold
+targets: fault_plant_knee_soft, fault_plant_collapse
+duration: 60 s
+description: 10 s single-leg hold on plant side, immediate pass; 3 sets. Stop if knee pain.
+
+drill_id: drill_approach_beep
+targets: fault_approach_rushed, fault_approach_short_steps
+duration: 60 s
+description: Metronome/clap on plant; decelerate into clap from 5 m; 6 approaches.
+
+drill_id: drill_follow_finish_line
+targets: fault_follow_through_cut, fault_follow_across_body_short
+duration: 45 s
+description: Tape 30 cm past ball; kicking foot must cross before recovery; 5 reps.
+
+drill_id: drill_arms_plate_carry
+targets: fault_arms_collapsed, fault_non_kicking_arm_passive
+duration: 45 s
+description: Hold plates both hands; complete kick without dropping; 5 kicks.
+
+drill_id: drill_knee_long_leg
+targets: fault_knee_stiff_strike
+duration: 45 s
+description: Three-quarter speed kicks focusing full extension toward wall chalk mark; 6 reps.
+
+drill_id: drill_plant_freeze
+targets: fault_plant_collapse
+duration: 60 s
+description: After kick, hold plant-leg balance 2 s; 5 per foot.
+
+drill_id: drill_approach_corridor
+targets: fault_approach_wide
+duration: 45 s
+description: 40 cm cone corridor to ball; approach stays inside; 4 reps.
+
+drill_id: drill_strike_rpe_ladder
+targets: fault_strike_no_acceleration
+duration: 90 s
+description: Three kicks at 50%, 75%, 100% effort with full approach; rest 10 s between.
+
+drill_id: drill_approach_gather
+targets: fault_approach_short_steps, fault_approach_rushed
+duration: 60 s
+description: Walk-in exaggerate penultimate gather step then plant; 6 reps.
+
+drill_id: drill_plant_toe_band
+targets: fault_plant_toe_out_excess, fault_plant_foot_closes_hip
+duration: 45 s
+description: Tape marks acceptable plant yaw band; 5 kicks keeping plant inside marks.
+
+drill_id: drill_plant_quiet
+targets: fault_plant_heel_strike_hard
+duration: 45 s
+description: Quiet plant holds without kick ×3 then 3 soft plants with pass.
+
+drill_id: drill_hip_open_pause
+targets: fault_hip_opens_late, fault_hips_stay_square
+duration: 60 s
+description: Plant, pause with hip open toward target, then swing; 5 reps.
+
+drill_id: drill_trunk_turn_reach
+targets: fault_trunk_rotation_absent, fault_shoulders_closed_target
+duration: 60 s
+description: Opposite-arm cross-body reach while slow shadow swings; 8 reps.
+
+drill_id: drill_nk_arm_point
+targets: fault_non_kicking_arm_passive
+duration: 45 s
+description: Point free arm to target sideline through kick; 6 reps.
+
+drill_id: drill_follow_cross_cone
+targets: fault_follow_across_body_short, fault_follow_through_cut
+duration: 45 s
+description: Cone past midline; swinging foot must pass cone before recovery; 5 reps.
+
+drill_id: drill_ankle_lock_shadow
+targets: fault_ankle_locked_strike
+duration: 45 s
+description: Shadow swings with toes-up ankle lock then 3 firm passes.
+
+drill_id: drill_sidefoot_short_cock
+targets: fault_side_foot_big_windup
+duration: 60 s
+description: Wall push-passes with abbreviated cocking; 10 reps. Youth: accuracy only.
+
+drill_id: drill_weak_foot_mirror
+targets: fault_weak_foot_plant_mismatch
+duration: 90 s
+description: Alternate-foot plant freezes then easy passes each foot matching plant picture.
+
+drill_id: drill_volley_trunk_lean
+targets: fault_volley_trunk_upright
+duration: 60 s
+description: Self-toss thigh volleys focusing athletic trunk lean; 8 soft reps.
+
+drill_id: drill_volley_plant_first
+targets: fault_volley_plant_late
+duration: 60 s
+description: Plant-then-swing shadow volleys; freeze plant 1 s before swing; 6 reps.
+
+drill_id: drill_hip_path_clear
+targets: fault_kicking_hip_adduction_early
+duration: 45 s
+description: Outside cone along swing path; foot clears cone then strikes; 5 reps.
+
+drill_id: drill_shoulders_open_target
+targets: fault_shoulders_closed_target
+duration: 45 s
+description: Freeze at peak swing showing shirt number to target; 5 freezes + 3 full kicks.
+
+---
+
+## Multi-finding warm-up block (team, ~5 min)
+
+1. Dynamic leg swings (10 each leg) — no max height youth.
+2. Stationary side-foot taps ×10.
+3. Plant-and-freeze: approach, plant, hold 2 s, no kick.
+4. One coached kick each athlete with single finding focus.
+
+## Safety
+
+- Stop on acute pain; refer per Disclaimer.
+- Youth: cap full-effort instep counts per NGB guidance.
+- Hard surfaces: prefer passing weight over maximal strike volume.

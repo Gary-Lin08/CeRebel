@@ -1,0 +1,131 @@
+# Boxing Sport Pack — Ontology (Schema)
+
+## Entity: Boxer
+
+Attributes:
+- boxer_id (string, optional external)
+- stance: orthodox | southpaw
+- audience_band: youth | adult | unknown
+
+Relations:
+- performs → PunchInstance | ShadowSession
+- subject_of → FindingInstance
+
+## Entity: PunchType
+
+Enum:
+- jab (lead straight)
+- cross (rear straight)
+- footwork_step (non-contact travel)
+- shadow_round (repeated form cycle)
+
+Attributes:
+- punch_type_id (stable slug)
+- striking_hand: lead | rear (for jab/cross)
+
+## Entity: BoxingPhase
+
+Attributes:
+- phase_id (e.g., B_GUARD, B_EXTEND, F_STEP)
+- phase_family: punch | footwork | guard
+- ordinal (integer order within punch chain)
+- description_plain (English)
+
+Relations:
+- follows → BoxingPhase
+- contains_events → PhaseEvent
+
+## Entity: PhaseEvent
+
+Attributes:
+- event_id
+- start_rule (narrative, body-only)
+- end_rule (narrative)
+- detector_proxy (optional engineering string)
+
+Examples:
+- extend_peak_wrist — argmax striking-hand wrist speed
+- guard_stable — wrists in guard band, COM over base
+- retract_complete — striking wrist returns toward guard volume
+
+## Entity: Finding
+
+Attributes:
+- finding_id (slug, prefix fault_)
+- headline (plain language)
+- phase_id (primary)
+- punch_type optional (jab | cross | any)
+- severity_hint: info | form | balance | load
+- body_signals (list of measurable descriptions)
+- why_it_matters (balance, efficiency, joint load — non-diagnostic, non-combat)
+- authority_level: B+ | B typical
+- evidence_type: CoachingConsensus | BiomechRelationship
+
+Relations:
+- has_cue → Cue
+- has_drill → Drill
+
+## Entity: Cue
+
+Attributes:
+- cue_id
+- finding_id (foreign)
+- feel_text (athlete-facing, body-first)
+- coach_text (optional longer)
+
+## Entity: Drill
+
+Attributes:
+- drill_id
+- finding_id
+- duration_sec (30–90 typical)
+- setup (mirror, clear floor space; no partner striking)
+- instructions (ordered steps)
+- youth_variant (optional shorter/slower copy)
+
+## Entity: Checkpoint
+
+Attributes:
+- checkpoint_id
+- phase_id
+- series_id (from brain_plan measurement surface)
+- quality_dimension (from Quality/001)
+- pass_description (body observable)
+- fail_links → Finding
+
+## Entity: LoadConcern
+
+Attributes:
+- concern_id
+- description (volume, repetition speed — not fighting)
+- audience_band
+- authority_level A | A+ when citing PA or sports medicine summaries
+
+Not a Finding — used in Training/ disclaimers.
+
+## Entity: EvidenceChunk (RAG metadata pattern)
+
+Attributes:
+- source_id (from SOURCE_MANIFEST)
+- authority_level
+- evidence_type
+- retrieved_at
+- audience_band optional
+
+## Naming conventions
+
+- Punch phases: prefix B_
+- Footwork phases: prefix F_
+- Finding IDs: prefix fault_
+- Cue IDs: cue_<finding_id>
+- Drill IDs: drill_<finding_id>
+
+## Handedness mapping (default orthodox)
+
+Jab: lead hand = left wrist for orthodox; cross: rear hand = right wrist.
+Southpaw: mirror lead/rear in product logic; corpus may say "lead hand" / "rear hand".
+
+## Out-of-ontology (glossary only, not coached as tactics)
+
+- Opponent, ring generalship, knockdown, illegal blow — disambiguation for RAG only;
+  no Finding or Drill entities tied to harming others.

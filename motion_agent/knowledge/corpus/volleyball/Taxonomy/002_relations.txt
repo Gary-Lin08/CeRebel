@@ -1,0 +1,374 @@
+# Volleyball Sport Pack — Concept relations (v0.1)
+# Aligns: _meta/brain_plan.txt phase IDs SP_*, SV_*, PS_*
+
+## Skill family → phase chain
+
+relation: uses_chain
+from: skill_spike_approach
+to: spike_phase_chain
+
+relation: uses_chain
+from: skill_serve
+to: serve_phase_chain
+
+relation: uses_chain
+from: skill_pass_platform
+to: pass_phase_chain
+
+## Phase ordering (spike)
+
+relation: precedes
+from: SP_READY
+to: SP_APPROACH
+
+relation: precedes
+from: SP_APPROACH
+to: SP_PENULT
+
+relation: precedes
+from: SP_PENULT
+to: SP_PLANT
+
+relation: precedes
+from: SP_PLANT
+to: SP_TAKEOFF
+
+relation: precedes
+from: SP_TAKEOFF
+to: SP_SWING
+
+relation: precedes
+from: SP_SWING
+to: SP_CONTACT
+
+relation: precedes
+from: SP_CONTACT
+to: SP_LANDING
+
+## Phase ordering (serve)
+
+relation: precedes
+from: SV_READY
+to: SV_LOAD
+
+relation: precedes
+from: SV_LOAD
+to: SV_TOSS_ARM
+
+relation: precedes
+from: SV_TOSS_ARM
+to: SV_DRAW
+
+relation: precedes
+from: SV_DRAW
+to: SV_STRIKE
+
+relation: precedes
+from: SV_STRIKE
+to: SV_FOLLOW
+
+## Phase ordering (pass platform)
+
+relation: precedes
+from: PS_READY
+to: PS_MOVE
+
+relation: precedes
+from: PS_MOVE
+to: PS_PLATFORM
+
+relation: precedes
+from: PS_PLATFORM
+to: PS_CONTACT
+
+relation: precedes
+from: PS_CONTACT
+to: PS_EXTEND
+
+relation: precedes
+from: PS_EXTEND
+to: PS_RECOVER
+
+## Finding → phase anchoring (v2 attack + block-ready)
+
+relation: anchored_in
+from: fault_spike_no_penult_load
+to: SP_PENULT
+
+relation: anchored_in
+from: fault_spike_short_approach
+to: SP_APPROACH
+
+relation: anchored_in
+from: fault_spike_early_arm
+to: SP_SWING
+
+relation: anchored_in
+from: fault_spike_late_jump
+to: SP_TAKEOFF
+
+relation: anchored_in
+from: fault_spike_late_jump
+to: SP_SWING
+
+relation: anchored_in
+from: fault_spike_stiff_landing
+to: SP_LANDING
+
+relation: anchored_in
+from: fault_jump_behind_contact
+to: SP_SWING
+
+relation: anchored_in
+from: fault_jump_behind_contact
+to: SP_CONTACT
+
+relation: anchored_in
+from: fault_jump_early_reach
+to: SP_TAKEOFF
+
+relation: anchored_in
+from: fault_arm_only_swing
+to: SP_TAKEOFF
+
+relation: anchored_in
+from: fault_soft_plant
+to: SP_PLANT
+
+relation: anchored_in
+from: fault_short_approach
+to: SP_APPROACH
+
+relation: anchored_in
+from: fault_penultimate_flat
+to: SP_PENULT
+
+relation: anchored_in
+from: fault_asymmetric_takeoff
+to: SP_TAKEOFF
+
+relation: anchored_in
+from: fault_late_trunk_open
+to: SP_SWING
+
+relation: anchored_in
+from: fault_landing_stiff
+to: SP_LANDING
+
+relation: anchored_in
+from: fault_slow_approach
+to: SP_APPROACH
+
+relation: anchored_in
+from: fault_narrow_plant
+to: SP_PLANT
+
+relation: anchored_in
+from: fault_wide_plant
+to: SP_PLANT
+
+relation: anchored_in
+from: fault_approach_crossover_chaotic
+to: SP_APPROACH
+
+relation: anchored_in
+from: fault_approach_last_step_overreach
+to: SP_PLANT
+
+relation: anchored_in
+from: fault_arm_swing_elbow_lead
+to: SP_SWING
+
+relation: anchored_in
+from: fault_swing_no_draw
+to: SP_PLANT
+
+relation: anchored_in
+from: fault_hitting_shoulder_open_early
+to: SP_TAKEOFF
+
+relation: anchored_in
+from: fault_landing_single_leg_dominant
+to: SP_LANDING
+
+relation: anchored_in
+from: fault_landing_forward_fall
+to: SP_LANDING
+
+relation: anchored_in
+from: fault_block_ready_upright
+to: SP_READY
+
+relation: anchored_in
+from: fault_block_arms_low
+to: SP_READY
+
+relation: anchored_in
+from: fault_jump_timing_rushed
+to: SP_PLANT
+
+relation: anchored_in
+from: fault_com_wrist_desync
+to: SP_CONTACT
+
+## Legacy kebab → fault_* aliases (v2 migration)
+
+relation: alias_of
+from: jump-behind-contact
+to: fault_jump_behind_contact
+
+relation: alias_of
+from: jump-early-reach
+to: fault_jump_early_reach
+
+relation: alias_of
+from: arm-only-swing
+to: fault_arm_only_swing
+
+relation: alias_of
+from: soft-plant
+to: fault_soft_plant
+
+relation: alias_of
+from: short-approach
+to: fault_short_approach
+
+relation: alias_of
+from: penultimate-flat
+to: fault_penultimate_flat
+
+relation: alias_of
+from: asymmetric-takeoff
+to: fault_asymmetric_takeoff
+
+relation: alias_of
+from: late-trunk-open
+to: fault_late_trunk_open
+
+relation: alias_of
+from: landing-stiff
+to: fault_landing_stiff
+
+relation: alias_of
+from: slow-approach
+to: fault_slow_approach
+
+relation: alias_of
+from: narrow-plant
+to: fault_narrow_plant
+
+relation: alias_of
+from: wide-plant
+to: fault_wide_plant
+
+relation: alias_of
+from: fault_spike_no_penult_load
+to: fault_penultimate_flat
+
+relation: alias_of
+from: fault_spike_short_approach
+to: fault_short_approach
+
+relation: alias_of
+from: fault_spike_stiff_landing
+to: fault_landing_stiff
+
+## Finding → phase anchoring (serve / pass — reserved ids)
+
+relation: anchored_in
+from: fault_serve_knee_lock
+to: SV_LOAD
+
+relation: anchored_in
+from: fault_serve_toss_arm_drift
+to: SV_TOSS_ARM
+
+relation: anchored_in
+from: fault_serve_poor_decel
+to: SV_FOLLOW
+
+relation: anchored_in
+from: fault_pass_broken_platform
+to: PS_PLATFORM
+
+relation: anchored_in
+from: fault_pass_absorb_only
+to: PS_EXTEND
+
+relation: anchored_in
+from: fault_pass_narrow_base
+to: PS_READY
+
+## Checkpoint → finding (Quality/002)
+
+relation: fail_triggers
+from: cp_sp_penult_load
+to: fault_spike_no_penult_load
+
+relation: fail_triggers
+from: cp_sp_plant_before_swing
+to: fault_spike_early_arm
+
+relation: fail_triggers
+from: cp_sp_jump_before_contact
+to: fault_spike_late_jump
+
+relation: fail_triggers
+from: cp_sp_landing_flex
+to: fault_spike_stiff_landing
+
+relation: fail_triggers
+from: cp_sv_knee_load
+to: fault_serve_knee_lock
+
+relation: fail_triggers
+from: cp_sv_toss_arm_stable
+to: fault_serve_toss_arm_drift
+
+relation: fail_triggers
+from: cp_sv_follow_decel
+to: fault_serve_poor_decel
+
+relation: fail_triggers
+from: cp_ps_platform_level
+to: fault_pass_broken_platform
+
+relation: fail_triggers
+from: cp_ps_move_through
+to: fault_pass_absorb_only
+
+relation: fail_triggers
+from: cp_ps_ready_base_youth
+to: fault_pass_narrow_base
+
+## Event detection (body proxies, no ball)
+
+relation: detected_by
+from: SP_CONTACT
+to: series hitting_hand_speed max
+
+relation: detected_by
+from: SV_STRIKE
+to: series strike_hand_speed max
+
+relation: detected_by
+from: PS_CONTACT
+to: series platform_angle stability
+
+## Synonym expansion (RAG)
+
+relation: synonym_of
+from: bump pass
+to: skill_pass_platform
+
+relation: synonym_of
+from: penultimate step
+to: phase_sp_penult
+
+relation: synonym_of
+from: broken platform
+to: fault_pass_broken_platform
+
+relation: synonym_of
+from: kinetic chain
+to: phase_kinetic_chain_vb

@@ -1,0 +1,117 @@
+# Tennis Sport Pack — Architecture (CeRebel)
+
+## Purpose
+
+This pack supplies retrieval-grounded knowledge for **body-first tennis coaching** in CeRebel.
+The product reconstructs human motion from video (2D/3D body keypoints) and explains what the athlete’s body
+is doing across recognizable **serve** and **groundstroke** phases. Ball tracking, line calling, racket sensors,
+and Hawkeye-style trajectories are optional enrichments, not prerequisites for coaching briefs or chat answers.
+
+Primary motion scope (v1):
+- **Flat or kick serve** motion from side or rear oblique camera (body-visible).
+- **Forehand and backhand** groundstrokes (open, semi-open, or neutral stance variants).
+- Right- and left-handed players; default naming assumes right-handed (racket side = trail side on forehand).
+
+Out of scope for automatic findings (glossary or future packs only):
+- Ball spin rate, placement, net clearance, double-bounce rules.
+- Doubles positioning, poaching, tactical patterns.
+- Foot-fault adjudication without calibrated court geometry.
+- String bed or racket model optimization.
+
+## Design principles
+
+1. **Body-measurable claims only** for automated findings: joint angles and heights where visible, segment speeds,
+   timing between phase events, posture and weight-shift proxies without a ball.
+2. **Evidence layering**: ITF rules (A+) for definitions; clinical and epidemiology reviews (A/B+) for load awareness;
+   biomechanics reviews (B+) for kinetic-chain relationships; cues and drills are coaching advice (B), paired with
+   disclaimer docs.
+3. **No fabricated medical norms**: numeric angle targets are not prescribed as universal medicine; qualitative
+   patterns and published themes only, with youth/adult separation for training volume.
+4. **Phase-first retrieval**: faults, checkpoints, and cues index to `Phases/001_phase_model.txt` event IDs so
+   future tennis detectors can attach findings to time windows.
+
+## Directory roles (this pack)
+
+| Path | Role |
+|------|------|
+| Docs/ | Product architecture, disclaimers, pack policies |
+| Schema/ | Entity types: player, stroke, phase, finding, cue, drill |
+| Taxonomy/ | Concepts, synonyms, phase order for RAG expansion |
+| Phases/ | Canonical phase models (serve + groundstroke) |
+| Quality/ | Body-defined “good” patterns; checkpoint catalog |
+| Findings/ | Fault library (finding cards with stable IDs) |
+| Coaching/ | Feel cues and short drills linked to findings |
+| Biomechanics/ | Open-literature summaries of serve and groundstroke mechanics |
+| Training/ | Practice structure, youth scaling, team/coach context |
+| _meta/ | Manifests, brain plan, build reports — excluded from chunk index |
+
+## Motion pipeline integration (planned)
+
+### Input contract
+
+- Session adapter produces a `MotionSequence`: joint positions over time, FPS, duration.
+- Minimum useful joints: both wrists, elbows, shoulders, hips, knees, ankles, pelvis/spine proxy.
+- Handedness flips racket-side vs non-racket-side labels.
+
+### Tennis-likeness gate (future)
+
+Conservative auto-select signals (not yet wired in `sports/registry.py`):
+- **Serve-like**: asymmetric shoulder elevation window + single dominant wrist speed peak overhead height band.
+- **Groundstroke-like**: lateral trunk rotation + horizontal wrist speed peak near mid-clip.
+- **Reject**: golf-like vertical spine tilt with low asymmetric shoulder pattern; pure running gait.
+
+### Phase detection (v1 heuristic alignment)
+
+Until dedicated event detectors ship, align narrative phases to computable proxies:
+
+| Event ID | Proxy signal | Stroke |
+|----------|--------------|--------|
+| S_CONTACT_PROXY | argmax racket-side wrist speed | Serve |
+| G_CONTACT_PROXY | argmax racket-side wrist speed | Groundstroke |
+| S_TOSS_RISE | non-racket wrist vertical velocity peak early | Serve |
+| S_TROPHY_LOAD | knee flexion local minimum before S_CONTACT_PROXY | Serve |
+| G_UNIT_TURN | trunk yaw velocity peak before G_CONTACT_PROXY | Groundstroke |
+| G_SPLIT | bilateral ankle speed micro-peak at clip onset | Groundstroke |
+
+### Coach brief generation (future)
+
+When `SportPack` for tennis ships, `build_coach_briefs` will consume phase windows, ranked finding cards,
+one feel cue and one short drill per prioritized finding from Coaching/.
+
+## RAG chunking guidance
+
+- English primary text; definitional sentences with repeated stable IDs (`fault_*`, `S_*`, `G_*`).
+- Include authority level in prose where claims are evidence-backed (see SOURCE_MANIFEST).
+- `_meta/*` excluded from indexing per product default.
+
+## Evidence types (tennis pack)
+
+| evidence_type | Example content | Default authority |
+|---------------|-----------------|-------------------|
+| RuleFact | Service definition, let | A+ |
+| ClinicalGuidance | Overuse monitoring, when to seek care | A |
+| BiomechRelationship | Leg drive before trunk rotation on serve | B+ |
+| CoachingAdvice | Cues, drills, practice blocks | B |
+| ProductLogic | Phase map, detector placeholders | Internal B |
+
+## Youth vs adult
+
+Training volume, court size, and ball compression differ by age band (`audience=youth` vs `adult` in Training/).
+Mechanics cues overlap but **load and repetition** must not copy adult serve intensity to young juniors.
+
+## Versioning
+
+Pack status: **content build 2026-10-21** (see `_meta/build_report.txt`).
+Registry catalog entry remains `coming_soon` until detector validation and `TennisPack` module land.
+
+## Related code paths (current)
+
+- `motion_agent/sports/registry.py` — COMING_SOON catalog entry for tennis.
+- `motion_agent/knowledge/__init__.py` — corpus indexing skips `_meta/`.
+
+## Next engineering milestones
+
+1. `TennisPack` with serve vs groundstroke classifier from wrist/shoulder signals.
+2. Labeled clip suite (side/rear) for false-positive tests vs golf and baseball throw.
+3. Optional racket IMU channel (separate evidence_type RacketMeasured).
+4. Volley and overhead phase extension sharing G_* recovery patterns.

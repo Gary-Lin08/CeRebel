@@ -1,0 +1,184 @@
+# Golf Full Swing — Biomechanics Overview (RAG summary layer)
+
+**Purpose:** Concise, body-first synthesis for CeRebel coaching RAG. **Not prescriptive medicine.** Population trends carry
+large individual and methodological variance.
+
+**Authority:** B+ (peer-reviewed systematic reviews, open access). **Full extracts (unchanged):**
+- Biomechanics/001_GRF_CoP_Golf_Systematic_Review_2026.txt — Watson et al., Sports Medicine 2026
+- Biomechanics/002_Golf_Swing_Biomechanics_Systematic_Review_2022.txt — Bourgain et al., Sports 2022
+
+**Primary URLs (SOURCE_MANIFEST):**
+- GRF / CoP review PDF: https://link.springer.com/content/pdf/10.1007/s40279-025-02391-3.pdf
+- GRF / CoP DOI: https://doi.org/10.1007/s40279-025-02391-3
+- Kinematics review PDF: https://mdpi-res.com/d_attachment/sports/sports-10-00091/article_deploy/sports-10-00091.pdf
+- Kinematics DOI: https://doi.org/10.3390/sports10060091
+
+**Product alignment:** `_meta/brain_plan.txt` — seven phase IDs, impact_proxy, monocular / estimated GRF only.
+
+---
+
+## 1. What the literature agrees on (high level)
+
+Full-swing performance in research is often studied through **kinematics** (segment rotations, joint angles, timing of peak
+speeds) and **kinetics** (ground reaction force, centre of pressure, inverse-dynamics estimates). Both open-access reviews
+stress that golf is highly individual, yet recurring themes appear:
+
+1. **Proximal-to-distal sequencing** — Lower body and trunk contributions typically precede peak speeds farther out the chain
+   in skilled patterns; transition timing (lower body reversing while upper body completes backswing) is a coaching and
+   research focus.
+2. **Pelvis–thorax separation (X-factor language)** — Dissociation between pelvis and shoulder girdle rotation is widely
+   discussed, but **definitions and peak timing differ across studies**, limiting direct comparison of absolute degrees.
+3. **Ground interaction** — Vertical and horizontal GRF components and CoP paths associate with clubhead speed and skill in
+   multiple investigations; **timing of force application** is emphasized alongside magnitude.
+4. **Methodological caution** — Heterogeneous marker sets, 2D vs 3D choices, and non-ISB joint definitions explain contradictory
+   findings; product series should stay **internally consistent** rather than mixing published absolute norms.
+
+CeRebel maps these themes to observable pose series (pelvis_rotation, thorax_rotation, separation, com_ap_shift,
+hand_speed_lead, spine_flexion) — not to force-plate or launch-monitor ground truth.
+
+---
+
+## 2. Kinematics themes (Bourgain et al. 2022 — summary)
+
+**Scope of review:** Systematic review of golf-swing **kinematics** literature (92 articles), categorized into X-factor,
+crunch factor, swing plane / clubhead trajectory, kinematic sequence, and joint angular kinematics. Male golfers dominated
+included studies; performance and injury motives both appear in the field.
+
+**X-factor and separation:**
+- X-factor denotes shoulder–pelvis dissociation; variants include **X-factor stretch** (peak separation early in downswing)
+  and impact-phase definitions. McLean-style planar projections differ from 3D anatomical approaches.
+- Reported links to clubhead speed exist in some cohorts, but **method choice shifts measured values** (e.g., thorax vs
+  shoulder line, timing of peak). Joyce et al. and related work caution that comparing X-factor across studies without
+  harmonized definitions is unreliable.
+- **Coaching translation:** Use **relative** separation trends in the product (thorax_rotation − pelvis_rotation) and
+  collapse-before-impact_proxy patterns — not a single “correct” degree for all players.
+
+**Kinematic sequence:**
+- Literature describes ordering of peak segment angular velocities (pelvis → thorax → arm → hand/club). Detection depends on
+  which body segments and velocity components are analyzed (Philippot et al. — component effects on sequence identification).
+- Bourgain et al. note **lack of consensus** preventing broad generalization; contradictory results partly reflect definitions
+  and filtering of angular velocity signals.
+- **Coaching translation:** Qualitative “lower body leads” / “transition stagger” cues; checkpoint cp_transition_lower uses
+  pelvis_rot_vel vs hand_speed_lead ordering as a **proxy**, not lab peak timestamps from 2D pose.
+
+**Crunch factor, swing plane, joint angles:**
+- Crunch factor and lumbar loading appear in injury-related kinematics discussions; this overview does **not** translate
+  epidemiology into personal injury risk scores in the app.
+- Swing plane and clubhead trajectory domains are club-path heavy — glossary only for v1 body-first coaching.
+- Joint-angle tables in the review illustrate **example** values from selected papers; ISB-aligned reporting is recommended
+  for future research but is **not uniformly present** in legacy studies.
+
+**Methodological recommendations (review authors):**
+- Prefer **3D** approaches over 2D for rotation-dominated variables where possible.
+- Follow **International Society of Biomechanics (ISB)** anatomical frames when reporting joint angles to enable aggregation.
+- Report marker sets, filtering, and event definitions (top of backswing, impact) explicitly.
+
+**Related DOIs in manifest (methods context, not duplicated here):**
+- X-factor measurement: https://doi.org/10.1080/17461391003792603 (Joyce et al.)
+- Sequence methods: https://doi.org/10.5277/abb-01318-2019-02 (Philippot et al.)
+- Elite sequence example: https://doi.org/10.1080/14763141.2010.535842 (Zheng et al.)
+
+---
+
+## 3. Ground reaction force and CoP themes (Watson et al. 2026 — summary)
+
+**Scope of review:** PRISMA 2020 systematic review of **GRF and CoP** during the golf swing and associations with
+**clubhead speed (CHS)** and **skill level** (24 included studies).
+
+**Key findings (population level):**
+- Multiple empirical studies report **moderate-to-strong associations** between CHS and GRF and/or CoP metrics.
+- **More skilled golfers** tended to show **higher GRF** (magnitude) and **better CHS** than less skilled cohorts in
+  aggregated narrative synthesis — skill and swing style moderate any single metric.
+- **Timing** of force development matters: effective use of GRF is described as supporting proximal-to-distal energy transfer,
+  not merely producing maximum vertical force at an arbitrary instant.
+- **CoP / weight transfer:** CoP is the application point of resultant horizontal GRF components; it is related to but not
+  identical to centre-of-mass motion. Novice patterns often show incomplete shift toward the lead side before impact in
+  coaching-oriented descriptions; experienced golfers more often exhibit fuller transfer — with study-level variability.
+- Research field needs **standardized terminology** and reporting for GRF/CoP metrics across swing phases.
+
+**CeRebel interpretation (estimated, qualitative):**
+- Product checkpoints use **com_ap_shift**, **com_lateral**, and qualitative grf_vertical_est trends — **not** Newton targets
+  from force-plate cohorts.
+- Do **not** display Watson review magnitudes or handicap–CHS correlations as user pass/fail thresholds without external
+  measurement tags.
+- CHS and handicap statistics in the review contextualize **why** ground interaction is studied; they are **out of scope**
+  for v1 body-only findings.
+
+**Public coaching alignment (B sources — paraphrase only, see SOURCE_MANIFEST):**
+- PGA / TPI / Titleist public articles emphasize AP shear, lead-foot push timing, and rotation — consistent with “timing +
+  coordination” rather than bracing maximally at address.
+
+---
+
+## 4. Body-first mechanics mapped to phases
+
+| Theme | Typical phase window (product IDs) | Observable series (internal) |
+|-------|-----------------------------------|------------------------------|
+| Stable setup, minimal sway | address, takeaway | com_lateral, spine_flexion |
+| Pelvis turn in backswing | backswing | pelvis_rotation |
+| Separation peak / maintenance | backswing, transition | separation |
+| Lower body leads reversal | transition | pelvis_rot_vel, hand_speed_lead |
+| Posture maintenance | downswing, impact_proxy | spine_flexion vs address |
+| Weight toward lead side | downswing, impact_proxy | com_ap_shift, lead_hip_flex |
+| Balanced finish | finish | finish_balance |
+
+**impact_proxy:** Peak lead-hand speed toward target — not ball contact. See Phases/001_phase_model.txt.
+
+**Capture:** Down-the-line preferred for rotation and sway; oblique views reduce separation fidelity (Quality cp_capture_dtl).
+
+---
+
+## 5. Adult vs youth population notes
+
+**Adults (B+ literature bands):**
+- Separation and sequencing language in findings assumes full skeletal maturity and typical full-swing coaching context.
+- GRF/CoP skill differences in Watson et al. largely reflect **adult male-dominated** study populations — do not infer junior
+  numeric bands from these reviews.
+
+**Youth (B / coaching consensus — separate audience tag):**
+- Prioritize **balance, controlled rotation amplitude, and finish stability** over speed or “max ground force” cues.
+- Shorter backswing depth when overswing threatens balance (finding overswing-depth in brain_plan).
+- Weekly volume and multi-sport load follow NGB / club medical staff — see Training/001_team_practice.txt.
+- **Never** apply adult CHS or GRF cohort statistics to junior-facing checkpoint copy.
+
+PopulationNote ontology: `youth | adult | all` per Schema/001_ontology.txt.
+
+---
+
+## 6. Limitations block (mandatory for RAG consumers)
+
+1. **Monocular depth error** affects lateral sway, AP shift, and estimated kinetics.
+2. **Estimated GRF ≠ force plate** — direction/magnitude trends only, authority capped for checkpoints.
+3. **X-factor / separation** definitions in literature ≠ internal series unless explicitly calibrated.
+4. **No ball or club track** — clubhead speed, face, path, AoA remain glossary or future sensor ingest.
+5. **Injury content** in full reviews is for researcher context; app outputs are coaching awareness, not diagnosis.
+6. **Copyright:** Summaries only in this file; long-form CC BY review text remains in sibling Biomechanics/00*_*.txt files.
+
+---
+
+## 7. Relationship to Quality and Findings
+
+Quality/002_checkpoints.txt implements body-first gates (setup stability, separation, transition sequencing, posture,
+weight shift, finish). Findings/001_common_faults.txt maps fail patterns to feel cues and drills without requiring
+launch-monitor variables.
+
+When a checkpoint cites this overview, prefer wording: **“typical in published cohorts”** or **“coaching consensus (B)”**
+ — not personal medical advice. Footer: Docs/002_DISCLAIMER.txt.
+
+---
+
+## 8. What this overview deliberately omits
+
+- Verbatim abstract or extended results tables from copyrighted or CC BY full texts (use ingested review files for retrieval).
+- Prescriptive absolute joint angles as universal norms.
+- Ball flight, spin, and curve prediction.
+- Proprietary TPI paid curriculum or TrackMan metric targets as coaching requirements.
+
+---
+
+## 9. Indexing note
+
+This file is the **summary layer** for RAG alongside Phases/, Quality/, Findings/, Coaching/, and Training/. Full systematic
+reviews remain indexed separately for deep retrieval with license attribution.
+
+End overview — gap-fill 2026-10-21

@@ -1,0 +1,168 @@
+# Freestyle Swimming — Concept Taxonomy (v1)
+
+## Primary concepts
+
+concept_id: freestyle_front_crawl
+label_en: Freestyle (front crawl)
+definition: Continuous prone stroke with alternating arm pull and flutter kick; fastest competitive stroke; body-first analysis uses arm cycle timing without pool instrumentation.
+synonyms_en: front crawl, freestyle, crawl stroke
+synonyms_zh: 自由泳, 爬泳
+parent: swimming
+authority: A+ (competition naming via World Aquatics); B+ mechanics
+
+concept_id: stroke_cycle
+label_en: Stroke cycle
+definition: One complete sequence from hand entry through pull, push, exit, and recovery on one arm; paired with contralateral arm half-cycle offset.
+synonyms_en: stroke count cycle, arm cycle
+related_phases: all
+authority: ProductLogic
+
+concept_id: early_vertical_forearm
+label_en: Early vertical forearm (EVF)
+definition: Coaching construct: forearm oriented to press backward soon after entry with elbow flexed above wrist in side view; associated with effective catch in many biomechanics summaries.
+synonyms_en: high elbow catch, vertical forearm, catch position
+related_phases: swim_phase_catch, swim_phase_pull
+authority: B+
+
+concept_id: body_roll
+label_en: Body roll (hip-shoulder rotation)
+definition: Trunk rotation around longitudinal axis to facilitate reach and pull; amplitude varies by event distance and individual mobility.
+synonyms_en: hip rotation, shoulder roll, rotation timing
+related_phases: swim_phase_body_roll
+authority: B+
+
+concept_id: two_beat_six_beat_kick
+label_en: Kick timing patterns
+definition: Flutter kick frequency expressed relative to arm cycle — e.g., six-beat (six kicks per full arm cycle) common in middle-distance; two-beat in some distance models.
+synonyms_en: flutter kick rhythm, beat cycle
+related_phases: swim_phase_kick
+authority: B
+
+## Phase concepts (align to swim_phase_*)
+
+concept_id: phase_recovery
+label_en: Arm recovery
+start_event: E_EXIT
+end_event: E_ENTRY
+body_focus: relaxed shoulder, elbow high, no crossover
+
+concept_id: phase_entry
+label_en: Hand entry
+start_event: E_ENTRY
+end_event: E_CATCH
+body_focus: finger-first entry, extend along line, head neutral
+
+concept_id: phase_catch
+label_en: Catch
+start_event: E_CATCH
+end_event: E_PULL_MID
+body_focus: elbow above wrist, forearm vertical proxy, no pause
+
+concept_id: phase_pull
+label_en: Pull
+start_event: E_PULL_MID
+end_event: E_PUSH_START
+body_focus: accelerate backward under body, roll with pull
+
+concept_id: phase_push
+label_en: Push / finish
+start_event: E_PUSH_START
+end_event: E_EXIT
+body_focus: complete push past hip, clean exit
+
+concept_id: phase_breathe
+label_en: Breathing
+start_event: E_BREATHE_START
+end_event: E_BREATHE_END
+body_focus: rotate head, one goggle in, quick inhale
+
+concept_id: phase_kick
+label_en: Flutter kick
+continuous: true
+body_focus: hip-initiated, ankles relaxed, narrow kick width
+
+## Event concepts
+
+concept_id: event_entry
+label_en: Hand entry event
+definition: Frame where pulling hand transitions from recovery to water contact and forward extension completes.
+detector: E_ENTRY
+
+concept_id: event_catch
+label_en: Catch initiation
+definition: Elbow flexion accelerates and wrist depth increases after entry.
+detector: E_CATCH
+
+concept_id: event_pull_peak
+label_en: Pull speed peak
+definition: Maximum pulling-wrist speed during underwater phase.
+detector: E_PULL_PEAK
+
+concept_id: event_exit
+label_en: Hand exit
+definition: Hand leaves water near hip to begin recovery.
+detector: E_EXIT
+
+## Fault concept families
+
+concept_id: fault_family_elbow
+label_en: Elbow path faults
+examples: fault_dropped_elbow, fault_low_elbow_recovery
+authority: B
+
+concept_id: fault_family_head_breath
+label_en: Head and breathing faults
+examples: fault_excessive_head_lift, fault_late_breath_timing
+authority: B
+
+concept_id: fault_family_alignment
+label_en: Body line faults
+examples: fault_crossover_entry, fault_snaking_hips, fault_flat_swim
+authority: B
+
+## Stroke variants (glossary, limited v1 findings)
+
+concept_id: sprint_freestyle
+label_en: Sprint freestyle
+definition: Higher stroke rate, straighter recovery, stronger kick; shorter catch window.
+authority: B
+
+concept_id: distance_freestyle
+label_en: Distance freestyle
+definition: Longer stroke length, higher elbow recovery common, kick reduced for efficiency.
+authority: B
+
+concept_id: open_water_freestyle
+label_en: Open-water freestyle
+definition: Sighting strokes, higher head lift episodic, wider stroke for stability in chop.
+authority: B
+
+## Equipment and environment (non-finding)
+
+concept_id: pool_swimming
+label_en: Pool swimming
+definition: Controlled lane swimming; side camera feasible.
+authority: B
+
+concept_id: open_water_swimming
+label_en: Open water swimming
+definition: Variable visibility and sighting; motion confidence flags apply.
+authority: B
+
+## Measurement concepts
+
+concept_id: stroke_rate
+label_en: Stroke rate
+definition: Cycles per minute derived from E_ENTRY period; body-measurable from video.
+synonyms_en: cadence, SPM
+authority: ProductLogic
+
+concept_id: stroke_length_proxy
+label_en: Stroke length (proxy)
+definition: Distance per cycle estimated from body speed × cycle period when pool length unknown.
+authority: ProductLogic
+
+concept_id: shoulder_impingement_risk_language
+label_en: Shoulder load language (non-diagnostic)
+definition: Careful wording for dropped elbow and overreach patterns discussed in clinical reviews — not a diagnosis.
+authority: A (clinical context only)

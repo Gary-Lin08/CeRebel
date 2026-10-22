@@ -1,0 +1,92 @@
+# Freestyle — Youth Development and Volume Context
+
+Authority: B federation learn-to-swim frameworks and NGB progression language; A for pain/stop rules via disclaimer.
+Summaries only — verify current age-group standards on publisher sites in SOURCE_MANIFEST.
+
+---
+
+## Developmental stages (conceptual)
+
+Most NGB models progress swimmers through:
+
+1. **Water comfort and safety** — floating, kicking, breath control (may precede full freestyle cycle).
+2. **Linear body line** — kick with board, side kicking, long spine.
+3. **Arms integration** — single-arm, catch-up, first full freestyle with breathing.
+4. **Endurance and legal stroke** — continuous 25 m → 50 m → longer repeats with legal touch turns (rules in glossary).
+5. **Performance training** — periodized volume and race skills.
+
+CeRebel fault severity should be **lower** for stages 2–3 on advanced checkpoints (EVF strictness) until catch exists consistently.
+
+---
+
+## Skill priorities by stage (freestyle-focused)
+
+### Stage 2 — kick and line
+
+- fault_bicycle_kick, fault_wide_kick, fault_excessive_head_lift (when breath introduced)
+- Drills: drill_side_kick, drill_vertical_kick, drill_6_kick_switch (short distances)
+
+### Stage 3 — arms and breath
+
+- fault_crossover_entry, fault_hold_breath_tension, fault_flat_swim
+- Drills: drill_catch_up, drill_single_arm_freestyle, drill_bilateral_breathing (every 4–5 for beginners)
+
+### Stage 4 — catch and efficiency
+
+- fault_dropped_elbow, fault_pause_at_catch, fault_short_push
+- Drills: drill_fist_drill, drill_sculling_front (supervised)
+
+### Stage 5 — performance
+
+- axis_repeatability, asymmetric patterns under fatigue
+- Integrate race pacing; avoid adult elite distance templates on pre-adolescent swimmers without coach plan.
+
+---
+
+## Stroke rate guidance (coaching bands, not medical)
+
+Youth stroke rates vary widely with height and skill. Coaches use **stroke count** per length plus subjective ease.
+
+Illustrative **info-only** bands for 25 m pool freestyle (verify locally):
+
+| Level (approx.) | SPM range (info) | Notes |
+|-----------------|------------------|-------|
+| Learning continuous swim | 40–70 | Higher rates common; length short |
+| Age-group trained | 50–80 | Technique themes rotate weekly |
+| Advanced junior | 60–90 | Event-specific coaching |
+
+Product checkpoint cp_youth_stroke_rate_sanity flags **info** when derived SPM falls far outside athlete's recent baseline — not automatic fault.
+
+---
+
+## Volume and rest (principles)
+
+- Increase volume **gradually**; technique degradation at end of long sets is expected — interpret findings with fatigue tag.
+- Multi-sport youth should coordinate with other coaches to avoid cumulative shoulder load.
+- No single universal yardage cap in this pack — cite team and NGB policies.
+
+Pitch Smart analog for swimming does not exist as one global standard; use **club age-group guidelines**.
+
+---
+
+## Safety and supervision
+
+- Constant supervision per venue rules.
+- Teach exhale underwater early to reduce breath-holding anxiety (fault_hold_breath_tension context).
+- Stop for pain, dizziness, or breathing distress — disclaimer mandatory.
+
+---
+
+## Parent-facing language (RAG)
+
+When users ask about child’s stroke:
+- Emphasize **fun, safety, and long-term skill** over split times.
+- Recommend certified learn-to-swim or team coaches for progression.
+- Avoid comparing child to elite video templates.
+
+---
+
+## Sources category
+
+World Aquatics development documents, USA Swimming / Swim England / Swimming Canada public progression materials,
+ASCA educational summaries (B). URLs in `_meta/SOURCE_MANIFEST.txt`.

@@ -1,0 +1,137 @@
+# Volleyball Approach — Drills (30–90s each) v2
+# Linked to fault_*; equipment-minimal; youth-safe variants noted
+
+## drill_fault_jump_behind_contact — reach-and-hold (60s)
+targets: fault_jump_behind_contact
+Setup: Side view capture; no ball.
+Action: Full approach → jump → at peak, hold hitting hand at highest comfortable reach 1 s → land soft.
+Reps: 4 quality reps, rest 20 s between.
+Youth: 3 reps; reduce jump intensity; skip if knee pain.
+
+## drill_fault_jump_early_reach — delayed-arm takeoff (45s)
+targets: fault_jump_early_reach, fault_spike_late_jump
+Setup: Shadow spike from plant.
+Action: Plant → vertical jump with arms on hips → only after pelvis rises, add full arm swing.
+Reps: 5 slow-motion reps.
+Youth: 4 reps at walk-in speed first.
+
+## drill_fault_arm_only_swing — target touch jump (90s)
+targets: fault_arm_only_swing
+Setup: Tape target at max reach + 5 cm.
+Action: Approach last 2 steps → jump to touch target with hitting hand.
+Reps: 6, rest 15 s.
+Youth: Target at reach only; limit to 4 reps per set.
+
+## drill_fault_soft_plant — penultimate-plant spring (60s)
+targets: fault_soft_plant
+Setup: Mark penultimate and plant spots on floor.
+Action: Walk-in, exaggerate knee bend on penultimate, deeper bend on plant, mini hop without swing.
+Reps: 8.
+
+## drill_fault_short_approach — cone depth (60s)
+targets: fault_short_approach, fault_spike_short_approach
+Setup: Start cone, plant cone 3–4 m ahead (adjust youth shorter).
+Action: 4-step approach must reach plant cone before jump.
+Reps: 5 pass/fail attempts.
+
+## drill_fault_penultimate_flat — last-two only (45s)
+targets: fault_penultimate_flat, fault_spike_no_penult_load
+Setup: Side view.
+Action: Only penultimate + plant + hop; no arm swing first 4 reps, add arm last 4.
+Reps: 8 total.
+
+## drill_fault_asymmetric_takeoff — two-foot hop chain (60s)
+targets: fault_asymmetric_takeoff
+Setup: Line on floor.
+Action: From athletic stance, 6 forward two-foot hops emphasizing simultaneous leave.
+Reps: 2 sets of 6.
+
+## drill_fault_late_trunk_open — trunk-first hop (60s)
+targets: fault_late_trunk_open, fault_spike_early_arm
+Setup: Light med-ball optional — can use shadow only.
+Action: Small hop, rotate trunk toward target wall, then arm whip / overhead throw.
+Reps: 6.
+Youth: Shadow only; 4 reps.
+
+## drill_fault_landing_stiff — soft stick (45s)
+targets: fault_landing_stiff, fault_spike_stiff_landing
+Setup: Capture landing.
+Action: Approach jump, land on two feet, hold 2 s with knees flexed feel.
+Reps: 5.
+coach_note: Load awareness — stop if pain. Not rehab.
+
+## drill_fault_slow_approach — tempo clap (60s)
+targets: fault_slow_approach
+Setup: Coach or partner claps on plant.
+Action: 3-step approach; increase step cadence each rep until clap aligns with explosive plant.
+Reps: 6 building tempo.
+
+## drill_fault_narrow_plant — tape rails (45s)
+targets: fault_narrow_plant
+Setup: Parallel tape lines ~shoulder-width.
+Action: Plant with each foot on a line before hop.
+Reps: 8 shadow approaches.
+
+## drill_fault_wide_plant — circle plant (45s)
+targets: fault_wide_plant
+Setup: 24-inch circle on floor.
+Action: Last step must land with both feet inside circle before jump.
+Reps: 8.
+
+## drill_fault_approach_crossover_chaotic — tape runway (60s)
+targets: fault_approach_crossover_chaotic
+Action: Approach must stay between parallel floor tapes to plant; 6 shadow approaches.
+
+## drill_fault_approach_last_step_overreach — plant-under-hips (45s)
+targets: fault_approach_last_step_overreach
+Action: Plant foot on mark under pelvis line; 8 reps.
+
+## drill_fault_arm_swing_elbow_lead — high-elbow whip (60s)
+targets: fault_arm_swing_elbow_lead
+Action: Stand or short approach; exaggerate high-elbow draw then whip ×8.
+
+## drill_fault_swing_no_draw — draw-hold (60s)
+targets: fault_swing_no_draw
+Action: Plant with elbow back 1s freeze, then jump-swing ×6.
+
+## drill_fault_hitting_shoulder_open_early — closed-shoulder rise (60s)
+targets: fault_hitting_shoulder_open_early
+Action: Hold closed chest through first half of jump ×6.
+
+## drill_fault_landing_single_leg_dominant — two-foot stick (45s)
+targets: fault_landing_single_leg_dominant
+Action: Small approach hops, two-foot stick; 6 reps.
+
+## drill_fault_landing_forward_fall — hip-hinge stick (45s)
+targets: fault_landing_forward_fall
+Action: Stick landings with light hip hinge hold 2s; 5 reps.
+
+## drill_fault_block_ready_upright — ready freeze (45s)
+targets: fault_block_ready_upright
+Action: On clap, drop into athletic base hold 2s ×8.
+
+## drill_fault_block_arms_low — shoulder-shelf block jump (60s)
+targets: fault_block_arms_low
+Action: Shadow block jumps; hands start at shoulders, press up at peak ×6.
+
+## drill_fault_jump_timing_rushed — metronome approach (90s)
+targets: fault_jump_timing_rushed
+Action: One beat approach, one beat plant hold, one beat jump; 6 cycles.
+
+## drill_fault_com_wrist_desync — mix hold + delay (60s)
+targets: fault_com_wrist_desync, fault_jump_behind_contact, fault_jump_early_reach
+Action: 2 reach-and-hold reps + 2 delayed-arm reps.
+
+## Team-friendly — one-main-fix rotation (90s per athlete)
+Setup: Side camera on approach lane during pepper or hit lines.
+Action: Each athlete 3 approaches; coach picks one finding; athlete runs linked drill once before re-record.
+Use: Training/001_team_practice.txt integration.
+
+## Jump serve — leg-then-strike shadow (60s)
+Setup: variant=serve; no toss scoring.
+Action: 4 jump serves shadow: emphasize same leg drive as attack before hand peak.
+Youth: Standing serve progression if jump serve not age-appropriate per club policy.
+targets: fault_jump_early_reach, fault_arm_only_swing
+
+## Practice safety
+Stop drills if pain occurs. Drills are not rehabilitation exercises. See Docs/002_DISCLAIMER.txt.

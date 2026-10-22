@@ -1,0 +1,178 @@
+# Yoga Sport Pack — Ontology (Schema)
+
+Aligns with SPORT_PACK_KB_SPEC and yoga/_meta/brain_plan.txt v0.1.
+Non-medical product KB: CoachingCaution is coaching education, not clinical screening.
+
+## Entity: Practitioner
+
+Attributes:
+- practitioner_id (optional external)
+- audience_band: youth | adult | unspecified
+- experience_level: beginner | intermediate | advanced (optional UX only)
+
+Relations:
+- performs → AsanaInstance
+- subject_of → FindingInstance (session-level, optional)
+
+## Entity: PoseFamily
+
+Attributes:
+- family_id (e.g., F_INVERTED_V, F_STANDING_LUNGE)
+- label_en, label_zh optional
+- description_plain (body-first)
+
+Relations:
+- includes → Pose
+
+## Entity: Pose
+
+Attributes:
+- pose_id (stable slug: downward_dog, warrior_2, tree, …)
+- label_en, sanskrit_alias optional (taxonomy synonyms)
+- primary_family_id
+- bilateral: true | false | asymmetric_left_right
+- typical_support: standing | hands_knees | prone | supine | seated
+
+Relations:
+- memberOf → PoseFamily
+- has_caution → CoachingCaution (0..n)
+- has_modification → ModificationOption (0..n)
+
+## Entity: AsanaInstance
+
+Attributes:
+- instance_id (session clip)
+- detected_pose_id (optional until classifier ships)
+- clip_duration_sec
+- confidence_band: high | medium | low
+
+Relations:
+- instanceOf → Pose
+- has_phase_span → AsanaPhase (with start/end frame narrative)
+
+## Entity: AsanaPhase
+
+Attributes:
+- phase_id: Y_ENTRY | Y_SETUP | Y_ALIGN | Y_HOLD | Y_EXIT | Y_INTEGRATION
+- ordinal (integer)
+- description_plain
+
+Relations:
+- follows → AsanaPhase
+- contains_events → AsanaEvent
+
+## Entity: AsanaEvent
+
+Attributes:
+- event_id (e.g., hold_start, align_window_start)
+- start_rule (narrative, OpenSim-friendly)
+- end_rule (narrative)
+- detector_proxy (optional engineering string)
+
+## Entity: Finding
+
+Attributes:
+- finding_id (slug, prefix fault_)
+- headline (plain language)
+- phase_id (primary)
+- pose_id or family_id anchor
+- severity_hint: info | form | load
+- body_signals (list, measurable on body model)
+- why_it_matters (comfort, efficiency, load awareness — non-diagnostic)
+- authority_level: B+ | B typical
+- evidence_type: BiomechRelationship | CoachingAdvice
+
+Relations:
+- has_cue → Cue
+- has_drill → Drill
+- suggested_modification → ModificationOption (0..n)
+- related_caution → CoachingCaution (0..n)
+
+## Entity: CoachingCaution
+
+Attributes:
+- caution_id (prefix caution_)
+- headline (coach-facing, non-diagnostic)
+- athlete_message (short UI copy)
+- redirect_action: skip | modify | slow_exit | consult_professional
+- authority_level: B+ | B (general movement education)
+
+Relations:
+- caution_applies_to → Pose | PoseFamily
+
+Note: Do NOT encode ICD conditions or “ contraindicated if you have X diagnosis ” as
+automated rules. Wording: “some people prefer to avoid or modify when they notice …”.
+
+## Entity: ModificationOption
+
+Attributes:
+- modification_id (prefix mod_)
+- label_en (e.g., “Bent knees in down dog”)
+- instructions_short (ordered steps)
+- props_optional: wall | chair | block | strap | none
+- audience_band: youth | adult | all
+
+Relations:
+- modification_for → Finding | Pose
+
+## Entity: Cue
+
+Attributes:
+- cue_id (cue_<finding_id>)
+- finding_id
+- feel_text (internal/external focus, body-first)
+- coach_text optional
+
+## Entity: Drill
+
+Attributes:
+- drill_id (drill_<finding_id>)
+- finding_id
+- duration_sec (30–90)
+- setup (minimal; props allowed as optional)
+- instructions (ordered steps)
+- youth_variant optional
+
+## Entity: Checkpoint
+
+Attributes:
+- checkpoint_id
+- phase_id
+- quality_dimension (from Quality/001)
+- pass_description (body observable)
+- fail_links → Finding
+
+## Entity: MeasurementDefinition / AlignmentProxy
+
+Attributes:
+- series_id (see brain_plan section 5)
+- signal_description
+- unit
+- primary_phases
+
+Relations:
+- measuredOn → AsanaPhase
+
+## Entity: EvidenceChunk (RAG metadata)
+
+Attributes:
+- source_id (SOURCE_MANIFEST)
+- authority_level
+- evidence_type
+- retrieved_at
+- audience_band optional
+
+## Naming conventions
+
+- Phase IDs: prefix Y_
+- Finding IDs: prefix fault_
+- Caution IDs: prefix caution_
+- Modification IDs: prefix mod_
+- Cue IDs: cue_<finding_id>
+- Drill IDs: drill_<finding_id>
+
+## Bilateral / facing conventions
+
+Default: camera-facing “front” leg in lunges = front_knee; mirror for left-leading clips.
+Corpus uses “front leg / back leg” and “hand-side / opposite side” unless pose is symmetric.
+Product logic may swap labels from detected stance; KB stays side-agnostic where possible.

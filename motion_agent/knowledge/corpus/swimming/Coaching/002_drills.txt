@@ -1,0 +1,154 @@
+# Freestyle — Drills (30–90 s and set patterns)
+
+Equipment mentions are optional; coaches decide safety and pool rules. Link to finding_id from Findings/.
+Authority: B NGB progressions and open coaching literature summaries.
+
+---
+
+drill_id: drill_fist_drill
+linked_findings: fault_dropped_elbow, fault_pause_at_catch
+duration: 30–60 s or 2 × 25 m
+description: Swim freestyle with closed fists to emphasize forearm surface; forces earlier vertical forearm engagement after entry.
+body_focus: catch, pull
+coaching_points: Maintain roll; do not increase stroke rate to compensate; reopen hands for next 25 m comparison.
+caution: Shoulder discomfort — stop if pain.
+
+drill_id: drill_sculling_front
+linked_findings: fault_dropped_elbow, fault_sculling_outside
+duration: 45–90 s
+description: Scull in front quadrant with elbows high, small figure-eight hand motion; then swim 25 m applying same elbow height into catch.
+body_focus: catch
+coaching_points: Elbows near surface; feel pressure on palms/forearms.
+
+drill_id: drill_single_arm_freestyle
+linked_findings: fault_crossover_entry, fault_wide_pull, fault_asymmetric_pull_power
+duration: 6 × 25 m alternating arms
+description: One arm strokes while other rests extended forward or at side; breathe away from stroking arm or use snorkel if coach approves.
+body_focus: entry line, pull path
+coaching_points: Enter at shoulder width; complete push past hip.
+
+drill_id: drill_catch_up
+linked_findings: fault_overreach_entry, fault_asymmetric_cycle_timing
+duration: 4 × 50 m
+description: Hands touch or nearly touch in front before next pull begins; slows cycle to emphasize alignment and roll.
+body_focus: timing, body line
+coaching_points: Do not pause excessively at front — touch and go.
+
+drill_id: drill_6_kick_switch
+linked_findings: fault_flat_swim, fault_excessive_head_lift
+duration: 8 × 25 m
+description: Six flutter kicks on side with bottom arm extended, then take one full stroke to switch sides.
+body_focus: body roll, kick
+coaching_points: Head down except when rotating to breathe; hips and shoulders stack.
+
+drill_id: drill_vertical_kick
+linked_findings: fault_bicycle_kick, fault_wide_kick
+duration: 4 × 30 s at wall
+description: Vertical flutter kick in deep water, arms crossed or above water; maintain narrow kick.
+body_focus: kick
+coaching_points: Hips drive; knees soft; continuous small kicks.
+
+drill_id: drill_side_kick
+linked_findings: fault_wide_kick, fault_snaking_hips
+duration: 6 × 25 m per side
+description: Kick on side with lower arm extended, head aligned with spine; optional snorkel.
+body_focus: alignment, kick width
+coaching_points: Top shoulder stacked over bottom hip.
+
+drill_id: drill_finger_tip_drag
+linked_findings: fault_low_elbow_recovery
+duration: 4 × 25 m
+description: Drag fingertips along water surface during recovery to promote high elbow path.
+body_focus: recovery
+coaching_points: Relaxed wrist; elbow leads.
+
+drill_id: drill_bilateral_breathing
+linked_findings: fault_excessive_head_lift, fault_asymmetric_cycle_timing
+duration: 3 × 100 m breathe every 3
+description: Bilateral breathing pattern to balance roll and timing.
+body_focus: breathing, rhythm
+coaching_points: One goggle in; exhale underwater.
+
+drill_id: drill_snorkel_technique
+linked_findings: fault_excessive_head_lift, fault_late_breath_timing
+duration: 4 × 50 m
+description: Front snorkel allows continuous head-down focus on catch and pull; remove snorkel for breath timing sets after.
+body_focus: catch, pull
+equipment: snorkel
+caution: Clear snorkel properly; beginner supervision.
+
+drill_id: drill_pull_buoy_pull
+linked_findings: fault_wide_pull, fault_double_peaked_pull
+duration: 4 × 100 m pull
+description: Pull buoy between legs isolates arm stroke; emphasize continuous pull and push finish.
+body_focus: pull, push
+equipment: pull buoy
+caution: Can mask kick issues — alternate with full stroke.
+
+drill_id: drill_tempo_increase
+linked_findings: fault_pause_at_catch
+duration: 4 × 50 m (+2 SPM steps)
+description: Gradually increase stroke rate while maintaining catch connection — use tempo beeper if available.
+body_focus: rhythm, catch continuity
+coaching_points: Do not sacrifice EVF proxy for rate in learning stages.
+
+drill_id: drill_finish_touch_thigh
+linked_findings: fault_short_push, fault_upward_exit
+duration: 8 × 25 m
+description: Emphasize hand brushing thigh on exit before recovery; may exaggerate briefly for learning.
+body_focus: push phase
+caution: Over-exaggeration can irritate shoulder — moderate range.
+
+drill_id: drill_streamline_push_off
+linked_findings: n/a (skill context)
+duration: 4 × streamline to flags
+description: Not a fault drill — teaches body line before stroke cycles; exclude push-off from fault detection in metadata.
+body_focus: body line
+notes: Tag trim_start_event=push_off in analysis.
+
+drill_id: drill_open_water_sighting
+linked_findings: fault_excessive_head_lift (contextual)
+duration: 5 × 50 m sight every 6 strokes
+description: Practice quick forward sight without full vertical lift; for open-water athletes.
+body_focus: head motion
+notes: Lower automated head-lift fault weight when tagged.
+
+---
+
+## Drill selection matrix (coach brief helper)
+
+| Primary finding | First drill | Second drill |
+|-----------------|-------------|--------------|
+| fault_dropped_elbow | drill_fist_drill | drill_sculling_front |
+| fault_crossover_entry | drill_single_arm_freestyle | drill_catch_up |
+| fault_excessive_head_lift | drill_bilateral_breathing | drill_6_kick_switch |
+| fault_bicycle_kick | drill_vertical_kick | drill_side_kick |
+| fault_flat_swim | drill_6_kick_switch | drill_catch_up |
+| fault_short_push | drill_finish_touch_thigh | drill_pull_buoy_pull |
+
+---
+
+## Youth modifications
+
+- Shorten distances to 15 m when attention or fitness limits apply.
+- Prefer drill_6_kick_switch and drill_side_kick before band or heavy pull buoy volume.
+- Emphasize exhale cues (drill_bilateral_breathing pattern) before advanced catch drills.
+
+drill_id: drill_smooth_breath_return
+linked_findings: fault_early_breath_drop, fault_excessive_head_lift
+duration: 6 × 25 m
+description: Breathe every 3 with slow head return; compare to snorkel set.
+body_focus: breathe
+coaching_points: No slam of head after inhale.
+
+drill_id: drill_finish_quiet_exit
+linked_findings: fault_thumb_first_exit_extreme, fault_short_push
+duration: 8 × 25 m
+description: Exaggerate finish to thigh then quiet recovery; coach watches exit only.
+body_focus: push, exit
+
+drill_id: drill_hip_wake_kick
+linked_findings: fault_dead_hip_kick, fault_surface_kick_splash
+duration: 4 × 25 m + 30 s vertical
+description: Kickboard then swim matching hip rhythm; optional vertical kick.
+body_focus: kick

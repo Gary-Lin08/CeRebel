@@ -1,0 +1,69 @@
+# Basketball Shooting — Quality Definition (body-first)
+
+## What “quality” means in CeRebel
+
+For this pack, **shooting quality** is not make/miss. It is the degree to which visible body mechanics align with
+patterns associated in open literature and reputable coaching with:
+
+1. **Stable base** before and through release (setup, landing for jump shots).
+2. **Coordinated sequence** — lower-body drive (when used) → trunk alignment → shooting-arm extension without
+   obvious compensations visible in pose data.
+3. **Repeatable timing** — similar event ordering (dip → rise → set → release) across reps when comparing clips.
+4. **Controlled finish** — follow-through hold (FT) or symmetric soft landing (jump), without extreme joint
+   collapse visible from the capture angle.
+
+Quality scores in product code (future) should combine checkpoint pass rate, phase confidence, and capture quality
+(occlusion flags) — not a single “perfect form” template.
+
+## Dimensions
+
+| dimension_id      | plain label              | primary phases      | shot_variant |
+|-------------------|--------------------------|---------------------|--------------|
+| base_stability    | Stance and balance       | setup, follow       | jump, ft     |
+| load_rhythm       | Load-to-shoot rhythm     | dip, drive            | jump         |
+| vertical_transfer | Leg drive to shot        | drive, transfer       | jump         |
+| upper_alignment   | Shooting arm path        | set, release          | jump, ft     |
+| off_hand_quiet    | Guide hand interference  | set, release          | jump, ft     |
+| release_extension | Full extension timing  | release, follow       | jump, ft     |
+| landing_control   | Landing symmetry         | follow                | jump         |
+| routine_consistency | FT routine repeatability | setup, follow       | ft           |
+
+Each dimension maps to checkpoints in `002_checkpoints.txt`. A rep can be “high upper_alignment, moderate
+landing_control” — product copy should avoid single-number grades without dimension breakdown.
+
+## Evidence basis
+
+- Biomechanics reviews and kinematic studies of jump shots and free throws (B+): sequential extension, role of
+  lower body in jump shot vs reduced leg work in FT.
+- Coaching consensus (B): eyes on target, balance hand, follow-through — translated to body signals where visible.
+- Clinical load guidance (A): landing mechanics and cumulative jump volume — referenced for landing_control severity,
+  not for predicting injury in an individual.
+
+## Youth vs adult quality framing
+
+**Youth (approx. ≤14U):** prioritize balance, repeatable foot placement, and finish hold over maximizing dip depth or
+jump height. Lower absolute wrist release height is normal with smaller stature and ball size.
+
+**Adult / post-puberty:** same dimensions; allow greater dip and COM rise without labeling “excessive” unless
+combined with landing fault or loss of upper alignment.
+
+Never tell youth to copy elite NBA release height or leg load without coach supervision.
+
+## Capture quality gates
+
+Downgrade or suppress findings when:
+
+- Shooting arm nearly parallel to image plane (foreshortening).
+- Frame rate < 30 fps for jump shot (misses E_RELEASE timing).
+- Feet or landing occluded.
+- Clip labeled `ft` but COM rise indicates jump (variant mismatch).
+
+## Relationship to findings
+
+Checkpoints **pass/fail/unclear** at phase windows. Findings fire when checkpoints fail with sufficient confidence
+or when fault-specific rules in Findings/001 trigger. Quality definition does not duplicate fault headlines — it
+states the positive model.
+
+## Disclaimer pointer
+
+All quality language is coaching support, not medical clearance. See Docs/002_DISCLAIMER.txt.

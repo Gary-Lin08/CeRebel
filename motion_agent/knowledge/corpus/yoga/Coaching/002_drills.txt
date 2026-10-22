@@ -1,0 +1,195 @@
+# Yoga — Short Drills (30–90 s, body-first, linked to fault_* / pose_id)
+# Each drill: drill_id | fault_id | duration | setup | steps | safety
+
+---
+drill_id: drill_wall_dog_hinge
+fault_id: fault_dog_rounded_spine, fault_dog_lumbar_sag
+pose_id: pose_down_dog
+duration: 60s
+setup: Stand arm’s length from wall, feet hip-width.
+steps: Place palms on wall at shoulder height; walk feet back until hips hinge and spine lengthens. Soft knees. Hold 5 breaths. Repeat with 1 cm lower hand placement if comfortable.
+safety: Stop if wrist or shoulder pain. Osteoporosis: avoid aggressive flexion elsewhere in session — not this drill.
+authority: B
+---
+
+---
+drill_id: drill_dog_pedal
+fault_id: fault_dog_locked_knees, fault_dog_rounded_spine
+pose_id: pose_down_dog
+duration: 75s
+setup: Down Dog or knee-down table variant.
+steps: Alternate heel reach 4 cycles, pause 2 breaths with knees bent and spine long. Film one cycle for comparison.
+safety: High blood pressure / glaucoma: keep head above heart if physician restricted inversions — use wall dog instead.
+authority: B
+---
+
+---
+drill_id: drill_knee_plank_line
+fault_id: fault_plank_hip_sag, fault_plank_hip_pike
+pose_id: pose_plank
+duration: 90s
+setup: Mat, optional dowel or broomstick for partner check.
+steps: 30s knee plank with sagittal line; 20s rest; 20s full plank only if line holds; 20s rest. Partner or stick touches hip if line breaks.
+safety: Wrist pain: fists or forearms on blocks.
+authority: B
+---
+
+---
+drill_id: drill_eccentric_chaturanga
+fault_id: fault_flow_uncontrolled_drop, fault_chaturanga_shoulder_drop
+pose_id: pose_chaturanga_low
+duration: 90s
+setup: Knees down, hands shoulder-width.
+steps: 4-second lower from plank knees-down, 1-second pause at lowest safe point (upper arms parallel), optional press up. Max 3 reps in 90s window.
+safety: Shoulder injury history: reduce depth; skip press-up.
+authority: B+
+---
+
+---
+drill_id: drill_wall_warrior_knee
+fault_id: fault_warrior_knee_collapse
+pose_id: pose_warrior_2
+duration: 75s
+setup: Side to wall, outer back hip near wall.
+steps: Open into Warrior II facing away from wall; press front outer foot into floor; hold 5 breaths each side. Knee tracks over ankle.
+safety: Knee pain: shorten stance and reduce bend.
+authority: B
+---
+
+---
+drill_id: drill_tree_wall_touch
+fault_id: fault_tree_hip_jut, fault_balance_hip_drop
+pose_id: pose_tree
+duration: 60s
+setup: Stand beside wall, inside hand light on wall.
+steps: Enter Tree with foot on calf; touch wall only for balance; remove finger when stable 3 breaths. Switch sides.
+safety: fault_tree_foot_on_knee rule — rehearse foot placement before lift.
+authority: B
+---
+
+---
+drill_id: drill_chair_block_squeeze
+fault_id: fault_chair_knee_collapse
+pose_id: pose_chair
+duration: 45s
+setup: Block between thighs, feet hip-width.
+steps: Lower 3 inches on exhale, squeeze block gently, rise halfway on inhale. 4 cycles.
+safety: Low back: keep ribs over pelvis.
+authority: B
+---
+
+---
+drill_id: drill_bridge_block_knees
+fault_id: fault_bridge_knee_splay
+pose_id: pose_bridge
+duration: 45s
+setup: Supine, block between knees, feet flat.
+steps: Lift pelvis on exhale, squeeze block 3 breaths, lower on exhale. 3 lifts.
+safety: Neck: keep neutral; avoid aggressive chin tuck.
+authority: B
+---
+
+---
+drill_id: drill_sphinx_thoracic
+fault_id: fault_backbend_lumbar_dominant
+pose_id: pose_cobra
+duration: 75s
+setup: Prone, forearms parallel, elbows under shoulders.
+steps: Press forearms, lift chest gently; keep pubic bone down; 8 breaths. No arm straightening.
+safety: Pregnancy: skip prone after first trimester per clinician; product uses user flag.
+authority: B+
+---
+
+---
+drill_id: drill_seated_strap_length
+fault_id: fault_forward_fold_spine_round, fault_seated_slump
+pose_id: pose_seated_forward_fold
+duration: 90s
+setup: Seated on blanket, strap around feet.
+steps: Inhale sit tall; exhale hinge with strap taut but spine long — 5 breaths. No pulling nose to knee.
+safety: Osteoporosis / acute disc symptoms: sit upright only, no end-range flexion.
+authority: B+
+---
+
+---
+drill_id: drill_standing_hinge_wall
+fault_id: fault_forward_fold_spine_round
+pose_id: pose_forward_fold_standing
+duration: 60s
+setup: Stand with buttocks lightly touching wall.
+steps: Hinge forward keeping three points of contact: sacrum, upper back if possible, head neutral; micro-bend knees. 5 breaths.
+safety: Dizziness: rise slowly.
+authority: B
+---
+
+---
+drill_id: drill_mountain_micro_bend
+fault_id: fault_locked_knee_balance
+pose_id: pose_mountain, pose_tree
+duration: 45s
+setup: Barefoot on mat.
+steps: 10 breaths in Mountain with 5-degree knee flex; close eyes last 2 breaths if stable.
+safety: Fall risk: eyes open near wall.
+authority: B
+---
+
+---
+drill_id: drill_plank_shoulder_taps
+fault_id: fault_plank_hip_sag, fault_hold_wandering
+pose_id: pose_plank
+duration: 60s
+setup: Knees or full plank.
+steps: Slow alternate hand tap opposite shoulder, 4 taps each side without hip sway.
+safety: Skip if wrist irritated.
+authority: B+
+---
+
+---
+drill_id: drill_triangle_wall_back
+fault_id: fault_triangle_knee_hyperextend
+pose_id: pose_triangle
+duration: 60s
+setup: Back heel to wall in Triangle setup.
+steps: Enter Triangle with back against wall for alignment; micro-bend front knee; 4 breaths each side.
+safety: Hip pinching: shorten stance.
+authority: B
+---
+
+---
+drill_id: drill_rib_cage_breath
+fault_id: fault_upward_salute_rib_flare
+pose_id: pose_upward_salute
+duration: 45s
+setup: Standing or seated.
+steps: Hands on lower ribs; inhale arms up only as far as ribs stay down; exhale arms down. 6 cycles.
+safety: Shoulder impingement: stop at pain-free height.
+authority: B
+---
+
+---
+drill_id: drill_supported_child
+fault_id: fault_child_compressed_neck
+pose_id: pose_child
+duration: 60s
+setup: Bolster or stacked blankets under torso.
+steps: Knees wide, forehead on bolster, arms forward relaxed. 8–10 breaths.
+safety: Knee injury: pad knees.
+authority: B
+---
+
+---
+drill_id: drill_dog_plank_shift_slow
+fault_id: fault_flow_uncontrolled_drop, fault_plank_hip_sag
+pose_id: pose_down_dog, pose_plank
+duration: 90s
+setup: Down Dog.
+steps: Shift forward to Plank over 4 counts; pause 2 breaths; shift back over 4 counts. 3 round trips.
+safety: Wrist load: shorten trips or use fists.
+authority: B
+---
+
+# Drill selection logic (product, internal)
+
+- One drill per prioritized finding in coach brief; prefer ≤90s for mobile homework.
+- If capture angle poor for pose, substitute generic drill from same fault family (e.g., wall variants).
+- Youth: favor balance games and wall support over deep chaturanga eccentrics.
