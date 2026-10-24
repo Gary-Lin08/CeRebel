@@ -150,8 +150,19 @@ def _legal_html(name: str) -> bytes | None:
     return html.encode("utf-8")
 
 
+def _sign_media(handler: BaseHTTPRequestHandler, payload: dict) -> dict:
+    """Sign /media/<session>/ URLs the caller may view, so <video> and loaders can fetch them."""
+    from motion_agent.app.media_urls import sign_payload
+    from motion_agent.app.product_api import current_user, media_allowed
+
+    user = current_user(SETTINGS, handler.headers)
+    return sign_payload(SETTINGS.product_dir, payload, lambda sid: media_allowed(SETTINGS, user, sid))
+
+
 def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) -> None:
     raw = json.dumps(payload, default=str).encode("utf-8")
+    if code < 400 and b'"/media/' in raw:
+        raw = json.dumps(_sign_media(handler, payload), default=str).encode("utf-8")
     handler.send_response(code)
     handler.send_header("Content-Type", "application/json")
     handler.send_header("Content-Length", str(len(raw)))
@@ -263,6 +274,16 @@ class Handler(BaseHTTPRequestHandler):
             requested = (qs.get("session_id") or [None])[0]
             user = current_user(SETTINGS, self.headers)
             if requested and not user_may_view_session(SETTINGS, user, requested):
+                from motion_agent.app.library import owner_of
+                from motion_agent.app.product_api import capture_was_deleted
+
+                if user and owner_of(SETTINGS.product_dir, requested) == user["user_id"] and capture_was_deleted(
+                    SETTINGS, requested
+                ):
+                    # Old link or bookmark to a swing this account deleted: tell the UI to drop it.
+                    return _json_response(
+                        self, 410, {"error": True, "deleted": True, "message": "You deleted this swing."}
+                    )
                 return _json_response(
                     self, 403, {"error": True, "message": "That capture belongs to another account"}
                 )
@@ -545,12 +566,21 @@ class Handler(BaseHTTPRequestHandler):
             parts = path.strip("/").split("/")
             if len(parts) >= 3:
                 session_id = parts[1]
-                if not media_allowed(SETTINGS, current_user(SETTINGS, self.headers), session_id):
+                from motion_agent.app.media_urls import PARAM, token_valid
+                from motion_agent.app.product_api import media_session_live
+
+                token = (parse_qs(parsed.query or "").get(PARAM) or [None])[0]
+                # A signed URL proves the server already checked this caller; still refuse
+                # captures that were deleted after the URL was handed out.
+                signed = token_valid(SETTINGS.product_dir, session_id, token) and media_session_live(
+                    SETTINGS, session_id
+                )
+                if not signed and not media_allowed(SETTINGS, current_user(SETTINGS, self.headers), session_id):
                     return _json_response(self, 403, {"error": True, "message": "This capture is private"})
                 rel = "/".join(parts[2:])
                 cand = resolve_media_file(session_id, rel, DATA_DIR)
                 if cand is not None:
-                    return self._serve_file(cand)
+                    return self._serve_file(cand, private=True)
             return _json_response(self, 404, {"error": True, "message": "media not found"})
 
         _json_response(self, 404, {"error": True, "message": "not found"})
@@ -882,22 +912,68 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:  # noqa: BLE001
                 pass
 
-    def _serve_file(self, path: Path) -> None:
+    def _serve_file(self, path: Path, *, private: bool = False) -> None:
         if not path.is_file():
             return _json_response(self, 404, {"error": True, "message": f"missing {path.name}"})
-        data = path.read_bytes()
+        size = path.stat().st_size
         mime, _ = mimetypes.guess_type(str(path))
         if path.suffix.lower() == ".js" or path.name.endswith(".module.js"):
             mime = "text/javascript; charset=utf-8"
-        self.send_response(200)
+        # iOS Safari will not play a <video> unless Range requests get 206 answers.
+        start, end = 0, size - 1
+        rng = _parse_range(self.headers.get("Range"), size)
+        if rng == "invalid":
+            self.send_response(416)
+            self.send_header("Content-Range", f"bytes */{size}")
+            self.send_header("Content-Length", "0")
+            _send_cors_headers(self)
+            self.end_headers()
+            return
+        if rng:
+            start, end = rng
+            self.send_response(206)
+            self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+        else:
+            self.send_response(200)
         self.send_header("Content-Type", mime or "application/octet-stream")
-        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Content-Length", str(end - start + 1))
         _send_cors_headers(self)
-        # Allow video seeking
         self.send_header("Accept-Ranges", "bytes")
-        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Cache-Control", "private, no-cache" if private else "no-cache")
+        if private:
+            self.send_header("Referrer-Policy", "no-referrer")
         self.end_headers()
-        self.wfile.write(data)
+        if self.command == "HEAD":
+            return
+        with path.open("rb") as handle:
+            handle.seek(start)
+            remaining = end - start + 1
+            while remaining > 0:
+                chunk = handle.read(min(256 * 1024, remaining))
+                if not chunk:
+                    break
+                self.wfile.write(chunk)
+                remaining -= len(chunk)
+
+
+def _parse_range(header: str | None, size: int):
+    """Return (start, end) for a single 'bytes=' range, None for no range, 'invalid' for 416."""
+    if not header or not header.startswith("bytes=") or "," in header or size <= 0:
+        return None
+    first, _, last = header[6:].strip().partition("-")
+    try:
+        if first == "":
+            n = int(last)
+            if n <= 0:
+                return "invalid"
+            return max(0, size - n), size - 1
+        start = int(first)
+        end = int(last) if last else size - 1
+    except ValueError:
+        return None
+    if start >= size or end < start:
+        return "invalid"
+    return start, min(end, size - 1)
 
 
 def main() -> None:

@@ -573,6 +573,13 @@ video.is-hidden-source { display: none !important; }
   cursor: pointer;
   text-decoration: underline dotted;
 }
+/* No video to seek (deleted, or removed on the retention schedule): plain text, not a link. */
+.ts.ts--off {
+  color: inherit;
+  cursor: default;
+  text-decoration: none;
+  pointer-events: none;
+}
 
 .composer {
   display: flex;
@@ -4180,6 +4187,45 @@ code {
       return sportFindings.find((n) => n.id === sportOpenId) || sportFindings[0] || null;
     }
 
+    function hasSessionVideo() {
+      return !!(player && (player.currentSrc || player.getAttribute("src")));
+    }
+
+    // Every control that points at the source video goes away when that video does.
+    function syncVideoLinks() {
+      const on = hasSessionVideo();
+      document.querySelectorAll(".ts").forEach((el) => el.classList.toggle("ts--off", !on));
+      const compareToggle = document.getElementById("fixCompareToggle");
+      if (compareToggle) compareToggle.hidden = !on;
+      const compare = document.getElementById("fixCompare");
+      if (compare && !on) compare.hidden = true;
+      if (!on) {
+        ["fixVideo", "fixCompareA", "fixCompareB", "phasePreviewPlayer"].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el && el.getAttribute("src")) {
+            el.removeAttribute("src");
+            el.load();
+          }
+        });
+      }
+    }
+
+    // Forget a swing that no longer exists: drop it from the URL and the player.
+    function forgetSession(sessionId) {
+      if (sessionId && activeSessionId !== sessionId) return;
+      activeSessionId = null;
+      const url = new URL(window.location.href);
+      if (url.searchParams.has("session")) {
+        url.searchParams.delete("session");
+        window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+      }
+      if (player.getAttribute("src")) {
+        player.removeAttribute("src");
+        player.load();
+      }
+      syncVideoLinks();
+    }
+
     function syncFixVideoSrc() {
       const fixVideo = document.getElementById("fixVideo");
       if (!fixVideo || !player) return;
@@ -4981,9 +5027,10 @@ code {
       chat.appendChild(div);
       chat.scrollTop = chat.scrollHeight;
       div.querySelectorAll(".ts").forEach((el) => {
+        el.classList.toggle("ts--off", !hasSessionVideo());
         el.addEventListener("click", () => {
           const t = parseFloat(el.dataset.t);
-          if (!Number.isNaN(t)) {
+          if (!Number.isNaN(t) && hasSessionVideo()) {
             player.currentTime = t;
             player.play();
           }
@@ -5178,6 +5225,14 @@ code {
           ? "&session_id=" + encodeURIComponent(activeSessionId)
           : "";
         const r = await fetch("/api/session?t=" + Date.now() + sessionQuery, { headers: authHeaders() });
+        if (r.status === 410 && activeSessionId) {
+          // An old email link or bookmark to a swing that was deleted: open the newest one instead.
+          forgetSession(activeSessionId);
+          await loadSession({ announce: false });
+          status.textContent = "That swing was deleted, so we opened your latest one.";
+          status.className = "status";
+          return;
+        }
         session = await r.json();
         const meta = document.getElementById("sessionMeta");
         const devMeta = document.getElementById("sessionDevMeta");
@@ -5275,11 +5330,17 @@ code {
         } else if (session.video_url_path) {
           // Cache-bust so a replacement session.mp4 for the same id reloads.
           golfPhasesVideoWaitBound = false;
-          player.src = session.video_url_path + "?t=" + Date.now();
+          const fvWrap = document.getElementById("fixVideoWrap");
+          if (fvWrap) fvWrap.style.display = "";
+          // The path carries a signed ?mt= token (video tags cannot send the auth header).
+          const videoUrl = new URL(session.video_url_path, window.location.origin);
+          videoUrl.searchParams.set("t", String(Date.now()));
+          player.src = videoUrl.pathname + videoUrl.search;
           player.muted = true;
           player.playsInline = true;
           player.load();
           syncFixVideoSrc();
+          syncVideoLinks();
           const tryAutoplay = () => {
             player.play().catch(() => {});
             const fv = document.getElementById("fixVideo");
@@ -5291,6 +5352,14 @@ code {
           golfPhasesVideoWaitBound = false;
           player.removeAttribute("src");
           player.load();
+          // Source video deleted on the retention schedule: keep the 3D analysis, explain the gap.
+          const fvWrap = document.getElementById("fixVideoWrap");
+          if (fvWrap) fvWrap.style.display = session.source_video_removed ? "none" : "";
+          if (session.source_video_removed) {
+            status.textContent = "Your original video was deleted on our retention schedule. The 3D body model and measurements are kept.";
+            status.className = "status";
+          }
+          syncVideoLinks();
         }
         const ex = document.getElementById("examples");
         ex.innerHTML = "";
@@ -5585,6 +5654,10 @@ code {
             headers: authHeaders({ "Content-Type": "application/json" }),
             body: JSON.stringify({ session_id: row.session_id }),
           });
+          if (activeSessionId === row.session_id) {
+            forgetSession(row.session_id);
+            loadSession({ announce: false }).catch(() => {});
+          }
           refreshLibrary();
         });
         li.appendChild(label);
