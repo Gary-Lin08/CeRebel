@@ -4,12 +4,9 @@ Why: one always-on GPU caps throughput (one video at a time) and costs money whi
 On Modal, each upload runs on its own GPU container, containers scale out under load and
 back to zero when idle, and we pay only for the seconds a video is being processed.
 
-Deploy (from a machine that has the GEM-X checkout, e.g. the current GPU server):
+Deploy from the machine that has the GEM-X checkout (the current GPU server):
 
-    pip install modal && modal setup                 # once; logs in to your Modal account
-    modal volume create cerebel-gemx-weights          # once
-    modal volume put cerebel-gemx-weights /root/GEM-X/inputs/pretrained /pretrained
-    CEREBEL_GEMX_ROOT=/root/GEM-X modal deploy deploy/modal_gemx.py
+    bash deploy/modal_setup.sh        # login, upload weights once, deploy, smoke test
 
 Then on the web server set CEREBEL_GPU_BACKEND=modal (see gemx_pipeline.run_gemx_modal).
 Knobs: CEREBEL_MODAL_GPU (default L40S), CEREBEL_MODAL_MIN_CONTAINERS (default 0; 1 keeps
@@ -35,13 +32,37 @@ GEMX_LOCAL = os.environ.get("CEREBEL_GEMX_ROOT", "/root/GEM-X")
 GEMX_REMOTE = "/root/GEM-X"
 GPU = os.environ.get("CEREBEL_MODAL_GPU", "L40S")
 
+# Mirrors GEM-X's own Dockerfile (CUDA 12.6, Python 3.10, torch cu126, SOMA, detectron2, ONNX YOLOX).
 image = (
-    modal.Image.from_registry("nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04", add_python="3.11")
-    .apt_install("ffmpeg", "libgl1", "libglib2.0-0", "git")
-    .pip_install_from_requirements(f"{GEMX_LOCAL}/requirements.txt")
-    .add_local_dir(GEMX_LOCAL, GEMX_REMOTE, copy=True, ignore=["inputs/pretrained", "outputs", ".venv", ".git"])
+    modal.Image.from_registry("nvidia/cuda:12.6.0-devel-ubuntu22.04", add_python="3.10")
+    .apt_install(
+        "git", "git-lfs", "wget", "curl", "xvfb", "ffmpeg", "build-essential",
+        "libegl1-mesa-dev", "libgl1-mesa-glx", "libglib2.0-0",
+    )
+    .pip_install("uv")
+    .run_commands("uv pip install --system torch torchvision --index-url https://download.pytorch.org/whl/cu126")
+    # Code + SOMA LFS assets (third_party). Model weights live in a Volume, not the image.
+    .add_local_dir(
+        GEMX_LOCAL,
+        GEMX_REMOTE,
+        copy=True,
+        ignore=["inputs/**", "outputs/**", ".venv/**", ".git/**", "**/__pycache__/**", "gem.egg-info/**"],
+    )
+    .run_commands(
+        f"cd {GEMX_REMOTE} && uv pip install --system -e third_party/soma",
+        f"cd {GEMX_REMOTE} && grep -vE '^(torch|torchvision)$' requirements.txt > /tmp/req.txt && uv pip install --system -r /tmp/req.txt",
+        f"cd {GEMX_REMOTE} && uv pip install --system -e .",
+        "uv pip install --system cloudpickle fvcore iopath pycocotools braceexpand roma 'setuptools<75' viser 'protobuf>=5.28.1,<6'",
+        "FORCE_CUDA=1 TORCH_CUDA_ARCH_LIST='8.0;8.6;8.9;9.0' uv pip install --system "
+        "'git+https://github.com/facebookresearch/detectron2.git@a1ce2f9' --no-build-isolation --no-deps",
+        "uv pip install --system onnxruntime-gpu",
+    )
+    .env({"PYOPENGL_PLATFORM": "egl", "EGL_PLATFORM": "surfaceless", "HF_HOME": "/cache/hf", "TORCH_HOME": "/cache/torch"})
 )
-weights = modal.Volume.from_name("cerebel-gemx-weights", create_if_missing=True)
+# inputs/ = checkpoints, pretrained, mhr_data, soma_data (~6.4 GB). Upload once with modal_setup.sh.
+inputs_vol = modal.Volume.from_name("cerebel-gemx-inputs", create_if_missing=True)
+# Hugging Face / torch hub downloads made at runtime are cached here across containers.
+cache_vol = modal.Volume.from_name("cerebel-gemx-cache", create_if_missing=True)
 
 app = modal.App("cerebel-gemx")
 
@@ -49,7 +70,7 @@ app = modal.App("cerebel-gemx")
 @app.cls(
     gpu=GPU,
     image=image,
-    volumes={f"{GEMX_REMOTE}/inputs/pretrained": weights},
+    volumes={f"{GEMX_REMOTE}/inputs": inputs_vol, "/cache": cache_vol},
     timeout=20 * 60,
     scaledown_window=5 * 60,
     min_containers=int(os.environ.get("CEREBEL_MODAL_MIN_CONTAINERS", "0")),
@@ -97,3 +118,13 @@ class Gemx:
                 "frames": result.get("frames"),
                 "elapsed_s": round(time.time() - started, 2),
             }
+
+
+@app.local_entrypoint()
+def smoke(video: str, fps: float = 30.0):
+    """modal run deploy/modal_gemx.py::smoke --video path/to/clip.mp4"""
+    data = Path(video).read_bytes()
+    t0 = time.time()
+    out = Gemx().run.remote("SMOKE-TEST", data, Path(video).suffix, fps)
+    size = len(out.get("archive") or b"")
+    print({k: v for k, v in out.items() if k != "archive"}, f"archive={size} bytes", f"wall={time.time() - t0:.1f}s")
