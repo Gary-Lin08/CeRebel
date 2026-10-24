@@ -796,12 +796,24 @@ class Handler(BaseHTTPRequestHandler):
             if user:
                 key = "u:" + str(user["user_id"])
             else:
-                # Behind Cloudflare Tunnel every request comes from 127.0.0.1; use the visitor IP header.
-                ip = (self.headers.get("CF-Connecting-IP") or self.client_address[0] or "unknown").strip()
+                # Behind a proxy (Cloudflare Tunnel, Vercel, the GPU host's port mapping) every request
+                # comes from a local address; use the visitor IP the proxy forwards.
+                forwarded = (self.headers.get("X-Forwarded-For") or "").split(",")[0]
+                ip = (
+                    self.headers.get("CF-Connecting-IP")
+                    or self.headers.get("X-Real-IP")
+                    or forwarded
+                    or self.client_address[0]
+                    or "unknown"
+                ).strip()
                 key = "ip:" + ip[:64]
             allowed, _left = _billing.take_question(
                 SETTINGS.product_dir, key, _billing.daily_question_limit(pro, bool(user))
             )
+            if allowed and not user:
+                # Forwarded IP headers can be forged: cap all anonymous questions together too.
+                total = int(os.environ.get("CEREBEL_ANON_DAILY_TOTAL", "300"))
+                allowed, _left = _billing.take_question(SETTINGS.product_dir, "anon-total", total)
             if not allowed:
                 message = (
                     "You've reached today's question limit. Create a free account to keep asking."
