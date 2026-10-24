@@ -76,9 +76,41 @@ def library_payload(settings: Settings, user: dict[str, Any]) -> dict[str, Any]:
 
 
 def user_may_view_session(settings: Settings, user: dict[str, Any] | None, session_id: str) -> bool:
+    """Anonymous callers may only see ownerless demo captures."""
     if user is None:
-        return True
+        return owner_of(settings.product_dir, session_id) is None
     return owns(settings.product_dir, user["user_id"], session_id)
+
+
+def default_visible_session_id(
+    settings: Settings, data_dir: Path, user: dict[str, Any] | None
+) -> str | None:
+    """Newest ready capture the caller may read when no session id was given.
+
+    Signed-in users get their own newest ready capture, then the shared demo.
+    Anonymous callers get the newest ownerless (demo) session, never another account's upload.
+    """
+    sessions_root = Path(data_dir) / "sessions"
+
+    def _ready(sid: str) -> bool:
+        return (sessions_root / sid / "ik" / "opensim-motion.json").is_file()
+
+    if user:
+        for row in list_captures(settings.product_dir, user["user_id"]):
+            sid = str(row.get("session_id") or "")
+            if sid and _ready(sid):
+                return sid
+    if not sessions_root.is_dir():
+        return None
+    demo: list[tuple[float, str]] = []
+    for entry in sessions_root.iterdir():
+        motion = entry / "ik" / "opensim-motion.json"
+        if entry.is_dir() and motion.is_file() and owner_of(settings.product_dir, entry.name) is None:
+            demo.append((motion.stat().st_mtime, entry.name))
+    if not demo:
+        return None
+    demo.sort(reverse=True)
+    return demo[0][1]
 
 
 def read_progress(settings: Settings, session_id: str) -> dict[str, Any] | None:

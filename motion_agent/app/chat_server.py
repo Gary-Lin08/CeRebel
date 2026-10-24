@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import hmac
 import json
 import logging
 import mimetypes
 import os
-import traceback
+import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -38,8 +39,12 @@ DATA_DIR = SETTINGS.data_dir
 HOST = SETTINGS.host
 PORT = SETTINGS.port
 BACKEND = SETTINGS.backend
-# Local demo fallback when MOTION_AGENT_PROMPT_PASSWORD is unset.
-_LEGACY_PROMPT_PASSWORD = "20081005"
+# Browser origins allowed to call this API cross-site (comma-separated). Empty = same-origin only.
+ALLOWED_ORIGINS = frozenset(
+    origin.strip().rstrip("/")
+    for origin in os.environ.get("CEREBEL_ALLOWED_ORIGINS", "").split(",")
+    if origin.strip()
+)
 
 
 def _public_presets() -> list[dict]:
@@ -60,21 +65,67 @@ def _capture_visible(handler: BaseHTTPRequestHandler, session_id: str) -> bool:
     return media_allowed(SETTINGS, current_user(SETTINGS, handler.headers), session_id)
 
 
+def _scoped_video_id(
+    handler: BaseHTTPRequestHandler, requested: str | None
+) -> tuple[str | None, tuple[int, dict] | None]:
+    """Choose the capture a read endpoint may use.
+
+    An explicit id must be visible to the caller. Without one, use the caller's newest
+    capture (signed in) or the shared demo, never the globally newest session, which
+    may belong to another account. Returns (video_id, error) with error = (code, payload).
+    """
+    from motion_agent.app.product_api import current_user, default_visible_session_id
+
+    if requested:
+        if not _capture_visible(handler, requested):
+            return None, (403, {"error": True, "message": "This capture is private"})
+        return requested, None
+    sid = default_visible_session_id(SETTINGS, DATA_DIR, current_user(SETTINGS, handler.headers))
+    if not sid:
+        return None, (
+            404,
+            {
+                "error": True,
+                "type": "NO_SESSION",
+                "fallback": "raw_video",
+                "message": "No preprocessed video session found.",
+            },
+        )
+    return sid, None
+
+
 def _check_prompt_password(provided: str | None) -> bool:
-    expected = SETTINGS.prompt_password or _LEGACY_PROMPT_PASSWORD
-    return bool(provided) and provided == expected
+    """Operator features stay locked until MOTION_AGENT_PROMPT_PASSWORD is set."""
+    expected = SETTINGS.prompt_password
+    if not expected or not provided:
+        return False
+    return hmac.compare_digest(provided.encode("utf-8"), expected.encode("utf-8"))
 
 
 def _password_from_request(handler: BaseHTTPRequestHandler, parsed=None) -> str | None:
+    """Read the operator password from the X-Prompt-Password header only.
+
+    Query-string passwords end up in access logs and browser history, so they are ignored.
+    """
     header = handler.headers.get("X-Prompt-Password")
     if header:
         return header.strip()
-    if parsed is not None:
-        qs = parse_qs(parsed.query or "")
-        vals = qs.get("password") or qs.get("prompt_password") or []
-        if vals:
-            return str(vals[0])
     return None
+
+
+def _send_cors_headers(handler: BaseHTTPRequestHandler) -> None:
+    """Echo the Origin only when it is explicitly allowed; never send a wildcard."""
+    origin = (handler.headers.get("Origin") or "").rstrip("/")
+    if origin and origin in ALLOWED_ORIGINS:
+        handler.send_header("Access-Control-Allow-Origin", origin)
+        handler.send_header("Vary", "Origin")
+
+
+def _internal_error(exc: BaseException, where: str) -> dict:
+    """Log the full traceback server-side; give the client only an opaque reference."""
+    error_id = uuid.uuid4().hex[:12]
+    LOG.error("%s failed [%s]: %s", where, error_id, exc, exc_info=exc)
+    return {"error": True, "message": "Something went wrong. Please try again.", "error_id": error_id}
 
 
 def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) -> None:
@@ -82,7 +133,7 @@ def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) ->
     handler.send_response(code)
     handler.send_header("Content-Type", "application/json")
     handler.send_header("Content-Length", str(len(raw)))
-    handler.send_header("Access-Control-Allow-Origin", "*")
+    _send_cors_headers(handler)
     handler.end_headers()
     handler.wfile.write(raw)
 
@@ -93,7 +144,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_OPTIONS(self) -> None:  # noqa: N802
         self.send_response(204)
-        self.send_header("Access-Control-Allow-Origin", "*")
+        _send_cors_headers(self)
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header(
             "Access-Control-Allow-Headers",
@@ -153,8 +204,8 @@ class Handler(BaseHTTPRequestHandler):
             qs = parse_qs(parsed.query or "")
             session_id = (qs.get("session_id") or [""])[0].strip()
             user = current_user(SETTINGS, self.headers)
-            if user and session_id and not user_may_view_session(SETTINGS, user, session_id):
-                return _json_response(self, 403, {"error": True, "message": "That capture belongs to another account"})
+            if session_id and not user_may_view_session(SETTINGS, user, session_id):
+                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
             prog = read_progress(SETTINGS, session_id) if session_id else None
             if not prog:
                 return _json_response(self, 404, {"error": True, "message": "Unknown capture"})
@@ -256,7 +307,18 @@ class Handler(BaseHTTPRequestHandler):
                             "consumer_ready": False,
                         },
                     )
-            info = get_current_session_info(DATA_DIR, session_id=requested if user else None)
+            if not user:
+                # Anonymous visitors only ever see the shared demo, never another account's upload.
+                from motion_agent.app.product_api import default_visible_session_id
+
+                requested = default_visible_session_id(SETTINGS, DATA_DIR, None)
+                if not requested:
+                    return _json_response(
+                        self,
+                        200,
+                        {"ok": True, "empty": True, "demo": True, "message": "No demo capture is available yet."},
+                    )
+            info = get_current_session_info(DATA_DIR, session_id=requested)
             if user:
                 info["signed_in"] = True
                 info["email"] = user.get("email")
@@ -269,14 +331,11 @@ class Handler(BaseHTTPRequestHandler):
             # still offer extra presets, but the session tells the truth first.
             try:
                 from motion_agent.app.product_session import build_product_session_fields
-                from motion_agent.storage.motion_store import newest_ready_session_dir
 
                 session_dir = None
                 sid = info.get("session_id")
                 if sid:
                     session_dir = DATA_DIR / "sessions" / str(sid)
-                if session_dir is None or not session_dir.is_dir():
-                    session_dir = newest_ready_session_dir(DATA_DIR)
                 if session_dir is not None and session_dir.is_dir():
                     info.update(build_product_session_fields(session_dir, data_dir=DATA_DIR))
                     if user and info.get("sport") == "general":
@@ -298,8 +357,9 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/golf_phases":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
-            if video_id and not _capture_visible(self, video_id):
-                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
+            video_id, denied = _scoped_video_id(self, video_id)
+            if denied is not None:
+                return _json_response(self, *denied)
             max_swings = 5
             raw_max = (qs.get("max_swings") or [None])[0]
             if raw_max is not None:
@@ -317,8 +377,9 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/sport_analysis":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
-            if video_id and not _capture_visible(self, video_id):
-                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
+            video_id, denied = _scoped_video_id(self, video_id)
+            if denied is not None:
+                return _json_response(self, *denied)
             sport = ((qs.get("sport") or ["golf"])[0] or "golf").strip().lower()
             handedness = ((qs.get("handedness") or ["right"])[0] or "right").strip().lower()
             payload = get_sport_analysis(
@@ -332,8 +393,9 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/coach_briefs":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
-            if video_id and not _capture_visible(self, video_id):
-                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
+            video_id, denied = _scoped_video_id(self, video_id)
+            if denied is not None:
+                return _json_response(self, *denied)
             sport = ((qs.get("sport") or ["golf"])[0] or "golf").strip().lower()
             try:
                 from motion_agent.app.coach_briefs import build_coach_briefs
@@ -349,12 +411,10 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/smplx_mesh_status":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
-            if video_id and not _capture_visible(self, video_id):
-                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
-            if video_id:
-                session_dir = DATA_DIR / "sessions" / str(video_id)
-            else:
-                session_dir = newest_ready_session_dir(DATA_DIR)
+            video_id, denied = _scoped_video_id(self, video_id)
+            if denied is not None:
+                return _json_response(self, *denied)
+            session_dir = DATA_DIR / "sessions" / str(video_id)
             if session_dir is None or not session_dir.is_dir():
                 return _json_response(
                     self,
@@ -370,8 +430,9 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/smplx_mesh_clip":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
-            if video_id and not _capture_visible(self, video_id):
-                return _json_response(self, 403, {"error": True, "message": "This capture is private"})
+            video_id, denied = _scoped_video_id(self, video_id)
+            if denied is not None:
+                return _json_response(self, *denied)
             try:
                 t0 = float((qs.get("t0") or qs.get("start") or ["0"])[0])
                 t1 = float((qs.get("t1") or qs.get("end") or ["0"])[0])
@@ -385,10 +446,7 @@ class Handler(BaseHTTPRequestHandler):
                         "message": "t0 and t1 must be numbers",
                     },
                 )
-            if video_id:
-                session_dir = DATA_DIR / "sessions" / str(video_id)
-            else:
-                session_dir = newest_ready_session_dir(DATA_DIR)
+            session_dir = DATA_DIR / "sessions" / str(video_id)
             if session_dir is None or not session_dir.is_dir():
                 return _json_response(
                     self,
@@ -532,6 +590,15 @@ class Handler(BaseHTTPRequestHandler):
                 return _json_response(
                     self, 403, {"error": True, "message": "That capture belongs to another account"}
                 )
+        else:
+            # Without an explicit capture the agent would read the globally newest session.
+            from motion_agent.app.product_api import default_visible_session_id
+
+            video_id = default_visible_session_id(SETTINGS, DATA_DIR, user)
+            if not video_id:
+                return _json_response(
+                    self, 404, {"error": True, "type": "NO_SESSION", "message": "No capture available yet."}
+                )
         attach_video = bool(body.get("attach_video", True))
         backend = body.get("backend") or BACKEND
         system_prompt = body.get("system_prompt")
@@ -607,16 +674,7 @@ class Handler(BaseHTTPRequestHandler):
             )
             return _json_response(self, 200, chat_payload(result))
         except Exception as exc:  # noqa: BLE001
-            LOG.exception("chat failed")
-            return _json_response(
-                self,
-                500,
-                {
-                    "error": True,
-                    "message": str(exc),
-                    "traceback": traceback.format_exc(),
-                },
-            )
+            return _json_response(self, 500, _internal_error(exc, "chat"))
 
     def _chat_stream(
         self,
@@ -632,7 +690,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/event-stream; charset=utf-8")
         self.send_header("Cache-Control", "no-cache, no-transform")
         self.send_header("Connection", "close")
-        self.send_header("Access-Control-Allow-Origin", "*")
+        _send_cors_headers(self)
         self.send_header("X-Accel-Buffering", "no")
         self.end_headers()
 
@@ -665,29 +723,35 @@ class Handler(BaseHTTPRequestHandler):
                 }
             )
         except Exception as exc:  # noqa: BLE001
-            LOG.exception("chat stream failed")
+            public = _internal_error(exc, "chat stream")
             try:
                 from motion_agent.app.product_api import record_event
 
-                record_event(SETTINGS, "chat_error", session_id=video_id or "", message=str(exc)[:300])
+                record_event(
+                    SETTINGS,
+                    "chat_error",
+                    session_id=video_id or "",
+                    message=str(exc)[:300],
+                    error_id=public["error_id"],
+                )
             except Exception:  # noqa: BLE001
                 LOG.exception("failed to record chat error")
             try:
                 emit(
                     {
                         "type": "error",
-                        "message": str(exc),
-                        "traceback": traceback.format_exc(),
+                        "message": public["message"],
+                        "error_id": public["error_id"],
                         "interim": False,
                     }
                 )
                 emit(
                     {
                         "type": "done",
-                        "answer": f"Error: {exc}",
+                        "answer": public["message"],
                         "session_id": video_id or "",
                         "tool_calls_used": 0,
-                        "error": str(exc),
+                        "error": public["message"],
                         "interim": False,
                     }
                 )
@@ -710,7 +774,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", mime or "application/octet-stream")
         self.send_header("Content-Length", str(len(data)))
-        self.send_header("Access-Control-Allow-Origin", "*")
+        _send_cors_headers(self)
         # Allow video seeking
         self.send_header("Accept-Ranges", "bytes")
         self.send_header("Cache-Control", "no-cache")

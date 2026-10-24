@@ -3,14 +3,18 @@
 from __future__ import annotations
 
 import hashlib
+import hmac
 import json
+import os
 import secrets
 import threading
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 _LOCK = threading.Lock()
+# Login tokens expire. CEREBEL_TOKEN_TTL_DAYS changes the lifetime (default 30 days).
+TOKEN_TTL = timedelta(days=float(os.environ.get("CEREBEL_TOKEN_TTL_DAYS") or 30))
 
 
 def _now() -> str:
@@ -75,16 +79,41 @@ def login(product_dir: Path, email: str, password: str) -> dict[str, Any]:
         accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
         row = accounts.get(email)
-        if not row or _hash_password(password or "", row.get("salt") or "") != row.get("password_hash"):
+        expected_hash = str((row or {}).get("password_hash") or "")
+        given_hash = _hash_password(password or "", (row or {}).get("salt") or "")
+        if not row or not hmac.compare_digest(given_hash, expected_hash):
             raise ValueError("Email or password is incorrect.")
         token = _issue_token(tokens_path, row["user_id"], email)
     return {"ok": True, "token": token, "user": {"user_id": row["user_id"], "email": email}}
 
 
+def _token_expired(row: Any, now: datetime) -> bool:
+    """Tokens issued before expiry existed fall back to created_at + TOKEN_TTL."""
+    if not isinstance(row, dict):
+        return True
+    try:
+        if row.get("expires_at"):
+            expires = datetime.fromisoformat(str(row["expires_at"]))
+        else:
+            expires = datetime.fromisoformat(str(row.get("created_at"))) + TOKEN_TTL
+    except (TypeError, ValueError):
+        return True
+    if expires.tzinfo is None:
+        expires = expires.replace(tzinfo=timezone.utc)
+    return now >= expires
+
+
 def _issue_token(tokens_path: Path, user_id: str, email: str) -> str:
-    tokens = _read(tokens_path)
+    now = datetime.now(timezone.utc)
+    # Drop expired tokens while we are rewriting the file anyway.
+    tokens = {tok: row for tok, row in _read(tokens_path).items() if not _token_expired(row, now)}
     token = secrets.token_urlsafe(32)
-    tokens[token] = {"user_id": user_id, "email": email, "created_at": _now()}
+    tokens[token] = {
+        "user_id": user_id,
+        "email": email,
+        "created_at": now.isoformat(),
+        "expires_at": (now + TOKEN_TTL).isoformat(),
+    }
     _write(tokens_path, tokens)
     return token
 
@@ -99,7 +128,7 @@ def user_from_token(product_dir: Path, token: str | None) -> dict[str, Any] | No
         return None
     _, tokens_path = _paths(product_dir)
     row = _read(tokens_path).get(token)
-    if not row:
+    if not row or _token_expired(row, datetime.now(timezone.utc)):
         return None
     return {"user_id": row.get("user_id"), "email": row.get("email"), "token": token}
 
