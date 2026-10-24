@@ -233,7 +233,8 @@ class Handler(BaseHTTPRequestHandler):
                 return _json_response(self, 401, {"ok": False, "error": True, "message": "Sign in required"})
             return _json_response(self, 200, library_payload(SETTINGS, user))
         if path.startswith("/api/progress"):
-            from motion_agent.app.product_api import current_user, read_progress, user_may_view_session
+            from motion_agent.app.product_api import current_user, user_may_view_session
+            from motion_agent.app.product_api import read_progress_with_queue as read_progress
 
             qs = parse_qs(parsed.query or "")
             session_id = (qs.get("session_id") or [""])[0].strip()

@@ -334,3 +334,87 @@ class ProviderConfigTests(unittest.TestCase):
             emb = DashScopeEmbedder()
             self.assertEqual(emb.base_url, "https://embed.example/v1")
             self.assertEqual(emb.api_key, "k-embed")
+
+
+class TrimAndQueueTests(unittest.TestCase):
+    def test_parse_trim_rules(self):
+        from motion_agent.app.product_api import _parse_trim
+
+        self.assertIsNone(_parse_trim(None, 20))
+        self.assertEqual(_parse_trim(("4.2", "7.5"), 20), (4.2, 7.5))
+        self.assertIsNone(_parse_trim(("4", "4.5"), 20))      # too short
+        self.assertIsNone(_parse_trim(("0", "15"), 20))       # too long
+        self.assertIsNone(_parse_trim(("0", "5.9"), 6))       # basically the whole clip
+        self.assertEqual(_parse_trim(("-1", "3"), 20), (0.0, 3.0))
+        self.assertIsNone(_parse_trim(("x", "3"), 20))
+
+    def test_trim_video_with_ffmpeg(self):
+        import shutil
+        import subprocess
+
+        from motion_agent.app.product_api import probe_video, trim_video
+
+        if not shutil.which("ffmpeg"):
+            self.skipTest("ffmpeg not installed")
+        with tempfile.TemporaryDirectory() as tmp:
+            src = Path(tmp) / "source_video.mov"
+            subprocess.run(
+                ["ffmpeg", "-loglevel", "error", "-y", "-f", "lavfi", "-i", "testsrc=size=320x240:rate=60",
+                 "-t", "8", str(src)], check=True,
+            )
+            out = trim_video(src, 2.0, 5.0)
+            self.assertIsNotNone(out)
+            meta = probe_video(out)
+            self.assertAlmostEqual(meta["duration"], 3.0, delta=0.15)
+            self.assertGreater(meta["fps"], 50)
+
+    def test_queue_info_messages(self):
+        import sys
+        import types
+
+        from motion_agent.app import product_api
+
+        class FakeQueue:
+            def jobs_ahead(self, sid):
+                return {"RUN": (0, True), "NEXT": (0, False), "LATER": (3, False)}.get(sid)
+
+        fake = types.ModuleType("upload_server")
+        fake._QUEUE = FakeQueue()
+        with mock.patch.dict(sys.modules, {"upload_server": fake}):
+            self.assertTrue(product_api.queue_info("RUN")["running"])
+            self.assertIn("next", product_api.queue_info("NEXT")["queue_message"])
+            later = product_api.queue_info("LATER")
+            self.assertEqual(later["jobs_ahead"], 3)
+            self.assertIn("3 swings ahead", later["queue_message"])
+            self.assertIsNone(product_api.queue_info("NOPE"))
+
+
+class NotifyTests(unittest.TestCase):
+    def test_disabled_without_smtp(self):
+        from motion_agent.app import notify
+
+        with mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("CEREBEL_SMTP_HOST", None)
+            self.assertFalse(notify.notify_analysis("a@b.co", "ready", "SID"))
+
+    def test_message_contents(self):
+        from motion_agent.app import notify
+
+        env = {"CEREBEL_MAIL_FROM": "CeRebel <garylin@cerebel.tech>", "CEREBEL_PUBLIC_URL": "https://playground.cerebel.tech"}
+        with mock.patch.dict(os.environ, env):
+            ok = notify.build_message("a@b.co", "ready", "SID9")
+            self.assertIn("ready", ok["Subject"])
+            self.assertIn("https://playground.cerebel.tech/?session=SID9", ok.get_content())
+            bad = notify.build_message("a@b.co", "failed", "SID9", "no swing found")
+            self.assertIn("did not use one of your monthly analyses", bad.get_content())
+
+    def test_send_runs_in_background(self):
+        from motion_agent.app import notify
+
+        env = {"CEREBEL_SMTP_HOST": "smtp.example", "CEREBEL_MAIL_FROM": "x@example.com"}
+        with mock.patch.dict(os.environ, env), mock.patch.object(notify, "_send") as send:
+            self.assertTrue(notify.notify_analysis("a@b.co", "ready", "SID"))
+            for t in __import__("threading").enumerate():
+                if t.name.startswith("mail-"):
+                    t.join(2)
+            send.assert_called_once()

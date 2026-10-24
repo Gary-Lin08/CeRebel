@@ -150,7 +150,7 @@ def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], header
 def library_payload(settings: Settings, user: dict[str, Any]) -> dict[str, Any]:
     rows = list_captures(settings.product_dir, user["user_id"])
     for row in rows:
-        row["progress"] = read_progress(settings, row.get("session_id") or "")
+        row["progress"] = read_progress_with_queue(settings, row.get("session_id") or "")
         stage = (row.get("progress") or {}).get("stage")
         if stage in {"ready", "error"} and row.get("status") != stage:
             update_status(settings.product_dir, row["session_id"], stage)
@@ -214,6 +214,41 @@ def default_visible_session_id(
     return configured_demo_session_id(settings)
 
 
+AVG_JOB_SECONDS = float(os.environ.get("CEREBEL_AVG_JOB_SECONDS", "150"))
+
+
+def queue_info(session_id: str) -> dict[str, Any] | None:
+    """Place in the GPU line and a rough wait, when this process owns the queue."""
+    import sys
+
+    mod = sys.modules.get("upload_server")
+    queue = getattr(mod, "_QUEUE", None) if mod else None
+    if queue is None or not hasattr(queue, "jobs_ahead"):
+        return None
+    found = queue.jobs_ahead(session_id)
+    if found is None:
+        return None
+    ahead, running = found
+    wait_s = (ahead + (0.5 if running else 1)) * AVG_JOB_SECONDS
+    minutes = max(1, round(wait_s / 60))
+    if running:
+        message = f"Rebuilding your body now — about {minutes} min."
+    elif ahead == 0:
+        message = f"You're next — about {minutes} min."
+    else:
+        message = f"{ahead} swing{'s' if ahead != 1 else ''} ahead of you — about {minutes} min. We'll email you when it's ready."
+    return {"jobs_ahead": ahead, "running": running, "eta_minutes": minutes, "queue_message": message}
+
+
+def read_progress_with_queue(settings: Settings, session_id: str) -> dict[str, Any] | None:
+    prog = read_progress(settings, session_id)
+    if prog and str(prog.get("stage") or "") not in {"ready", "error", "no_swing", "rejected"}:
+        info = queue_info(session_id)
+        if info:
+            prog = {**prog, **info}
+    return prog
+
+
 def read_progress(settings: Settings, session_id: str) -> dict[str, Any] | None:
     path = settings.data_dir / "sessions" / session_id / "upload_progress.json"
     if not path.is_file():
@@ -228,12 +263,52 @@ def read_progress(settings: Settings, session_id: str) -> dict[str, Any] | None:
     return data if isinstance(data, dict) else None
 
 
+def _parse_trim(trim: tuple[Any, Any] | None, duration: float) -> tuple[float, float] | None:
+    """Validate a client-proposed swing window; None means keep the whole clip."""
+    if not trim:
+        return None
+    try:
+        start, end = float(trim[0]), float(trim[1])
+    except (TypeError, ValueError):
+        return None
+    if duration <= 0:
+        return None
+    start = max(0.0, start)
+    end = min(duration, end)
+    length = end - start
+    if length < MIN_DURATION_S or length > 10.0 or length >= duration - 0.25:
+        return None
+    return round(start, 3), round(end, 3)
+
+
+def trim_video(src: Path, start: float, end: float) -> Path | None:
+    """Cut the swing window with ffmpeg (re-encode for frame accuracy). None on failure."""
+    import subprocess
+
+    dest = src.with_name("swing_window.mp4")
+    cmd = [
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-ss", f"{start:.3f}", "-to", f"{end:.3f}", "-i", str(src),
+        "-map", "0:v:0", "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "17",
+        "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(dest),
+    ]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if proc.returncode != 0 or not dest.is_file() or dest.stat().st_size < 1024:
+        dest.unlink(missing_ok=True)
+        return None
+    return dest
+
+
 def save_upload(
     settings: Settings,
     user: dict[str, Any],
     *,
     filename: str,
     file_obj: Any,
+    trim: tuple[Any, Any] | None = None,
 ) -> tuple[int, dict[str, Any]]:
     from motion_agent.app import billing
 
@@ -275,7 +350,8 @@ def save_upload(
     if size > settings.max_upload_bytes:
         dest.unlink(missing_ok=True)
         return 413, {"ok": False, "error": True, "message": "File is too large"}
-    rejection, warnings = quality_check(probe_video(dest))
+    meta = probe_video(dest)
+    rejection, warnings = quality_check(meta)
     if rejection:
         # Rejected uploads are recorded (for the funnel) but never count toward the quota,
         # and the video itself is removed right away.
@@ -290,6 +366,15 @@ def save_upload(
         purge_session_dir(settings, session_id)
         record_event(settings, "upload_rejected", user_id=user["user_id"], reason=rejection[:80])
         return 422, {"ok": False, "error": True, "rejected": True, "message": rejection + " This didn't use one of your analyses."}
+    window = _parse_trim(trim, float((meta or {}).get("duration") or 0.0))
+    trimmed = None
+    if window:
+        trimmed = trim_video(dest, *window)
+        if trimmed is not None:
+            # Only the swing window is kept and sent to the GPU: less compute, less stored video.
+            dest.unlink(missing_ok=True)
+            dest = trimmed.replace(upload_dir / "source_video.mp4")
+            record_event(settings, "upload_trimmed", user_id=user["user_id"], seconds=round(window[1] - window[0], 2))
     add_capture(
         settings.product_dir,
         user_id=user["user_id"],
@@ -395,6 +480,19 @@ def finalize_capture(settings: Settings, session_id: str) -> dict[str, Any]:
     }
 
 
+def _email_owner(settings: Settings, session_id: str, status: str, detail: str) -> None:
+    try:
+        from motion_agent.app.accounts import profile
+        from motion_agent.app.notify import notify_analysis
+
+        owner = owner_of(settings.product_dir, session_id)
+        email = (profile(settings.product_dir, owner) or {}).get("email") if owner else None
+        if notify_analysis(email, status, session_id, detail):
+            record_event(settings, "email_sent", session_id=session_id, status=status)
+    except Exception:  # noqa: BLE001
+        LOG.exception("analysis email failed session=%s", session_id)
+
+
 PIPELINE_TIMEOUT_S = 45 * 60
 _TERMINAL_STAGES = {"ready", "error", "no_swing"}
 
@@ -429,10 +527,13 @@ def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
         prog = _wait_for_pipeline(settings, session_id)
         stage = str(prog.get("stage") or "processing")
         if stage == "ready":
-            finalize_capture(settings, session_id)
+            final = finalize_capture(settings, session_id) or {}
+            _email_owner(settings, session_id, "ready" if final.get("status") == "ready" else "failed",
+                         str(final.get("message") or ""))
         else:
             update_status(settings.product_dir, session_id, stage, message=prog.get("message"))
             if stage == "error":
+                _email_owner(settings, session_id, "failed", "")
                 record_event(
                     settings,
                     "pipeline_error",
@@ -476,7 +577,10 @@ def parse_upload(handler: Any, settings: Settings, user: dict[str, Any]) -> tupl
     if fileitem is None or not getattr(fileitem, "file", None):
         return 400, {"ok": False, "error": True, "message": "Missing file"}
     filename = getattr(fileitem, "filename", None) or "video.mp4"
-    return save_upload(settings, user, filename=filename, file_obj=fileitem.file)
+    trim = None
+    if "trim_start" in form and "trim_end" in form:
+        trim = (form.getfirst("trim_start"), form.getfirst("trim_end"))
+    return save_upload(settings, user, filename=filename, file_obj=fileitem.file, trim=trim)
 
 
 def remove_account(settings: Settings, user: dict[str, Any]) -> tuple[int, dict[str, Any]]:

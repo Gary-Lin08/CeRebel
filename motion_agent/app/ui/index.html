@@ -5566,6 +5566,8 @@ code {
         const label = document.createElement("button");
         label.type = "button";
         label.textContent = (row.filename || "Swing") + " · " + stageLabel(stage);
+        const queueMsg = row.progress && row.progress.queue_message;
+        if (queueMsg && stage !== "ready") label.textContent += " · " + queueMsg;
         label.addEventListener("click", () => {
           activeSessionId = row.session_id;
           if (stage === "ready") loadSession();
@@ -5695,8 +5697,27 @@ code {
         const uploadStatus = document.getElementById("uploadStatus");
         if (uploadStatus) uploadStatus.textContent = "Uploading…";
         if (window.cerebelBilling) window.cerebelBilling.track("upload_click", { mb: Math.round(file.size / 1e6) });
+        let prep = null;
+        if (window.cerebelSwingTrim) {
+          prep = await window.cerebelSwingTrim.analyze(file, (msg) => { if (uploadStatus) uploadStatus.textContent = msg; });
+          if (prep && prep.block) {
+            if (uploadStatus) uploadStatus.textContent = prep.warning + " This didn't use one of your analyses.";
+            uploadFile.value = "";
+            return;
+          }
+          if (prep && prep.warning && !window.confirm(prep.warning + "\n\nUpload anyway?")) {
+            if (uploadStatus) uploadStatus.textContent = "";
+            uploadFile.value = "";
+            return;
+          }
+          if (uploadStatus) uploadStatus.textContent = "Uploading…";
+        }
         const body = new FormData();
         body.append("file", file);
+        if (prep && prep.window) {
+          body.append("trim_start", String(prep.window[0]));
+          body.append("trim_end", String(prep.window[1]));
+        }
         const r = await fetch("/api/upload", { method: "POST", headers: authHeaders(), body });
         const data = await r.json();
         if (!r.ok) {
@@ -5786,6 +5807,7 @@ code {
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="/static/playground-fx.js"></script>
   <script src="/static/billing.js"></script>
+  <script src="/static/swing_trim.js"></script>
 </body>
 </html>
 

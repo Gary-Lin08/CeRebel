@@ -256,8 +256,18 @@
     row.parentNode.insertBefore(hero, row.nextSibling);
   }
 
+  function openDeepLink() {
+    var sid = new URLSearchParams(window.location.search).get("session");
+    if (!sid || !/^[A-Za-z0-9-]{8,64}$/.test(sid) || !signedIn()) return;
+    try {
+      activeSessionId = sid;
+      loadSession({ announce: true });
+    } catch (_) {}
+  }
+
   function init() {
     wireHero();
+    window.setTimeout(openDeepLink, 600);
     track("landing_view", { signed_in: signedIn() });
     wireTrust();
     handleReturn();

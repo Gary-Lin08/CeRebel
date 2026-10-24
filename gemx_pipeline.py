@@ -455,6 +455,7 @@ class GemxPipelineQueue:
         self._cv = threading.Condition()
         self._pending: list[Path] = []
         self._seen: set[str] = set()
+        self.current: str | None = None  # session id being processed right now
         self._ready = threading.Event()
         self._worker = threading.Thread(target=self._loop, name="gemx-queue", daemon=True)
         self._worker.start()
@@ -472,6 +473,16 @@ class GemxPipelineQueue:
             LOG.exception("warm worker wait failed; jobs will retry on submit")
         finally:
             self._ready.set()
+
+    def jobs_ahead(self, session_id: str) -> tuple[int, bool] | None:
+        """(videos ahead of this one, is_running_now); None when it is not queued here."""
+        with self._cv:
+            if self.current == session_id:
+                return 0, True
+            for i, pending in enumerate(self._pending):
+                if pending.name == session_id:
+                    return i + (1 if self.current else 0), False
+        return None
 
     def enqueue(self, session_dir: Path) -> None:
         session_dir = Path(session_dir)
@@ -491,7 +502,12 @@ class GemxPipelineQueue:
                 while not self._pending:
                     self._cv.wait()
                 session_dir = self._pending.pop(0)
-            result = process_session(session_dir, self.data_dir)
+                self.current = session_dir.name
+            try:
+                result = process_session(session_dir, self.data_dir)
+            finally:
+                with self._cv:
+                    self.current = None
             with self._cv:
                 self._seen.add(str(session_dir.resolve()))
             if self.on_complete is not None:
