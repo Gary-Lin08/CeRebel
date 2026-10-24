@@ -20,6 +20,7 @@ async function start(root) {
   const replay = root.querySelector(".swing__replay");
   const readout = root.querySelector(".swing__readout");
   const tag = root.querySelector(".swing__tag");
+  const video = root.querySelector(".swing__video video");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const css = getComputedStyle(document.documentElement);
   const color = (name, fallback) => new THREE.Color((css.getPropertyValue(name) || fallback).trim());
@@ -40,7 +41,7 @@ async function start(root) {
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  stage.prepend(renderer.domElement);
+  (stage.querySelector(".swing__gl") || stage).prepend(renderer.domElement);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(24, 1, 0.1, 50);
 
@@ -57,7 +58,7 @@ async function start(root) {
   rim.position.set(-3, 2.5, -2.5);
   scene.add(rim);
 
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(1.6, 64), new THREE.ShadowMaterial({ opacity: 0.16 }));
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(8, 4), new THREE.ShadowMaterial({ opacity: 0.16 }));
   ground.rotation.x = -Math.PI / 2;
   ground.receiveShadow = true;
   scene.add(ground);
@@ -84,7 +85,8 @@ async function start(root) {
   const muscleMeshes = data.muscles.map(() => {
     const m = new THREE.Mesh(new THREE.BufferGeometry(), muscleMat);
     m.castShadow = true;
-    scene.add(m);
+    m.userData.overlay = true;
+    model.add(m); // muscle paths are in the same frame as the bones, so they share its offset
     return m;
   });
   const curvePts = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
@@ -132,7 +134,66 @@ async function start(root) {
   const trail = new THREE.Line(trailGeo, new THREE.LineDashedMaterial({
     color: color("--turf", "#2F6B45"), dashSize: 0.012, gapSize: 0.03, transparent: true, opacity: 0.9,
   }));
-  scene.add(trail);
+  trail.userData.overlay = true;
+  model.add(trail);
+
+  // GEM-X: the 3D joints the pose model estimates from the video, before any biomechanics.
+  const gemx = data.gemx;
+  const gemxGroup = new THREE.Group();
+  scene.add(gemxGroup);
+  // GEM-X joints use their own heading; turn them about the hips to face the same way as OpenSim.
+  const gemxInner = new THREE.Group();
+  gemxGroup.add(gemxInner);
+  if (gemx) {
+    const g0 = gemx.frames[0], o0 = frames[0].b, gi = (n) => gemx.names.indexOf(n), oi = (n) => data.bodies.indexOf(n);
+    const L = g0[gi("LeftArm")], R = g0[gi("RightArm")], H = g0[gi("Hips")];
+    const OL = o0[oi("humerus_l")], OR = o0[oi("humerus_r")];
+    const yawG = Math.atan2(L[2] - R[2], L[0] - R[0]);
+    const yawO = Math.atan2(OL[2] - OR[2], OL[0] - OR[0]);
+    gemxInner.position.set(H[0], 0, H[2]);
+    gemxInner.rotation.y = yawG - yawO;
+    gemxInner.userData.pivot = new THREE.Vector3(H[0], 0, H[2]);
+  }
+  const jointGeo = new THREE.SphereGeometry(0.022, 16, 12);
+  const jointMat = new THREE.MeshStandardMaterial({ color: color("--turf", "#2F6B45"), roughness: 0.4 });
+  const linkGeo = new THREE.CylinderGeometry(0.011, 0.011, 1, 10);
+  linkGeo.translate(0, 0.5, 0);
+  const linkMat = new THREE.MeshStandardMaterial({ color: color("--ink", "#16241D"), roughness: 0.5 });
+  const skip = new Set(["HeadEnd", "Jaw", "LeftEye", "RightEye", "LeftToeEnd", "RightToeEnd"]);
+  const gJoints = gemx ? gemx.names.map((n) => {
+    const m = new THREE.Mesh(jointGeo, jointMat);
+    m.castShadow = true;
+    m.visible = !skip.has(n);
+    gemxInner.add(m);
+    return m;
+  }) : [];
+  const gLinks = gemx ? gemx.parents.map((par, i) => {
+    if (par < 0 || skip.has(gemx.names[i])) return null;
+    const m = new THREE.Mesh(linkGeo, linkMat);
+    m.castShadow = true;
+    gemxInner.add(m);
+    return m;
+  }) : [];
+  const up = new THREE.Vector3(0, 1, 0), dir = new THREE.Vector3();
+  const gp = gemx ? gemx.names.map(() => new THREE.Vector3()) : [];
+  function poseGemx(t) {
+    if (!gemx) return;
+    const f = Math.max(0, Math.min(gemx.frames.length - 1, (t / tEnd) * (gemx.frames.length - 1)));
+    const i = Math.floor(f), j = Math.min(gemx.frames.length - 1, i + 1), k = f - i;
+    gp.forEach((v, n) => {
+      const A = gemx.frames[i][n], Bv = gemx.frames[j][n];
+      v.set(A[0] + (Bv[0] - A[0]) * k, A[1] + (Bv[1] - A[1]) * k, A[2] + (Bv[2] - A[2]) * k).sub(gemxInner.userData.pivot);
+      gJoints[n].position.copy(v);
+    });
+    gLinks.forEach((m, n) => {
+      if (!m) return;
+      const a = gp[gemx.parents[n]], b = gp[n];
+      dir.subVectors(b, a);
+      m.position.copy(a);
+      m.scale.set(1, Math.max(dir.length(), 1e-4), 1);
+      m.quaternion.setFromUnitVectors(up, dir.normalize());
+    });
+  }
 
   // Frame sampling with interpolation between stored frames.
   const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
@@ -151,6 +212,11 @@ async function start(root) {
   const elbowWorld = new THREE.Vector3();
   function pose(t) {
     current = t;
+    poseGemx(t);
+    if (video && video.readyState >= 1 && !video.seeking) {
+      const vt = t + (parseFloat(video.dataset.offset || "0") || 0);
+      if (Math.abs(video.currentTime - vt) > 0.04) video.currentTime = vt;
+    }
     const { a, b, k } = sample(t);
     nodes.forEach((node, n) => {
       if (!node) return;
@@ -172,7 +238,7 @@ async function start(root) {
 
     const showFix = fixShown > 0;
     model.traverse((o) => {
-      if (!o.isMesh) return;
+      if (!o.isMesh || o.userData.overlay) return;
       let body = o;
       while (body && !fixBones.has(body.name) && body !== model) body = body.parent;
       o.material = showFix && body && fixBones.has(body.name) ? fixMat : boneMat;
@@ -199,7 +265,8 @@ async function start(root) {
     const w = stage.clientWidth, h = stage.clientHeight || w * 1.05;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    const dist = Math.max(5.6, 5.6 / Math.min(1, camera.aspect * 1.05));
+    const span = gemx ? 2.2 : 1.05; // how wide the lineup is, in metres
+    const dist = Math.max(4.9, (4.9 * span) / Math.min(span, camera.aspect * 1.1));
     const yaw = 0.42;
     camera.position.set(target.x + Math.sin(yaw) * dist, 1.25, target.z + Math.cos(yaw) * dist);
     camera.lookAt(target);
@@ -212,17 +279,22 @@ async function start(root) {
     if (tag) {
       v.copy(elbowWorld).project(camera);
       const r = renderer.domElement.getBoundingClientRect();
-      const s = stage.getBoundingClientRect();
+      const s = (tag.offsetParent || stage).getBoundingClientRect();
       tag.style.transform = `translate(${((v.x + 1) / 2) * r.width + (r.left - s.left) - 64}px, ${((1 - v.y) / 2) * r.height + (r.top - s.top) - 14}px)`;
     }
   }
   new ResizeObserver(fit).observe(stage);
 
-  // Center the figure on the pelvis at address.
+  // Line the two models up side by side on one ground, GEM-X left and OpenSim right, as seen by the camera.
   const p0 = frames[0].b[data.bodies.indexOf("pelvis")];
-  model.position.set(0, 0, 0);
+  const yaw0 = 0.42;
+  const right = new THREE.Vector3(Math.cos(yaw0), 0, -Math.sin(yaw0));
+  const gap = gemx ? 0.62 : 0;
+  model.position.copy(right).multiplyScalar(gap);
+  gemxGroup.position.copy(right).multiplyScalar(-gap);
   target.set(p0[0], 0.92, p0[2]);
   ground.position.set(p0[0], 0.001, p0[2]);
+  ground.rotation.z = yaw0;
 
   // Phases
   const phaseAt = (t) => { let n = ""; data.phases.forEach((p) => { if (t >= p[1] - 1e-6) n = p[0]; }); return n; };
