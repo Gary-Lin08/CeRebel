@@ -34,6 +34,25 @@ from motion_agent.storage.video_store import resolve_media_file
 LOG = logging.getLogger("motion_agent.chat_server")
 
 UI_DIR = Path(__file__).resolve().parent / "ui"
+# Optional path prefix (e.g. "/playground") when the app is also served under the main site,
+# cerebel.tech/playground, through a reverse proxy that keeps the prefix. Requests without the
+# prefix keep working (playground.cerebel.tech); with it, the prefix is stripped on the way in and
+# added back to the absolute URLs in the UI files and JSON on the way out.
+_base = os.environ.get("CEREBEL_BASE_PATH", "").strip().strip("/")
+BASE_PATH = "/" + _base if _base else ""
+_PREFIXED = ("/api/", "/static/", "/media/", "/terms", "/privacy")
+
+
+def with_base(text: str, base: str) -> str:
+    """Prefix the app's absolute URLs in HTML/JS/CSS text with the base path."""
+    if not base:
+        return text
+    for q in ('"', "'", "`", "("):
+        for prefix in _PREFIXED:
+            text = text.replace(q + prefix, q + base + prefix)
+        if q != "(":
+            text = text.replace(q + "/" + q, q + base + "/" + q)  # links to the app's home page
+    return text
 SETTINGS = load_settings()
 DATA_DIR = SETTINGS.data_dir
 HOST = SETTINGS.host
@@ -167,6 +186,9 @@ def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) ->
     raw = json.dumps(payload, default=str).encode("utf-8")
     if code < 400 and b'"/media/' in raw:
         raw = json.dumps(_sign_media(handler, payload), default=str).encode("utf-8")
+    base = getattr(handler, "base", "")
+    if base and b'"/media/' in raw:
+        raw = raw.replace(b'"/media/', b'"' + base.encode() + b"/media/")
     handler.send_response(code)
     handler.send_header("Content-Type", "application/json")
     handler.send_header("Content-Length", str(len(raw)))
@@ -176,13 +198,28 @@ def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) ->
 
 
 class Handler(BaseHTTPRequestHandler):
+    base = ""
+
     def log_message(self, fmt: str, *args) -> None:
         LOG.info("%s - " + fmt, self.address_string(), *args)
+
+    def parse_request(self) -> bool:
+        if not super().parse_request():
+            return False
+        self.base = ""
+        if BASE_PATH:
+            path, sep, query = self.path.partition("?")
+            if path == BASE_PATH or path.startswith(BASE_PATH + "/"):
+                self.base = BASE_PATH
+                self.path = (path[len(BASE_PATH):] or "/") + sep + query
+        return True
 
     def _serve_legal(self, name: str) -> None:
         raw = _legal_html(name)
         if raw is None:
             return _json_response(self, 404, {"error": True, "message": "not found"})
+        if self.base:
+            raw = with_base(raw.decode("utf-8"), self.base).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
@@ -944,6 +981,17 @@ class Handler(BaseHTTPRequestHandler):
         mime, _ = mimetypes.guess_type(str(path))
         if path.suffix.lower() == ".js" or path.name.endswith(".module.js"):
             mime = "text/javascript; charset=utf-8"
+        if self.base and path.suffix.lower() in (".html", ".js", ".css") and UI_DIR.resolve() in path.resolve().parents:
+            body = with_base(path.read_text(encoding="utf-8"), self.base).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", mime or "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            _send_cors_headers(self)
+            self.send_header("Cache-Control", "no-cache")
+            self.end_headers()
+            if self.command != "HEAD":
+                self.wfile.write(body)
+            return
         # iOS Safari will not play a <video> unless Range requests get 206 answers.
         start, end = 0, size - 1
         rng = _parse_range(self.headers.get("Range"), size)
