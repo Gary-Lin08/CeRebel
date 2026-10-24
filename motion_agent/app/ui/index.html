@@ -2116,6 +2116,7 @@ code {
   <link rel="stylesheet" href="/static/playground-v3.css" />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/playground-landing.css" />
+  <link rel="stylesheet" href="/static/playground-app.css" />
 </head>
 <body class="pg pg-dev">
   <div id="lpLanding" class="lp" hidden>
@@ -3517,7 +3518,8 @@ code {
       group.name = "opensim-muscles";
       group.userData.meshes = new Map();
       group.userData.sharedMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xd96b5c),
+        // Muted in the consumer view so the flag-red fix bones stand out against the muscles.
+        color: new THREE.Color(isDevUi ? 0xd96b5c : 0xc29a90),
         roughness: 0.42,
         metalness: 0.02,
         clearcoat: 0.22,
@@ -4119,7 +4121,7 @@ code {
       const { THREE, GLTFLoader } = await ensureThree();
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setClearColor(0x07060b, 1);
+      renderer.setClearColor(isDevUi ? 0x07060b : 0xe4e8e2, 1);
       host.appendChild(renderer.domElement);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(32, 1, 0.02, 40);
@@ -4128,7 +4130,7 @@ code {
       const keyLight = new THREE.DirectionalLight(0xf4f0fa, 1.15);
       keyLight.position.set(1.6, 3.2, 2.2);
       scene.add(keyLight);
-      const fill = new THREE.DirectionalLight(0xb99bff, 0.35);
+      const fill = new THREE.DirectionalLight(isDevUi ? 0xb99bff : 0xdfe8ff, 0.35);
       fill.position.set(-1.8, 1.2, -1.2);
       scene.add(fill);
       const loader = new GLTFLoader();
@@ -4158,8 +4160,9 @@ code {
       const goal = new THREE.Vector3(0, 1, 0);
       const look = new THREE.Vector3(0, 1, 0);
       const desired = new THREE.Vector3();
-      const accent = new THREE.Color("#b99bff");
-      const quiet = new THREE.Color("#6a6474");
+      // Consumer view uses the landing palette: flag red for the fix, quiet grey-green for the rest.
+      const accent = new THREE.Color(isDevUi ? "#b99bff" : "#D9402A");
+      const quiet = new THREE.Color(isDevUi ? "#6a6474" : "#9aa79d");
       const bone = new THREE.Color("#eee9dd");
       let focus = { anchor: "pelvis", bones: ["pelvis", "torso"], view_yaw: 0, label: "Body" };
       let lastFrame = null;
@@ -4178,7 +4181,7 @@ code {
       function setFocus(note) {
         const next = (note && note.focus) || focus;
         focus = next;
-        accent.set((note && note.accent) || "#b99bff");
+        accent.set(isDevUi ? (note && note.accent) || "#b99bff" : "#D9402A");
         const label = document.getElementById("sportCloseupTarget");
         if (label) label.innerHTML = "<span>Fix</span>" + escapeHtml(next.label || note && note.title || "Body");
       }
@@ -5349,7 +5352,7 @@ code {
       }
     }
 
-    async function loadSession({ announce = false } = {}) {
+    async function loadSession({ announce = false, sample = false } = {}) {
       const prevId = session && session.session_id;
       loadNewestBtn.disabled = true;
       if (announce) {
@@ -5357,9 +5360,11 @@ code {
         status.className = "status";
       }
       try {
-        const sessionQuery = authToken && activeSessionId
-          ? "&session_id=" + encodeURIComponent(activeSessionId)
-          : "";
+        const sessionQuery = sample
+          ? "&sample=1"
+          : authToken && activeSessionId
+            ? "&session_id=" + encodeURIComponent(activeSessionId)
+            : "";
         const r = await fetch("/api/session?t=" + Date.now() + sessionQuery, { headers: authHeaders() });
         if (r.status === 410 && activeSessionId) {
           // An old email link or bookmark to a swing that was deleted: open the newest one instead.
@@ -5879,7 +5884,7 @@ code {
       const v3Sample = document.getElementById("v3Sample");
       if (v3Sample) {
         v3Sample.addEventListener("click", () => {
-          loadSession({ announce: true }).then(() => {
+          loadSession({ announce: true, sample: true }).then(() => {
             const target = document.getElementById("fixHero");
             if (target && !target.hidden) target.scrollIntoView({ behavior: "smooth", block: "start" });
           });
@@ -5888,7 +5893,7 @@ code {
       const tocSample = document.getElementById("tocTrySample");
       if (tocSample) {
         tocSample.addEventListener("click", function () {
-          loadSession({ announce: true });
+          loadSession({ announce: true, sample: true });
         });
       }
       const lpUpload = document.getElementById("lpUpload");
@@ -6077,8 +6082,14 @@ code {
       });
     }
     if (authToken) {
-      if (accountPanel) accountPanel.hidden = false;
-      refreshLibrary().catch(() => {});
+      // Operators always get the library open. Players see it only until they have a swing;
+      // after that it stays behind the account button so the swing is the first thing on the page.
+      if (accountPanel) accountPanel.hidden = !isDevUi;
+      refreshLibrary()
+        .then(() => {
+          if (!isDevUi && accountPanel && libraryList && !libraryList.children.length) accountPanel.hidden = false;
+        })
+        .catch(() => {});
     }
     // Restore unlock for this browser tab only (not permanent).
     try {

@@ -1,0 +1,85 @@
+/* CeRebel signed-in app in the landing's palette (DESIGN.md): paper ground, ink text,
+   turf for actions, flag red only for the fix. Loaded last; ?dev=1 keeps its own look. */
+body.pg-consumer {
+  --bg: #F1F3EF;
+  --panel: #FFFFFF;
+  --panel-2: #E4E8E2;
+  --text: #16241D;
+  --muted: #4C5A52;
+  --lime: #2F6B45;
+  --accent: #2F6B45;
+  --accent-tint: #E3ECE5;
+  --ink: #F1F3EF;
+  --user: #E4E8E2;
+  --agent: #FFFFFF;
+  --tool: #F6F1E4;
+  --border: #C8D0C9;
+  --rule: #C8D0C9;
+  --danger: #D9402A;
+  --type: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--type);
+}
+body.pg-consumer #pgVanta { display: none !important; }
+body.pg-consumer ::selection { background: #D6E4D9; }
+
+/* The one fix wears flag red; the server's per-fix pastels don't read on paper. */
+body.pg-consumer .fix-hero__evidence { border-color: #EBC2B9; color: #B5321F; background: #FBEDEA; }
+body.pg-consumer .fix-hero__tabs button.is-active { border-color: #D9402A; box-shadow: inset 0 0 0 1px #D9402A; }
+body.pg-consumer .fix-hero__actions button.primary:hover,
+body.pg-consumer .composer button:hover { background: #24382D; color: #F1F3EF; }
+
+/* Motion analysis panel: from violet-on-black to the same paper and ink */
+body.pg-consumer .ma,
+body.pg-consumer .ma [style*="--accent"] { --accent: #D9402A !important; }
+body.pg-consumer .ma { --mono: "Archivo", "Helvetica Neue", Arial, sans-serif; border-radius: 10px; }
+body.pg-consumer .ma__stage { background: #FFFFFF; }
+body.pg-consumer .ma__closeup { background: #E4E8E2; border-left-color: #C8D0C9; border-top-color: #C8D0C9; }
+body.pg-consumer .ma__closeup-label,
+body.pg-consumer .ma__closeup-status,
+body.pg-consumer .ma__closeup-target span { color: #4C5A52; letter-spacing: 0.02em; text-transform: none; font-size: 0.78rem; }
+body.pg-consumer .ma__closeup-target { color: #16241D; }
+body.pg-consumer .ma__badge { color: #16241D; background: rgba(241, 243, 239, 0.9); }
+body.pg-consumer .ma__caption { color: #4C5A52; }
+body.pg-consumer .ma__cue { color: #16241D; }
+body.pg-consumer .ma__steps { background: rgba(228, 232, 226, 0.9); }
+body.pg-consumer .ma__steps button { color: #4C5A52; }
+body.pg-consumer .ma__steps button.is-active { color: #FFFFFF; background: #D9402A; }
+body.pg-consumer .ma__console { border-top-color: #C8D0C9; }
+body.pg-consumer .ma-deck__play { color: #F1F3EF; background: #2F6B45; }
+body.pg-consumer .ma-deck__play:hover { background: #24382D; }
+body.pg-consumer .ma.is-slow .ma-deck__play { box-shadow: 0 0 0 6px rgba(47, 107, 69, 0.18); }
+body.pg-consumer .ma__timeline input::-webkit-slider-runnable-track { background: linear-gradient(90deg, #2F6B45 var(--playhead), #D5DBD5 var(--playhead)); }
+body.pg-consumer .ma__timeline input::-webkit-slider-thumb { background: #16241D; }
+body.pg-consumer .ma__phases li { border-top-color: #D5DBD5; color: #4C5A52; }
+body.pg-consumer .ma__phases li.is-active { color: #16241D; border-top-color: #2F6B45; }
+body.pg-consumer .ma-track__head,
+body.pg-consumer .ma-track__lane { border-top-color: #E4E8E2; }
+body.pg-consumer .ma-track__head { color: #4C5A52; }
+body.pg-consumer .ma-track__head p { color: #16241D; }
+body.pg-consumer .ma-track__head small { color: #4C5A52; }
+body.pg-consumer .ma-track__lane path { stroke: #4C5A52; }
+body.pg-consumer .ma-track__zero { stroke: #C8D0C9; }
+body.pg-consumer .ma-plan li { border-color: #C8D0C9; background: #FFFFFF; }
+body.pg-consumer .ma-plan li.is-open { border-color: #D9402A; background: #FFFFFF; }
+body.pg-consumer .ma-plan__body dd,
+body.pg-consumer .ma-plan__muscle span,
+body.pg-consumer .ma-plan__muscle small { color: #4C5A52; }
+body.pg-consumer .ma-plan__body .is-action dd { color: #16241D; }
+body.pg-consumer .ma__highlights li { color: #16241D; }
+body.pg-consumer .ma__swatch,
+body.pg-consumer .ma__highlights li::before { background: #2F6B45; }
+
+/* The analysis panel was wider than a phone screen; keep every column inside it. */
+body.pg-consumer .ma { min-width: 0; max-width: 100%; box-sizing: border-box; }
+body.pg-consumer .ma__stage > *, body.pg-consumer .ma__console, body.pg-consumer .ma-deck > * { min-width: 0; }
+@media (max-width: 800px) {
+  body.pg-consumer .ma__stage { grid-template-columns: minmax(0, 1fr); }
+  body.pg-consumer .ma__closeup { min-height: 62vw; }
+}
+@media (max-width: 560px) {
+  /* Short phases overlap on a phone: keep the ticks, name only the current one. */
+  body.pg-consumer .ma__phases li:not(.is-active) { color: transparent; }
+}
