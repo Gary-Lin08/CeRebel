@@ -1,8 +1,8 @@
 /* CeRebel swing hero: one real swing as the OpenSim musculoskeletal model.
-   Data: /static/hero/swing-sample.json (OpenSim IK body transforms + muscle paths, no video, no face)
+   Data: /static/hero/swing-sample.json (OpenSim IK body transforms, muscle paths, GEM-X joints, and the clip they came from)
    and /static/hero/opensim-bones.glb (Rajagopal-Lai-Uhlrich 2023 bones, one node per body).
-   Motion happens once on load: address to the top, then the lead arm turns red and the elbow
-   angle appears. After that only the scrubber, the phase buttons or Replay move it.
+   Motion happens once on load: address to the top, then the highlighted bones turn red and
+   their angle appears. After that only the scrubber, the phase buttons or Replay move it.
    With reduced motion the page shows the top of the backswing as a still. */
 const THREE = await import("/static/three/three.module.js");
 const { GLTFLoader } = await import("/static/three/GLTFLoader.js");
@@ -40,6 +40,20 @@ async function start(root) {
   const frames = data.frames;
   const tEnd = frames[frames.length - 1].t;
   const tTop = data.fix.t;
+  // The highlighted measurement: frame.v when the data names one, else the lead elbow.
+  const fixLabel = data.fix.label || "Lead elbow";
+  const fixAnchor = data.fix.anchor || "ulna_l";
+  const valueOf = (fr) => (fr.v != null ? fr.v : fr.elbow);
+  if (video && data.video && data.video.src) {
+    video.dataset.offset = String(data.video.offset || 0);
+    video.src = data.video.src;
+    video.hidden = false;
+    // Seeks are skipped while one is in flight, so catch up to wherever the model ended up.
+    video.addEventListener("seeked", () => {
+      const vt = current + (data.video.offset || 0);
+      if (Math.abs(video.currentTime - vt) > 0.04) video.currentTime = vt;
+    });
+  }
 
   // Scene
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -88,7 +102,7 @@ async function start(root) {
 
   // Muscles: fusiform tubes along each OpenSim path, rebuilt per frame (paths change length).
   const muscleMat = new THREE.MeshStandardMaterial({
-    color: 0xb4584a, roughness: 0.45, metalness: 0, transparent: true, opacity: 0.82,
+    color: 0xc29a90, roughness: 0.5, metalness: 0, transparent: true, opacity: 0.8, // muted, so the flag-red highlight reads
   });
   const muscleMeshes = data.muscles.map(() => {
     const m = new THREE.Mesh(new THREE.BufferGeometry(), muscleMat);
@@ -251,17 +265,17 @@ async function start(root) {
       while (body && !fixBones.has(body.name) && body !== model) body = body.parent;
       o.material = showFix && body && fixBones.has(body.name) ? fixMat : boneMat;
     });
-    const elbow = a.elbow + (b.elbow - a.elbow) * k;
-    if (readout) readout.textContent = "Lead elbow " + Math.round(elbow) + "°";
-    const ulna = model.getObjectByName("ulna_l");
-    if (ulna) ulna.getWorldPosition(elbowWorld);
+    const value = Math.round(valueOf(a) + (valueOf(b) - valueOf(a)) * k);
+    if (readout) readout.textContent = fixLabel + " " + value + "°";
+    const anchor = model.getObjectByName(fixAnchor);
+    if (anchor) anchor.getWorldPosition(elbowWorld);
     if (tag) {
-      tag.textContent = Math.round(elbow) + "°";
+      tag.textContent = value + "°";
       tag.style.opacity = String(fixShown);
     }
     if (range) {
       range.value = t.toFixed(2);
-      range.setAttribute("aria-valuetext", phaseAt(t) + ", lead elbow " + Math.round(elbow) + " degrees");
+      range.setAttribute("aria-valuetext", phaseAt(t) + ", " + fixLabel.toLowerCase() + " " + value + " degrees");
     }
     markPhase(t);
     render();
