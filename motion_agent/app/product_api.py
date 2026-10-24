@@ -751,12 +751,30 @@ def media_allowed(settings: Settings, user: dict[str, Any] | None, session_id: s
     return user_may_view_session(settings, user, session_id)
 
 
+def gemx_output_root() -> Path:
+    gemx_root = Path(os.environ.get("CEREBEL_GEMX_ROOT", "/root/GEM-X"))
+    return Path(os.environ.get("CEREBEL_GEMX_OUTPUT_ROOT", str(gemx_root / "outputs" / "cerebel")))
+
+
+def neck_output_root() -> Path:
+    """Where older builds of the neck IK step left soma_raw/soma_aligned.npz per session.
+    New captures write these into session/ik/ instead; this folder is only cleaned up."""
+    default = Path(__file__).resolve().parents[2] / "kinetic-lens" / "retargeting_neck_v2" / "outputs"
+    return Path(os.environ.get("CEREBEL_NECK_OUTPUT_ROOT", str(default)))
+
+
 def gemx_output_dir(session_id: str) -> Path | None:
     """GEM-X writes its results outside the session folder (CEREBEL_GEMX_OUTPUT_ROOT/<session>)."""
+    return _session_subdir(gemx_output_root(), session_id)
+
+
+def neck_output_dir(session_id: str) -> Path | None:
+    return _session_subdir(neck_output_root(), session_id)
+
+
+def _session_subdir(root: Path, session_id: str) -> Path | None:
     if not re.fullmatch(r"[A-Za-z0-9_-]+", session_id or ""):
         return None
-    gemx_root = Path(os.environ.get("CEREBEL_GEMX_ROOT", "/root/GEM-X"))
-    root = Path(os.environ.get("CEREBEL_GEMX_OUTPUT_ROOT", str(gemx_root / "outputs" / "cerebel")))
     try:
         root = root.resolve()
         target = (root / session_id).resolve()
@@ -768,9 +786,9 @@ def gemx_output_dir(session_id: str) -> Path | None:
 
 
 def purge_session_dir(settings: Settings, session_id: str) -> None:
-    gemx = gemx_output_dir(session_id)
-    if gemx is not None:
-        shutil.rmtree(gemx, ignore_errors=True)
+    for outside in (gemx_output_dir(session_id), neck_output_dir(session_id)):
+        if outside is not None:
+            shutil.rmtree(outside, ignore_errors=True)
     root = (settings.data_dir / "sessions").resolve()
     target = (root / session_id).resolve()
     if root not in target.parents or not target.is_dir():

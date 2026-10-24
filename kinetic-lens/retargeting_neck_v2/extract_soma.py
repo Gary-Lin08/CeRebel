@@ -14,12 +14,17 @@ from .config import GEMX_PYTHON, GEMX_ROOT, OUTPUTS_DIR, SOMA_ASSETS
 from .soma_frames import SomaSequence, align_joints_and_rotations, save_npz, session_paths
 
 
-def extract_session(session_id: str, *, device: str = "cuda:0") -> Path:
+def extract_session(session_id: str, *, device: str = "cuda:0", out_dir: Path | None = None) -> Path:
+    """Write soma_raw.npz, soma_aligned.npz and extract_meta.json to ``out_dir``.
+
+    The product passes the session's ik/ folder so these files are deleted with the session
+    (account deletion, retention). ``OUTPUTS_DIR/<session>`` is only the default for dev scripts.
+    """
     paths = session_paths(session_id)
     hpe = paths["hpe"]
     if hpe is None:
         raise FileNotFoundError(f"No hpe_results.pt for session {session_id}")
-    out_dir = OUTPUTS_DIR / session_id
+    out_dir = Path(out_dir) if out_dir is not None else OUTPUTS_DIR / session_id
     raw_path = out_dir / "soma_raw.npz"
     aligned_path = out_dir / "soma_aligned.npz"
     worker = Path(__file__).with_name("_extract_worker.py")

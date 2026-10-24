@@ -356,6 +356,26 @@ def _export_soma_display(session_dir: Path, hpe_results: Path, fps: float) -> Pa
     return None
 
 
+def _sanitize_hpe(hpe_results: Path) -> None:
+    """Drop head shape and unused network outputs from hpe_results.pt (see hpe_privacy.py).
+    Runs after IK and the display export, so their results use the full prediction."""
+    if not GEMX_PYTHON.is_file():
+        LOG.error("hpe_results.pt NOT sanitized (GEM-X python missing): %s", hpe_results)
+        return
+    script = Path(__file__).resolve().parent / "hpe_privacy.py"
+    try:
+        proc = subprocess.run(
+            [str(GEMX_PYTHON), str(script), str(hpe_results.resolve())],
+            capture_output=True, text=True, timeout=300,
+        )
+    except (subprocess.TimeoutExpired, OSError) as exc:
+        LOG.error("hpe_results.pt NOT sanitized: %s (%s)", hpe_results, exc)
+        return
+    if proc.returncode != 0:
+        LOG.error("hpe_results.pt NOT sanitized rc=%s: %s\n%s", proc.returncode, hpe_results,
+                  (proc.stderr or proc.stdout or "").strip()[-1500:])
+
+
 def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
     session_id = session_dir.name
     header = _read_header(session_dir)
@@ -412,6 +432,8 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
                 soma_display = _export_soma_display(session_dir, hpe, fps)
             except Exception:
                 LOG.exception("SOMA display export raised for session %s", session_id)
+
+        _sanitize_hpe(hpe)
 
         write_latest_pointer(
             data_dir,

@@ -19,6 +19,10 @@ What it does, matching the public Privacy Policy:
 3. Unowned data. Session folders that belong to no account (except CEREBEL_DEMO_SESSION_ID)
    follow the same inactivity limit; GEM-X output folders whose session is gone follow the
    raw-video limit. Usage-log rows older than the inactivity limit are dropped.
+4. Neck IK leftovers. Older builds wrote soma_raw.npz / soma_aligned.npz to
+   kinetic-lens/retargeting_neck_v2/outputs/<session> (CEREBEL_NECK_OUTPUT_ROOT), outside the
+   session folder. The session keeps its own copy in ik/, so these folders are removed as soon
+   as their session is gone, and otherwise after the raw-video limit.
 
 Every run is logged, and appended to <data>/product/retention.jsonl (ids and counts only).
 """
@@ -141,7 +145,14 @@ def _renewing_subscription(settings: Settings, user_id: str) -> bool:
 
 
 def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = None) -> dict[str, Any]:
-    from motion_agent.app.product_api import gemx_output_dir, purge_session_dir, remove_account, scrub_events
+    from motion_agent.app.product_api import (
+        gemx_output_dir,
+        gemx_output_root,
+        neck_output_root,
+        purge_session_dir,
+        remove_account,
+        scrub_events,
+    )
 
     now = now or datetime.now(timezone.utc)
     raw_days = raw_video_retention_days()
@@ -159,6 +170,7 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
         "raw_video_deleted": [],
         "orphan_sessions_deleted": [],
         "orphan_gemx_deleted": [],
+        "neck_ik_deleted": [],
         "events_removed": 0,
     }
 
@@ -238,7 +250,7 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
                  "would delete" if dry_run else "deleted", sid, entry["files"], entry["bytes"], entry["processed_at"])
 
     # 4. GEM-X output folders whose session folder no longer exists.
-    gemx_root = _gemx_root()
+    gemx_root = _existing_dir(gemx_output_root())
     if gemx_root is not None:
         for item in sorted(p for p in gemx_root.iterdir() if p.is_dir()):
             sid = item.name
@@ -251,7 +263,22 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
                 report["orphan_gemx_deleted"].append(sid)
                 LOG.info("%s GEM-X output without a session: %s", "would delete" if dry_run else "deleted", sid)
 
-    # 5. Old usage-log rows.
+    # 5. Neck IK files older builds left outside the session folder (session/ik/ has a copy).
+    neck_root = _existing_dir(neck_output_root())
+    if neck_root is not None:
+        for item in sorted(p for p in neck_root.iterdir() if p.is_dir()):
+            sid = item.name
+            if sid == demo:
+                continue
+            stamp = _mtime(item)
+            if (sessions_root / sid).is_dir() and (stamp is None or stamp >= raw_cutoff):
+                continue
+            if not dry_run:
+                shutil.rmtree(item, ignore_errors=True)
+            report["neck_ik_deleted"].append(sid)
+            LOG.info("%s neck IK files of session %s", "would delete" if dry_run else "deleted", sid)
+
+    # 6. Old usage-log rows.
     if dry_run:
         report["events_removed"] = _count_old_events(settings, inactive_cutoff)
     else:
@@ -262,9 +289,7 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
     return report
 
 
-def _gemx_root() -> Path | None:
-    gemx_root = Path(os.environ.get("CEREBEL_GEMX_ROOT", "/root/GEM-X"))
-    root = Path(os.environ.get("CEREBEL_GEMX_OUTPUT_ROOT", str(gemx_root / "outputs" / "cerebel")))
+def _existing_dir(root: Path) -> Path | None:
     try:
         return root if root.is_dir() else None
     except OSError:
@@ -300,6 +325,7 @@ def summary_line(report: dict[str, Any]) -> str:
         f"({len(report['accounts_skipped'])} skipped), "
         f"{len(report['orphan_sessions_deleted'])} unowned sessions, "
         f"{len(report['orphan_gemx_deleted'])} orphan GEM-X folders, "
+        f"{len(report['neck_ik_deleted'])} neck IK folders, "
         f"{report['events_removed']} old usage events"
     )
 

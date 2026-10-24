@@ -45,12 +45,18 @@ class _TempData(unittest.TestCase):
         root = Path(self._tmp.name)
         self.data = root / "data"
         self.gemx = root / "gemx-out"
+        self.neck = root / "neck-out"
         self.data.mkdir()
         self.gemx.mkdir()
+        self.neck.mkdir()
         self.settings = _settings(self.data)
         self.env = mock.patch.dict(
             os.environ,
-            {"CEREBEL_GEMX_OUTPUT_ROOT": str(self.gemx), "CEREBEL_DEMO_SESSION_ID": ""},
+            {
+                "CEREBEL_GEMX_OUTPUT_ROOT": str(self.gemx),
+                "CEREBEL_NECK_OUTPUT_ROOT": str(self.neck),
+                "CEREBEL_DEMO_SESSION_ID": "",
+            },
         )
         self.env.start()
         for key in ("CEREBEL_RAW_VIDEO_RETENTION_DAYS", "CEREBEL_INACTIVE_DELETE_DAYS"):
@@ -286,6 +292,25 @@ class RetentionTests(_TempData):
         self.assertFalse(stale.exists())
         self.assertFalse((self.gemx / "GONE1").exists())
 
+    def test_neck_ik_leftovers_outside_the_session_are_removed(self):
+        active = self._user(consent=True)
+        self._session("RECENT1", processed_days_ago=2, owner=active["user_id"])
+        self._session("AGED1", processed_days_ago=40, owner=active["user_id"])
+        for sid, days in (("RECENT1", 2), ("AGED1", 40), ("GONE2", 1)):
+            (self.neck / sid).mkdir()
+            (self.neck / sid / "soma_raw.npz").write_bytes(b"x")
+            (self.neck / sid / "soma_aligned.npz").write_bytes(b"x")
+            _age(self.neck / sid, days)
+        dry = retention.run(self.settings, dry_run=True)
+        self.assertEqual(sorted(dry["neck_ik_deleted"]), ["AGED1", "GONE2"])
+        self.assertTrue((self.neck / "GONE2").is_dir())
+        report = retention.run(self.settings)
+        self.assertEqual(sorted(report["neck_ik_deleted"]), ["AGED1", "GONE2"])
+        self.assertTrue((self.neck / "RECENT1" / "soma_aligned.npz").is_file())
+        self.assertFalse((self.neck / "AGED1").exists())
+        self.assertFalse((self.neck / "GONE2").exists())
+        self.assertIn("2 neck IK folders", retention.summary_line(report))
+
     def test_cli_dry_run(self):
         self._session("CLI1", processed_days_ago=45, owner=None)
         out = io.StringIO()
@@ -309,6 +334,8 @@ class AccountDeleteTests(_TempData):
             (s / "source_video.mp4").write_bytes(b"v")
             (self.gemx / sid).mkdir()
             (self.gemx / sid / "hpe_results.pt").write_bytes(b"x")
+            (self.neck / sid).mkdir()
+            (self.neck / sid / "soma_aligned.npz").write_bytes(b"x")
             add_capture(self.settings.product_dir, user_id=uid, session_id=sid, filename="mine.mp4")
         product_api.remove_capture(self.settings, user, "DEL2")
         (self.gemx / "DEL2").mkdir()  # simulate GPU results left over from before this fix
@@ -325,6 +352,7 @@ class AccountDeleteTests(_TempData):
         for sid in ("DEL1", "DEL2"):
             self.assertFalse((self.data / "sessions" / sid).exists())
             self.assertFalse((self.gemx / sid).exists())
+            self.assertFalse((self.neck / sid).exists())
         self.assertEqual(all_captures(self.settings.product_dir), [])
         self.assertNotIn(uid, billing._read(self.settings.product_dir)["users"])
         events = (self.settings.product_dir / "events.jsonl").read_text()
@@ -346,6 +374,58 @@ class AccountDeleteTests(_TempData):
         data["users"][user["user_id"]]["cancel_at_period_end"] = True
         billing._write(self.settings.product_dir, data)
         self.assertEqual(product_api.remove_account(self.settings, user)[0], 200)
+
+
+class HpeSanitizeTests(unittest.TestCase):
+    def setUp(self):
+        try:
+            import torch
+        except ImportError:
+            raise unittest.SkipTest("torch not installed")
+        self.torch = torch
+        import sys
+
+        root = str(Path(__file__).resolve().parents[2])
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        import hpe_privacy
+
+        self.hpe_privacy = hpe_privacy
+
+    def _pred(self):
+        t = self.torch
+        params = lambda: {  # noqa: E731
+            "global_orient": t.ones(5, 3),
+            "body_pose": t.ones(5, 228),
+            "identity_coeffs": t.arange(45.0).repeat(5, 1) + 1,
+            "scale_params": t.ones(5, 75),
+            "transl": t.ones(5, 3),
+        }
+        return {
+            "body_params_global": params(),
+            "body_params_incam": params(),
+            "K_fullimg": t.eye(3).repeat(5, 1, 1),
+            "net_outputs": {"model_output": {"pred_x": t.ones(5, 600)}, "decode_dict": {}},
+        }
+
+    def test_drops_head_shape_and_network_outputs_and_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "hpe_results.pt"
+            original = self._pred()
+            self.torch.save(original, path)
+            self.assertTrue(self.hpe_privacy.sanitize_file(path))
+            out = self.torch.load(path, weights_only=False)
+            self.assertNotIn("net_outputs", out)
+            self.assertTrue(out["cerebel_privacy"]["head_identity_zeroed"])
+            for key in ("body_params_global", "body_params_incam"):
+                ident = out[key]["identity_coeffs"]
+                self.assertTrue(self.torch.all(ident[:, 20:40] == 0))
+                self.assertTrue(self.torch.equal(ident[:, :20], original[key]["identity_coeffs"][:, :20]))
+                self.assertTrue(self.torch.equal(ident[:, 40:], original[key]["identity_coeffs"][:, 40:]))
+                self.assertTrue(self.torch.equal(out[key]["body_pose"], original[key]["body_pose"]))
+            self.assertTrue(self.torch.equal(out["K_fullimg"], original["K_fullimg"]))
+            self.assertFalse(self.hpe_privacy.sanitize_file(path))
+            self.assertEqual(self.hpe_privacy.main(["--root", tmp]), 0)
 
 
 class LegalPageTests(unittest.TestCase):

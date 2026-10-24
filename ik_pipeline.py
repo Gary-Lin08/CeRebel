@@ -77,8 +77,9 @@ def _extract_soma_aligned(session_id: str, ik_dir: Path, device: str | None = No
     from retargeting_neck_v2.extract_soma import extract_session
 
     device = device or os.environ.get("CEREBEL_IK_DEVICE", "cuda:0")
-    extracted = extract_session(session_id, device=device)
-    # Prefer a copy next to other IK artifacts so sessions are self-contained.
+    # Write straight into session/ik/ so nothing about the user is left outside the session
+    # folder (account deletion and retention remove the session folder).
+    extracted = extract_session(session_id, device=device, out_dir=ik_dir)
     if extracted.resolve() != aligned.resolve():
         shutil.copy2(extracted, aligned)
     return aligned
