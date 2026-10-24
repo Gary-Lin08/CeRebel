@@ -308,12 +308,38 @@ def finalize_capture(settings: Settings, session_id: str) -> dict[str, Any]:
     }
 
 
+PIPELINE_TIMEOUT_S = 45 * 60
+_TERMINAL_STAGES = {"ready", "error", "no_swing"}
+
+
+def _wait_for_pipeline(settings: Settings, session_id: str, *, poll_s: float = 5.0) -> dict[str, Any]:
+    """Block (in the upload thread) until the GPU pipeline reaches a final stage."""
+    import time
+
+    deadline = time.monotonic() + PIPELINE_TIMEOUT_S
+    while True:
+        prog = read_progress(settings, session_id) or {}
+        if str(prog.get("stage") or "") in _TERMINAL_STAGES:
+            return prog
+        if time.monotonic() >= deadline:
+            _write_progress(
+                settings,
+                session_id,
+                stage="error",
+                percent=100,
+                message="Processing took too long. This upload does not count toward your monthly analyses.",
+                error="timeout",
+            )
+            return read_progress(settings, session_id) or {"stage": "error"}
+        time.sleep(poll_s)
+
+
 def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
     try:
         from upload_server import _process_uploaded_session
 
         _process_uploaded_session(session_id, filename)
-        prog = read_progress(settings, session_id) or {}
+        prog = _wait_for_pipeline(settings, session_id)
         stage = str(prog.get("stage") or "processing")
         if stage == "ready":
             finalize_capture(settings, session_id)

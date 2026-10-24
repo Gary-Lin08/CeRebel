@@ -43,7 +43,9 @@ LOG = logging.getLogger("cerebel.web_api")
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("CEREBEL_DATA_DIR", str(ROOT / "data")))
-HOST = os.environ.get("CEREBEL_WEB_API_HOST", "0.0.0.0")
+# Internal tool: binds to localhost unless explicitly exposed. The public product is
+# motion_agent/app/chat_server.py, which has accounts and per-user access checks.
+HOST = os.environ.get("CEREBEL_WEB_API_HOST", "127.0.0.1")
 PORT = int(os.environ.get("CEREBEL_WEB_API_PORT", "8093"))
 GEMX_ENABLED = os.environ.get("CEREBEL_GEMX_ENABLED", "1").lower() not in ("0", "false", "no")
 
@@ -323,7 +325,16 @@ def create_session(video_bytes: bytes, content_type: str, sport: str, movement: 
         tmp_path.unlink(missing_ok=True)
 
 
+_SESSION_ID_RE = __import__("re").compile(r"^[A-Za-z0-9-]{8,64}$")
+
+
+def _valid_session_id(session_id: str) -> bool:
+    return bool(_SESSION_ID_RE.match(session_id or ""))
+
+
 def session_status(session_id: str) -> dict:
+    if not _valid_session_id(session_id):
+        return {"stage": "not_found"}
     session_dir = DATA_DIR / "sessions" / session_id
     if not session_dir.is_dir():
         return {"stage": "not_found"}
@@ -366,6 +377,8 @@ def session_status(session_id: str) -> dict:
 
 
 def session_results(session_id: str) -> dict:
+    if not _valid_session_id(session_id):
+        raise SessionError("not_ready", "Unknown session.")
     session_dir = DATA_DIR / "sessions" / session_id
     ik_json = session_dir / "ik.json"
     if not ik_json.is_file():
@@ -544,6 +557,10 @@ class Handler(BaseHTTPRequestHandler):
 
         try:
             if parts == ["api", "sessions"]:
+                # Lists every upload on the server, so it is opt-in for local debugging only.
+                if os.environ.get("CEREBEL_WEB_API_LIST_SESSIONS") != "1":
+                    self._json({"error": "not found"}, 404)
+                    return
                 self._json({"sessions": list_sessions()})
                 return
             if parts == ["api", "health"]:
@@ -563,7 +580,12 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if len(parts) >= 3 and parts[0] == "media":
                 session_id, name = parts[1], "/".join(parts[2:])
-                self._file(DATA_DIR / "sessions" / session_id / "ik" / name)
+                base = (DATA_DIR / "sessions" / session_id / "ik").resolve()
+                target = (base / name).resolve()
+                if not _valid_session_id(session_id) or base not in target.parents:
+                    self._json({"error": "not found"}, 404)
+                    return
+                self._file(target)
                 return
         except Exception as exc:  # noqa: BLE001
             LOG.exception("GET %s failed", path)

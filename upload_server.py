@@ -408,6 +408,20 @@ def _on_pipeline_complete(result: PipelineResult) -> None:
         )
 
 
+def ensure_queue() -> GemxPipelineQueue:
+    """Create the GEM-X queue on first use.
+
+    main() creates it for the standalone upload server; the consumer app
+    (motion_agent chat_server) imports this module without calling main(),
+    so it needs the queue created lazily here.
+    """
+    global _QUEUE
+    with _LOCK:
+        if _QUEUE is None:
+            _QUEUE = GemxPipelineQueue(DATA_DIR, on_complete=_on_pipeline_complete, wait_for_warm=True)
+        return _QUEUE
+
+
 def _process_uploaded_session(session_id: str, original_name: str) -> None:
     session_dir = DATA_DIR / "sessions" / session_id
     video_path = session_dir / "upload" / "source_video"
@@ -471,7 +485,7 @@ def _process_uploaded_session(session_id: str, original_name: str) -> None:
             + "\n",
             encoding="utf-8",
         )
-        assert _QUEUE is not None
+        queue = ensure_queue()
         threading.Thread(
             target=_watch_pipeline, args=(session_id,), name=f"watch-{session_id[:8]}", daemon=True
         ).start()
@@ -481,7 +495,7 @@ def _process_uploaded_session(session_id: str, original_name: str) -> None:
             name=f"jpegs-{session_id[:8]}",
             daemon=True,
         ).start()
-        _QUEUE.enqueue(session_dir)
+        queue.enqueue(session_dir)
     except Exception as exc:
         LOG.exception("upload processing failed session=%s", session_id)
         _write_progress(
@@ -739,7 +753,6 @@ def _enrich_from_pointer(session_id: str, prog: dict, ptr: dict) -> dict:
 
 
 def main() -> None:
-    global _QUEUE
     logging.basicConfig(
         level=os.environ.get("CEREBEL_LOG_LEVEL", "INFO"),
         format="%(asctime)s %(levelname)s %(name)s %(message)s",
@@ -748,7 +761,7 @@ def main() -> None:
     (DATA_DIR / "sessions").mkdir(parents=True, exist_ok=True)
     if not UI_DIR.is_dir():
         raise SystemExit(f"upload UI missing: {UI_DIR}")
-    _QUEUE = GemxPipelineQueue(DATA_DIR, on_complete=_on_pipeline_complete, wait_for_warm=True)
+    ensure_queue()
     server = ThreadingHTTPServer((HOST, PORT), Handler)
     LOG.info("upload server on %s:%s ui=%s data=%s", HOST, PORT, UI_DIR, DATA_DIR)
     server.serve_forever()

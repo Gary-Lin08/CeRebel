@@ -1,0 +1,104 @@
+# CeRebel auto-deploy: every push to main is synced to the GPU server over SSH.
+#
+# Repository secrets (Settings > Secrets and variables > Actions > Secrets):
+#   SSH_HOST          server host name
+#   SSH_PORT          SSH port
+#   SSH_USER          login user
+#   SSH_PRIVATE_KEY   private key of a key pair made only for deploys
+#   SSH_KNOWN_HOSTS   output of: ssh-keyscan -p <port> <host>
+#
+# Repository variables (same page > Variables):
+#   DEPLOY_PATH       absolute path of the code on the server, e.g. /root/CeRebel
+#   RESTART_CMD       command that restarts the app, e.g. systemctl restart cerebel-server
+#   HEALTH_CMD        (optional) command that fails if the app is down,
+#                     e.g. curl -fsS http://127.0.0.1:8093/ > /dev/null
+
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Syntax check all Python files
+        run: python -m compileall -q -x '(^|/)(\.git|node_modules|third_party)/' .
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Sync code to server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+        run: |
+          test -n "$DEPLOY_PATH" || { echo "DEPLOY_PATH variable is not set"; exit 1; }
+          stamp=$(date -u +%Y%m%dT%H%M%SZ)
+          # No --delete: files that exist only on the server (models, sessions,
+          # user uploads, .env) are never removed. Overwritten files are kept in
+          # .deploy-backup/<time>/ so a bad deploy can be rolled back by hand.
+          rsync -az --checksum \
+            --backup --backup-dir=".deploy-backup/$stamp" \
+            --exclude '.git/' --exclude '.github/' --exclude '.deploy-backup/' \
+            --exclude '.env' --exclude '*.env' \
+            --exclude 'sessions/' --exclude 'data/' --exclude 'uploads/' \
+            --exclude '__pycache__/' --exclude '*.pyc' \
+            -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT -o IdentitiesOnly=yes" \
+            ./ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
+          echo "Backup of replaced files: $DEPLOY_PATH/.deploy-backup/$stamp"
+
+      - name: Restart and health check
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          RESTART_CMD: ${{ vars.RESTART_CMD }}
+          HEALTH_CMD: ${{ vars.HEALTH_CMD }}
+        run: |
+          test -n "$RESTART_CMD" || { echo "RESTART_CMD variable is not set"; exit 1; }
+          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" -o IdentitiesOnly=yes \
+            "$SSH_USER@$SSH_HOST" \
+            "cd '$DEPLOY_PATH' && $RESTART_CMD"
+          if [ -n "$HEALTH_CMD" ]; then
+            for i in 1 2 3 4 5 6; do
+              if ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" -o IdentitiesOnly=yes \
+                   "$SSH_USER@$SSH_HOST" "$HEALTH_CMD"; then
+                echo "Health check passed"; exit 0
+              fi
+              echo "Health check failed, retrying in 10s ($i/6)"; sleep 10
+            done
+            echo "App did not come back up after deploy"; exit 1
+          fi
+
+      - name: Remove key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
