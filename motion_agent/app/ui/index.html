@@ -21,6 +21,7 @@
   <script src="/static/marked.min.js"></script>
   <script src="/static/purify.min.js"></script>
   <link rel="stylesheet" href="/static/billing.css" />
+  <link rel="stylesheet" href="/static/playground-v3.css" />
   <style>
 /* CeRebel Playground — name-as-monument + motion stack */
 :root {
@@ -2181,6 +2182,38 @@ code {
     </section>
 
     <main class="pg-stage" id="stage">
+      <section class="v3-hero" id="v3Hero" hidden aria-labelledby="v3HeroTitle">
+        <div class="v3-hero__copy">
+          <p class="v3-eyebrow">Golf swing analysis · from one phone video</p>
+          <h2 class="v3-hero__title" id="v3HeroTitle">See your swing as a full 3D body. Fix the one thing that matters.</h2>
+          <p class="v3-hero__sub">CeRebel rebuilds your skeleton from a normal phone clip, measures every joint, and shows the numbers behind each tip.</p>
+          <div class="v3-hero__actions">
+            <button type="button" class="primary v3-cta" id="v3Upload">Upload a swing</button>
+            <button type="button" class="v3-ghost" id="v3Sample">See a sample swing</button>
+          </div>
+          <ul class="v3-hero__facts">
+            <li><strong>3</strong> free swings a month</li>
+            <li>Results in minutes</li>
+            <li>Delete your swings any time · <a href="/privacy">Privacy</a></li>
+          </ul>
+        </div>
+        <aside class="v3-film" aria-labelledby="v3FilmTitle">
+          <p class="v3-eyebrow" id="v3FilmTitle">How to film it</p>
+          <svg class="v3-film__art" viewBox="0 0 240 120" role="img" aria-label="Phone on a stand, side-on to the golfer, whole body in frame">
+            <rect x="8" y="34" width="34" height="58" rx="6" class="v3-film__phone" />
+            <line x1="25" y1="92" x2="25" y2="114" class="v3-film__line" />
+            <line x1="14" y1="114" x2="36" y2="114" class="v3-film__line" />
+            <path d="M44 63 L150 26 M44 63 L150 112" class="v3-film__ray" />
+            <circle cx="176" cy="30" r="8" class="v3-film__body" />
+            <path d="M176 38 L172 72 M172 72 L162 108 M172 72 L184 108 M174 48 L196 70 L214 104" class="v3-film__body" />
+          </svg>
+          <ol class="v3-film__steps">
+            <li><span>01</span> Side-on, phone still at hip height, 8–10 ft away.</li>
+            <li><span>02</span> Whole body and club in frame, address to finish.</li>
+            <li><span>03</span> One swing, under 30 s. Slow-motion if you have it.</li>
+          </ol>
+        </aside>
+      </section>
       <p class="demo-note" id="demoNote" hidden>Sample swing. Sign in to upload your own clip.</p>
       <section class="empty-state" id="emptyState" hidden>
         <h3>Upload a swing</h3>
@@ -2478,6 +2511,10 @@ code {
       const hasFix = !!(document.getElementById("fixHero") && !document.getElementById("fixHero").hidden);
       const processing = !!(document.getElementById("processingState") && !document.getElementById("processingState").hidden);
       home.hidden = hasFix || processing;
+      // The hero is the single way in for visitors; once you have your own swing it steps aside.
+      const hero = document.getElementById("v3Hero");
+      if (hero) hero.hidden = !!authToken && (hasFix || processing);
+      document.body.classList.toggle("v3-has-swing", hasFix);
     }
 
     function authHeaders(extra) {
@@ -5692,6 +5729,17 @@ code {
       if (tocStart) {
         tocStart.addEventListener("click", function () {
           openAccountPanel(true);
+        });
+      }
+      const v3Upload = document.getElementById("v3Upload");
+      if (v3Upload) v3Upload.addEventListener("click", () => openAccountPanel(true));
+      const v3Sample = document.getElementById("v3Sample");
+      if (v3Sample) {
+        v3Sample.addEventListener("click", () => {
+          loadSession({ announce: true }).then(() => {
+            const target = document.getElementById("fixHero");
+            if (target && !target.hidden) target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
         });
       }
       const tocSample = document.getElementById("tocTrySample");
