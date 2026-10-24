@@ -1,0 +1,471 @@
+diff --git a/gem/utils/ckpt_compat.py b/gem/utils/ckpt_compat.py
+index e8e6124..36da8b1 100644
+--- a/gem/utils/ckpt_compat.py
++++ b/gem/utils/ckpt_compat.py
+@@ -21,7 +21,9 @@ def remap_legacy_state_dict(state_dict):
+         ("nova.", "body_model."),
+         ("nvhuman.", "body_model."),
+     ]
+-    dual_write_denoiser_prefixes = (
++    # Older checkpoints store condition embedders under the denoiser submodule;
++    # current GEM owns them at the LightningModule root.
++    denoiser_to_root_prefixes = (
+         "learned_pos_params",
+         "learned_pos_linear.",
+         "embed_noisyobs.",
+@@ -30,6 +32,7 @@ def remap_legacy_state_dict(state_dict):
+         "cam_angvel_embedder.",
+         "cond_exists_embedder.",
+     )
++    denoiser_prefix = "pipeline.denoiser3d.denoiser."
+ 
+     remapped = OrderedDict()
+     renamed = 0
+@@ -40,12 +43,12 @@ def remap_legacy_state_dict(state_dict):
+                 new_key = f"{new_prefix}{new_key[len(old_prefix):]}"
+                 renamed += 1
+                 break
+-        remapped[new_key] = value
+-        if any(new_key.startswith(prefix) for prefix in dual_write_denoiser_prefixes):
+-            dual_key = f"pipeline.denoiser3d.denoiser.{new_key}"
+-            if dual_key not in remapped:
+-                remapped[dual_key] = value
++        if new_key.startswith(denoiser_prefix):
++            suffix = new_key[len(denoiser_prefix) :]
++            if any(suffix.startswith(p) for p in denoiser_to_root_prefixes):
++                new_key = suffix
+                 renamed += 1
++        remapped[new_key] = value
+ 
+     return remapped, {
+         "renamed": renamed,
+diff --git a/gem/utils/sam3db_extractor.py b/gem/utils/sam3db_extractor.py
+index e29191c..2ee4646 100644
+--- a/gem/utils/sam3db_extractor.py
++++ b/gem/utils/sam3db_extractor.py
+@@ -137,10 +137,20 @@ class SAM3DBExtractor:
+         render_mhr=False,
+     ):
+         del render_mhr
++        imgs = read_video_np(video_path, scale=img_ds)
++        return self.extract_features(imgs, bbx_xys, batch_size=batch_size)
++
++    def extract_features(
++        self,
++        imgs,
++        bbx_xys,
++        batch_size=16,
++    ):
++        """Run SAM3D feature extraction on an RGB uint8 array (N,H,W,3)."""
+         from sam_3d_body.data.utils.prepare_batch import prepare_batch  # type: ignore[reportMissingImports]
+         from sam_3d_body.utils import recursive_to  # type: ignore[reportMissingImports]
+ 
+-        imgs = read_video_np(video_path, scale=img_ds)
++        imgs = np.asarray(imgs)
+         bbx_xys = torch.as_tensor(bbx_xys).float().cpu().numpy()
+ 
+         tokens = []
+@@ -154,15 +164,12 @@ class SAM3DBExtractor:
+ 
+             for j, img in enumerate(batch_imgs):
+                 cx, cy, s = batch_bbx[j]
+-                s_scaled = s * img_ds
+-                cx_scaled = cx * img_ds
+-                cy_scaled = cy * img_ds
+                 box = np.array(
+                     [
+-                        cx_scaled - s_scaled / 2,
+-                        cy_scaled - s_scaled / 2,
+-                        cx_scaled + s_scaled / 2,
+-                        cy_scaled + s_scaled / 2,
++                        cx - s / 2,
++                        cy - s / 2,
++                        cx + s / 2,
++                        cy + s / 2,
+                     ],
+                     dtype=np.float32,
+                 ).reshape(1, 4)
+@@ -218,3 +225,4 @@ class SAM3DBExtractor:
+             "transls": torch.cat(transls, dim=0),
+             "rendered_imgs": [],
+         }
++
+diff --git a/gem/utils/yolox_detector.py b/gem/utils/yolox_detector.py
+index c30dc5a..dc4a617 100644
+--- a/gem/utils/yolox_detector.py
++++ b/gem/utils/yolox_detector.py
+@@ -444,24 +444,30 @@ class ByteTracker:
+ 
+ def detect_and_track(
+     frames: np.ndarray,
+-    detector: YOLOXDetector,
++    detector,
+     *,
+     detect_every: int = 1,
+     tracker_kwargs: dict | None = None,
++    use_bytetrack: bool = True,
++    batch_size: int = 16,
+ ) -> tuple[np.ndarray, np.ndarray]:
+-    """Run YOLOX detection + ByteTrack on a video and return the primary
+-    person's bounding boxes.
++    """Run YOLOX detection (+ optional ByteTrack) and return primary person boxes.
+ 
+     Parameters
+     ----------
+     frames : (T, H, W, 3) uint8 RGB array
+-    detector : YOLOXDetector instance
++    detector : YOLOXDetector or YOLOXTorchDetector
+     detect_every : int
+-        Run detection every N frames.  Intermediate frames use Kalman
+-        prediction only (faster but less accurate for fast motion).
+-        Set to 1 to detect every frame.
++        Run detection every N frames when using ByteTrack. Intermediate frames
++        use Kalman prediction only. Ignored when ``use_bytetrack=False``.
+     tracker_kwargs : dict
+         Extra kwargs for ByteTracker.
++    use_bytetrack : bool
++        If False, skip ByteTrack and take the highest-score person box per
++        frame (best for single-subject captures). Gaps are interpolated.
++    batch_size : int
++        Frames per YOLO forward when the detector supports ``detect_batch``
++        (PyTorch checkpoint backend).
+ 
+     Returns
+     -------
+@@ -471,25 +477,111 @@ def detect_and_track(
+     from tqdm import tqdm
+ 
+     T, H, W, _ = frames.shape
+-    tracker = ByteTracker(**(tracker_kwargs or {}))
+ 
+-    # Per-frame results: list of (track_results)
++    if not use_bytetrack:
++        return _detect_primary_no_track(frames, detector, batch_size=batch_size)
++
++    tracker = ByteTracker(**(tracker_kwargs or {}))
+     per_frame: list[list[tuple[np.ndarray, int, float]]] = []
+ 
+-    for i in tqdm(range(T), desc="YOLOX+ByteTrack"):
+-        if i % detect_every == 0:
++    # Prefer batched detection when available.
++    detect_idxs = list(range(0, T, max(1, detect_every)))
++    det_map: dict[int, tuple[np.ndarray, np.ndarray]] = {}
++    if hasattr(detector, "detect_batch") and detect_every == 1:
++        for start in tqdm(range(0, T, batch_size), desc="YOLOX(batch)"):
++            chunk = frames[start : start + batch_size]
++            imgs_bgr = [f[..., ::-1].copy() for f in chunk]
++            boxes_list, scores_list = detector.detect_batch(imgs_bgr)
++            for i, (boxes, scores) in enumerate(zip(boxes_list, scores_list)):
++                det_map[start + i] = (boxes, scores)
++    else:
++        for i in tqdm(detect_idxs, desc="YOLOX+ByteTrack"):
+             img_bgr = frames[i][..., ::-1].copy()
+-            boxes, scores = detector.detect(img_bgr)
++            det_map[i] = detector.detect(img_bgr)
++
++    for i in tqdm(range(T), desc="ByteTrack", leave=False):
++        if i in det_map:
++            boxes, scores = det_map[i]
+         else:
+-            # No detection — feed empty to tracker (Kalman prediction only)
+             boxes, scores = np.empty((0, 4)), np.empty((0,))
+         results = tracker.update(boxes, scores)
+         per_frame.append(results)
+ 
+-    # Select primary track: the one with largest cumulative area
+     return _select_primary_track(per_frame, T, H, W)
+ 
+ 
++def _detect_primary_no_track(
++    frames: np.ndarray,
++    detector,
++    *,
++    batch_size: int = 16,
++) -> tuple[np.ndarray, np.ndarray]:
++    """Per-frame best YOLO box (no ByteTrack), with gap interpolation."""
++    from tqdm import tqdm
++
++    T, H, W, _ = frames.shape
++    bbx_xyxy = np.zeros((T, 4), dtype=np.float32)
++    track_ids = np.full(T, -1, dtype=np.int32)
++
++    def _pick(boxes: np.ndarray, scores: np.ndarray) -> np.ndarray | None:
++        if boxes is None or len(boxes) == 0:
++            return None
++        return boxes[int(np.argmax(scores))]
++
++    if hasattr(detector, "detect_batch"):
++        for start in tqdm(range(0, T, batch_size), desc="YOLOX(batch,no-track)"):
++            chunk = frames[start : start + batch_size]
++            imgs_bgr = [f[..., ::-1].copy() for f in chunk]
++            boxes_list, scores_list = _detect_batch_with_oom_backoff(
++                detector, imgs_bgr, batch_size
++            )
++            for i, (boxes, scores) in enumerate(zip(boxes_list, scores_list)):
++                t = start + i
++                box = _pick(boxes, scores)
++                if box is not None:
++                    bbx_xyxy[t] = box
++                    track_ids[t] = 0
++    else:
++        for t in tqdm(range(T), desc="YOLOX(no-track)"):
++            boxes, scores = detector.detect(frames[t][..., ::-1].copy())
++            box = _pick(boxes, scores)
++            if box is not None:
++                bbx_xyxy[t] = box
++                track_ids[t] = 0
++
++    if (track_ids == 0).sum() == 0:
++        default = np.array([0.0, 0.0, W - 1, H - 1], dtype=np.float32)
++        return np.tile(default, (T, 1)), np.full(T, -1, dtype=np.int32)
++
++    _interpolate_gaps(bbx_xyxy, track_ids, 0, H, W)
++    bbx_xyxy[:, [0, 2]] = np.clip(bbx_xyxy[:, [0, 2]], 0, W - 1)
++    bbx_xyxy[:, [1, 3]] = np.clip(bbx_xyxy[:, [1, 3]], 0, H - 1)
++    return bbx_xyxy, track_ids
++
++
++def _detect_batch_with_oom_backoff(detector, imgs_bgr, batch_size: int):
++    """Run detect_batch, splitting on CUDA OOM."""
++    import torch
++
++    bs = max(1, min(batch_size, len(imgs_bgr)))
++    while bs >= 1:
++        try:
++            # Process in chunks of bs
++            all_boxes, all_scores = [], []
++            for start in range(0, len(imgs_bgr), bs):
++                chunk = imgs_bgr[start : start + bs]
++                boxes_list, scores_list = detector.detect_batch(chunk)
++                all_boxes.extend(boxes_list)
++                all_scores.extend(scores_list)
++            return all_boxes, all_scores
++        except torch.cuda.OutOfMemoryError:
++            torch.cuda.empty_cache()
++            if bs == 1:
++                raise
++            bs = max(1, bs // 2)
++    raise RuntimeError("YOLO detect_batch failed")
++
++
+ def _select_primary_track(
+     per_frame: list[list[tuple[np.ndarray, int, float]]],
+     T: int,
+diff --git a/requirements.txt b/requirements.txt
+index f960e3c..3d8cf8a 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -1,31 +1,35 @@
+-# PyTorch
+-torch==2.10.0+cu126
+-torchvision==0.25.0+cu126
++# PyTorch — keep the machine's installed CUDA/torch/cudnn stack.
++# Do not upgrade these pins to match upstream; install matching wheels separately.
++torch
++torchvision
+ timm==0.6.7
+ 
+ # Lightning + Hydra
+-lightning==2.6.1
++lightning>=2.0,<2.5
+ hydra-core==1.3.0
+ hydra-colorlog==1.2.0
+-rich==14.3.3
++rich
+ 
+ # Common utilities
+-numpy==1.23.5
+-scipy==1.15.3
+-pillow==12.1.1
+-tqdm==4.67.3
+-pyyaml==6.0.3
+-setuptools==82.0.1
+-opencv-python==4.11.0.86
+-ffmpeg-python==0.2.0
+-einops==0.8.2
++numpy>=1.23,<2
++scipy
++pillow
++tqdm
++pyyaml
++setuptools<75
++opencv-python
++ffmpeg-python
++einops
+ imageio==2.34.1
+-av==13.1.0
+-safetensors==0.7.0
++av<14
++safetensors
+ 
+ # 3D
+-trimesh==4.11.3
++trimesh
++viser
+ 
+ # ML
+-transformers==5.3.0
+-wandb==0.25.1
++transformers<5
++wandb
++huggingface_hub
++protobuf>=5.28.1,<6  # avoid TF/onnx MessageFactory.GetPrototype breakage
+diff --git a/scripts/demo/demo_soma.py b/scripts/demo/demo_soma.py
+index fec4834..c09cf96 100644
+--- a/scripts/demo/demo_soma.py
++++ b/scripts/demo/demo_soma.py
+@@ -79,6 +79,23 @@ def _parse_args():
+     parser.add_argument("--ckpt", type=str, default=None)
+     parser.add_argument("--exp", type=str, default="gem_soma_regression")
+     parser.add_argument("--retarget", action="store_true", help="Retarget SOMA motion to G1 robot")
++    parser.add_argument(
++        "--kp2d_overlay",
++        action="store_true",
++        help="Write intermediate 0_kp2d77_overlay.mp4 (off by default)",
++    )
++    parser.add_argument(
++        "--viser",
++        action=argparse.BooleanOptionalAction,
++        default=True,
++        help="Serve interactive 3D visualization via viser (default: on; headless-friendly)",
++    )
++    parser.add_argument("--viser_port", type=int, default=8080, help="Viser HTTP port")
++    parser.add_argument(
++        "--render_video",
++        action="store_true",
++        help="Also write Open3D offscreen MP4 renders (needs working EGL/Open3D)",
++    )
+     return parser.parse_args()
+ 
+ 
+@@ -428,13 +445,14 @@ def main():
+     _copy_video_if_needed(cfg)
+     run_preprocess(cfg)
+     fps = int(cv2.VideoCapture(cfg.video_path).get(cv2.CAP_PROP_FPS) + 0.5) or 30
+-    render_2d_keypoints(
+-        video_path=cfg.video_path,
+-        vitpose_path=cfg.paths.vitpose,
+-        bbx_path=cfg.paths.bbx,
+-        output_path=str(Path(cfg.output_dir) / "0_kp2d77_overlay.mp4"),
+-        fps=fps,
+-    )
++    if args.kp2d_overlay:
++        render_2d_keypoints(
++            video_path=cfg.video_path,
++            vitpose_path=cfg.paths.vitpose,
++            bbx_path=cfg.paths.bbx,
++            output_path=str(Path(cfg.output_dir) / "0_kp2d77_overlay.mp4"),
++            fps=fps,
++        )
+     data = load_data_dict(cfg)
+ 
+     if not Path(cfg.paths.hpe_results).exists():
+@@ -445,27 +463,53 @@ def main():
+         pred = model.predict(data, static_cam=cfg.static_cam, postproc=True)
+         torch.save(detach_to_cpu(pred), cfg.paths.hpe_results)
+ 
+-    render_incam(cfg, fps=fps)
+-    render_global_o3d(cfg, fps=fps)
+-
+-    if args.retarget:
+-        from scripts.demo.retarget_utils import render_g1_robot, run_retarget
++    if args.render_video:
++        render_incam(cfg, fps=fps)
++        render_global_o3d(cfg, fps=fps)
++
++        if args.retarget:
++            from scripts.demo.retarget_utils import render_g1_robot, run_retarget
++
++            pred = torch.load(cfg.paths.hpe_results)
++            body_params_global = _get_body_params(pred, "body_params_global")
++            csv_buffer = run_retarget(body_params_global, fps, cfg.paths.retarget_csv)
++            render_g1_robot(cfg, csv_buffer, fps=fps)
++            kp2d_video = str(Path(cfg.output_dir) / "0_kp2d77_overlay.mp4")
++            merge_videos_grid_2x2(
++                [
++                    kp2d_video,
++                    cfg.paths.incam_video,
++                    cfg.paths.global_video,
++                    cfg.paths.retarget_video,
++                ],
++                cfg.paths.incam_global_horiz_video,
++            )
++        else:
++            merge_videos_horizontal(
++                [cfg.paths.incam_video, cfg.paths.global_video], cfg.paths.incam_global_horiz_video
++            )
++
++    if args.retarget and not args.render_video:
++        from scripts.demo.retarget_utils import run_retarget
+ 
+         pred = torch.load(cfg.paths.hpe_results)
+         body_params_global = _get_body_params(pred, "body_params_global")
+-        csv_buffer = run_retarget(body_params_global, fps, cfg.paths.retarget_csv)
+-        render_g1_robot(cfg, csv_buffer, fps=fps)
+-        kp2d_video = str(Path(cfg.output_dir) / "0_kp2d77_overlay.mp4")
+-        merge_videos_grid_2x2(
+-            [kp2d_video, cfg.paths.incam_video, cfg.paths.global_video, cfg.paths.retarget_video],
+-            cfg.paths.incam_global_horiz_video,
+-        )
+-    else:
+-        merge_videos_horizontal(
+-            [cfg.paths.incam_video, cfg.paths.global_video], cfg.paths.incam_global_horiz_video
+-        )
++        run_retarget(body_params_global, fps, cfg.paths.retarget_csv)
++
+     Log.info(f"[Done] Outputs in {cfg.output_dir}")
+ 
++    if args.viser:
++        from gem.utils.vis.viser_viewer import compute_demo_meshes, launch_viser_demo
++
++        faces, verts_global = compute_demo_meshes(cfg)
++        launch_viser_demo(
++            faces,
++            verts_global,
++            fps=float(fps),
++            port=args.viser_port,
++            block=True,
++        )
++
+ 
+ if __name__ == "__main__":
+     os.environ.setdefault("PYOPENGL_PLATFORM", "osmesa")
+diff --git a/scripts/install_env.sh b/scripts/install_env.sh
+index 4504b0a..c5edad3 100755
+--- a/scripts/install_env.sh
++++ b/scripts/install_env.sh
+@@ -5,7 +5,7 @@ echo "Installing gem in editable mode..."
+ uv pip install -e .
+ 
+ echo "Installing SAM-3D-Body runtime deps..."
+-uv pip install cloudpickle fvcore iopath pycocotools braceexpand roma 'setuptools<75'
++uv pip install cloudpickle fvcore iopath pycocotools braceexpand roma 'setuptools<75' viser 'protobuf>=5.28.1,<6'
+ 
+ if [[ "$(uname)" == "Darwin" ]]; then
+     echo "macOS detected — skipping detectron2, installing ONNX Runtime..."
+@@ -13,6 +13,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
+ else
+     echo "Installing detectron2..."
+     uv pip install 'git+https://github.com/facebookresearch/detectron2.git@a1ce2f9' --no-build-isolation --no-deps
++    echo "Installing ONNX Runtime (YOLOX detector)..."
++    uv pip install onnxruntime-gpu || uv pip install onnxruntime
+ fi
+ 
+ echo "Environment setup complete."
++echo "Note: keep the machine's existing torch / CUDA / cuDNN stack; do not upgrade them via this script."
+diff --git a/setup.cfg b/setup.cfg
+index 19d5e0b..8442616 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -27,9 +27,10 @@ install_requires =
+     scipy
+     pillow
+     transformers
+-    open3d
+     wandb
+     huggingface_hub
++    viser
++    trimesh
+ 
+ [options.extras_require]
+ train =
