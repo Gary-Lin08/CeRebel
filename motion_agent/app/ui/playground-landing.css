@@ -115,7 +115,7 @@ body.lp-mode #accountPanel button:focus-visible { outline: 2px solid #2F6B45; ou
 .swing { margin: var(--s6) 0 0; }
 .swing__stage { display: grid; grid-template-columns: 1fr 2fr; height: min(58vh, 540px); }
 .swing__video { position: relative; overflow: hidden; border-radius: var(--r); background: var(--paper-2); }
-.swing__video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.swing__video video { display: block; width: 100%; height: 100%; max-height: none; margin: 0; border-radius: 0; object-fit: cover; background: var(--paper-2); }
 .swing__video video[hidden] { display: none; }
 .swing__placeholder {
   position: absolute; inset: 0; display: grid; place-content: center; text-align: center;
