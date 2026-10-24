@@ -119,6 +119,18 @@ class MediaEndpointTests(unittest.TestCase):
         status, _, _ = self._get(f"/media/OTHER/session.mp4?mt={tok}")
         self.assertEqual(status, 403)
 
+    def test_static_cannot_escape_the_ui_folder(self):
+        for path in ("/static/../chat_server.py", "/static/../../../deploy/env.product.example", "/static/../../../../../../etc/passwd"):
+            conn = __import__("http.client").client.HTTPConnection("127.0.0.1", self.server.server_address[1])
+            conn.request("GET", path)  # sent as-is, no client-side normalisation
+            resp = conn.getresponse()
+            body = resp.read()
+            conn.close()
+            self.assertEqual(resp.status, 404, path)
+            self.assertNotIn(b"root:", body)
+        status, _, _ = self._get("/static/billing.css")
+        self.assertEqual(status, 200)
+
     def test_deleted_swing_link_says_gone_to_its_owner_only(self):
         from motion_agent.app.accounts import login
 
