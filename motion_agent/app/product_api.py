@@ -5,6 +5,8 @@ from __future__ import annotations
 import cgi
 import json
 import logging
+import os
+import re
 import shutil
 import threading
 import uuid
@@ -180,20 +182,25 @@ def _public_subscription(settings: Settings, user_id: str) -> dict[str, Any]:
 
 
 def user_may_view_session(settings: Settings, user: dict[str, Any] | None, session_id: str) -> bool:
-    """Anonymous callers may only see ownerless demo captures."""
-    if user is None:
-        return owner_of(settings.product_dir, session_id) is None
-    return owns(settings.product_dir, user["user_id"], session_id)
+    """Only an explicitly configured demo or the account's own capture is visible."""
+    if session_id == configured_demo_session_id(settings):
+        return True
+    return bool(user) and owns(settings.product_dir, user["user_id"], session_id)
+
+
+def configured_demo_session_id(settings: Settings) -> str | None:
+    """Never infer a public demo from unowned legacy sessions."""
+    sid = os.environ.get("CEREBEL_DEMO_SESSION_ID", "").strip()
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", sid):
+        return None
+    motion = settings.data_dir / "sessions" / sid / "ik" / "opensim-motion.json"
+    return sid if motion.is_file() and owner_of(settings.product_dir, sid) is None else None
 
 
 def default_visible_session_id(
     settings: Settings, data_dir: Path, user: dict[str, Any] | None
 ) -> str | None:
-    """Newest ready capture the caller may read when no session id was given.
-
-    Signed-in users get their own newest ready capture, then the shared demo.
-    Anonymous callers get the newest ownerless (demo) session, never another account's upload.
-    """
+    """Return the account's newest ready capture, then the configured demo."""
     sessions_root = Path(data_dir) / "sessions"
 
     def _ready(sid: str) -> bool:
@@ -204,17 +211,7 @@ def default_visible_session_id(
             sid = str(row.get("session_id") or "")
             if sid and _ready(sid):
                 return sid
-    if not sessions_root.is_dir():
-        return None
-    demo: list[tuple[float, str]] = []
-    for entry in sessions_root.iterdir():
-        motion = entry / "ik" / "opensim-motion.json"
-        if entry.is_dir() and motion.is_file() and owner_of(settings.product_dir, entry.name) is None:
-            demo.append((motion.stat().st_mtime, entry.name))
-    if not demo:
-        return None
-    demo.sort(reverse=True)
-    return demo[0][1]
+    return configured_demo_session_id(settings)
 
 
 def read_progress(settings: Settings, session_id: str) -> dict[str, Any] | None:
@@ -523,11 +520,8 @@ def remove_capture(settings: Settings, user: dict[str, Any], session_id: str) ->
 
 
 def media_allowed(settings: Settings, user: dict[str, Any] | None, session_id: str) -> bool:
-    """Uploaded captures stay private. Sessions with no owner remain the shared demo."""
-    owner = owner_of(settings.product_dir, session_id)
-    if not owner:
-        return True
-    return bool(user) and user.get("user_id") == owner
+    """Only the chosen demo and captures owned by this account are public/readable."""
+    return user_may_view_session(settings, user, session_id)
 
 
 def purge_session_dir(settings: Settings, session_id: str) -> None:

@@ -255,13 +255,13 @@ class Handler(BaseHTTPRequestHandler):
                     self, 500, {"ok": False, "error": True, "message": str(exc), "sports": []}
                 )
         if path == "/api/session":
-            from motion_agent.app.library import list_captures, owns
-            from motion_agent.app.product_api import current_user
+            from motion_agent.app.library import list_captures
+            from motion_agent.app.product_api import current_user, user_may_view_session
 
             qs = parse_qs(parsed.query or "")
             requested = (qs.get("session_id") or [None])[0]
             user = current_user(SETTINGS, self.headers)
-            if user and requested and not owns(SETTINGS.product_dir, user["user_id"], requested):
+            if requested and not user_may_view_session(SETTINGS, user, requested):
                 return _json_response(
                     self, 403, {"error": True, "message": "That capture belongs to another account"}
                 )

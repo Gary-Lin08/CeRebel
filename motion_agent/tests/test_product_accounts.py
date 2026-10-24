@@ -14,7 +14,7 @@ from motion_agent.app.accounts import login, register, user_from_token
 from motion_agent.app.config import Settings
 from motion_agent.app.health import health_report
 from motion_agent.app.library import add_capture, captures_today, delete_capture, list_captures
-from motion_agent.app.product_api import media_allowed, purge_session_dir
+from motion_agent.app.product_api import default_visible_session_id, media_allowed, purge_session_dir
 
 
 class AccountTests(unittest.TestCase):
@@ -91,7 +91,14 @@ class PrivacyTests(unittest.TestCase):
             self.assertTrue(media_allowed(settings, {"user_id": "owner"}, "SID"))
             self.assertFalse(media_allowed(settings, None, "SID"))
             self.assertFalse(media_allowed(settings, {"user_id": "other"}, "SID"))
-            self.assertTrue(media_allowed(settings, None, "DEMO"))
+            self.assertFalse(media_allowed(settings, None, "DEMO"))
+            demo = data / "sessions" / "DEMO" / "ik"
+            demo.mkdir(parents=True)
+            (demo / "opensim-motion.json").write_text("{}", encoding="utf-8")
+            with mock.patch.dict(os.environ, {"CEREBEL_DEMO_SESSION_ID": "DEMO"}):
+                self.assertTrue(media_allowed(settings, None, "DEMO"))
+                self.assertEqual(default_visible_session_id(settings, data, None), "DEMO")
+                self.assertFalse(media_allowed(settings, None, "SID"))
             purge_session_dir(settings, "SID")
             self.assertFalse(session.exists())
             outside = data / "not-a-session"
@@ -226,9 +233,11 @@ class DefaultSessionScopeTests(unittest.TestCase):
             self._ready(data, "PRIVATE", 2_000)  # newer, but owned by someone
             add_capture(data / "product", user_id="owner", session_id="PRIVATE", filename="a.mp4")
             settings = self._settings(data)
-            self.assertEqual(default_visible_session_id(settings, data, None), "DEMO")
-            self.assertEqual(default_visible_session_id(settings, data, {"user_id": "owner"}), "PRIVATE")
-            self.assertEqual(default_visible_session_id(settings, data, {"user_id": "other"}), "DEMO")
+            self.assertIsNone(default_visible_session_id(settings, data, None))
+            with mock.patch.dict(os.environ, {"CEREBEL_DEMO_SESSION_ID": "DEMO"}):
+                self.assertEqual(default_visible_session_id(settings, data, None), "DEMO")
+                self.assertEqual(default_visible_session_id(settings, data, {"user_id": "owner"}), "PRIVATE")
+                self.assertEqual(default_visible_session_id(settings, data, {"user_id": "other"}), "DEMO")
 
     def test_no_demo_means_no_default(self):
         from motion_agent.app.product_api import default_visible_session_id
@@ -244,10 +253,13 @@ class DefaultSessionScopeTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp:
             data = Path(tmp) / "data"
+            self._ready(data, "DEMO", 1_000)
             add_capture(data / "product", user_id="owner", session_id="PRIVATE", filename="a.mp4")
             settings = self._settings(data)
             self.assertFalse(user_may_view_session(settings, None, "PRIVATE"))
-            self.assertTrue(user_may_view_session(settings, None, "DEMO"))
+            self.assertFalse(user_may_view_session(settings, None, "DEMO"))
+            with mock.patch.dict(os.environ, {"CEREBEL_DEMO_SESSION_ID": "DEMO"}):
+                self.assertTrue(user_may_view_session(settings, None, "DEMO"))
             self.assertTrue(user_may_view_session(settings, {"user_id": "owner"}, "PRIVATE"))
             self.assertFalse(user_may_view_session(settings, {"user_id": "other"}, "PRIVATE"))
 
