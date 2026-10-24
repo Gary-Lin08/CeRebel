@@ -4195,8 +4195,10 @@ code {
     function syncVideoLinks() {
       const on = hasSessionVideo();
       document.querySelectorAll(".ts").forEach((el) => el.classList.toggle("ts--off", !on));
-      const compareToggle = document.getElementById("fixCompareToggle");
-      if (compareToggle) compareToggle.hidden = !on;
+      ["fixCompareToggle", "fixPlayMoment"].forEach((id) => {
+        const btn = document.getElementById(id);
+        if (btn) btn.hidden = !on;
+      });
       const compare = document.getElementById("fixCompare");
       if (compare && !on) compare.hidden = true;
       if (!on) {
