@@ -21,7 +21,6 @@
   <script src="/static/marked.min.js"></script>
   <script src="/static/purify.min.js"></script>
   <link rel="stylesheet" href="/static/billing.css" />
-  <link rel="stylesheet" href="/static/playground-v3.css" />
   <style>
 /* CeRebel Playground — name-as-monument + motion stack */
 :root {
@@ -2114,6 +2113,7 @@ code {
   }
 
 </style>
+  <link rel="stylesheet" href="/static/playground-v3.css" />
 </head>
 <body class="pg pg-dev">
   <div id="pgVanta" aria-hidden="true"></div>
@@ -5732,7 +5732,14 @@ code {
         });
       }
       const v3Upload = document.getElementById("v3Upload");
-      if (v3Upload) v3Upload.addEventListener("click", () => openAccountPanel(true));
+      if (v3Upload) {
+        v3Upload.addEventListener("click", () => {
+          // First-time visitors came to upload, so open on "Create account", not "Sign in".
+          const modeBtn = document.getElementById("accountMode");
+          if (!authToken && accountMode === "login" && modeBtn) modeBtn.click();
+          openAccountPanel(true);
+        });
+      }
       const v3Sample = document.getElementById("v3Sample");
       if (v3Sample) {
         v3Sample.addEventListener("click", () => {

@@ -1,0 +1,219 @@
+/* CeRebel Playground v3 — consumer shell (loaded last; ?dev=1 is untouched).
+   Direction: graphite ground, one lime signal colour, mono for numbers.
+   One way in (the hero), one main fix on the results page, coach on demand. */
+
+/* —— Top: slim brand row instead of the giant wordmark —— */
+body.pg-consumer .pg-monument {
+  padding-top: 0.25rem;
+  padding-bottom: 0;
+  min-height: 0;
+}
+body.pg-consumer .pg-monument__word {
+  font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+body.pg-consumer #cbHero,
+body.pg-consumer #tocHome,
+body.pg-consumer .playbook { display: none !important; }
+body.pg-consumer .pg-nav__links span[aria-hidden="true"] { display: none; }
+body.pg-consumer .pg-nav__links { gap: 1.5rem; align-items: baseline; }
+/* "No swing yet" says nothing to a first-time visitor; the hero already does. */
+body.pg-consumer:not(.v3-has-swing) .pg-brand-row .sport-pill { display: none; }
+
+/* —— Hero —— */
+.v3-hero[hidden] { display: none !important; }
+body.pg-dev .v3-hero { display: none !important; }
+.v3-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: stretch;
+  margin: clamp(0.5rem, 2vw, 1.5rem) 0 clamp(2rem, 5vw, 3.5rem);
+  order: -1;
+}
+.v3-eyebrow {
+  margin: 0 0 0.9rem;
+  font-family: var(--mono);
+  font-size: var(--step-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+.v3-hero__title {
+  margin: 0;
+  max-width: 17ch;
+  font-size: clamp(2.1rem, 1.3rem + 3.2vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+  text-wrap: balance;
+}
+.v3-hero__sub {
+  margin: 1.1rem 0 0;
+  max-width: 34rem;
+  color: var(--muted);
+  font-size: var(--step-body);
+  line-height: 1.55;
+}
+.v3-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.v3-cta,
+.v3-ghost {
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  min-height: 3.1rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.v3-cta {
+  border: 0;
+  background: var(--lime);
+  color: var(--ink);
+}
+.v3-cta:hover { transform: translateY(-1px); }
+.v3-ghost {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+}
+.v3-ghost:hover { border-color: color-mix(in srgb, var(--lime) 50%, var(--border)); }
+.v3-cta:focus-visible,
+.v3-ghost:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.v3-hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: var(--step-small);
+}
+.v3-hero__facts strong {
+  font-family: var(--mono);
+  font-weight: 500;
+  color: var(--text);
+}
+.v3-hero__facts a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* Filming card: the most common reason an upload is rejected is how it was filmed. */
+.v3-film {
+  align-self: center;
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+}
+.v3-film__art {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto 1rem;
+}
+.v3-film__phone { fill: none; stroke: var(--text); stroke-width: 2; }
+.v3-film__line { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
+.v3-film__ray { fill: none; stroke: var(--lime); stroke-width: 1.5; stroke-dasharray: 4 5; opacity: 0.7; }
+.v3-film__body { fill: none; stroke: var(--lime); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.v3-film__steps {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: var(--text);
+}
+.v3-film__steps span {
+  display: inline-block;
+  min-width: 2rem;
+  font-family: var(--mono);
+  color: var(--lime);
+}
+
+/* One upload entry: while the hero is up, the old empty-state card would repeat it. */
+body.pg-consumer .v3-hero:not([hidden]) ~ #emptyState { display: none !important; }
+
+/* —— Sample banner reads as a label above the demo, not a stray box —— */
+body.pg-consumer .demo-note:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+  margin: 0 0 1rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--lime) 40%, var(--border));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--lime);
+  font-family: var(--mono);
+  font-size: var(--step-small);
+  order: 4;
+}
+
+/* —— Sports: Golf leads; the rest are a quiet "coming next" row —— */
+body.pg-consumer .sport-card.is-locked {
+  background: transparent;
+  opacity: 0.6;
+}
+body.pg-consumer .sport-card.is-locked .sport-card__blurb { display: none; }
+body.pg-consumer .sports-catalog__head h3 { font-size: var(--step-small); }
+
+/* —— Native file input looked like an OS dialog button —— */
+body.pg-consumer .upload-label input[type="file"]::file-selector-button {
+  font: inherit;
+  font-weight: 700;
+  margin-right: 0.75rem;
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--lime);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* —— Coach button: only once there is a swing to ask about; never over content on phones —— */
+body.pg-consumer:not(.v3-has-swing) .coach-fab { display: none !important; }
+body.pg-consumer .coach-fab {
+  right: calc(1rem + var(--safe-right));
+  bottom: calc(1rem + var(--safe-bottom));
+}
+
+/* —— Timestamps in coach answers read as tappable chips —— */
+body.pg-consumer .ts:not(.ts--off) {
+  display: inline-block;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lime) 14%, transparent);
+  font-family: var(--mono);
+  font-size: 0.9em;
+  text-decoration: none;
+}
+body.pg-consumer .ts:not(.ts--off)::before { content: "▶ "; font-size: 0.75em; }
+
+@media (max-width: 860px) {
+  .v3-hero { grid-template-columns: 1fr; }
+  .v3-film { align-self: stretch; }
+}
+@media (max-width: 560px) {
+  body.pg-consumer .pg-monument__word { font-size: 1.5rem; }
+  .v3-hero__actions { flex-direction: column; }
+  .v3-cta, .v3-ghost { width: 100%; }
+  body.pg-consumer .pg-stage { padding-bottom: calc(5rem + var(--safe-bottom)); }
+  body.pg-consumer input, body.pg-consumer textarea { font-size: 16px; } /* no iOS zoom on focus */
+}
+@media (prefers-reduced-motion: reduce) {
+  .v3-cta, .v3-ghost { transition: none; }
+}
+
+/* Before there is a swing the nav already carries the name; drop the second wordmark row. */
+body.pg-consumer:not(.v3-has-swing) .pg-monument { display: none; }
