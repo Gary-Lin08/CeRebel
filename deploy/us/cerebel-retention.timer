@@ -1,0 +1,13 @@
+# Installed by deploy/us/setup-droplet.sh to /etc/systemd/system/cerebel-retention.timer
+# Daily, before the backup, so a backup never keeps data that was due for deletion.
+# Persistent=true: if the server was off at that time, the job runs as soon as it is back.
+[Unit]
+Description=Run CeRebel data retention every day
+
+[Timer]
+OnCalendar=*-*-* 07:41:00 UTC
+RandomizedDelaySec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

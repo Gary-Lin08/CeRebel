@@ -1,0 +1,39 @@
+# Installed by deploy/us/setup-droplet.sh to /etc/caddy/Caddyfile
+# The site address placeholder below is replaced with the real host name at install time.
+# Caddy gets and renews the Let's Encrypt certificate by itself once DNS points here.
+{
+	# email you@example.com
+}
+
+{$CEREBEL_DOMAIN} {
+	encode zstd gzip
+
+	# Largest accepted request. Uploads are clips of at most 30 s; the app also checks
+	# CEREBEL_UPLOAD_MAX_BYTES (set to the same 200 MB in .env.product).
+	request_body {
+		max_size 200MB
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		Cross-Origin-Opener-Policy "same-origin-allow-popups"
+		-Server
+	}
+
+	reverse_proxy 127.0.0.1:8092 {
+		# Coach answers stream as server-sent events: pass bytes through immediately.
+		flush_interval -1
+		header_up X-Real-IP {remote_host}
+	}
+
+	log {
+		output file /var/log/caddy/cerebel-access.log {
+			roll_size 50MiB
+			roll_keep 10
+		}
+	}
+}

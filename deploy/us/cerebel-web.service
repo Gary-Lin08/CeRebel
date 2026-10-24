@@ -1,0 +1,32 @@
+# Installed by deploy/us/setup-droplet.sh to /etc/systemd/system/cerebel-web.service
+[Unit]
+Description=CeRebel web app (motion_agent chat_server on 127.0.0.1:8092)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=cerebel
+Group=cerebel
+WorkingDirectory=/opt/cerebel
+# /tmp/opensim-models -> /opt/opensim-models (bone meshes); recreated here in case /tmp was cleaned.
+ExecStartPre=+/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/cerebel-opensim.conf
+ExecStart=/bin/bash /opt/cerebel/deploy/us/start-web.sh
+Restart=always
+RestartSec=5
+# Uploads run in worker threads: give an in-flight request a moment on restart.
+TimeoutStopSec=20
+KillMode=mixed
+LimitNOFILE=65536
+UMask=0027
+# Hardening that does not get in the way of OpenSim/torch subprocesses.
+# (No PrivateTmp: kinetic-lens/analysis/Geometry points into /tmp/opensim-models.)
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

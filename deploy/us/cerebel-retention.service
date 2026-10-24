@@ -1,0 +1,27 @@
+# Installed by deploy/us/setup-droplet.sh to /etc/systemd/system/cerebel-retention.service
+# Deletes data past the retention periods promised in the privacy policy
+# (motion_agent/app/retention.py: raw video after CEREBEL_RAW_VIDEO_RETENTION_DAYS,
+# inactive accounts after CEREBEL_INACTIVE_DELETE_DAYS). Started daily by cerebel-retention.timer.
+#   Run now:          sudo systemctl start cerebel-retention
+#   See what it did:  journalctl -u cerebel-retention -n 50
+#   Preview only:     sudo -u cerebel bash /opt/cerebel/deploy/us/start-web.sh -m motion_agent.app.retention --dry-run
+[Unit]
+Description=CeRebel daily data retention (privacy policy deletions)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=cerebel
+Group=cerebel
+WorkingDirectory=/opt/cerebel
+# Same environment as the web app: .env.product, then /etc/cerebel/droplet.env.
+ExecStart=/bin/bash /opt/cerebel/deploy/us/start-web.sh -m motion_agent.app.retention
+Nice=10
+UMask=0027
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true

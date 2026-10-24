@@ -1,0 +1,16 @@
+# Installed by deploy/us/setup-droplet.sh to /etc/systemd/system/cerebel-backup.service
+# Daily copy of data/product (accounts, subscriptions, usage events) to /var/backups/cerebel,
+# kept 14 days (the privacy policy says backups are kept 14 days). Started by cerebel-backup.timer.
+#   Run now: sudo systemctl start cerebel-backup     Log: journalctl -u cerebel-backup
+[Unit]
+Description=CeRebel daily backup of data/product (14-day rotation)
+After=cerebel-retention.service
+
+[Service]
+Type=oneshot
+Environment=APP_DIR=/opt/cerebel
+Environment=BACKUP_DIR=/var/backups/cerebel
+Environment=KEEP_DAYS=14
+ExecStart=/usr/local/sbin/cerebel-backup
+Nice=10
+IOSchedulingClass=idle

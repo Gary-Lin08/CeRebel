@@ -1,17 +1,29 @@
-# CeRebel auto-deploy: every push to main is synced to the GPU server over SSH.
+# CeRebel auto-deploy: every push to main is synced to the server over SSH.
 #
 # Repository secrets (Settings > Secrets and variables > Actions > Secrets):
 #   SSH_HOST          server host name
-#   SSH_PORT          SSH port
+#   SSH_PORT          SSH port (optional, default 22)
 #   SSH_USER          login user
 #   SSH_PRIVATE_KEY   private key of a key pair made only for deploys
 #   SSH_KNOWN_HOSTS   output of: ssh-keyscan -p <port> <host>
 #
 # Repository variables (same page > Variables):
-#   DEPLOY_PATH       absolute path of the code on the server, e.g. /root/CeRebel
-#   RESTART_CMD       command that restarts the app, e.g. systemctl restart cerebel-server
-#   HEALTH_CMD        (optional) command that fails if the app is down,
-#                     e.g. curl -fsS http://127.0.0.1:8093/ > /dev/null
+#   DEPLOY_PATH       absolute path of the code on the server (default /opt/cerebel)
+#   RESTART_CMD       command that restarts the app (default: sudo systemctl restart cerebel-web)
+#   HEALTH_CMD        command that fails if the app is down
+#                     (default: curl -fsS http://127.0.0.1:8092/terms > /dev/null)
+#   Unset variables fall back to the US droplet values below; set them to deploy elsewhere
+#   (old Shanghai box: DEPLOY_PATH=/root/CerebelServer, RESTART_CMD=bash deploy/run-product.sh restart).
+#
+# Values for the US droplet set up by deploy/us/setup-droplet.sh (see deploy/us/DEPLOY_US.md):
+#   SSH_HOST=<droplet IP>   SSH_PORT=22   SSH_USER=cerebel   (all three are secrets)
+#   SSH_PRIVATE_KEY / SSH_KNOWN_HOSTS: as above; the public half goes into
+#                     /home/cerebel/.ssh/authorized_keys on the droplet
+#   DEPLOY_PATH=/opt/cerebel                            (default)
+#   RESTART_CMD=sudo systemctl restart cerebel-web      (default; setup-droplet.sh allows exactly this)
+#   HEALTH_CMD=curl -fsS http://127.0.0.1:8092/terms > /dev/null   (default)
+# New Python packages in deploy/us/requirements-web.txt are not installed by this workflow:
+# run `bash /opt/cerebel/deploy/us/setup-droplet.sh` as root on the droplet after such a change.
 
 name: deploy
 
@@ -56,9 +68,9 @@ jobs:
       - name: Sync code to server
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
           SSH_USER: ${{ secrets.SSH_USER }}
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH || '/opt/cerebel' }}
         run: |
           test -n "$DEPLOY_PATH" || { echo "DEPLOY_PATH variable is not set"; exit 1; }
           stamp=$(date -u +%Y%m%dT%H%M%SZ)
@@ -68,7 +80,7 @@ jobs:
           rsync -az --checksum \
             --backup --backup-dir=".deploy-backup/$stamp" \
             --exclude '.git/' --exclude '.github/' --exclude '.deploy-backup/' \
-            --exclude '.env' --exclude '*.env' \
+            --exclude '.env' --exclude '*.env' --exclude '.env.*' \
             --exclude 'sessions/' --exclude 'data/' --exclude 'uploads/' \
             --exclude '__pycache__/' --exclude '*.pyc' \
             -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT -o IdentitiesOnly=yes" \
@@ -78,11 +90,11 @@ jobs:
       - name: Restart and health check
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
           SSH_USER: ${{ secrets.SSH_USER }}
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
-          RESTART_CMD: ${{ vars.RESTART_CMD }}
-          HEALTH_CMD: ${{ vars.HEALTH_CMD }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH || '/opt/cerebel' }}
+          RESTART_CMD: ${{ vars.RESTART_CMD || 'sudo systemctl restart cerebel-web' }}
+          HEALTH_CMD: ${{ vars.HEALTH_CMD || 'curl -fsS http://127.0.0.1:8092/terms > /dev/null' }}
         run: |
           test -n "$RESTART_CMD" || { echo "RESTART_CMD variable is not set"; exit 1; }
           ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" -o IdentitiesOnly=yes \

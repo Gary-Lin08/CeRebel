@@ -1,0 +1,11 @@
+# Installed by deploy/us/setup-droplet.sh to /etc/systemd/system/cerebel-backup.timer
+[Unit]
+Description=Back up CeRebel accounts and billing data every day
+
+[Timer]
+OnCalendar=*-*-* 08:17:00 UTC
+RandomizedDelaySec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
