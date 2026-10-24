@@ -2114,8 +2114,105 @@ code {
 
 </style>
   <link rel="stylesheet" href="/static/playground-v3.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/playground-landing.css" />
 </head>
 <body class="pg pg-dev">
+  <div id="lpLanding" class="lp" hidden>
+    <header class="lp-wrap lp-nav">
+      <img src="/static/cerebel-logo-ink.svg" alt="CeRebel" class="lp-logo" width="112" height="37" />
+      <button type="button" class="lp-signin" id="lpSignin">Sign in</button>
+    </header>
+    <main>
+      <section class="lp-wrap lp-hero" data-swing-hero aria-labelledby="lpTitle">
+        <div class="lp-hero__copy">
+          <h1 id="lpTitle" class="lp-display">Your swing, measured joint by joint.</h1>
+          <div>
+            <p class="lp-lead">Film one swing on your phone. CeRebel turns it into a 3D pose, then a full OpenSim body, and tells you the one thing to fix first.</p>
+            <div class="lp-actions">
+              <button type="button" class="lp-btn" id="lpUpload">Upload your swing</button>
+              <a href="#lpSample" class="lp-link">Read the sample analysis</a>
+            </div>
+            <p class="lp-small" id="lpFreeLine">Free for 3 swings a month. No credit card.</p>
+          </div>
+        </div>
+        <figure class="swing">
+          <div class="swing__stage">
+            <div class="swing__video">
+              <video muted playsinline preload="auto" hidden></video>
+              <div class="swing__placeholder">Player video<br /><small>side-on, from a phone</small></div>
+            </div>
+            <div class="swing__gl" role="img" aria-label="The same swing as GEM-X 3D joints and as an OpenSim skeleton with muscles. At the top of the backswing the lead arm is bent 57 degrees.">
+              <span class="swing__tag" aria-hidden="true"></span>
+            </div>
+          </div>
+          <figcaption class="swing__labels">
+            <span><b>Phone video</b> What you upload</span>
+            <span><b>GEM-X</b> 3D pose from the video</span>
+            <span><b>OpenSim</b> Bones, muscles, joint angles</span>
+          </figcaption>
+          <div class="swing__scrub">
+            <div class="swing__phases" role="group" aria-label="Swing phases"></div>
+            <input class="swing__range" type="range" aria-label="Scrub through the swing" />
+            <button type="button" class="swing__replay">Replay</button>
+            <p class="swing__caption"><span class="swing__fix">Lead arm bends at the top</span> <span class="swing__readout"></span></p>
+          </div>
+        </figure>
+      </section>
+
+      <section class="lp-wrap lp-sec" id="lpSample" aria-labelledby="lpSampleTitle">
+        <div class="lp-sec__head">
+          <h2 id="lpSampleTitle">What comes back</h2>
+          <p>The sample above, as the coach writes it. Every number comes from the measurement, not from a language model.</p>
+        </div>
+        <article class="lp-sec__body">
+          <h3>Lead arm bends</h3>
+          <p class="lp-figure"><span>57°</span> lead elbow bend at the top, from 1° at address</p>
+          <p><strong>Why it matters.</strong> A bent lead arm narrows the swing radius, so the clubhead has less time to build speed.</p>
+          <p><strong>What to feel.</strong> Reach the lead arm long. Feel the lead shoulder stay connected to the chest.</p>
+          <p><strong>Today's drill.</strong> Pump drill. Pause at the top with the lead arm extended, pump down halfway twice, then swing through. Eight reps.</p>
+        </article>
+      </section>
+
+      <section class="lp-wrap lp-sec" aria-labelledby="lpFilmTitle">
+        <div class="lp-sec__head">
+          <h2 id="lpFilmTitle">How to film it</h2>
+          <p>Thirty seconds of setup gets a clean measurement.</p>
+        </div>
+        <div class="lp-sec__body lp-film">
+          <svg viewBox="0 0 180 120" aria-hidden="true">
+            <line class="lp-film__ground" x1="6" y1="104" x2="174" y2="104" />
+            <rect class="lp-film__phone" x="18" y="58" width="16" height="28" rx="3" />
+            <path class="lp-film__ray" d="M34 66 L140 30 M34 78 L140 104" />
+            <circle class="lp-film__phone" cx="140" cy="38" r="6" />
+            <path class="lp-film__phone" d="M140 44 V76 M140 76 L132 104 M140 76 L148 104 M140 52 L126 64" />
+          </svg>
+          <ul>
+            <li>Stand the phone at hip height, side-on to you, 8 to 10 feet away.</li>
+            <li>Keep your whole body and the club in frame from address to finish.</li>
+            <li>Use 60 fps or higher if your phone offers it, in good light.</li>
+            <li>One swing per clip. A few seconds is enough.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="lp-wrap lp-sec" aria-labelledby="lpPriceTitle">
+        <div class="lp-sec__head">
+          <h2 id="lpPriceTitle">Pricing</h2>
+          <p>Start free. Upgrade when you want more swings and coach questions.</p>
+        </div>
+        <div class="lp-sec__body">
+          <div class="lp-plans" id="lpPlans">
+            <div class="lp-plan"><b>Free</b><span class="lp-plan__price">$0</span><small id="lpFreeDetail">3 swings a month</small></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="lp-wrap lp-foot">
+      <span>© Cerebel, Inc.</span>
+      <nav aria-label="Legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a></nav>
+    </footer>
+  </div>
   <div id="pgVanta" aria-hidden="true"></div>
   <div class="pg-shell">
     <header class="pg-nav">
@@ -5649,7 +5746,46 @@ code {
         target.scrollIntoView({ behavior: "smooth", block: "center" });
       });
     }
+    // Signed-out visitors see the landing; signing in brings back the app. Operators (?dev=1) never see it.
+    function syncLanding() {
+      const landing = document.getElementById("lpLanding");
+      if (!landing) return;
+      const show = !authToken && !isDevUi;
+      landing.hidden = !show;
+      document.body.classList.toggle("lp-mode", show);
+      if (show) window.dispatchEvent(new Event("cerebel:landing"));
+    }
+    async function paintLandingPlans() {
+      const box = document.getElementById("lpPlans");
+      if (!box) return;
+      let billing = null;
+      try {
+        const r = await fetch("/api/billing");
+        billing = (await r.json()).billing;
+      } catch (_) {}
+      if (!billing) return;
+      const free = Number(billing.free_monthly) || 3;
+      const freeText = free + (free === 1 ? " swing a month" : " swings a month");
+      const freeLine = document.getElementById("lpFreeLine");
+      if (freeLine) freeLine.textContent = "Free for " + freeText + ". No credit card.";
+      const freeDetail = document.getElementById("lpFreeDetail");
+      if (freeDetail) freeDetail.textContent = freeText;
+      (billing.plans || []).forEach((plan) => {
+        const row = document.createElement("div");
+        row.className = "lp-plan";
+        const name = document.createElement("b");
+        name.textContent = plan.label;
+        const price = document.createElement("span");
+        price.className = "lp-plan__price";
+        price.textContent = plan.price;
+        const detail = document.createElement("small");
+        detail.textContent = [plan.detail, billing.pro_monthly ? billing.pro_monthly + " swings a month" : ""].filter(Boolean).join(". ");
+        row.append(name, price, detail);
+        box.appendChild(row);
+      });
+    }
     function paintAccount(user) {
+      syncLanding();
       const signed = !!(user && user.email);
       if (accountBtn) accountBtn.textContent = signed ? user.email : "Sign in";
       if (accountOut) accountOut.hidden = !signed;
@@ -5755,6 +5891,36 @@ code {
           loadSession({ announce: true });
         });
       }
+      const lpUpload = document.getElementById("lpUpload");
+      if (lpUpload) {
+        lpUpload.addEventListener("click", () => {
+          const modeBtn = document.getElementById("accountMode");
+          if (accountMode === "login" && modeBtn) modeBtn.click();
+          openAccountPanel(true);
+        });
+      }
+      const lpSignin = document.getElementById("lpSignin");
+      if (lpSignin) {
+        lpSignin.addEventListener("click", () => {
+          const modeBtn = document.getElementById("accountMode");
+          if (accountMode !== "login" && modeBtn) modeBtn.click();
+          openAccountPanel(true);
+        });
+      }
+      // Over the landing the account panel is a dialog: Escape or a click outside closes it.
+      const closeLandingPanel = () => {
+        if (!document.body.classList.contains("lp-mode") || !accountPanel || accountPanel.hidden) return;
+        accountPanel.hidden = true;
+        if (lpUpload) lpUpload.focus();
+      };
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeLandingPanel();
+      });
+      document.addEventListener("pointerdown", (e) => {
+        if (accountPanel && !accountPanel.contains(e.target) && !e.target.closest("#lpUpload, #lpSignin")) closeLandingPanel();
+      });
+      syncLanding();
+      if (!isDevUi) paintLandingPlans();
       syncTocHome();
     })();
     if (accountModeBtn) {
@@ -5949,6 +6115,7 @@ code {
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="/static/playground-fx.js"></script>
   <script src="/static/billing.js"></script>
+  <script type="module" src="/static/swing-hero.js"></script>
   <script src="/static/swing_trim.js"></script>
 </body>
 </html>

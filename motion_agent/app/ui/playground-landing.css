@@ -1,0 +1,220 @@
+/* CeRebel landing for signed-out visitors (tokens from DESIGN.md).
+   Shown by index.html as #lpLanding with body.lp-mode; the app below stays as it was. */
+.lp {
+  --paper: #F1F3EF;
+  --paper-2: #E4E8E2;
+  --ink: #16241D;
+  --ink-hover: #24382D;
+  --ink-2: #4C5A52;
+  --line: #C8D0C9;
+  --turf: #2F6B45;
+  --flag: #D9402A;
+  --lp-font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px; --s9: 112px;
+  --width: 1160px;
+  --r: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--lp-font);
+  font-size: 17px;
+  line-height: 1.55;
+  font-variation-settings: "wdth" 100;
+}
+.lp[hidden] { display: none !important; }
+.lp *, .lp *::before, .lp *::after { box-sizing: border-box; }
+.lp a { color: var(--turf); }
+.lp :focus-visible { outline: 2px solid var(--turf); outline-offset: 2px; border-radius: 2px; }
+
+/* Signed-out: the landing is the page. The app chrome comes back after sign-in. */
+body.lp-mode { background: #F1F3EF; }
+body.lp-mode #pgVanta,
+body.lp-mode .pg-shell > :not(#accountPanel),
+body.lp-mode .pg-foot { display: none !important; }
+body.lp-mode .pg-shell { min-height: 0; padding: 0; }
+body.lp-mode #accountPanel:not([hidden]) {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  max-height: 92dvh;
+  overflow: auto;
+  box-shadow: 0 -12px 40px rgba(22, 36, 29, 0.18);
+}
+/* The account form keeps its markup but takes the landing's paper and ink while it sits over it */
+body.lp-mode #accountPanel {
+  margin: 0; padding: 24px; max-width: none;
+  border: 0; border-radius: 10px 10px 0 0;
+  background: #fff; color: #16241D;
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.5;
+  box-shadow: 0 0 0 100vmax rgba(22, 36, 29, 0.42), 0 -12px 40px rgba(22, 36, 29, 0.18);
+}
+body.lp-mode #accountPanel p { color: #4C5A52; margin: 0 0 12px; }
+body.lp-mode #accountPanel a { color: #2F6B45; }
+body.lp-mode #accountPanel label { color: #16241D; font-size: 14px; font-weight: 600; }
+body.lp-mode #accountPanel label.cb-consent { font-weight: 400; color: #4C5A52; display: flex; gap: 8px; align-items: flex-start; }
+body.lp-mode #accountPanel input[type="email"],
+body.lp-mode #accountPanel input[type="password"],
+body.lp-mode #accountPanel input[type="text"] {
+  min-height: 44px; padding: 8px 12px; font: inherit; font-weight: 400;
+  border: 1px solid #C8D0C9; border-radius: 6px; background: #F1F3EF; color: #16241D;
+}
+body.lp-mode #accountPanel input:focus-visible { outline: 2px solid #2F6B45; outline-offset: 1px; }
+body.lp-mode #accountPanel button {
+  min-height: 44px; padding: 0 16px; font: inherit; font-weight: 600;
+  border: 1px solid #C8D0C9; border-radius: 6px; background: transparent; color: #16241D; cursor: pointer;
+  box-shadow: none; text-transform: none; letter-spacing: 0;
+}
+body.lp-mode #accountPanel button.primary { background: #16241D; border-color: #16241D; color: #F1F3EF; font-weight: 700; }
+body.lp-mode #accountPanel button:focus-visible { outline: 2px solid #2F6B45; outline-offset: 2px; }
+
+@media (min-width: 720px) {
+  body.lp-mode #accountPanel:not([hidden]) {
+    inset: 50% auto auto 50%;
+    width: min(460px, 92vw);
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+  }
+}
+
+.lp-wrap { max-width: var(--width); margin: 0 auto; padding-left: var(--s5); padding-right: var(--s5); }
+.lp-nav { display: flex; align-items: center; justify-content: space-between; padding-top: var(--s5); }
+.lp-logo { display: block; height: 30px; width: auto; }
+.lp-signin {
+  font: inherit; font-weight: 600; color: var(--ink);
+  background: none; border: 0; padding: var(--s2) 0; cursor: pointer;
+}
+.lp-signin:hover { text-decoration: underline; }
+
+/* Hero */
+.lp-hero { padding-top: var(--s7); padding-bottom: var(--s9); }
+.lp-hero__copy { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--s7); align-items: end; }
+.lp-display {
+  margin: 0;
+  max-width: 13ch;
+  font-size: clamp(40px, 4.6vw, 66px);
+  line-height: 0.95;
+  font-weight: 800;
+  font-variation-settings: "wdth" 112;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.lp-lead { margin: 0; max-width: 36ch; font-size: 20px; line-height: 1.5; color: var(--ink-2); }
+.lp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s5); }
+.lp-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 var(--s5);
+  border: 0; border-radius: var(--r);
+  background: var(--ink); color: var(--paper);
+  font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+}
+.lp-btn:hover { background: var(--ink-hover); }
+.lp-btn:disabled { opacity: 0.4; cursor: default; }
+.lp-link { font-weight: 600; text-underline-offset: 3px; }
+.lp-small { margin: var(--s4) 0 0; font-size: 14px; color: var(--ink-2); }
+
+/* Lineup: phone video, GEM-X joints, OpenSim body, on one timeline */
+.swing { margin: var(--s6) 0 0; }
+.swing__stage { display: grid; grid-template-columns: 1fr 2fr; height: min(58vh, 540px); }
+.swing__video { position: relative; overflow: hidden; border-radius: var(--r); background: var(--paper-2); }
+.swing__video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.swing__video video[hidden] { display: none; }
+.swing__placeholder {
+  position: absolute; inset: 0; display: grid; place-content: center; text-align: center;
+  color: var(--ink-2); border: 1.5px dashed var(--line); border-radius: var(--r); font-weight: 600;
+}
+.swing__video video:not([hidden]) + .swing__placeholder,
+.swing__placeholder[hidden] { display: none; }
+.swing__gl { position: relative; min-width: 0; }
+.swing__gl canvas { display: block; width: 100% !important; height: 100% !important; }
+.swing__tag {
+  position: absolute; left: 0; top: 0;
+  padding: 2px 8px; border-radius: 4px;
+  background: var(--flag); color: #fff;
+  font-weight: 700; font-size: 18px;
+  font-variation-settings: "wdth" 75; font-variant-numeric: tabular-nums;
+  opacity: 0; pointer-events: none;
+}
+.swing.is-failed .swing__gl::after {
+  content: "The 3D view needs WebGL, which this browser has turned off.";
+  position: absolute; inset: 0; display: grid; place-content: center; padding: var(--s5);
+  text-align: center; color: var(--ink-2);
+}
+.swing__labels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--s4); margin-top: var(--s3); font-size: 14px; color: var(--ink-2); }
+.swing__labels b { display: block; color: var(--ink); font-size: 16px; }
+.swing__scrub {
+  display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s4); align-items: center;
+  margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--line);
+}
+.swing__phases { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--s1) var(--s3); }
+.swing__phases button {
+  font: inherit; font-size: 14px; padding: var(--s1) 0;
+  border: 0; background: none; color: var(--ink-2); cursor: pointer;
+}
+.swing__phases button:hover { color: var(--ink); }
+.swing__phases button.is-current { color: var(--turf); font-weight: 700; }
+.swing__range { width: 100%; accent-color: var(--turf); }
+.swing__replay {
+  font: inherit; font-size: 14px; font-weight: 600;
+  padding: var(--s2) var(--s3); border: 1px solid var(--line); border-radius: var(--r);
+  background: transparent; color: var(--ink); cursor: pointer;
+}
+.swing__replay:hover { border-color: var(--ink-2); }
+.swing__caption { grid-column: 1 / -1; margin: 0; display: flex; justify-content: space-between; gap: var(--s4); font-size: 14px; color: var(--ink-2); }
+.swing__fix { color: var(--flag); font-weight: 600; }
+.swing__readout { font-variant-numeric: tabular-nums; font-variation-settings: "wdth" 75; font-weight: 700; color: var(--ink); }
+
+/* Sections below the hero share one two-column rhythm */
+.lp-sec {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--s7);
+  padding-top: var(--s8); padding-bottom: var(--s9); border-top: 1px solid var(--line);
+}
+.lp-sec h2 { margin: 0; font-size: 32px; line-height: 1.1; font-weight: 700; }
+.lp-sec__head p { margin: var(--s4) 0 0; max-width: 36ch; color: var(--ink-2); }
+.lp-sec__body { max-width: 62ch; }
+.lp-sec__body h3 { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 650; }
+.lp-sec__body p { margin-top: 0; }
+.lp-sec__body strong { font-weight: 650; }
+.lp-figure { margin: var(--s2) 0 var(--s5); color: var(--ink-2); }
+.lp-figure span {
+  margin-right: var(--s2); color: var(--flag);
+  font-size: 44px; font-weight: 700; line-height: 1;
+  font-variation-settings: "wdth" 75; font-variant-numeric: tabular-nums; vertical-align: -6px;
+}
+
+/* Filming */
+.lp-film { display: grid; grid-template-columns: 180px 1fr; gap: var(--s5); align-items: start; }
+.lp-film svg { width: 100%; height: auto; }
+.lp-film__phone { fill: none; stroke: var(--ink); stroke-width: 2; }
+.lp-film__ray { fill: none; stroke: var(--turf); stroke-width: 1.5; stroke-dasharray: 3 5; }
+.lp-film__ground { stroke: var(--line); stroke-width: 1.5; }
+.lp-film ul { margin: 0; padding-left: 1.1em; }
+.lp-film li + li { margin-top: var(--s2); }
+
+/* Pricing, filled from /api/billing so the page never shows a price the server doesn't charge */
+.lp-plans { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.lp-plan { display: grid; grid-template-columns: 1fr auto; gap: var(--s1) var(--s4); padding: var(--s4) 0; border-bottom: 1px solid var(--line); }
+.lp-plan b { font-size: 18px; font-weight: 650; }
+.lp-plan__price { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.lp-plan small { grid-column: 1 / -1; color: var(--ink-2); font-size: 14px; }
+
+.lp-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s4); padding-top: var(--s6); padding-bottom: var(--s7); border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+.lp-foot nav { display: flex; gap: var(--s5); }
+
+@media (max-width: 880px) {
+  .lp-hero { padding-top: var(--s6); padding-bottom: var(--s8); }
+  .lp-hero__copy, .lp-sec { grid-template-columns: 1fr; gap: var(--s5); }
+  .swing__stage { grid-template-columns: 2fr 3fr; height: min(64vh, 520px); }
+  .swing__labels { grid-template-columns: 2fr 1.5fr 1.5fr; }
+  .lp-sec { padding-top: var(--s7); padding-bottom: var(--s8); }
+}
+@media (max-width: 560px) {
+  .lp-btn { width: 100%; }
+  /* Phones: the models get the full width and the video sits in the corner, so the bodies stay readable */
+  .swing__stage { position: relative; display: block; height: min(115vw, 62vh); min-height: 400px; }
+  .swing__gl { height: 100%; }
+  .swing__video { position: absolute; left: 0; top: 0; z-index: 1; width: 26%; aspect-ratio: 9 / 16; height: auto; box-shadow: 0 0 0 3px var(--paper); }
+  .swing__placeholder { font-size: 12px; padding: 4px; }
+  .swing__labels span { font-size: 12px; }
+  .swing__labels b { font-size: 14px; }
+  .lp-film { grid-template-columns: 1fr; }
+  .lp-film svg { max-width: 220px; }
+}
