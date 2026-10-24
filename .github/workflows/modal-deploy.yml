@@ -1,0 +1,85 @@
+# Deploy the GEM-X GPU function (deploy/modal_gemx.py) to Modal.
+#
+# Runs when main changes the Modal app or the GEM-X overlay, or by hand
+# (Actions > modal-deploy > Run workflow). The image is built in Modal's cloud from
+# upstream NVlabs/GEM-X plus deploy/gemx_overlay, so this runner needs nothing but the
+# Modal client. Model weights are already in the "cerebel-gemx-inputs" Volume
+# (`modal run deploy/modal_gemx.py::prefetch`, once) and are not touched here.
+#
+# Repository secrets (Settings > Secrets and variables > Actions > Secrets):
+#   MODAL_TOKEN_ID       from modal.com > Settings > API Tokens > New token
+#   MODAL_TOKEN_SECRET   (use a token made only for GitHub, not the web server's)
+#
+# Optional repository variables (same page > Variables), read at deploy time:
+#   CEREBEL_MODAL_GPU             default L40S
+#   CEREBEL_MODAL_REGION          default us (all of the US, 1.15x price); e.g. us-east (1.75x).
+#                                 Must stay inside the US: the privacy policy promises it.
+#   CEREBEL_MODAL_MIN_CONTAINERS  default 0
+#   CEREBEL_MODAL_MAX_CONTAINERS  default 10
+#   CEREBEL_MODAL_HF_SECRET       name of a Modal Secret holding HF_TOKEN, if ever needed
+
+name: modal-deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - deploy/modal_gemx.py
+      - deploy/gemx_overlay/**
+      - .github/workflows/modal-deploy.yml
+  workflow_dispatch: {}
+
+concurrency:
+  group: modal-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          # Same minor version as the Modal image (add_python="3.10") and the web droplet.
+          python-version: "3.10"
+
+      - name: Install the Modal client
+        run: python -m pip install --upgrade "modal>=1.0,<2"
+
+      - name: Deploy cerebel-gemx
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          VAR_GPU: ${{ vars.CEREBEL_MODAL_GPU }}
+          VAR_MIN: ${{ vars.CEREBEL_MODAL_MIN_CONTAINERS }}
+          VAR_MAX: ${{ vars.CEREBEL_MODAL_MAX_CONTAINERS }}
+          VAR_HF: ${{ vars.CEREBEL_MODAL_HF_SECRET }}
+          VAR_REGION: ${{ vars.CEREBEL_MODAL_REGION }}
+          # 1 would leave the GPU class out of the deploy (prefetch-only mode); never here.
+          CEREBEL_MODAL_PREFETCH_ONLY: "0"
+        run: |
+          test -n "$MODAL_TOKEN_ID" -a -n "$MODAL_TOKEN_SECRET" \
+            || { echo "Add the MODAL_TOKEN_ID and MODAL_TOKEN_SECRET repository secrets"; exit 1; }
+          # Only export knobs that are set: an empty value would override the defaults
+          # in deploy/modal_gemx.py (os.environ.get returns "" instead of the default).
+          if [ -n "$VAR_GPU" ]; then export CEREBEL_MODAL_GPU="$VAR_GPU"; fi
+          if [ -n "$VAR_MIN" ]; then export CEREBEL_MODAL_MIN_CONTAINERS="$VAR_MIN"; fi
+          if [ -n "$VAR_MAX" ]; then export CEREBEL_MODAL_MAX_CONTAINERS="$VAR_MAX"; fi
+          if [ -n "$VAR_HF" ]; then export CEREBEL_MODAL_HF_SECRET="$VAR_HF"; fi
+          if [ -n "$VAR_REGION" ]; then
+            for r in ${VAR_REGION//,/ }; do
+              case "$r" in us|us-east|us-central|us-south|us-west) ;;
+                *) echo "CEREBEL_MODAL_REGION contains non-US region '$r'"; exit 1 ;;
+              esac
+            done
+            export CEREBEL_MODAL_REGION="$VAR_REGION"
+          fi
+          modal deploy deploy/modal_gemx.py
+          # The deployed class must exist (a prefetch-only deploy would silently drop it).
+          python - <<'PY'
+          import modal
+          modal.Cls.from_name("cerebel-gemx", "Gemx").hydrate()
+          print("cerebel-gemx / Gemx is deployed")
+          PY

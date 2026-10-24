@@ -1,42 +1,33 @@
 #!/usr/bin/env bash
-# One-time Modal setup for the GEM-X GPU function. Run on the GPU server from /root/CerebelServer.
+# One-time Modal setup for the GEM-X GPU function. Run from any machine that can reach
+# modal.com (NOT the China GPU server). Builds in Modal's cloud; downloads weights from
+# Hugging Face into a Modal Volume; nothing large is uploaded from this machine.
+#   bash deploy/modal_setup.sh [smoke_clip.mp4]
 set -euo pipefail
 cd "$(dirname "$0")/.."
-GEMX_ROOT="${CEREBEL_GEMX_ROOT:-/root/GEM-X}"
 PY="${PYTHON:-python3}"
+SMOKE_GPUS="${CEREBEL_MODAL_SMOKE_GPUS:-L40S A100-40GB}"
 
 echo "== 1/5 install the Modal client"
-"$PY" -m pip install -q --upgrade modal
+"$PY" -m pip install -q --upgrade pip modal
 
-if ! "$PY" -m modal token info >/dev/null 2>&1; then
-  echo "== 2/5 log in: open the link printed below in your browser and approve"
+if ! "$PY" -m modal app list >/dev/null 2>&1; then
+  echo "== 2/5 log in: approve the link printed below in your browser"
   "$PY" -m modal token new
 else
   echo "== 2/5 already logged in to Modal"
 fi
 
-echo "== 3/5 upload model weights (~6.4 GB, once; re-running only uploads what is missing)"
-"$PY" -m modal volume create cerebel-gemx-inputs >/dev/null 2>&1 || true
-"$PY" -m modal volume create cerebel-gemx-cache >/dev/null 2>&1 || true
-for d in checkpoints pretrained mhr_data soma_data soma_assets; do
-  if [ -e "$GEMX_ROOT/inputs/$d" ]; then
-    echo "   uploading inputs/$d"
-    "$PY" -m modal volume put cerebel-gemx-inputs "$GEMX_ROOT/inputs/$d" "/$d" || echo "   (already uploaded, skipping)"
-  fi
+echo "== 3/5 build the image and deploy (first build takes 15-30 min)"
+"$PY" -m modal deploy deploy/modal_gemx.py
+
+echo "== 4/5 download model weights from Hugging Face into the Modal Volume (once)"
+"$PY" -m modal run deploy/modal_gemx.py::prefetch
+
+echo "== 5/5 smoke test (cold + warm) per GPU type"
+SAMPLE="${1:-kinetic-lens/public/assets/layup-original.mp4}"
+for g in $SMOKE_GPUS; do
+  "$PY" -m modal run deploy/modal_gemx.py::smoke --video "$SAMPLE" --gpu "$g" || echo "   smoke on $g failed"
 done
-
-echo "== 4/5 build the image and deploy (first build takes 10-20 min)"
-CEREBEL_GEMX_ROOT="$GEMX_ROOT" "$PY" -m modal deploy deploy/modal_gemx.py
-
-echo "== 5/5 smoke test on a short clip"
-SAMPLE="${1:-}"
-if [ -z "$SAMPLE" ]; then
-  SAMPLE=$(ls -t data/sessions/*/upload/source_video.* 2>/dev/null | head -1 || true)
-fi
-if [ -n "$SAMPLE" ]; then
-  CEREBEL_GEMX_ROOT="$GEMX_ROOT" "$PY" -m modal run deploy/modal_gemx.py::smoke --video "$SAMPLE"
-else
-  echo "   no sample video found; run: modal run deploy/modal_gemx.py::smoke --video <clip.mp4>"
-fi
 echo
-echo "Done. To use it, add CEREBEL_GPU_BACKEND=modal to .env.product and restart: bash deploy/run-product.sh restart"
+echo "Done. On the web server set CEREBEL_GPU_BACKEND=modal plus MODAL_TOKEN_ID/MODAL_TOKEN_SECRET, then restart."
