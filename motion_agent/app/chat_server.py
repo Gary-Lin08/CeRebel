@@ -801,8 +801,8 @@ class Handler(BaseHTTPRequestHandler):
                 forwarded = (self.headers.get("X-Forwarded-For") or "").split(",")[0]
                 ip = (
                     self.headers.get("CF-Connecting-IP")
+                    or forwarded  # first hop = the visitor; X-Real-IP is the nearest proxy
                     or self.headers.get("X-Real-IP")
-                    or forwarded
                     or self.client_address[0]
                     or "unknown"
                 ).strip()
