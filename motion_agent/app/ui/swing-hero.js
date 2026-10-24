@@ -8,10 +8,18 @@ const THREE = await import("/static/three/three.module.js");
 const { GLTFLoader } = await import("/static/three/GLTFLoader.js");
 
 const root = document.querySelector("[data-swing-hero]");
-if (root) start(root).catch((err) => {
-  root.classList.add("is-failed");
-  console.warn("swing hero", err);
-});
+let started = false;
+function boot() {
+  // A hidden landing (signed in, or ?dev=1) has no size to render into, so wait until it shows.
+  if (!root || started || root.closest("[hidden]")) return;
+  started = true;
+  start(root).catch((err) => {
+    root.classList.add("is-failed");
+    console.warn("swing hero", err);
+  });
+}
+boot();
+window.addEventListener("cerebel:landing", boot);
 
 async function start(root) {
   const stage = root.querySelector(".swing__stage");
@@ -265,8 +273,11 @@ async function start(root) {
     const w = stage.clientWidth, h = stage.clientHeight || w * 1.05;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    const span = gemx ? 2.2 : 1.05; // how wide the lineup is, in metres
+    // How wide the lineup is, in metres; portrait screens get a tighter margin so the bodies stay large.
+    const span = (gemx ? 2.2 : 1.05) * (camera.aspect < 1 ? 0.7 : 1);
     const dist = Math.max(4.9, (4.9 * span) / Math.min(span, camera.aspect * 1.1));
+    // On phones the video sits in the top corner, so look a little higher and the bodies drop below it.
+    target.y = camera.aspect < 1 ? 1.5 : 0.95;
     const yaw = 0.42;
     camera.position.set(target.x + Math.sin(yaw) * dist, 1.25, target.z + Math.cos(yaw) * dist);
     camera.lookAt(target);
