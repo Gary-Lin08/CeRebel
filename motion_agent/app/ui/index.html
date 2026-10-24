@@ -5698,8 +5698,8 @@ code {
         const data = await r.json();
         if (!r.ok) {
           if (uploadStatus) uploadStatus.textContent = data.message || "Upload failed";
+          uploadFile.value = "";
           if (r.status === 402 && window.cerebelBilling) {
-            uploadFile.value = "";
             if (data.paywall) window.cerebelBilling.openPaywall(data);
           }
           return;
