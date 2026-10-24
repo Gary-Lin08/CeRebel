@@ -41,6 +41,10 @@ UI_DIR = Path(__file__).resolve().parent / "ui"
 _base = os.environ.get("CEREBEL_BASE_PATH", "").strip().strip("/")
 BASE_PATH = "/" + _base if _base else ""
 _PREFIXED = ("/api/", "/static/", "/media/", "/terms", "/privacy")
+# Behind the main site's proxy (Vercel caps request bodies at ~4.5 MB), the video upload goes
+# straight to the app's own origin instead; that origin must list the main site in
+# CEREBEL_ALLOWED_ORIGINS. Empty: uploads use the same path as everything else.
+UPLOAD_ORIGIN = os.environ.get("CEREBEL_UPLOAD_ORIGIN", "").strip().rstrip("/")
 
 
 def with_base(text: str, base: str) -> str:
@@ -982,7 +986,10 @@ class Handler(BaseHTTPRequestHandler):
         if path.suffix.lower() == ".js" or path.name.endswith(".module.js"):
             mime = "text/javascript; charset=utf-8"
         if self.base and path.suffix.lower() in (".html", ".js", ".css") and UI_DIR.resolve() in path.resolve().parents:
-            body = with_base(path.read_text(encoding="utf-8"), self.base).encode("utf-8")
+            text = with_base(path.read_text(encoding="utf-8"), self.base)
+            if UPLOAD_ORIGIN:
+                text = text.replace(f'"{self.base}/api/upload"', f'"{UPLOAD_ORIGIN}/api/upload"')
+            body = text.encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", mime or "text/html; charset=utf-8")
             self.send_header("Content-Length", str(len(body)))
