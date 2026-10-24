@@ -32,7 +32,6 @@ def main() -> None:
     args = parser.parse_args()
 
     sys.path.insert(0, str(args.gemx_root))
-    from gem.utils.net_utils import to_cuda
     from gem.utils.soma_utils.soma_layer import SomaLayer
 
     device = args.device
@@ -40,9 +39,11 @@ def main() -> None:
         device = "cpu"
 
     pred = torch.load(args.hpe_results, weights_only=False)
-    params = to_cuda(_get_body_params(pred, "body_params_global"))
-    if device == "cpu":
-        params = {k: v.cpu() if torch.is_tensor(v) else v for k, v in params.items()}
+    # Move straight to the target device (GEM-X to_cuda fails on CPU-only torch builds).
+    params = {
+        k: v.to(device) if torch.is_tensor(v) else v
+        for k, v in _get_body_params(pred, "body_params_global").items()
+    }
 
     soma = SomaLayer(
         data_root=args.soma_assets,

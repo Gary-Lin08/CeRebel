@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -29,6 +30,18 @@ LANDMARK_NAMES = [
     "left_ankle", "right_ankle", "left_heel", "right_heel",
     "left_foot_index", "right_foot_index",
 ]
+
+
+def _to_device(obj, device: str):
+    """Move tensors (also inside dicts/lists) to ``device``. Replaces GEM-X ``to_cuda`` so the
+    conversion also runs on CPU-only web servers (GPU inference on Modal)."""
+    if torch.is_tensor(obj):
+        return obj.to(device)
+    if isinstance(obj, dict):
+        return {k: _to_device(v, device) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return type(obj)(_to_device(v, device) for v in obj)
+    return obj
 
 
 def _get_body_params(pred: dict, key: str):
@@ -63,9 +76,10 @@ def convert_hpe_to_pose3d(
     if str(gemx_root) not in sys.path:
         sys.path.insert(0, str(gemx_root))
 
-    from gem.utils.net_utils import to_cuda
     from gem.utils.soma_utils.soma_layer import SomaLayer
 
+    if str(device).startswith("cuda") and not torch.cuda.is_available():
+        device = "cpu"
     pred = torch.load(hpe_results, weights_only=False)
     K_all = pred["K_fullimg"].float().cpu().numpy()
 
@@ -77,8 +91,8 @@ def convert_hpe_to_pose3d(
         mode="warp",
     )
     with torch.no_grad():
-        out_g = soma(**to_cuda(_get_body_params(pred, "body_params_global")))
-        out_i = soma(**to_cuda(_get_body_params(pred, "body_params_incam")))
+        out_g = soma(**_to_device(_get_body_params(pred, "body_params_global"), device))
+        out_i = soma(**_to_device(_get_body_params(pred, "body_params_incam"), device))
         raw_joints = out_g["joints"].float().cpu().numpy()
         global_yaw = global_yaw_series(raw_joints)
         joints_g = normalize_soma77_joints(raw_joints)
@@ -163,7 +177,7 @@ def main() -> int:
     parser.add_argument("--fps", type=float, default=30.0)
     parser.add_argument("--gemx-root", type=Path, default=Path("/root/GEM-X"))
     parser.add_argument("--soma-assets", default="/root/GEM-X/inputs/soma_assets")
-    parser.add_argument("--device", default="cuda:0")
+    parser.add_argument("--device", default=os.environ.get("CEREBEL_IK_DEVICE", "cuda:0"))
     parser.add_argument("--height-cm", type=float, default=185.0)
     parser.add_argument("--mass-kg", type=float, default=93.0)
     parser.add_argument("--session-header", type=Path, default=None)
