@@ -229,7 +229,8 @@ def queue_info(session_id: str) -> dict[str, Any] | None:
     if found is None:
         return None
     ahead, running = found
-    wait_s = (ahead + (0.5 if running else 1)) * AVG_JOB_SECONDS
+    workers = max(1, int(getattr(queue, "workers", 1) or 1))
+    wait_s = 0.5 * AVG_JOB_SECONDS if running else (ahead // workers + 1.5) * AVG_JOB_SECONDS
     minutes = max(1, round(wait_s / 60))
     if running:
         message = f"Rebuilding your body now — about {minutes} min."

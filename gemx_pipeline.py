@@ -35,6 +35,8 @@ except ImportError:  # pragma: no cover
             "on",
         )
 MIN_FRAMES = int(os.environ.get("CEREBEL_GEMX_MIN_FRAMES", "8"))
+# "local" = the warm worker on this machine; "modal" = deploy/modal_gemx.py on Modal GPUs.
+GPU_BACKEND = os.environ.get("CEREBEL_GPU_BACKEND", "local").strip().lower()
 WORKER_HOST = os.environ.get("CEREBEL_GEMX_WORKER_HOST", "127.0.0.1")
 WORKER_PORT = int(os.environ.get("CEREBEL_GEMX_WORKER_PORT", "61017"))
 WORKER_TIMEOUT_S = float(os.environ.get("CEREBEL_GEMX_WORKER_TIMEOUT_S", "3600"))
@@ -205,6 +207,42 @@ def run_gemx_warm(
     return out_dir
 
 
+def _safe_extract(archive: bytes, dest: Path) -> None:
+    import io
+    import tarfile
+
+    dest.mkdir(parents=True, exist_ok=True)
+    root = dest.resolve()
+    with tarfile.open(fileobj=io.BytesIO(archive), mode="r:gz") as tar:
+        for member in tar.getmembers():
+            target = (root / member.name).resolve()
+            if target != root and root not in target.parents:
+                raise RuntimeError(f"unsafe path in GPU result archive: {member.name}")
+            if member.issym() or member.islnk():
+                raise RuntimeError(f"links are not allowed in GPU result archive: {member.name}")
+        tar.extractall(root)
+
+
+def run_gemx_modal(session_id: str, fps: float, *, video_path: Path) -> Path:
+    """Run GEM-X on Modal's autoscaling GPUs (deploy/modal_gemx.py) and unpack the result locally."""
+    import modal  # only needed when CEREBEL_GPU_BACKEND=modal
+
+    cls = modal.Cls.from_name(os.environ.get("CEREBEL_MODAL_APP", "cerebel-gemx"), "Gemx")
+    resp = cls().run.remote(session_id, Path(video_path).read_bytes(), Path(video_path).suffix, float(fps))
+    if not resp.get("ok"):
+        raise RuntimeError(resp.get("error") or "Modal GEM-X job failed")
+    out_dir = DEFAULT_OUTPUT_ROOT / session_id
+    _safe_extract(resp["archive"], out_dir)
+    hpe = out_dir / resp["hpe_rel"]
+    if not hpe.is_file():
+        raise FileNotFoundError(f"Modal result missing {hpe}")
+    LOG.info(
+        "warm GEM-X done session=%s elapsed=%.1fs frames=%s → %s (modal)",
+        session_id, float(resp.get("elapsed_s") or 0.0), resp.get("frames"), hpe,
+    )
+    return out_dir
+
+
 def write_latest_pointer(
     data_dir: Path,
     *,
@@ -332,9 +370,15 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
     )
     try:
         jpeg_dir, video_path = _resolve_gemx_input(session_dir)
-        out_dir = run_gemx_warm(
-            session_id, fps, jpeg_dir=jpeg_dir, video_path=video_path
-        )
+        if GPU_BACKEND == "modal":
+            src = video_path or next(iter(sorted((session_dir / "upload").glob("source_video.*"))), None)
+            if src is None:
+                raise FileNotFoundError("Modal backend needs the uploaded video file")
+            out_dir = run_gemx_modal(session_id, fps, video_path=Path(src))
+        else:
+            out_dir = run_gemx_warm(
+                session_id, fps, jpeg_dir=jpeg_dir, video_path=video_path
+            )
         candidates = [
             out_dir / "hpe_results.pt",
             out_dir / "preprocess" / "hpe_results.pt",
@@ -455,10 +499,16 @@ class GemxPipelineQueue:
         self._cv = threading.Condition()
         self._pending: list[Path] = []
         self._seen: set[str] = set()
-        self.current: str | None = None  # session id being processed right now
+        self._running: set[str] = set()  # session ids being processed right now
         self._ready = threading.Event()
-        self._worker = threading.Thread(target=self._loop, name="gemx-queue", daemon=True)
-        self._worker.start()
+        # One local GPU = one job at a time. With CEREBEL_GPU_BACKEND=modal each job gets its
+        # own autoscaled GPU container, so several jobs can run side by side.
+        default_workers = "10" if GPU_BACKEND == "modal" else "1"
+        self.workers = max(1, int(os.environ.get("CEREBEL_QUEUE_WORKERS", default_workers)))
+        for n in range(self.workers):
+            threading.Thread(target=self._loop, name=f"gemx-queue-{n}", daemon=True).start()
+        if GPU_BACKEND == "modal":
+            wait_for_warm = False
         if wait_for_warm:
             threading.Thread(
                 target=self._wait_ready, name="gemx-wait-ready", daemon=True
@@ -477,11 +527,11 @@ class GemxPipelineQueue:
     def jobs_ahead(self, session_id: str) -> tuple[int, bool] | None:
         """(videos ahead of this one, is_running_now); None when it is not queued here."""
         with self._cv:
-            if self.current == session_id:
+            if session_id in self._running:
                 return 0, True
             for i, pending in enumerate(self._pending):
                 if pending.name == session_id:
-                    return i + (1 if self.current else 0), False
+                    return i, False
         return None
 
     def enqueue(self, session_dir: Path) -> None:
@@ -502,12 +552,12 @@ class GemxPipelineQueue:
                 while not self._pending:
                     self._cv.wait()
                 session_dir = self._pending.pop(0)
-                self.current = session_dir.name
+                self._running.add(session_dir.name)
             try:
                 result = process_session(session_dir, self.data_dir)
             finally:
                 with self._cv:
-                    self.current = None
+                    self._running.discard(session_dir.name)
             with self._cv:
                 self._seen.add(str(session_dir.resolve()))
             if self.on_complete is not None:

@@ -418,3 +418,58 @@ class NotifyTests(unittest.TestCase):
                 if t.name.startswith("mail-"):
                     t.join(2)
             send.assert_called_once()
+
+
+class GpuQueueTests(unittest.TestCase):
+    def test_queue_positions_and_parallel_workers(self):
+        import sys
+        import threading
+
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+        import gemx_pipeline
+
+        gate = threading.Event()
+        started = []
+
+        def fake_process(session_dir, data_dir):
+            started.append(session_dir.name)
+            gate.wait(5)
+            return gemx_pipeline.PipelineResult(session_id=session_dir.name, video_path=session_dir, output_dir=session_dir, hpe_results=session_dir, fps=30.0, ok=True)
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(gemx_pipeline, "process_session", fake_process), \
+                mock.patch.dict(os.environ, {"CEREBEL_QUEUE_WORKERS": "2"}):
+            q = gemx_pipeline.GemxPipelineQueue(Path(tmp), wait_for_warm=False)
+            self.assertEqual(q.workers, 2)
+            for sid in ("A", "B", "C", "D"):
+                q.enqueue(Path(tmp) / sid)
+            deadline = time.time() + 3
+            while len(started) < 2 and time.time() < deadline:
+                time.sleep(0.02)
+            self.assertEqual(sorted(started), ["A", "B"])           # two run side by side
+            self.assertEqual(q.jobs_ahead("A"), (0, True))
+            self.assertEqual(q.jobs_ahead("C"), (0, False))
+            self.assertEqual(q.jobs_ahead("D"), (1, False))
+            self.assertIsNone(q.jobs_ahead("Z"))
+            gate.set()
+            deadline = time.time() + 5
+            while (q._pending or q._running or len(started) < 4) and time.time() < deadline:
+                time.sleep(0.02)
+            self.assertEqual(len(started), 4)
+
+    def test_safe_extract_rejects_traversal(self):
+        import io
+        import sys
+        import tarfile
+
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+        import gemx_pipeline
+
+        buf = io.BytesIO()
+        with tarfile.open(fileobj=buf, mode="w:gz") as tar:
+            data = b"x"
+            info = tarfile.TarInfo("../evil.txt")
+            info.size = len(data)
+            tar.addfile(info, io.BytesIO(data))
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(RuntimeError):
+                gemx_pipeline._safe_extract(buf.getvalue(), Path(tmp) / "out")

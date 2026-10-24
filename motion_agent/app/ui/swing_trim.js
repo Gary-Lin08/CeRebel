@@ -22,6 +22,8 @@
   );
 
   var landmarkerPromise = null;
+  // MediaPipe VIDEO mode needs timestamps that only ever increase, across all clips.
+  var clock = 0;
 
   function loadLandmarker() {
     if (landmarkerPromise) return landmarkerPromise;
@@ -95,15 +97,18 @@
       video = await openVideo(file);
       var duration = video.duration;
       if (!isFinite(duration) || duration <= 0) return null;
-      var step = Math.max(1 / 8, duration / 160);
+      var step = Math.max(1 / 6, duration / 90);
       var samples = [];
       var multi = 0;
       var body = 0;
       var seen = 0;
+      var processed = 0;
       for (var t = 0; t < duration; t += step) {
         if ((Date.now() - started) / 1000 > CFG.maxSeconds) break;
         await seek(video, t);
-        var res = landmarker.detectForVideo(video, Math.round(t * 1000));
+        clock += Math.max(1, Math.round(step * 1000));
+        var res = landmarker.detectForVideo(video, clock);
+        processed += 1;
         var poses = (res && res.landmarks) || [];
         if (poses.length > 1) multi += 1;
         if (poses.length) {
@@ -113,13 +118,16 @@
           samples.push({ t: t, x: (lm[15].x + lm[16].x) / 2, y: (lm[15].y + lm[16].y) / 2 });
         }
       }
-      var total = Math.max(1, Math.round(duration / step));
+      var total = Math.max(1, processed);
       var stats = {
         duration: duration,
+        processed: processed,
+        coverage: Math.min(1, (processed * step) / duration),
         detected: seen / total,
         fullBody: seen ? body / seen : 0,
         multiple: multi / total,
       };
+      if (processed < 10) return null; // too little evidence either way: upload untrimmed
       if (stats.detected < 0.3) {
         return {
           block: true,
@@ -146,7 +154,8 @@
         if (!best || v > best.v) best = { t: speeds[j].t, v: v };
       }
       var win = null;
-      if (best && duration > CFG.before + CFG.after + 1.5) {
+      // Only trim when the whole clip was scanned; otherwise the strike may lie in the unscanned part.
+      if (best && stats.coverage > 0.95 && duration > CFG.before + CFG.after + 1.5) {
         var s = Math.max(0, best.t - CFG.before);
         var e = Math.min(duration, best.t + CFG.after);
         if (e - s >= 2.5) win = [Number(s.toFixed(2)), Number(e.toFixed(2))];
