@@ -1,9 +1,9 @@
-/* CeRebel swing hero: one real swing as the OpenSim musculoskeletal model.
+/* CeRebel swing reel: one real swing, driven by scroll.
    Data: /static/hero/swing-sample.json (OpenSim IK body transforms, muscle paths, GEM-X joints, and the clip they came from)
    and /static/hero/opensim-bones.glb (Rajagopal-Lai-Uhlrich 2023 bones, one node per body).
-   Motion happens once on load: address to the top, then the highlighted bones turn red and
-   their angle appears. After that only the scrubber, the phase buttons or Replay move it.
-   With reduced motion the page shows the top of the backswing as a still. */
+   Scrolling through the reel plays the swing from address to the top in three acts: the phone video,
+   then GEM-X joints, then the OpenSim body with the fix lit up. The phase buttons jump the page to a phase.
+   With reduced motion the reel is a still of the top of the backswing with everything shown. */
 const THREE = await import("/static/three/three.module.js");
 const { GLTFLoader } = await import("/static/three/GLTFLoader.js");
 
@@ -23,9 +23,8 @@ window.addEventListener("cerebel:landing", boot);
 
 async function start(root) {
   const stage = root.querySelector(".swing__stage");
-  const range = root.querySelector(".swing__range");
   const phaseList = root.querySelector(".swing__phases");
-  const replay = root.querySelector(".swing__replay");
+  const numEl = root.querySelector(".reel__num");
   const readout = root.querySelector(".swing__readout");
   const tag = root.querySelector(".swing__tag");
   const video = root.querySelector(".swing__video video");
@@ -49,7 +48,9 @@ async function start(root) {
     video.src = data.video.src;
     video.hidden = false;
     // Seeks are skipped while one is in flight, so catch up to wherever the model ended up.
+    video.addEventListener("loadeddata", () => pose(current));
     video.addEventListener("seeked", () => {
+
       const vt = current + (data.video.offset || 0);
       if (Math.abs(video.currentTime - vt) > 0.04) video.currentTime = vt;
     });
@@ -67,7 +68,7 @@ async function start(root) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(24, 1, 0.1, 50);
 
-  scene.add(new THREE.HemisphereLight(0xf4f6f1, 0x9aa79d, 1.15));
+  scene.add(new THREE.HemisphereLight(0xdfe9e4, 0x0a1512, 0.95));
   const key = new THREE.DirectionalLight(0xffffff, 2.1);
   key.position.set(2.2, 4.2, 3.2);
   key.castShadow = true;
@@ -76,19 +77,19 @@ async function start(root) {
   key.shadow.camera.top = 2.5; key.shadow.camera.bottom = -0.5;
   key.shadow.radius = 6;
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xdfe8ff, 0.9);
+  const rim = new THREE.DirectionalLight(0xe8c98a, 1.6); // floodlight from behind
   rim.position.set(-3, 2.5, -2.5);
   scene.add(rim);
 
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(8, 4), new THREE.ShadowMaterial({ opacity: 0.16 }));
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(8, 4), new THREE.ShadowMaterial({ opacity: 0.38 }));
   ground.rotation.x = -Math.PI / 2;
   ground.receiveShadow = true;
   scene.add(ground);
 
   // Bones
   const model = gltf.scene;
-  const boneMat = new THREE.MeshStandardMaterial({ color: 0xe9e4d8, roughness: 0.55, metalness: 0 });
-  const fixMat = new THREE.MeshStandardMaterial({ color: color("--flag", "#D9402A"), roughness: 0.5, metalness: 0 });
+  const boneMat = new THREE.MeshStandardMaterial({ color: 0xe9e4d8, roughness: 0.55, metalness: 0, transparent: true });
+  const fixMat = new THREE.MeshStandardMaterial({ color: color("--fix", "#F2A541"), emissive: 0x6a3a00, roughness: 0.45, metalness: 0, transparent: true });
   const fixBones = new Set(data.fix.bones);
   model.traverse((o) => {
     if (o.isMesh) {
@@ -102,7 +103,7 @@ async function start(root) {
 
   // Muscles: fusiform tubes along each OpenSim path, rebuilt per frame (paths change length).
   const muscleMat = new THREE.MeshStandardMaterial({
-    color: 0xc29a90, roughness: 0.5, metalness: 0, transparent: true, opacity: 0.8, // muted, so the flag-red highlight reads
+    color: 0xa9776d, roughness: 0.5, metalness: 0, transparent: true, opacity: 0.8, // muted, so the amber highlight reads
   });
   const muscleMeshes = data.muscles.map(() => {
     const m = new THREE.Mesh(new THREE.BufferGeometry(), muscleMat);
@@ -154,7 +155,7 @@ async function start(root) {
   const handIdx = [data.bodies.indexOf("hand_l"), data.bodies.indexOf("hand_r")];
   const trailGeo = new THREE.BufferGeometry();
   const trail = new THREE.Line(trailGeo, new THREE.LineDashedMaterial({
-    color: color("--turf", "#2F6B45"), dashSize: 0.012, gapSize: 0.03, transparent: true, opacity: 0.9,
+    color: color("--lamp", "#E8C98A"), dashSize: 0.012, gapSize: 0.03, transparent: true, opacity: 0.9,
   }));
   trail.userData.overlay = true;
   model.add(trail);
@@ -177,10 +178,10 @@ async function start(root) {
     gemxInner.userData.pivot = new THREE.Vector3(H[0], 0, H[2]);
   }
   const jointGeo = new THREE.SphereGeometry(0.022, 16, 12);
-  const jointMat = new THREE.MeshStandardMaterial({ color: color("--turf", "#2F6B45"), roughness: 0.4 });
+  const jointMat = new THREE.MeshStandardMaterial({ color: 0xa8d5c2, emissive: 0x0f3a2c, roughness: 0.4, transparent: true });
   const linkGeo = new THREE.CylinderGeometry(0.011, 0.011, 1, 10);
   linkGeo.translate(0, 0.5, 0);
-  const linkMat = new THREE.MeshStandardMaterial({ color: color("--ink", "#16241D"), roughness: 0.5 });
+  const linkMat = new THREE.MeshStandardMaterial({ color: 0xeef0ea, roughness: 0.5, transparent: true, opacity: 0.7 });
   const skip = new Set(["HeadEnd", "Jaw", "LeftEye", "RightEye", "LeftToeEnd", "RightToeEnd"]);
   const gJoints = gemx ? gemx.names.map((n) => {
     const m = new THREE.Mesh(jointGeo, jointMat);
@@ -266,16 +267,13 @@ async function start(root) {
       o.material = showFix && body && fixBones.has(body.name) ? fixMat : boneMat;
     });
     const value = Math.round(valueOf(a) + (valueOf(b) - valueOf(a)) * k);
-    if (readout) readout.textContent = fixLabel + " " + value + "°";
+    if (readout) readout.textContent = fixLabel;
+    if (numEl) numEl.textContent = String(value);
     const anchor = model.getObjectByName(fixAnchor);
     if (anchor) anchor.getWorldPosition(elbowWorld);
     if (tag) {
       tag.textContent = value + "°";
       tag.style.opacity = String(fixShown);
-    }
-    if (range) {
-      range.value = t.toFixed(2);
-      range.setAttribute("aria-valuetext", phaseAt(t) + ", " + fixLabel.toLowerCase() + " " + value + " degrees");
     }
     markPhase(t);
     render();
@@ -291,7 +289,7 @@ async function start(root) {
     const span = (gemx ? 2.2 : 1.05) * (camera.aspect < 1 ? 0.7 : 1);
     const dist = Math.max(4.9, (4.9 * span) / Math.min(span, camera.aspect * 1.1));
     // On phones the video sits in the top corner, so look a little higher and the bodies drop below it.
-    target.y = camera.aspect < 1 ? 1.5 : 0.95;
+    target.y = camera.aspect < 1 ? 1.2 : 0.95;
     const yaw = 0.42;
     camera.position.set(target.x + Math.sin(yaw) * dist, 1.25, target.z + Math.cos(yaw) * dist);
     camera.lookAt(target);
@@ -321,14 +319,16 @@ async function start(root) {
   ground.position.set(p0[0], 0.001, p0[2]);
   ground.rotation.z = yaw0;
 
-  // Phases
-  const phaseAt = (t) => { let n = ""; data.phases.forEach((p) => { if (t >= p[1] - 1e-6) n = p[0]; }); return n; };
+  // Phases up to the top of the backswing, where the reel ends.
+  const phaseAt = (t) => { let n = ""; rail.forEach((p) => { if (t >= p[1] - 1e-6) n = p[0]; }); return n; };
+  const rail = data.phases.filter((p) => p[2] <= tTop + 0.01).map((p) => [p[0], p[1], p[2]]);
+  rail.push(["Top", tTop, tTop]);
   const items = [];
-  data.phases.forEach((p) => {
+  rail.forEach((p) => {
     const b = document.createElement("button");
     b.type = "button";
     b.textContent = p[0];
-    b.addEventListener("click", () => { stop(); fixShown = 1; pose(Math.min(tEnd, (p[1] + p[2]) / 2)); });
+    b.addEventListener("click", () => scrollToTime(p[2] === p[1] ? p[1] : (p[1] + p[2]) / 2));
     phaseList.appendChild(b);
     items.push([p[0], b]);
   });
@@ -339,42 +339,65 @@ async function start(root) {
       if (name === cur) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
     });
   }
-  range.min = "0";
-  range.max = tEnd.toFixed(2);
-  range.step = "0.01";
-  range.addEventListener("input", () => { stop(); fixShown = 1; pose(parseFloat(range.value)); });
 
-  // The one orchestrated moment.
-  let raf = 0;
+  // Scroll position through the reel (0 to 1) sets everything. The value chases the scroll
+  // with a little lag, which is what makes it feel smooth rather than stepped.
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
   const ease = (x) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
-  function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; root.classList.remove("is-playing"); }
-  function play() {
-    stop();
-    fixShown = 0;
-    root.classList.add("is-playing");
-    const swingMs = 2800, fixMs = 500;
-    let t0 = 0;
-    const step = (now) => {
-      if (!t0) t0 = now;
-      const e = now - t0;
-      if (e < swingMs) pose(tTop * ease(e / swingMs));
-      else {
-        fixShown = Math.min(1, (e - swingMs) / fixMs);
-        pose(tTop);
-        if (fixShown >= 1) { stop(); return; }
-      }
-      raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
+  const SWING_FROM = 0.04, SWING_TO = 0.86;
+  const timeAt = (p) => tTop * ease(clamp01((p - SWING_FROM) / (SWING_TO - SWING_FROM)));
+  function scrollProgress() {
+    const r = root.getBoundingClientRect();
+    return clamp01(-r.top / Math.max(1, r.height - window.innerHeight));
   }
-  replay.addEventListener("click", play);
+  function scrollToTime(t) {
+    let lo = 0, hi = 1;
+    for (let k = 0; k < 30; k++) { const mid = (lo + hi) / 2; if (timeAt(mid) < t) lo = mid; else hi = mid; }
+    const p = t >= tTop ? 0.95 : hi;
+    const top = root.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + p * (root.offsetHeight - window.innerHeight), behavior: reduced ? "auto" : "smooth" });
+  }
+
+  let shown = -1;
+  function apply(p) {
+    const act = p < 0.26 ? 1 : p < 0.6 ? 2 : 3;
+    if (root.dataset.act !== String(act)) root.dataset.act = String(act);
+    const g = smooth((p - 0.22) / 0.1);
+    const o = smooth((p - 0.56) / 0.1);
+    jointMat.opacity = g;
+    linkMat.opacity = 0.7 * g;
+    gemxGroup.visible = g > 0.01;
+    boneMat.opacity = o;
+    fixMat.opacity = o;
+    muscleMat.opacity = 0.8 * o;
+    trail.material.opacity = 0.9 * o;
+    model.visible = o > 0.01;
+    // GEM-X stands alone in the middle, then steps aside for OpenSim.
+    gemxGroup.position.copy(right).multiplyScalar(-gap * o);
+    fixShown = clamp01((p - SWING_TO + 0.02) / 0.06);
+    root.classList.toggle("is-fix", fixShown > 0.5);
+    root.style.setProperty("--p", p.toFixed(4));
+    pose(timeAt(p));
+  }
 
   fit();
   root.classList.add("is-ready");
-  if (reduced) { fixShown = 1; pose(tTop); return; }
-  pose(0);
-  const io = new IntersectionObserver((entries) => {
-    if (entries.some((x) => x.isIntersecting)) { io.disconnect(); setTimeout(play, 300); }
-  }, { threshold: 0.35 });
-  io.observe(stage);
+  if (reduced) { apply(1); return; }
+  let cur = scrollProgress(), raf = 0;
+  function tick() {
+    const p = scrollProgress();
+    root.classList.toggle("is-moved", p > 0.02);
+    cur += (p - cur) * 0.14;
+    if (Math.abs(p - cur) < 0.0004) cur = p;
+    if (cur !== shown) { shown = cur; apply(cur); }
+    raf = requestAnimationFrame(tick);
+  }
+  apply(cur);
+  // Only run while the reel is on screen.
+  new IntersectionObserver((entries) => {
+    const on = entries.some((x) => x.isIntersecting);
+    if (on && !raf) raf = requestAnimationFrame(tick);
+    if (!on && raf) { cancelAnimationFrame(raf); raf = 0; }
+  }).observe(root);
 }

@@ -1,76 +1,168 @@
-/* CeRebel signed-in app in the landing's palette (DESIGN.md): paper ground, ink text,
-   turf for actions, flag red only for the fix. Loaded last; ?dev=1 keeps its own look. */
+/* CeRebel signed-in app, same "dusk on the course" look as the landing: the fluid field behind,
+   dark glass panels, bone for actions, amber only for the fix. Loaded last; ?dev=1 keeps its own look.
+   Tokens (--night, --bone, --lamp, --fix, --spring...) come from playground-landing.css. */
 body.pg-consumer {
-  --bg: #F1F3EF;
-  --panel: #FFFFFF;
-  --panel-2: #E4E8E2;
-  --text: #16241D;
-  --muted: #4C5A52;
-  --lime: #2F6B45;
-  --accent: #2F6B45;
-  --accent-tint: #E3ECE5;
-  --ink: #F1F3EF;
-  --user: #E4E8E2;
-  --agent: #FFFFFF;
-  --tool: #F6F1E4;
-  --border: #C8D0C9;
-  --rule: #C8D0C9;
-  --danger: #D9402A;
-  --type: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --mono: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --bg: #0A1512;
+  --panel: rgba(16, 34, 29, 0.62);
+  --panel-2: rgba(22, 46, 39, 0.66);
+  --text: #EEF0EA;
+  --muted: rgba(238, 240, 234, 0.64);
+  --lime: #EEF0EA;
+  --accent: #E8C98A;
+  --accent-tint: rgba(232, 201, 138, 0.12);
+  --ink: #0B1A15;
+  --user: rgba(238, 240, 234, 0.92);
+  --agent: rgba(16, 34, 29, 0.72);
+  --tool: rgba(232, 201, 138, 0.08);
+  --border: rgba(238, 240, 234, 0.12);
+  --rule: rgba(238, 240, 234, 0.1);
+  --danger: #F2A541;
+  --radius: 22px;
+  --ease: cubic-bezier(0.2, 0.9, 0.25, 1);
+  --type: "Inter", "SF Pro Text", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Inter", "SF Pro Text", -apple-system, "Helvetica Neue", Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   font-family: var(--type);
+  font-feature-settings: "tnum" 1;
 }
 body.pg-consumer #pgVanta { display: none !important; }
-body.pg-consumer ::selection { background: #D6E4D9; }
+body.pg-consumer .pg-shell { position: relative; z-index: 1; }
+body.pg-consumer ::selection { background: rgba(232, 201, 138, 0.35); }
 
-/* The one fix wears flag red; the server's per-fix pastels don't read on paper. */
-body.pg-consumer .fix-hero__evidence { border-color: #EBC2B9; color: #B5321F; background: #FBEDEA; }
-body.pg-consumer .fix-hero__tabs button.is-active { border-color: #D9402A; box-shadow: inset 0 0 0 1px #D9402A; }
-body.pg-consumer .fix-hero__actions button.primary:hover,
-body.pg-consumer .composer button:hover { background: #24382D; color: #F1F3EF; }
+/* Headings take the display face. */
+body.pg-consumer h1, body.pg-consumer h2, body.pg-consumer h3,
+body.pg-consumer .v3-hero__title, body.pg-consumer .pg-monument__word {
+  font-family: "Inter Tight", "SF Pro Display", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600; letter-spacing: -0.035em;
+}
+body.pg-consumer .v3-hero__title { font-size: clamp(2.6rem, 1.2rem + 4.6vw, 5.2rem); line-height: 0.95; max-width: 13ch; }
+body.pg-consumer .v3-eyebrow,
+body.pg-consumer .fix-hero__kicker { color: var(--lamp); letter-spacing: 0; text-transform: none; font-family: var(--type); font-weight: 500; }
+body.pg-consumer .v3-film__steps span { color: var(--lamp); }
+body.pg-consumer .v3-film__ray, body.pg-consumer .v3-film__body { stroke: var(--lamp); }
 
-/* Motion analysis panel: from violet-on-black to the same paper and ink */
+/* Every button is a pill that presses in and springs back. */
+body.pg-consumer button,
+body.pg-consumer .upload-label {
+  border-radius: 999px;
+  transition: transform 0.55s var(--spring), background-color 0.3s ease, box-shadow 0.35s ease, color 0.3s ease, border-color 0.3s ease;
+}
+body.pg-consumer button:active:not(:disabled) { transform: scale(0.955); transition-duration: 0.12s; }
+body.pg-consumer button:focus-visible { outline: 2px solid var(--lamp); outline-offset: 3px; }
+body.pg-consumer .v3-cta,
+body.pg-consumer button.primary {
+  background: var(--bone); color: #0B1A15; border: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 12px 32px -12px rgba(232, 201, 138, 0.45);
+}
+body.pg-consumer .v3-cta:hover,
+body.pg-consumer button.primary:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 18px 40px -12px rgba(232, 201, 138, 0.6); }
+body.pg-consumer .v3-ghost {
+  background: rgba(238, 240, 234, 0.07); border: 0; box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.2);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+body.pg-consumer .v3-ghost:hover { background: rgba(238, 240, 234, 0.13); box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.4); }
+
+/* Nav: a floating glass bar, like the landing. */
+body.pg-consumer .pg-nav {
+  position: sticky; top: 12px; z-index: 30;
+  margin: 12px 12px 0; padding: 8px 8px 8px 20px;
+  border-radius: 999px; border: 0;
+  background: rgba(14, 28, 24, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.1), 0 20px 50px -24px rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5); backdrop-filter: blur(18px) saturate(1.5);
+}
+body.pg-consumer .pg-nav__links a { color: var(--muted); text-decoration: none; transition: color 0.25s; }
+body.pg-consumer .pg-nav__links a:hover { color: var(--text); }
+body.pg-consumer #accountBtn {
+  min-height: 38px; padding: 0 16px; border: 0;
+  background: rgba(238, 240, 234, 0.08); color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.18);
+}
+
+/* Library and account: a drawer from the right instead of a box on top of the page. */
+body.pg-consumer:not(.lp-mode) #accountPanel:not([hidden]) {
+  position: fixed; z-index: 50; top: 76px; right: 12px;
+  width: min(420px, calc(100vw - 24px)); max-height: calc(100dvh - 88px); overflow: auto;
+  margin: 0; padding: 24px;
+  border: 0; border-radius: 26px;
+  background: rgba(14, 30, 25, 0.82);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.12), 0 40px 80px -30px rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5);
+  animation: drawerIn 0.7s var(--spring);
+}
+@keyframes drawerIn { from { opacity: 0; transform: translateX(24px) scale(0.98); } }
+body.pg-consumer #accountPanel #libraryList { display: grid; gap: 6px; padding: 0; list-style: none; }
+body.pg-consumer #accountPanel #libraryList li { display: flex; gap: 6px; }
+body.pg-consumer #accountPanel #libraryList li button:first-child { flex: 1; text-align: left; }
+body.pg-consumer #accountPanel button,
+body.pg-consumer #accountPanel .upload-label {
+  min-height: 42px; padding: 0 16px; border: 0;
+  background: rgba(238, 240, 234, 0.07); color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.14);
+}
+body.pg-consumer #accountPanel input[type="email"],
+body.pg-consumer #accountPanel input[type="password"],
+body.pg-consumer #accountPanel input[type="text"] {
+  min-height: 46px; padding: 10px 14px; border: 0; border-radius: 14px;
+  background: rgba(238, 240, 234, 0.07); color: var(--text); box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.14);
+}
+body.pg-consumer input[type="file"]::file-selector-button {
+  min-height: 40px; margin-right: 12px; padding: 0 16px; border: 0; border-radius: 999px;
+  background: var(--bone); color: #0B1A15; font: 600 14px/1 var(--type); cursor: pointer;
+}
+
+/* Glass for the cards that float on the field. */
+body.pg-consumer .v3-film,
+body.pg-consumer .fix-hero,
 body.pg-consumer .ma,
-body.pg-consumer .ma [style*="--accent"] { --accent: #D9402A !important; }
-body.pg-consumer .ma { --mono: "Archivo", "Helvetica Neue", Arial, sans-serif; border-radius: 10px; }
-body.pg-consumer .ma__stage { background: #FFFFFF; }
-body.pg-consumer .ma__closeup { background: #E4E8E2; border-left-color: #C8D0C9; border-top-color: #C8D0C9; }
+body.pg-consumer #emptyState,
+body.pg-consumer #processingState,
+body.pg-consumer .sports-catalog__grid > * {
+  border: 0;
+  border-radius: 26px;
+  background: linear-gradient(160deg, rgba(18, 58, 46, 0.5), rgba(10, 21, 18, 0.66));
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.09), 0 30px 80px -40px rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
+}
+body.pg-consumer .sports-catalog__grid > * { border-radius: 18px; transition: transform 0.6s var(--spring), box-shadow 0.3s; }
+body.pg-consumer .sports-catalog__grid > *:hover { transform: translateY(-3px); }
+
+/* Drag a clip over the page: upload targets light up. */
+body.cx-dragging.pg-consumer .v3-cta,
+body.cx-dragging.pg-consumer #accountPanel .upload-label { box-shadow: 0 0 0 2px var(--lamp), 0 0 40px rgba(232, 201, 138, 0.5); }
+
+/* The one fix wears amber. */
+body.pg-consumer .fix-hero__evidence { border: 0; color: var(--fix); background: rgba(242, 165, 65, 0.12); box-shadow: inset 0 0 0 1px rgba(242, 165, 65, 0.35); }
+body.pg-consumer .fix-hero__tabs button.is-active { box-shadow: inset 0 0 0 1px var(--fix); color: var(--text); }
+
+/* Motion analysis panel */
+body.pg-consumer .ma,
+body.pg-consumer .ma [style*="--accent"] { --accent: #F2A541 !important; }
+body.pg-consumer .ma { overflow: hidden; --mono: var(--type); }
+body.pg-consumer .ma__stage { background: transparent; }
+body.pg-consumer .ma__closeup { background: rgba(5, 12, 10, 0.45); border-left-color: var(--rule); border-top-color: var(--rule); }
 body.pg-consumer .ma__closeup-label,
 body.pg-consumer .ma__closeup-status,
-body.pg-consumer .ma__closeup-target span { color: #4C5A52; letter-spacing: 0.02em; text-transform: none; font-size: 0.78rem; }
-body.pg-consumer .ma__closeup-target { color: #16241D; }
-body.pg-consumer .ma__badge { color: #16241D; background: rgba(241, 243, 239, 0.9); }
-body.pg-consumer .ma__caption { color: #4C5A52; }
-body.pg-consumer .ma__cue { color: #16241D; }
-body.pg-consumer .ma__steps { background: rgba(228, 232, 226, 0.9); }
-body.pg-consumer .ma__steps button { color: #4C5A52; }
-body.pg-consumer .ma__steps button.is-active { color: #FFFFFF; background: #D9402A; }
-body.pg-consumer .ma__console { border-top-color: #C8D0C9; }
-body.pg-consumer .ma-deck__play { color: #F1F3EF; background: #2F6B45; }
-body.pg-consumer .ma-deck__play:hover { background: #24382D; }
-body.pg-consumer .ma.is-slow .ma-deck__play { box-shadow: 0 0 0 6px rgba(47, 107, 69, 0.18); }
-body.pg-consumer .ma__timeline input::-webkit-slider-runnable-track { background: linear-gradient(90deg, #2F6B45 var(--playhead), #D5DBD5 var(--playhead)); }
-body.pg-consumer .ma__timeline input::-webkit-slider-thumb { background: #16241D; }
-body.pg-consumer .ma__phases li { border-top-color: #D5DBD5; color: #4C5A52; }
-body.pg-consumer .ma__phases li.is-active { color: #16241D; border-top-color: #2F6B45; }
+body.pg-consumer .ma__closeup-target span { color: var(--muted); letter-spacing: 0; text-transform: none; font-size: 0.8rem; }
+body.pg-consumer .ma__badge { color: var(--text); background: rgba(10, 21, 18, 0.7); }
+body.pg-consumer .ma__steps { background: rgba(238, 240, 234, 0.08); }
+body.pg-consumer .ma__steps button { color: var(--muted); }
+body.pg-consumer .ma__steps button.is-active { color: #1B1206; background: var(--fix); }
+body.pg-consumer .ma-deck__play { color: #0B1A15; background: var(--bone); }
+body.pg-consumer .ma.is-slow .ma-deck__play { box-shadow: 0 0 0 6px rgba(238, 240, 234, 0.14); }
+body.pg-consumer .ma__timeline input::-webkit-slider-runnable-track { background: linear-gradient(90deg, var(--lamp) var(--playhead), rgba(238, 240, 234, 0.14) var(--playhead)); }
+body.pg-consumer .ma__timeline input::-webkit-slider-thumb { background: var(--bone); }
+body.pg-consumer .ma__phases li { border-top-color: rgba(238, 240, 234, 0.14); color: var(--muted); }
+body.pg-consumer .ma__phases li.is-active { color: var(--text); border-top-color: var(--lamp); }
 body.pg-consumer .ma-track__head,
-body.pg-consumer .ma-track__lane { border-top-color: #E4E8E2; }
-body.pg-consumer .ma-track__head { color: #4C5A52; }
-body.pg-consumer .ma-track__head p { color: #16241D; }
-body.pg-consumer .ma-track__head small { color: #4C5A52; }
-body.pg-consumer .ma-track__lane path { stroke: #4C5A52; }
-body.pg-consumer .ma-track__zero { stroke: #C8D0C9; }
-body.pg-consumer .ma-plan li { border-color: #C8D0C9; background: #FFFFFF; }
-body.pg-consumer .ma-plan li.is-open { border-color: #D9402A; background: #FFFFFF; }
-body.pg-consumer .ma-plan__body dd,
-body.pg-consumer .ma-plan__muscle span,
-body.pg-consumer .ma-plan__muscle small { color: #4C5A52; }
-body.pg-consumer .ma-plan__body .is-action dd { color: #16241D; }
-body.pg-consumer .ma__highlights li { color: #16241D; }
+body.pg-consumer .ma-track__lane { border-top-color: var(--rule); }
+body.pg-consumer .ma-track__lane path { stroke: rgba(238, 240, 234, 0.7); }
+body.pg-consumer .ma-track__zero { stroke: rgba(238, 240, 234, 0.14); }
+body.pg-consumer .ma-plan li { border-color: var(--border); background: rgba(238, 240, 234, 0.04); border-radius: 16px; }
+body.pg-consumer .ma-plan li.is-open { border-color: var(--fix); }
 body.pg-consumer .ma__swatch,
-body.pg-consumer .ma__highlights li::before { background: #2F6B45; }
+body.pg-consumer .ma__highlights li::before { background: var(--lamp); }
 
 /* The analysis panel was wider than a phone screen; keep every column inside it. */
 body.pg-consumer .ma { min-width: 0; max-width: 100%; box-sizing: border-box; }
@@ -80,6 +172,18 @@ body.pg-consumer .ma__stage > *, body.pg-consumer .ma__console, body.pg-consumer
   body.pg-consumer .ma__closeup { min-height: 62vw; }
 }
 @media (max-width: 560px) {
-  /* Short phases overlap on a phone: keep the ticks, name only the current one. */
   body.pg-consumer .ma__phases li:not(.is-active) { color: transparent; }
 }
+
+/* Footer: a quiet line, not a giant wordmark. */
+body.pg-consumer .pg-foot { position: relative; z-index: 1; background: transparent; border-top: 1px solid var(--rule); }
+body.pg-consumer .pg-foot__word { font-size: 1.25rem; letter-spacing: -0.02em; color: var(--muted); }
+body.pg-consumer .pg-foot, body.pg-consumer .pg-foot * { color: var(--muted); }
+
+/* Sections enter once, softly. */
+@media (prefers-reduced-motion: no-preference) {
+  body.pg-consumer .v3-hero:not([hidden]) > * { animation: rise 1s var(--spring) both; }
+  body.pg-consumer .v3-hero:not([hidden]) > :nth-child(2) { animation-delay: 0.12s; }
+  body.pg-consumer .fix-hero:not([hidden]) { animation: rise 0.9s var(--spring) both; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(20px); } }
