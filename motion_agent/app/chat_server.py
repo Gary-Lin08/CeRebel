@@ -324,10 +324,10 @@ class Handler(BaseHTTPRequestHandler):
                 if row_status in {"uploading", "extracting", "queued", "gemx", "ik", "processing"} or (
                     owned_row and not motion_ready and row_status not in {"error", "deleted", "no_swing"}
                 ):
-                    from motion_agent.app.product_api import read_progress
+                    from motion_agent.app.product_api import public_progress, read_progress
                     from motion_agent.app.product_session import sports_catalog_payload
 
-                    prog = read_progress(SETTINGS, requested) or {}
+                    prog = public_progress(read_progress(SETTINGS, requested)) or {}
                     return _json_response(
                         self,
                         200,

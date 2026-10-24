@@ -301,3 +301,20 @@ class TokenExpiryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPublicProgress(unittest.TestCase):
+    def test_raw_exception_is_hidden(self):
+        from motion_agent.app.product_api import PIPELINE_FAILED_MESSAGE, public_progress
+
+        raw = "Lookup failed for Cls 'Gemx' from the 'cerebel-gemx' app"
+        out = public_progress({"stage": "error", "message": raw, "error": raw})
+        self.assertEqual(out["message"], PIPELINE_FAILED_MESSAGE)
+        self.assertNotIn("error", out)
+
+    def test_written_message_is_kept(self):
+        from motion_agent.app.product_api import public_progress
+
+        out = public_progress({"stage": "error", "message": "File is too small", "error": "too small"})
+        self.assertEqual(out["message"], "File is too small")
+        self.assertEqual(public_progress({"stage": "gemx", "message": "x", "error": "x"})["error"], "x")

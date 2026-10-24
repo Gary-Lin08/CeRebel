@@ -285,8 +285,22 @@ def queue_info(session_id: str) -> dict[str, Any] | None:
     return {"jobs_ahead": ahead, "running": running, "eta_minutes": minutes, "queue_message": message}
 
 
+PIPELINE_FAILED_MESSAGE = "Something went wrong on our side while analyzing this video. Please try again."
+
+
+def public_progress(prog: dict[str, Any] | None) -> dict[str, Any] | None:
+    """Progress as shown to the user: a raw exception text (message == error) is replaced."""
+    if not prog or prog.get("stage") != "error":
+        return prog
+    out = {k: v for k, v in prog.items() if k != "error"}
+    raw = prog.get("error")
+    if not out.get("message") or (raw and out.get("message") == raw):
+        out["message"] = PIPELINE_FAILED_MESSAGE
+    return out
+
+
 def read_progress_with_queue(settings: Settings, session_id: str) -> dict[str, Any] | None:
-    prog = read_progress(settings, session_id)
+    prog = public_progress(read_progress(settings, session_id))
     if prog and str(prog.get("stage") or "") not in {"ready", "error", "no_swing", "rejected"}:
         info = queue_info(session_id)
         if info:
@@ -586,7 +600,7 @@ def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
             _email_owner(settings, session_id, "ready" if final.get("status") == "ready" else "failed",
                          str(final.get("message") or ""))
         else:
-            update_status(settings.product_dir, session_id, stage, message=prog.get("message"))
+            update_status(settings.product_dir, session_id, stage, message=(public_progress(prog) or {}).get("message"))
             if stage == "error":
                 _email_owner(settings, session_id, "failed", "")
                 record_event(
@@ -605,7 +619,7 @@ def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
             message="Processing could not start on this machine.",
             error=str(exc),
         )
-        update_status(settings.product_dir, session_id, "error", message=str(exc))
+        update_status(settings.product_dir, session_id, "error", message=PIPELINE_FAILED_MESSAGE)
         record_event(settings, "pipeline_error", session_id=session_id, message=str(exc))
 
 
