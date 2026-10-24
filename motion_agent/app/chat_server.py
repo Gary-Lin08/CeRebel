@@ -985,7 +985,7 @@ class Handler(BaseHTTPRequestHandler):
         mime, _ = mimetypes.guess_type(str(path))
         if path.suffix.lower() == ".js" or path.name.endswith(".module.js"):
             mime = "text/javascript; charset=utf-8"
-        if self.base and path.suffix.lower() in (".html", ".js", ".css") and UI_DIR.resolve() in path.resolve().parents:
+        if self.base and path.suffix.lower() in (".html", ".js", ".css", ".json") and UI_DIR.resolve() in path.resolve().parents:
             text = with_base(path.read_text(encoding="utf-8"), self.base)
             if UPLOAD_ORIGIN:
                 text = text.replace(f'"{self.base}/api/upload"', f'"{UPLOAD_ORIGIN}/api/upload"')
