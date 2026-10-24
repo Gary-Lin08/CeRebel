@@ -145,6 +145,10 @@ def _legal_html(name: str) -> bytes | None:
         "{{COMPANY}}": os.environ.get("CEREBEL_LEGAL_ENTITY") or "CeRebel, Inc.",
         "{{CONTACT_EMAIL}}": os.environ.get("CEREBEL_SUPPORT_EMAIL") or "support@cerebel.ai",
     }
+    from motion_agent.app.consent import inactive_delete_days, period_label, raw_video_retention_days
+
+    fills["{{RAW_VIDEO_RETENTION_DAYS}}"] = str(raw_video_retention_days())
+    fills["{{INACTIVE_DELETE_PERIOD}}"] = period_label(inactive_delete_days())
     for key, value in fills.items():
         html = html.replace(key, value)
     return html.encode("utf-8")
@@ -579,6 +583,22 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as exc:  # noqa: BLE001
                 LOG.exception("upload failed")
                 return _json_response(self, 400, {"ok": False, "error": True, "message": str(exc)})
+            return _json_response(self, code, payload)
+        if parsed.path == "/api/account/video-consent":
+            length = int(self.headers.get("Content-Length", "0"))
+            if length > 16_384:
+                return _json_response(self, 413, {"error": True, "message": "body too large"})
+            raw = self.rfile.read(length) if length else b"{}"
+            try:
+                body = json.loads(raw.decode("utf-8") or "{}")
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+            from motion_agent.app.product_api import current_user, handle_video_consent
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"error": True, "message": "Sign in required"})
+            code, payload = handle_video_consent(SETTINGS, user, body if isinstance(body, dict) else {})
             return _json_response(self, code, payload)
         if parsed.path == "/api/account/delete":
             from motion_agent.app.product_api import current_user, remove_account

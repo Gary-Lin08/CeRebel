@@ -287,18 +287,23 @@ class QualityGateTests(unittest.TestCase):
     def test_rejected_upload_is_free_and_deleted(self):
         from motion_agent.app import product_api
 
+        from motion_agent.app.accounts import record_video_consent
+        from motion_agent.app.consent import VIDEO_CONSENT_VERSION
+
         with tempfile.TemporaryDirectory() as tmp:
             settings = _settings(Path(tmp))
+            uid = register(settings.product_dir, "a@b.co", "longenough")["user"]["user_id"]
+            record_video_consent(settings.product_dir, uid, VIDEO_CONSENT_VERSION)
             bad = {"duration": 0.5, "fps": 30, "width": 1080, "height": 1920}
             with mock.patch.object(product_api, "probe_video", return_value=bad):
                 code, payload = save_upload(
-                    settings, {"user_id": "u1", "email": "a@b.co"}, filename="s.mp4", file_obj=io.BytesIO(b"x" * 4096)
+                    settings, {"user_id": uid, "email": "a@b.co"}, filename="s.mp4", file_obj=io.BytesIO(b"x" * 4096)
                 )
             self.assertEqual(code, 422)
             self.assertTrue(payload["rejected"])
-            rows = list_captures(settings.product_dir, "u1")
+            rows = list_captures(settings.product_dir, uid)
             self.assertEqual(rows[0]["status"], "rejected")
-            self.assertEqual(billing.quota(settings.product_dir, "u1", rows)["remaining"], 3)
+            self.assertEqual(billing.quota(settings.product_dir, uid, rows)["remaining"], 3)
             self.assertFalse((Path(tmp) / "sessions").exists() and any((Path(tmp) / "sessions").iterdir()))
 
 

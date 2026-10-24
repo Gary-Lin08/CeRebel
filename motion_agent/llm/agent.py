@@ -1046,8 +1046,12 @@ def get_current_session_info(
             summary["soma_mesh_url_path"] = f"/media/{seq.video_id}/soma-mesh.bin"
             # Keep video path out of the client so the raw capture stays hidden.
             summary["video_url_path"] = None
-        else:
+        elif seq.video_path and seq.video_path.is_file():
             summary["video_url_path"] = f"/media/{seq.video_id}/session.mp4"
+        else:
+            # The source video can be deleted on the retention schedule; the analysis stays.
+            summary["video_url_path"] = None
+            summary["source_video_removed"] = (session_dir / "retention.json").is_file()
     except Exception as exc:  # noqa: BLE001
         summary["load_error"] = str(exc)
     return summary

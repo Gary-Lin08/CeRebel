@@ -87,6 +87,10 @@ def register(
             "terms_version": TERMS_VERSION,
             "terms_accepted_at": _now(),
             "coach_code": _clean_coach_code(coach_code),
+            "last_active_at": _now(),
+            # Separate, explicit consent to video processing is recorded before the first upload.
+            "video_consent_version": None,
+            "video_consent_at": None,
         }
         _write(accounts_path, accounts)
         token = _issue_token(tokens_path, user_id, email)
@@ -103,6 +107,8 @@ def login(product_dir: Path, email: str, password: str) -> dict[str, Any]:
         given_hash = _hash_password(password or "", (row or {}).get("salt") or "")
         if not row or not hmac.compare_digest(given_hash, expected_hash):
             raise ValueError("Email or password is incorrect.")
+        row["last_login_at"] = row["last_active_at"] = _now()
+        _write(accounts_path, accounts)
         token = _issue_token(tokens_path, row["user_id"], email)
     return {"ok": True, "token": token, "user": {"user_id": row["user_id"], "email": email}}
 
@@ -188,5 +194,105 @@ def profile(product_dir: Path, user_id: str) -> dict[str, Any]:
                 "coach_code": row.get("coach_code"),
                 "created_at": row.get("created_at"),
                 "terms_version": row.get("terms_version"),
+                "video_consent_version": row.get("video_consent_version"),
+                "video_consent_at": row.get("video_consent_at"),
+                "video_consent_retention_days": row.get("video_consent_retention_days"),
+                "last_active_at": row.get("last_active_at"),
             }
     return {}
+
+
+# ---------------------------------------------------------------- video consent and activity
+
+
+def video_consent_is_current(version: str | None, retention_days: int | None = None) -> bool:
+    """Consent counts only for the current text and a raw-video retention no longer than agreed."""
+    from motion_agent.app.consent import VIDEO_CONSENT_VERSION, raw_video_retention_days
+
+    if not version or version != VIDEO_CONSENT_VERSION:
+        return False
+    if retention_days is None:
+        return True
+    try:
+        return int(retention_days) >= raw_video_retention_days()
+    except (TypeError, ValueError):
+        return False
+
+
+def has_video_consent(product_dir: Path, user_id: str) -> bool:
+    row = profile(product_dir, user_id)
+    return bool(row) and video_consent_is_current(
+        row.get("video_consent_version"), row.get("video_consent_retention_days")
+    )
+
+
+def video_consent_status(product_dir: Path, user_id: str) -> dict[str, Any]:
+    from motion_agent.app.consent import public_video_consent
+
+    row = profile(product_dir, user_id)
+    return public_video_consent(
+        row.get("video_consent_version"),
+        row.get("video_consent_at"),
+        row.get("video_consent_retention_days"),
+    )
+
+
+def record_video_consent(product_dir: Path, user_id: str, version: str) -> dict[str, Any]:
+    """Store the user's explicit agreement to the current video-processing text."""
+    from motion_agent.app.consent import VIDEO_CONSENT_VERSION, raw_video_retention_days
+
+    if version != VIDEO_CONSENT_VERSION:
+        raise ValueError("The consent text has changed. Reload the page and review it again.")
+    with _LOCK:
+        accounts_path, _ = _paths(product_dir)
+        accounts = _read(accounts_path)
+        row = next((r for r in accounts.values() if r.get("user_id") == user_id), None)
+        if row is None:
+            raise LookupError("Account not found.")
+        now = _now()
+        row["video_consent_version"] = VIDEO_CONSENT_VERSION
+        row["video_consent_at"] = now
+        row["video_consent_retention_days"] = raw_video_retention_days()
+        row["last_active_at"] = now
+        _write(accounts_path, accounts)
+    return {"version": VIDEO_CONSENT_VERSION, "accepted_at": now}
+
+
+ACTIVITY_WRITE_INTERVAL = timedelta(hours=12)
+
+
+def touch_activity(product_dir: Path, user_id: str, *, force: bool = False) -> None:
+    """Remember the last interaction (used for inactivity deletion). Writes at most twice a day."""
+    now = datetime.now(timezone.utc)
+    accounts_path, _ = _paths(product_dir)
+    row = next((r for r in _read(accounts_path).values() if r.get("user_id") == user_id), None)
+    if row is None:
+        return
+    if not force:
+        try:
+            last = datetime.fromisoformat(str(row.get("last_active_at")))
+            if last.tzinfo is None:
+                last = last.replace(tzinfo=timezone.utc)
+            if now - last < ACTIVITY_WRITE_INTERVAL:
+                return
+        except (TypeError, ValueError):
+            pass
+    with _LOCK:
+        accounts = _read(accounts_path)
+        for item in accounts.values():
+            if item.get("user_id") == user_id:
+                item["last_active_at"] = now.isoformat()
+                _write(accounts_path, accounts)
+                return
+
+
+def list_accounts(product_dir: Path) -> list[dict[str, Any]]:
+    """Account rows without password material (for the retention job)."""
+    accounts_path, _ = _paths(product_dir)
+    secret = {"salt", "password_hash"}
+    return [{k: v for k, v in row.items() if k not in secret} for row in _read(accounts_path).values()]
+
+
+def tokens_for_user(product_dir: Path, user_id: str) -> list[dict[str, Any]]:
+    _, tokens_path = _paths(product_dir)
+    return [dict(row) for row in _read(tokens_path).values() if isinstance(row, dict) and row.get("user_id") == user_id]

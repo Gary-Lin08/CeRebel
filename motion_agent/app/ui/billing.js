@@ -149,6 +149,7 @@
   }
 
   function paint(data) {
+    if (data && data.video_consent) setConsent(data.video_consent);
     var box = document.getElementById("libraryBox");
     if (!box || !data) return;
     wireFilmingTips();
@@ -224,6 +225,114 @@
   }
 
   window.cerebelBilling = { track: track, paint: paint, openPaywall: openPaywall, checkout: checkout, portal: portal };
+
+  /* Separate, explicit consent to video processing before the first upload.
+     The text comes from the server (/api/me -> video_consent) so the page and the record match. */
+  var consentState = null;
+  var consentToken = null;
+  var consentPending = null;
+
+  function currentToken() {
+    try { return authToken || ""; } catch (_) { return ""; }
+  }
+  function setConsent(c) {
+    if (!c) return;
+    consentState = c;
+    consentToken = currentToken();
+  }
+  async function fetchConsent() {
+    try {
+      var r = await fetch("/api/me", { headers: headers() });
+      var d = await r.json();
+      if (d && d.video_consent) setConsent(d.video_consent);
+    } catch (_) {}
+    return consentState;
+  }
+  function showConsent(c) {
+    return new Promise(function (resolve) {
+      var box = el("input", { type: "checkbox", id: "cbVideoConsentBox" });
+      var agree = el("button", { type: "button", class: "primary", text: "Agree and continue" });
+      var cancel = el("button", { type: "button", text: "Not now" });
+      var msg = el("p", { class: "cb-muted", role: "status" });
+      var textP = el("p", { text: c.text || "" });
+      var procs = el("ul", { class: "cb-features" });
+      (c.processors || []).forEach(function (p) {
+        procs.appendChild(el("li", { text: p.name + " (" + p.country + "): " + p.role }));
+      });
+      agree.disabled = true;
+      box.addEventListener("change", function () { agree.disabled = !box.checked; });
+      var modal = el("div", { id: "cbVideoConsent", class: "cb-modal", role: "dialog", "aria-modal": "true", "aria-label": "Consent to video processing" }, [
+        el("div", { class: "cb-card" }, [
+          el("h3", { text: "Before your first upload" }),
+          textP,
+          el("p", { class: "cb-muted", text: "Who processes your video and data:" }),
+          procs,
+          el("label", { class: "cb-consent", for: "cbVideoConsentBox" }, [
+            box,
+            el("span", { text: "I have read this and agree to my videos being processed this way." }),
+          ]),
+          el("p", { class: "cb-fine" }, [
+            document.createTextNode("Details in the "),
+            el("a", { href: c.privacy_url || "/privacy", target: "_blank", text: "Privacy Policy" }),
+            document.createTextNode(". You can delete any video, or your whole account, at any time."),
+          ]),
+          msg,
+          el("div", { class: "account-panel__actions" }, [agree, cancel]),
+        ]),
+      ]);
+      function close(ok) {
+        modal.remove();
+        resolve(ok);
+      }
+      cancel.addEventListener("click", function () { close(false); });
+      agree.addEventListener("click", async function () {
+        if (!box.checked) return;
+        agree.disabled = true;
+        msg.textContent = "Saving…";
+        try {
+          var r = await fetch("/api/account/video-consent", {
+            method: "POST",
+            headers: headers({ "Content-Type": "application/json" }),
+            body: JSON.stringify({ accept: true, version: c.version }),
+          });
+          var d = await r.json();
+          if (d && d.video_consent) setConsent(d.video_consent);
+          if (!r.ok) {
+            if (r.status === 409 && d.video_consent) {
+              c = d.video_consent;
+              textP.textContent = c.text || "";
+              box.checked = false;
+            }
+            msg.textContent = (d && d.message) || "Could not save your consent. Try again.";
+            agree.disabled = !box.checked;
+            return;
+          }
+          close(true);
+        } catch (_) {
+          msg.textContent = "Could not save your consent. Check your connection and try again.";
+          agree.disabled = false;
+        }
+      });
+      document.body.appendChild(modal);
+    });
+  }
+  async function ensureConsent() {
+    if (!signedIn()) return false;
+    if (consentPending) return consentPending;
+    var c = consentToken === currentToken() ? consentState : null;
+    if (!c) c = await fetchConsent();
+    if (c && !c.required) return true;
+    if (!c) {
+      toast("Could not load the video consent. Reload the page and try again.");
+      return false;
+    }
+    consentPending = showConsent(c).then(function (ok) { consentPending = null; return ok; });
+    return consentPending;
+  }
+  window.cerebelConsent = {
+    ensure: ensureConsent,
+    reset: function (c) { consentState = null; consentToken = null; if (c) setConsent(c); },
+  };
 
   function wireFilmingTips() {
     var box = document.getElementById("libraryBox");

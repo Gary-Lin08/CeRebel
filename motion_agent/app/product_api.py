@@ -14,15 +14,27 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from motion_agent.app.accounts import delete_account, login, logout, register, user_from_token
+from motion_agent.app.accounts import (
+    delete_account,
+    has_video_consent,
+    login,
+    logout,
+    record_video_consent,
+    register,
+    touch_activity,
+    user_from_token,
+    video_consent_status,
+)
 from motion_agent.app.config import Settings
 from motion_agent.app.library import (
     add_capture,
+    all_captures,
     captures_today,
     delete_capture,
     list_captures,
     owner_of,
     owns,
+    purge_user_rows,
     session_ids_for_user,
     update_status,
 )
@@ -114,7 +126,38 @@ def token_from_headers(headers: Any) -> str | None:
 
 
 def current_user(settings: Settings, headers: Any) -> dict[str, Any] | None:
-    return user_from_token(settings.product_dir, token_from_headers(headers))
+    user = user_from_token(settings.product_dir, token_from_headers(headers))
+    if user and user.get("user_id"):
+        # Any signed-in request counts as an interaction for the inactivity-deletion clock.
+        try:
+            touch_activity(settings.product_dir, str(user["user_id"]))
+        except OSError:
+            LOG.warning("could not record account activity")
+    return user
+
+
+def handle_video_consent(settings: Settings, user: dict[str, Any], body: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+    """POST /api/account/video-consent {"accept": true, "version": "..."}."""
+    if body.get("accept") is not True:
+        return 400, {
+            "ok": False,
+            "error": True,
+            "message": "Tick the box to agree to video processing before uploading.",
+            "video_consent": video_consent_status(settings.product_dir, user["user_id"]),
+        }
+    try:
+        accepted = record_video_consent(settings.product_dir, user["user_id"], str(body.get("version") or ""))
+    except ValueError as exc:
+        return 409, {
+            "ok": False,
+            "error": True,
+            "message": str(exc),
+            "video_consent": video_consent_status(settings.product_dir, user["user_id"]),
+        }
+    except LookupError as exc:
+        return 404, {"ok": False, "error": True, "message": str(exc)}
+    record_event(settings, "video_consent", user_id=user["user_id"], version=accepted["version"])
+    return 200, {"ok": True, "video_consent": video_consent_status(settings.product_dir, user["user_id"])}
 
 
 def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], headers: Any) -> tuple[int, dict[str, Any]]:
@@ -164,6 +207,7 @@ def library_payload(settings: Settings, user: dict[str, Any]) -> dict[str, Any]:
         "quota": billing.quota(settings.product_dir, user["user_id"], rows),
         "subscription": _public_subscription(settings, user["user_id"]),
         "billing": billing.public_plans(settings.product_dir),
+        "video_consent": video_consent_status(settings.product_dir, user["user_id"]),
     }
 
 
@@ -328,6 +372,16 @@ def save_upload(
                 "Upgrade to Pro for more, or wait until the 1st."
             )
         return 402, {"ok": False, "error": True, "paywall": q["plan"] == "free", "quota": q, "message": message}
+    if not has_video_consent(settings.product_dir, user["user_id"]):
+        # Nothing is written to disk before the account has agreed to the current video text.
+        record_event(settings, "upload_needs_consent", user_id=user["user_id"])
+        return 428, {
+            "ok": False,
+            "error": True,
+            "consent_required": True,
+            "video_consent": video_consent_status(settings.product_dir, user["user_id"]),
+            "message": "Please review and agree to how your video is processed before your first upload.",
+        }
     ext = Path(filename or "video.mp4").suffix.lower() or ".mp4"
     if ext not in _VIDEO_EXT:
         return 400, {"ok": False, "error": True, "message": f"Unsupported video type: {ext}"}
@@ -584,14 +638,82 @@ def parse_upload(handler: Any, settings: Settings, user: dict[str, Any]) -> tupl
     return save_upload(settings, user, filename=filename, file_obj=fileitem.file, trim=trim)
 
 
-def remove_account(settings: Settings, user: dict[str, Any]) -> tuple[int, dict[str, Any]]:
-    session_ids = session_ids_for_user(settings.product_dir, user["user_id"])
-    delete_account(settings.product_dir, user["user_id"])
-    for session_id in session_ids:
-        delete_capture(settings.product_dir, user["user_id"], session_id)
+def remove_account(settings: Settings, user: dict[str, Any], *, reason: str = "user_request") -> tuple[int, dict[str, Any]]:
+    """Delete the account, its tokens, every capture (files and GPU results), its library rows,
+    its local billing row and its usage events. Stripe keeps its own payment records."""
+    from motion_agent.app import billing
+
+    user_id = user["user_id"]
+    sub = billing.subscription_for(settings.product_dir, user_id)
+    if billing.is_pro(settings.product_dir, user_id) and not sub.get("cancel_at_period_end"):
+        return 409, {
+            "ok": False,
+            "error": True,
+            "subscription_active": True,
+            "message": "Cancel your Pro subscription first (Manage subscription) so you are not charged again, then delete your account.",
+        }
+    active = session_ids_for_user(settings.product_dir, user_id)
+    # Include rows deleted earlier: their GPU results may still be on disk.
+    every = sorted({str(r["session_id"]) for r in all_captures(settings.product_dir)
+                    if r.get("user_id") == user_id and r.get("session_id")})
+    delete_account(settings.product_dir, user_id)
+    for session_id in every:
         purge_session_dir(settings, session_id)
-    record_event(settings, "account_deleted", user_id=user["user_id"], captures=len(session_ids))
-    return 200, {"ok": True, "deleted_captures": len(session_ids)}
+    purge_user_rows(settings.product_dir, user_id)
+    _forget_billing(settings.product_dir, user_id)
+    scrub_events(settings, user_id=user_id, session_ids=every)
+    # No user id here: the point is that nothing links back to the deleted account.
+    record_event(settings, "account_deleted", captures=len(active), reason=reason)
+    return 200, {"ok": True, "deleted_captures": len(active)}
+
+
+def _forget_billing(product_dir: Path, user_id: str) -> None:
+    from motion_agent.app import billing
+
+    with billing._LOCK:  # noqa: SLF001 - same storage helpers billing uses
+        data = billing._read(product_dir)  # noqa: SLF001
+        if data["users"].pop(user_id, None) is not None:
+            billing._write(product_dir, data)  # noqa: SLF001
+
+
+_EVENTS_LOCK = threading.Lock()
+
+
+def scrub_events(settings: Settings, *, user_id: str | None = None, session_ids: list[str] | None = None,
+                 older_than: datetime | None = None) -> int:
+    """Drop usage-log rows for a deleted account / session, or rows older than a cutoff."""
+    path = settings.product_dir / "events.jsonl"
+    if not path.is_file():
+        return 0
+    sids = set(session_ids or [])
+    kept: list[str] = []
+    removed = 0
+    with _EVENTS_LOCK:
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                kept.append(line)
+                continue
+            drop = bool(user_id) and row.get("user_id") == user_id
+            drop = drop or (bool(sids) and row.get("session_id") in sids)
+            if older_than is not None and not drop:
+                try:
+                    ts = datetime.fromisoformat(str(row.get("ts")))
+                    drop = (ts if ts.tzinfo else ts.replace(tzinfo=timezone.utc)) < older_than
+                except (TypeError, ValueError):
+                    pass
+            if drop:
+                removed += 1
+            else:
+                kept.append(line)
+        if removed:
+            tmp = path.with_suffix(".jsonl.tmp")
+            tmp.write_text("".join(k + "\n" for k in kept), encoding="utf-8")
+            tmp.replace(path)
+    return removed
 
 
 def ops_summary(settings: Settings) -> dict[str, Any]:
@@ -629,7 +751,26 @@ def media_allowed(settings: Settings, user: dict[str, Any] | None, session_id: s
     return user_may_view_session(settings, user, session_id)
 
 
+def gemx_output_dir(session_id: str) -> Path | None:
+    """GEM-X writes its results outside the session folder (CEREBEL_GEMX_OUTPUT_ROOT/<session>)."""
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", session_id or ""):
+        return None
+    gemx_root = Path(os.environ.get("CEREBEL_GEMX_ROOT", "/root/GEM-X"))
+    root = Path(os.environ.get("CEREBEL_GEMX_OUTPUT_ROOT", str(gemx_root / "outputs" / "cerebel")))
+    try:
+        root = root.resolve()
+        target = (root / session_id).resolve()
+        if root in target.parents and target.is_dir():
+            return target
+    except OSError:
+        return None
+    return None
+
+
 def purge_session_dir(settings: Settings, session_id: str) -> None:
+    gemx = gemx_output_dir(session_id)
+    if gemx is not None:
+        shutil.rmtree(gemx, ignore_errors=True)
     root = (settings.data_dir / "sessions").resolve()
     target = (root / session_id).resolve()
     if root not in target.parents or not target.is_dir():
@@ -641,7 +782,7 @@ def record_event(settings: Settings, kind: str, **fields: Any) -> None:
     settings.product_dir.mkdir(parents=True, exist_ok=True)
     path = settings.product_dir / "events.jsonl"
     row = {"ts": datetime.now(timezone.utc).isoformat(), "kind": kind, **fields}
-    with path.open("a", encoding="utf-8") as handle:
+    with _EVENTS_LOCK, path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(row, default=str) + "\n")
 
 

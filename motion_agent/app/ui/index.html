@@ -5275,6 +5275,8 @@ code {
         } else if (session.video_url_path) {
           // Cache-bust so a replacement session.mp4 for the same id reloads.
           golfPhasesVideoWaitBound = false;
+          const fvWrap = document.getElementById("fixVideoWrap");
+          if (fvWrap) fvWrap.style.display = "";
           player.src = session.video_url_path + "?t=" + Date.now();
           player.muted = true;
           player.playsInline = true;
@@ -5291,6 +5293,13 @@ code {
           golfPhasesVideoWaitBound = false;
           player.removeAttribute("src");
           player.load();
+          // Source video deleted on the retention schedule: keep the 3D analysis, explain the gap.
+          const fvWrap = document.getElementById("fixVideoWrap");
+          if (fvWrap) fvWrap.style.display = session.source_video_removed ? "none" : "";
+          if (session.source_video_removed) {
+            status.textContent = "Your original video was deleted on our retention schedule. The 3D body model and measurements are kept.";
+            status.className = "status";
+          }
         }
         const ex = document.getElementById("examples");
         ex.innerHTML = "";
@@ -5695,6 +5704,11 @@ code {
         const file = uploadFile.files && uploadFile.files[0];
         if (!file || !authToken) return;
         const uploadStatus = document.getElementById("uploadStatus");
+        if (window.cerebelConsent && !(await window.cerebelConsent.ensure())) {
+          if (uploadStatus) uploadStatus.textContent = "Upload cancelled. We need your consent to process the video.";
+          uploadFile.value = "";
+          return;
+        }
         if (uploadStatus) uploadStatus.textContent = "Uploading…";
         if (window.cerebelBilling) window.cerebelBilling.track("upload_click", { mb: Math.round(file.size / 1e6) });
         let prep = null;
@@ -5726,6 +5740,11 @@ code {
           if (r.status === 402 && window.cerebelBilling) {
             if (data.paywall) window.cerebelBilling.openPaywall(data);
           }
+          if (r.status === 428 && window.cerebelConsent) {
+            window.cerebelConsent.reset(data.video_consent);
+            if (uploadStatus) uploadStatus.textContent = (data.message || "Consent needed.") + " Choose the clip again after agreeing.";
+            window.cerebelConsent.ensure();
+          }
           return;
         }
         activeSessionId = data.session_id;
@@ -5744,7 +5763,9 @@ code {
         if (!window.confirm("Delete this account and every swing stored on this server?")) return;
         const r = await fetch("/api/account/delete", { method: "POST", headers: authHeaders({ "Content-Type": "application/json" }), body: "{}" });
         if (!r.ok) {
-          if (accountStatus) accountStatus.textContent = "Could not delete the account.";
+          let msg = "Could not delete the account.";
+          try { msg = (await r.json()).message || msg; } catch (_) {}
+          if (accountStatus) accountStatus.textContent = msg;
           return;
         }
         authToken = "";

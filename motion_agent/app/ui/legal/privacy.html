@@ -6,50 +6,96 @@
 main{max-width:720px;margin:0 auto;padding:48px 16px 80px}h1{font-size:30px;margin:0 0 4px}h2{font-size:19px;margin:32px 0 8px}
 p,li{color:var(--ink)}.meta{color:var(--muted);font-size:14px;margin-bottom:24px}a{color:var(--accent)}ul{padding-left:20px}
 .box{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600}
 </style></head><body><main>
 <h1>Privacy Policy</h1>
 <p class="meta">Effective October 24, 2026 · <a href="/">Back to CeRebel</a> · <a href="/terms">Terms of Service</a></p>
 
-<div class="box"><strong>In short:</strong> we process your videos only to analyse your movement for you, we never sell them, and you can delete them, or your whole account, at any time.</div>
+<div class="box"><strong>In short:</strong> we use your swing videos only to build a 3D model of your body and coach your swing. Everything is stored and processed in the United States. We never use your video to identify you, never build face templates, never sell your data, and never give medical diagnoses. Original videos are deleted {{RAW_VIDEO_RETENTION_DAYS}} days after processing, and you can delete any swing, or your whole account, at any time.</div>
+
+<p>This policy explains how {{COMPANY}} ("CeRebel", "we", "us") handles personal information in the CeRebel web app. It is also our public retention schedule and destruction policy for body data that some laws treat as biometric.</p>
 
 <h2>1. What we collect</h2>
 <ul>
-<li><strong>Account:</strong> email address, a salted hash of your password, optional coach code, and when you accepted these terms.</li>
-<li><strong>Videos you upload</strong> and what we compute from them: a 3D body model, body measurements such as segment lengths, joint angles and estimated forces. Because this describes the geometry of your body, some laws treat it as <strong>biometric information</strong>.</li>
-<li><strong>Questions</strong> you ask the coach and its answers.</li>
-<li><strong>Billing:</strong> handled by Stripe. We receive your subscription status and a Stripe customer ID, never your full card number.</li>
-<li><strong>Usage events</strong> such as "upload started" or "report viewed", tied to your account, to improve the product.</li>
+<li><strong>Account:</strong> your email address, a salted hash of your password (never the password itself), an optional coach code, login sessions, when you accepted the Terms and this policy, when and to which version of the video consent you agreed, and when you last used CeRebel.</li>
+<li><strong>Videos you upload.</strong> To process a video we also keep, for a short time, the frames extracted from it, a playback copy for your report, and one still image.</li>
+<li><strong>Body data derived from your videos</strong> (see section 2): a 3D body model, joint positions, joint angles, estimated joint loads, swing phases and the coaching results.</li>
+<li><strong>Coach questions.</strong> Your questions and the coach's answers are processed to answer you. We do not keep a transcript on our servers; we record only that a question was asked (time, account and swing).</li>
+<li><strong>Billing:</strong> handled by Stripe. We receive your subscription status, plan and a Stripe customer ID, never your card number.</li>
+<li><strong>Usage events</strong> such as "upload started" or "report viewed", with a time, your account ID, the swing ID and a random browser ID, to improve the product.</li>
+<li><strong>Technical data:</strong> our web server and Cloudflare process your IP address, browser type and the pages you request to deliver and secure the service, and our server writes them to its technical logs.</li>
 </ul>
 
-<h2>2. How we use it</h2>
-<p>Only to provide and improve CeRebel for you: to rebuild and analyse your movement, show your history, answer your questions, run billing, keep the service secure, and contact you about your account. We do not sell or rent personal information, use it for advertising profiles, or use your videos to identify you.</p>
-
-<h2>3. Your consent to video processing</h2>
-<p>When you create an account you agree that we may process the videos you upload, and the body data derived from them, for these purposes. You can withdraw consent at any time by deleting your videos or your account.</p>
-
-<h2>4. Who else processes your data</h2>
+<h2>2. The 3D body model and joint angles</h2>
+<p>From your video, our software estimates where your joints are in every frame and fits a 3D model of a human body to them: a skeleton with your pose over time, plus numbers that describe your overall body shape and proportions. From the skeleton we calculate joint angles (for example hip turn or wrist hinge), speeds, swing phases, and model-based estimates of the loads on your joints.</p>
 <ul>
-<li>Our cloud hosting and GPU provider, which stores and processes videos on our behalf.</li>
-<li>Stripe, for payments.</li>
-<li>An AI language-model provider for the coach chat. By default it receives your question and the computed numbers, <strong>not</strong> your video frames.</li>
+<li>We use this only to measure and coach your movement. We do not use it, or your video, to recognise or verify who you are, and we do not compare it against other people.</li>
+<li>We do not extract face landmarks, measure facial features or create a face template. Because the model covers the whole body it includes an approximate head shape, but the skeleton we analyse has a single point for the head, and the 3D figure shown in the app is a generic body posed like you.</li>
+<li>Because this data describes your body, some laws treat it as <strong>biometric</strong> or <strong>health-related</strong> information, and we handle it under the stricter rules described here.</li>
 </ul>
-<p>These providers may only use the data to provide their services to us.</p>
 
-<h2>5. Retention and deletion</h2>
-<p>We keep your videos and the body data derived from them until you delete them or delete your account. Deleting removes them from our servers right away.</p>
+<h2>3. Not medical advice</h2>
+<p>CeRebel gives coaching feedback, not a medical diagnosis or treatment. Joint loads are model-based estimates from a single phone video. Talk to a doctor or physical therapist about pain or injury.</p>
 
-<h2>6. Your rights</h2>
-<p>You can access, download, correct or delete your data. Email <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> and we will respond within 30 days. Depending on where you live (for example California, Illinois, Texas, Washington or the EU/UK), you may have additional rights, and we will honour them.</p>
+<h2>4. How we use your data</h2>
+<p>Only to provide CeRebel to you: to rebuild and analyse your movement, show your history, answer your questions, run billing, send account and "your analysis is ready" emails, keep the service secure, and improve the product from usage events. We do not sell, rent or trade personal information, we do not share it for targeted advertising, and we do not use your videos or body data to train third-party AI models.</p>
 
-<h2>7. Security</h2>
-<p>Passwords are stored as salted hashes, sessions expire, each account can only see its own videos, and connections are encrypted in transit.</p>
+<h2>5. Your consent to video processing</h2>
+<p>Before your first upload we ask for a separate, explicit consent that names the services below and the retention periods in section 8. We record the version of that text and the time you agreed. If the text or the retention period becomes longer, we ask again before your next upload. You can withdraw consent at any time by deleting your swings or your account; we then stop processing them.</p>
 
-<h2>8. Children</h2>
-<p>CeRebel is not directed to children under 13, and we do not knowingly collect their data. If you believe a child has uploaded a video, contact us and we will delete it.</p>
+<h2>6. Who processes your data</h2>
+<p>These service providers process data only on our behalf and under our instructions. All of them are in the United States.</p>
+<table>
+<tr><th>Provider</th><th>What it does</th><th>Country</th></tr>
+<tr><td>DigitalOcean</td><td>Web server and storage of accounts, videos and results (US East data center)</td><td>United States</td></tr>
+<tr><td>Modal</td><td>GPU processing of each uploaded video in a temporary workspace that is discarded when the job ends</td><td>United States</td></tr>
+<tr><td>Together AI</td><td>AI coach: receives your question and the computed numbers, not your video or its frames</td><td>United States</td></tr>
+<tr><td>Stripe</td><td>Payments and subscriptions</td><td>United States</td></tr>
+<tr><td>Cloudflare</td><td>DNS and network delivery between your device and our server</td><td>United States</td></tr>
+<tr><td>SpaceMail</td><td>Account and "analysis ready" emails</td><td>United States</td></tr>
+</table>
+<p>We may also disclose information if the law requires it, or to protect the safety of our users, and only as that requires.</p>
 
-<h2>9. Changes</h2>
-<p>We will notify you before material changes take effect.</p>
+<h2>7. Where your data is stored</h2>
+<p>We store and process your videos, body data and account data only in the United States, using the providers above. We do not transfer them to other countries.</p>
 
-<h2>10. Contact</h2>
-<p>{{COMPANY}} · <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+<h2>8. Retention and deletion</h2>
+<table>
+<tr><th>Data</th><th>How long we keep it</th></tr>
+<tr><td>Original video, its frames, playback copy and still image</td><td>Deleted automatically {{RAW_VIDEO_RETENTION_DAYS}} days after processing. Your report then shows the 3D model and numbers without video playback.</td></tr>
+<tr><td>Uploads that fail our quality check</td><td>Deleted immediately.</td></tr>
+<tr><td>3D body model, joint angles and other results</td><td>Until you delete the swing or your account, and deleted automatically {{INACTIVE_DELETE_PERIOD}} after your last interaction with CeRebel (signing in, uploading or using the app while signed in). An account with a paid subscription that is still renewing is treated as active.</td></tr>
+<tr><td>Account and usage events</td><td>Until you delete your account, or {{INACTIVE_DELETE_PERIOD}} after your last interaction. Usage events are also deleted once they are {{INACTIVE_DELETE_PERIOD}} old.</td></tr>
+</table>
+<p>A deletion job runs every day. When you delete a swing or your account, we remove it from our live servers right away: your account, login sessions, videos, body data, local billing status and usage events. Account records are also in daily server backups that are kept for 14 days, so they disappear from backups within 14 days. Stripe keeps payment records as the law requires, and emails we already sent stay in your mailbox. We keep a deletion log that contains only random IDs and counts. If you have a Pro subscription that is still set to renew, cancel it first in <em>Manage subscription</em> so you are not charged again, then delete your account.</p>
+
+<h2>9. Your rights</h2>
+<p>Wherever you live in the US, you can ask to know what we hold about you and get a copy, correct it, delete it, or withdraw consent. You can delete swings and your account yourself in the Library panel, or email <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a>. We will verify the request comes from the account holder and respond within 30 days. We will not treat you differently for using your rights. If we decline a request, you can appeal by replying to our answer, and we will tell you the outcome and how to contact your state Attorney General.</p>
+
+<h2>10. Illinois residents (BIPA)</h2>
+<p>We treat the body data in section 2 as if it were biometric information under the Illinois Biometric Information Privacy Act, although we do not scan face or hand geometry and do not use it to identify anyone. We collect it only after your written (electronic) consent described in section 5, which states the purpose and how long we keep it. Our retention schedule is section 8: we delete the data when you delete it, and in any case {{INACTIVE_DELETE_PERIOD}} after your last interaction. We do not sell, lease, trade or otherwise profit from it, and we disclose it only to the providers in section 6 acting for us, or where the law requires. We protect it at least as carefully as other sensitive information.</p>
+
+<h2>11. Texas residents (CUBI)</h2>
+<p>We do not capture retina or iris scans, fingerprints, voiceprints, or records of hand or face geometry. If any of our body data were treated as a biometric identifier under Texas law, we tell you before collecting it and ask for your consent (section 5), we do not sell, lease or disclose it except as that law allows, and we destroy it on the schedule in section 8.</p>
+
+<h2>12. Washington residents (My Health My Data Act and RCW 19.375)</h2>
+<p>Body data and joint-load estimates may be "consumer health data" under Washington's My Health My Data Act. We collect it only to provide the service you asked for, with your consent (section 5). We use the categories in section 1, collected directly from you and your videos, for the purposes in section 4, and we share it only with the providers in section 6. We do not sell it. You can confirm whether we hold your consumer health data, get a copy, have it deleted, and withdraw consent, as described in section 9. We do not enroll any biometric identifier in a database for identification.</p>
+
+<h2>13. Colorado residents</h2>
+<p>Before collection we tell you what we collect, why, how long we keep it and the names of the providers who receive it (sections 5, 6 and 8), and we ask for your consent; accepting the Terms alone is not consent. This page is our written retention and deletion policy: we delete body data when its purpose ends, and no later than {{INACTIVE_DELETE_PERIOD}} after your last interaction. If a security incident affects your data, we will notify you and the authorities as the law requires. You can access, correct, delete and get a portable copy of your data. We do not sell personal data or use it for targeted advertising or for profiling that produces legal or similarly significant effects.</p>
+
+<h2>14. California residents (CCPA)</h2>
+<p>In the last 12 months we collected the categories in section 1: identifiers (email, account ID), commercial information (plan and subscription status), internet activity (usage events, technical data), and physical characteristics (videos and body data). We get them from you and your device, use them for the purposes in section 4 and disclose them only to the providers in section 6 for those purposes. We do not sell or "share" personal information, including of people under 16. We use sensitive personal information (account login and body data) only to provide the service you request, not to infer characteristics about you. You have the right to know, delete and correct your information and not to be discriminated against for using these rights; an authorised agent may ask on your behalf. Use the contact in section 9.</p>
+
+<h2>15. Security</h2>
+<p>Passwords are stored as salted hashes, login sessions expire, each account can only see its own swings, and connections are encrypted in transit.</p>
+
+<h2>16. Children</h2>
+<p>CeRebel is not directed to children under 13, and we do not knowingly collect their data. If you believe a child under 13 has uploaded a video, contact us and we will delete it.</p>
+
+<h2>17. Changes</h2>
+<p>We will notify you before material changes take effect. If a change affects how your videos are processed, we ask for your consent again before your next upload.</p>
+
+<h2>18. Contact</h2>
+<p>{{COMPANY}}, a Delaware corporation · <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> · privacy questions, rights requests and appeals</p>
 </main></body></html>

@@ -118,3 +118,19 @@ def captures_today(product_dir: Path, user_id: str) -> int:
         for r in list_captures(product_dir, user_id)
         if str(r.get("created_at") or "").startswith(today)
     )
+
+
+def all_captures(product_dir: Path) -> list[dict[str, Any]]:
+    """Every library row, including deleted ones (for the retention job)."""
+    return [dict(r) for r in _read(product_dir)]
+
+
+def purge_user_rows(product_dir: Path, user_id: str) -> int:
+    """Hard-delete every library row of an account (used when the account itself is deleted)."""
+    with _LOCK:
+        rows = _read(product_dir)
+        keep = [r for r in rows if r.get("user_id") != user_id]
+        removed = len(rows) - len(keep)
+        if removed:
+            _write(product_dir, keep)
+        return removed
