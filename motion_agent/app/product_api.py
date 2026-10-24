@@ -760,6 +760,19 @@ def remove_capture(settings: Settings, user: dict[str, Any], session_id: str) ->
     return 200, {"ok": True, "session_id": session_id}
 
 
+def media_session_live(settings: Settings, session_id: str) -> bool:
+    """The demo, or a capture whose library row still exists and is not deleted."""
+    if session_id == configured_demo_session_id(settings):
+        return True
+    owner = owner_of(settings.product_dir, session_id)
+    return bool(owner) and owns(settings.product_dir, owner, session_id)
+
+
+def capture_was_deleted(settings: Settings, session_id: str) -> bool:
+    """True when this id was a real capture that its owner (or retention) deleted."""
+    return bool(owner_of(settings.product_dir, session_id)) and not media_session_live(settings, session_id)
+
+
 def media_allowed(settings: Settings, user: dict[str, Any] | None, session_id: str) -> bool:
     """Only the chosen demo and captures owned by this account are public/readable."""
     return user_may_view_session(settings, user, session_id)
