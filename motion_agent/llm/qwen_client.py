@@ -80,6 +80,11 @@ def _load_api_key() -> str:
     Prefer ``~/Qwen_KEY.txt`` (or ``QWEN_KEY_FILE``) so key-file updates take
     effect without fighting a stale process environment. Fall back to env vars.
     """
+    # Provider-neutral key first, so switching to a US-hosted OpenAI-compatible
+    # endpoint (Together, Fireworks, OpenAI, ...) is configuration only.
+    generic = os.environ.get("MOTION_AGENT_API_KEY")
+    if generic and generic.strip():
+        return generic.strip()
     key_file = Path(os.environ.get("QWEN_KEY_FILE", str(Path.home() / "Qwen_KEY.txt")))
     if key_file.is_file():
         for line in key_file.read_text(encoding="utf-8").splitlines():
@@ -161,7 +166,10 @@ class QwenDashScopeVLM(VisionLanguageModel):
             req["tool_choice"] = kwargs.get("tool_choice", "auto")
         # Ask DashScope for visible intermediate reasoning when the model supports it.
         # If the combo with tools fails, retry without thinking.
-        enable_thinking = bool(kwargs.get("enable_thinking", True))
+        # MOTION_AGENT_ENABLE_THINKING=0 turns reasoning off server-wide: fewer output
+        # tokens and faster answers. Not every OpenAI-compatible host accepts the flag.
+        thinking_env = os.environ.get("MOTION_AGENT_ENABLE_THINKING", "1").strip().lower()
+        enable_thinking = bool(kwargs.get("enable_thinking", True)) and thinking_env not in {"0", "false", "no", "off"}
         extra_body = kwargs.get("extra_body")
         if extra_body is None and enable_thinking:
             extra_body = {"enable_thinking": True}

@@ -692,6 +692,26 @@ class Handler(BaseHTTPRequestHandler):
             _password_from_request(self, parsed)
         )
         backend = (body.get("backend") if dev_backend else None) or BACKEND
+        from motion_agent.app import billing as _billing
+
+        if not dev_backend:
+            pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
+            if user:
+                key = "u:" + str(user["user_id"])
+            else:
+                # Behind Cloudflare Tunnel every request comes from 127.0.0.1; use the visitor IP header.
+                ip = (self.headers.get("CF-Connecting-IP") or self.client_address[0] or "unknown").strip()
+                key = "ip:" + ip[:64]
+            allowed, _left = _billing.take_question(
+                SETTINGS.product_dir, key, _billing.daily_question_limit(pro, bool(user))
+            )
+            if not allowed:
+                message = (
+                    "You've reached today's question limit. Create a free account to keep asking."
+                    if not user
+                    else "You've reached today's question limit. It resets at midnight UTC."
+                )
+                return _json_response(self, 429, {"error": True, "limit": True, "message": message})
         try:
             from motion_agent.app.product_api import record_event
 

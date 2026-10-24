@@ -300,3 +300,37 @@ class QualityGateTests(unittest.TestCase):
             self.assertEqual(rows[0]["status"], "rejected")
             self.assertEqual(billing.quota(settings.product_dir, "u1", rows)["remaining"], 3)
             self.assertFalse((Path(tmp) / "sessions").exists() and any((Path(tmp) / "sessions").iterdir()))
+
+
+class QuestionAllowanceTests(unittest.TestCase):
+    def test_daily_question_cap(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.assertEqual(billing.take_question(root, "u:1", 2), (True, 1))
+            self.assertEqual(billing.take_question(root, "u:1", 2), (True, 0))
+            self.assertEqual(billing.take_question(root, "u:1", 2), (False, 0))
+            self.assertTrue(billing.take_question(root, "u:2", 2)[0])
+
+    def test_limits_by_plan(self):
+        with mock.patch.dict(os.environ, {"CEREBEL_ANON_DAILY_QUESTIONS": "2", "CEREBEL_FREE_DAILY_QUESTIONS": "5"}):
+            self.assertEqual(billing.daily_question_limit(False, False), 2)
+            self.assertEqual(billing.daily_question_limit(False, True), 5)
+            self.assertEqual(billing.daily_question_limit(True, True), 100)
+
+
+class ProviderConfigTests(unittest.TestCase):
+    def test_generic_api_key_and_embed_url(self):
+        from motion_agent.knowledge import DashScopeEmbedder
+        from motion_agent.llm.qwen_client import _load_api_key
+
+        env = {
+            "MOTION_AGENT_API_KEY": "k-generic",
+            "MOTION_AGENT_BASE_URL": "https://chat.example/v1",
+            "MOTION_AGENT_KB_EMBED_BASE_URL": "https://embed.example/v1",
+            "MOTION_AGENT_KB_EMBED_API_KEY": "k-embed",
+        }
+        with mock.patch.dict(os.environ, env):
+            self.assertEqual(_load_api_key(), "k-generic")
+            emb = DashScopeEmbedder()
+            self.assertEqual(emb.base_url, "https://embed.example/v1")
+            self.assertEqual(emb.api_key, "k-embed")

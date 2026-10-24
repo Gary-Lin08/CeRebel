@@ -150,6 +150,37 @@ def quota(product_dir: Path, user_id: str, captures: list[dict[str, Any]]) -> di
     }
 
 
+# ---------------------------------------------------------------- coach question allowance
+
+
+def daily_question_limit(pro: bool, signed_in: bool) -> int:
+    if not signed_in:
+        return _env_int("CEREBEL_ANON_DAILY_QUESTIONS", 3)
+    return _env_int("CEREBEL_PRO_DAILY_QUESTIONS", 100) if pro else _env_int("CEREBEL_FREE_DAILY_QUESTIONS", 15)
+
+
+def take_question(product_dir: Path, key: str, limit: int) -> tuple[bool, int]:
+    """Count one coach question for `key` today (UTC). Returns (allowed, remaining)."""
+    path = product_dir / "question_counts.json"
+    today = _now().strftime("%Y-%m-%d")
+    with _LOCK:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+        except (OSError, json.JSONDecodeError):
+            data = {}
+        if data.get("day") != today:
+            data = {"day": today, "counts": {}}
+        used = int(data["counts"].get(key, 0))
+        if used >= limit:
+            return False, 0
+        data["counts"][key] = used + 1
+        product_dir.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(data), encoding="utf-8")
+        tmp.replace(path)
+        return True, limit - used - 1
+
+
 # ---------------------------------------------------------------- plans shown to the browser
 
 

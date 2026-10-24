@@ -252,11 +252,12 @@ class DashScopeEmbedder:
         api_key: str | None = None,
     ) -> None:
         self.model = model or DEFAULT_EMBED_MODEL
-        self.base_url = base_url or os.environ.get(
-            "MOTION_AGENT_BASE_URL",
-            "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        self.base_url = (
+            base_url
+            or os.environ.get("MOTION_AGENT_KB_EMBED_BASE_URL")
+            or os.environ.get("MOTION_AGENT_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
         )
-        self.api_key = api_key
+        self.api_key = api_key or (os.environ.get("MOTION_AGENT_KB_EMBED_API_KEY") or "").strip() or None
         self._client = None
 
     def _get_client(self):

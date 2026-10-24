@@ -5424,7 +5424,10 @@ code {
         });
         if (!r.ok) {
           const errText = await r.text();
-          throw new Error(`HTTP ${r.status}: ${errText.slice(0, 300)}`);
+          let friendly = "";
+          try { friendly = (JSON.parse(errText) || {}).message || ""; } catch (_) {}
+          if (r.status === 429 && friendly) throw new Error(friendly);
+          throw new Error(friendly || `HTTP ${r.status}: ${errText.slice(0, 300)}`);
         }
         await readSse(r, (ev) => {
           if ((ev.type || ev.kind) === "final") sawFinal = true;
