@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Installed by deploy/mac/setup-mac.sh. Daily 03:41 local time: deletes expired raw videos
+     and inactive accounts (privacy policy). A run missed while the Mac slept happens on wake.
+     Logs: @LOG_DIR@/retention.log -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>tech.cerebel.retention</string>
+  <key>ProgramArguments</key>
+  <array><string>/bin/bash</string><string>@APP_DIR@/deploy/mac/start-mac.sh</string>
+    <string>-m</string><string>motion_agent.app.retention</string></array>
+  <key>WorkingDirectory</key><string>@APP_DIR@</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>CEREBEL_LAYOUT_ENV</key><string>@LAYOUT_FILE@</string>
+    <key>CEREBEL_OSIM_MODELS</key><string>@OSIM_MODELS_DIR@</string>
+  </dict>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>3</integer><key>Minute</key><integer>41</integer></dict>
+  <key>Nice</key><integer>10</integer>
+  <key>Umask</key><integer>23</integer>
+  <key>StandardOutPath</key><string>@LOG_DIR@/retention.log</string>
+  <key>StandardErrorPath</key><string>@LOG_DIR@/retention.log</string>
+</dict>
+</plist>

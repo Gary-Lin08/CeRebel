@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Installed by deploy/mac/setup-mac.sh. Daily 04:17 local time, after retention: 14 daily
+     copies of data/product in @BACKUP_DIR@. Logs: @LOG_DIR@/backup.log -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>tech.cerebel.backup</string>
+  <key>ProgramArguments</key>
+  <array><string>/bin/bash</string><string>@APP_DIR@/deploy/us/cerebel-backup.sh</string></array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>APP_DIR</key><string>@APP_DIR@</string>
+    <key>BACKUP_DIR</key><string>@BACKUP_DIR@</string>
+    <key>KEEP_DAYS</key><string>14</string>
+  </dict>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>4</integer><key>Minute</key><integer>17</integer></dict>
+  <key>Nice</key><integer>10</integer>
+  <key>LowPriorityIO</key><true/>
+  <key>StandardOutPath</key><string>@LOG_DIR@/backup.log</string>
+  <key>StandardErrorPath</key><string>@LOG_DIR@/backup.log</string>
+</dict>
+</plist>

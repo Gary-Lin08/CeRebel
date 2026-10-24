@@ -27,9 +27,10 @@
 
 name: deploy
 
+# The web app now runs on the Mac mini behind a Cloudflare Tunnel (deploy/mac/DEPLOY_MAC.md),
+# which this SSH workflow cannot reach. Pushes to main no longer deploy; update the Mac with
+# `bash deploy/mac/update-mac.sh`. Run by hand (Actions > deploy) only for an SSH-reachable box.
 on:
-  push:
-    branches: [main]
   workflow_dispatch: {}
 
 concurrency:

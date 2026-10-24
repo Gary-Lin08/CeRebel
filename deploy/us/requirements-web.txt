@@ -16,7 +16,8 @@ scipy>=1.10,<1.15         # golf phases, angle unwrap, IK retarget
 matplotlib>=3.7,<3.10     # report plots
 openai>=1.40,<4           # OpenAI-compatible LLM and embeddings client (Together AI)
 modal>=1.0,<2             # CEREBEL_GPU_BACKEND=modal calls modal.Cls.from_name("cerebel-gemx","Gemx")
-torch==2.4.1+cpu          # same minor as the GPU image (2.4.0): reads hpe_results.pt, runs SomaLayer on CPU
+torch==2.4.1+cpu; sys_platform == "linux"    # same minor as the GPU image (2.4.0): reads hpe_results.pt, runs SomaLayer on CPU
+torch==2.4.1; sys_platform == "darwin"       # macOS (Mac mini host): PyPI wheels are CPU/MPS, no +cpu tag
 pypdf>=4.0                # knowledge-base ingest scripts
 python-docx>=1.1          # knowledge-base ingest scripts
 

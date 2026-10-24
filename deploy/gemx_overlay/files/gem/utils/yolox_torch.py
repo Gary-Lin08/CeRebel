@@ -43,12 +43,21 @@ def download_yolox_x_checkpoint(url: str = YOLOX_X_PTH_URL) -> Path:
         return dest
     sys.stderr.write(f'Downloading YOLOX checkpoint: "{url}" → {dest}\n')
     req = Request(url, headers={"User-Agent": "gem-yolox"})
-    with urlopen(req) as resp, open(dest, "wb") as f:
+    # Write to a temp name and rename only once complete: a cut-off download must never be
+    # left under the real name (the size check above would then accept it forever).
+    part = dest.with_name(dest.name + ".part")
+    with urlopen(req) as resp, open(part, "wb") as f:
+        expected = int(resp.headers.get("Content-Length") or 0)
         while True:
             buf = resp.read(1 << 20)
             if not buf:
                 break
             f.write(buf)
+    got = part.stat().st_size
+    if expected and got != expected:
+        part.unlink(missing_ok=True)
+        raise RuntimeError(f"YOLOX download incomplete: {got} of {expected} bytes")
+    part.replace(dest)
     return dest
 
 

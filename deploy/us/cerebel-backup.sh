@@ -15,7 +15,10 @@ out="$BACKUP_DIR/product-$stamp.tar.gz"
 if [[ -d "$SRC" ]]; then
   # Files may change while we read them (events.jsonl appends); tar exit 1 means just that.
   rc=0
-  tar -czf "$out.part" --warning=no-file-changed -C "$APP_DIR/data" product || rc=$?
+  # GNU tar (Linux) knows --warning; macOS bsdtar does not and treats it as an error.
+  warn_flag=()
+  tar --version 2>/dev/null | grep -q 'GNU tar' && warn_flag=(--warning=no-file-changed)
+  tar -czf "$out.part" ${warn_flag[@]+"${warn_flag[@]}"} -C "$APP_DIR/data" product || rc=$?
   if [[ $rc -gt 1 ]]; then
     rm -f "$out.part"
     echo "$(date -u +%FT%TZ) backup FAILED rc=$rc" >&2
