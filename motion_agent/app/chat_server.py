@@ -187,7 +187,7 @@ def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) ->
     if code < 400 and b'"/media/' in raw:
         raw = json.dumps(_sign_media(handler, payload), default=str).encode("utf-8")
     base = getattr(handler, "base", "")
-    if base and b'"/media/' in raw:
+    if isinstance(base, str) and base and b'"/media/' in raw:
         raw = raw.replace(b'"/media/', b'"' + base.encode() + b"/media/")
     handler.send_response(code)
     handler.send_header("Content-Type", "application/json")
