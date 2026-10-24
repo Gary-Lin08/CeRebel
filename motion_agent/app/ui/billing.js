@@ -151,6 +151,7 @@
   function paint(data) {
     var box = document.getElementById("libraryBox");
     if (!box || !data) return;
+    wireFilmingTips();
     if (data.billing) lastBilling = data.billing;
     var host = document.getElementById("cbPlanBox");
     if (!host) {
@@ -224,7 +225,39 @@
 
   window.cerebelBilling = { track: track, paint: paint, openPaywall: openPaywall, checkout: checkout, portal: portal };
 
+  function wireFilmingTips() {
+    var box = document.getElementById("libraryBox");
+    if (!box || document.getElementById("cbTips")) return;
+    var label = box.querySelector(".upload-label");
+    var tips = el("details", { id: "cbTips", class: "cb-tips" }, [
+      el("summary", { text: "How to film for the best analysis" }),
+      el("ul", {}, [
+        el("li", { text: "Side-on (down the line) or face-on, the same view every time." }),
+        el("li", { text: "Whole body and the club in frame, from address to finish." }),
+        el("li", { text: "Phone still, on a stand or propped up, about hip height, 8–10 ft away." }),
+        el("li", { text: "Slow-motion (120 or 240 fps) if your phone has it; good light." }),
+        el("li", { text: "One swing per clip, under 30 seconds. Only you in the shot." }),
+      ]),
+    ]);
+    box.insertBefore(tips, label || box.firstChild);
+  }
+
+  function wireHero() {
+    var row = document.querySelector("body.pg-consumer .pg-brand-row");
+    if (!row || document.getElementById("cbHero")) return;
+    var free = 3;
+    var hero = el("div", { id: "cbHero" }, [
+      el("p", { class: "cb-hero", text: "See your swing as a full 3D body, and get the one fix that matters." }),
+      el("p", {
+        class: "cb-hero-sub",
+        text: "Film one swing on your phone. CeRebel rebuilds your skeleton, measures every joint, and shows the numbers behind every tip. Free for " + free + " swings a month.",
+      }),
+    ]);
+    row.parentNode.insertBefore(hero, row.nextSibling);
+  }
+
   function init() {
+    wireHero();
     track("landing_view", { signed_in: signedIn() });
     wireTrust();
     handleReturn();

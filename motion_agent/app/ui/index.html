@@ -5705,7 +5705,10 @@ code {
           return;
         }
         activeSessionId = data.session_id;
-        if (uploadStatus) uploadStatus.textContent = "Saved. Rebuilding the body — this can take a few minutes.";
+        if (uploadStatus) {
+          uploadStatus.textContent = "Saved. Rebuilding the body — this can take a few minutes.";
+          if (data.warnings && data.warnings.length) uploadStatus.textContent += " " + data.warnings.join(" ");
+        }
         uploadFile.value = "";
         refreshLibrary();
       });

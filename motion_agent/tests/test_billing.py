@@ -268,3 +268,35 @@ class PipelineWaitTests(unittest.TestCase):
             with mock.patch.object(product_api, "PIPELINE_TIMEOUT_S", 0):
                 prog = product_api._wait_for_pipeline(settings, "SID2", poll_s=0)
             self.assertEqual(prog["stage"], "error")
+
+
+class QualityGateTests(unittest.TestCase):
+    def test_quality_rules(self):
+        from motion_agent.app.product_api import quality_check
+
+        self.assertIsNone(quality_check(None)[0])
+        self.assertIn("only", quality_check({"duration": 0.8, "fps": 30, "width": 1080, "height": 1920})[0])
+        self.assertIn("Trim", quality_check({"duration": 95, "fps": 30, "width": 1080, "height": 1920})[0])
+        self.assertIn("choppy", quality_check({"duration": 5, "fps": 15, "width": 1080, "height": 1920})[0])
+        self.assertIn("too small", quality_check({"duration": 5, "fps": 30, "width": 240, "height": 320})[0])
+        ok, warnings = quality_check({"duration": 5, "fps": 30, "width": 1080, "height": 1920})
+        self.assertIsNone(ok)
+        self.assertEqual(len(warnings), 1)
+        self.assertEqual(quality_check({"duration": 5, "fps": 240, "width": 1080, "height": 1920}), (None, []))
+
+    def test_rejected_upload_is_free_and_deleted(self):
+        from motion_agent.app import product_api
+
+        with tempfile.TemporaryDirectory() as tmp:
+            settings = _settings(Path(tmp))
+            bad = {"duration": 0.5, "fps": 30, "width": 1080, "height": 1920}
+            with mock.patch.object(product_api, "probe_video", return_value=bad):
+                code, payload = save_upload(
+                    settings, {"user_id": "u1", "email": "a@b.co"}, filename="s.mp4", file_obj=io.BytesIO(b"x" * 4096)
+                )
+            self.assertEqual(code, 422)
+            self.assertTrue(payload["rejected"])
+            rows = list_captures(settings.product_dir, "u1")
+            self.assertEqual(rows[0]["status"], "rejected")
+            self.assertEqual(billing.quota(settings.product_dir, "u1", rows)["remaining"], 3)
+            self.assertFalse((Path(tmp) / "sessions").exists() and any((Path(tmp) / "sessions").iterdir()))

@@ -21,3 +21,28 @@
 .cb-trust button{font:inherit;padding:.3rem .7rem;border:1px solid var(--rule);background:transparent;color:var(--text);cursor:pointer}
 .cb-consent{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:.5rem}
 .cb-consent input{margin-top:.25rem}
+
+/* Consumer shell polish: hide operator controls, keep panels clear of the fixed nav. */
+body.pg-consumer #loadNewest,
+body.pg-consumer .pg-monument__modes { display: none !important; }
+body.pg-consumer .pg-monument { padding-top: calc(4.75rem + var(--safe-top, 0px)) !important; }
+body.pg-consumer .account-panel { margin-top: calc(4.75rem + var(--safe-top, 0px)) !important; scroll-margin-top: 5rem; }
+body.pg-consumer .account-panel .account-panel__actions button,
+body.pg-consumer #libraryBox > button,
+body.pg-consumer #accountBtn {
+  font: inherit; font-size: .95rem; padding: .5rem .9rem; min-height: 44px;
+  border: 1px solid var(--rule); background: var(--panel-2); color: var(--text); cursor: pointer;
+}
+body.pg-consumer .account-panel .account-panel__actions button.primary {
+  background: var(--accent, #e1fe67); color: #0b0c0b; border-color: transparent; font-weight: 600;
+}
+body.pg-consumer .account-panel input[type="text"] {
+  padding: .45rem .55rem; border: 1px solid var(--rule); background: var(--panel-2); color: var(--text);
+}
+.cb-hero { margin: .9rem 0 0; max-width: 38rem; font-size: clamp(1.35rem, 3.6vw, 2rem); line-height: 1.2; font-weight: 600; color: var(--text); }
+.cb-hero-sub { margin: .6rem 0 0; max-width: 38rem; color: var(--muted); font-size: 1rem; line-height: 1.5; }
+body.pg-consumer .account-panel a { color: var(--accent, #e1fe67); }
+.cb-tips { margin: .25rem 0 .6rem; font-size: var(--step-small, .9rem); }
+.cb-tips summary { cursor: pointer; color: var(--text); }
+.cb-tips ul { margin: .4rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+.cb-tips li { margin: .2rem 0; }

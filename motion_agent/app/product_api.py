@@ -29,6 +29,80 @@ LOG = logging.getLogger("motion_agent.product_api")
 
 _VIDEO_EXT = {".mp4", ".mov", ".m4v", ".webm", ".avi", ".mkv", ".mpeg", ".mpg"}
 
+MIN_DURATION_S = 1.5
+MAX_DURATION_S = 30.0
+MIN_FPS = 24.0
+MIN_SHORT_SIDE = 320
+LOW_FPS_WARN = 59.0
+LOW_RES_WARN = 480
+
+
+def probe_video(path: Path) -> dict[str, Any] | None:
+    """Duration, frame rate and size via ffprobe; None when ffprobe is unavailable or fails."""
+    import subprocess
+
+    cmd = [
+        "ffprobe", "-v", "error", "-select_streams", "v:0",
+        "-show_entries", "stream=width,height,avg_frame_rate,r_frame_rate:format=duration",
+        "-of", "json", str(path),
+    ]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        data = json.loads(proc.stdout or "{}")
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+        return None
+    streams = data.get("streams") or []
+    if not streams:
+        return {"no_video": True}
+    st = streams[0]
+
+    def _rate(text: str | None) -> float:
+        try:
+            num, _, den = str(text or "0/1").partition("/")
+            return float(num) / float(den or 1)
+        except (ValueError, ZeroDivisionError):
+            return 0.0
+
+    fps = _rate(st.get("avg_frame_rate")) or _rate(st.get("r_frame_rate"))
+    try:
+        duration = float((data.get("format") or {}).get("duration") or 0.0)
+    except ValueError:
+        duration = 0.0
+    return {
+        "width": int(st.get("width") or 0),
+        "height": int(st.get("height") or 0),
+        "fps": round(fps, 2),
+        "duration": round(duration, 2),
+    }
+
+
+def quality_check(meta: dict[str, Any] | None) -> tuple[str | None, list[str]]:
+    """Return (rejection message or None, warnings). Unknown metadata passes."""
+    if meta is None:
+        return None, []
+    if meta.get("no_video"):
+        return "We couldn't find a video track in that file. Try exporting it again as MP4 or MOV.", []
+    duration = float(meta.get("duration") or 0)
+    fps = float(meta.get("fps") or 0)
+    short_side = min(int(meta.get("width") or 0), int(meta.get("height") or 0))
+    if duration and duration < MIN_DURATION_S:
+        return f"That clip is only {duration:.1f}s. Film the whole swing, from address to finish.", []
+    if duration > MAX_DURATION_S:
+        return (
+            f"That clip is {duration:.0f}s long. Trim it to one swing (under {MAX_DURATION_S:.0f}s) and upload again.",
+            [],
+        )
+    if fps and fps < MIN_FPS:
+        return f"That video is {fps:.0f} fps, which is too choppy to measure. Use your camera's normal or slow-motion mode.", []
+    if short_side and short_side < MIN_SHORT_SIDE:
+        return "That video is too small to measure. Upload the original from your camera roll, not a compressed copy.", []
+    warnings = []
+    if fps and fps < LOW_FPS_WARN:
+        warnings.append("Filmed below 60 fps: fast moments like impact are less precise. Slow-motion works best.")
+    if short_side and short_side < LOW_RES_WARN:
+        warnings.append("Low resolution: some joint angles may be less precise.")
+    return None, warnings
+
 
 def token_from_headers(headers: Any) -> str | None:
     auth = headers.get("Authorization") or headers.get("X-User-Token")
@@ -204,6 +278,21 @@ def save_upload(
     if size > settings.max_upload_bytes:
         dest.unlink(missing_ok=True)
         return 413, {"ok": False, "error": True, "message": "File is too large"}
+    rejection, warnings = quality_check(probe_video(dest))
+    if rejection:
+        # Rejected uploads are recorded (for the funnel) but never count toward the quota,
+        # and the video itself is removed right away.
+        add_capture(
+            settings.product_dir,
+            user_id=user["user_id"],
+            session_id=session_id,
+            filename=filename or dest.name,
+            status="rejected",
+        )
+        update_status(settings.product_dir, session_id, "rejected", message=rejection)
+        purge_session_dir(settings, session_id)
+        record_event(settings, "upload_rejected", user_id=user["user_id"], reason=rejection[:80])
+        return 422, {"ok": False, "error": True, "rejected": True, "message": rejection + " This didn't use one of your analyses."}
     add_capture(
         settings.product_dir,
         user_id=user["user_id"],
@@ -233,6 +322,7 @@ def save_upload(
         "filename": filename,
         "bytes": size,
         "stage": "extracting",
+        "warnings": warnings,
     }
 
 
