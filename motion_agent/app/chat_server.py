@@ -282,6 +282,17 @@ class Handler(BaseHTTPRequestHandler):
             qs = parse_qs(parsed.query or "")
             requested = (qs.get("session_id") or [None])[0]
             user = current_user(SETTINGS, self.headers)
+            if not requested and (qs.get("sample") or [""])[0] == "1":
+                # "See a sample swing" opens the shared demo even for an account with swings of its own.
+                from motion_agent.app.product_api import configured_demo_session_id
+
+                requested = configured_demo_session_id(SETTINGS)
+                if not requested:
+                    return _json_response(
+                        self,
+                        200,
+                        {"ok": True, "empty": True, "demo": True, "message": "No demo capture is available yet."},
+                    )
             if requested and not user_may_view_session(SETTINGS, user, requested):
                 from motion_agent.app.library import owner_of
                 from motion_agent.app.product_api import capture_was_deleted
