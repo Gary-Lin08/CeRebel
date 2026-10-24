@@ -128,6 +128,28 @@ def _internal_error(exc: BaseException, where: str) -> dict:
     return {"error": True, "message": "Something went wrong. Please try again.", "error_id": error_id}
 
 
+def _env_flag(name: str) -> bool:
+    return (os.environ.get(name) or "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+LEGAL_DIR = UI_DIR / "legal"
+
+
+def _legal_html(name: str) -> bytes | None:
+    """Terms/Privacy pages with operator details filled in from the environment."""
+    path = LEGAL_DIR / f"{name}.html"
+    if not path.is_file():
+        return None
+    html = path.read_text(encoding="utf-8")
+    fills = {
+        "{{COMPANY}}": os.environ.get("CEREBEL_LEGAL_ENTITY") or "CeRebel, Inc.",
+        "{{CONTACT_EMAIL}}": os.environ.get("CEREBEL_SUPPORT_EMAIL") or "support@cerebel.ai",
+    }
+    for key, value in fills.items():
+        html = html.replace(key, value)
+    return html.encode("utf-8")
+
+
 def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) -> None:
     raw = json.dumps(payload, default=str).encode("utf-8")
     handler.send_response(code)
@@ -141,6 +163,16 @@ def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) ->
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt: str, *args) -> None:
         LOG.info("%s - " + fmt, self.address_string(), *args)
+
+    def _serve_legal(self, name: str) -> None:
+        raw = _legal_html(name)
+        if raw is None:
+            return _json_response(self, 404, {"error": True, "message": "not found"})
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(raw)))
+        self.end_headers()
+        self.wfile.write(raw)
 
     def do_OPTIONS(self) -> None:  # noqa: N802
         self.send_response(204)
@@ -159,19 +191,21 @@ class Handler(BaseHTTPRequestHandler):
         if path in ("/", "/index.html"):
             return self._serve_file(UI_DIR / "index.html")
         if path in ("/terms", "/privacy"):
-            title = "Terms" if path == "/terms" else "Privacy"
-            body = (
-                "<p>CeRebel coaching is movement feedback from your video, not a medical diagnosis.</p>"
-                "<p>Videos and reconstructed motion stay on this account. Delete a capture to remove it from your library.</p>"
-                "<p>Invite beta allows a small number of new captures per day.</p>"
+            return self._serve_legal(path.strip("/"))
+        if path == "/api/billing":
+            from motion_agent.app.product_api import current_user, library_payload
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                from motion_agent.app.billing import public_plans
+
+                return _json_response(self, 200, {"ok": True, "user": None, "billing": public_plans(SETTINGS.product_dir)})
+            full = library_payload(SETTINGS, user)
+            return _json_response(
+                self,
+                200,
+                {k: full[k] for k in ("ok", "user", "quota", "subscription", "billing")},
             )
-            raw = f"<!doctype html><meta charset=utf-8><title>{title}</title><h1>{title}</h1>{body}".encode()
-            self.send_response(200)
-            self.send_header("Content-Type", "text/html; charset=utf-8")
-            self.send_header("Content-Length", str(len(raw)))
-            self.end_headers()
-            self.wfile.write(raw)
-            return
         if path.startswith("/static/"):
             return self._serve_file(UI_DIR / path[len("/static/") :])
         if path == "/api/health":
@@ -567,6 +601,58 @@ class Handler(BaseHTTPRequestHandler):
                 return _json_response(self, 401, {"error": True, "message": "Sign in required"})
             code, payload = remove_capture(SETTINGS, user, str(body.get("session_id") or ""))
             return _json_response(self, code, payload)
+        if parsed.path == "/api/stripe/webhook":
+            from motion_agent.app.billing import BillingError, handle_webhook
+            from motion_agent.app.product_api import record_event
+
+            length = int(self.headers.get("Content-Length", "0"))
+            if length <= 0 or length > 1_000_000:
+                return _json_response(self, 400, {"error": True, "message": "bad body"})
+            raw = self.rfile.read(length)
+            try:
+                result = handle_webhook(SETTINGS.product_dir, raw, self.headers.get("Stripe-Signature"))
+            except BillingError as exc:
+                return _json_response(self, exc.status, {"error": True, "message": exc.message})
+            except Exception as exc:  # noqa: BLE001
+                return _json_response(self, 500, _internal_error(exc, "stripe webhook"))
+            if result.get("user_id"):
+                record_event(SETTINGS, "billing_" + str(result.get("type")), user_id=result["user_id"])
+            return _json_response(self, 200, {"ok": True})
+        if parsed.path in ("/api/billing/checkout", "/api/billing/portal", "/api/events"):
+            length = int(self.headers.get("Content-Length", "0"))
+            if length > 16_384:
+                return _json_response(self, 413, {"error": True, "message": "body too large"})
+            raw = self.rfile.read(length) if length else b"{}"
+            try:
+                body = json.loads(raw.decode("utf-8") or "{}")
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+            if not isinstance(body, dict):
+                body = {}
+            from motion_agent.app.product_api import current_user, record_client_event, record_event
+
+            user = current_user(SETTINGS, self.headers)
+            if parsed.path == "/api/events":
+                code, payload = record_client_event(SETTINGS, user, body)
+                return _json_response(self, code, payload)
+            if not user:
+                return _json_response(self, 401, {"error": True, "message": "Sign in required"})
+            from motion_agent.app.accounts import profile
+            from motion_agent.app.billing import BillingError, create_checkout, create_portal
+
+            try:
+                if parsed.path == "/api/billing/checkout":
+                    full_user = {**user, **profile(SETTINGS.product_dir, user["user_id"])}
+                    plan = str(body.get("plan") or "annual")
+                    result = create_checkout(SETTINGS.product_dir, full_user, plan)
+                    record_event(SETTINGS, "checkout_created", user_id=user["user_id"], plan=plan)
+                else:
+                    result = create_portal(SETTINGS.product_dir, user)
+            except BillingError as exc:
+                return _json_response(self, exc.status, {"error": True, "message": exc.message})
+            except Exception as exc:  # noqa: BLE001
+                return _json_response(self, 500, _internal_error(exc, "billing"))
+            return _json_response(self, 200, result)
         if parsed.path not in ("/api/chat", "/api/chat/stream"):
             return _json_response(self, 404, {"error": True, "message": "not found"})
         length = int(self.headers.get("Content-Length", "0"))
@@ -599,8 +685,19 @@ class Handler(BaseHTTPRequestHandler):
                 return _json_response(
                     self, 404, {"error": True, "type": "NO_SESSION", "message": "No capture available yet."}
                 )
-        attach_video = bool(body.get("attach_video", True))
-        backend = body.get("backend") or BACKEND
+        # Sending video frames to the language model is off unless the operator opts in:
+        # the coach answers from tool outputs, and user video should not leave this server.
+        attach_video = bool(body.get("attach_video", True)) and _env_flag("CEREBEL_LLM_ATTACH_VIDEO")
+        dev_backend = (self.headers.get("X-Motion-Dev") or "").strip() == "1" and _check_prompt_password(
+            _password_from_request(self, parsed)
+        )
+        backend = (body.get("backend") if dev_backend else None) or BACKEND
+        try:
+            from motion_agent.app.product_api import record_event
+
+            record_event(SETTINGS, "chat_question", user_id=(user or {}).get("user_id"), session_id=str(video_id))
+        except Exception:  # noqa: BLE001
+            LOG.exception("chat event failed")
         system_prompt = body.get("system_prompt")
         if isinstance(system_prompt, str):
             system_prompt = system_prompt.strip() or None

@@ -44,9 +44,22 @@ def current_user(settings: Settings, headers: Any) -> dict[str, Any] | None:
 def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], headers: Any) -> tuple[int, dict[str, Any]]:
     if path == "/api/auth/register":
         try:
-            return 200, register(settings.product_dir, str(body.get("email") or ""), str(body.get("password") or ""))
+            created = register(
+                settings.product_dir,
+                str(body.get("email") or ""),
+                str(body.get("password") or ""),
+                accepted_terms=body.get("accept_terms") is True,
+                coach_code=body.get("coach_code"),
+            )
         except ValueError as exc:
             return 400, {"ok": False, "error": True, "message": str(exc)}
+        record_event(
+            settings,
+            "signup",
+            user_id=created["user"]["user_id"],
+            coach_code=bool(body.get("coach_code")),
+        )
+        return 200, created
     if path == "/api/auth/login":
         try:
             return 200, login(settings.product_dir, str(body.get("email") or ""), str(body.get("password") or ""))
@@ -66,12 +79,29 @@ def library_payload(settings: Settings, user: dict[str, Any]) -> dict[str, Any]:
         if stage in {"ready", "error"} and row.get("status") != stage:
             update_status(settings.product_dir, row["session_id"], stage)
             row["status"] = stage
+    from motion_agent.app import billing
+
     return {
         "ok": True,
         "user": {"user_id": user["user_id"], "email": user["email"]},
         "captures": rows,
-        "daily_limit": settings.invite_daily_limit,
-        "used_today": captures_today(settings.product_dir, user["user_id"]),
+        "quota": billing.quota(settings.product_dir, user["user_id"], rows),
+        "subscription": _public_subscription(settings, user["user_id"]),
+        "billing": billing.public_plans(settings.product_dir),
+    }
+
+
+def _public_subscription(settings: Settings, user_id: str) -> dict[str, Any]:
+    from motion_agent.app import billing
+
+    row = billing.subscription_for(settings.product_dir, user_id)
+    return {
+        "pro": billing.is_pro(settings.product_dir, user_id),
+        "status": row.get("status"),
+        "plan": row.get("plan"),
+        "current_period_end": row.get("current_period_end"),
+        "cancel_at_period_end": bool(row.get("cancel_at_period_end")),
+        "can_manage": bool(row.get("customer")),
     }
 
 
@@ -134,12 +164,23 @@ def save_upload(
     filename: str,
     file_obj: Any,
 ) -> tuple[int, dict[str, Any]]:
-    if captures_today(settings.product_dir, user["user_id"]) >= settings.invite_daily_limit:
-        return 429, {
-            "ok": False,
-            "error": True,
-            "message": f"Daily capture limit is {settings.invite_daily_limit}. Try again tomorrow.",
-        }
+    from motion_agent.app import billing
+
+    rows = list_captures(settings.product_dir, user["user_id"])
+    q = billing.quota(settings.product_dir, user["user_id"], rows)
+    if q["remaining"] <= 0:
+        record_event(settings, "paywall_hit", user_id=user["user_id"], plan=q["plan"])
+        if q["plan"] == "pro":
+            message = (
+                f"You've reached this month's fair-use limit of {q['monthly_limit']} analyses. "
+                "It resets on the 1st."
+            )
+        else:
+            message = (
+                f"You've used your {q['monthly_limit']} free analyses this month. "
+                "Upgrade to Pro for more, or wait until the 1st."
+            )
+        return 402, {"ok": False, "error": True, "paywall": q["plan"] == "free", "quota": q, "message": message}
     ext = Path(filename or "video.mp4").suffix.lower() or ".mp4"
     if ext not in _VIDEO_EXT:
         return 400, {"ok": False, "error": True, "message": f"Unsupported video type: {ext}"}
@@ -387,3 +428,43 @@ def record_event(settings: Settings, kind: str, **fields: Any) -> None:
     row = {"ts": datetime.now(timezone.utc).isoformat(), "kind": kind, **fields}
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(row, default=str) + "\n")
+
+
+# Events the browser may send. Anything else is dropped.
+CLIENT_EVENTS = {
+    "landing_view",
+    "sample_report_view",
+    "signup_view",
+    "upload_click",
+    "report_view",
+    "fix_expand",
+    "trust_yes",
+    "trust_no",
+    "chat_open",
+    "paywall_view",
+    "checkout_click",
+    "share_click",
+}
+
+
+def record_client_event(settings: Settings, user: dict[str, Any] | None, body: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+    name = str(body.get("event") or "")[:40]
+    if name not in CLIENT_EVENTS:
+        return 400, {"ok": False, "error": True, "message": "unknown event"}
+    props = body.get("props") if isinstance(body.get("props"), dict) else {}
+    reserved = {"kind", "ts", "user_id", "visitor", "settings"}
+    safe = {
+        str(k)[:40]: v
+        for k, v in list(props.items())[:10]
+        if str(k)[:40] not in reserved
+        and isinstance(v, (str, int, float, bool))
+        and (not isinstance(v, str) or len(v) <= 120)
+    }
+    record_event(
+        settings,
+        "client_" + name,
+        user_id=(user or {}).get("user_id"),
+        visitor=str(body.get("visitor") or "")[:40] or None,
+        **safe,
+    )
+    return 200, {"ok": True}

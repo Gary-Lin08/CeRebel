@@ -20,6 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="/static/marked.min.js"></script>
   <script src="/static/purify.min.js"></script>
+  <link rel="stylesheet" href="/static/billing.css" />
   <style>
 /* CeRebel Playground — name-as-monument + motion stack */
 :root {
@@ -2131,6 +2132,8 @@ code {
         <p id="accountHint">Sign in to upload your own clip. Without an account you can still try the sample. <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
         <label>Email <input id="accountEmail" type="email" autocomplete="username" required /></label>
         <label>Password <input id="accountPassword" type="password" autocomplete="current-password" minlength="8" required /></label>
+        <label id="accountCoachRow" hidden>Coach code (optional) <input id="accountCoach" type="text" maxlength="32" autocomplete="off" placeholder="If a coach sent you here" /></label>
+        <label class="cb-consent" id="accountConsentRow" hidden><input id="accountConsent" type="checkbox" /> <span>I'm 18+ (or have a parent's OK), I agree to the <a href="/terms" target="_blank">Terms</a> and <a href="/privacy" target="_blank">Privacy Policy</a>, and I consent to CeRebel processing my videos and the body data derived from them to analyse my movement.</span></label>
         <div class="account-panel__actions">
           <button type="submit" class="primary" id="accountSubmit">Sign in</button>
           <button type="button" id="accountMode">Create account</button>
@@ -2423,8 +2426,8 @@ code {
   </div>
   <script>
     const chat = document.getElementById("chat");
-    // Playground is the default product UI. Opt into the slim consumer shell with ?consumer=1.
-    const isConsumerUi = new URLSearchParams(window.location.search).has("consumer");
+    // The consumer shell is the default. Operators open the playground with ?dev=1.
+    const isConsumerUi = !new URLSearchParams(window.location.search).has("dev");
     const isDevUi = !isConsumerUi;
     const AUTH_KEY = "cerebel_user_token_v1";
     const PREFERRED_SPORT_KEY = "cerebel_preferred_sport_v1";
@@ -5550,8 +5553,9 @@ code {
       paintAccount(data.user);
       const quota = document.getElementById("uploadQuota");
       if (quota) {
-        quota.textContent = (data.used_today || 0) + " of " + (data.daily_limit || 0) + " new swings used today.";
+        quota.textContent = "Failed or unreadable uploads don't count toward your monthly analyses.";
       }
+      if (window.cerebelBilling) window.cerebelBilling.paint(data);
       libraryList.innerHTML = "";
       (data.captures || []).forEach((row) => {
         const li = document.createElement("li");
@@ -5624,6 +5628,13 @@ code {
         const submit = document.getElementById("accountSubmit");
         if (submit) submit.textContent = accountMode === "login" ? "Sign in" : "Create account";
         accountModeBtn.textContent = accountMode === "login" ? "Create account" : "Have an account? Sign in";
+        const coachRow = document.getElementById("accountCoachRow");
+        const consentRow = document.getElementById("accountConsentRow");
+        if (coachRow) coachRow.hidden = accountMode !== "register";
+        if (consentRow) consentRow.hidden = accountMode !== "register";
+        const pw = document.getElementById("accountPassword");
+        if (pw) pw.autocomplete = accountMode === "register" ? "new-password" : "current-password";
+        if (accountMode === "register" && window.cerebelBilling) window.cerebelBilling.track("signup_view");
       });
     }
     if (accountForm) {
@@ -5631,11 +5642,22 @@ code {
         e.preventDefault();
         const email = document.getElementById("accountEmail").value.trim();
         const password = document.getElementById("accountPassword").value;
+        const consent = document.getElementById("accountConsent");
+        if (accountMode === "register" && !(consent && consent.checked)) {
+          if (accountStatus) accountStatus.textContent = "Please tick the box to accept the Terms and Privacy Policy.";
+          return;
+        }
         if (accountStatus) accountStatus.textContent = "Working…";
+        const payload = { email, password };
+        if (accountMode === "register") {
+          payload.accept_terms = true;
+          const coach = document.getElementById("accountCoach");
+          if (coach && coach.value.trim()) payload.coach_code = coach.value.trim();
+        }
         const r = await fetch(accountMode === "register" ? "/api/auth/register" : "/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify(payload),
         });
         const data = await r.json();
         if (!r.ok) {
@@ -5669,12 +5691,17 @@ code {
         if (!file || !authToken) return;
         const uploadStatus = document.getElementById("uploadStatus");
         if (uploadStatus) uploadStatus.textContent = "Uploading…";
+        if (window.cerebelBilling) window.cerebelBilling.track("upload_click", { mb: Math.round(file.size / 1e6) });
         const body = new FormData();
         body.append("file", file);
         const r = await fetch("/api/upload", { method: "POST", headers: authHeaders(), body });
         const data = await r.json();
         if (!r.ok) {
           if (uploadStatus) uploadStatus.textContent = data.message || "Upload failed";
+          if (r.status === 402 && window.cerebelBilling) {
+            uploadFile.value = "";
+            if (data.paywall) window.cerebelBilling.openPaywall(data);
+          }
           return;
         }
         activeSessionId = data.session_id;
@@ -5752,6 +5779,7 @@ code {
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="/static/playground-fx.js"></script>
+  <script src="/static/billing.js"></script>
 </body>
 </html>
 

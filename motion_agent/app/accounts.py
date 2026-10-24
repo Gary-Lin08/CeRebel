@@ -48,12 +48,29 @@ def _hash_password(password: str, salt: str) -> str:
     return digest.hex()
 
 
-def register(product_dir: Path, email: str, password: str) -> dict[str, Any]:
+TERMS_VERSION = "2026-10-24"
+
+
+def _clean_coach_code(code: str | None) -> str | None:
+    code = "".join(ch for ch in str(code or "").strip().upper() if ch.isalnum() or ch in "-_")
+    return code[:32] or None
+
+
+def register(
+    product_dir: Path,
+    email: str,
+    password: str,
+    *,
+    accepted_terms: bool = True,
+    coach_code: str | None = None,
+) -> dict[str, Any]:
     email = (email or "").strip().lower()
     if "@" not in email or len(email) < 5:
         raise ValueError("Enter a valid email.")
     if len(password or "") < 8:
         raise ValueError("Password must be at least 8 characters.")
+    if not accepted_terms:
+        raise ValueError("Please accept the Terms and Privacy Policy, including video processing.")
     with _LOCK:
         accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
@@ -67,6 +84,9 @@ def register(product_dir: Path, email: str, password: str) -> dict[str, Any]:
             "salt": salt,
             "password_hash": _hash_password(password, salt),
             "created_at": _now(),
+            "terms_version": TERMS_VERSION,
+            "terms_accepted_at": _now(),
+            "coach_code": _clean_coach_code(coach_code),
         }
         _write(accounts_path, accounts)
         token = _issue_token(tokens_path, user_id, email)
@@ -155,3 +175,18 @@ def logout(product_dir: Path, token: str | None) -> None:
         tokens = _read(tokens_path)
         tokens.pop(token, None)
         _write(tokens_path, tokens)
+
+
+def profile(product_dir: Path, user_id: str) -> dict[str, Any]:
+    """Non-secret account fields (no password hash or salt)."""
+    accounts_path, _ = _paths(product_dir)
+    for row in _read(accounts_path).values():
+        if row.get("user_id") == user_id:
+            return {
+                "user_id": user_id,
+                "email": row.get("email"),
+                "coach_code": row.get("coach_code"),
+                "created_at": row.get("created_at"),
+                "terms_version": row.get("terms_version"),
+            }
+    return {}

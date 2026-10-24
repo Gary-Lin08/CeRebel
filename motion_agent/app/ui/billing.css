@@ -1,0 +1,23 @@
+.cb-planbox{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;padding:.5rem 0 .75rem;border-bottom:1px solid var(--rule);margin-bottom:.5rem}
+.cb-planbox button{font:inherit;padding:.35rem .7rem;border:1px solid var(--rule);background:var(--panel-2);color:var(--text);cursor:pointer}
+.cb-planbox button.primary{background:var(--accent,#e1fe67);color:#0b0c0b;border-color:transparent}
+.cb-badge{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .5rem;border:1px solid var(--rule)}
+.cb-badge--pro{background:var(--accent,#e1fe67);color:#0b0c0b;border-color:transparent}
+.cb-muted{color:var(--muted);font-size:var(--step-small,.9rem)}
+.cb-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.55)}
+.cb-card{position:relative;width:min(440px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:1.4rem 1.25rem;border:1px solid var(--rule);background:var(--panel,#121412);color:var(--text)}
+.cb-card h3{margin:0 0 .3rem;font-size:1.3rem}
+.cb-close{position:absolute;top:.4rem;right:.6rem;font-size:1.4rem;background:none;border:0;color:var(--muted);cursor:pointer}
+.cb-features{margin:.75rem 0;padding-left:1.1rem}
+.cb-features li{margin:.25rem 0}
+.cb-plans{display:grid;gap:.6rem;margin:.75rem 0}
+.cb-plan{display:flex;justify-content:space-between;align-items:center;gap:.75rem;padding:.75rem .85rem;border:1px solid var(--rule)}
+.cb-plan--hi{border-color:var(--accent,#e1fe67)}
+.cb-plan button{font:inherit;padding:.45rem .9rem;border:1px solid var(--rule);background:var(--panel-2);color:var(--text);cursor:pointer;white-space:nowrap}
+.cb-plan button.primary{background:var(--accent,#e1fe67);color:#0b0c0b;border-color:transparent}
+.cb-price{font-size:1.05rem;margin-top:.1rem}
+.cb-fine{font-size:.78rem;color:var(--muted);margin:.5rem 0 0}
+.cb-trust{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:.9rem}
+.cb-trust button{font:inherit;padding:.3rem .7rem;border:1px solid var(--rule);background:transparent;color:var(--text);cursor:pointer}
+.cb-consent{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:.5rem}
+.cb-consent input{margin-top:.25rem}
