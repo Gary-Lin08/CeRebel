@@ -222,7 +222,12 @@ class Handler(BaseHTTPRequestHandler):
                 {k: full[k] for k in ("ok", "user", "quota", "subscription", "billing")},
             )
         if path.startswith("/static/"):
-            return self._serve_file(UI_DIR / path[len("/static/") :])
+            # Resolve first: "/static/../../.env.product" must never leave the UI folder.
+            ui_root = UI_DIR.resolve()
+            target = (ui_root / path[len("/static/") :]).resolve()
+            if ui_root not in target.parents:
+                return _json_response(self, 404, {"error": True, "message": "not found"})
+            return self._serve_file(target)
         if path == "/api/health":
             code, payload = health_report(SETTINGS)
             return _json_response(self, code, payload)
