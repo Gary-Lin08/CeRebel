@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#0a0b0b" />
   <meta
     name="description"
-    content="CeRebel Playground — motion session, sport packs, OpenSim body, and coach chat."
+    content="Film one golf swing on your phone. CeRebel rebuilds it in 3D, estimates every joint angle, and tells you the one thing to fix first."
   />
   <title>CeRebel Playground</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2150,14 +2150,14 @@ code {
             <div class="swing__video">
               <video muted playsinline preload="auto" poster="/static/hero/golfer-swing-poster.jpg" aria-label="Phone video of the swing"></video>
             </div>
-            <div class="swing__gl" role="img" aria-label="The same swing as GEM-X 3D joints and as an OpenSim skeleton with muscles. At the top of the backswing the shoulders have turned 39 degrees more than the hips.">
+            <div class="swing__gl" role="img" aria-label="The same swing as 3D joints and as a skeleton with muscles. At the top of the backswing the shoulders have turned 39 degrees more than the hips.">
               <span class="swing__tag" aria-hidden="true"></span>
             </div>
           </div>
           <ol class="reel__acts">
             <li data-act="1"><b>One phone, one swing.</b> Side-on, a few seconds long, filmed on the camera you already carry.</li>
-            <li data-act="2"><b>GEM-X finds every joint.</b> A 3D pose for each frame of the video, from the hips to the fingertips.</li>
-            <li data-act="3"><b>OpenSim puts the body back.</b> Bones, muscles and joint angles. The part that went wrong lights up.</li>
+            <li data-act="2"><b>CeRebel finds every joint.</b> A 3D pose for each frame of the video, from the hips to the fingertips.</li>
+            <li data-act="3"><b>Then it rebuilds your body.</b> Bones, muscles and joint angles. The part that went wrong lights up.</li>
           </ol>
           <div class="reel__hud">
             <p class="reel__metric" aria-live="off"><span class="reel__num">0</span><span class="reel__deg">°</span><small class="swing__readout">Shoulders past hips</small></p>
@@ -2497,8 +2497,8 @@ code {
           <div class="meta session-dev-meta" id="sessionDevMeta" hidden></div>
         </div>
         <video id="player" controls playsinline muted preload="auto"></video>
-        <div id="egoMeshStage" aria-label="Egocentric SOMA mesh stream">
-          <span id="egoMeshLabel">Egocentric · SOMA</span>
+        <div id="egoMeshStage" aria-label="Egocentric view">
+          <span id="egoMeshLabel">Egocentric view</span>
         </div>
         <div class="golf-phase-board" id="golfPhaseBoard" hidden>
           <div class="golf-phase-board__head">
@@ -2599,7 +2599,7 @@ code {
       </header>
       <video id="phasePreviewPlayer" controls playsinline></video>
       <div id="phasePreviewMesh" hidden>
-        <div class="phase-preview__mesh-status" id="phasePreviewMeshStatus">Loading OpenSim skeleton…</div>
+        <div class="phase-preview__mesh-status" id="phasePreviewMeshStatus">Loading the 3D skeleton…</div>
       </div>
       <p class="phase-preview__hint" id="phasePreviewHint">Playing this phase only — closes or loops at the end of the window.</p>
     </div>
@@ -3428,7 +3428,7 @@ code {
 
       const label = document.getElementById("egoMeshLabel");
       if (label) {
-        label.textContent = "Egocentric · SOMA";
+        label.textContent = "Egocentric view";
       }
 
       const onResize = () => {
@@ -3489,7 +3489,7 @@ code {
       if (loadNewestBtn) {
         if (isDevUi) {
           loadNewestBtn.title = fakeEgocentric
-            ? "Reload the newest session (egocentric SOMA stream)"
+            ? "Reload the newest session (egocentric view)"
             : "Reload the newest successfully preprocessed session";
           loadNewestBtn.textContent = fakeEgocentric ? "Load newest stream" : "Load newest video";
         } else {
@@ -3859,7 +3859,7 @@ code {
       if (phasePreviewMesh) phasePreviewMesh.hidden = !mesh;
       if (phasePreviewHint) {
         phasePreviewHint.textContent = mesh
-          ? "OpenSim bones + Rajagopal muscle paths — drag to orbit; loops at phase end."
+          ? "3D bones and muscles. Drag to turn it; it loops at the end of the phase."
           : "Playing this phase only — closes or loops at the end of the window.";
       }
     }
@@ -3868,7 +3868,7 @@ code {
       showPreviewChrome({ mesh: true });
       if (phasePreviewMeshStatus) {
         phasePreviewMeshStatus.hidden = false;
-        phasePreviewMeshStatus.textContent = "Loading OpenSim skeleton…";
+        phasePreviewMeshStatus.textContent = "Loading the 3D skeleton…";
       }
       disposeMeshViewer();
       const sid = (session && session.session_id) || golfPhasesSessionId || "";
@@ -3880,7 +3880,7 @@ code {
       const resp = await fetch(url);
       const data = await resp.json();
       if (data.error || data.fallback === "raw_video" || !data.frames || !data.glb_url) {
-        const msg = data.message || "OpenSim skeleton unavailable — showing raw video.";
+        const msg = "The 3D skeleton isn't ready for this swing, so the video plays instead.";
         if (phasePreviewMeshStatus) {
           phasePreviewMeshStatus.hidden = false;
           phasePreviewMeshStatus.textContent = msg;
@@ -3945,13 +3945,14 @@ code {
       phasePreview.hidden = false;
       if (phaseViewMode === "smplx") {
         openPhasePreviewMesh(phase, swing, start, end).catch((err) => {
-          const msg = String((err && err.message) || err);
+          // Internal errors name pipeline pieces; customers get a plain message, the console keeps the detail.
+          const msg = "The 3D skeleton didn't load, so the video plays instead.";
           console.error("Skeleton preview failed", err);
           if (phasePreviewMeshStatus) {
             phasePreviewMeshStatus.hidden = false;
             phasePreviewMeshStatus.textContent = msg;
           }
-          status.textContent = "Skeleton preview failed: " + msg;
+          status.textContent = msg;
           status.className = "status err";
           openPhasePreviewVideo(phase, swing, start, end, { softFallback: true });
         });
@@ -4002,15 +4003,18 @@ code {
         );
         const data = await r.json();
         if (!r.ok || data.error) {
+          // Server messages can name internal files and tools; keep them in the console.
+          console.error("Swing phases failed", data.message);
           if (golfPhaseMeta) {
-            golfPhaseMeta.textContent = data.message || "Could not load swing phases";
+            golfPhaseMeta.textContent = "Couldn't load the swing phases for this video.";
           }
           return;
         }
         renderGolfPhaseCards(data);
         golfPhasesSessionId = sid;
       } catch (e) {
-        if (golfPhaseMeta) golfPhaseMeta.textContent = String(e.message || e);
+        console.error("Swing phases failed", e);
+        if (golfPhaseMeta) golfPhaseMeta.textContent = "Couldn't load the swing phases for this video.";
       } finally {
         golfPhasesLoading = false;
       }
@@ -5509,7 +5513,7 @@ code {
         if (fakeEgocentric && session.soma_mesh_url_path) {
           playEgoSomaMesh(session.soma_mesh_url_path).catch((err) => {
             console.error(err);
-            status.textContent = "Egocentric SOMA mesh failed to load";
+            status.textContent = "The egocentric view didn't load. Reload the page to try again.";
             status.className = "status err";
           });
         } else if (session.video_url_path) {
