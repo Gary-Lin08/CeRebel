@@ -3903,7 +3903,7 @@ code {
         "&t0=" + encodeURIComponent(String(start)) +
         "&t1=" + encodeURIComponent(String(end)) +
         "&muscles=1";
-      const resp = await fetch(url);
+      const resp = await fetch(url, { headers: authHeaders() });
       const data = await resp.json();
       if (data.error || data.fallback === "raw_video" || !data.frames || !data.glb_url) {
         const msg = "The 3D skeleton isn't ready for this swing, so the video plays instead.";
@@ -4025,7 +4025,8 @@ code {
       if (golfPhaseBoard) golfPhaseBoard.hidden = false;
       try {
         const r = await fetch(
-          "/api/golf_phases?video_id=" + encodeURIComponent(sid) + "&t=" + Date.now()
+          "/api/golf_phases?video_id=" + encodeURIComponent(sid) + "&t=" + Date.now(),
+          { headers: authHeaders() }
         );
         const data = await r.json();
         if (!r.ok || data.error) {
@@ -4181,7 +4182,7 @@ code {
         "&max_frames=160&muscles=1";
       let data;
       try {
-        const resp = await fetch(url);
+        const resp = await fetch(url, { headers: authHeaders() });
         data = await resp.json();
       } catch (err) {
         if (statusEl) statusEl.textContent = "Skeleton unavailable";
@@ -4313,7 +4314,7 @@ code {
     function scheduleSportAnalysis(sport) {
       const sid = (session && session.session_id) || "";
       const q = sid ? "&video_id=" + encodeURIComponent(sid) : "";
-      fetch("/api/sport_analysis?sport=" + encodeURIComponent(sport) + q + "&t=" + Date.now())
+      fetch("/api/sport_analysis?sport=" + encodeURIComponent(sport) + q + "&t=" + Date.now(), { headers: authHeaders() })
         .then((r) => r.json())
         .then((data) => {
           if (promptMode !== sport) return;
@@ -4579,7 +4580,7 @@ code {
       }
       try {
         const q = sid ? ("?video_id=" + encodeURIComponent(sid) + "&sport=golf") : "?sport=golf";
-        const r = await fetch("/api/coach_briefs" + q + "&t=" + Date.now());
+        const r = await fetch("/api/coach_briefs" + q + "&t=" + Date.now(), { headers: authHeaders() });
         const data = await r.json();
         if (!data.error && Array.isArray(data.briefs)) {
           coachBriefs = data.briefs;
