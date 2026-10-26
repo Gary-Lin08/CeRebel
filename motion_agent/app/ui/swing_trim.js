@@ -87,14 +87,25 @@
   }
 
   var VIS = 0.5;
-  var BODY = [0, 15, 16, 27, 28]; // nose, wrists, ankles
+  var HEAD = [0, 7, 8]; // nose, ears
+  var PAIRS = [[15, 16], [27, 28]]; // wrists, ankles
 
+  function inFrame(p) {
+    return !!p && p.x > -0.02 && p.x < 1.02 && p.y > -0.02 && p.y < 1.02;
+  }
+  function seen(p) {
+    return !!p && (p.visibility == null || p.visibility > VIS);
+  }
+
+  /* Head to feet in the picture. Joints get a position even when hidden, so "in frame" is read
+     from the position; visibility only has to hold for one side of each pair, because the grip
+     hides one wrist (and the body often one ankle) for most of a swing. */
   function fullBody(lm) {
-    return BODY.every(function (i) {
-      var p = lm[i];
-      if (!p) return false;
-      var inFrame = p.x > -0.02 && p.x < 1.02 && p.y > -0.02 && p.y < 1.02;
-      return inFrame && (p.visibility == null || p.visibility > VIS);
+    if (!HEAD.some(function (i) { return inFrame(lm[i]) && seen(lm[i]); })) return false;
+    return PAIRS.every(function (pair) {
+      var a = lm[pair[0]];
+      var b = lm[pair[1]];
+      return inFrame(a) && inFrame(b) && (seen(a) || seen(b));
     });
   }
 
