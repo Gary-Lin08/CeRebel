@@ -334,6 +334,23 @@ class Handler(BaseHTTPRequestHandler):
             if not user:
                 return _json_response(self, 401, {"ok": False, "error": True, "message": "Sign in required"})
             return _json_response(self, 200, library_payload(SETTINGS, user))
+        if path == "/api/compare":
+            from motion_agent.app.compare import compare_payload
+            from motion_agent.app.product_api import current_user
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"ok": False, "error": True, "message": "Sign in required"})
+            qs = parse_qs(parsed.query or "")
+            code, payload = compare_payload(
+                SETTINGS,
+                user,
+                (qs.get("before") or [None])[0],
+                (qs.get("after") or [None])[0],
+                before_swing=(qs.get("before_swing") or [0])[0],
+                after_swing=(qs.get("after_swing") or [0])[0],
+            )
+            return _json_response(self, code, payload)
         if path.startswith("/api/progress"):
             from motion_agent.app.product_api import current_user, user_may_view_session
             from motion_agent.app.product_api import read_progress_with_queue as read_progress
