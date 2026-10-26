@@ -19,6 +19,9 @@
 .cb-fine{font-size:.78rem;color:var(--muted);margin:.5rem 0 0}
 .cb-trust{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:.9rem}
 .cb-trust button{font:inherit;padding:.3rem .7rem;border:1px solid var(--rule);background:transparent;color:var(--text);cursor:pointer}
+/* Same size as the other small actions on the card, not the headline size it inherited. */
+.cb-trust button{font-size:.875rem;white-space:nowrap}
+.cb-trust .cb-muted{flex-basis:100%}
 .cb-consent{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:.5rem}
 .cb-consent input{margin-top:.25rem}
 

@@ -1283,6 +1283,9 @@ code {
       font-size: 0.66rem;
       text-align: center;
       white-space: nowrap;
+      text-overflow: ellipsis;
+      padding-left: 2px;
+      padding-right: 2px;
       cursor: pointer;
     }
     .ma__phases li.is-active { color: #f1ecf7; border-top-color: #52e07c; }
@@ -1547,6 +1550,8 @@ code {
     gap: 0.65rem;
     min-height: 280px;
   }
+  .fix-hero__side { align-content: start; }
+  body.pg-consumer .fix-hero__video-wrap video { max-height: min(62vh, 520px); }
   .fix-hero__video-wrap {
     position: relative;
     border-radius: 10px;
@@ -1781,7 +1786,7 @@ code {
   body.pg-consumer #productSubtitle { order: 1; }
   body.pg-consumer #tocHome { order: 2; }
   body.pg-consumer #detectBanner { order: 3; }
-  body.pg-consumer #sports { order: 4; margin-top: 0.75rem; }
+  body.pg-consumer #sports { order: 7; margin-top: 0.75rem; }
   body.pg-consumer #fixHero { order: 5; }
   body.pg-consumer #sportBoard { order: 6; }
   body.pg-consumer #workspace {
@@ -1807,6 +1812,11 @@ code {
   body.pg-consumer #sportBoard .ma__metric,
   body.pg-consumer #sportBoard .ma__caption,
   body.pg-consumer #sportBoard .ma__cue { display: none; }
+  /* With its text shown in the fix card above, the copy column was empty: the 3D close-up takes the
+     full width and the fix steps sit on its top-right corner. */
+  body.pg-consumer #sportBoard .ma__stage { grid-template-columns: minmax(0, 1fr); }
+  body.pg-consumer #sportBoard .ma__copy { position: absolute; z-index: 2; top: 0; right: 0; padding: 14px; }
+  body.pg-consumer #sportBoard .ma__closeup { border-left: 0; }
   body.pg-consumer .coach-fab {
     display: inline-flex;
     position: fixed;
@@ -2288,7 +2298,11 @@ code {
       <button type="button" id="accountBtn" title="Sign in">Sign in</button>
       <button type="button" id="loadNewest" title="Reload newest preprocessed session">Load newest</button>
     </header>
-    <section class="account-panel" id="accountPanel" hidden>
+    <section class="account-panel" id="accountPanel" hidden aria-labelledby="accountPanelTitle">
+      <div class="account-panel__head">
+        <h2 id="accountPanelTitle">Your swings</h2>
+        <button type="button" class="account-panel__close" id="accountPanelClose" aria-label="Close the library">Close</button>
+      </div>
       <form id="accountForm">
         <p id="accountHint">Sign in to upload your own clip. Without an account you can still try the sample. <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
         <label>Email <input id="accountEmail" type="email" autocomplete="username" required /></label>
@@ -2339,7 +2353,7 @@ code {
         <div class="v3-hero__copy">
           <p class="v3-eyebrow">Golf swing analysis · from one phone video</p>
           <h2 class="v3-hero__title" id="v3HeroTitle">See your swing as a full 3D body. Fix the one thing that matters.</h2>
-          <p class="v3-hero__sub">CeRebel rebuilds your skeleton from a normal phone clip, measures every joint, and shows the numbers behind each tip.</p>
+          <p class="v3-hero__sub">CeRebel rebuilds your skeleton from a normal phone clip, estimates every joint angle, and shows the numbers behind each tip.</p>
           <div class="v3-hero__actions">
             <button type="button" class="primary v3-cta" id="v3Upload">Upload a swing</button>
             <button type="button" class="v3-ghost" id="v3Sample">See a sample swing</button>
@@ -5161,6 +5175,7 @@ code {
         li.dataset.end = String(phase.end_time);
         li.style.setProperty("--span", String(Math.max(0.15, Number(phase.end_time) - Number(phase.start_time))));
         li.textContent = phase.label || phase.id || "Phase";
+        li.title = li.textContent;
         li.addEventListener("click", () => seekPlayer(phase.start_time));
         phases.appendChild(li);
       });
@@ -5176,8 +5191,7 @@ code {
         wrap.innerHTML =
           `<div class="ma-track__head">` +
           `<span>${escapeHtml(trace.label)}</span>` +
-          `<p><output data-readout="${escapeHtml(trace.id)}">${formatTraceValue(last, trace.unit)}</output>` +
-          `<small>${escapeHtml(trace.unit || "")}</small></p></div>` +
+          `<p><output data-readout="${escapeHtml(trace.id)}">${formatTraceValue(last, trace.unit)}</output></p></div>` +
           `<div class="ma-track__lane"></div>`;
         const lane = wrap.querySelector(".ma-track__lane");
         const windows = findings.filter((note) => note.series === trace.id);
@@ -5652,7 +5666,10 @@ code {
           clearGolfPhaseBoard();
           clearSportBoard();
         }
-        if (announce) {
+        if (announce && !isDevUi) {
+          status.textContent = "Showing your newest swing.";
+          status.className = "status";
+        } else if (announce) {
           const changed = prevId && prevId !== session.session_id;
           status.textContent = changed
             ? `Loaded newest video: ${session.session_id} (was ${prevId})`
@@ -5968,7 +5985,18 @@ code {
       if (accountOut) accountOut.hidden = !signed;
       if (libraryBox) libraryBox.hidden = !signed;
       if (accountForm) accountForm.hidden = signed;
+      const panelTitle = document.getElementById("accountPanelTitle");
+      if (panelTitle) panelTitle.textContent = signed ? "Your swings" : "Sign in";
     }
+    // Uploads from some phones arrive with a random hex name; show when it was filmed instead.
+    function captureName(row) {
+      const name = String(row.filename || "");
+      if (name && !/^[0-9a-f]{16,}(\.[a-z0-9]+)?$/i.test(name)) return name;
+      const when = row.created_at ? new Date(row.created_at) : null;
+      if (!when || Number.isNaN(when.getTime())) return "Swing";
+      return "Swing · " + when.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+    }
+
     async function refreshLibrary() {
       if (!authToken || !libraryList) return;
       const r = await fetch("/api/library", { headers: authHeaders() });
@@ -5990,7 +6018,8 @@ code {
         const stage = (row.progress && row.progress.stage) || row.status || "processing";
         const label = document.createElement("button");
         label.type = "button";
-        label.textContent = (row.filename || "Swing") + " · " + stageLabel(stage);
+        label.textContent = captureName(row) + " · " + stageLabel(stage);
+        label.title = label.textContent;
         const queueMsg = row.progress && row.progress.queue_message;
         if (queueMsg && stage !== "ready") label.textContent += " · " + queueMsg;
         label.addEventListener("click", () => {
@@ -6033,6 +6062,25 @@ code {
       accountBtn.addEventListener("click", () => {
         accountPanel.hidden = !accountPanel.hidden;
       });
+    }
+    if (accountPanel) {
+      const isDrawer = () => !isDevUi && !document.body.classList.contains("lp-mode");
+      const closeDrawer = () => { if (isDrawer()) accountPanel.hidden = true; };
+      const closeBtn = document.getElementById("accountPanelClose");
+      if (closeBtn) closeBtn.addEventListener("click", () => { accountPanel.hidden = true; });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !accountPanel.hidden && !document.querySelector(".cb-modal")) closeDrawer();
+      });
+      document.addEventListener("pointerdown", (e) => {
+        if (accountPanel.hidden || accountPanel.contains(e.target)) return;
+        // Buttons that open the drawer, and dialogs it opens (consent, upgrade), keep it open.
+        if (e.target.closest("#accountBtn, #navLibrary, a[href='#library'], .cb-modal, #tocStartUpload, #emptyUpload")) return;
+        closeDrawer();
+      });
+      // The coach button hides while the drawer covers its corner.
+      const syncDrawerClass = () => document.body.classList.toggle("is-drawer-open", isDrawer() && !accountPanel.hidden);
+      new MutationObserver(syncDrawerClass).observe(accountPanel, { attributes: true, attributeFilter: ["hidden"] });
+      syncDrawerClass();
     }
     (function wireTocProductChrome() {
       const navLibrary = document.getElementById("navLibrary");
@@ -6174,6 +6222,8 @@ code {
       uploadFile.addEventListener("change", async () => {
         const file = uploadFile.files && uploadFile.files[0];
         if (!file || !authToken) return;
+        // Upload progress is written in the drawer, so show it even if the upload started elsewhere.
+        if (accountPanel) accountPanel.hidden = false;
         const uploadStatus = document.getElementById("uploadStatus");
         if (window.cerebelConsent && !(await window.cerebelConsent.ensure())) {
           if (uploadStatus) uploadStatus.textContent = "Upload cancelled. We need your consent to process the video.";
