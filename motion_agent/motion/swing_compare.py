@@ -190,7 +190,7 @@ def swing_snapshot(
             values["trail_knee_loss"] = max(0.0, knee_a[1] - knee_b[1])
         goals["trail_knee_loss"] = {"max": TRAIL_KNEE_LOSS_MAX_DEG, "label": f"under {TRAIL_KNEE_LOSS_MAX_DEG:.0f}°"}
 
-        elbow_0 = _at(traces.get("lead-elbow"), address[0])
+        elbow_0 = _at(traces.get("lead-elbow"), address[1])
         elbow_1 = _at(traces.get("lead-elbow"), top[1])
         if elbow_0 and elbow_1:
             values["lead_elbow_top"] = elbow_1[1]

@@ -58,6 +58,39 @@ def _phase_walkthrough(payload: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+# What each consumer chip asks about: detector / KB fault ids, the trace it is read
+# from, and title phrases as a last resort. Coaching text mentions other body parts
+# ("the arms have to make the speed" on the hip-turn note), so the body text is
+# never searched.
+_CHIP_LEAD_ARM = {
+    "ids": ("lead-arm", "fault_lead_arm_collapse_top"),
+    "series": ("lead-elbow",),
+    "title": ("lead arm", "lead elbow", "front arm"),
+}
+_CHIP_PELVIS = {
+    "ids": ("early-extension", "fault_early_extension"),
+    "series": ("pelvis-drift",),
+    "title": ("early extension", "pelvis drift", "hip drift"),
+}
+
+
+def _finding_for_chip(
+    findings: list[dict[str, Any]], chip: dict[str, tuple[str, ...]]
+) -> dict[str, Any] | None:
+    for note in findings:
+        ids = {str(note.get(k) or "").lower() for k in ("id", "fault_id")}
+        if ids & set(chip["ids"]):
+            return note
+    for note in findings:
+        if str(note.get("series") or "").lower() in chip["series"]:
+            return note
+    for note in findings:
+        title = " ".join(str(note.get(k) or "") for k in ("title", "headline")).lower()
+        if any(phrase in title for phrase in chip["title"]):
+            return note
+    return None
+
+
 def build_coach_briefs(
     *,
     video_id: str | None = None,
@@ -104,37 +137,19 @@ def build_coach_briefs(
         )
     add("downswing_walkthrough", CONSUMER_GOLF_QUESTIONS[1], _phase_walkthrough(payload))
 
-    # Keyword-mapped finding briefs for the remaining consumer chips.
-    keyword_map = (
-        ("lead arm", "arm", "elbow", "collaps"),
-        ("pelvis", "hip", "early extension", "drift"),
-    )
-    for note in findings:
-        blob = " ".join(
-            str(note.get(k) or "")
-            for k in ("id", "title", "detail", "why", "cue", "series")
-        ).lower()
-        if any(k in blob for k in keyword_map[0]) and len(briefs) < 6:
+    # Finding briefs for the remaining consumer chips.
+    for question, suffix, chip in (
+        (CONSUMER_GOLF_QUESTIONS[2], "_arm", _CHIP_LEAD_ARM),
+        (CONSUMER_GOLF_QUESTIONS[3], "_pelvis", _CHIP_PELVIS),
+    ):
+        note = _finding_for_chip(findings, chip)
+        if note is not None and len(briefs) < 6:
             add(
-                f"finding_{note.get('id')}_arm",
-                CONSUMER_GOLF_QUESTIONS[2],
+                f"finding_{note.get('id')}{suffix}",
+                question,
                 _finding_answer(note),
                 note.get("id"),
             )
-            break
-    for note in findings:
-        blob = " ".join(
-            str(note.get(k) or "")
-            for k in ("id", "title", "detail", "why", "cue", "series")
-        ).lower()
-        if any(k in blob for k in keyword_map[1]) and len(briefs) < 6:
-            add(
-                f"finding_{note.get('id')}_pelvis",
-                CONSUMER_GOLF_QUESTIONS[3],
-                _finding_answer(note),
-                note.get("id"),
-            )
-            break
 
     # Dedupe by question text (keep first).
     seen: set[str] = set()

@@ -17,6 +17,9 @@ from motion_agent.motion.synchronization import slice_indices
 from motion_agent.storage.errors import tool_error
 
 MAX_SAMPLES = 80
+# "From address" figures are measured from the median pose over this much of the
+# end of the address phase, so one noisy frame does not move every reading.
+ADDRESS_HOLD_S = 0.5
 
 _SPORTS = ("golf", "baseball")
 
@@ -96,9 +99,12 @@ def build_sport_analysis(
         return tool_error("ANALYSIS_FAILED", phase_note or "Could not locate a movement window")
 
     start_s, end_s = window
+    # "From address" traces are zeroed where the golfer is set (the end of the
+    # detected address phase), not at the first frame of the clip.
+    zero = _address_hold(phases, start_s, end_s) if key == "golf" else (start_s, start_s)
     built: list[dict[str, Any]] = []
     for spec in series_spec:
-        series = _build_series(seq, spec, start_s, end_s)
+        series = _build_series(seq, spec, start_s, end_s, zero)
         if series is not None:
             built.append(series)
     if len(built) < 2:
@@ -107,7 +113,7 @@ def build_sport_analysis(
             "Not enough reconstructed joint series to draw the analysis figures.",
         )
 
-    landmarks = _landmarks(built, impact_time)
+    landmarks = _landmarks(built, impact_time, zero[1])
     findings, highlights = _compose_report(
         key, built, phases, impact_time, lead, trail
     )
@@ -185,7 +191,7 @@ def _golf_series_spec(lead: str, trail: str) -> list[dict[str, Any]]:
             "unit": "°",
             "kind": "coord",
             "coord": "lumbar_rotation",
-            "zero_at_start": True,
+            "zeroed": True,
         },
         {
             "id": "pelvis-turn",
@@ -193,7 +199,7 @@ def _golf_series_spec(lead: str, trail: str) -> list[dict[str, Any]]:
             "unit": "°",
             "kind": "coord",
             "coord": "pelvis_rotation",
-            "zero_at_start": True,
+            "zeroed": True,
         },
         {
             "id": "pelvis-drift",
@@ -236,7 +242,7 @@ def _baseball_series_spec(lead: str, trail: str) -> list[dict[str, Any]]:
             "unit": "°",
             "kind": "coord",
             "coord": "lumbar_rotation",
-            "zero_at_start": True,
+            "zeroed": True,
         },
         {
             "id": "front-knee",
@@ -422,24 +428,43 @@ def _even_phases(start_s: float, end_s: float, labels: list[tuple[str, str]]) ->
     return out
 
 
+def _address_hold(
+    phases: list[dict[str, Any]], start_s: float, end_s: float
+) -> tuple[float, float]:
+    """The last stretch of the address phase, just before the takeaway."""
+    span = _phase_span(phases, "address")
+    if span is None:
+        return start_s, start_s
+    b = min(max(span[1], start_s), end_s)
+    return max(span[0], start_s, b - ADDRESS_HOLD_S), b
+
+
 def _build_series(
     seq: MotionSequence,
     spec: dict[str, Any],
     start_s: float,
     end_s: float,
+    zero: tuple[float, float] | None = None,
 ) -> dict[str, Any] | None:
+    """One labeled trace. Zeroed traces and drift read from their median over ``zero``
+    (a time span; the first frame of the window when None)."""
     sl = slice_indices(seq.timestamps, start_s, end_s)
     times = np.asarray(seq.timestamps[sl], dtype=np.float64)
     if times.size < 4:
         return None
+    if zero is None:
+        z0 = z1 = 0
+    else:
+        z0 = int(np.argmin(np.abs(times - zero[0])))
+        z1 = max(z0, int(np.argmin(np.abs(times - zero[1]))))
     kind = spec["kind"]
     if kind == "coord":
         raw = seq.opensim_coordinates.get(spec["coord"])
         if raw is None:
             return None
         values = np.degrees(np.asarray(raw[sl], dtype=np.float64))
-        if spec.get("zero_at_start"):
-            values = values - float(values[0])
+        if spec.get("zeroed"):
+            values = values - float(np.median(values[z0 : z1 + 1]))
     elif kind == "speed":
         joint = spec["joint"]
         if joint not in seq.joint_positions:
@@ -452,7 +477,7 @@ def _build_series(
         if joint not in seq.joint_positions:
             return None
         pos = np.asarray(seq.joint_positions[joint][sl], dtype=np.float64)
-        horizontal = pos[:, [0, 2]] - pos[0, [0, 2]]
+        horizontal = pos[:, [0, 2]] - np.median(pos[z0 : z1 + 1, [0, 2]], axis=0)
         values = np.linalg.norm(horizontal, axis=-1) * 100.0
     elif kind == "stride":
         lead = spec["lead"]
@@ -484,7 +509,11 @@ def _downsample(times: np.ndarray, values: np.ndarray, n: int) -> tuple[np.ndarr
     return times[idx], values[idx]
 
 
-def _landmarks(series: list[dict[str, Any]], impact_time: float | None) -> list[dict[str, Any]]:
+def _landmarks(
+    series: list[dict[str, Any]],
+    impact_time: float | None,
+    from_s: float | None = None,
+) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for trace in series:
         times = trace["times"]
@@ -492,8 +521,10 @@ def _landmarks(series: list[dict[str, Any]], impact_time: float | None) -> list[
         if not times:
             continue
         pairs = list(zip(times, values))
-        peak = max(pairs, key=lambda p: p[1])
-        trough = min(pairs, key=lambda p: p[1])
+        # Peaks and minima describe the swing, not the setup before address.
+        swing = [p for p in pairs if from_s is None or p[0] >= from_s - 1e-6] or pairs
+        peak = max(swing, key=lambda p: p[1])
+        trough = min(swing, key=lambda p: p[1])
         out.append(
             {
                 "id": f"{trace['id']}-peak",
@@ -683,7 +714,7 @@ def _golf_report(
             )
 
     elbow = traces.get("lead-elbow")
-    e0 = _at(elbow, address[0])
+    e0 = _at(elbow, address[1])
     e1 = _at(elbow, top[1])
     if elbow and e0 and e1:
         if e1[1] - e0[1] >= 15 or e1[1] >= 45:
@@ -798,7 +829,7 @@ def _golf_report(
         highlights.append(f"Trail-hand speed peaks at {peak[1]:.2f} m/s at {peak[0]:.2f} s.")
 
     if len(findings) < 2:
-        findings.extend(_fallback_readings(traces, t0, t1, lead, trail, accents=("#c4a6ff", "#8fd0ff", "#ffb84d")))
+        findings.extend(_fallback_readings(traces, address[1], t1, lead, trail, accents=("#c4a6ff", "#8fd0ff", "#ffb84d")))
     # Biggest fix first — not whatever rule fired first in code order.
     findings.sort(key=lambda note: float(note.get("severity") or 0.0), reverse=True)
     return _stamp_focus(findings[:4], lead, trail), highlights[:4]
@@ -1031,7 +1062,9 @@ def _fallback_readings(
     for trace, accent in zip(traces.values(), accents):
         if not trace["values"]:
             continue
-        peak = max(zip(trace["times"], trace["values"]), key=lambda item: abs(item[1]))
+        pairs = list(zip(trace["times"], trace["values"]))
+        pairs = [p for p in pairs if p[0] >= t0 - 1e-6] or pairs
+        peak = max(pairs, key=lambda item: abs(item[1]))
         out.append(_finding(
             fid=f"read-{trace['id']}",
             title=trace["label"],
