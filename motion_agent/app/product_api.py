@@ -713,7 +713,7 @@ def remove_account(settings: Settings, user: dict[str, Any], *, reason: str = "u
 def _forget_billing(product_dir: Path, user_id: str) -> None:
     from motion_agent.app import billing
 
-    with billing._LOCK:  # noqa: SLF001 - same storage helpers billing uses
+    with billing._locked(product_dir):  # noqa: SLF001 - same storage helpers and lock billing uses
         data = billing._read(product_dir)  # noqa: SLF001
         if data["users"].pop(user_id, None) is not None:
             billing._write(product_dir, data)  # noqa: SLF001

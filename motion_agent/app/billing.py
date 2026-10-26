@@ -86,6 +86,12 @@ def _path(product_dir: Path) -> Path:
     return product_dir / "billing.json"
 
 
+def _locked(product_dir: Path):
+    """Around every read-modify-write of billing.json: account deletion (retention, privacy_backfill)
+    rewrites it from other processes."""
+    return locked(_path(product_dir), _LOCK)
+
+
 def _read(product_dir: Path) -> dict[str, Any]:
     path = _path(product_dir)
     if not path.is_file():
@@ -372,7 +378,7 @@ def handle_webhook(product_dir: Path, payload: bytes, signature: str | None) -> 
     kind = str(event.get("type") or "")
     obj = (event.get("data") or {}).get("object") or {}
     changed: str | None = None
-    with _LOCK:
+    with _locked(product_dir):
         data = _read(product_dir)
         if event_id and event_id in data["events"]:
             return {"ok": True, "duplicate": True}
