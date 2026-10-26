@@ -15,7 +15,8 @@ from motion_agent.app import billing
 from motion_agent.app.config import Settings
 from motion_agent.app.library import list_captures
 from motion_agent.motion.adapter import adapt_session
-from motion_agent.motion.swing_compare import compare_snapshots, swing_snapshot
+from motion_agent.motion.swing_compare import METRIC_BY_FINDING, compare_snapshots, swing_snapshot
+from motion_agent.motion.swing_overlay import overlay_for_finding
 from motion_agent.storage.video_store import media_url, resolve_media_file
 
 LOG = logging.getLogger("motion_agent.compare")
@@ -112,6 +113,29 @@ def _side(settings: Settings, row: dict[str, Any], snap: dict[str, Any]) -> dict
     }
 
 
+def _highlight(snap: dict[str, Any], finding_id: str | None, label: str | None) -> dict[str, Any] | None:
+    """How to mark last time's main fix on this swing's video, and when."""
+    spec = METRIC_BY_FINDING.get(finding_id or "")
+    events = snap.get("events") or {}
+    if spec is None:
+        return None
+    lead, trail = ("right", "left") if snap.get("handedness") == "left" else ("left", "right")
+    if spec.event == "impact":
+        start, end = events.get("impact"), events.get("finish")
+    else:
+        start, end = events.get("address"), events.get("top")
+    if start is None or end is None:
+        return None
+    return {
+        "finding_id": finding_id,
+        "overlay": overlay_for_finding(str(finding_id), None, lead, trail),
+        "start_time": start,
+        "end_time": end,
+        # The knee figure is bend lost, not the angle drawn at the knee, so it gets no label there.
+        "label": None if spec.id == "trail_knee_loss" else label,
+    }
+
+
 def _swing_arg(value: Any) -> int:
     try:
         return max(0, int(value))
@@ -182,6 +206,9 @@ def compare_payload(
     from motion_agent.app.product_api import record_event
 
     main = result.get("main_issue") or {}
+    sides = (_side(settings, before_row, snaps[0]), _side(settings, after_row, snaps[1]))
+    for side, snap, label in zip(sides, snaps, (main.get("before_display"), main.get("after_display"))):
+        side["highlight"] = _highlight(snap, main.get("finding_id"), label)
     record_event(
         settings,
         "compare_view",
@@ -198,7 +225,7 @@ def compare_payload(
         "reordered": reordered,
         "adjacent": adjacent,
         "any_pair": pro,
-        "before": _side(settings, before_row, snaps[0]),
-        "after": _side(settings, after_row, snaps[1]),
+        "before": sides[0],
+        "after": sides[1],
         **result,
     }

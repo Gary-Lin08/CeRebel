@@ -578,6 +578,20 @@ class Handler(BaseHTTPRequestHandler):
             )
             code = 200 if not payload.get("error") else 404 if payload.get("type") == "NO_SESSION" else 500
             return _json_response(self, code, payload)
+        if path == "/api/swing_keypoints":
+            qs = parse_qs(parsed.query or "")
+            video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]
+            video_id, denied = _scoped_video_id(self, video_id)
+            if denied is not None:
+                return _json_response(self, *denied)
+            from motion_agent.motion.swing_overlay import keypoints_payload
+
+            pose_path = DATA_DIR / "sessions" / str(video_id) / "ik" / "pose3d.json"
+            try:
+                pose3d = json.loads(pose_path.read_text(encoding="utf-8")) if pose_path.is_file() else None
+            except (OSError, json.JSONDecodeError):
+                pose3d = None
+            return _json_response(self, 200, {"session_id": video_id, **keypoints_payload(pose3d)})
         if path == "/api/coach_briefs":
             qs = parse_qs(parsed.query or "")
             video_id = (qs.get("video_id") or qs.get("session_id") or [None])[0]

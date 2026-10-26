@@ -2141,6 +2141,7 @@ code {
   <link rel="stylesheet" href="/static/playground-landing.css" />
   <link rel="stylesheet" href="/static/playground-app.css" />
   <link rel="stylesheet" href="/static/compare.css" />
+  <link rel="stylesheet" href="/static/skeleton-overlay.css" />
 </head>
 <body class="pg pg-dev">
   <div id="lpLanding" class="lp" hidden>
@@ -4703,6 +4704,7 @@ code {
       const hero = document.getElementById("fixHero");
       const fab = document.getElementById("coachFab");
       if (!hero) return;
+      if (window.cerebelSkeleton) window.cerebelSkeleton.onNote(isDevUi ? null : note, lastSportPayload);
       if (isDevUi || !lastSportPayload || !note) {
         hero.hidden = true;
         if (fab) fab.hidden = true;
@@ -5526,6 +5528,7 @@ code {
         }
         session = await r.json();
         if (window.cerebelCompare) window.cerebelCompare.onSession(session);
+        if (window.cerebelSkeleton) window.cerebelSkeleton.onSession(session);
         const meta = document.getElementById("sessionMeta");
         const devMeta = document.getElementById("sessionDevMeta");
         paintCaptureChrome(session);
@@ -6378,6 +6381,7 @@ code {
   <script src="/static/playground-fx.js"></script>
   <script src="/static/billing.js"></script>
   <script src="/static/compare.js"></script>
+  <script src="/static/skeleton-overlay.js"></script>
   <script src="/static/cinema-fluid.js"></script>
   <script src="/static/cinema-motion.js"></script>
   <script type="module" src="/static/swing-hero.js"></script>

@@ -357,6 +357,9 @@
       v.playsInline = true;
       v.src = url;
       wrap.appendChild(v);
+      if (window.cerebelSkeleton) {
+        window.cerebelSkeleton.attach(v).setSession(side.session_id).setStatic(side.highlight);
+      }
     } else {
       wrap.appendChild(el("div", {
         class: "cp-novideo",

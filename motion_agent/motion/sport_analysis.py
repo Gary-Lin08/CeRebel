@@ -987,7 +987,7 @@ def _stamp_focus(
     lead: str,
     trail: str,
 ) -> list[dict[str, Any]]:
-    """Point each fix at the limb the website close-up would frame."""
+    """Point each fix at the limb the website close-up would frame, and say how to mark it on the video."""
     catalog = {
         "trail-knee": _focus_for("knee", trail, -32, "Trail knee"),
         "lead-arm": _focus_for("arm", lead, 36, "Lead arm"),
@@ -1008,10 +1008,13 @@ def _stamp_focus(
         "trail-hand": _focus_for("hand", trail, -40, "Trail hand"),
         "throwing-hand": _focus_for("hand", trail, -40, "Throwing hand"),
     }
+    from motion_agent.motion.swing_overlay import overlay_for_finding
+
     for note in findings:
         note["focus"] = catalog.get(note["id"]) or series_focus.get(note.get("series") or "") or _focus_for(
             "pelvis", None, 0, "Body"
         )
+        note["overlay"] = overlay_for_finding(note["id"], note.get("series"), lead, trail)
     return findings
 
 

@@ -353,6 +353,11 @@ class CompareAccessTests(unittest.TestCase):
         self.assertEqual(payload["after"]["session_id"], "S2")
         self.assertTrue(payload["metrics"])
         self.assertIn(payload["main_issue"]["status"], ("resolved", "borderline", "improving", "unchanged", "worse"))
+        for side in ("before", "after"):
+            mark = payload[side]["highlight"]
+            self.assertEqual(mark["finding_id"], payload["main_issue"]["finding_id"])
+            self.assertTrue(mark["overlay"]["segments"])
+            self.assertLess(mark["start_time"], mark["end_time"])
 
     def test_reversed_request_is_put_in_time_order(self):
         code, payload = self._compare("S2", "S1")
