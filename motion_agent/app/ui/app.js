@@ -78,6 +78,7 @@ const CxApp = (function () {
     afterAuth: null,
     asking: false,
     dictation: null,
+    call: null,          // a live voice call: { msgs } = coach chat length when it started
   };
 
   // ---------------------------------------------------------------- small helpers
@@ -176,6 +177,11 @@ const CxApp = (function () {
   async function route() {
     state.viewToken += 1;
     window.clearTimeout(state.waitTimer);
+    // A call is about the swing on screen; leaving it ends the call (the chat is cleared too).
+    if (state.call) {
+      state.call = null;
+      if (window.cerebelVoice) window.cerebelVoice.hangUp();
+    }
     closeSheet();
     const r = parseRoute();
     if (r.auth) window.history.replaceState(null, "", window.location.pathname + window.location.search + (authToken ? "#/" : "#/sample"));
@@ -523,7 +529,7 @@ const CxApp = (function () {
     $("sampleBannerBtn").textContent = visitor ? "Upload yours, free" : "Film yours";
     $("sampleBannerBtn").dataset.act = visitor ? "signup" : "film";
     $("reportDate").textContent = "";
-    $("micBtn").hidden = !voiceMode();
+    paintMic();
   }
 
   function resetReport(message) {
@@ -1410,18 +1416,46 @@ const CxApp = (function () {
 
   // ---------------------------------------------------------------- talking to the coach
 
-  // A live call needs voice-coach.js with a start(); until then the mic dictates a question.
+  // A live call needs voice-coach.js with a start() and a way to carry the voice in this browser;
+  // otherwise the mic dictates a question.
   function liveVoice() {
-    return window.cerebelVoice && typeof window.cerebelVoice.start === "function" ? window.cerebelVoice : null;
+    const v = window.cerebelVoice;
+    if (!v || typeof v.start !== "function") return null;
+    return !v.state || v.state().available ? v : null;
   }
   function voiceMode() {
     if (liveVoice()) return "live";
     return window.SpeechRecognition || window.webkitSpeechRecognition ? "dictate" : "";
   }
+  function paintMic() {
+    const mode = voiceMode();
+    $("micBtn").hidden = !mode;
+    if (!state.dictation) $("micBtn").setAttribute("aria-label", mode === "live" ? "Talk to your coach" : "Ask out loud");
+  }
   function paintCallCard() {
     const live = liveVoice();
+    const next = live && live.state ? live.state() : {};
     $("callCard").hidden = !live;
-    $("callNote").textContent = authToken ? "Hands free, with your swing on screen." : "Create a free account to try it.";
+    $("callNote").textContent = !authToken ? "Create a free account to try it."
+      : next.need === "upgrade" ? "Part of Pro. Hands free, with your swing on screen."
+      : next.kind === "trial" ? "One free try. Hands free, with your swing on screen."
+      : "Hands free, with your swing on screen.";
+  }
+
+  // voice-coach.js reports here when a call can start, starts or ends.
+  function onVoice(e) {
+    const live = !!(e.detail && e.detail.live);
+    if (live && !state.call) {
+      state.call = { msgs: $("msgs").childElementCount };
+      // The call panel takes the bottom of the screen; the swing stays in view above it.
+      if (state.sheet === "coach") closeSheet();
+    } else if (!live && state.call) {
+      const said = $("msgs").childElementCount > state.call.msgs;
+      state.call = null;
+      if (said && state.sheet !== "coach") toast("Your call's transcript is in the coach chat.");
+    }
+    if (state.view === "vReport") paintMic();
+    if (state.sheet === "coach") paintCallCard();
   }
 
   function micPressed() {
@@ -1532,6 +1566,7 @@ const CxApp = (function () {
       paintSpeed();
     });
     $("linesBtn").addEventListener("click", toggleLines);
+    window.addEventListener("cerebel-voice", onVoice);
     bindTrack();
     paintSpeed();
     setAuthMode("register");
@@ -1555,6 +1590,6 @@ const CxApp = (function () {
     selectFix,
     addBubble,
     // Pure helpers, exposed for the tests.
-    _test: { drillParts, formatValue, seriesValue, stripAnalysis, whenLabel, parseRoute },
+    _test: { drillParts, formatValue, seriesValue, stripAnalysis, whenLabel, parseRoute, voiceMode },
   };
 })();

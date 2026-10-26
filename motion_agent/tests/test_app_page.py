@@ -160,6 +160,22 @@ class AppScriptTests(unittest.TestCase):
         # skeleton-overlay.js draws on the video's parent; the report's video sits in the stage box.
         self.assertRegex(self.html, r'<div class="cx-stage__box" id="stageBox">\s*<video id="fixVideo"')
 
+    def test_voice_coach_loads_after_the_app_script(self):
+        head = self.html[: self.html.index("<body")]
+        self.assertIn('href="/static/voice-coach.css"', head)
+        self.assertLess(self.html.index('src="/static/app.js"'), self.html.index('src="/static/voice-coach.js"'))
+
+    def test_globals_the_voice_coach_calls(self):
+        # voice-coach.js names the page globals it calls at run time in its header comment.
+        vc = (UI / "voice-coach.js").read_text(encoding="utf-8")
+        names = [n.strip() for n in re.search(r"globals \(([^)]*)\)", vc).group(1).replace("\n", " ").split(",")]
+        self.assertIn("addBubble", names)
+        for name in names:
+            if name == "cerebelBilling":
+                self.assertIn('src="/static/billing.js"', self.html)
+            else:
+                self.assertRegex(self.js, rf"\n(?:function {name}\(|let {name}\b)", name)
+
     def test_redirect_runs_before_the_landing_renders(self):
         head = self.index[: self.index.index("<body")]
         self.assertIn('meta[name="cerebel-app"]', head)
@@ -223,6 +239,48 @@ process.stdout.write(JSON.stringify(out));
         # Signed out, home falls back to the sample; a bad id is not a swing route.
         self.assertEqual(self.node("#/")["route"], {"name": "sample"})
         self.assertEqual(self.node("#/swing/../../etc")["route"], {"name": "sample"})
+
+
+@unittest.skipUnless(shutil.which("node"), "node is not installed")
+class AppVoiceModeTests(unittest.TestCase):
+    """What the mic button and the call card do: a live call when voice-coach.js can start one in
+    this browser, else dictation where the browser has speech recognition, else nothing."""
+
+    HARNESS = r"""
+const src = require("fs").readFileSync(process.argv[1], "utf8");
+const doc = { getElementById: () => null, addEventListener() {}, readyState: "loading", querySelectorAll: () => [] };
+const out = {};
+for (const [name, extra] of Object.entries(JSON.parse(process.argv[2]))) {
+  const win = Object.assign({ location: { search: "", hash: "", pathname: "/app" }, history: { replaceState() {} }, addEventListener() {}, matchMedia: () => ({ matches: false }) }, extra);
+  if (extra.voice) win.cerebelVoice = { start() {}, state: () => ({ available: extra.voice === "available" }) };
+  if (extra.voice === "no-start") win.cerebelVoice = { refresh() {}, hangUp() {} };
+  const t = new Function("document", "window", "localStorage", "URLSearchParams", src + "\nreturn CxApp._test;")(doc, win, { getItem: () => "" }, URLSearchParams);
+  out[name] = t.voiceMode();
+}
+process.stdout.write(JSON.stringify(out));
+"""
+
+    def test_voice_mode(self):
+        cases = {
+            "nothing": {},
+            "dictation only": {"webkitSpeechRecognition": True},
+            "live call": {"voice": "available"},
+            "live call unavailable": {"voice": "unavailable", "webkitSpeechRecognition": True},
+            "voice script without start": {"voice": "no-start", "SpeechRecognition": True},
+        }
+        done = subprocess.run(
+            ["node", "-e", self.HARNESS, str(UI / "app.js"), json.dumps(cases)], capture_output=True, text=True, timeout=30, check=True
+        )
+        self.assertEqual(
+            json.loads(done.stdout),
+            {
+                "nothing": "",
+                "dictation only": "dictate",
+                "live call": "live",
+                "live call unavailable": "dictate",
+                "voice script without start": "dictate",
+            },
+        )
 
 
 if __name__ == "__main__":

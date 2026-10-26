@@ -8,8 +8,10 @@ import dataclasses
 import json
 import math
 import queue
+import shutil
 import socket
 import struct
+import subprocess
 import tempfile
 import threading
 import time
@@ -826,6 +828,126 @@ class ServerIntegrationTests(unittest.TestCase):
 
             status = json.loads(urllib.request.urlopen(self.url.replace("ws://", "http://").replace("live", "status")).read())
             self.assertEqual(status, {"enabled": False})
+
+
+@unittest.skipUnless(shutil.which("node"), "node is not installed")
+class VoiceCoachScriptTests(unittest.TestCase):
+    """voice-coach.js in Node with a stub page: the start() the app page (/app) calls, the state it
+    paints from, and the old page's own buttons. The browser has no speech of its own here."""
+
+    SCRIPT = Path(voice.__file__).resolve().parent / "ui" / "voice-coach.js"
+    HARNESS = r"""
+const vm = require("vm");
+const src = require("fs").readFileSync(process.argv[1], "utf8");
+const sc = JSON.parse(process.argv[2]);
+const out = { events: [], toasts: [], calls: [] };
+const added = [];
+function el(id) {
+  const attrs = {};
+  return {
+    id, hidden: false, textContent: "", innerHTML: "",
+    classList: { toggle() {}, add() {}, remove() {}, contains: () => false },
+    setAttribute(k, v) { attrs[k] = String(v); }, getAttribute(k) { return k in attrs ? attrs[k] : null; },
+    addEventListener() {}, insertAdjacentElement(_, e) { added.push(e); },
+  };
+}
+const send = el("send");
+const ctx = {
+  document: {
+    readyState: "complete",
+    body: { classList: { contains: (c) => c === "cx" && sc.page === "app", add() {}, remove() {} }, appendChild(e) { out.calls.push(["appendChild", e.className || ""]); } },
+    getElementById: (id) => (id === "send" ? send : null),
+    createElement: () => el(""),
+    querySelectorAll: (sel) => (sel === "[data-voice-live]" ? added : []),
+  },
+  navigator: { userAgent: "node", mediaDevices: { getUserMedia() {} } },
+  location: { protocol: "http:", host: "127.0.0.1" },
+  localStorage: { getItem: () => null, setItem() {} },
+  fetch: async (url, opts) => { out.calls.push(["fetch", url, (opts && opts.headers) || {}]); return { json: async () => sc.status }; },
+  CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init && init.detail; } },
+  dispatchEvent(e) { out.events.push([e.type, e.detail]); return true; },
+  addEventListener() {},
+  setTimeout, clearTimeout, setInterval, clearInterval,
+  WebSocket: function () {},
+  authToken: sc.token || "", session: sc.session || null,
+  showToast: (m) => out.toasts.push(m),
+  showConsumerChat: () => out.calls.push(["showConsumerChat"]),
+  openAccountPanel: () => out.calls.push(["openAccountPanel"]),
+  cerebelBilling: { openPaywall: (r) => out.calls.push(["openPaywall", r]), track() {} },
+};
+ctx.window = ctx;
+vm.createContext(ctx);
+vm.runInContext(src, ctx);
+(async () => {
+  const v = ctx.cerebelVoice;
+  await v.refresh();
+  out.startType = typeof v.start;
+  out.state = v.state();
+  out.calls = [];
+  if (sc.start) await v.start();
+  out.buttons = added.map((b) => ({ id: b.id, text: b.textContent, hidden: b.hidden }));
+  process.stdout.write(JSON.stringify(out));
+})().catch((e) => { process.stderr.write(String((e && e.stack) || e)); process.exit(1); });
+"""
+    TRIAL = {"enabled": True, "cloud": True, "kind": "trial", "need": None, "seconds": 180}
+
+    def run_page(self, **scenario):
+        scenario.setdefault("page", "app")
+        scenario.setdefault("token", "tok")
+        scenario.setdefault("status", self.TRIAL)
+        done = subprocess.run(
+            ["node", "-e", self.HARNESS, str(self.SCRIPT), json.dumps(scenario)],
+            capture_output=True, text=True, timeout=30, check=True,
+        )
+        return json.loads(done.stdout)
+
+    def test_start_is_exported_with_the_state_the_app_paints_from(self):
+        out = self.run_page()
+        self.assertEqual(out["startType"], "function")
+        self.assertEqual(out["state"], {"available": True, "live": False, "kind": "trial", "need": None})
+        # The app page repaints its mic button and call card from this event.
+        self.assertEqual(out["events"][-1], ["cerebel-voice", out["state"]])
+
+    def test_app_page_keeps_its_own_buttons(self):
+        # The app's buttons carry icons; voice-coach.js must not add (or relabel) buttons there.
+        self.assertEqual(self.run_page(page="app")["buttons"], [])
+        self.assertEqual(
+            self.run_page(page="old")["buttons"], [{"id": "voiceLive", "text": "Talk live · free try", "hidden": False}]
+        )
+
+    def test_not_available_without_a_way_to_carry_the_voice(self):
+        self.assertFalse(self.run_page(status={"enabled": False})["state"]["available"])
+        self.assertFalse(self.run_page(status={**self.TRIAL, "cloud": False})["state"]["available"])
+
+    def test_start_asks_for_consent_before_a_call(self):
+        out = self.run_page(start=True)
+        self.assertIn(["appendChild", "vc-consent"], out["calls"])
+        self.assertFalse(out["state"]["live"])
+
+    def test_start_after_the_free_try_opens_the_paywall(self):
+        out = self.run_page(status={"enabled": True, "cloud": True, "kind": "trial", "need": "upgrade", "seconds": 0}, start=True)
+        self.assertIn(["openPaywall", {"voice": True}], out["calls"])
+        self.assertNotIn(["appendChild", "vc-consent"], out["calls"])
+
+    def test_start_signed_out_asks_for_an_account(self):
+        out = self.run_page(token="", status={"enabled": True, "cloud": True, "kind": "", "need": "signin", "seconds": 0}, start=True)
+        self.assertIn(["openAccountPanel"], out["calls"])
+        self.assertEqual(out["toasts"], ["Create a free account to try live coaching."])
+
+    def test_start_without_a_swing_does_not_call(self):
+        out = self.run_page(session={"empty": True}, start=True)
+        self.assertEqual(out["toasts"], ["Upload a swing before calling the coach."])
+        self.assertEqual(out["calls"], [])
+
+    def test_start_when_voice_is_off_falls_back_to_typing(self):
+        out = self.run_page(status={"enabled": False}, start=True)
+        self.assertEqual(out["toasts"], ["Live coaching isn't available right now. Type your question instead."])
+        self.assertIn(["showConsumerChat"], out["calls"])
+
+    def test_status_request_sends_the_login(self):
+        out = self.run_page(start=True)
+        fetch = next(c for c in out["calls"] if c[0] == "fetch")
+        self.assertEqual(fetch[1:], ["/api/voice/status", {"Authorization": "Bearer tok"}])
 
 
 if __name__ == "__main__":

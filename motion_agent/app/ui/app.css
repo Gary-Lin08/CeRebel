@@ -23,12 +23,16 @@
   --gut-l: max(20px, env(safe-area-inset-left, 0px));
   --gut-r: max(20px, env(safe-area-inset-right, 0px));
   --askbar-h: 70px;
-  /* Names the shared styles (billing.css, compare.css, skeleton-overlay.css) read. */
+  /* Names the shared styles (billing.css, compare.css, skeleton-overlay.css, voice-coach.css) read. */
   --bg: var(--night);
   --text: var(--bone);
   --muted: var(--mist);
   --rule: var(--line-2);
   --accent: var(--fix);
+  --accent-tint: var(--fix-soft);
+  --border: var(--line-2);
+  --ink: var(--fix-ink);
+  --danger: var(--bad);
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -262,6 +266,20 @@ body.cx.is-locked { overflow: hidden; }
 .cx-toast { position: fixed; left: 50%; bottom: calc(var(--askbar-h) + 20px + env(safe-area-inset-bottom, 0px)); z-index: 60; transform: translate(-50%, 12px); opacity: 0; pointer-events: none; width: max-content; max-width: calc(100% - 40px); padding: 10px 16px; border-radius: 14px; background: var(--bone); color: var(--night); font-size: 14px; font-weight: 500; text-align: center; transition: opacity 0.2s ease, transform 0.2s ease; }
 .cx-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
+/* ---------- Live call (voice-coach.js) ---------- */
+/* The call panel takes the ask bar's place at the bottom; the swing stays in view above it. */
+body.cx.vc-in-call .cx-askbar { display: none; }
+body.cx.vc-in-call .cx-report { padding-bottom: calc(220px + env(safe-area-inset-bottom, 0px)); }
+.cx .vc-sheet { background: color-mix(in srgb, var(--deep) 94%, transparent); border-color: var(--line-2); }
+/* Short screens (a phone on its side): one row, so the panel stays below the video. */
+@media (max-height: 560px) {
+  .cx .vc-sheet { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "orb body actions"; padding: 8px 12px; gap: 10px; }
+  .cx .vc-orb { width: 40px; height: 40px; }
+  .cx .vc-caption { max-height: 1.5em; }
+  .cx .vc-timer { display: none; }
+  body.cx.vc-in-call .cx-stage__box { min-height: 160px; }
+}
+
 /* Progress sheet and paywall come from compare.js and billing.js; keep them above the app's sheets. */
 .cp-sheet, .cb-modal { z-index: 70 !important; }
 
@@ -275,6 +293,10 @@ body.cx.is-locked { overflow: hidden; }
   .cx-controls { padding-left: 14px; padding-right: 14px; }
   .cx-report__body { padding: 0 0 calc(var(--askbar-h) + 24px); margin: 0; max-width: 620px; }
   .cx-askbar { left: auto; right: max(20px, calc((100vw - 1120px) / 2 + 20px)); width: min(620px, calc(100vw - 500px)); background: none; }
+  /* The call panel sits where the ask bar was, under the report text and clear of the video. */
+  .cx .vc-sheet { left: auto; right: max(20px, calc((100vw - 1120px) / 2 + 20px)); transform: none; width: min(620px, calc(100vw - 500px)); }
+  body.cx.vc-in-call .cx-report { padding-bottom: 40px; }
+  body.cx.vc-in-call .cx-report__body { padding-bottom: 240px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

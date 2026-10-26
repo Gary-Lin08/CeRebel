@@ -17,8 +17,10 @@ Primary product UI: `motion_agent/app/ui/index.html` on `chat_server` `/`.
 - `/` sends signed-in customers, email links (`/?session=<id>`) and the checkout return to `/app`.
   `CEREBEL_APP_UI=classic` turns that off and keeps everyone on the old single page.
 - Reuses `skeleton-overlay.js`, `compare.js`, `billing.js` and `swing_trim.js` through the same globals the old page defined.
-- Not in the app yet: the full-screen 3D body view, and the live voice call (needs `cerebelVoice.start()` from `voice-coach.js`;
-  until then the mic button dictates a question where the browser supports it).
+- Live voice call (`voice-coach.js`): the mic button and the coach sheet's call card call `cerebelVoice.start()` and repaint on
+  the `cerebel-voice` event. In a call the call panel takes the ask bar's place, the video stays in view, and the transcript
+  goes into the coach chat. Where the browser can't carry a call, the mic button dictates a question instead.
+- Not in the app yet: the full-screen 3D body view.
 - Tests: `motion_agent/tests/test_app_page.py`.
 
 ## Playground surface

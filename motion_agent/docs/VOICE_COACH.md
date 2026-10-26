@@ -52,7 +52,8 @@ sentence. `mock` stands in for tests. The voice buttons stay hidden until the pr
 
 Files: `app/ws.py` (standard-library WebSocket), `app/speech.py` (providers: `together`, `mock`),
 `app/voice.py` (call, reply rules, usage), `app/chat_server.py` (`/api/voice/live`, `/api/voice/status`),
-`ui/voice-coach.js` + `.css` (buttons, consent, call sheet, capture, playback), `scripts/voice_probe.py`.
+`ui/voice-coach.js` + `.css` (buttons, consent, call sheet, capture, playback; on the app page `/app` the page's own
+mic button and call card call `cerebelVoice.start()`), `scripts/voice_probe.py`.
 
 ## Run it locally
 

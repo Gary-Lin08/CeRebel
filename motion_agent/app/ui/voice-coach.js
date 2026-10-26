@@ -6,8 +6,10 @@
      cloud   when the device cannot: microphone audio streams to our server and speech provider,
              and the user can talk over the coach.
    With neither, the buttons stay hidden and a failed call falls back to typing.
-   Loaded after the main inline script; uses its globals (authToken, session, addBubble,
-   escapeHtml, showConsumerChat, showToast, openAccountPanel, cerebelBilling) only at call time. */
+   Loaded after the page's main script (the old page's inline script, or app.js on /app); uses its
+   globals (authToken, session, addBubble, escapeHtml, showConsumerChat, showToast,
+   openAccountPanel, cerebelBilling) only at call time. The app page draws its own call buttons:
+   it calls cerebelVoice.start() and repaints on the "cerebel-voice" window event. */
 (function () {
   "use strict";
 
@@ -115,8 +117,18 @@
     return device;
   }
 
+  function available() {
+    return !!(status && status.enabled && (device || status.cloud));
+  }
+
+  // What a page that draws its own call buttons needs: whether a call can start in this browser,
+  // whether one is on, and what the next one needs (signin | upgrade) or is (trial | pro | open).
+  function info() {
+    return { available: available(), live: !!call, kind: (status && status.kind) || "", need: (status && status.need) || null };
+  }
+
   function paintButtons() {
-    var on = !!(status && status.enabled && (device || status.cloud));
+    var on = available();
     document.querySelectorAll("[data-voice-live]").forEach(function (btn) {
       btn.hidden = !on;
       btn.classList.toggle("is-live", !!call);
@@ -127,9 +139,12 @@
     // The live call replaces the old hold-to-talk button where it is available.
     var hold = document.getElementById("fixVoice");
     if (hold && on) hold.hidden = true;
+    try { window.dispatchEvent(new CustomEvent("cerebel-voice", { detail: info() })); } catch (_) {}
   }
 
   function addButtons() {
+    // The app page (/app) has its own call buttons, with icons; it calls start() itself.
+    if (document.body.classList.contains("cx")) return;
     var send = document.getElementById("send");
     if (send && !document.getElementById("voiceLive")) {
       var b = document.createElement("button");
@@ -160,13 +175,18 @@
   // ------------------------------------------------------------------ start
 
   async function begin() {
+    if (call) return;
     var s = currentSession();
     if (s && (s.empty || s.processing || s.no_swing)) {
       toast(s.no_swing ? "Upload a clearer swing before calling the coach." : "Upload a swing before calling the coach.");
       return;
     }
     await refreshStatus();
-    if (!status || !status.enabled) return;
+    if (!status || !status.enabled) {
+      toast("Live coaching isn't available right now. Type your question instead.");
+      backToTyping();
+      return;
+    }
     if (status.need === "signin") {
       toast("Create a free account to try live coaching.");
       try { openAccountPanel(); } catch (_) {}
@@ -696,6 +716,8 @@
   window.cerebelVoice = {
     refresh: refreshStatus,
     hangUp: hangUp,
+    start: begin,
+    state: info,
     speech: function () { return device ? device.kind : status && status.cloud ? "cloud" : null; },
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
