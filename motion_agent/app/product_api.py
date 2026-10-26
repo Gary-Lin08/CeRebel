@@ -26,6 +26,7 @@ from motion_agent.app.accounts import (
     video_consent_status,
 )
 from motion_agent.app.config import Settings
+from motion_agent.app.file_lock import locked
 from motion_agent.app.library import (
     add_capture,
     all_captures,
@@ -718,6 +719,8 @@ def _forget_billing(product_dir: Path, user_id: str) -> None:
             billing._write(product_dir, data)  # noqa: SLF001
 
 
+# Thread lock for this process; file_lock.locked adds the flock that retention and
+# privacy_backfill (separate processes rewriting events.jsonl) also take.
 _EVENTS_LOCK = threading.Lock()
 
 
@@ -730,7 +733,7 @@ def scrub_events(settings: Settings, *, user_id: str | None = None, session_ids:
     sids = set(session_ids or [])
     kept: list[str] = []
     removed = 0
-    with _EVENTS_LOCK:
+    with locked(path, _EVENTS_LOCK):
         for line in path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -871,7 +874,8 @@ def record_event(settings: Settings, kind: str, **fields: Any) -> None:
     settings.product_dir.mkdir(parents=True, exist_ok=True)
     path = settings.product_dir / "events.jsonl"
     row = {"ts": datetime.now(timezone.utc).isoformat(), "kind": kind, **fields}
-    with _EVENTS_LOCK, path.open("a", encoding="utf-8") as handle:
+    # Open only once the lock is held, so a concurrent rewrite cannot leave us appending to the old file.
+    with locked(path, _EVENTS_LOCK), path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(row, default=str) + "\n")
 
 

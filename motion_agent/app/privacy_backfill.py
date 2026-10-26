@@ -30,6 +30,7 @@ from typing import Any
 
 from motion_agent.app.accounts import delete_account, list_accounts, tokens_for_user
 from motion_agent.app.config import Settings, load_settings
+from motion_agent.app.file_lock import locked
 from motion_agent.app.library import all_captures, purge_user_rows
 
 LOG = logging.getLogger("motion_agent.privacy_backfill")
@@ -82,23 +83,25 @@ def _anonymize_deletion_rows(settings: Settings, user_ids: set[str]) -> int:
         return 0
     out: list[str] = []
     changed = 0
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        try:
-            row = json.loads(line)
-        except json.JSONDecodeError:
+    # Same lock as record_event/scrub_events: chat_server may append while we rewrite.
+    with locked(path):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                out.append(line)
+                continue
+            if isinstance(row, dict) and row.get("kind") == "account_deleted" and row.get("user_id") in user_ids:
+                row.pop("user_id", None)
+                line = json.dumps(row, default=str)
+                changed += 1
             out.append(line)
-            continue
-        if isinstance(row, dict) and row.get("kind") == "account_deleted" and row.get("user_id") in user_ids:
-            row.pop("user_id", None)
-            line = json.dumps(row, default=str)
-            changed += 1
-        out.append(line)
-    if changed:
-        tmp = path.with_suffix(".jsonl.tmp")
-        tmp.write_text("".join(o + "\n" for o in out), encoding="utf-8")
-        tmp.replace(path)
+        if changed:
+            tmp = path.with_suffix(".jsonl.tmp")
+            tmp.write_text("".join(o + "\n" for o in out), encoding="utf-8")
+            tmp.replace(path)
     return changed
 
 

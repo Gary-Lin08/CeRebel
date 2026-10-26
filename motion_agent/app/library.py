@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from motion_agent.app.file_lock import locked
+
 _LOCK = threading.Lock()
 
 
@@ -18,6 +20,11 @@ def _now() -> str:
 def _path(product_dir: Path) -> Path:
     product_dir.mkdir(parents=True, exist_ok=True)
     return product_dir / "library.json"
+
+
+def _locked(product_dir: Path):
+    """Around every read-modify-write: retention and privacy_backfill rewrite this file from other processes."""
+    return locked(_path(product_dir), _LOCK)
 
 
 def _read(product_dir: Path) -> list[dict[str, Any]]:
@@ -54,7 +61,7 @@ def add_capture(
         "created_at": _now(),
         "deleted": False,
     }
-    with _LOCK:
+    with _locked(product_dir):
         rows = _read(product_dir)
         rows.append(row)
         _write(product_dir, rows)
@@ -88,7 +95,7 @@ def owner_of(product_dir: Path, session_id: str) -> str | None:
 
 
 def update_status(product_dir: Path, session_id: str, status: str, **extra: Any) -> None:
-    with _LOCK:
+    with _locked(product_dir):
         rows = _read(product_dir)
         for row in rows:
             if row.get("session_id") == session_id and not row.get("deleted"):
@@ -98,7 +105,7 @@ def update_status(product_dir: Path, session_id: str, status: str, **extra: Any)
 
 
 def delete_capture(product_dir: Path, user_id: str, session_id: str) -> bool:
-    with _LOCK:
+    with _locked(product_dir):
         rows = _read(product_dir)
         found = False
         for row in rows:
@@ -120,7 +127,7 @@ def log_practice(product_dir: Path, user_id: str, session_id: str, finding_id: s
     Stored on the capture's own row, so deleting the capture or the account removes it too.
     Returns how many times that fix has been practiced, or None when the capture is not theirs.
     """
-    with _LOCK:
+    with _locked(product_dir):
         rows = _read(product_dir)
         for row in rows:
             if row.get("user_id") == user_id and row.get("session_id") == session_id and not row.get("deleted"):
@@ -148,7 +155,7 @@ def all_captures(product_dir: Path) -> list[dict[str, Any]]:
 
 def purge_user_rows(product_dir: Path, user_id: str) -> int:
     """Hard-delete every library row of an account (used when the account itself is deleted)."""
-    with _LOCK:
+    with _locked(product_dir):
         rows = _read(product_dir)
         keep = [r for r in rows if r.get("user_id") != user_id]
         removed = len(rows) - len(keep)
