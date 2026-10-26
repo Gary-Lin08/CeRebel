@@ -21,11 +21,15 @@ def _model_credential(backend: str) -> dict[str, Any]:
 
 
 def health_report(settings: Settings) -> tuple[int, dict[str, Any]]:
+    from motion_agent.app.product_api import gpu_status
+
     data_dir = settings.data_dir
     sessions = data_dir / "sessions"
     disk_ok = data_dir.is_dir() and os.access(data_dir, os.W_OK)
     model = _model_credential(settings.backend)
-    ready = disk_ok and bool(model.get("ok"))
+    # "loading" still accepts uploads (they wait in the queue); "down" means they cannot be analysed.
+    gpu = gpu_status()
+    ready = disk_ok and bool(model.get("ok")) and gpu != "down"
     payload = {
         "ok": ready,
         "process": "up",
@@ -36,6 +40,7 @@ def health_report(settings: Settings) -> tuple[int, dict[str, Any]]:
             "sessions_present": sessions.is_dir(),
         },
         "model": {k: model[k] for k in ("ok", "credential", "backend") if k in model},
+        "gpu": {"ok": gpu != "down", "state": gpu},
         "prompt_edit_configured": settings.prompt_password is not None,
     }
     if not model.get("ok") and model.get("message") and settings.backend != "mock":

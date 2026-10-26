@@ -51,6 +51,12 @@ _QUEUE: GemxPipelineQueue | None = None
 _LOCK = threading.Lock()
 _JOBS: dict[str, dict] = {}
 
+# Shown when the GPU worker could not be reached (failed_at == "gpu_unavailable").
+GPU_UNAVAILABLE_MESSAGE = (
+    "Our analysis server was offline, so this swing wasn't analyzed and it didn't use one of "
+    "your analyses. Please upload it again in a few minutes."
+)
+
 STAGES = (
     "uploading",
     "extracting",
@@ -326,12 +332,16 @@ def _watch_pipeline(session_id: str) -> None:
                 ik_status = ptr.get("ik_status") or ""
                 err = ptr.get("error")
                 if status == "error":
+                    failed_at = ptr.get("failed_at")
                     _write_progress(
                         session_id,
                         stage="error",
                         percent=100,
-                        message=err or "Pipeline failed",
+                        message=(
+                            GPU_UNAVAILABLE_MESSAGE if failed_at == "gpu_unavailable" else err or "Pipeline failed"
+                        ),
                         error=err or "Pipeline failed",
+                        failed_at=failed_at,
                     )
                     return
                 if status == "ready" and ik_status in ("ready", "skipped", "error", ""):
@@ -343,6 +353,7 @@ def _watch_pipeline(session_id: str) -> None:
                             message="Biomechanical analysis did not complete",
                             error="Analysis failed",
                             ik_status=ik_status,
+                            failed_at="ik",
                         )
                     else:
                         _write_progress(
@@ -397,14 +408,20 @@ def _on_pipeline_complete(result: PipelineResult) -> None:
             ik_status="skipped" if not result.ik_error else "error",
             error=result.ik_error,
             opensim_motion=str(result.opensim_motion or ""),
+            failed_at=result.failed_at,
         )
     else:
         _write_progress(
             session_id,
             stage="error",
             percent=100,
-            message=result.error or "Pipeline failed",
+            message=(
+                GPU_UNAVAILABLE_MESSAGE
+                if result.failed_at == "gpu_unavailable"
+                else result.error or "Pipeline failed"
+            ),
             error=result.error or "Pipeline failed",
+            failed_at=result.failed_at,
         )
 
 
