@@ -56,6 +56,13 @@ PHASE_MIN_DURATION_S: dict[str, float] = {
 # Cost for matching a peak to the null / no-object slot (DETR-style ∅).
 _NO_OBJECT_COST = 1.35
 
+# Takeaway → top is under ~1.5 s even for a slow full swing. A longer span means
+# setup motion (walking in, waggles) tripped the onset rule before the real takeaway.
+MAX_BACKSWING_S = 2.0
+# The backswing moves the hands at a good share of strike speed. A smaller hump just
+# before the top is a twitch while paused there, not the takeaway.
+BACKSWING_MIN_SHARE = 0.25
+
 
 def _scaled_phase_mins(swing_duration_s: float) -> dict[str, float]:
     """Scale nominal mins so all seven phases can fit in the swing window."""
@@ -591,6 +598,36 @@ def _place_boundary(
     return min(max(t_hint, lo), hi)
 
 
+def _backswing_onset(
+    ts: np.ndarray,
+    speed: np.ndarray,
+    swing_i0: int,
+    top_i: int,
+    impact_i: int,
+    quiet: float,
+) -> int | None:
+    """First moving frame of the backswing, found walking back from the top.
+
+    The backswing is the hand-speed hump just before the top. Walking back from its
+    peak to where the hands are still again gives the takeaway, however much setup
+    motion comes before it.
+    """
+    lo = max(swing_i0, int(np.searchsorted(ts, float(ts[top_i]) - MAX_BACKSWING_S)))
+    if top_i - lo < 3:
+        return None
+    peak_i = lo + int(np.argmax(speed[lo:top_i]))
+    if speed[peak_i] < BACKSWING_MIN_SHARE * float(speed[impact_i]):
+        return None
+    still = max(quiet * 1.15, 0.2 * float(speed[peak_i]))
+    for i in range(peak_i, swing_i0 - 1, -1):
+        if speed[i] <= still:
+            # Settle back to the stillest frame before the hump, not past quiet.
+            while i > swing_i0 and quiet * 1.15 < speed[i - 1] < speed[i]:
+                i -= 1
+            return min(i + 1, peak_i)
+    return None
+
+
 def _build_phases(
     ts: np.ndarray,
     speed: np.ndarray,
@@ -652,6 +689,10 @@ def _build_phases(
         if speed[i] > quiet * 1.15:
             take_i = i
             break
+    if t_top - float(ts[take_i]) > MAX_BACKSWING_S:
+        onset = _backswing_onset(ts, speed, swing_i0, top_i, impact_i, quiet)
+        if onset is not None and float(ts[onset]) >= take_earliest_t:
+            take_i = onset
     t_take = _place_boundary(
         float(ts[take_i]),
         t_start,

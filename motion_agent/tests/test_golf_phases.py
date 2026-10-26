@@ -4,10 +4,14 @@ from __future__ import annotations
 
 import unittest
 from pathlib import Path
+from unittest import mock
+
+import numpy as np
 
 from motion_agent.llm.schemas import openai_tools
 from motion_agent.motion.adapter import adapt_session
-from motion_agent.motion.golf_phases import PHASE_ORDER, segment_golf_swings
+from motion_agent.motion import golf_phases
+from motion_agent.motion.golf_phases import PHASE_ORDER, _build_phases, segment_golf_swings
 from motion_agent.storage.motion_store import newest_ready_session_dir
 from motion_agent.tools.motion_tools import execute_tool
 
@@ -105,6 +109,81 @@ class TestGolfPhases(unittest.TestCase):
         result = execute_tool(seq, "segment_golf_swings", {"max_swings": 2})
         self.assertFalse(result.get("error"), result)
         self.assertEqual(result.get("sport"), "golf")
+
+
+def _bump(ts: np.ndarray, at: float, height: float, width: float) -> np.ndarray:
+    return height * np.exp(-((ts - at) ** 2) / (2 * width**2))
+
+
+def _hand_speed(duration: float, swing_at: float) -> tuple[np.ndarray, np.ndarray]:
+    """Wrist speed: a setup waggle at 1 s, then backswing hump, top valley, strike."""
+    ts = np.arange(0.0, duration, 1 / 30)
+    speed = (
+        0.05
+        + _bump(ts, 1.0, 0.8, 0.08)
+        + _bump(ts, swing_at, 4.0, 0.2)
+        + _bump(ts, swing_at + 0.85, 9.0, 0.12)
+    )
+    return ts, speed
+
+
+def _phases(ts: np.ndarray, speed: np.ndarray) -> dict[str, tuple[float, float]]:
+    impact_i = int(np.argmax(speed))
+    quiet = float(np.percentile(speed, 30))
+    phases = _build_phases(ts, speed, impact_i, 0, len(ts) - 1, quiet)
+    return {p["id"]: (p["start_time"], p["end_time"]) for p in phases}
+
+
+class TakeawayAfterLongSetupTests(unittest.TestCase):
+    def test_short_setup_keeps_the_onset_rule(self) -> None:
+        # Waggle 0.8 s before the backswing: takeaway-to-top stays under 2 s.
+        ts, speed = _hand_speed(4.0, swing_at=1.9)
+        with mock.patch(
+            "motion_agent.motion.golf_phases._backswing_onset",
+            wraps=golf_phases._backswing_onset,
+        ) as onset:
+            phases = _phases(ts, speed)
+        onset.assert_not_called()
+        with mock.patch.object(golf_phases, "MAX_BACKSWING_S", float("inf")):
+            self.assertEqual(phases, _phases(ts, speed))
+
+    def test_long_setup_walks_back_from_the_top(self) -> None:
+        # Same waggle at 1 s, but the swing starts six seconds later.
+        ts, speed = _hand_speed(10.0, swing_at=7.9)
+        with mock.patch(
+            "motion_agent.motion.golf_phases._backswing_onset",
+            wraps=golf_phases._backswing_onset,
+        ) as onset:
+            phases = _phases(ts, speed)
+        onset.assert_called_once()
+        # The backswing hump leaves the still level about 0.7 s before its 7.9 s peak.
+        address_end = phases["address"][1]
+        self.assertGreater(address_end, 7.0)
+        self.assertLess(address_end, 7.6)
+        self.assertLess(phases["backswing"][1] - phases["takeaway"][0], golf_phases.MAX_BACKSWING_S)
+        # Without the walk-back the waggle at 1 s would start the takeaway.
+        with mock.patch.object(golf_phases, "MAX_BACKSWING_S", float("inf")):
+            self.assertLess(_phases(ts, speed)["address"][1], 1.0)
+
+    def test_pause_at_the_top_keeps_the_real_takeaway(self) -> None:
+        # Backswing at 1 s, a 2.5 s hold at the top with a small twitch, then the strike.
+        ts = np.arange(0.0, 6.0, 1 / 30)
+        speed = (
+            0.05
+            + _bump(ts, 1.0, 3.0, 0.2)
+            + _bump(ts, 3.7, 0.15, 0.08)
+            + _bump(ts, 4.4, 9.0, 0.12)
+        )
+        with mock.patch(
+            "motion_agent.motion.golf_phases._backswing_onset",
+            wraps=golf_phases._backswing_onset,
+        ) as onset:
+            phases = _phases(ts, speed)
+        # The twitch is too small to be a backswing, so the onset rule's takeaway stands.
+        onset.assert_called_once()
+        self.assertLess(phases["address"][1], 1.0)
+        with mock.patch.object(golf_phases, "BACKSWING_MIN_SHARE", 0.0):
+            self.assertGreater(_phases(ts, speed)["address"][1], 3.0)
 
 
 if __name__ == "__main__":
