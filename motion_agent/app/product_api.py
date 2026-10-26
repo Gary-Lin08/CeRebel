@@ -282,7 +282,12 @@ def queue_info(session_id: str) -> dict[str, Any] | None:
     elif ahead == 0:
         message = f"You're next — about {minutes} min."
     else:
-        message = f"{ahead} swing{'s' if ahead != 1 else ''} ahead of you — about {minutes} min. We'll email you when it's ready."
+        from motion_agent.app.notify import enabled as email_enabled
+
+        message = f"{ahead} swing{'s' if ahead != 1 else ''} ahead of you — about {minutes} min."
+        # Only promise an email when the server can actually send one.
+        if email_enabled():
+            message += " We'll email you when it's ready."
     return {"jobs_ahead": ahead, "running": running, "eta_minutes": minutes, "queue_message": message}
 
 

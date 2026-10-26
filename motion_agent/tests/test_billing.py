@@ -392,6 +392,11 @@ class TrimAndQueueTests(unittest.TestCase):
             self.assertEqual(later["jobs_ahead"], 3)
             self.assertIn("3 swings ahead", later["queue_message"])
             self.assertIsNone(product_api.queue_info("NOPE"))
+            # The email promise only appears when the server can send mail.
+            with mock.patch.dict("os.environ", {"CEREBEL_SMTP_HOST": "", "CEREBEL_MAIL_FROM": ""}):
+                self.assertNotIn("email", product_api.queue_info("LATER")["queue_message"])
+            with mock.patch.dict("os.environ", {"CEREBEL_SMTP_HOST": "smtp.example.test", "CEREBEL_MAIL_FROM": "a@example.test"}):
+                self.assertIn("email you", product_api.queue_info("LATER")["queue_message"])
 
 
 class NotifyTests(unittest.TestCase):
