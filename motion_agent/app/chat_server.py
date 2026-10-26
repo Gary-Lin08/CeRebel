@@ -443,10 +443,12 @@ class Handler(BaseHTTPRequestHandler):
                 if row_status in {"uploading", "extracting", "queued", "gemx", "ik", "processing"} or (
                     owned_row and not motion_ready and row_status not in {"error", "deleted", "no_swing"}
                 ):
-                    from motion_agent.app.product_api import public_progress, read_progress
+                    from motion_agent.app.notify import enabled as email_enabled
+                    from motion_agent.app.product_api import read_progress_with_queue
                     from motion_agent.app.product_session import sports_catalog_payload
 
-                    prog = public_progress(read_progress(SETTINGS, requested)) or {}
+                    prog = read_progress_with_queue(SETTINGS, requested) or {}
+                    emails = email_enabled()
                     return _json_response(
                         self,
                         200,
@@ -460,7 +462,18 @@ class Handler(BaseHTTPRequestHandler):
                             "message": prog.get("message")
                             or "Rebuilding your body from the video…",
                             "product_title": "Working on your swing",
-                            "product_subtitle": "This usually takes a few minutes. Keep this page open.",
+                            "product_subtitle": (
+                                "This usually takes a few minutes. You can close this page; we'll email you when it's ready."
+                                if emails
+                                else "This usually takes a few minutes. This page updates on its own."
+                            ),
+                            # What the waiting screen shows: the step, how far along, and the line ahead.
+                            "stage": prog.get("stage") or row_status or "processing",
+                            "percent": prog.get("percent"),
+                            "jobs_ahead": prog.get("jobs_ahead"),
+                            "eta_minutes": prog.get("eta_minutes"),
+                            "queue_message": prog.get("queue_message"),
+                            "email_when_ready": emails,
                             "sports_catalog": sports_catalog_payload()["sports"],
                             "consumer_ready": False,
                         },

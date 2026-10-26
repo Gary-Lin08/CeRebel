@@ -2083,6 +2083,15 @@ code {
   }
   .demo-note { color: var(--muted); font-size: var(--step-small); }
   .empty-state h3 { margin: 0 0 0.35rem; }
+  .processing-steps { list-style: none; margin: 0.6rem 0 0.75rem; padding: 0; display: grid; gap: 0.3rem; font-size: var(--step-small); color: var(--muted); }
+  .processing-steps li::before { content: "○"; display: inline-block; width: 1.4em; }
+  .processing-steps li.is-done::before { content: "✓"; }
+  .processing-steps li.is-current { color: var(--text); font-weight: 600; }
+  .processing-steps li.is-current::before { content: "●"; }
+  .processing-bar { height: 3px; border-radius: 3px; background: var(--rule); overflow: hidden; margin-bottom: 0.75rem; }
+  .processing-bar i { display: block; height: 100%; width: 0; background: var(--lime); transition: width 0.6s ease; }
+  .processing-note { font-size: var(--step-small); }
+  @media (prefers-reduced-motion: reduce) { .processing-bar i { transition: none; } }
   .empty-state p { margin: 0 0 0.75rem; color: var(--muted); }
   body.pg-consumer .pg-nav { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
   body.pg-consumer #accountBtn,
@@ -2366,7 +2375,10 @@ code {
       </section>
       <section class="empty-state" id="processingState" hidden>
         <h3>Working on your swing</h3>
+        <ol class="processing-steps" id="processingSteps" aria-label="Analysis steps"></ol>
+        <div class="processing-bar" aria-hidden="true"><i id="processingBar"></i></div>
         <p id="processingCopy">Rebuilding the body from your video…</p>
+        <p class="processing-note" id="processingNote"></p>
       </section>
       <h2 class="pg-stage__title" data-enter id="productTitle">Your swing</h2>
       <p class="pg-stage__lede" data-enter id="productSubtitle">One main fix on your body. Scrub the phases. Ask only if you want more.</p>
@@ -5677,6 +5689,40 @@ code {
       return labels[stage] || stage || "Working";
     }
 
+    // Waiting screen: which step the analysis is on. "Waiting in line" only appears when there is a line.
+    const PROCESSING_STEPS = [
+      ["received", "Upload received", ["uploading"]],
+      ["preparing", "Preparing frames", ["extracting", "processing"]],
+      ["queued", "Waiting in line", ["queued"]],
+      ["body", "Rebuilding your body", ["gemx"]],
+      ["measure", "Measuring angles", ["ik"]],
+    ];
+
+    function paintProcessingSteps(data) {
+      const list = document.getElementById("processingSteps");
+      const bar = document.getElementById("processingBar");
+      const stage = String(data.stage || data.status || "processing");
+      const queued = stage === "queued" || Number(data.jobs_ahead) > 0;
+      const steps = PROCESSING_STEPS.filter(([id]) => id !== "queued" || queued);
+      let current = steps.findIndex(([, , stages]) => stages.includes(stage));
+      if (current < 0) current = 1;
+      if (list) {
+        list.innerHTML = "";
+        steps.forEach(([, label], i) => {
+          const li = document.createElement("li");
+          li.textContent = label;
+          if (i < current) li.className = "is-done";
+          if (i === current) {
+            li.className = "is-current";
+            li.setAttribute("aria-current", "step");
+          }
+          list.appendChild(li);
+        });
+      }
+      const pct = Number(data.percent);
+      if (bar) bar.style.width = (Number.isFinite(pct) ? Math.max(4, Math.min(100, pct)) : 8) + "%";
+    }
+
     function paintCaptureChrome(data) {
       const demo = document.getElementById("demoNote");
       const empty = document.getElementById("emptyState");
@@ -5687,7 +5733,10 @@ code {
       if (processing) {
         processing.hidden = !(data && data.processing);
         const msg = document.getElementById("processingCopy");
-        if (msg) msg.textContent = (data && (data.message || data.product_subtitle)) || "Working…";
+        if (msg) msg.textContent = (data && (data.queue_message || data.message)) || "Working…";
+        const note = document.getElementById("processingNote");
+        if (note) note.textContent = (data && data.product_subtitle) || "";
+        if (data && data.processing) paintProcessingSteps(data);
       }
       const title = document.getElementById("productTitle");
       const sub = document.getElementById("productSubtitle");
