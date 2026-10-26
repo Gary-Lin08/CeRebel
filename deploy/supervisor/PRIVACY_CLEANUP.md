@@ -95,16 +95,19 @@ cp deploy/supervisor/cerebel-retention.conf /etc/supervisor/conf.d/ && superviso
 
 ## 第二轮（2026-10-26）：跨进程文件锁，retention 补三条规则
 
-分支 `claude/exciting-elgamal-4d06a4`，基于 ui-polish d263734 并合入了上面这一轮的提交。服务器上
-product_api.py、library.py、billing.py、retention.py、privacy_backfill.py 与这个基线逐字节相同（已用 git hash-object 核对过）。
+分支 `claude/exciting-elgamal-4d06a4`，基于 origin/ui-polish f7fd6d1，并合入了上面这一轮的提交（awesome-lamport b181880）。
+服务器上 product_api.py、library.py、billing.py、accounts.py、retention.py、privacy_backfill.py 与这个基线逐字节相同（已用 git hash-object 核对过）。
+部署、合并和重启都由主会话负责。
 
 | 提交 | 内容 | 生效方式 |
 |---|---|---|
 | 132cb1d | 新增 `file_lock.py`。所有写 events.jsonl 和 library.json 的地方，除了线程锁，再对旁边的 `<文件>.lock` 加 flock。涉及 record_event 的追加、scrub_events 的重写、library 的读改写，以及 privacy_backfill 的 `_anonymize_deletion_rows` | retention、backfill 子进程下次运行即生效；chat_server 需要重启 cerebel-product |
 | a0b67b2 | retention 新增三条规则：`<sid>_gemx.log` 超过原始视频期限（30 天）就删除；`data/product_events.jsonl` 按 24 个月逐行过期，删空后删除文件；`question_counts.json` 里前一天的计数直接删除。take_question 也加了同一把锁 | retention 每天的子进程自动生效 |
+| c8713d3 | 同一把 flock 也用于 accounts.json、tokens.json（两个文件共用一把锁，因为 register、login、delete_account 会同时写这两个文件）和 billing.json（包括 `_forget_billing`） | 需要重启 cerebel-product |
 | b7bfbf3 | question_counts.json 不再存访客 IP，改存 HMAC。密钥只在进程内存里，每个 UTC 日更换一次。重启后当天按 IP 的计数会清零，匿名提问的每日总量上限照常有效 | 需要重启 cerebel-product |
 
-在旧代码上跑多进程测试，450 行里丢了 150~300 行，library 的写入进程还会因为共用 `.tmp` 文件而崩溃；加锁后反复运行都不丢行。
+在旧代码上跑多进程测试：events.jsonl 的 450 行里丢了 150~300 行；library、accounts/tokens、billing 的写入进程会因为共用 `.tmp` 文件而崩溃（FileNotFoundError）。加锁后反复运行都不丢行，也不崩溃。
+提交号是改基线之前的；在当前分支上对应 0d12900、db3cff4、0611616、c8713d3。
 
 ### 只读盘点（2026-10-26 UTC 18:50 前后）
 
@@ -115,12 +118,14 @@ product_api.py、library.py、billing.py、retention.py、privacy_backfill.py �
 
 ### 要在服务器上执行的命令（需要先经用户批准）
 
-第 A 步，在 Mac 上执行：上传 6 个文件。服务器会先核对那 5 个旧文件的哈希，只要有一个对不上（说明别的会话又部署过），就不覆盖并退出。
-之后备份旧文件，解包，编译检查，最后打印新的哈希。新哈希应为：file_lock 0a2607e、library 2dd5ddc、product_api cde9981、billing 5b1e5bb、retention ed8ec8a、privacy_backfill 04b979e。
+第 A 步，在 Mac 上执行：上传 7 个文件。服务器会先核对那 6 个旧文件的哈希，只要有一个对不上（说明别的会话又部署过），就不覆盖并退出。
+之后备份旧文件，解包，编译检查，最后打印新的哈希。新哈希应为：file_lock 0a2607e、library 2dd5ddc、product_api 7c163bc、billing c2894c7、accounts a0cc484、retention ed8ec8a、privacy_backfill 04b979e。
 
 ```bash
-cd /Users/kaijunlin/Developer/CeRebel/.claude/worktrees/exciting-elgamal-4d06a4 && COPYFILE_DISABLE=1 tar czf - motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py | ssh -p 46474 root@proxy-ai.onethingai.com 'cd /root/CerebelServer || exit 1; for x in cc6f351431794c9f4b7908fa5a1e894103c0d56f:library 2d1935213d21f38cd5408a2ba6adfdb2f7ba69d3:product_api 1a5636ef8f16943b6be8a343db19f99e04eca367:billing 4d5c58a45f2d101c0a0b6833b984a48f531d444c:retention 143fa61f8185cf70f423e8e7c49bcb916fba4bdd:privacy_backfill; do f=motion_agent/app/${x#*:}.py; [ "$(git hash-object $f)" = "${x%%:*}" ] || { echo "CHANGED $f - not deploying"; exit 1; }; done; B=/root/deploy-backup-20261026-locks; mkdir -m 700 -p $B && cp -p motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py $B/ && tar xzf - --no-same-owner -C /root/CerebelServer && /root/miniconda3/bin/python3 -m py_compile motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py && git hash-object motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py'
+cd /Users/kaijunlin/Developer/CeRebel/.claude/worktrees/exciting-elgamal-4d06a4 && COPYFILE_DISABLE=1 tar czf - motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/accounts.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py | ssh -p 46474 root@proxy-ai.onethingai.com 'cd /root/CerebelServer || exit 1; for x in cc6f351431794c9f4b7908fa5a1e894103c0d56f:library 2d1935213d21f38cd5408a2ba6adfdb2f7ba69d3:product_api 1a5636ef8f16943b6be8a343db19f99e04eca367:billing c9ae99d2f17f960d888fdc6e4f1a3b6109803e0a:accounts 4d5c58a45f2d101c0a0b6833b984a48f531d444c:retention 143fa61f8185cf70f423e8e7c49bcb916fba4bdd:privacy_backfill; do f=motion_agent/app/${x#*:}.py; [ "$(git hash-object $f)" = "${x%%:*}" ] || { echo "CHANGED $f - not deploying"; exit 1; }; done; B=/root/deploy-backup-20261026-locks; mkdir -m 700 -p $B && cp -p motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/accounts.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py $B/ && tar xzf - --no-same-owner -C /root/CerebelServer && /root/miniconda3/bin/python3 -m py_compile motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/accounts.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py && git hash-object motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/accounts.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py'
 ```
+
+文件放到磁盘上之后、重启之前，新旧代码可以兼容：retention 和 backfill 的子进程会用新代码加锁，正在运行的 chat_server 仍是旧代码，不加锁，和现在的情况一样。
 
 下面各步都在服务器上执行。第一行用来设置环境，SSH 断开后要重新执行。
 
