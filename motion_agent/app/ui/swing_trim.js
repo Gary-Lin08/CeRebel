@@ -65,12 +65,24 @@
   function openVideo(file) {
     return new Promise(function (resolve, reject) {
       var v = document.createElement("video");
+      var url = URL.createObjectURL(file);
+      var timer = setTimeout(function () {
+        URL.revokeObjectURL(url);
+        reject(new Error("video load timeout"));
+      }, 8000);
       v.muted = true;
       v.playsInline = true;
       v.preload = "auto";
-      v.src = URL.createObjectURL(file);
-      v.addEventListener("loadeddata", function () { resolve(v); }, { once: true });
-      v.addEventListener("error", function () { reject(new Error("unreadable video")); }, { once: true });
+      v.addEventListener("loadeddata", function () { clearTimeout(timer); resolve(v); }, { once: true });
+      v.addEventListener("error", function () {
+        clearTimeout(timer);
+        URL.revokeObjectURL(url);
+        reject(new Error("unreadable video"));
+      }, { once: true });
+      v.src = url;
+      // iOS Safari stops at metadata for a video that isn't on the page (no "loadeddata",
+      // seeks never finish) unless load() is called.
+      v.load();
     });
   }
 
@@ -170,5 +182,13 @@
     }
   }
 
-  window.cerebelSwingTrim = { analyze: analyze, preload: loadLandmarker, config: CFG };
+  /* The check must never hold up an upload: past this limit the clip goes up as it is. */
+  function analyzeWithin(file, onStatus) {
+    return Promise.race([
+      analyze(file, onStatus),
+      new Promise(function (resolve) { setTimeout(function () { resolve(null); }, (CFG.maxSeconds + 20) * 1000); }),
+    ]);
+  }
+
+  window.cerebelSwingTrim = { analyze: analyzeWithin, preload: loadLandmarker, config: CFG };
 })();
