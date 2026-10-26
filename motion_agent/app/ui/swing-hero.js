@@ -47,6 +47,12 @@ async function start(root) {
     video.dataset.offset = String(data.video.offset || 0);
     video.src = data.video.src;
     video.hidden = false;
+    // iOS Safari paints nothing for a video that has never played, even after a seek; until then
+    // the card shows its poster. A muted play-then-pause makes it decode frames for the scrub.
+    video.addEventListener("loadedmetadata", () => {
+      const primed = video.play();
+      if (primed) primed.then(() => { video.pause(); pose(current); }).catch(() => {});
+    }, { once: true });
     // Seeks are skipped while one is in flight, so catch up to wherever the model ended up.
     video.addEventListener("loadeddata", () => pose(current));
     video.addEventListener("seeked", () => {

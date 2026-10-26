@@ -93,7 +93,8 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   padding: 10px 10px 10px 20px;
   border-radius: 999px;
   transform: translateX(-50%);
-  transition: background-color 0.5s ease, box-shadow 0.5s ease, width 0.8s var(--spring), -webkit-backdrop-filter 0.5s, backdrop-filter 0.5s;
+  /* backdrop-filter switches without a transition: animating it renders a smeared patch mid-flight. */
+  transition: background-color 0.5s ease, box-shadow 0.5s ease, width 0.8s var(--spring);
 }
 .lp-nav.is-floating {
   width: min(calc(100% - 24px), 760px);
@@ -260,18 +261,19 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   .reel[data-act="3"] .swing__video {
     transform: translate(calc(16px + var(--s) * var(--vh) * 0.28125 - 50vw), calc(76px + var(--s) * var(--vh) * 0.5 - 40svh)) scale(var(--s));
   }
-  .reel__acts, .reel[data-act="1"] .reel__acts { left: 16px; right: 16px; top: auto; bottom: 0; width: auto; position: relative; }
+  /* Relative positioning ignores `right`, so the gutters are margins or the captions run off-screen. */
+  .reel__acts, .reel[data-act="1"] .reel__acts { left: auto; right: auto; top: auto; bottom: 0; width: auto; margin: 0 16px; position: relative; }
   .reel__acts { height: 0; }
   .reel__acts li { inset: auto 0 12px 0; font-size: 15px; }
   .reel__acts b { font-size: 24px; }
-  .reel[data-act="1"] .reel__acts li { display: none; }
+  /* The act 1 caption fills the space under the video, so the scroll hint would sit on top of it. */
+  .reel__hint { display: none; }
   .reel__hud { grid-template-columns: 1fr; gap: 10px; padding: 0 16px 20px; }
   .reel__metric { position: absolute; right: 16px; top: -64svh; grid-row: auto; font-size: 56px; justify-items: end; text-align: right; }
   .reel__metric small { font-size: 12px; }
   .reel[data-act="1"] .reel__metric { opacity: 0; }
   .swing__phases { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; }
   .swing__phases button { flex: none; }
-  .reel__hint { bottom: 100px; }
 }
 
 /* ---------- Sections ---------- */
