@@ -6275,6 +6275,11 @@ code {
         }
         uploadFile.value = "";
         refreshLibrary();
+        // Show the new swing right away: the waiting screen with its steps, which turns into the
+        // report on its own when the analysis is ready. Without this the page stayed where it was.
+        if (!isDevUi && accountPanel) accountPanel.hidden = true;
+        loadSession();
+        if (!isDevUi) window.scrollTo({ top: 0, behavior: "smooth" });
       });
     }
     const deleteAccountBtn = document.getElementById("deleteAccount");
