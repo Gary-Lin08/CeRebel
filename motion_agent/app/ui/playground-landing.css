@@ -166,7 +166,7 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 .swing__video {
   --vh: min(74svh, 760px);
   --s: 0.62;
-  --cy: 50%;
+  --cy: 53%; /* clears the nav bar */
   position: absolute; z-index: 2;
   left: calc(50% - var(--vh) * 0.28125); top: calc(var(--cy) - var(--vh) / 2);
   height: var(--vh); width: calc(var(--vh) * 0.5625);
