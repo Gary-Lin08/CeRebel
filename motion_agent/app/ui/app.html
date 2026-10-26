@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CeRebel" />
+  <meta name="cerebel-surface" content="shared" />
+  <meta name="theme-color" content="#0A1512" />
+  <meta name="description" content="Your golf swing, rebuilt in 3D from one phone video, with the one thing to fix first." />
+  <title>CeRebel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/billing.css" />
+  <link rel="stylesheet" href="/static/compare.css" />
+  <link rel="stylesheet" href="/static/skeleton-overlay.css" />
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body class="cx">
+  <p class="cx-boot" id="boot">Loading…</p>
+
+  <!-- Home: film the next swing, open the last one, today's drill, progress, every swing -->
+  <main class="cx-view" id="vHome" hidden>
+    <header class="cx-top cx-pad">
+      <a class="cx-logo" href="/"><img src="/static/cerebel-logo.svg" alt="CeRebel" width="96" height="32" /></a>
+      <button type="button" class="cx-avatar" id="accountBtn" data-act="account" aria-label="Your account"></button>
+    </header>
+    <div class="cx-pad cx-home">
+      <section class="cx-film" aria-labelledby="filmTitle">
+        <h1 id="filmTitle">Film your next swing</h1>
+        <p>Phone side-on at hip height, whole body in frame, one swing.</p>
+        <button type="button" class="cx-btn cx-btn--primary cx-btn--big" data-act="film">Film a swing</button>
+        <p class="cx-quota" id="homeQuota"></p>
+      </section>
+
+      <section class="cx-card cx-first" id="homeFirst" hidden>
+        <p>Your first report shows up here a few minutes after you upload. Want to see what you'll get?</p>
+        <a class="cx-btn cx-btn--small" href="#/sample">See a sample report</a>
+      </section>
+
+      <div id="homePending"></div>
+
+      <div id="homeLatestWrap" hidden>
+        <h2 class="cx-sec">Latest swing</h2>
+        <a class="cx-swing" id="homeLatest" href="#/">
+          <span class="cx-thumb"><video id="homeThumb" muted playsinline preload="metadata" tabindex="-1"></video></span>
+          <span class="cx-swing__body">
+            <span class="cx-date" id="homeLatestDate"></span>
+            <strong id="homeLatestTitle">Opening your report…</strong>
+            <span class="cx-chip cx-chip--fix" id="homeLatestChip" hidden>Main fix</span>
+          </span>
+          <span class="cx-chev" aria-hidden="true">›</span>
+        </a>
+      </div>
+
+      <div id="homeDrillWrap" hidden>
+        <h2 class="cx-sec">Today's drill</h2>
+        <section class="cx-card">
+          <strong class="cx-card__title" id="homeDrillName"></strong>
+          <p id="homeDrillText"></p>
+          <div class="cx-row">
+            <span class="cx-count" id="homeDrillCount"></span>
+            <a class="cx-btn cx-btn--small cx-btn--quiet" id="homeDrillOpen" href="#/">Open drill</a>
+          </div>
+        </section>
+      </div>
+
+      <div id="homeProgressWrap" hidden>
+        <h2 class="cx-sec">Progress</h2>
+        <section class="cx-card" id="homeProgress"></section>
+      </div>
+
+      <div id="homeAllWrap" hidden>
+        <h2 class="cx-sec">Your swings</h2>
+        <ul class="cx-list" id="homeAll"></ul>
+      </div>
+
+      <p class="cx-more">Golf today. More sports are on the way.</p>
+    </div>
+  </main>
+
+  <!-- Report: the swing on video with the fix marked, then fix / drill / all data -->
+  <main class="cx-view cx-report" id="vReport" hidden>
+    <header class="cx-top cx-pad">
+      <a class="cx-icon-btn" id="reportBack" href="#/" aria-label="Back to home">‹</a>
+      <a class="cx-logo" id="reportLogo" href="/" hidden><img src="/static/cerebel-logo.svg" alt="CeRebel" width="96" height="32" /></a>
+      <span class="cx-top__title" id="reportTitle"><strong>Swing report</strong><span id="reportDate"></span></span>
+      <button type="button" class="cx-btn cx-btn--small cx-btn--primary" id="reportSignup" data-act="signup" hidden>Sign up free</button>
+    </header>
+    <p class="cx-banner" id="sampleBanner" hidden>
+      <span>This is a sample swing.</span>
+      <button type="button" data-act="signup" id="sampleBannerBtn">Upload yours, free</button>
+    </p>
+
+    <div class="cx-report__grid">
+      <section class="cx-stage" aria-label="Your swing">
+        <div class="cx-stage__box" id="stageBox">
+          <video id="fixVideo" muted playsinline preload="auto" loop></video>
+          <span class="cx-stage__hint" id="stageHint" hidden></span>
+          <button type="button" class="cx-stage__moment" id="momentBtn" data-act="moment" hidden>▶ See the moment</button>
+          <p class="cx-stage__gone" id="stageGone" hidden>Your original video was deleted on our retention schedule. The measurements are kept.</p>
+        </div>
+        <div class="cx-controls">
+          <button type="button" class="cx-ctl" id="playBtn" aria-label="Play">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path id="playIcon" d="M4 2.5v11l9-5.5z" /></svg>
+          </button>
+          <div class="cx-track" id="track" role="slider" tabindex="0" aria-label="Swing timeline" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="cx-track__rail"></div>
+            <div class="cx-track__fix" id="trackFix"></div>
+            <div class="cx-track__head" id="trackHead"></div>
+          </div>
+          <button type="button" class="cx-ctl" id="speedBtn" aria-label="Playback speed">½×</button>
+          <button type="button" class="cx-ctl" id="linesBtn" aria-pressed="true" aria-label="Show the skeleton lines">Lines</button>
+        </div>
+        <p class="cx-phase" id="phaseNow"></p>
+      </section>
+
+      <div class="cx-report__body cx-pad">
+        <section class="cx-fix" id="fixBlock" aria-live="polite">
+          <p class="cx-kicker" id="fixKicker">Measuring your swing…</p>
+          <h1 id="fixHeadline"></h1>
+          <p class="cx-fix__plain" id="fixPlain"></p>
+          <p class="cx-metric" id="fixMetricRow" hidden><span class="cx-num" id="fixMetric"></span><span id="fixMetricCap"></span></p>
+        </section>
+
+        <section class="cx-notice" id="reportNotice" hidden>
+          <p id="reportNoticeText"></p>
+          <button type="button" class="cx-btn cx-btn--primary" data-act="film">Film another swing</button>
+        </section>
+
+        <div id="reportTabs" hidden>
+          <div class="cx-tabs" role="tablist" aria-label="Report sections">
+            <button type="button" role="tab" id="tabFix" aria-selected="true" aria-controls="panFix" data-tab="fix">Fix</button>
+            <button type="button" role="tab" id="tabDrill" aria-selected="false" aria-controls="panDrill" data-tab="drill">Drill</button>
+            <button type="button" role="tab" id="tabData" aria-selected="false" aria-controls="panData" data-tab="data">All data</button>
+          </div>
+
+          <section class="cx-panel" role="tabpanel" id="panFix" aria-labelledby="tabFix">
+            <div class="cx-block" id="fixWhyBlock"><h3>Why it matters</h3><p id="fixWhy"></p></div>
+            <div class="cx-block" id="fixCueBlock"><h3>What to feel</h3><p class="cx-feel" id="fixCue"></p></div>
+            <div class="cx-match" id="trust"></div>
+            <div class="cx-block" id="othersBlock">
+              <h3>Also in this swing</h3>
+              <div class="cx-others" id="others"></div>
+            </div>
+          </section>
+
+          <section class="cx-panel" role="tabpanel" id="panDrill" aria-labelledby="tabDrill" hidden>
+            <div class="cx-block"><h3>Today's drill</h3><p class="cx-feel" id="drillName"></p></div>
+            <ol class="cx-steps-plain" id="drillSteps"></ol>
+            <p class="cx-check" id="drillCheckRow"><b>How you'll know it works.</b> <span id="drillCheck"></span></p>
+            <div class="cx-row" id="practiceRow">
+              <span class="cx-count" id="practiceCount"></span>
+              <button type="button" class="cx-btn cx-btn--small cx-btn--primary" data-act="practiced" id="practicedBtn">Mark today as practiced</button>
+            </div>
+            <button type="button" class="cx-btn" data-act="film">Film again to check</button>
+          </section>
+
+          <section class="cx-panel" role="tabpanel" id="panData" aria-labelledby="tabData" hidden>
+            <p class="cx-muted">Measurements across the whole swing. Scrub the video and the numbers follow.</p>
+            <div class="cx-others" id="seriesList"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="cx-askbar cx-pad" id="askbar">
+      <button type="button" class="cx-askbar__field" data-act="coach">Ask about this swing…</button>
+      <button type="button" class="cx-askbar__mic" id="micBtn" data-act="mic" aria-label="Ask out loud" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.9V20H8.5a1 1 0 1 0 0 2h7a1 1 0 1 0 0-2H13v-2.6a6 6 0 0 0 5-5.9z" /></svg>
+      </button>
+    </div>
+  </main>
+
+  <!-- Waiting: the swing is still being analysed -->
+  <main class="cx-view" id="vWait" hidden>
+    <header class="cx-top cx-pad">
+      <a class="cx-icon-btn" href="#/" aria-label="Back to home">‹</a>
+      <span class="cx-top__title"><strong>Your swing</strong></span>
+    </header>
+    <section class="cx-wait cx-pad" aria-live="polite">
+      <h1 id="waitTitle">Working on your swing</h1>
+      <ol class="cx-wait__steps" id="waitSteps" aria-label="Analysis steps"></ol>
+      <div class="cx-wait__bar" aria-hidden="true"><i id="waitBar"></i></div>
+      <p class="cx-wait__msg" id="waitMsg"></p>
+      <p class="cx-muted" id="waitNote"></p>
+      <div class="cx-row" id="waitActions" hidden>
+        <button type="button" class="cx-btn cx-btn--primary" data-act="film">Film another swing</button>
+        <a class="cx-btn" href="#/">Back to home</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="cx-backdrop" id="backdrop" hidden></div>
+
+  <!-- Coach -->
+  <section class="cx-sheet cx-sheet--tall" id="sCoach" role="dialog" aria-modal="true" aria-labelledby="coachTitle" hidden>
+    <div class="cx-sheet__handle" aria-hidden="true"></div>
+    <header class="cx-sheet__head cx-pad">
+      <div><h2 id="coachTitle">Coach</h2><p>Answers come from this swing's measurements.</p></div>
+      <button type="button" class="cx-icon-btn" data-act="close" aria-label="Close">×</button>
+    </header>
+    <div class="cx-sheet__body cx-pad" id="chat" data-lenis-prevent>
+      <button type="button" class="cx-call" id="callCard" data-act="call" hidden>
+        <span class="cx-call__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.9V20H8.5a1 1 0 1 0 0 2h7a1 1 0 1 0 0-2H13v-2.6a6 6 0 0 0 5-5.9z" /></svg></span>
+        <strong>Talk live with your coach</strong>
+        <span id="callNote"></span>
+      </button>
+      <div class="cx-chips" id="chips"></div>
+      <div class="cx-msgs" id="msgs"></div>
+    </div>
+    <form class="cx-composer cx-pad" id="composer">
+      <input id="q" type="text" autocomplete="off" enterkeyhint="send" placeholder="Ask about this swing" aria-label="Ask the coach" maxlength="600" />
+      <button type="submit" class="cx-btn cx-btn--primary" id="send">Ask</button>
+    </form>
+  </section>
+
+  <!-- Film -->
+  <section class="cx-sheet" id="sFilm" role="dialog" aria-modal="true" aria-labelledby="filmSheetTitle" hidden>
+    <div class="cx-sheet__handle" aria-hidden="true"></div>
+    <header class="cx-sheet__head cx-pad">
+      <div><h2 id="filmSheetTitle">Film it in thirty seconds</h2><p>Good setup is most of a good measurement.</p></div>
+      <button type="button" class="cx-icon-btn" data-act="close" aria-label="Close">×</button>
+    </header>
+    <div class="cx-sheet__body cx-pad">
+      <ol class="cx-steps">
+        <li><div><strong>Stand the phone up</strong><span>Hip height, side-on to you, 8 to 10 feet away.</span></div></li>
+        <li><div><strong>Get all of you in frame</strong><span>Whole body and the club, from address to finish. 60 fps if your phone has it.</span></div></li>
+        <li><div><strong>Swing once</strong><span>One swing per clip. A few seconds is enough.</span></div></li>
+      </ol>
+      <div class="cx-actions">
+        <label class="cx-btn cx-btn--primary cx-btn--big cx-file">Record a swing
+          <input type="file" id="fileCamera" accept="video/*" capture="environment" />
+        </label>
+        <label class="cx-btn cx-file">Choose a video
+          <input type="file" id="fileLibrary" accept="video/mp4,video/quicktime,video/webm" />
+        </label>
+      </div>
+      <p class="cx-fine" id="filmQuota"></p>
+      <p class="cx-fine">Raw video is deleted automatically after processing. <a href="/privacy">Privacy</a></p>
+    </div>
+  </section>
+
+  <!-- Sign up / sign in -->
+  <section class="cx-sheet" id="sAuth" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden>
+    <div class="cx-sheet__handle" aria-hidden="true"></div>
+    <header class="cx-sheet__head cx-pad">
+      <div><h2 id="authTitle">See your own swing</h2><p id="authSub">Free for 3 swings a month. No credit card.</p></div>
+      <button type="button" class="cx-icon-btn" data-act="close" aria-label="Close">×</button>
+    </header>
+    <form class="cx-sheet__body cx-pad" id="authForm" novalidate>
+      <div class="cx-seg" role="tablist" aria-label="Account">
+        <button type="button" role="tab" id="authNew" aria-selected="true" data-auth="register">Create account</button>
+        <button type="button" role="tab" id="authOld" aria-selected="false" data-auth="login">Sign in</button>
+      </div>
+      <label class="cx-field" for="authEmail">Email
+        <input id="authEmail" type="email" autocomplete="username" inputmode="email" required />
+      </label>
+      <label class="cx-field" for="authPassword">Password
+        <input id="authPassword" type="password" autocomplete="new-password" minlength="8" required />
+      </label>
+      <details class="cx-coach-code" id="authCoachRow">
+        <summary>Have a coach code?</summary>
+        <label class="cx-field" for="authCoach">Coach code
+          <input id="authCoach" type="text" maxlength="32" autocomplete="off" />
+        </label>
+      </details>
+      <label class="cx-consent" id="authConsentRow"><input id="authConsent" type="checkbox" /> <span>I'm 18 or older (or have a parent's OK), I agree to the <a href="/terms" target="_blank">Terms</a> and <a href="/privacy" target="_blank">Privacy Policy</a>, and I consent to CeRebel processing my videos and the body data derived from them to analyse my movement.</span></label>
+      <p class="cx-error" id="authStatus" role="alert"></p>
+      <button type="submit" class="cx-btn cx-btn--primary cx-btn--big" id="authSubmit">Create account</button>
+    </form>
+  </section>
+
+  <!-- Account -->
+  <section class="cx-sheet" id="sAccount" role="dialog" aria-modal="true" aria-labelledby="accountTitle" hidden>
+    <div class="cx-sheet__handle" aria-hidden="true"></div>
+    <header class="cx-sheet__head cx-pad">
+      <div><h2 id="accountTitle">Your account</h2><p id="accountEmail"></p></div>
+      <button type="button" class="cx-icon-btn" data-act="close" aria-label="Close">×</button>
+    </header>
+    <div class="cx-sheet__body cx-pad">
+      <div class="cx-card">
+        <div class="cx-row"><span class="cx-chip" id="accountPlan">Free</span><span class="cx-muted" id="accountQuota"></span></div>
+        <div class="cx-row">
+          <button type="button" class="cx-btn cx-btn--small cx-btn--primary" id="accountUpgrade" data-act="upgrade">Upgrade to Pro</button>
+          <button type="button" class="cx-btn cx-btn--small" id="accountManage" data-act="manage" hidden>Manage subscription</button>
+        </div>
+      </div>
+      <button type="button" class="cx-btn" data-act="signout">Sign out</button>
+      <button type="button" class="cx-btn cx-btn--danger" data-act="delete-account">Delete account and videos</button>
+      <p class="cx-fine"><a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
+    </div>
+  </section>
+
+  <div class="cx-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/static/marked.min.js"></script>
+  <script src="/static/purify.min.js"></script>
+  <script src="/static/app.js"></script>
+  <script src="/static/skeleton-overlay.js"></script>
+  <script src="/static/compare.js"></script>
+  <script src="/static/billing.js"></script>
+  <script src="/static/swing_trim.js"></script>
+</body>
+</html>

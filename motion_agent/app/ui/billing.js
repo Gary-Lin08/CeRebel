@@ -378,7 +378,8 @@
   function init() {
     wireHero();
     window.setTimeout(openDeepLink, 600);
-    track("landing_view", { signed_in: signedIn() });
+    // The app page (/app) is not the landing; it reports its own report and sample views.
+    if (!document.body.classList.contains("cx")) track("landing_view", { signed_in: signedIn() });
     wireTrust();
     handleReturn();
   }

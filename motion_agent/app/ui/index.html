@@ -10,7 +10,35 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="CeRebel" />
   <meta name="cerebel-surface" content="shared" />
+  <meta name="cerebel-app" content="classic" />
   <meta name="theme-color" content="#0a0b0b" />
+  <script>
+    // Customers live on the app page (/app). Signed-in visitors, email links to a swing and the
+    // checkout return go straight there; the landing's sign-in and upload buttons open it too.
+    // The developer playground (?dev=1 on a shared port, or the operator port) stays here.
+    (function () {
+      var app = document.querySelector('meta[name="cerebel-app"]');
+      var surfaceMeta = document.querySelector('meta[name="cerebel-surface"]');
+      var surface = surfaceMeta ? surfaceMeta.content : "shared";
+      var params = new URLSearchParams(window.location.search);
+      if (!app || app.content !== "new") return;
+      if (surface === "operator" || (surface === "shared" && params.has("dev"))) return;
+      var token = "";
+      try { token = localStorage.getItem("cerebel_user_token_v1") || ""; } catch (_) {}
+      if (token || params.has("session") || params.has("checkout")) {
+        window.location.replace("/app" + window.location.search + window.location.hash);
+        return;
+      }
+      document.documentElement.classList.add("cx-new-app");
+      document.addEventListener("click", function (e) {
+        var btn = e.target.closest && e.target.closest("#lpSignin, #lpUpload, #lpUpload2");
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = "/app" + (btn.id === "lpSignin" ? "#signin" : "#signup");
+      }, true);
+    })();
+  </script>
   <meta
     name="description"
     content="Film one golf swing on your phone. CeRebel rebuilds it in 3D, estimates every joint angle, and tells you the one thing to fix first."
@@ -2198,6 +2226,7 @@ code {
         <div class="lp-sec__head">
           <h2 id="lpBackTitle" data-split>What comes back</h2>
           <p>The swing above, the way the app shows it. Every number comes from the measurement, not from a language model.</p>
+          <a href="/app#sample" class="lp-btn lp-btn--glass lp-btn--sm lp-sample"><span>Open the full sample report</span></a>
         </div>
         <div class="tabs" data-tabs>
           <div class="tabs__list" role="tablist" aria-label="What comes back">
@@ -2274,7 +2303,10 @@ code {
 
       <section class="lp-end" aria-labelledby="lpEndTitle">
         <h2 id="lpEndTitle" class="lp-display lp-display--end" data-split>See your own swing.</h2>
-        <button type="button" class="lp-btn lp-btn--lg" id="lpUpload2" data-magnetic><span>Upload your swing</span></button>
+        <div class="lp-actions">
+          <button type="button" class="lp-btn lp-btn--lg" id="lpUpload2" data-magnetic><span>Upload your swing</span></button>
+          <a href="/app#sample" class="lp-btn lp-btn--glass lp-btn--lg lp-sample" data-magnetic><span>Open a sample report</span></a>
+        </div>
       </section>
     </main>
     <footer class="lp-foot">

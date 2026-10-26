@@ -47,7 +47,11 @@ BASE_PATH = "/" + _base if _base else ""
 # unset keeps the single shared port.
 OPERATOR_PORT = int(os.environ.get("CEREBEL_OPERATOR_PORT") or 0)
 SURFACE_META = '<meta name="cerebel-surface" content="{}" />'
-_PREFIXED = ("/api/", "/static/", "/media/", "/terms", "/privacy")
+# Signed-in customers use the app page (/app: home, report, coach). "classic" keeps them on the
+# old single page at / instead, as a switch back if the app page misbehaves after a deploy.
+APP_UI = "classic" if os.environ.get("CEREBEL_APP_UI", "").strip().lower() == "classic" else "new"
+APP_META = '<meta name="cerebel-app" content="{}" />'
+_PREFIXED = ("/api/", "/static/", "/media/", "/terms", "/privacy", "/app")
 # Behind the main site's proxy (Vercel caps request bodies at ~4.5 MB), the video upload goes
 # straight to the app's own origin instead; that origin must list the main site in
 # CEREBEL_ALLOWED_ORIGINS. Empty: uploads use the same path as everything else.
@@ -261,6 +265,12 @@ class Handler(BaseHTTPRequestHandler):
         # The page reads this tag to decide between the customer app and the developer playground.
         text = (UI_DIR / "index.html").read_text(encoding="utf-8")
         text = text.replace(SURFACE_META.format("shared"), SURFACE_META.format(self._surface()), 1)
+        text = text.replace(APP_META.format("classic"), APP_META.format(APP_UI), 1)
+        self._send_text(self._ui_text(text), "text/html; charset=utf-8")
+
+    def _serve_app(self) -> None:
+        text = (UI_DIR / "app.html").read_text(encoding="utf-8")
+        text = text.replace(SURFACE_META.format("shared"), SURFACE_META.format(self._surface()), 1)
         self._send_text(self._ui_text(text), "text/html; charset=utf-8")
 
     def _serve_legal(self, name: str) -> None:
@@ -308,6 +318,8 @@ class Handler(BaseHTTPRequestHandler):
             return _json_response(
                 self, 200, {"enabled": True, "cloud": provider_ready(), **voice.voice_allowance(SETTINGS.product_dir, user, pro)}
             )
+        if path in ("/app", "/app/"):
+            return self._serve_app()
         if path in ("/terms", "/privacy"):
             return self._serve_legal(path.strip("/"))
         if path == "/api/billing":

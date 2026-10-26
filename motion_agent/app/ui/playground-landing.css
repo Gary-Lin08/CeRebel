@@ -423,3 +423,7 @@ body.lp-mode #accountPanel button:focus-visible { outline: 2px solid var(--lamp)
   .reel__sticky { position: relative; height: 100svh; }
   .reel__hint { display: none; }
 }
+
+/* Links into the sample report on the app page; only when the app page is on (index.html head script). */
+.lp-sample { display: none !important; }
+.cx-new-app .lp-sample { display: inline-flex !important; }
