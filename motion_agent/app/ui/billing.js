@@ -129,6 +129,7 @@
     });
     var free = (billing && billing.free_monthly) || 3;
     var pro = (billing && billing.pro_monthly) || 60;
+    var questions = (billing && billing.pro_daily_questions) || 100;
     var modal = el("div", { id: "cbPaywall", class: "cb-modal", role: "dialog", "aria-modal": "true", "aria-label": "Upgrade to Pro" }, [
       el("div", { class: "cb-card" }, [
         el("button", { type: "button", class: "cb-close", "aria-label": "Close", text: "×", onclick: closePaywall }),
@@ -137,7 +138,7 @@
         el("ul", { class: "cb-features" }, [
           el("li", { text: "Up to " + pro + " analyses a month (free plan: " + free + ")" }),
           el("li", { text: "Track the same metrics across every swing" }),
-          el("li", { text: "Unlimited questions to the coach about your swings" }),
+          el("li", { text: "Up to " + questions + " questions a day to the coach about your swings" }),
           el("li", { text: "Less than the price of one lesson. Cancel anytime." }),
         ]),
         list,

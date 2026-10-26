@@ -256,6 +256,7 @@ def public_plans(product_dir: Path) -> dict[str, Any]:
         "plans": plans,
         "free_monthly": free_monthly_limit(),
         "pro_monthly": pro_monthly_limit(),
+        "pro_daily_questions": daily_question_limit(True, True),
     }
 
 

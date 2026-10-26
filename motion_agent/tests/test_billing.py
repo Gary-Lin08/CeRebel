@@ -166,6 +166,11 @@ class PlansTests(unittest.TestCase):
             self.assertFalse(info["checkout_enabled"])
             self.assertEqual(info["plans"], [])
 
+    def test_paywall_question_limit_matches_the_real_cap(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict(os.environ, {"CEREBEL_PRO_DAILY_QUESTIONS": "42"}):
+            self.assertEqual(billing.public_plans(Path(tmp))["pro_daily_questions"], 42)
+            self.assertEqual(billing.daily_question_limit(True, True), 42)
+
     def test_founding_plan_offered_until_limit(self):
         env = {
             "STRIPE_SECRET_KEY": "sk_test_x",
