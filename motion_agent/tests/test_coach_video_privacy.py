@@ -175,8 +175,32 @@ class AttachOnTests(unittest.TestCase):
         self.assertEqual(openai_tools(), openai_tools(include_rgb=True))
 
 
+class LibraryDefaultTests(unittest.TestCase):
+    """A caller that forgets attach_video gets the private behaviour, not the video."""
+
+    def test_motion_agent_default_offers_no_rgb_tools(self) -> None:
+        calls: list[str] = []
+        vlm = _VideoCuriousVLM()
+        with mock.patch.object(agent_mod, "execute_tool", _fake_execute_tool(calls)):
+            agent = MotionAgent(_seq(), vlm=vlm)
+            agent.answer("Is my lead arm straight at the top?")
+        self.assertFalse(agent.attach_video)
+        for names in vlm.tools_seen:
+            self.assertFalse(RGB_TOOL_NAMES & set(names), names)
+        for sent in vlm.sent:
+            self.assertNotIn(FRAME_PIXELS, sent)
+            self.assertNotIn(CLIP_PIXELS, sent)
+
+    def test_answer_question_default_is_off(self) -> None:
+        import inspect
+
+        self.assertIs(inspect.signature(agent_mod.answer_question).parameters["attach_video"].default, False)
+
+
 class OperatorPortTests(unittest.TestCase):
     """Operator with password and X-Motion-Dev still gets video only with the env flag on."""
+
+    operator = True
 
     @classmethod
     def setUpClass(cls):
@@ -184,7 +208,7 @@ class OperatorPortTests(unittest.TestCase):
 
         cls.chat_server = chat_server
         cls.server = ThreadingHTTPServer(("127.0.0.1", 0), chat_server.Handler)
-        cls.server.operator = True
+        cls.server.operator = cls.operator
         threading.Thread(target=cls.server.serve_forever, daemon=True).start()
 
     @classmethod
@@ -192,14 +216,17 @@ class OperatorPortTests(unittest.TestCase):
         cls.server.shutdown()
         cls.server.server_close()
 
-    def _attach_video_for(self, flag: str) -> bool:
+    def _attach_video_for(self, flag: str, owner: str | None = None, operator_port: int = 8093) -> bool:
         seen: dict = {}
 
         def fake_answer(question, **kwargs):
             seen.update(kwargs)
             return AgentResult(answer="ok", session_id="SYNTH")
 
-        body = json.dumps({"question": "hi", "video_id": "SYNTH", "backend": "mock"}).encode()
+        body = {"question": "hi", "video_id": "SYNTH"}
+        if self.operator:
+            body["backend"] = "mock"  # backend switches are refused on the public port
+        body = json.dumps(body).encode()
         req = urllib.request.Request(
             f"http://127.0.0.1:{self.server.server_address[1]}/api/chat",
             data=body,
@@ -208,13 +235,19 @@ class OperatorPortTests(unittest.TestCase):
         cs = self.chat_server
         with mock.patch.dict(os.environ, {"CEREBEL_LLM_ATTACH_VIDEO": flag}), mock.patch.object(
             cs, "_check_prompt_password", return_value=True
-        ), mock.patch.object(cs, "answer_question", fake_answer), mock.patch(
+        ), mock.patch.object(cs, "answer_question", fake_answer), mock.patch.object(
+            cs, "build_vlm", lambda backend=None: MockVLM()
+        ), mock.patch(
             "motion_agent.app.product_api.current_user", return_value=None
         ), mock.patch("motion_agent.app.product_api.media_allowed", return_value=True), mock.patch(
             "motion_agent.app.product_api.record_event"
         ), mock.patch(
             "motion_agent.app.product_session.resolve_prompt_mode_for_session",
             return_value=(None, {}),
+        ), mock.patch("motion_agent.app.library.owner_of", return_value=owner), mock.patch.object(
+            cs, "OPERATOR_PORT", operator_port
+        ), mock.patch(
+            "motion_agent.app.billing.take_question", return_value=(True, 1)
         ):
             with urllib.request.urlopen(req, timeout=10) as resp:
                 self.assertEqual(resp.status, 200)
@@ -225,6 +258,22 @@ class OperatorPortTests(unittest.TestCase):
 
     def test_flag_on_lets_the_operator_attach_video(self) -> None:
         self.assertTrue(self._attach_video_for("1"))
+
+    def test_flag_on_never_sends_a_customers_video(self) -> None:
+        # The consent promises the coach gets numbers, not video, for every account's capture.
+        self.assertFalse(self._attach_video_for("1", owner="u_customer"))
+
+
+class CustomerPortTests(OperatorPortTests):
+    """The public port never attaches video, whatever the flag says."""
+
+    operator = False
+
+    def test_flag_on_lets_the_operator_attach_video(self) -> None:
+        self.assertFalse(self._attach_video_for("1"))
+
+    def test_single_shared_port_does_not_attach_either(self) -> None:
+        self.assertFalse(self._attach_video_for("1", operator_port=0))
 
 
 if __name__ == "__main__":

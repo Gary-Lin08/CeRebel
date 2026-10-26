@@ -79,18 +79,20 @@ def register(
         raise ValueError("Password must be at least 8 characters.")
     if not accepted_terms:
         raise ValueError("Please accept the Terms and Privacy Policy, including video processing.")
+    # Hash before taking the lock: PBKDF2 is slow on purpose and the lock is shared by all accounts.
+    salt = secrets.token_hex(16)
+    password_hash = _hash_password(password, salt)
     with _locked(product_dir):
         accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
         if email in accounts:
             raise ValueError("An account with that email already exists.")
-        salt = secrets.token_hex(16)
         user_id = secrets.token_hex(8)
         accounts[email] = {
             "user_id": user_id,
             "email": email,
             "salt": salt,
-            "password_hash": _hash_password(password, salt),
+            "password_hash": password_hash,
             "created_at": _now(),
             "terms_version": TERMS_VERSION,
             "terms_accepted_at": _now(),
@@ -107,14 +109,18 @@ def register(
 
 def login(product_dir: Path, email: str, password: str) -> dict[str, Any]:
     email = (email or "").strip().lower()
+    accounts_path, tokens_path = _paths(product_dir)
+    # Verify outside the lock (PBKDF2 is slow on purpose); the file is replaced atomically.
+    row = _read(accounts_path).get(email)
+    expected_hash = str((row or {}).get("password_hash") or "")
+    given_hash = _hash_password(password or "", (row or {}).get("salt") or "")
+    if not row or not hmac.compare_digest(given_hash, expected_hash):
+        raise ValueError("Email or password is incorrect.")
     with _locked(product_dir):
-        accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
         row = accounts.get(email)
-        expected_hash = str((row or {}).get("password_hash") or "")
-        given_hash = _hash_password(password or "", (row or {}).get("salt") or "")
-        if not row or not hmac.compare_digest(given_hash, expected_hash):
-            raise ValueError("Email or password is incorrect.")
+        if not row or not hmac.compare_digest(str(row.get("password_hash") or ""), expected_hash):
+            raise ValueError("Email or password is incorrect.")  # deleted meanwhile
         row["last_login_at"] = row["last_active_at"] = _now()
         _write(accounts_path, accounts)
         token = _issue_token(tokens_path, row["user_id"], email)

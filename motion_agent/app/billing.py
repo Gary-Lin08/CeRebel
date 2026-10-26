@@ -41,6 +41,10 @@ _LOCK = threading.Lock()
 # the swing could not be read, or the user deleted it before it finished.
 _NOT_COUNTED = {"error", "no_swing", "deleted", "rejected"}
 _ACTIVE_STATUSES = {"active", "trialing"}
+# Stripe statuses in which the subscription can still charge the card or retry a failed charge.
+_BILLING_STATUSES = {"active", "trialing", "past_due", "unpaid", "paused"}
+# Accounts deleted here: their webhooks must not recreate a billing row. Random ids only.
+_DELETED_USERS_KEPT = 10_000
 
 
 class BillingError(Exception):
@@ -115,6 +119,27 @@ def _write(product_dir: Path, data: dict[str, Any]) -> None:
 
 def subscription_for(product_dir: Path, user_id: str) -> dict[str, Any]:
     return dict(_read(product_dir)["users"].get(user_id) or {})
+
+
+def still_billing(product_dir: Path, user_id: str) -> bool:
+    """True while Stripe may charge this account again unless it cancels.
+
+    Wider than is_pro: a past_due or unpaid subscription is not Pro, but Stripe keeps retrying
+    the card, so deleting the account (and with it the Manage subscription button) would leave
+    the user paying for an account that no longer exists.
+    """
+    row = subscription_for(product_dir, user_id)
+    return row.get("status") in _BILLING_STATUSES and not row.get("cancel_at_period_end")
+
+
+def forget_user(product_dir: Path, user_id: str) -> None:
+    """Drop the account's billing row and ignore its later webhooks (account deleted)."""
+    with _locked(product_dir):
+        data = _read(product_dir)
+        data["users"].pop(user_id, None)
+        gone = [u for u in data.get("deleted_users") or [] if u != user_id]
+        data["deleted_users"] = (gone + [user_id])[-_DELETED_USERS_KEPT:]
+        _write(product_dir, data)
 
 
 def is_pro(product_dir: Path, user_id: str) -> bool:
@@ -293,6 +318,9 @@ def _public_url() -> str:
 def create_checkout(product_dir: Path, user: dict[str, Any], plan: str) -> dict[str, Any]:
     if is_pro(product_dir, user["user_id"]):
         raise BillingError("You already have Pro. Use Manage subscription to change plans.", 409)
+    if still_billing(product_dir, user["user_id"]):
+        # past_due / unpaid: a second checkout would start a second subscription on top.
+        raise BillingError("Your subscription has a payment problem. Use Manage subscription to update your card.", 409)
     price = _env("STRIPE_PRICE_MONTHLY") if plan == "monthly" else _env("STRIPE_PRICE_ANNUAL")
     if plan not in {"annual", "monthly", "founding"} or not price:
         raise BillingError("That plan is not available.")
@@ -378,14 +406,36 @@ def handle_webhook(product_dir: Path, payload: bytes, signature: str | None) -> 
     event_id = str(event.get("id") or "")
     kind = str(event.get("type") or "")
     obj = (event.get("data") or {}).get("object") or {}
+    try:
+        created = int(event.get("created") or 0)
+    except (TypeError, ValueError):
+        created = 0
     changed: str | None = None
     with _locked(product_dir):
         data = _read(product_dir)
         if event_id and event_id in data["events"]:
             return {"ok": True, "duplicate": True}
+        deleted_users = set(data.get("deleted_users") or [])
+
+        def _applies(user_id: str, subscription_id: Any) -> bool:
+            """Stripe does not deliver events in order. Skip one that is older than what the row
+            already reflects, and never revive a subscription Stripe has canceled (that is final)."""
+            if user_id in deleted_users:
+                return False
+            row = data["users"].get(user_id) or {}
+            if created and created < int(row.get("event_created") or 0):
+                return False
+            if (kind != "customer.subscription.deleted" and row.get("status") == "canceled"
+                    and subscription_id and row.get("subscription") == subscription_id):
+                return False
+            return True
+
         if kind == "checkout.session.completed" and obj.get("mode") == "subscription":
             user_id = obj.get("client_reference_id") or (obj.get("metadata") or {}).get("user_id")
-            if user_id:
+            if (obj.get("metadata") or {}).get("plan") == "founding":
+                # The coupon was redeemed whatever happens to the account afterwards.
+                data["founding_used"] = int(data.get("founding_used") or 0) + 1
+            if user_id and _applies(user_id, obj.get("subscription")):
                 row = data["users"].setdefault(user_id, {})
                 row.update({
                     "customer": obj.get("customer"),
@@ -394,8 +444,8 @@ def handle_webhook(product_dir: Path, payload: bytes, signature: str | None) -> 
                     "plan": (obj.get("metadata") or {}).get("plan"),
                     "updated_at": _now().isoformat(),
                 })
-                if (obj.get("metadata") or {}).get("plan") == "founding":
-                    data["founding_used"] = int(data.get("founding_used") or 0) + 1
+                if created:
+                    row["event_created"] = created
                 changed = user_id
         elif kind in {
             "customer.subscription.created",
@@ -408,7 +458,7 @@ def handle_webhook(product_dir: Path, payload: bytes, signature: str | None) -> 
                     (uid for uid, row in data["users"].items() if row.get("subscription") == obj.get("id")),
                     None,
                 )
-            if user_id:
+            if user_id and _applies(user_id, obj.get("id")):
                 row = data["users"].setdefault(user_id, {})
                 row.update({
                     "customer": obj.get("customer") or row.get("customer"),
@@ -418,6 +468,8 @@ def handle_webhook(product_dir: Path, payload: bytes, signature: str | None) -> 
                     "cancel_at_period_end": bool(obj.get("cancel_at_period_end")),
                     "updated_at": _now().isoformat(),
                 })
+                if created:
+                    row["event_created"] = created
                 changed = user_id
         if event_id:
             data["events"] = (data["events"] + [event_id])[-500:]

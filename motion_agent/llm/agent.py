@@ -623,7 +623,7 @@ class MotionAgent:
         seq: MotionSequence,
         vlm: VisionLanguageModel | None = None,
         max_tool_calls: int | None = None,
-        attach_video: bool = True,
+        attach_video: bool = False,
         system_prompt: str | None = None,
         prompt_mode: str | None = None,
     ) -> None:
@@ -900,7 +900,7 @@ def answer_question(
     video_id: str | None = None,
     data_dir: Path | None = None,
     vlm: VisionLanguageModel | None = None,
-    attach_video: bool = True,
+    attach_video: bool = False,
     system_prompt: str | None = None,
     prompt_mode: str | None = None,
     on_event: OnEvent | None = None,

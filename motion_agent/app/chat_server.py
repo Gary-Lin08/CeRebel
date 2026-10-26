@@ -95,6 +95,22 @@ def _capture_visible(handler: BaseHTTPRequestHandler, session_id: str) -> bool:
     return media_allowed(SETTINGS, current_user(SETTINGS, handler.headers), session_id)
 
 
+def _unowned_capture(session_id: str) -> bool:
+    """True when no account (live or deleted) uploaded this capture."""
+    from motion_agent.app.library import owner_of
+
+    return owner_of(SETTINGS.product_dir, session_id) is None
+
+
+def _privacy_findings() -> list[dict]:
+    """Differences between this server's configuration and the Privacy Policy (privacy_guard)."""
+    from motion_agent.app import privacy_guard
+
+    if privacy_guard.gate_mode() == "off":
+        return []
+    return privacy_guard.findings(data_dir=DATA_DIR)
+
+
 def _scoped_video_id(
     handler: BaseHTTPRequestHandler, requested: str | None
 ) -> tuple[str | None, tuple[int, dict] | None]:
@@ -175,8 +191,14 @@ def _legal_html(name: str) -> bytes | None:
         "{{COMPANY}}": os.environ.get("CEREBEL_LEGAL_ENTITY") or "CeRebel, Inc.",
         "{{CONTACT_EMAIL}}": os.environ.get("CEREBEL_SUPPORT_EMAIL") or "support@cerebel.ai",
     }
-    from motion_agent.app.consent import inactive_delete_days, period_label, raw_video_retention_days
+    from motion_agent.app.consent import (
+        inactive_delete_days,
+        period_label,
+        processor_rows_html,
+        raw_video_retention_days,
+    )
 
+    fills["{{PROCESSOR_ROWS}}"] = processor_rows_html()
     fills["{{RAW_VIDEO_RETENTION_DAYS}}"] = str(raw_video_retention_days())
     fills["{{INACTIVE_DELETE_PERIOD}}"] = period_label(inactive_delete_days())
     for key, value in fills.items():
@@ -233,6 +255,27 @@ class Handler(BaseHTTPRequestHandler):
 
     def _dev_allowed(self) -> bool:
         return self._surface() != "customer"
+
+    def _visitor_ip(self) -> str:
+        """The visitor's address. Behind a proxy (Cloudflare Tunnel, Vercel, the GPU host's port
+        mapping) every request comes from a local address; use the one the proxy forwards."""
+        forwarded = (self.headers.get("X-Forwarded-For") or "").split(",")[0]
+        ip = (
+            self.headers.get("CF-Connecting-IP")
+            or forwarded  # first hop = the visitor; X-Real-IP is the nearest proxy
+            or self.headers.get("X-Real-IP")
+            or self.client_address[0]
+            or "unknown"
+        ).strip()
+        return ip[:64]
+
+    def _body_length(self, limit: int) -> int | None:
+        """Content-Length when it is a number within `limit`, else None (caller answers 413)."""
+        try:
+            length = int(self.headers.get("Content-Length") or "0")
+        except ValueError:
+            return None
+        return length if 0 <= length <= limit else None
 
     def _ui_text(self, text: str) -> str:
         if self.base:
@@ -318,9 +361,12 @@ class Handler(BaseHTTPRequestHandler):
             password = _password_from_request(self, parsed)
             if not _check_prompt_password(password):
                 return _json_response(self, 401, {"error": True, "message": "Password required"})
+            from motion_agent.app import privacy_guard
             from motion_agent.app.product_api import ops_summary
 
-            return _json_response(self, 200, ops_summary(SETTINGS))
+            return _json_response(
+                self, 200, {**ops_summary(SETTINGS), "privacy": privacy_guard.report(data_dir=DATA_DIR)}
+            )
         if path == "/api/me":
             from motion_agent.app.product_api import current_user, library_payload
 
@@ -735,15 +781,19 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
         if parsed.path in ("/api/auth/register", "/api/auth/login", "/api/auth/logout"):
-            length = int(self.headers.get("Content-Length", "0"))
+            length = self._body_length(16_384)
+            if length is None:
+                return _json_response(self, 413, {"error": True, "message": "body too large"})
             raw = self.rfile.read(length) if length else b"{}"
             try:
                 body = json.loads(raw.decode("utf-8") or "{}")
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+            if not isinstance(body, dict):
                 return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
             from motion_agent.app.product_api import handle_auth_post
 
-            code, payload = handle_auth_post(SETTINGS, parsed.path, body, self.headers)
+            code, payload = handle_auth_post(SETTINGS, parsed.path, body, self.headers, client_ip=self._visitor_ip())
             return _json_response(self, code, payload)
         if parsed.path == "/api/upload":
             from motion_agent.app.product_api import current_user, parse_upload
@@ -751,6 +801,13 @@ class Handler(BaseHTTPRequestHandler):
             user = current_user(SETTINGS, self.headers)
             if not user:
                 return _json_response(self, 401, {"ok": False, "error": True, "message": "Sign in to upload"})
+            from motion_agent.app import privacy_guard
+
+            if privacy_guard.blocks_uploads(_privacy_findings()):
+                # CEREBEL_PRIVACY_GATE=enforce and the deployment differs from the Privacy Policy.
+                return _json_response(
+                    self, 503, {"ok": False, "error": True, "unavailable": True, "message": privacy_guard.UPLOADS_PAUSED}
+                )
             try:
                 code, payload = parse_upload(self, SETTINGS, user)
             except Exception as exc:  # noqa: BLE001
@@ -782,11 +839,15 @@ class Handler(BaseHTTPRequestHandler):
             code, payload = remove_account(SETTINGS, user)
             return _json_response(self, code, payload)
         if parsed.path == "/api/library/delete":
-            length = int(self.headers.get("Content-Length", "0"))
+            length = self._body_length(4096)
+            if length is None:
+                return _json_response(self, 413, {"error": True, "message": "body too large"})
             raw = self.rfile.read(length) if length else b"{}"
             try:
                 body = json.loads(raw.decode("utf-8") or "{}")
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+            if not isinstance(body, dict):
                 return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
             from motion_agent.app.product_api import current_user, remove_capture
 
@@ -865,11 +926,16 @@ class Handler(BaseHTTPRequestHandler):
             return _json_response(self, 200, result)
         if parsed.path not in ("/api/chat", "/api/chat/stream"):
             return _json_response(self, 404, {"error": True, "message": "not found"})
-        length = int(self.headers.get("Content-Length", "0"))
+        # Room for a question plus an operator's system prompt override.
+        length = self._body_length(256 * 1024)
+        if length is None:
+            return _json_response(self, 413, {"error": True, "message": "body too large"})
         raw = self.rfile.read(length) if length else b"{}"
         try:
             body = json.loads(raw.decode("utf-8"))
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+        if not isinstance(body, dict):
             return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
 
         question = (body.get("question") or "").strip()
@@ -878,6 +944,11 @@ class Handler(BaseHTTPRequestHandler):
         if not self._dev_allowed() and (body.get("system_prompt") or body.get("backend")):
             # Prompt overrides and backend switches belong to the developer port.
             return _json_response(self, 403, {"error": True, "message": "Not available here"})
+        from motion_agent.app import privacy_guard
+
+        if self._surface() != "operator" and privacy_guard.blocks_coach(_privacy_findings()):
+            # CEREBEL_PRIVACY_GATE=enforce and the coach's model endpoint differs from the Privacy Policy.
+            return _json_response(self, 503, {"error": True, "unavailable": True, "message": privacy_guard.COACH_PAUSED})
         video_id = body.get("video_id")
         from motion_agent.app.product_api import current_user
 
@@ -900,7 +971,15 @@ class Handler(BaseHTTPRequestHandler):
                 )
         # Sending video frames to the language model is off unless the operator opts in:
         # the coach answers from tool outputs, and user video should not leave this server.
-        attach_video = bool(body.get("attach_video", True)) and _env_flag("CEREBEL_LLM_ATTACH_VIDEO")
+        # The video consent promises the coach gets "the computed numbers, not my video", so
+        # even with the flag on only the developer port may attach video, and only for
+        # captures no account owns (the operator's own test clips and the demo).
+        attach_video = (
+            bool(body.get("attach_video", True))
+            and _env_flag("CEREBEL_LLM_ATTACH_VIDEO")
+            and self._surface() == "operator"
+            and _unowned_capture(str(video_id))
+        )
         dev_backend = (
             self._dev_allowed()
             and (self.headers.get("X-Motion-Dev") or "").strip() == "1"
@@ -911,20 +990,7 @@ class Handler(BaseHTTPRequestHandler):
 
         if not dev_backend:
             pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
-            if user:
-                key = "u:" + str(user["user_id"])
-            else:
-                # Behind a proxy (Cloudflare Tunnel, Vercel, the GPU host's port mapping) every request
-                # comes from a local address; use the visitor IP the proxy forwards.
-                forwarded = (self.headers.get("X-Forwarded-For") or "").split(",")[0]
-                ip = (
-                    self.headers.get("CF-Connecting-IP")
-                    or forwarded  # first hop = the visitor; X-Real-IP is the nearest proxy
-                    or self.headers.get("X-Real-IP")
-                    or self.client_address[0]
-                    or "unknown"
-                ).strip()
-                key = "ip:" + ip[:64]
+            key = "u:" + str(user["user_id"]) if user else "ip:" + self._visitor_ip()
             allowed, _left = _billing.take_question(
                 SETTINGS.product_dir, key, _billing.daily_question_limit(pro, bool(user))
             )
@@ -1209,6 +1275,10 @@ def main() -> None:
         session,
         fake_egocentric_enabled(),
     )
+    from motion_agent.app import privacy_guard
+
+    for item in _privacy_findings():
+        LOG.warning("privacy check (%s): %s", privacy_guard.gate_mode(), item["message"])
     server, operator = build_servers(HOST, PORT, OPERATOR_PORT)
     if operator is not None:
         LOG.info("developer playground on 127.0.0.1:%s (public port serves the customer app only)", OPERATOR_PORT)

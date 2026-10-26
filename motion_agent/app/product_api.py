@@ -162,8 +162,13 @@ def handle_video_consent(settings: Settings, user: dict[str, Any], body: dict[st
     return 200, {"ok": True, "video_consent": video_consent_status(settings.product_dir, user["user_id"])}
 
 
-def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], headers: Any) -> tuple[int, dict[str, Any]]:
+def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], headers: Any,
+                     client_ip: str = "unknown") -> tuple[int, dict[str, Any]]:
+    from motion_agent.app import rate_limit
+
     if path == "/api/auth/register":
+        if rate_limit.SIGNUPS_PER_IP.blocked(client_ip):
+            return 429, {"ok": False, "error": True, "message": rate_limit.TOO_MANY_SIGNUPS}
         try:
             created = register(
                 settings.product_dir,
@@ -174,6 +179,7 @@ def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], header
             )
         except ValueError as exc:
             return 400, {"ok": False, "error": True, "message": str(exc)}
+        rate_limit.SIGNUPS_PER_IP.hit(client_ip)
         record_event(
             settings,
             "signup",
@@ -182,10 +188,17 @@ def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], header
         )
         return 200, created
     if path == "/api/auth/login":
+        email_key = str(body.get("email") or "").strip().lower()[:254]
+        if rate_limit.LOGIN_FAILS_PER_EMAIL.blocked(email_key) or rate_limit.LOGIN_FAILS_PER_IP.blocked(client_ip):
+            return 429, {"ok": False, "error": True, "message": rate_limit.TOO_MANY_LOGINS}
         try:
-            return 200, login(settings.product_dir, str(body.get("email") or ""), str(body.get("password") or ""))
+            result = login(settings.product_dir, email_key, str(body.get("password") or ""))
         except ValueError as exc:
+            rate_limit.LOGIN_FAILS_PER_EMAIL.hit(email_key)
+            rate_limit.LOGIN_FAILS_PER_IP.hit(client_ip)
             return 401, {"ok": False, "error": True, "message": str(exc)}
+        rate_limit.LOGIN_FAILS_PER_EMAIL.clear(email_key)
+        return 200, result
     if path == "/api/auth/logout":
         logout(settings.product_dir, token_from_headers(headers))
         return 200, {"ok": True}
@@ -618,6 +631,10 @@ def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
 
         _process_uploaded_session(session_id, filename)
         prog = _wait_for_pipeline(settings, session_id)
+        if capture_was_deleted(settings, session_id):
+            # Deleted while the GPU was working: the pipeline wrote results back after the purge.
+            purge_session_dir(settings, session_id)
+            return
         stage = str(prog.get("stage") or "processing")
         if stage == "ready":
             final = finalize_capture(settings, session_id) or {}
@@ -636,6 +653,9 @@ def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
                 )
     except Exception as exc:  # noqa: BLE001
         LOG.exception("pipeline start failed")
+        if capture_was_deleted(settings, session_id):
+            purge_session_dir(settings, session_id)
+            return
         _write_progress(
             settings,
             session_id,
@@ -689,8 +709,9 @@ def remove_account(settings: Settings, user: dict[str, Any], *, reason: str = "u
     from motion_agent.app import billing
 
     user_id = user["user_id"]
-    sub = billing.subscription_for(settings.product_dir, user_id)
-    if billing.is_pro(settings.product_dir, user_id) and not sub.get("cancel_at_period_end"):
+    # Includes past_due / unpaid: Stripe keeps retrying the card, and once the account is gone
+    # the user has no Manage subscription button left to stop it.
+    if billing.still_billing(settings.product_dir, user_id):
         return 409, {
             "ok": False,
             "error": True,
@@ -715,10 +736,7 @@ def remove_account(settings: Settings, user: dict[str, Any], *, reason: str = "u
 def _forget_billing(product_dir: Path, user_id: str) -> None:
     from motion_agent.app import billing
 
-    with billing._locked(product_dir):  # noqa: SLF001 - same storage helpers and lock billing uses
-        data = billing._read(product_dir)  # noqa: SLF001
-        if data["users"].pop(user_id, None) is not None:
-            billing._write(product_dir, data)  # noqa: SLF001
+    billing.forget_user(product_dir, user_id)
 
 
 # Thread lock for this process; file_lock.locked adds the flock that retention and

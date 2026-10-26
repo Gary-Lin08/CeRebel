@@ -127,6 +127,9 @@ CEREBEL_GEMX_DEVICE=cpu
 MOTION_AGENT_SMPLX_DEVICE=cpu
 CEREBEL_FAKE_EGOCENTRIC=0
 CEREBEL_GPU_BACKEND=modal
+# Not a provider the Privacy Policy names yet: privacy_guard reports it until consent.PROCESSORS
+# lists this machine and VIDEO_CONSENT_VERSION is bumped.
+CEREBEL_HOST_PROVIDER=mac-mini-boston
 MOTION_AGENT_HOST=127.0.0.1
 MOTION_AGENT_PORT=8092
 MPLBACKEND=Agg

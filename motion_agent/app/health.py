@@ -11,6 +11,10 @@ from motion_agent.app.config import Settings
 def _model_credential(backend: str) -> dict[str, Any]:
     if backend == "mock":
         return {"ok": True, "credential": "not_required", "backend": backend}
+    if not (os.environ.get("MOTION_AGENT_BASE_URL") or "").strip():
+        # There is no default endpoint any more, so the coach cannot answer.
+        return {"ok": False, "credential": "endpoint_missing", "backend": backend,
+                "message": "MOTION_AGENT_BASE_URL is not set"}
     try:
         from motion_agent.llm.qwen_client import _load_api_key
 
@@ -44,6 +48,8 @@ def health_report(settings: Settings) -> tuple[int, dict[str, Any]]:
         "prompt_edit_configured": settings.prompt_password is not None,
     }
     if not model.get("ok") and model.get("message") and settings.backend != "mock":
-        payload["model"]["message"] = "credential unavailable"
+        payload["model"]["message"] = (
+            "endpoint not configured" if model.get("credential") == "endpoint_missing" else "credential unavailable"
+        )
     # Process is up either way. 503 means the product cannot accept work.
     return (200 if ready else 503), payload

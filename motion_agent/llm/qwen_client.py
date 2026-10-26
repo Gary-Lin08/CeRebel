@@ -105,6 +105,18 @@ def _load_api_key() -> str:
     )
 
 
+def require_base_url(*names: str) -> str:
+    """The first of these environment variables that is set; raise when none is."""
+    for name in names:
+        value = (os.environ.get(name) or "").strip()
+        if value:
+            return value
+    raise RuntimeError(
+        f"{' / '.join(names)} is not set. Point it at the OpenAI-compatible endpoint named in the "
+        "Privacy Policy (for example https://api.together.xyz/v1); there is no default."
+    )
+
+
 class QwenDashScopeVLM(VisionLanguageModel):
     """OpenAI-compatible DashScope intl client for Qwen3-VL."""
 
@@ -116,10 +128,10 @@ class QwenDashScopeVLM(VisionLanguageModel):
         timeout_s: float = 180.0,
     ) -> None:
         self.model = model or os.environ.get("MOTION_AGENT_MODEL", "qwen3.7-plus")
-        self.base_url = base_url or os.environ.get(
-            "MOTION_AGENT_BASE_URL",
-            "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        )
+        # No built-in endpoint: the old default was DashScope's mainland-China host, so a server
+        # missing this setting sent user questions to China while the Privacy Policy names a US
+        # provider. Every deployment must say where the coach's requests go.
+        self.base_url = base_url or require_base_url("MOTION_AGENT_BASE_URL")
         self.api_key = api_key or _load_api_key()
         self.timeout_s = timeout_s
         self._client = None

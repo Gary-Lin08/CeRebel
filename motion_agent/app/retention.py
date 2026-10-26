@@ -151,8 +151,7 @@ def last_interaction(account: dict[str, Any], captures: list[dict[str, Any]], to
 def _renewing_subscription(settings: Settings, user_id: str) -> bool:
     from motion_agent.app import billing
 
-    row = billing.subscription_for(settings.product_dir, user_id)
-    return billing.is_pro(settings.product_dir, user_id) and not row.get("cancel_at_period_end")
+    return billing.still_billing(settings.product_dir, user_id)
 
 
 def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = None) -> dict[str, Any]:
@@ -181,6 +180,7 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
         "raw_video_deleted": [],
         "orphan_sessions_deleted": [],
         "orphan_gemx_deleted": [],
+        "deleted_capture_leftovers": [],
         "neck_ik_deleted": [],
         "gemx_logs_deleted": [],
         "events_removed": 0,
@@ -217,6 +217,7 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
     gone_users = {e["user_id"] for e in report["accounts_deleted"]}
     rows = all_captures(settings.product_dir)
     owner = {str(r["session_id"]): r.get("user_id") for r in rows if r.get("session_id")}
+    live = {str(r["session_id"]) for r in rows if r.get("session_id") and not r.get("deleted")}
     uploaded = {str(r["session_id"]): _utc(r.get("created_at")) for r in rows if r.get("session_id")}
     sessions_root = settings.data_dir / "sessions"
     session_dirs = sorted(p for p in sessions_root.iterdir() if p.is_dir()) if sessions_root.is_dir() else []
@@ -234,6 +235,14 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
                 report["orphan_sessions_deleted"].append(sid)
                 LOG.info("%s unowned session %s", "would delete" if dry_run else "deleted", sid)
                 continue
+        # 2b. Files of a capture its owner deleted: a GPU job that was still running when the
+        #     user pressed Delete can write results back. Deletion is immediate, so no age limit.
+        elif sid not in live:
+            if not dry_run:
+                purge_session_dir(settings, sid)
+            report["deleted_capture_leftovers"].append(sid)
+            LOG.info("%s files of deleted capture %s", "would delete" if dry_run else "deleted", sid)
+            continue
         # 3. Raw video after the retention period; derived results stay.
         done = processed_at(session_dir)
         if uploaded.get(sid) is not None:
@@ -381,6 +390,7 @@ def summary_line(report: dict[str, Any]) -> str:
         f"({len(report['accounts_skipped'])} skipped), "
         f"{len(report['orphan_sessions_deleted'])} unowned sessions, "
         f"{len(report['orphan_gemx_deleted'])} orphan GEM-X folders, "
+        f"{len(report['deleted_capture_leftovers'])} deleted-capture leftovers, "
         f"{len(report['neck_ik_deleted'])} neck IK folders, "
         f"{len(report['gemx_logs_deleted'])} GEM-X logs, "
         f"{report['events_removed']} old usage events "

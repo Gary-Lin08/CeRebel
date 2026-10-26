@@ -252,23 +252,26 @@ class DashScopeEmbedder:
         api_key: str | None = None,
     ) -> None:
         self.model = model or DEFAULT_EMBED_MODEL
+        # Resolved when the first request is made; there is no built-in endpoint (see qwen_client).
         self.base_url = (
             base_url
-            or os.environ.get("MOTION_AGENT_KB_EMBED_BASE_URL")
-            or os.environ.get("MOTION_AGENT_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+            or (os.environ.get("MOTION_AGENT_KB_EMBED_BASE_URL") or "").strip()
+            or (os.environ.get("MOTION_AGENT_BASE_URL") or "").strip()
+            or None
         )
         self.api_key = api_key or (os.environ.get("MOTION_AGENT_KB_EMBED_API_KEY") or "").strip() or None
         self._client = None
 
     def _get_client(self):
         if self._client is None:
-            from openai import OpenAI
+            from motion_agent.llm.qwen_client import _load_api_key, require_base_url
 
-            from motion_agent.llm.qwen_client import _load_api_key
+            base_url = self.base_url or require_base_url("MOTION_AGENT_KB_EMBED_BASE_URL", "MOTION_AGENT_BASE_URL")
+            from openai import OpenAI
 
             self._client = OpenAI(
                 api_key=self.api_key or _load_api_key(),
-                base_url=self.base_url,
+                base_url=base_url,
                 timeout=60.0,
             )
         return self._client
