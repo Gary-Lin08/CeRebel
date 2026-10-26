@@ -4,8 +4,8 @@
         --say "What's the biggest thing I should fix?" --say "How fast were my hips turning at impact?"
 
 Each question is spoken at real-time pace (16 kHz PCM16), followed by silence. Questions come
-from --wav files (16 kHz mono) or are synthesized with --say through the configured Model Studio
-key (local testing only). --barge-in sends the next question while the coach is still talking.
+from --wav files (16 kHz mono) or are synthesized with --say through the configured speech
+provider (CEREBEL_VOICE_PROVIDER / CEREBEL_VOICE_API_KEY, as for the server). --barge-in sends the next question while the coach is still talking.
 Prints one JSON line per turn: ms from the end of speech to the transcript, the first audio
 (the opening line), the reply text and the first audio of the reply.
 """
@@ -14,13 +14,11 @@ from __future__ import annotations
 
 import argparse
 import array
-import base64
 import json
 import struct
 import sys
 import threading
 import time
-import urllib.request
 import wave
 from pathlib import Path
 
@@ -32,23 +30,16 @@ FRAME = 1600  # 100 ms
 
 
 def synthesize(text: str) -> bytes:
-    from motion_agent.llm.qwen_client import _load_api_key
+    from motion_agent.app.speech import build_provider
 
-    body = json.dumps({"model": "qwen3-tts-flash", "input": {"text": text, "voice": "Cherry", "language_type": "English"}}).encode()
-    req = urllib.request.Request(
-        "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
-        data=body,
-        headers={"Authorization": "Bearer " + _load_api_key(), "Content-Type": "application/json", "X-DashScope-SSE": "enable"},
-    )
-    pcm = bytearray()
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        for raw in resp:
-            line = raw.decode("utf-8", "replace").strip()
-            if line.startswith("data:"):
-                data = ((json.loads(line[5:]).get("output") or {}).get("audio") or {}).get("data")
-                if data:
-                    pcm += base64.b64decode(data)
-    src = array.array("h", bytes(pcm))  # 24 kHz -> 16 kHz
+    chunks: list[bytes] = []
+    tts = build_provider().open_tts()
+    try:
+        if not tts.synthesize(text, chunks.append, threading.Event()):
+            raise SystemExit(f"could not synthesize {text!r}")
+    finally:
+        tts.close()
+    src = array.array("h", b"".join(chunks))  # 24 kHz -> 16 kHz
     return array.array("h", (src[int(i * 1.5)] for i in range(int(len(src) / 1.5)))).tobytes()
 
 

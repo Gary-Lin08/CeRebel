@@ -2,7 +2,8 @@
 
 Audio in: 16 kHz mono PCM16 from the browser. Audio out: 24 kHz mono PCM16.
 Providers are chosen with CEREBEL_VOICE_PROVIDER:
-  dashscope  streaming recognition + realtime synthesis on Model Studio (local demo key)
+  together   realtime transcription + streaming synthesis on Together AI (United States), the
+             same company that already serves the coach model
   mock       offline stand-ins for tests and UI checks
 Nothing here is shown to users; provider names and errors stay in server logs.
 """
@@ -19,6 +20,7 @@ import threading
 import time
 import uuid
 from typing import Callable
+from urllib.parse import quote
 
 from motion_agent.app import ws as wslib
 
@@ -69,38 +71,53 @@ def _env(name: str, default: str) -> str:
     return value.strip() if value and value.strip() else default
 
 
-# --------------------------------------------------------------------------- DashScope
+# --------------------------------------------------------------------------- Together AI
 
 
-class DashScopeAsr(AsrStream):
-    """fun-asr-realtime over the inference WebSocket (run-task / binary audio / finish-task)."""
+def together_key() -> str | None:
+    """CEREBEL_VOICE_API_KEY, else TOGETHER_API_KEY, else the coach key when the coach runs on Together."""
+    for name in ("CEREBEL_VOICE_API_KEY", "TOGETHER_API_KEY"):
+        value = (os.environ.get(name) or "").strip()
+        if value:
+            return value
+    if "together" in (os.environ.get("MOTION_AGENT_BASE_URL") or "").lower():
+        value = (os.environ.get("MOTION_AGENT_API_KEY") or "").strip()
+        if value:
+            return value
+    return None
+
+
+class TogetherAsr(AsrStream):
+    """Realtime transcription: base64 PCM in, interim deltas and completed segments out.
+    The service's own voice-activity detection ends each segment after a pause."""
 
     def __init__(self, base: str, key: str, on_partial: OnText, on_final: OnText, on_error: OnText) -> None:
         self.on_partial, self.on_final, self.on_error = on_partial, on_final, on_error
-        self.task_id = uuid.uuid4().hex
-        self.sock = wslib.connect(base + "/api-ws/v1/inference", {"Authorization": "Bearer " + key})
-        self.sock.send_text(json.dumps({
-            "header": {"action": "run-task", "task_id": self.task_id, "streaming": "duplex"},
-            "payload": {
-                "task_group": "audio", "task": "asr", "function": "recognition",
-                "model": _env("CEREBEL_VOICE_ASR_MODEL", "fun-asr-realtime"),
-                "parameters": {
-                    "format": "pcm",
-                    "sample_rate": IN_RATE,
-                    "language_hints": ["en"],
-                    "max_sentence_silence": int(_env("CEREBEL_VOICE_END_SILENCE_MS", "600")),
-                    "heartbeat": True,
-                },
-                "input": {},
-            },
-        }))
-        self._started = threading.Event()
+        model = _env("CEREBEL_VOICE_ASR_MODEL", "openai/whisper-large-v3")
+        url = (
+            f"{base}/v1/realtime?intent=transcription&model={quote(model, safe='')}"
+            "&input_audio_format=pcm_s16le_16000"
+        )
+        self.sock = wslib.connect(url, {"Authorization": "Bearer " + key, "OpenAI-Beta": "realtime=v1"})
         self._closed = False
+        self._started = threading.Event()
         self._thread = threading.Thread(target=self._read, name="voice-asr", daemon=True)
         self._thread.start()
         if not self._started.wait(8):
             self.close()
-            raise wslib.WebSocketClosed("recognition did not start")
+            raise wslib.WebSocketClosed("transcription did not start")
+        self.sock.send_text(json.dumps({
+            "type": "transcription_session.updated",
+            "session": {"turn_detection": {
+                "type": "server_vad",
+                "threshold": float(_env("CEREBEL_VOICE_VAD_THRESHOLD", "0.3")),
+                "min_silence_duration_ms": int(_env("CEREBEL_VOICE_END_SILENCE_MS", "600")),
+                "min_speech_duration_ms": 250,
+                # The default (5 s) would cut a longer question into several turns.
+                "max_speech_duration_s": 30,
+                "speech_pad_ms": 250,
+            }},
+        }))
 
     def _read(self) -> None:
         while True:
@@ -114,69 +131,63 @@ class DashScopeAsr(AsrStream):
                 ev = json.loads(payload)
             except ValueError:
                 continue
-            event = (ev.get("header") or {}).get("event")
-            if event == "task-started":
+            kind = ev.get("type")
+            if kind == "session.created":
                 self._started.set()
-            elif event == "result-generated":
-                sentence = ((ev.get("payload") or {}).get("output") or {}).get("sentence") or {}
-                if sentence.get("heartbeat"):
-                    continue
-                text = str(sentence.get("text") or "").strip()
-                if not text:
-                    continue
-                (self.on_final if sentence.get("sentence_end") else self.on_partial)(text)
-            elif event == "task-failed":
-                LOG.warning("recognition failed: %s", (ev.get("header") or {}).get("error_message"))
-                self.on_error("recognition failed")
-                break
-            elif event == "task-finished":
+            elif kind == "conversation.item.input_audio_transcription.delta":
+                text = str(ev.get("delta") or "").strip()  # each delta replaces the previous one
+                if text:
+                    self.on_partial(text)
+            elif kind == "conversation.item.input_audio_transcription.completed":
+                text = str(ev.get("transcript") or "").strip()
+                if text:
+                    self.on_final(text)
+            elif kind == "conversation.item.input_audio_transcription.failed":
+                LOG.warning("transcription segment failed: %s", str(ev.get("error"))[:200])
+            elif kind == "error":
+                detail = ev.get("error") if isinstance(ev.get("error"), dict) else ev
+                LOG.warning("transcription error: %s", str(detail.get("message") or detail)[:200])
+                self.on_error("transcription failed")
                 break
         if not self._closed:
-            self.on_error("recognition stream closed")
+            self.on_error("transcription stream closed")
 
     def send_audio(self, pcm: bytes) -> None:
         if not self._closed:
-            self.sock.send_binary(pcm)
+            self.sock.send_text(json.dumps({"type": "input_audio_buffer.append", "audio": base64.b64encode(pcm).decode("ascii")}))
 
     def close(self) -> None:
         if self._closed:
             return
         self._closed = True
-        try:
-            self.sock.send_text(json.dumps({
-                "header": {"action": "finish-task", "task_id": self.task_id, "streaming": "duplex"},
-                "payload": {"input": {}},
-            }))
-        except (OSError, wslib.WebSocketClosed):
-            pass
         self.sock.close()
 
 
-class DashScopeTts(Synthesizer):
-    """Realtime synthesis over one WebSocket, reused sentence after sentence (commit mode)."""
+def _strip_wav_header(chunk: bytes) -> bytes:
+    """The first PCM chunk can arrive with a WAV header in front of the samples."""
+    if not chunk.startswith(b"RIFF"):
+        return chunk
+    at = chunk.find(b"data")
+    return chunk[at + 8 :] if at >= 0 else chunk[44:]
+
+
+class TogetherTts(Synthesizer):
+    """Streaming synthesis over one WebSocket; each sentence is its own context, synthesized on commit."""
 
     def __init__(self, base: str, key: str) -> None:
-        self.base, self.key = base, key
-        self.model = _env("CEREBEL_VOICE_TTS_MODEL", "qwen3-tts-flash-realtime")
-        self.voice = _env("CEREBEL_VOICE_TTS_VOICE", "Ethan")
+        self.key = key
+        model = _env("CEREBEL_VOICE_TTS_MODEL", "hexgrad/Kokoro-82M")
+        voice = _env("CEREBEL_VOICE_TTS_VOICE", "af_heart")
+        self.url = (
+            f"{base}/v1/audio/speech/websocket?model={quote(model, safe='')}&voice={quote(voice, safe='+()')}"
+            f"&response_format=pcm&sample_rate={OUT_RATE}&segment=never"
+        )
         self.first_audio_timeout = float(_env("CEREBEL_VOICE_TTS_TIMEOUT_S", "5"))
         self.sock: wslib.WebSocket | None = None
 
     def _open(self) -> wslib.WebSocket:
-        sock = wslib.connect(f"{self.base}/api-ws/v1/realtime?model={self.model}", {"Authorization": "Bearer " + self.key})
+        sock = wslib.connect(self.url, {"Authorization": "Bearer " + self.key})
         sock.sock.settimeout(self.first_audio_timeout)
-        sock.recv()  # session.created
-        sock.send_text(json.dumps({
-            "event_id": uuid.uuid4().hex,
-            "type": "session.update",
-            "session": {
-                "voice": self.voice,
-                "response_format": "pcm",
-                "sample_rate": OUT_RATE,
-                "mode": "commit",
-                "language_type": "English",
-            },
-        }))
         return sock
 
     def warm(self) -> None:
@@ -188,15 +199,17 @@ class DashScopeTts(Synthesizer):
             self.sock = None
 
     def synthesize(self, text: str, on_audio: OnAudio, cancel: threading.Event) -> bool:
+        context = uuid.uuid4().hex[:16]
         try:
             if self.sock is None or self.sock.closed:
                 self.sock = self._open()
             sock = self.sock
-            for kind, extra in (("input_text_buffer.append", {"text": text}), ("input_text_buffer.commit", {})):
-                sock.send_text(json.dumps({"event_id": uuid.uuid4().hex, "type": kind, **extra}))
+            sock.send_text(json.dumps({"type": "input_text_buffer.append", "text": text, "context_id": context}))
+            sock.send_text(json.dumps({"type": "input_text_buffer.commit", "context_id": context}))
+            first = True
             while True:
                 if cancel.is_set():
-                    # Abandon the rest of this response: a fresh socket is cheaper than draining it.
+                    # A fresh socket next time is simpler than draining this sentence's audio.
                     self.close()
                     return False
                 msg = sock.recv()
@@ -207,13 +220,19 @@ class DashScopeTts(Synthesizer):
                 if op != wslib.OP_TEXT:
                     continue
                 ev = json.loads(payload)
+                if ev.get("context_id") not in (None, context):
+                    continue  # audio still arriving for an earlier sentence
                 kind = ev.get("type")
-                if kind == "response.audio.delta" and ev.get("delta"):
-                    on_audio(base64.b64decode(ev["delta"]))
-                elif kind == "response.done":
+                if kind == "conversation.item.audio_output.delta" and ev.get("delta"):
+                    chunk = base64.b64decode(ev["delta"])
+                    if first:
+                        chunk, first = _strip_wav_header(chunk), False
+                    if chunk:
+                        on_audio(chunk[: len(chunk) - len(chunk) % 2])
+                elif kind == "conversation.item.audio_output.done":
                     return True
-                elif kind == "error":
-                    LOG.warning("synthesis error: %s", str(ev.get("error"))[:200])
+                elif kind in ("conversation.item.tts.failed", "error"):
+                    LOG.warning("synthesis failed: %s", str(ev.get("error") or ev)[:200])
                     self.close()
                     return False
         except (OSError, ValueError, wslib.WebSocketClosed) as exc:
@@ -227,20 +246,21 @@ class DashScopeTts(Synthesizer):
         self.sock = None
 
 
-class DashScopeProvider(SpeechProvider):
-    name = "dashscope"
+class TogetherProvider(SpeechProvider):
+    name = "together"
 
     def __init__(self) -> None:
-        from motion_agent.llm.qwen_client import _load_api_key
-
-        self.key = os.environ.get("CEREBEL_VOICE_API_KEY") or _load_api_key()
-        self.base = _env("CEREBEL_VOICE_WS_BASE", "wss://dashscope.aliyuncs.com").rstrip("/")
+        key = together_key()
+        if not key:
+            raise RuntimeError("no speech API key: set CEREBEL_VOICE_API_KEY")
+        self.key = key
+        self.base = _env("CEREBEL_VOICE_WS_BASE", "wss://api.together.ai").rstrip("/")
 
     def open_asr(self, on_partial: OnText, on_final: OnText, on_error: OnText) -> AsrStream:
-        return DashScopeAsr(self.base, self.key, on_partial, on_final, on_error)
+        return TogetherAsr(self.base, self.key, on_partial, on_final, on_error)
 
     def open_tts(self) -> Synthesizer:
-        return DashScopeTts(self.base, self.key)
+        return TogetherTts(self.base, self.key)
 
 
 # --------------------------------------------------------------------------- mock
@@ -320,10 +340,20 @@ class MockProvider(SpeechProvider):
         return MockTts()
 
 
+def provider_name() -> str:
+    return _env("CEREBEL_VOICE_PROVIDER", "together").lower()
+
+
+def provider_ready() -> bool:
+    """Whether a call could start: the provider is known and has its key."""
+    name = provider_name()
+    return name == "mock" or (name == "together" and bool(together_key()))
+
+
 def build_provider(name: str | None = None) -> SpeechProvider:
-    name = (name or _env("CEREBEL_VOICE_PROVIDER", "dashscope")).lower()
+    name = (name or provider_name()).lower()
     if name == "mock":
         return MockProvider()
-    if name == "dashscope":
-        return DashScopeProvider()
+    if name == "together":
+        return TogetherProvider()
     raise ValueError(f"unknown CEREBEL_VOICE_PROVIDER: {name}")

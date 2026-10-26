@@ -298,7 +298,9 @@ class Handler(BaseHTTPRequestHandler):
             from motion_agent.app import voice
             from motion_agent.app.product_api import current_user
 
-            if not voice.voice_enabled():
+            from motion_agent.app.speech import provider_ready
+
+            if not (voice.voice_enabled() and provider_ready()):
                 return _json_response(self, 200, {"enabled": False})
             user = current_user(SETTINGS, self.headers)
             pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
@@ -1049,7 +1051,9 @@ class Handler(BaseHTTPRequestHandler):
         from motion_agent.app import ws as wslib
         from motion_agent.app.product_api import current_user, default_visible_session_id, media_allowed, record_event
 
-        if not voice.voice_enabled():
+        from motion_agent.app.speech import build_provider, provider_ready
+
+        if not (voice.voice_enabled() and provider_ready()):
             return _json_response(self, 404, {"error": True, "message": "not found"})
         # The token travels in the first message, not a cookie, but refuse foreign pages anyway.
         origin = (self.headers.get("Origin") or "").rstrip("/")
@@ -1117,8 +1121,6 @@ class Handler(BaseHTTPRequestHandler):
             return build_coach_briefs(video_id=video_id, data_dir=DATA_DIR, sport="golf")
 
         try:
-            from motion_agent.app.speech import build_provider
-
             provider = build_provider()
         except Exception:  # noqa: BLE001
             LOG.exception("voice provider unavailable")

@@ -57,7 +57,7 @@
       btn.hidden = !on;
       btn.classList.toggle("is-live", !!call);
       btn.setAttribute("aria-pressed", call ? "true" : "false");
-      var hint = status && status.kind === "trial" && !call ? " · free try" : "";
+      var hint = status && status.kind === "trial" && !status.need && !call ? " · free try" : "";
       btn.textContent = call ? "End call" : btn.getAttribute("data-label") + hint;
     });
     // The live call replaces the old hold-to-talk button where it is available.
@@ -390,9 +390,12 @@
       '<button type="button" class="vc-ghost" data-act="mute" aria-pressed="false">Mute</button>' +
       '<button type="button" class="vc-end" data-act="end">End</button></div>';
     document.body.appendChild(sheet);
-    // Show the chat with the transcript, without focusing the text box (that would raise the
-    // keyboard on phones).
-    document.body.classList.add("vc-in-call", "pg-consumer-chat-open");
+    document.body.classList.add("vc-in-call");
+    // On wide screens show the chat with the transcript beside the call, without focusing the text
+    // box. Phones keep the page as it is: the sheet already shows the caption and the numbers.
+    if (window.matchMedia && window.matchMedia("(min-width: 721px)").matches) {
+      document.body.classList.add("pg-consumer-chat-open");
+    }
     c.sheet = sheet;
     sheet.querySelector(".vc-orb").addEventListener("click", function () {
       if (coachSpeaking(c)) bargeIn(c);

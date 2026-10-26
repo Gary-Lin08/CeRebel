@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import array
+import base64
 import dataclasses
 import json
 import math
@@ -471,6 +472,141 @@ class ThinkingFlagTests(unittest.TestCase):
         self.assertEqual([kw["extra_body"] for kw in sent], [{"enable_thinking": False}, {"enable_thinking": False}, {"enable_thinking": True}])
 
 
+class FakeTogether:
+    """A local stand-in that speaks Together AI's documented realtime STT and TTS WebSocket messages."""
+
+    def __init__(self) -> None:
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+        fake = self
+        self.requests: list[tuple[str, dict]] = []
+        self.messages: list[dict] = []
+
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *args):
+                pass
+
+            def do_GET(self):  # noqa: N802
+                fake.requests.append((self.path, dict(self.headers)))
+                sock = wslib.server_upgrade(self)
+                if self.path.startswith("/v1/realtime"):
+                    fake._stt(sock)
+                else:
+                    fake._tts(sock)
+
+        self.server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        threading.Thread(target=self.server.serve_forever, daemon=True).start()
+        self.base = "ws://127.0.0.1:%d" % self.server.server_address[1]
+
+    def _stt(self, sock) -> None:
+        sock.send_text(json.dumps({"type": "session.created", "session": {"id": "s1", "model": "openai/whisper-large-v3"}}))
+        appended = 0
+        while True:
+            msg = sock.recv()
+            if msg is None:
+                return
+            ev = json.loads(msg[1])
+            self.messages.append(ev)
+            if ev["type"] == "input_audio_buffer.append":
+                appended += 1
+                if appended == 2:
+                    sock.send_text(json.dumps({"type": "conversation.item.input_audio_transcription.delta", "delta": "How fast"}))
+                if appended == 4:
+                    sock.send_text(json.dumps({"type": "conversation.item.input_audio_transcription.completed", "transcript": "How fast were my hips turning?"}))
+
+    def _tts(self, sock) -> None:
+        def delta(ctx, pcm):
+            return json.dumps({"type": "conversation.item.audio_output.delta", "item_id": "tts_1", "context_id": ctx, "delta": base64.b64encode(pcm).decode()})
+
+        while True:
+            msg = sock.recv()
+            if msg is None:
+                return
+            ev = json.loads(msg[1])
+            self.messages.append(ev)
+            if ev["type"] == "input_text_buffer.commit":
+                ctx = ev.get("context_id")
+                sock.send_text(delta("an-older-sentence", b"\x09\x00" * 4))
+                sock.send_text(delta(ctx, b"RIFF" + b"\x00" * 32 + b"data" + b"\x00" * 4 + b"\x01\x00" * 4))
+                sock.send_text(delta(ctx, b"\x02\x00" * 4))
+                sock.send_text(json.dumps({"type": "conversation.item.audio_output.done", "item_id": "tts_1", "context_id": ctx}))
+
+    def close(self) -> None:
+        self.server.shutdown()
+        self.server.server_close()
+
+
+class TogetherAdapterTests(unittest.TestCase):
+    def setUp(self):
+        from motion_agent.app import speech
+
+        self.speech = speech
+        self.fake = FakeTogether()
+        self.addCleanup(self.fake.close)
+        env = mock.patch.dict("os.environ", {"CEREBEL_VOICE_API_KEY": "test-key", "CEREBEL_VOICE_WS_BASE": self.fake.base, "CEREBEL_VOICE_END_SILENCE_MS": "600"})
+        env.start()
+        self.addCleanup(env.stop)
+
+    def test_transcription_protocol(self):
+        partials, finals = [], []
+        asr = self.speech.TogetherProvider().open_asr(partials.append, finals.append, lambda m: None)
+        self.addCleanup(asr.close)
+        for i in range(4):
+            asr.send_audio(bytes([i, 0]) * 800)
+        self.assertTrue(_wait(lambda: finals))
+        path, headers = self.fake.requests[0]
+        self.assertEqual(path, "/v1/realtime?intent=transcription&model=openai%2Fwhisper-large-v3&input_audio_format=pcm_s16le_16000")
+        self.assertEqual(headers.get("Authorization"), "Bearer test-key")
+        self.assertEqual(headers.get("OpenAI-Beta"), "realtime=v1")
+        update = self.fake.messages[0]
+        self.assertEqual(update["type"], "transcription_session.updated")
+        vad = update["session"]["turn_detection"]
+        self.assertEqual((vad["type"], vad["min_silence_duration_ms"], vad["max_speech_duration_s"]), ("server_vad", 600, 30))
+        appended = [m for m in self.fake.messages if m["type"] == "input_audio_buffer.append"]
+        self.assertEqual(base64.b64decode(appended[1]["audio"]), bytes([1, 0]) * 800)
+        self.assertEqual(partials, ["How fast"])
+        self.assertEqual(finals, ["How fast were my hips turning?"])
+
+    def test_synthesis_protocol(self):
+        tts = self.speech.TogetherProvider().open_tts()
+        self.addCleanup(tts.close)
+        chunks = []
+        self.assertTrue(tts.synthesize("Keep your trail hip back.", chunks.append, threading.Event()))
+        self.assertEqual(chunks, [b"\x01\x00" * 4, b"\x02\x00" * 4])  # WAV header gone, older sentence skipped
+        path, headers = self.fake.requests[0]
+        self.assertEqual(path, "/v1/audio/speech/websocket?model=hexgrad%2FKokoro-82M&voice=af_heart&response_format=pcm&sample_rate=24000&segment=never")
+        self.assertEqual(headers.get("Authorization"), "Bearer test-key")
+        append, commit = self.fake.messages[:2]
+        self.assertEqual((append["type"], append["text"]), ("input_text_buffer.append", "Keep your trail hip back."))
+        self.assertEqual(commit, {"type": "input_text_buffer.commit", "context_id": append["context_id"]})
+        # The same connection serves the next sentence.
+        self.assertTrue(tts.synthesize("Stay in posture.", chunks.append, threading.Event()))
+        self.assertEqual(len(self.fake.requests), 1)
+
+    def test_cancel_drops_the_connection(self):
+        tts = self.speech.TogetherProvider().open_tts()
+        stop = threading.Event()
+        stop.set()
+        self.assertFalse(tts.synthesize("Never heard.", lambda pcm: None, stop))
+        self.assertIsNone(tts.sock)
+
+    def test_key_and_readiness(self):
+        clean = {k: "" for k in ("CEREBEL_VOICE_API_KEY", "TOGETHER_API_KEY", "MOTION_AGENT_API_KEY", "MOTION_AGENT_BASE_URL")}
+        with mock.patch.dict("os.environ", {**clean, "CEREBEL_VOICE_PROVIDER": "together"}):
+            self.assertFalse(self.speech.provider_ready())
+            with self.assertRaises(RuntimeError):
+                self.speech.build_provider()
+        with mock.patch.dict("os.environ", {**clean, "MOTION_AGENT_API_KEY": "coach", "MOTION_AGENT_BASE_URL": "https://api.fireworks.ai/inference/v1"}):
+            self.assertIsNone(self.speech.together_key())  # another provider's key is not used
+        with mock.patch.dict("os.environ", {**clean, "MOTION_AGENT_API_KEY": "coach", "MOTION_AGENT_BASE_URL": "https://api.together.xyz/v1"}):
+            self.assertEqual(self.speech.together_key(), "coach")
+        with mock.patch.dict("os.environ", {**clean, "TOGETHER_API_KEY": "t", "CEREBEL_VOICE_API_KEY": "v"}):
+            self.assertEqual(self.speech.together_key(), "v")
+            self.assertTrue(self.speech.provider_ready())
+        with mock.patch.dict("os.environ", {**clean, "CEREBEL_VOICE_PROVIDER": "mock"}):
+            self.assertTrue(self.speech.provider_ready())
+
+
 class ServerIntegrationTests(unittest.TestCase):
     """A real server socket, the mock speech provider and a stubbed coach."""
 
@@ -540,6 +676,14 @@ class ServerIntegrationTests(unittest.TestCase):
     def test_foreign_origin_is_refused(self):
         with self.assertRaises(wslib.WebSocketClosed):
             wslib.connect(self.url, {"Origin": "https://evil.example"})
+
+    def test_status_off_without_a_speech_key(self):
+        import urllib.request
+
+        env = {"CEREBEL_VOICE_PROVIDER": "together", "CEREBEL_VOICE_API_KEY": "", "TOGETHER_API_KEY": "", "MOTION_AGENT_BASE_URL": ""}
+        with mock.patch.dict("os.environ", env):
+            status = json.loads(urllib.request.urlopen(self.url.replace("ws://", "http://").replace("live", "status")).read())
+            self.assertEqual(status, {"enabled": False})
 
     def test_disabled_by_default(self):
         with mock.patch.dict("os.environ", {"CEREBEL_VOICE_ENABLED": "0"}):

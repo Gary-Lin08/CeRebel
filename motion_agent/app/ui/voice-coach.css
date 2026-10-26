@@ -158,6 +158,10 @@
 .bubble .vc-numbers ul { margin: 0; padding-left: 1.1rem; }
 
 body.vc-in-call #coach { padding-bottom: 7.5rem; }
+/* The call sheet takes the bottom of the screen: the floating coach button steps aside, and the
+   library drawer, when opened during a call, sits above the sheet (the call keeps going). */
+body.vc-in-call .coach-fab { display: none !important; }
+body.is-drawer-open .vc-sheet { z-index: 45; }
 
 @media (max-width: 560px) {
   .composer .vc-btn { padding: 0.75rem 0.8rem; }
