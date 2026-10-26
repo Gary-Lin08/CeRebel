@@ -1,0 +1,48 @@
+# Is the playground up? Checks cerebel.tech/playground and the GPU every 30 minutes.
+#
+# A failed run makes GitHub email the account that last changed this schedule (and shows a red
+# run under Actions), so an outage like the one on 2026-10-26, when the box was off for hours and
+# nobody knew, gets noticed. Every run bills at least one Actions minute: every 30 minutes is about
+# 1,440 minutes a month, inside the 2,000 free minutes of a private repository. For checks every
+# few minutes, add an external monitor (for example UptimeRobot) on the same two URLs instead.
+name: uptime
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: uptime
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Page opens and the GPU is ready
+        env:
+          BASE: https://cerebel.tech/playground
+        run: |
+          fail=0
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 --retry 2 --retry-delay 15 --retry-all-errors "$BASE/")
+          echo "page: HTTP $code"
+          [ "$code" = 200 ] || { echo "::error::The playground page answered HTTP $code"; fail=1; }
+
+          health=$(curl -s --max-time 20 --retry 2 --retry-delay 15 --retry-all-errors "$BASE/api/health" || true)
+          state=$(printf '%s' "$health" | python3 -c 'import json,sys
+          try:
+              print((json.load(sys.stdin).get("gpu") or {}).get("state", "missing"))
+          except Exception:
+              print("unreadable")')
+          echo "gpu: $state"
+          # "remote" means analyses run on Modal, which is fine too.
+          case "$state" in
+            ready|remote) ;;
+            *) echo "::error::GPU is '$state': uploads are refused until it is back"; fail=1 ;;
+          esac
+          exit $fail
