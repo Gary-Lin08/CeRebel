@@ -302,3 +302,37 @@ body.cx.vc-in-call .cx-report { padding-bottom: calc(220px + env(safe-area-inset
 @media (prefers-reduced-motion: reduce) {
   .cx *, .cx *::before, .cx *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- 3D body, full screen (body3d.js draws into the stage) ---------- */
+.cx-3d-row { border-color: var(--fix-line); background: linear-gradient(140deg, #22301F, var(--panel) 70%); }
+.cx-3d {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; flex-direction: column;
+  height: 100vh; height: 100dvh;
+  background: var(--night);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  animation: cx-fade 0.2s ease;
+}
+@keyframes cx-fade { from { opacity: 0; } }
+.cx-3d__head { display: flex; align-items: center; gap: 12px; padding: 8px var(--gut-r) 8px var(--gut-l); flex: none; }
+.cx-3d__title { min-width: 0; }
+.cx-3d__title h2 { font: 700 19px/1.2 var(--font-display); }
+.cx-3d__title p { display: flex; align-items: center; gap: 8px; margin-top: 3px; font-size: 13px; color: var(--lamp); }
+.cx-3d__swatch { width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--fix); box-shadow: 0 0 0 3px var(--fix-soft); }
+.cx-3d__head .cx-icon-btn { margin-left: auto; background: var(--panel); border: 1px solid var(--line); }
+.cx-3d__stage { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--night); touch-action: none; }
+.cx-3d__status { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; padding: 24px; text-align: center; font-size: 14px; color: var(--mist); }
+.cx-3d__foot { flex: none; border-top: 1px solid var(--line); background: var(--deep); }
+.cx-3d__controls { grid-template-columns: auto minmax(0, 1fr) auto; }
+.cx-3d .cx-phase { padding-bottom: 4px; }
+.cx-3d__opts { display: flex; align-items: center; gap: 8px; max-width: 640px; margin: 0 auto; padding: 0 var(--gut-r) 10px var(--gut-l); }
+.cx-3d__opts .cx-ctl { padding: 0 14px; flex: none; white-space: nowrap; }
+.cx-3d__opts .cx-ctl[aria-pressed="true"] { background: var(--panel-2); border-color: var(--line-2); }
+.cx-3d__hint { flex: 1; min-width: 0; font-size: 12px; line-height: 1.3; color: var(--faint); text-align: right; }
+/* A phone on its side: give the body the height. */
+@media (max-height: 520px) {
+  .cx-3d__head { padding-top: 2px; padding-bottom: 2px; }
+  .cx-3d__title p, .cx-3d__hint, .cx-3d .cx-phase { display: none; }
+  .cx-3d__opts { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 6px); right: calc(var(--gut-r) + 52px); padding: 0; margin: 0; }
+}

@@ -8,6 +8,7 @@ The page itself is static HTML/JS; these tests pin what the server and the old p
 from __future__ import annotations
 
 import json
+import math
 import re
 import shutil
 import subprocess
@@ -71,6 +72,17 @@ class AppRouteTests(unittest.TestCase):
         self.assertIn('fetch("/playground/api/library"', js)
         self.assertIn('xhr.open("POST", "/playground/api/upload")', js)
         self.assertNotIn('"/api/', js)
+
+    def test_base_path_prefixes_the_3d_module(self):
+        with mock.patch.object(chat_server, "BASE_PATH", "/playground"):
+            code, mod = _get(self.server, "/playground/static/body3d.js")
+            _, js = _get(self.server, "/playground/static/app.js")
+        self.assertEqual(code, 200)
+        self.assertIn('"/playground/api/smplx_mesh_clip?video_id="', mod)
+        self.assertIn('import("/playground/static/three/three.module.js")', mod)
+        self.assertNotIn('"/api/', mod)
+        self.assertNotIn('"/static/', mod)
+        self.assertIn('import("/playground/static/body3d.js")', js)
 
     def test_upload_goes_to_the_upload_origin_behind_the_proxy(self):
         with mock.patch.object(chat_server, "BASE_PATH", "/playground"), mock.patch.object(
@@ -181,6 +193,113 @@ class AppScriptTests(unittest.TestCase):
         self.assertIn('meta[name="cerebel-app"]', head)
         self.assertIn(chat_server.APP_META.format("classic"), head)
         self.assertIn('window.location.replace("/app"', head)
+
+
+class Body3dTests(unittest.TestCase):
+    """The full-screen 3D body (body3d.js): loaded only when opened, signed in, same three.js as the old page."""
+
+    def setUp(self):
+        self.mod = (UI / "body3d.js").read_text(encoding="utf-8")
+        self.js = (UI / "app.js").read_text(encoding="utf-8")
+        self.html = (UI / "app.html").read_text(encoding="utf-8")
+        self.index = (UI / "index.html").read_text(encoding="utf-8")
+
+    def test_every_request_sends_the_login_header(self):
+        calls = list(_fetch_calls(self.mod))
+        self.assertEqual(len(calls), 2)  # the clip and the bone model (a private /media file)
+        missing = [f"body3d.js:{line}" for line, args, before in calls if not _sends_login(args, before)]
+        self.assertEqual(missing, [], "add { headers: authHeaders() } to these requests")
+        self.assertIn("/api/smplx_mesh_clip", set().union(*(_api_paths(args, before) for _, args, before in calls)))
+        # The header comes from the page's own authHeaders(), the one app.js and the old page define.
+        self.assertIn("window.authHeaders()", self.mod)
+
+    def test_nothing_3d_loads_with_the_report(self):
+        self.assertNotRegex(self.html, r'src="[^"]*(?:three|body3d)')
+        self.assertIn('import("/static/body3d.js")', self.js)
+        # Only dynamic import() inside mount(): importing the module itself fetches nothing.
+        self.assertNotRegex(self.mod, re.compile(r"^\s*import\s", re.M))
+
+    def test_three_comes_from_the_old_pages_files(self):
+        paths = re.findall(r'import\("/static/(three/[^"]+)"\)', self.mod)
+        self.assertEqual(sorted(paths), ["three/GLTFLoader.js", "three/OrbitControls.js", "three/three.module.js"])
+        for path in paths:
+            self.assertTrue((UI / path).is_file(), path)
+            self.assertIn(f'import("/static/{path}")', self.index)
+
+    def test_the_all_data_tab_opens_it_full_screen(self):
+        pane = self.html[self.html.index('id="panData"') :]
+        pane = pane[: pane.index("</section>")]
+        self.assertIn('data-act="body3d"', pane)
+        self.assertIn("See it as a 3D body, bones and muscles", pane)
+        self.assertRegex(self.html, r'<section class="cx-3d" id="v3d" role="dialog" aria-modal="true"[^>]*hidden>')
+        self.assertIn('data-act="close-3d"', self.html)
+        wiring = self._block("function init3d()")
+        self.assertIn('el.dataset.act === "body3d") open3d()', wiring)
+        self.assertIn('el.dataset.act === "close-3d") close3d()', wiring)
+        self.assertIn("init3d();", self._block("function init()"))
+
+    def test_closing_frees_the_view(self):
+        self.assertIn("b3d.mod.dispose()", self._block("function close3d"))
+        # Escape, the back gesture and a new route close it too.
+        wiring = self._block("function init3d()")
+        for event in ('"keydown"', '"popstate"', '"hashchange"'):
+            self.assertRegex(wiring, event + r"[^\n]*close3d\(", event)
+
+    def _block(self, head: str) -> str:
+        block = self.js[self.js.index(head) :]
+        return block[: block.index("\n  }\n")]
+
+
+@unittest.skipUnless(shutil.which("node"), "node is not installed")
+class Body3dHelperTests(unittest.TestCase):
+    """The pure helpers in body3d.js, run in Node (the module only touches the browser inside mount())."""
+
+    @classmethod
+    def setUpClass(cls):
+        harness = r"""
+const src = require("fs").readFileSync(process.argv[1], "utf8");
+import("data:text/javascript," + encodeURIComponent(src)).then(({ _test: t }) => {
+  const times = [0, 0.1, 0.2, 0.3];
+  process.stdout.write(JSON.stringify({
+    nearest: [-1, 0, 0.04, 0.06, 0.149, 0.151, 0.3, 9, NaN].map((x) => t.frameIndexAt(times, x)),
+    empty: t.frameIndexAt([], 1),
+    knee: t.focusOf({ title: "Bent trail knee", start_time: 0.93, end_time: 1.73, focus: { anchor: "tibia_r", bones: ["femur_r", "tibia_r", "patella_r"], view_yaw: -32, label: "Trail knee" } }),
+    bare: t.focusOf({ title: "Early extension" }),
+    none: t.focusOf(null),
+    fit: [t.fitDistance(1.9, 1.2, 1.6, 35), t.fitDistance(1.9, 1.2, 0.55, 35)],
+    dedupe: t.dedupePoints([[0, 0, 0], [0, 0, 0.001], [0, 0, 0.01], ["x", null, 2]], 0.002),
+    segments: [t.tubeSegments(2), t.tubeSegments(4), t.tubeSegments(20)],
+  }));
+});
+"""
+        done = subprocess.run(
+            ["node", "-e", harness, str(UI / "body3d.js")], capture_output=True, text=True, timeout=30, check=True
+        )
+        cls.out = json.loads(done.stdout)
+
+    def test_nearest_frame_to_the_video_time(self):
+        self.assertEqual(self.out["nearest"], [0, 0, 0, 1, 1, 2, 3, 3, 0])
+        self.assertEqual(self.out["empty"], -1)
+
+    def test_the_fix_marks_its_bones(self):
+        self.assertEqual(
+            self.out["knee"],
+            {"anchor": "tibia_r", "bones": ["femur_r", "tibia_r", "patella_r"], "yaw": -32, "label": "Trail knee", "window": [0.93, 1.73]},
+        )
+        # No focus from the analysis: frame the pelvis, named after the fix.
+        self.assertEqual(self.out["bare"], {"anchor": "pelvis", "bones": ["pelvis"], "yaw": 0, "label": "Early extension", "window": None})
+        self.assertEqual(self.out["none"]["label"], "Body")
+
+    def test_the_whole_body_fits_on_a_wide_screen_and_a_phone(self):
+        half = math.tan(math.radians(35 / 2))
+        for dist, aspect in zip(self.out["fit"], (1.6, 0.55)):
+            self.assertGreaterEqual(dist * half, 1.9 / 2, aspect)
+            self.assertGreaterEqual(dist * half * aspect, 1.2 / 2, aspect)
+        self.assertGreater(self.out["fit"][1], self.out["fit"][0])
+
+    def test_muscle_paths(self):
+        self.assertEqual(self.out["dedupe"], [[0, 0, 0], [0, 0, 0.01], [0, 0, 2]])
+        self.assertEqual(self.out["segments"], [16, 24, 48])
 
 
 @unittest.skipUnless(shutil.which("node"), "node is not installed")

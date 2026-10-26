@@ -656,6 +656,7 @@ const CxApp = (function () {
     paintDrill();
     paintSeries();
     paintTrack();
+    paint3dEntry();
     if (state.overlay) state.overlay.setNote(f, rep.analysis);
     $("reportTabs").hidden = false;
     setTab(rep.tab);
@@ -1022,6 +1023,187 @@ const CxApp = (function () {
         sp.head.setAttribute("x2", xx);
       });
     }
+  }
+
+  // ---------------------------------------------------------------- 3D body, full screen
+
+  // body3d.js (and three.js behind it) load on the first open, never with the report. The view
+  // follows the report video; once the video was deleted it runs on its own clock (t, playing).
+  const b3d = { open: false, token: 0, mod: null, view: null, pushed: false, t: 0, playing: false, last: 0 };
+
+  function has3dVideo() { return !!video().getAttribute("src"); }
+  function time3d() { return has3dVideo() ? video().currentTime || 0 : b3d.t; }
+
+  // From renderReport: the entry row, the fix named in the header, and the amber bones.
+  function paint3dEntry() {
+    const rep = state.report;
+    const f = finding();
+    $("body3dRow").hidden = !rep.session || rep.session.has_opensim === false;
+    const focus = (f && f.focus) || {};
+    $("b3dFix").textContent = (focus.label || (f && f.title) || "The fix") + ", the part to fix";
+    if (b3d.view) b3d.view.setFinding(f);
+  }
+
+  // The same ticks and fix window as the report's timeline.
+  function paint3dTrack() {
+    const track = $("b3dTrack");
+    track.querySelectorAll(".cx-track__tick").forEach((n) => n.remove());
+    $("track").querySelectorAll(".cx-track__tick").forEach((n) => track.insertBefore(n.cloneNode(), $("b3dTrackHead")));
+    $("b3dTrackFix").style.cssText = $("trackFix").style.cssText;
+  }
+
+  function loop3d(now) {
+    if (!b3d.open) return;
+    window.requestAnimationFrame(loop3d);
+    const end = duration();
+    const dt = b3d.last ? Math.min(0.1, (now - b3d.last) / 1000) : 0;
+    b3d.last = now;
+    if (b3d.playing && !has3dVideo()) b3d.t = (b3d.t + dt * state.speed) % end;
+    const t = Math.min(time3d(), end);
+    const k = end ? t / end : 0;
+    $("b3dTrackHead").style.left = k * 100 + "%";
+    $("b3dTrack").setAttribute("aria-valuenow", String(Math.round(k * 100)));
+    const f = finding();
+    const phase = phaseAt(t);
+    const inFix = f && t >= Number(f.start_time) && t <= Number(f.end_time);
+    const html = (phase ? escapeHtml(phase.label) : "") + (inFix ? " · <b>the moment to fix</b>" : "");
+    if ($("b3dPhase").innerHTML !== html) $("b3dPhase").innerHTML = html;
+    const paused = has3dVideo() ? video().paused : !b3d.playing;
+    $("b3dPlayIcon").setAttribute("d", paused ? "M4 2.5v11l9-5.5z" : "M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z");
+    $("b3dPlay").setAttribute("aria-label", paused ? "Play" : "Pause");
+    $("b3dSpeed").textContent = $("speedBtn").textContent;
+  }
+
+  // Same as the report's play button, or the 3D view's own clock when there is no video.
+  function play3d() {
+    const v = video();
+    if (!has3dVideo()) { b3d.playing = !b3d.playing; return; }
+    if (v.paused) {
+      state.moment = null;
+      v.loop = true;
+      v.playbackRate = state.speed;
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {});
+    } else {
+      v.pause();
+    }
+  }
+  function seek3d(t) {
+    const time = Math.max(0, Math.min(duration(), t));
+    if (!has3dVideo()) { b3d.t = time; b3d.playing = false; return; }
+    const v = video();
+    state.moment = null;
+    v.pause();
+    try { v.currentTime = time; } catch (_) {}
+  }
+
+  async function open3d() {
+    const rep = state.report;
+    const f = finding();
+    if (!rep || !rep.sid || !rep.analysis || !f || b3d.open) return;
+    b3d.open = true;
+    b3d.token += 1;
+    const token = b3d.token;
+    $("v3d").hidden = false;
+    $("vReport").inert = true;
+    document.body.classList.add("is-locked");
+    $("b3dStatus").hidden = false;
+    $("b3dStatus").textContent = "Loading the 3D body…";
+    $("b3dZoom").setAttribute("aria-pressed", "false");
+    $("b3dMuscles").setAttribute("aria-pressed", "true");
+    $("b3dMuscles").hidden = false;
+    $("b3dHint").textContent = window.matchMedia("(pointer: coarse)").matches ? "Drag to turn, pinch to zoom" : "Drag to turn, scroll to zoom";
+    paint3dEntry();
+    paint3dTrack();
+    b3d.last = 0;
+    window.requestAnimationFrame(loop3d);
+    // The phone's back gesture closes the view instead of leaving the report. After a reload the
+    // entry from last time is still there, so reuse it.
+    try {
+      if (!(window.history.state && window.history.state.cx3d)) window.history.pushState({ cx3d: true }, "");
+      b3d.pushed = true;
+    } catch (_) {}
+    $("b3dDone").focus({ preventScroll: true });
+    track("fix_expand", { kind: "body3d", sample: !!rep.sample });
+    try {
+      b3d.mod = b3d.mod || (await import("/static/body3d.js"));
+      if (token !== b3d.token) return;
+      const view = await b3d.mod.mount($("b3dStage"), {
+        sessionId: rep.sid,
+        finding: f,
+        getTime: time3d,
+        t0: Number(rep.analysis.start_time) || 0,
+        t1: duration(),
+      });
+      if (token !== b3d.token) { view.dispose(); return; }
+      b3d.view = view;
+      // The switches may have been flipped while it loaded.
+      if ($("b3dZoom").getAttribute("aria-pressed") === "true") view.setCloseUp(true);
+      if ($("b3dMuscles").getAttribute("aria-pressed") !== "true") view.setMuscles(false);
+      $("b3dStatus").hidden = true;
+      $("b3dMuscles").hidden = !view.hasMuscles;
+    } catch (err) {
+      if (token !== b3d.token || (err && err.aborted)) return;
+      $("b3dStatus").textContent = (err && err.userMessage) || "We couldn't open the 3D body. Check your connection and try again.";
+    }
+  }
+
+  // navigated: the history entry already moved (back gesture, a new route), so don't go back again.
+  function close3d(opts) {
+    if (!b3d.open) return;
+    const navigated = !!(opts && opts.navigated);
+    b3d.open = false;
+    b3d.token += 1;
+    b3d.playing = false;
+    if (b3d.mod) b3d.mod.dispose();
+    b3d.view = null;
+    $("v3d").hidden = true;
+    $("vReport").inert = false;
+    if (!state.sheet) document.body.classList.remove("is-locked");
+    const pushed = b3d.pushed;
+    b3d.pushed = false;
+    if (pushed && !navigated && window.history.state && window.history.state.cx3d) window.history.back();
+    if (!navigated) $("body3dRow").focus({ preventScroll: true });
+  }
+
+  function toggle3dOption(btn, apply) {
+    const on = btn.getAttribute("aria-pressed") !== "true";
+    btn.setAttribute("aria-pressed", String(on));
+    if (b3d.view) apply(b3d.view, on);
+  }
+
+  function init3d() {
+    document.addEventListener("click", (e) => {
+      const el = e.target.closest("[data-act]");
+      if (el && el.dataset.act === "body3d") open3d();
+      else if (el && el.dataset.act === "close-3d") close3d();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && b3d.open) close3d(); });
+    window.addEventListener("popstate", (e) => { if (b3d.open && !(e.state && e.state.cx3d)) close3d({ navigated: true }); });
+    window.addEventListener("hashchange", () => close3d({ navigated: true }));
+    $("b3dPlay").addEventListener("click", play3d);
+    $("b3dSpeed").addEventListener("click", () => {
+      state.speed = SPEEDS[(SPEEDS.indexOf(state.speed) + 1) % SPEEDS.length];
+      if (!state.moment) video().playbackRate = state.speed;
+      paintSpeed();
+    });
+    $("b3dZoom").addEventListener("click", (e) => toggle3dOption(e.currentTarget, (view, on) => view.setCloseUp(on)));
+    $("b3dMuscles").addEventListener("click", (e) => toggle3dOption(e.currentTarget, (view, on) => view.setMuscles(on)));
+    const t = $("b3dTrack");
+    let dragging = false;
+    const at = (e) => {
+      const r = t.getBoundingClientRect();
+      seek3d(Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * duration());
+    };
+    t.addEventListener("pointerdown", (e) => { dragging = true; t.setPointerCapture(e.pointerId); at(e); });
+    t.addEventListener("pointermove", (e) => { if (dragging) at(e); });
+    t.addEventListener("pointerup", () => { dragging = false; });
+    t.addEventListener("pointercancel", () => { dragging = false; });
+    t.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      seek3d(time3d() + (e.key === "ArrowRight" ? 0.1 : -0.1));
+    });
   }
 
   // ---------------------------------------------------------------- waiting screen
@@ -1571,6 +1753,7 @@ const CxApp = (function () {
     paintSpeed();
     setAuthMode("register");
     window.addEventListener("hashchange", route);
+    init3d();
     window.requestAnimationFrame(tick);
     route();
   }

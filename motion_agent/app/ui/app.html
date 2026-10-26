@@ -161,6 +161,11 @@
 
           <section class="cx-panel" role="tabpanel" id="panData" aria-labelledby="tabData" hidden>
             <p class="cx-muted">Measurements across the whole swing. Scrub the video and the numbers follow.</p>
+            <button type="button" class="cx-other cx-3d-row" id="body3dRow" data-act="body3d">
+              <strong>See it as a 3D body, bones and muscles</strong>
+              <span>Full screen, in step with the video. Your fix is in amber.</span>
+              <span class="cx-chev" aria-hidden="true">›</span>
+            </button>
             <div class="cx-others" id="seriesList"></div>
           </section>
         </div>
@@ -292,6 +297,39 @@
       <button type="button" class="cx-btn" data-act="signout">Sign out</button>
       <button type="button" class="cx-btn cx-btn--danger" data-act="delete-account">Delete account and videos</button>
       <p class="cx-fine"><a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
+    </div>
+  </section>
+
+  <!-- 3D body, full screen. body3d.js and three.js load only when this opens. -->
+  <section class="cx-3d" id="v3d" role="dialog" aria-modal="true" aria-labelledby="b3dTitle" hidden>
+    <header class="cx-3d__head">
+      <div class="cx-3d__title">
+        <h2 id="b3dTitle">Your swing in 3D</h2>
+        <p><span class="cx-3d__swatch" aria-hidden="true"></span><span id="b3dFix"></span></p>
+      </div>
+      <button type="button" class="cx-icon-btn" id="b3dDone" data-act="close-3d" aria-label="Close the 3D view">×</button>
+    </header>
+    <div class="cx-3d__stage" id="b3dStage">
+      <p class="cx-3d__status" id="b3dStatus" role="status"></p>
+    </div>
+    <div class="cx-3d__foot">
+      <div class="cx-controls cx-3d__controls">
+        <button type="button" class="cx-ctl" id="b3dPlay" aria-label="Play">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path id="b3dPlayIcon" d="M4 2.5v11l9-5.5z" /></svg>
+        </button>
+        <div class="cx-track" id="b3dTrack" role="slider" tabindex="0" aria-label="Swing timeline" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="cx-track__rail"></div>
+          <div class="cx-track__fix" id="b3dTrackFix"></div>
+          <div class="cx-track__head" id="b3dTrackHead"></div>
+        </div>
+        <button type="button" class="cx-ctl" id="b3dSpeed" aria-label="Playback speed">½×</button>
+      </div>
+      <p class="cx-phase" id="b3dPhase"></p>
+      <div class="cx-3d__opts">
+        <button type="button" class="cx-ctl" id="b3dZoom" aria-pressed="false">Close-up</button>
+        <button type="button" class="cx-ctl" id="b3dMuscles" aria-pressed="true">Muscles</button>
+        <span class="cx-3d__hint" id="b3dHint">Drag to turn, scroll to zoom</span>
+      </div>
     </div>
   </section>
 
