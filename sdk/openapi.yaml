@@ -1,0 +1,930 @@
+openapi: 3.1.0
+info:
+  title: Cerebel product API
+  version: 0.1.0
+  summary: Upload a movement clip, get a 3D musculoskeletal reconstruction, measured joint angles and one coached fix.
+  description: |
+    The HTTP API served by `motion_agent/app/chat_server.py` (default port 8092).
+
+    - Every number in a report or a coach answer comes from deterministic motion tools on the
+      OpenSim reconstruction, never from the language model.
+    - Errors are JSON: `{"error": true, "message": "..."}`. A 500 adds `error_id`, which matches the
+      server log. Messages are written for end users and can be shown as they are.
+    - Signed-in calls send `Authorization: Bearer <token>` (the legacy `X-User-Token: <token>` also works).
+      Tokens last 30 days (`CEREBEL_TOKEN_TTL_DAYS`).
+    - Anonymous callers only ever see the demo capture named by `CEREBEL_DEMO_SESSION_ID`.
+    - The server may be mounted under a path prefix (`CEREBEL_BASE_PATH`, e.g. `/playground`).
+      Prefix every path below with it; `/media/...` URLs in answers already carry it.
+    - Cross-origin browser calls are allowed only from `CEREBEL_ALLOWED_ORIGINS`.
+
+    SDKs generated from or written against this file: `sdk/python` (cerebel) and `sdk/typescript` (@cerebel/sdk).
+servers:
+  - url: https://cerebel.tech/playground
+    description: Production (behind the main site's proxy; send uploads to the upload origin the operator publishes)
+  - url: http://127.0.0.1:8092
+    description: Local development server (see docs/getting-started.md)
+tags:
+  - name: service
+  - name: account
+  - name: captures
+  - name: reports
+  - name: coach
+  - name: billing
+  - name: internal
+security:
+  - {}
+  - bearer: []
+
+paths:
+  /api/health:
+    get:
+      tags: [service]
+      summary: Readiness of disk, language model and GPU
+      description: 200 when the product can take work, 503 when it cannot (the body says why). The process answering at all means it is up.
+      security: [{}]
+      responses:
+        "200":
+          description: Ready
+          content: { application/json: { schema: { $ref: "#/components/schemas/Health" } } }
+        "503":
+          description: Up but not ready (for example `gpu.state` is `down`)
+          content: { application/json: { schema: { $ref: "#/components/schemas/Health" } } }
+
+  /api/sports:
+    get:
+      tags: [service]
+      summary: Sport Pack catalog
+      security: [{}]
+      responses:
+        "200":
+          description: Live, beta and coming-soon sports
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  live_count: { type: integer }
+                  sports: { type: array, items: { $ref: "#/components/schemas/SportCatalogEntry" } }
+
+  /api/auth/register:
+    post:
+      tags: [account]
+      summary: Create an account and sign in
+      security: [{}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, accept_terms]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+                accept_terms:
+                  type: boolean
+                  const: true
+                  description: The person accepted the Terms and Privacy Policy (`/terms`, `/privacy`).
+                coach_code: { type: [string, "null"], maxLength: 32, description: "Optional referral code; copied to Stripe metadata at checkout." }
+      responses:
+        "200": { $ref: "#/components/responses/Auth" }
+        "400": { $ref: "#/components/responses/Error" }
+
+  /api/auth/login:
+    post:
+      tags: [account]
+      summary: Sign in
+      security: [{}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        "200": { $ref: "#/components/responses/Auth" }
+        "401": { $ref: "#/components/responses/Error" }
+
+  /api/auth/logout:
+    post:
+      tags: [account]
+      summary: Revoke the current token
+      responses:
+        "200": { $ref: "#/components/responses/Ok" }
+
+  /api/me:
+    get:
+      tags: [account]
+      summary: Account, captures, quota and consent (user is null when signed out)
+      responses:
+        "200":
+          description: "Library payload, or `{ok, user: null, captures: []}` when signed out"
+          content: { application/json: { schema: { $ref: "#/components/schemas/Library" } } }
+
+  /api/library:
+    get:
+      tags: [account]
+      summary: Same as /api/me but 401 when signed out
+      security: [{ bearer: [] }]
+      responses:
+        "200":
+          description: Library payload
+          content: { application/json: { schema: { $ref: "#/components/schemas/Library" } } }
+        "401": { $ref: "#/components/responses/Error" }
+
+  /api/account/video-consent:
+    post:
+      tags: [account]
+      summary: Agree to the current video-processing text
+      description: Required once per text version before the first upload. Show `video_consent.text` from /api/me to the person first.
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [accept, version]
+              properties:
+                accept: { type: boolean, const: true }
+                version: { type: string, description: "The `video_consent.version` the person saw." }
+      responses:
+        "200":
+          description: Recorded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  video_consent: { $ref: "#/components/schemas/VideoConsent" }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "409":
+          description: The text changed since the person saw it; show the new one
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+
+  /api/account/delete:
+    post:
+      tags: [account]
+      summary: Delete the account, its captures, results and usage events
+      security: [{ bearer: [] }]
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema: { type: object, properties: { ok: { type: boolean }, deleted_captures: { type: integer } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "409":
+          description: A Pro subscription still renews; cancel it first (subscription_active is true)
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+
+  /api/upload:
+    post:
+      tags: [captures]
+      summary: Upload one video for analysis
+      description: |
+        Answers as soon as the file is stored; analysis runs in the background (usually a few minutes).
+        Poll /api/progress. Quality rules: 1.5–30 s long, at least 24 fps, short side at least 320 px,
+        at most `CEREBEL_UPLOAD_MAX_BYTES` (300 MB by default; 95 MB behind the free Cloudflare plan).
+        Rejected, failed and no-swing uploads do not count toward the monthly allowance.
+        Behind a proxy with a body limit, send this call to `CEREBEL_UPLOAD_ORIGIN` instead.
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: { type: string, format: binary, description: ".mp4 .mov .m4v .webm .avi .mkv .mpeg .mpg" }
+                trim_start: { type: number, description: "Seconds; with trim_end keeps only this window" }
+                trim_end: { type: number }
+      responses:
+        "200":
+          description: Stored; processing started
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok, session_id, stage]
+                properties:
+                  ok: { type: boolean }
+                  session_id: { type: string }
+                  filename: { type: string }
+                  bytes: { type: integer }
+                  stage: { type: string, const: extracting }
+                  warnings: { type: array, items: { type: string }, description: "For example \"Filmed below 60 fps…\"" }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "402":
+          description: Monthly allowance used up (`paywall` true on the free plan)
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+        "413": { $ref: "#/components/responses/Error" }
+        "422":
+          description: Failed the quality check (`rejected` true); the file was deleted
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+        "428":
+          description: Video consent missing (`consent_required` true, `video_consent` has the text)
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+        "503":
+          description: GPU offline (`unavailable` true); nothing was stored
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+
+  /api/progress:
+    get:
+      tags: [captures]
+      summary: Where a capture is in the pipeline
+      parameters:
+        - $ref: "#/components/parameters/SessionIdRequired"
+      responses:
+        "200":
+          description: Progress record
+          content: { application/json: { schema: { $ref: "#/components/schemas/Progress" } } }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+
+  /api/session:
+    get:
+      tags: [captures]
+      summary: Session overview, or the waiting-screen state while processing
+      description: |
+        Without `session_id`: the caller's newest ready capture (signed in) or the demo (anonymous).
+        `sample=1` opens the demo even for signed-in accounts. While a capture is still processing the
+        answer has `processing: true` with stage, percent, jobs_ahead, eta_minutes instead of the report fields.
+        An account with no captures gets `empty: true`.
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+        - name: sample
+          in: query
+          schema: { type: string, enum: ["1"] }
+      responses:
+        "200":
+          description: Session
+          content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } }
+        "403": { $ref: "#/components/responses/Error" }
+        "410":
+          description: The account deleted this capture (`deleted` true)
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+
+  /api/library/delete:
+    post:
+      tags: [captures]
+      summary: Delete one capture and its files
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [session_id], properties: { session_id: { type: string } } }
+      responses:
+        "200": { $ref: "#/components/responses/Ok" }
+        "401": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+
+  /api/library/practice:
+    post:
+      tags: [captures]
+      summary: Mark a fix's drill as practiced once
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [session_id, finding_id]
+              properties:
+                session_id: { type: string }
+                finding_id: { type: string, pattern: "^[a-z0-9][a-z0-9_-]{0,63}$" }
+      responses:
+        "200":
+          description: Running count for this capture and fix
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  session_id: { type: string }
+                  finding_id: { type: string }
+                  count: { type: integer }
+        "400": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+
+  /api/sport_analysis:
+    get:
+      tags: [reports]
+      summary: The report (phases, measured traces, landmarks, findings)
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+        - name: sport
+          in: query
+          schema: { type: string, default: golf, enum: [golf, baseball] }
+        - name: handedness
+          in: query
+          schema: { type: string, default: right, enum: [right, left] }
+      responses:
+        "200":
+          description: Report
+          content: { application/json: { schema: { $ref: "#/components/schemas/SportAnalysis" } } }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+
+  /api/golf_phases:
+    get:
+      tags: [reports]
+      summary: Swings found in the clip, each with its phases
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+        - name: max_swings
+          in: query
+          schema: { type: integer, default: 5 }
+      responses:
+        "200":
+          description: Swing segmentation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sport: { type: string }
+                  handedness: { type: string }
+                  swing_count: { type: integer }
+                  swings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        swing_index: { type: integer }
+                        start_time: { type: number }
+                        end_time: { type: number }
+                        impact_time: { type: [number, "null"] }
+                        confidence: { type: number }
+                        phases: { type: array, items: { $ref: "#/components/schemas/Phase" } }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+
+  /api/coach_briefs:
+    get:
+      tags: [reports]
+      summary: Instant answers to the standard questions (no language model)
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+        - name: sport
+          in: query
+          schema: { type: string, default: golf }
+      responses:
+        "200":
+          description: Briefs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sport: { type: string }
+                  session_id: { type: string }
+                  briefs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string }
+                        question: { type: string }
+                        answer: { type: string }
+                        finding_id: { type: [string, "null"] }
+                        instant: { type: boolean }
+
+  /api/compare:
+    get:
+      tags: [reports]
+      summary: Two of the caller's swings, phase by phase
+      description: Metrics carry a provisional noise floor (`margin`); changes inside it are reported as `no_clear_change`.
+      security: [{ bearer: [] }]
+      parameters:
+        - { name: before, in: query, required: true, schema: { type: string } }
+        - { name: after, in: query, required: true, schema: { type: string } }
+        - { name: before_swing, in: query, schema: { type: integer, default: 0 } }
+        - { name: after_swing, in: query, schema: { type: integer, default: 0 } }
+      responses:
+        "200":
+          description: Comparison
+          content: { application/json: { schema: { $ref: "#/components/schemas/Compare" } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+
+  /api/smplx_mesh_status:
+    get:
+      tags: [reports]
+      summary: Whether 3D model assets exist for the capture
+      parameters: [{ $ref: "#/components/parameters/SessionId" }]
+      responses:
+        "200": { description: "Status, content: { application/json: { schema: { type: object } } }" }
+
+  /api/smplx_mesh_clip:
+    get:
+      tags: [reports]
+      summary: Bone transforms (and muscle paths) for a time window, for 3D playback
+      description: "Soft failures answer 200 with `fallback: raw_video` so a viewer can show the video instead."
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+        - { name: t0, in: query, required: true, schema: { type: number } }
+        - { name: t1, in: query, required: true, schema: { type: number } }
+        - { name: max_frames, in: query, schema: { type: integer, minimum: 12, maximum: 180, default: 90 } }
+        - { name: muscles, in: query, schema: { type: string, enum: ["0", "1"], default: "1" } }
+      responses:
+        "200": { description: "Clip, content: { application/json: { schema: { type: object } } }" }
+        "400": { $ref: "#/components/responses/Error" }
+
+  /media/{session_id}/{path}:
+    get:
+      tags: [reports]
+      summary: A capture's files (session video, model assets)
+      description: |
+        Use the URLs the API hands out (`video_url_path`, `media.video_url`): they carry a signed `mt`
+        parameter valid for `CEREBEL_MEDIA_URL_TTL_S` (6 h), because <video> tags cannot send the login
+        header. Range requests are supported (iOS Safari needs them).
+      parameters:
+        - { name: session_id, in: path, required: true, schema: { type: string, pattern: "^[A-Za-z0-9_-]+$" } }
+        - { name: path, in: path, required: true, schema: { type: string } }
+        - { name: mt, in: query, schema: { type: string } }
+      responses:
+        "200": { description: "File" }
+        "206": { description: "Partial content" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+
+  /api/chat:
+    post:
+      tags: [coach]
+      summary: Ask the AI coach about one capture
+      description: |
+        Daily question allowance: anonymous 3 (per visitor, plus 300 in total), free 15, Pro 100.
+        `system_prompt` and `backend` are operator-only and refused on the customer port.
+      requestBody: { $ref: "#/components/requestBodies/Question" }
+      responses:
+        "200":
+          description: Answer and the tool trace behind it
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer: { type: string }
+                  session_id: { type: string }
+                  tool_calls_used: { type: integer }
+                  error: { type: [string, "null"] }
+                  trace: { type: array, items: { $ref: "#/components/schemas/CoachEvent" } }
+        "400": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "429": { $ref: "#/components/responses/Error" }
+
+  /api/chat/stream:
+    post:
+      tags: [coach]
+      summary: Same as /api/chat, as Server-Sent Events
+      description: |
+        Each frame is `data: <json>\n\n`. Event `type`: status, thinking, assistant, tool, final, error, done.
+        `done` is always last and carries the full `answer`. Limits and errors before the stream starts
+        come back as ordinary JSON errors.
+      requestBody: { $ref: "#/components/requestBodies/Question" }
+      responses:
+        "200":
+          description: Event stream
+          content:
+            text/event-stream:
+              schema: { $ref: "#/components/schemas/CoachEvent" }
+        "429": { $ref: "#/components/responses/Error" }
+
+  /api/events:
+    post:
+      tags: [service]
+      summary: Record one product event
+      description: Only names in `CLIENT_EVENTS` (motion_agent/app/product_api.py) are kept; up to 10 scalar props.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [event]
+              properties:
+                event:
+                  type: string
+                  enum: [landing_view, sample_report_view, signup_view, upload_click, report_view, fix_expand, trust_yes,
+                         trust_no, chat_open, paywall_view, checkout_click, share_click, progress_card_view, progress_open]
+                visitor: { type: string, maxLength: 40 }
+                props: { type: object, additionalProperties: { type: [string, number, boolean] } }
+      responses:
+        "200": { $ref: "#/components/responses/Ok" }
+        "400": { $ref: "#/components/responses/Error" }
+
+  /api/billing:
+    get:
+      tags: [billing]
+      summary: Plans, and the caller's quota and subscription when signed in
+      responses:
+        "200": { description: "Plans, content: { application/json: { schema: { type: object } } }" }
+
+  /api/billing/checkout:
+    post:
+      tags: [billing]
+      summary: Stripe Checkout link
+      security: [{ bearer: [] }]
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object, properties: { plan: { type: string, enum: [founding, annual, monthly], default: annual } } }
+      responses:
+        "200":
+          description: Open `url` in a browser
+          content:
+            application/json:
+              schema: { type: object, properties: { ok: { type: boolean }, url: { type: string }, id: { type: string } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+
+  /api/billing/portal:
+    post:
+      tags: [billing]
+      summary: Stripe customer-portal link (manage or cancel)
+      security: [{ bearer: [] }]
+      responses:
+        "200":
+          description: Open `url` in a browser
+          content: { application/json: { schema: { type: object, properties: { ok: { type: boolean }, url: { type: string } } } } }
+        "404":
+          description: This account has no Stripe customer yet
+          content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+
+  /api/stripe/webhook:
+    post:
+      tags: [internal]
+      summary: Stripe events (server to server, signed)
+      description: Verified with `STRIPE_WEBHOOK_SECRET`. Handles checkout.session.completed and customer.subscription.created/updated/deleted.
+      security: [{}]
+      parameters:
+        - { name: Stripe-Signature, in: header, required: true, schema: { type: string } }
+      requestBody: { required: true, content: { application/json: { schema: { type: object } } } }
+      responses:
+        "200": { $ref: "#/components/responses/Ok" }
+        "400": { $ref: "#/components/responses/Error" }
+
+  /api/ops:
+    get:
+      tags: [internal]
+      summary: Operator counts (developer port only, X-Prompt-Password)
+      security: [{ operator: [] }]
+      responses:
+        "200": { description: "Counts, content: { application/json: { schema: { type: object } } }" }
+        "401": { $ref: "#/components/responses/Error" }
+        "404": { description: "Not served on the customer port" }
+
+  /api/system_prompt:
+    get:
+      tags: [internal]
+      summary: Coach system prompts and presets (developer port only, X-Prompt-Password)
+      security: [{ operator: [] }]
+      responses:
+        "200": { description: Prompts, content: { application/json: { schema: { type: object } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "404": { description: Not served on the customer port }
+
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: Token from /api/auth/register or /api/auth/login.
+    operator:
+      type: apiKey
+      in: header
+      name: X-Prompt-Password
+      description: MOTION_AGENT_PROMPT_PASSWORD. Only on the developer port (CEREBEL_OPERATOR_PORT, loopback).
+
+  parameters:
+    SessionId:
+      name: session_id
+      in: query
+      description: Capture id. `video_id` is accepted as an alias. Omit for the caller's newest ready capture or the demo.
+      schema: { type: string }
+    SessionIdRequired:
+      name: session_id
+      in: query
+      required: true
+      schema: { type: string }
+
+  requestBodies:
+    Question:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [question]
+            properties:
+              question: { type: string }
+              video_id: { type: [string, "null"], description: "Capture id; default is the caller's newest ready capture or the demo" }
+
+  responses:
+    Ok:
+      description: Done
+      content: { application/json: { schema: { type: object, properties: { ok: { type: boolean } } } } }
+    Error:
+      description: Error
+      content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+    Auth:
+      description: Signed in
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [ok, token, user]
+            properties:
+              ok: { type: boolean }
+              token: { type: string }
+              user: { $ref: "#/components/schemas/User" }
+
+  schemas:
+    Error:
+      type: object
+      required: [message]
+      properties:
+        error: { type: boolean }
+        ok: { type: boolean }
+        message: { type: string, description: "Safe to show to the person" }
+        error_id: { type: string, description: "On 500 answers; matches the server log" }
+        type: { type: string, description: "For example NO_SESSION" }
+        paywall: { type: boolean }
+        quota: { $ref: "#/components/schemas/Quota" }
+        rejected: { type: boolean }
+        consent_required: { type: boolean }
+        video_consent: { $ref: "#/components/schemas/VideoConsent" }
+        unavailable: { type: boolean }
+        limit: { type: boolean }
+        deleted: { type: boolean }
+      additionalProperties: true
+
+    User:
+      type: object
+      properties:
+        user_id: { type: string }
+        email: { type: string }
+
+    Health:
+      type: object
+      properties:
+        ok: { type: boolean }
+        process: { type: string, const: up }
+        backend: { type: string }
+        disk: { type: object }
+        model: { type: object }
+        gpu:
+          type: object
+          properties:
+            ok: { type: boolean }
+            state: { type: string, enum: [ready, loading, remote, down, unknown] }
+        prompt_edit_configured: { type: boolean }
+
+    SportCatalogEntry:
+      type: object
+      properties:
+        id: { type: string }
+        label: { type: string }
+        status: { type: string, enum: [live, beta, coming_soon] }
+        blurb: { type: string }
+        example_questions: { type: array, items: { type: string } }
+        product_title: { type: string }
+        product_subtitle: { type: string }
+        featured: { type: boolean }
+        locked: { type: boolean }
+        prompt_mode: { type: string }
+
+    Quota:
+      type: object
+      properties:
+        plan: { type: string, enum: [free, pro] }
+        monthly_limit: { type: integer }
+        used_this_month: { type: integer }
+        remaining: { type: integer }
+        resets: { type: string }
+
+    VideoConsent:
+      type: object
+      properties:
+        version: { type: string }
+        required: { type: boolean, description: "True until the current version is accepted" }
+        accepted_version: { type: [string, "null"] }
+        accepted_at: { type: [string, "null"] }
+        text: { type: string }
+        raw_video_retention_days: { type: integer }
+        inactive_delete_days: { type: integer }
+        processors: { type: array, items: { type: object } }
+
+    Capture:
+      type: object
+      properties:
+        session_id: { type: string }
+        filename: { type: string }
+        status: { type: string, description: "processing, ready, no_swing, error, rejected" }
+        created_at: { type: string, format: date-time }
+        sport: { type: string }
+        sport_label: { type: string }
+        sport_confidence: { type: number }
+        consumer_ready: { type: boolean }
+        progress: { oneOf: [{ $ref: "#/components/schemas/Progress" }, { type: "null" }] }
+
+    Library:
+      type: object
+      properties:
+        ok: { type: boolean }
+        user: { oneOf: [{ $ref: "#/components/schemas/User" }, { type: "null" }] }
+        captures: { type: array, items: { $ref: "#/components/schemas/Capture" } }
+        compare:
+          type: object
+          properties:
+            default: { type: [object, "null"], properties: { before: { type: string }, after: { type: string } } }
+            any_pair: { type: boolean }
+        quota: { $ref: "#/components/schemas/Quota" }
+        subscription:
+          type: object
+          properties:
+            pro: { type: boolean }
+            status: { type: [string, "null"] }
+            plan: { type: [string, "null"] }
+            current_period_end: { type: [integer, "null"] }
+            cancel_at_period_end: { type: boolean }
+            can_manage: { type: boolean }
+        billing: { type: object }
+        video_consent: { $ref: "#/components/schemas/VideoConsent" }
+
+    Progress:
+      type: object
+      required: [session_id, stage]
+      description: |
+        Stages in order: uploading, extracting, queued, gemx (3D body rebuild on the GPU), ik (OpenSim),
+        then one final stage: ready, no_swing, error or rejected.
+        The pipeline writes `ready` before sport detection runs; detection then rewrites the record with
+        `sport` set, or as `no_swing`. Treat `ready` as final only once `sport` is present.
+      properties:
+        session_id: { type: string }
+        stage: { type: string, enum: [uploading, extracting, queued, gemx, ik, processing, ready, no_swing, error, rejected] }
+        percent: { type: [number, "null"] }
+        message: { type: string }
+        sport: { type: string }
+        sport_confidence: { type: number }
+        consumer_ready: { type: boolean }
+        jobs_ahead: { type: integer }
+        running: { type: boolean }
+        eta_minutes: { type: integer }
+        queue_message: { type: string }
+        failed_at: { type: string, description: "input, gemx, ik, gpu_unavailable, start, timeout" }
+
+    Session:
+      type: object
+      properties:
+        session_id: { type: string }
+        empty: { type: boolean }
+        processing: { type: boolean }
+        demo: { type: boolean }
+        signed_in: { type: boolean }
+        sport: { type: string }
+        sport_label: { type: string }
+        sport_confidence: { type: number }
+        consumer_ready: { type: boolean }
+        no_swing: { type: boolean }
+        detect_message: { type: string }
+        fps: { type: number }
+        duration_s: { type: number }
+        has_video: { type: boolean }
+        has_opensim: { type: boolean }
+        has_dynamics: { type: boolean }
+        video_url_path: { type: string, description: "Signed /media URL of the session video" }
+        product_title: { type: string }
+        product_subtitle: { type: string }
+        example_questions: { type: array, items: { type: string } }
+        coach_briefs: { type: array, items: { type: object } }
+        stage: { type: string }
+        percent: { type: [number, "null"] }
+        jobs_ahead: { type: [integer, "null"] }
+        eta_minutes: { type: [integer, "null"] }
+      additionalProperties: true
+
+    Phase:
+      type: object
+      properties:
+        id: { type: string, description: "address, takeaway, backswing, top, downswing, impact, follow_through" }
+        label: { type: string }
+        start_time: { type: number }
+        end_time: { type: number }
+        key_time: { type: number }
+        confidence: { type: number }
+
+    Finding:
+      type: object
+      description: One coached observation. `findings` arrive biggest first; `strength` true means something done well.
+      properties:
+        id: { type: string }
+        title: { type: string }
+        headline: { type: string, description: "Plain-language one-liner" }
+        plain: { type: string }
+        detail: { type: string }
+        metric: { type: object, properties: { value: { type: string }, caption: { type: string } } }
+        why: { type: string }
+        cue: { type: string, description: "Feel cue" }
+        drill: { type: string }
+        check: { type: string, description: "How to tell it worked next time" }
+        series: { type: string }
+        start_time: { type: number }
+        end_time: { type: number }
+        strength: { type: boolean }
+        severity: { type: number }
+        fault_id: { type: string, description: "Stable knowledge-base key (fault_<snake_case>)" }
+        focus: { type: object, description: "Bones and camera yaw for a 3D close-up" }
+        overlay: { type: object, description: "Segments, angle arc and arrow drawn over the video" }
+        kb_sources: { type: string }
+      additionalProperties: true
+
+    SportAnalysis:
+      type: object
+      properties:
+        error: { type: boolean }
+        sport: { type: string }
+        session_id: { type: string }
+        title: { type: string }
+        handedness: { type: string }
+        lead_side: { type: string }
+        trail_side: { type: string }
+        impact_time: { type: [number, "null"] }
+        phases: { type: array, items: { $ref: "#/components/schemas/Phase" } }
+        series:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              label: { type: string }
+              unit: { type: string }
+              times: { type: array, items: { type: number } }
+              values: { type: array, items: { type: number } }
+        landmarks: { type: array, items: { type: object } }
+        findings: { type: array, items: { $ref: "#/components/schemas/Finding" } }
+        highlights: { type: array, items: { type: string } }
+        disclosure: { type: object }
+      additionalProperties: true
+
+    Compare:
+      type: object
+      properties:
+        ok: { type: boolean }
+        version: { type: integer }
+        before: { type: object }
+        after: { type: object }
+        comparability: { type: object, properties: { level: { type: string }, reasons: { type: array, items: { type: string } }, message: { type: string } } }
+        alignment: { type: object }
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              label: { type: string }
+              unit: { type: string }
+              before: { type: [number, "null"] }
+              after: { type: [number, "null"] }
+              delta: { type: [number, "null"] }
+              display: { type: string }
+              margin: { type: string }
+              verdict: { type: string, description: "improved, worse, no_clear_change, …" }
+        main_issue: { type: object }
+        next_issue: { type: object }
+        overlay: { type: object }
+        disclosure: { type: string }
+      additionalProperties: true
+
+    CoachEvent:
+      type: object
+      properties:
+        type: { type: string, enum: [status, thinking, assistant, tool, final, error, done] }
+        kind: { type: string }
+        interim: { type: boolean }
+        message: { type: string }
+        name: { type: [string, "null"], description: "Tool name on tool and status events" }
+        arguments: { type: [object, "null"] }
+        result_summary: {}
+        content: { type: [string, "null"] }
+        image_base64: { type: string }
+        mime_type: { type: string }
+        answer: { type: string, description: "On done" }
+        session_id: { type: string }
+        tool_calls_used: { type: integer }
+        error: { type: [string, "null"] }

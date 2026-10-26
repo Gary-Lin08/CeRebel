@@ -1,0 +1,49 @@
+# SDK tests: the Python and TypeScript clients against their mocks. Runs only when sdk/ changes.
+# No secrets and no network calls to Cerebel servers; the live-server suites stay skipped here.
+name: sdk
+
+on:
+  pull_request:
+    paths:
+      - sdk/**
+      - .github/workflows/sdk.yml
+  push:
+    branches: [main]
+    paths:
+      - sdk/**
+      - .github/workflows/sdk.yml
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit tests
+        working-directory: sdk/python
+        run: python -m unittest discover -s tests -t . -v
+
+  typescript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: sdk/typescript/package-lock.json
+      - name: Typecheck, test, build
+        working-directory: sdk/typescript
+        run: npm ci && npm run typecheck && npm test && npm run build
