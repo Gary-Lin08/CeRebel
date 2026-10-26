@@ -32,6 +32,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from motion_agent.app.file_lock import locked
+
 _LOCK = threading.Lock()
 
 # Captures in these states never count against the quota: the upload failed,
@@ -160,10 +162,13 @@ def daily_question_limit(pro: bool, signed_in: bool) -> int:
 
 
 def take_question(product_dir: Path, key: str, limit: int) -> tuple[bool, int]:
-    """Count one coach question for `key` today (UTC). Returns (allowed, remaining)."""
+    """Count one coach question for `key` today (UTC). Returns (allowed, remaining).
+
+    The retention job (another process) clears an earlier day's counts, hence the file lock.
+    """
     path = product_dir / "question_counts.json"
     today = _now().strftime("%Y-%m-%d")
-    with _LOCK:
+    with locked(path, _LOCK):
         try:
             data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
         except (OSError, json.JSONDecodeError):
@@ -179,6 +184,28 @@ def take_question(product_dir: Path, key: str, limit: int) -> tuple[bool, int]:
         tmp.write_text(json.dumps(data), encoding="utf-8")
         tmp.replace(path)
         return True, limit - used - 1
+
+
+def clear_old_question_counts(product_dir: Path, *, dry_run: bool = False, now: datetime | None = None) -> int:
+    """Delete an earlier day's question counts, which take_question only resets on the next question.
+
+    Returns how many counters that were (for the retention report).
+    """
+    path = product_dir / "question_counts.json"
+    if not path.is_file():
+        return 0
+    today = (now or _now()).strftime("%Y-%m-%d")
+    with locked(path, _LOCK):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            data = None
+        if isinstance(data, dict) and data.get("day") == today:
+            return 0
+        if not dry_run:
+            path.unlink(missing_ok=True)
+        counts = data.get("counts") if isinstance(data, dict) else None
+        return len(counts) if isinstance(counts, dict) else 0
 
 
 # ---------------------------------------------------------------- plans shown to the browser
