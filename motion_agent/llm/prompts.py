@@ -446,9 +446,53 @@ def _fake_egocentric_enabled() -> bool:
         )
 
 
-def compose_system_prompt(user_or_preset_prompt: str | None) -> str:
+# Preset lines that point the model at the video or the RGB frame/clip tools.
+# When the user's video is not shared with the model (CEREBEL_LLM_ATTACH_VIDEO
+# off) those tools are not offered, so each line is swapped for its no-video form.
+_NO_VIDEO_RULE = (
+    "- The video itself is not shared with you. When a question depends on visual\n"
+    "  appearance or scene context, say so and answer only from the measured motion.\n"
+)
+VIDEO_ONLY_GUIDANCE: tuple[tuple[str, str], ...] = (
+    ("- the source RGB video (and RGB frame/clip tools)\n", ""),
+    (
+        "- When visual appearance, object interaction, occlusion, or scene context matters,\n"
+        "  use the RGB video or RGB frame/clip tools.\n",
+        _NO_VIDEO_RULE,
+    ),
+    (
+        "- When visual appearance, club/ball interaction, occlusion, or scene context matters,\n"
+        "  use the RGB video or RGB frame/clip tools.\n",
+        _NO_VIDEO_RULE,
+    ),
+    (
+        "  2) Use RGB frames and/or get_joint_trajectory on a wrist if unsure about count.\n",
+        "  2) Use get_joint_trajectory on a wrist if unsure about count.\n",
+    ),
+    (
+        "- When visual appearance or scene context matters, use RGB tools, but still do\n"
+        "  not replace the traces with visual estimates.\n",
+        _NO_VIDEO_RULE,
+    ),
+)
+
+
+def without_video_guidance(prompt: str) -> str:
+    """Swap the video / RGB-tool lines of a preset for their no-video form."""
+    for video_text, no_video_text in VIDEO_ONLY_GUIDANCE:
+        prompt = prompt.replace(video_text, no_video_text)
+    return prompt
+
+
+def compose_system_prompt(
+    user_or_preset_prompt: str | None,
+    *,
+    attach_video: bool = True,
+) -> str:
     """Merge editable/preset prompt with non-editable server-side appendices."""
     base = (user_or_preset_prompt or "").strip() or SYSTEM_PROMPT
+    if not attach_video:
+        base = without_video_guidance(base)
     parts = [base.rstrip()]
     identity = IDENTITY_APPENDIX.strip()
     if identity and identity not in base:

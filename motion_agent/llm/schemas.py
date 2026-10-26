@@ -481,5 +481,13 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
 ]
 
 
-def openai_tools() -> list[dict[str, Any]]:
-    return TOOL_DEFINITIONS
+# Tools that return pixels from the user's own video. Plots and the force
+# render are drawn from measurements and stay available.
+RGB_TOOL_NAMES = frozenset({"get_rgb_frame", "get_rgb_clip"})
+
+
+def openai_tools(*, include_rgb: bool = True) -> list[dict[str, Any]]:
+    """Tool schemas for the model; include_rgb=False when the video is not shared."""
+    if include_rgb:
+        return TOOL_DEFINITIONS
+    return [t for t in TOOL_DEFINITIONS if t["function"]["name"] not in RGB_TOOL_NAMES]

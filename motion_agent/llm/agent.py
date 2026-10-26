@@ -20,9 +20,10 @@ from motion_agent.llm.prompts import (
     user_context_preamble,
 )
 from motion_agent.llm.qwen_client import VisionLanguageModel, build_vlm, file_to_data_uri
-from motion_agent.llm.schemas import openai_tools
+from motion_agent.llm.schemas import RGB_TOOL_NAMES, openai_tools
 from motion_agent.motion.adapter import adapt_session
 from motion_agent.motion.sequence import MotionSequence
+from motion_agent.storage.errors import tool_error
 from motion_agent.storage.motion_store import newest_ready_session_dir, session_summary
 from motion_agent.tools.motion_tools import execute_tool
 
@@ -633,14 +634,19 @@ class MotionAgent:
         self.attach_video = attach_video
         self.prompt_mode = prompt_mode
         base = system_prompt if system_prompt is not None else get_preset_prompt(prompt_mode)
-        self.system_prompt = compose_system_prompt(base)
+        self.system_prompt = compose_system_prompt(base, attach_video=attach_video)
 
     def answer(
         self,
         question: str,
         on_event: OnEvent | None = None,
     ) -> AgentResult:
-        tools = openai_tools() if self.vlm.supports_tool_calling() else []
+        # Without the video attached, the model is not offered the RGB frame/clip tools.
+        tools = (
+            openai_tools(include_rgb=self.attach_video)
+            if self.vlm.supports_tool_calling()
+            else []
+        )
         preamble = user_context_preamble(
             self.seq.video_id,
             self.seq.duration_s,
@@ -811,12 +817,21 @@ class MotionAgent:
                             "interim": True,
                         },
                     )
-                    result = execute_tool(
-                        self.seq,
-                        tc.name,
-                        _with_kb_scope(self.prompt_mode, tc.name, tc.arguments),
-                    )
-                    result = _scope_kb_tool_result(self.prompt_mode, tc.name, result)
+                    if tc.name in RGB_TOOL_NAMES and not self.attach_video:
+                        # The user's video is not shared with the model: never read its
+                        # frames, even when the model calls a tool it was not offered.
+                        result = tool_error(
+                            "TOOL_UNAVAILABLE",
+                            f"{tc.name} is not available: the video is not shared with "
+                            "you. Answer from the motion tools.",
+                        )
+                    else:
+                        result = execute_tool(
+                            self.seq,
+                            tc.name,
+                            _with_kb_scope(self.prompt_mode, tc.name, tc.arguments),
+                        )
+                        result = _scope_kb_tool_result(self.prompt_mode, tc.name, result)
                     used += 1
                     summary = _summarize_tool_result(tc.name, result)
                     image_b64 = None
