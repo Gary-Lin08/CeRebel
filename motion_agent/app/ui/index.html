@@ -2114,101 +2114,144 @@ code {
 
 </style>
   <link rel="stylesheet" href="/static/playground-v3.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/playground-landing.css" />
+  <link rel="stylesheet" href="/static/playground-app.css" />
 </head>
 <body class="pg pg-dev">
   <div id="lpLanding" class="lp" hidden>
-    <header class="lp-wrap lp-nav">
-      <img src="/static/cerebel-logo-ink.svg" alt="CeRebel" class="lp-logo" width="112" height="37" />
-      <button type="button" class="lp-signin" id="lpSignin">Sign in</button>
+    <header class="lp-nav" data-nav>
+      <a class="lp-logo" href="#lpTop"><img src="/static/cerebel-logo.svg" alt="CeRebel" width="112" height="37" /></a>
+      <nav class="lp-nav__links" aria-label="Sections">
+        <a href="#lpReel">How it works</a>
+        <a href="#lpBack">What you get</a>
+        <a href="#lpPrice">Pricing</a>
+      </nav>
+      <button type="button" class="lp-btn lp-btn--glass lp-btn--sm" id="lpSignin" data-magnetic><span>Sign in</span></button>
     </header>
     <main>
-      <section class="lp-wrap lp-hero" data-swing-hero aria-labelledby="lpTitle">
-        <div class="lp-hero__copy">
-          <h1 id="lpTitle" class="lp-display">Your swing, measured joint by joint.</h1>
-          <div>
-            <p class="lp-lead">Film one swing on your phone. CeRebel turns it into a 3D pose, then a full OpenSim body, and tells you the one thing to fix first.</p>
-            <div class="lp-actions">
-              <button type="button" class="lp-btn" id="lpUpload">Upload your swing</button>
-              <a href="#lpSample" class="lp-link">Read the sample analysis</a>
-            </div>
-            <p class="lp-small" id="lpFreeLine">Free for 3 swings a month. No credit card.</p>
+      <section class="lp-hero" id="lpTop" aria-labelledby="lpTitle">
+        <h1 id="lpTitle" class="lp-display" data-split>Your swing, taken apart.</h1>
+        <div class="lp-hero__foot">
+          <p class="lp-lead">Film one swing on your phone. CeRebel rebuilds it as a 3D skeleton with muscles, measures every joint, and tells you the one thing to fix first.</p>
+          <div class="lp-actions">
+            <button type="button" class="lp-btn" id="lpUpload" data-magnetic><span>Upload your swing</span></button>
+            <a href="#lpReel" class="lp-btn lp-btn--glass" data-magnetic><span>Watch it work</span></a>
           </div>
+          <p class="lp-small" id="lpFreeLine">Free for 3 swings a month. No credit card.</p>
         </div>
-        <figure class="swing">
-          <div class="swing__stage">
+        <a class="lp-cue" href="#lpReel" tabindex="-1" aria-hidden="true"><i></i></a>
+      </section>
+
+      <section class="reel" id="lpReel" data-swing-hero aria-labelledby="lpReelTitle">
+        <div class="reel__sticky">
+          <h2 id="lpReelTitle" class="lp-sr">From a phone video to a 3D body</h2>
+          <div class="reel__stage swing__stage">
             <div class="swing__video">
-              <video muted playsinline preload="auto" hidden></video>
-              <div class="swing__placeholder">Player video<br /><small>side-on, from a phone</small></div>
+              <video muted playsinline preload="auto" hidden aria-label="Phone video of the swing"></video>
             </div>
-            <div class="swing__gl" role="img" aria-label="The same swing as GEM-X 3D joints and as an OpenSim skeleton with muscles. At the top of the backswing the lead arm is bent 57 degrees.">
+            <div class="swing__gl" role="img" aria-label="The same swing as GEM-X 3D joints and as an OpenSim skeleton with muscles. At the top of the backswing the shoulders have turned 39 degrees more than the hips.">
               <span class="swing__tag" aria-hidden="true"></span>
             </div>
           </div>
-          <figcaption class="swing__labels">
-            <span><b>Phone video</b> What you upload</span>
-            <span><b>GEM-X</b> 3D pose from the video</span>
-            <span><b>OpenSim</b> Bones, muscles, joint angles</span>
-          </figcaption>
-          <div class="swing__scrub">
-            <div class="swing__phases" role="group" aria-label="Swing phases"></div>
-            <input class="swing__range" type="range" aria-label="Scrub through the swing" />
-            <button type="button" class="swing__replay">Replay</button>
-            <p class="swing__caption"><span class="swing__fix">Lead arm bends at the top</span> <span class="swing__readout"></span></p>
+          <ol class="reel__acts">
+            <li data-act="1"><b>One phone, one swing.</b> Side-on, a few seconds long, filmed on the camera you already carry.</li>
+            <li data-act="2"><b>GEM-X finds every joint.</b> A 3D pose for each frame of the video, from the hips to the fingertips.</li>
+            <li data-act="3"><b>OpenSim puts the body back.</b> Bones, muscles and joint angles. The part that went wrong lights up.</li>
+          </ol>
+          <div class="reel__hud">
+            <p class="reel__metric" aria-live="off"><span class="reel__num">0</span><span class="reel__deg">°</span><small class="swing__readout">Shoulders past hips</small></p>
+            <div class="swing__phases" role="group" aria-label="Jump to a swing phase"></div>
+            <div class="reel__bar" aria-hidden="true"><i></i></div>
           </div>
-        </figure>
-      </section>
-
-      <section class="lp-wrap lp-sec" id="lpSample" aria-labelledby="lpSampleTitle">
-        <div class="lp-sec__head">
-          <h2 id="lpSampleTitle">What comes back</h2>
-          <p>The sample above, as the coach writes it. Every number comes from the measurement, not from a language model.</p>
-        </div>
-        <article class="lp-sec__body">
-          <h3>Lead arm bends</h3>
-          <p class="lp-figure"><span>57°</span> lead elbow bend at the top, from 1° at address</p>
-          <p><strong>Why it matters.</strong> A bent lead arm narrows the swing radius, so the clubhead has less time to build speed.</p>
-          <p><strong>What to feel.</strong> Reach the lead arm long. Feel the lead shoulder stay connected to the chest.</p>
-          <p><strong>Today's drill.</strong> Pump drill. Pause at the top with the lead arm extended, pump down halfway twice, then swing through. Eight reps.</p>
-        </article>
-      </section>
-
-      <section class="lp-wrap lp-sec" aria-labelledby="lpFilmTitle">
-        <div class="lp-sec__head">
-          <h2 id="lpFilmTitle">How to film it</h2>
-          <p>Thirty seconds of setup gets a clean measurement.</p>
-        </div>
-        <div class="lp-sec__body lp-film">
-          <svg viewBox="0 0 180 120" aria-hidden="true">
-            <line class="lp-film__ground" x1="6" y1="104" x2="174" y2="104" />
-            <rect class="lp-film__phone" x="18" y="58" width="16" height="28" rx="3" />
-            <path class="lp-film__ray" d="M34 66 L140 30 M34 78 L140 104" />
-            <circle class="lp-film__phone" cx="140" cy="38" r="6" />
-            <path class="lp-film__phone" d="M140 44 V76 M140 76 L132 104 M140 76 L148 104 M140 52 L126 64" />
-          </svg>
-          <ul>
-            <li>Stand the phone at hip height, side-on to you, 8 to 10 feet away.</li>
-            <li>Keep your whole body and the club in frame from address to finish.</li>
-            <li>Use 60 fps or higher if your phone offers it, in good light.</li>
-            <li>One swing per clip. A few seconds is enough.</li>
-          </ul>
+          <p class="reel__hint" aria-hidden="true">Scroll to swing</p>
         </div>
       </section>
 
-      <section class="lp-wrap lp-sec" aria-labelledby="lpPriceTitle">
+      <section class="lp-sec" id="lpBack" aria-labelledby="lpBackTitle">
         <div class="lp-sec__head">
-          <h2 id="lpPriceTitle">Pricing</h2>
+          <h2 id="lpBackTitle" data-split>What comes back</h2>
+          <p>The swing above, the way the app shows it. Every number comes from the measurement, not from a language model.</p>
+        </div>
+        <div class="tabs" data-tabs>
+          <div class="tabs__list" role="tablist" aria-label="What comes back">
+            <button type="button" role="tab" id="lpTabFix" aria-controls="lpPanFix" aria-selected="true">The fix</button>
+            <button type="button" role="tab" id="lpTabJoint" aria-controls="lpPanJoint" aria-selected="false" tabindex="-1">Every joint</button>
+            <button type="button" role="tab" id="lpTabCoach" aria-controls="lpPanCoach" aria-selected="false" tabindex="-1">Ask the coach</button>
+            <i class="tabs__ink" aria-hidden="true"></i>
+          </div>
+          <article class="tabs__panel lp-fix" role="tabpanel" id="lpPanFix" aria-labelledby="lpTabFix" tabindex="0">
+            <p class="lp-big"><span>39°</span></p>
+            <div>
+              <h3>Shoulders turn past the hips</h3>
+              <p class="lp-muted">At the top: shoulders 71°, hips 32°.</p>
+              <p><strong>Why it matters.</strong> The gap between shoulders and hips stretches the trunk at the top, and the downswing gets its speed from letting that stretch unwind, hips first.</p>
+              <p><strong>What to keep.</strong> Let the hips stop turning before the shoulders do. Keep the trail knee flexed so the hips stay quiet.</p>
+              <p><strong>Today's drill.</strong> Pause at the top for a count of two, then start down with the lead hip, not the arms. Eight reps.</p>
+            </div>
+          </article>
+          <article class="tabs__panel lp-joint" role="tabpanel" id="lpPanJoint" aria-labelledby="lpTabJoint" tabindex="0" hidden>
+            <h3>Six measurements on one timeline</h3>
+            <p class="lp-muted">Scrub from address to follow-through and watch each one change. Anything outside the usual range is marked.</p>
+            <ul class="lp-tracks">
+              <li>Hip-shoulder separation</li>
+              <li>Pelvis turn</li>
+              <li>Pelvis drift from address</li>
+              <li>Lead elbow flex</li>
+              <li>Trail knee flex</li>
+              <li>Trail-hand speed</li>
+            </ul>
+          </article>
+          <article class="tabs__panel lp-coach" role="tabpanel" id="lpPanCoach" aria-labelledby="lpTabCoach" tabindex="0" hidden>
+            <h3>Questions about your swing, answered from your swing</h3>
+            <div class="lp-chat">
+              <p class="lp-chat__me">Why does the gap between my shoulders and hips matter?</p>
+              <p class="lp-chat__coach">At the top your shoulders are at 71° and your hips at 32°. That 39° gap stretches your trunk, and the downswing gets its speed from letting it unwind, hips first.</p>
+              <p class="lp-chat__me">What should I practise today?</p>
+              <p class="lp-chat__coach">Pause at the top for a count of two, then start down with the lead hip, not the arms. Eight reps.</p>
+            </div>
+            <p class="lp-muted lp-small">An example conversation about the sample swing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="lp-sec" aria-labelledby="lpFilmTitle">
+        <div class="lp-sec__head">
+          <h2 id="lpFilmTitle" data-split>Film it in thirty seconds</h2>
+          <p>Good setup is most of a good measurement.</p>
+        </div>
+        <ol class="lp-steps">
+          <li data-reveal><span>1</span><b>Stand the phone up</b>At hip height, side-on to you, 8 to 10 feet away.</li>
+          <li data-reveal><span>2</span><b>Get all of you in frame</b>Whole body and the club, from address to finish. 60 fps if your phone has it.</li>
+          <li data-reveal><span>3</span><b>Swing once</b>One swing per clip. A few seconds is enough.</li>
+        </ol>
+      </section>
+
+      <section class="lp-sec lp-privacy" aria-labelledby="lpPrivTitle">
+        <h2 id="lpPrivTitle" class="lp-statement" data-split>Your video is used to analyse your swing. That's it.</h2>
+        <ul class="lp-promises">
+          <li data-reveal>Raw video is deleted automatically after processing. The <a href="/privacy">privacy policy</a> lists exactly when.</li>
+          <li data-reveal>Delete any swing, or your whole account, whenever you like.</li>
+          <li data-reveal>Your videos only load through private links that expire.</li>
+        </ul>
+      </section>
+
+      <section class="lp-sec" id="lpPrice" aria-labelledby="lpPriceTitle">
+        <div class="lp-sec__head">
+          <h2 id="lpPriceTitle" data-split>Pricing</h2>
           <p>Start free. Upgrade when you want more swings and coach questions.</p>
         </div>
-        <div class="lp-sec__body">
-          <div class="lp-plans" id="lpPlans">
-            <div class="lp-plan"><b>Free</b><span class="lp-plan__price">$0</span><small id="lpFreeDetail">3 swings a month</small></div>
-          </div>
+        <div class="lp-plans" id="lpPlans">
+          <div class="lp-plan"><b>Free</b><span class="lp-plan__price">$0</span><small id="lpFreeDetail">3 swings a month</small></div>
         </div>
       </section>
+
+      <section class="lp-end" aria-labelledby="lpEndTitle">
+        <h2 id="lpEndTitle" class="lp-display lp-display--end" data-split>See your own swing.</h2>
+        <button type="button" class="lp-btn lp-btn--lg" id="lpUpload2" data-magnetic><span>Upload your swing</span></button>
+      </section>
     </main>
-    <footer class="lp-wrap lp-foot">
+    <footer class="lp-foot">
       <span>© Cerebel, Inc.</span>
       <nav aria-label="Legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a></nav>
     </footer>
@@ -2612,6 +2655,8 @@ code {
       const hero = document.getElementById("v3Hero");
       if (hero) hero.hidden = !!authToken && (hasFix || processing);
       document.body.classList.toggle("v3-has-swing", hasFix);
+      // Quieter background while there is a swing to read.
+      if (window.cxFluid) window.cxFluid.dim(hasFix ? 0.55 : 0);
     }
 
     function authHeaders(extra) {
@@ -3517,7 +3562,8 @@ code {
       group.name = "opensim-muscles";
       group.userData.meshes = new Map();
       group.userData.sharedMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xd96b5c),
+        // Muted in the consumer view so the flag-red fix bones stand out against the muscles.
+        color: new THREE.Color(isDevUi ? 0xd96b5c : 0xc29a90),
         roughness: 0.42,
         metalness: 0.02,
         clearcoat: 0.22,
@@ -4119,7 +4165,7 @@ code {
       const { THREE, GLTFLoader } = await ensureThree();
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setClearColor(0x07060b, 1);
+      renderer.setClearColor(isDevUi ? 0x07060b : 0x08130f, 1);
       host.appendChild(renderer.domElement);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(32, 1, 0.02, 40);
@@ -4128,7 +4174,7 @@ code {
       const keyLight = new THREE.DirectionalLight(0xf4f0fa, 1.15);
       keyLight.position.set(1.6, 3.2, 2.2);
       scene.add(keyLight);
-      const fill = new THREE.DirectionalLight(0xb99bff, 0.35);
+      const fill = new THREE.DirectionalLight(isDevUi ? 0xb99bff : 0xe8c98a, 0.5);
       fill.position.set(-1.8, 1.2, -1.2);
       scene.add(fill);
       const loader = new GLTFLoader();
@@ -4158,8 +4204,9 @@ code {
       const goal = new THREE.Vector3(0, 1, 0);
       const look = new THREE.Vector3(0, 1, 0);
       const desired = new THREE.Vector3();
-      const accent = new THREE.Color("#b99bff");
-      const quiet = new THREE.Color("#6a6474");
+      // Consumer view uses the landing palette: flag red for the fix, quiet grey-green for the rest.
+      const accent = new THREE.Color(isDevUi ? "#b99bff" : "#F2A541");
+      const quiet = new THREE.Color(isDevUi ? "#6a6474" : "#5d6d66");
       const bone = new THREE.Color("#eee9dd");
       let focus = { anchor: "pelvis", bones: ["pelvis", "torso"], view_yaw: 0, label: "Body" };
       let lastFrame = null;
@@ -4178,7 +4225,7 @@ code {
       function setFocus(note) {
         const next = (note && note.focus) || focus;
         focus = next;
-        accent.set((note && note.accent) || "#b99bff");
+        accent.set(isDevUi ? (note && note.accent) || "#b99bff" : "#F2A541");
         const label = document.getElementById("sportCloseupTarget");
         if (label) label.innerHTML = "<span>Fix</span>" + escapeHtml(next.label || note && note.title || "Body");
       }
@@ -5349,7 +5396,7 @@ code {
       }
     }
 
-    async function loadSession({ announce = false } = {}) {
+    async function loadSession({ announce = false, sample = false } = {}) {
       const prevId = session && session.session_id;
       loadNewestBtn.disabled = true;
       if (announce) {
@@ -5357,9 +5404,11 @@ code {
         status.className = "status";
       }
       try {
-        const sessionQuery = authToken && activeSessionId
-          ? "&session_id=" + encodeURIComponent(activeSessionId)
-          : "";
+        const sessionQuery = sample
+          ? "&sample=1"
+          : authToken && activeSessionId
+            ? "&session_id=" + encodeURIComponent(activeSessionId)
+            : "";
         const r = await fetch("/api/session?t=" + Date.now() + sessionQuery, { headers: authHeaders() });
         if (r.status === 410 && activeSessionId) {
           // An old email link or bookmark to a swing that was deleted: open the newest one instead.
@@ -5772,7 +5821,7 @@ code {
       if (freeDetail) freeDetail.textContent = freeText;
       (billing.plans || []).forEach((plan) => {
         const row = document.createElement("div");
-        row.className = "lp-plan";
+        row.className = "lp-plan lp-plan--paid";
         const name = document.createElement("b");
         name.textContent = plan.label;
         const price = document.createElement("span");
@@ -5879,7 +5928,7 @@ code {
       const v3Sample = document.getElementById("v3Sample");
       if (v3Sample) {
         v3Sample.addEventListener("click", () => {
-          loadSession({ announce: true }).then(() => {
+          loadSession({ announce: true, sample: true }).then(() => {
             const target = document.getElementById("fixHero");
             if (target && !target.hidden) target.scrollIntoView({ behavior: "smooth", block: "start" });
           });
@@ -5888,7 +5937,7 @@ code {
       const tocSample = document.getElementById("tocTrySample");
       if (tocSample) {
         tocSample.addEventListener("click", function () {
-          loadSession({ announce: true });
+          loadSession({ announce: true, sample: true });
         });
       }
       const lpUpload = document.getElementById("lpUpload");
@@ -5899,6 +5948,8 @@ code {
           openAccountPanel(true);
         });
       }
+      const lpUpload2 = document.getElementById("lpUpload2");
+      if (lpUpload2 && lpUpload) lpUpload2.addEventListener("click", () => lpUpload.click());
       const lpSignin = document.getElementById("lpSignin");
       if (lpSignin) {
         lpSignin.addEventListener("click", () => {
@@ -5917,7 +5968,7 @@ code {
         if (e.key === "Escape") closeLandingPanel();
       });
       document.addEventListener("pointerdown", (e) => {
-        if (accountPanel && !accountPanel.contains(e.target) && !e.target.closest("#lpUpload, #lpSignin")) closeLandingPanel();
+        if (accountPanel && !accountPanel.contains(e.target) && !e.target.closest("#lpUpload, #lpUpload2, #lpSignin")) closeLandingPanel();
       });
       syncLanding();
       if (!isDevUi) paintLandingPlans();
@@ -6063,6 +6114,25 @@ code {
         loadSession();
       });
     }
+    // Drop a clip anywhere on the page to upload it.
+    if (!isDevUi && uploadFile) {
+      window.addEventListener("dragover", (e) => {
+        if (e.dataTransfer && [...e.dataTransfer.types].includes("Files")) e.preventDefault();
+      });
+      window.addEventListener("drop", (e) => {
+        const files = e.dataTransfer && e.dataTransfer.files;
+        if (!files || !files.length) return;
+        e.preventDefault();
+        if (!authToken) {
+          openAccountPanel(false);
+          showToast("Sign in before uploading a swing.");
+          return;
+        }
+        uploadFile.files = files;
+        uploadFile.dispatchEvent(new Event("change"));
+        if (window.cxFluid) window.cxFluid.pulse(1);
+      });
+    }
     const emptyUpload = document.getElementById("emptyUpload");
     if (emptyUpload && uploadFile) {
       emptyUpload.addEventListener("click", () => {
@@ -6089,8 +6159,13 @@ code {
       });
     }
     if (authToken) {
-      if (accountPanel) accountPanel.hidden = false;
-      refreshLibrary().catch(() => {});
+      // Operators always get the library open. Players see it only until they have a swing;
+      // after that it stays behind the account button so the swing is the first thing on the page.
+      if (accountPanel) accountPanel.hidden = !isDevUi;
+      refreshLibrary()
+        .then(() => {
+        })
+        .catch(() => {});
     }
     // Restore unlock for this browser tab only (not permanent).
     try {
@@ -6115,6 +6190,8 @@ code {
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="/static/playground-fx.js"></script>
   <script src="/static/billing.js"></script>
+  <script src="/static/cinema-fluid.js"></script>
+  <script src="/static/cinema-motion.js"></script>
   <script type="module" src="/static/swing-hero.js"></script>
   <script src="/static/swing_trim.js"></script>
 </body>

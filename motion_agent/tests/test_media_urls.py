@@ -144,6 +144,23 @@ class MediaEndpointTests(unittest.TestCase):
         status, _, _ = self._get("/api/session?session_id=SID", {"Authorization": other})
         self.assertEqual(status, 403)
 
+    def test_sample_button_opens_the_demo_for_a_signed_in_account(self):
+        from motion_agent.app import product_api
+        from motion_agent.app.accounts import login
+
+        register(self.settings.product_dir, "new@example.com", "password123", accepted_terms=True)
+        token = login(self.settings.product_dir, "new@example.com", "password123")["token"]
+        with mock.patch.object(product_api, "configured_demo_session_id", return_value=None):
+            status, _, body = self._get("/api/session?sample=1", {"Authorization": token})
+        self.assertEqual(status, 200)
+        self.assertTrue(json.loads(body)["demo"])
+        demo = Path(self.settings.data_dir) / "sessions" / "DEMO"
+        demo.mkdir(parents=True)
+        with mock.patch.object(product_api, "configured_demo_session_id", return_value="DEMO"):
+            status, _, body = self._get("/api/session?sample=1", {"Authorization": token})
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body).get("session_id"), "DEMO")
+
     def test_json_responses_sign_media_for_the_owner_only(self):
         handler = mock.Mock()
         handler.headers = {}
