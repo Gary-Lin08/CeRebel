@@ -92,3 +92,74 @@ cp deploy/supervisor/cerebel-retention.conf /etc/supervisor/conf.d/ && superviso
 - 18:40 第 3 步：retention 正式运行，退出码 0，删除了 72 个会话的原始视频（5.55 GB），磁盘可用空间从 22G 增加到 28G。派生结果和 demo 都还在，复跑 dry-run 结果为 0。
 - 18:40 第 4 步：`cerebel-retention` 进入 RUNNING 状态，下次运行时间是 2026-10-27 07:41 UTC。
 - 说明：18:28 有别的会话部署了 claude/sweet-sinoussi-f47a6c 的 product_api.py、library.py、chat_server.py，并在 18:36 重启了 cerebel-product，这不是本次操作做的。那个分支没有改动本次用到的函数。
+
+## 第二轮（2026-10-26）：跨进程文件锁，retention 补三条规则
+
+分支 `claude/exciting-elgamal-4d06a4`，基于 ui-polish d263734 并合入了上面这一轮的提交。服务器上
+product_api.py、library.py、billing.py、retention.py、privacy_backfill.py 与这个基线逐字节相同（已用 git hash-object 核对过）。
+
+| 提交 | 内容 | 生效方式 |
+|---|---|---|
+| 132cb1d | 新增 `file_lock.py`。所有写 events.jsonl 和 library.json 的地方，除了线程锁，再对旁边的 `<文件>.lock` 加 flock。涉及 record_event 的追加、scrub_events 的重写、library 的读改写，以及 privacy_backfill 的 `_anonymize_deletion_rows` | retention、backfill 子进程下次运行即生效；chat_server 需要重启 cerebel-product |
+| a0b67b2 | retention 新增三条规则：`<sid>_gemx.log` 超过原始视频期限（30 天）就删除；`data/product_events.jsonl` 按 24 个月逐行过期，删空后删除文件；`question_counts.json` 里前一天的计数直接删除。take_question 也加了同一把锁 | retention 每天的子进程自动生效 |
+| b7bfbf3 | question_counts.json 不再存访客 IP，改存 HMAC。密钥只在进程内存里，每个 UTC 日更换一次。重启后当天按 IP 的计数会清零，匿名提问的每日总量上限照常有效 | 需要重启 cerebel-product |
+
+在旧代码上跑多进程测试，450 行里丢了 150~300 行，library 的写入进程还会因为共用 `.tmp` 文件而崩溃；加锁后反复运行都不丢行。
+
+### 只读盘点（2026-10-26 UTC 18:50 前后）
+
+- `data/product_events.jsonl`：99 行，全部来自 2026-09-17 20:43–22:33 UTC，涉及 8 个 visitor_id。内容是 page_view、上传和提问漏斗，属性里有 16 个 session_id，没有 IP 和邮箱。写它的 `web_api.py`（默认端口 8093）现在没有运行，产品也不再读这个文件。新规则按 24 个月过期，所以短期内不会删到它；如果要清理，只能一次性删除。
+- `data/product/question_counts.json`：day=2026-10-24，里面有 2 个 `ip:` 计数和 1 个 anon-total，没有用户计数。按天重置是懒触发的，只在下一次提问时才清，所以没人提问时，旧 IP 会一直留在文件里。新规则会在下一次 retention 时删掉它。存哈希是 b7bfbf3 做的。
+- `/root/GEM-X/outputs/cerebel/` 根目录下有 3 个 `*_gemx.log`：4D4F9135…、FDCF5F18…、smoke-short-48，时间都是 2026-08-22。内容是 GEM-X 的进度日志，带有 overlay 视频路径，没有邮箱。这 3 个会话的原始视频已经被 retention 删除（有 retention.json），在库里也没有记录。现在的代码已经不写这种日志。新规则会在下一次 retention 时删掉这 3 个文件。
+- `data/staging/`：24K，生成于 2026-10-24/25，没有视频。里面有 2 个测试账号（邮箱域名是 example.com 和 example.invalid，和正式账号不重叠）、9 行埋点、1 条已删除的库记录、1 个只有 upload_progress.json 的会话目录，以及 latest_mesh.json。没有进程在使用它，这是 staging 冒烟测试留下的数据，不纳入 retention，建议一次性删除。
+
+### 要在服务器上执行的命令（需要先经用户批准）
+
+第 A 步，在 Mac 上执行：上传 6 个文件。服务器会先核对那 5 个旧文件的哈希，只要有一个对不上（说明别的会话又部署过），就不覆盖并退出。
+之后备份旧文件，解包，编译检查，最后打印新的哈希。新哈希应为：file_lock 0a2607e、library 2dd5ddc、product_api cde9981、billing 5b1e5bb、retention ed8ec8a、privacy_backfill 04b979e。
+
+```bash
+cd /Users/kaijunlin/Developer/CeRebel/.claude/worktrees/exciting-elgamal-4d06a4 && COPYFILE_DISABLE=1 tar czf - motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py | ssh -p 46474 root@proxy-ai.onethingai.com 'cd /root/CerebelServer || exit 1; for x in cc6f351431794c9f4b7908fa5a1e894103c0d56f:library 2d1935213d21f38cd5408a2ba6adfdb2f7ba69d3:product_api 1a5636ef8f16943b6be8a343db19f99e04eca367:billing 4d5c58a45f2d101c0a0b6833b984a48f531d444c:retention 143fa61f8185cf70f423e8e7c49bcb916fba4bdd:privacy_backfill; do f=motion_agent/app/${x#*:}.py; [ "$(git hash-object $f)" = "${x%%:*}" ] || { echo "CHANGED $f - not deploying"; exit 1; }; done; B=/root/deploy-backup-20261026-locks; mkdir -m 700 -p $B && cp -p motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py $B/ && tar xzf - --no-same-owner -C /root/CerebelServer && /root/miniconda3/bin/python3 -m py_compile motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py && git hash-object motion_agent/app/file_lock.py motion_agent/app/library.py motion_agent/app/product_api.py motion_agent/app/billing.py motion_agent/app/retention.py motion_agent/app/privacy_backfill.py'
+```
+
+下面各步都在服务器上执行。第一行用来设置环境，SSH 断开后要重新执行。
+
+```bash
+cd /root/CerebelServer && set -a && . ./.env.product && set +a && PY=/root/miniconda3/bin/python3
+```
+
+第 B 步，只读预览新 retention 的效果。预期结果是 `3 GEM-X logs`、`(+0 legacy)`，以及 `3 stale question counters`；如果今天已经有人提过问，最后一项是 0。
+
+```bash
+$PY -m motion_agent.app.retention --dry-run
+```
+
+第 C 步，重启 cerebel-product，让 chat_server 加上锁和 IP 哈希（这一步要单独批准）。重启前先确认没有处理中的上传：
+第一条命令的输出里，除了 ready、error、rejected、no_swing，不应该还有别的状态。
+
+```bash
+$PY -c "import json,collections; print(collections.Counter(r.get('status') for r in json.load(open('data/product/library.json')) if not r.get('deleted')))"; tail -n 3 data/product/events.jsonl | cut -c1-90
+```
+
+```bash
+supervisorctl restart cerebel-product && sleep 5 && supervisorctl status cerebel-product && curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8092/api/health
+```
+
+回滚命令（文件和重启一起恢复）：
+
+```bash
+cp -p /root/deploy-backup-20261026-locks/*.py motion_agent/app/ && rm -f motion_agent/app/file_lock.py && supervisorctl restart cerebel-product
+```
+
+第 D 步，一次性清理（每一项都要单独批准）：
+
+```bash
+pgrep -af web_api || rm -f data/product_events.jsonl
+```
+
+```bash
+rm -rf /root/CerebelServer/data/staging
+```
+
+GEM-X 日志和旧的提问计数不用手动删，下一次 07:41 UTC 的 retention 会处理。要立刻处理的话，执行 `$PY -m motion_agent.app.retention`。
+确认没问题后，删除备份：`rm -rf /root/deploy-backup-20261026-locks`。
