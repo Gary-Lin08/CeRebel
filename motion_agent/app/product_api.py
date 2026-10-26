@@ -32,6 +32,7 @@ from motion_agent.app.library import (
     captures_today,
     delete_capture,
     list_captures,
+    log_practice as _log_practice,
     owner_of,
     owns,
     purge_user_rows,
@@ -758,6 +759,22 @@ def remove_capture(settings: Settings, user: dict[str, Any], session_id: str) ->
     purge_session_dir(settings, session_id)
     record_event(settings, "capture_deleted", user_id=user["user_id"], session_id=session_id)
     return 200, {"ok": True, "session_id": session_id}
+
+
+_FINDING_ID = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
+
+
+def log_practice(settings: Settings, user: dict[str, Any], body: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+    """The user marked a fix's drill as practiced on one of their captures."""
+    session_id = str(body.get("session_id") or "")
+    finding_id = str(body.get("finding_id") or "")
+    if not _FINDING_ID.match(finding_id):
+        return 400, {"ok": False, "error": True, "message": "Unknown fix"}
+    count = _log_practice(settings.product_dir, user["user_id"], session_id, finding_id)
+    if count is None:
+        return 404, {"ok": False, "error": True, "message": "Capture not found"}
+    record_event(settings, "practice_logged", user_id=user["user_id"], session_id=session_id, finding_id=finding_id)
+    return 200, {"ok": True, "session_id": session_id, "finding_id": finding_id, "count": count}
 
 
 def media_session_live(settings: Settings, session_id: str) -> bool:

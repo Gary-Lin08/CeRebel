@@ -111,6 +111,27 @@ def delete_capture(product_dir: Path, user_id: str, session_id: str) -> bool:
         return found
 
 
+PRACTICE_LOG_LIMIT = 100
+
+
+def log_practice(product_dir: Path, user_id: str, session_id: str, finding_id: str) -> int | None:
+    """Record that the user practiced the drill for one fix of their capture.
+
+    Stored on the capture's own row, so deleting the capture or the account removes it too.
+    Returns how many times that fix has been practiced, or None when the capture is not theirs.
+    """
+    with _LOCK:
+        rows = _read(product_dir)
+        for row in rows:
+            if row.get("user_id") == user_id and row.get("session_id") == session_id and not row.get("deleted"):
+                log = [p for p in (row.get("practice") or []) if isinstance(p, dict)]
+                log.append({"finding_id": finding_id, "at": _now()})
+                row["practice"] = log[-PRACTICE_LOG_LIMIT:]
+                _write(product_dir, rows)
+                return sum(1 for p in row["practice"] if p.get("finding_id") == finding_id)
+        return None
+
+
 def captures_today(product_dir: Path, user_id: str) -> int:
     today = datetime.now(timezone.utc).date().isoformat()
     return sum(

@@ -1621,6 +1621,9 @@ code {
     color: var(--lime);
   }
   .fix-hero__drill p { margin: 0.4rem 0 0; line-height: 1.45; }
+  .fix-hero__drill-actions { margin-top: 0.85rem; align-items: center; }
+  .fix-hero__drill-actions[hidden], .fix-hero__drill-actions button[hidden] { display: none; }
+  .fix-hero__drill-count { font-size: var(--step-small); color: var(--muted); }
   .fix-hero__chips {
     display: flex;
     flex-wrap: wrap;
@@ -2431,6 +2434,12 @@ code {
         <div class="fix-hero__drill" id="fixDrill" hidden>
           <h3>Today's drill</h3>
           <p id="fixDrillText"></p>
+          <p class="fix-hero__drill-check" id="fixDrillCheck" hidden></p>
+          <div class="fix-hero__actions fix-hero__drill-actions" id="fixDrillActions" hidden>
+            <button type="button" class="primary" id="fixDrillDone">Mark as practiced</button>
+            <button type="button" id="fixRefilm" hidden>Film again to check</button>
+            <span class="fix-hero__drill-count" id="fixDrillCount" aria-live="polite"></span>
+          </div>
         </div>
       </section>
       <section class="sports-catalog" id="sports" data-enter aria-label="Sport packs">
@@ -2618,6 +2627,7 @@ code {
     let authToken = "";
     let accountMode = "login";
     let activeSessionId = null;
+    let libraryCaptures = [];
     let libraryPoll = null;
     let preferredSport = "golf";
     try { authToken = localStorage.getItem(AUTH_KEY) || ""; } catch (_) {}
@@ -4706,9 +4716,61 @@ code {
         btn.classList.toggle("is-active", btn.dataset.id === note.id);
       });
       const drill = document.getElementById("fixDrill");
+      if (drill && !drill.hidden) paintDrill(note);
+    }
+
+    // Practice log: stored on the user's own capture, so only signed-in owners can mark it.
+    function ownCapture(sessionId) {
+      return sessionId ? libraryCaptures.find((row) => row.session_id === sessionId) || null : null;
+    }
+
+    function practiceCount(sessionId, findingId) {
+      const row = ownCapture(sessionId);
+      return row ? (row.practice || []).filter((p) => p.finding_id === findingId).length : 0;
+    }
+
+    function paintDrill(note) {
       const drillText = document.getElementById("fixDrillText");
-      if (drill && drillText && !drill.hidden) {
-        drillText.textContent = note.drill || "No drill for this fix yet.";
+      const check = document.getElementById("fixDrillCheck");
+      const actions = document.getElementById("fixDrillActions");
+      const count = document.getElementById("fixDrillCount");
+      const refilm = document.getElementById("fixRefilm");
+      if (drillText) drillText.textContent = note.drill || "No drill for this fix yet.";
+      if (check) {
+        check.hidden = !note.check;
+        check.innerHTML = note.check ? "<b>Next swing</b> " + escapeHtml(note.check) : "";
+      }
+      const mine = !!(authToken && ownCapture(activeSessionId));
+      if (actions) actions.hidden = !mine || !note.drill;
+      const n = mine ? practiceCount(activeSessionId, note.id) : 0;
+      if (count) count.textContent = n ? "Practiced " + n + (n === 1 ? " time" : " times") : "";
+      if (refilm) refilm.hidden = n === 0;
+    }
+
+    async function markPracticed() {
+      const note = currentFixNote();
+      const button = document.getElementById("fixDrillDone");
+      if (!note || !activeSessionId) return;
+      if (button) button.disabled = true;
+      try {
+        const r = await fetch("/api/library/practice", {
+          method: "POST",
+          headers: authHeaders({ "Content-Type": "application/json" }),
+          body: JSON.stringify({ session_id: activeSessionId, finding_id: note.id }),
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          showToast(r.status === 401 ? "Sign in to keep track of your practice." : (data.message || "Couldn't save that. Try again."));
+          return;
+        }
+        const row = ownCapture(activeSessionId);
+        if (row) row.practice = (row.practice || []).concat({ finding_id: note.id, at: new Date().toISOString() });
+        paintDrill(note);
+        showToast("Marked as practiced. Film again when you're ready to check it.");
+      } catch (_) {
+        showToast("Couldn't save that. Check your connection and try again.");
+      } finally {
+        if (button) button.disabled = false;
       }
     }
 
@@ -4803,11 +4865,19 @@ code {
         drillBtn.addEventListener("click", () => {
           const note = currentFixNote();
           const drill = document.getElementById("fixDrill");
-          const drillText = document.getElementById("fixDrillText");
-          if (!note || !drill || !drillText) return;
+          if (!note || !drill) return;
           drill.hidden = false;
-          drillText.textContent = note.drill || "No drill for this fix yet.";
+          paintDrill(note);
           drill.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+      }
+      const drillDone = document.getElementById("fixDrillDone");
+      if (drillDone) drillDone.addEventListener("click", markPracticed);
+      const refilm = document.getElementById("fixRefilm");
+      if (refilm) {
+        refilm.addEventListener("click", () => {
+          const input = document.getElementById("uploadFile");
+          if (input) input.click();
         });
       }
       if (playMoment) {
@@ -5860,6 +5930,10 @@ code {
         quota.textContent = "Failed or unreadable uploads don't count toward your monthly analyses.";
       }
       if (window.cerebelBilling) window.cerebelBilling.paint(data);
+      libraryCaptures = data.captures || [];
+      const openDrill = document.getElementById("fixDrill");
+      const openNote = openDrill && !openDrill.hidden ? currentFixNote() : null;
+      if (openNote) paintDrill(openNote);
       libraryList.innerHTML = "";
       (data.captures || []).forEach((row) => {
         const li = document.createElement("li");
@@ -6037,6 +6111,7 @@ code {
       accountOut.addEventListener("click", async () => {
         await fetch("/api/auth/logout", { method: "POST", headers: authHeaders({ "Content-Type": "application/json" }), body: "{}" });
         authToken = "";
+        libraryCaptures = [];
         activeSessionId = null;
         try { localStorage.removeItem(AUTH_KEY); } catch (_) {}
         paintAccount(null);
@@ -6115,6 +6190,7 @@ code {
           return;
         }
         authToken = "";
+        libraryCaptures = [];
         activeSessionId = null;
         try { localStorage.removeItem(AUTH_KEY); } catch (_) {}
         paintAccount(null);

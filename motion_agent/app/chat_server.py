@@ -750,6 +750,22 @@ class Handler(BaseHTTPRequestHandler):
                 return _json_response(self, 401, {"error": True, "message": "Sign in required"})
             code, payload = remove_capture(SETTINGS, user, str(body.get("session_id") or ""))
             return _json_response(self, code, payload)
+        if parsed.path == "/api/library/practice":
+            length = int(self.headers.get("Content-Length", "0"))
+            if length > 4096:
+                return _json_response(self, 413, {"error": True, "message": "body too large"})
+            raw = self.rfile.read(length) if length else b"{}"
+            try:
+                body = json.loads(raw.decode("utf-8") or "{}")
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+            from motion_agent.app.product_api import current_user, log_practice
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"error": True, "message": "Sign in required"})
+            code, payload = log_practice(SETTINGS, user, body if isinstance(body, dict) else {})
+            return _json_response(self, code, payload)
         if parsed.path == "/api/stripe/webhook":
             from motion_agent.app.billing import BillingError, handle_webhook
             from motion_agent.app.product_api import record_event
