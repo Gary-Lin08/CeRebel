@@ -446,6 +446,28 @@ def _fake_egocentric_enabled() -> bool:
         )
 
 
+# Appended for live voice calls (motion_agent/app/voice.py). The SAY part is spoken aloud;
+# the SCREEN lines appear under the reply in the chat. Numbers belong on the screen only.
+VOICE_APPENDIX = """
+---
+[Live voice call — your reply is spoken aloud]
+
+You are on a live voice call with the golfer, like a coach standing next to them at the range.
+Reply in exactly this format and nothing else:
+SAY: one to three short spoken sentences, under 50 words in total. Plain coaching language: what
+you noticed, why it matters, and one feel or drill to try. Say no numbers at all: no angles,
+speeds, distances, times, percentages or counts of degrees. No markdown, lists, emoji or code.
+SCREEN: up to three lines that each start with "- ". Each line is one measured number that backs
+up what you said, copied from a tool result with its unit, for example
+"- Pelvis drift toward the ball after impact: 8 cm". Leave SCREEN empty when no number helps.
+Use the tools exactly as you would for a written answer: when the question asks how fast, how far,
+how much or when, measure it with the motion tools first (velocity questions need the trajectory
+tool) and put the measured value on SCREEN; SAY then describes it in words ("quick", "a lot", "late").
+Do not narrate tool use, do not write a cerebel-analysis fence, and do not use any other headings.
+Earlier turns of this call come before the current question; resolve "that" or "it" from them.
+""".strip()
+
+
 # Preset lines that point the model at the video or the RGB frame/clip tools.
 # When the user's video is not shared with the model (CEREBEL_LLM_ATTACH_VIDEO
 # off) those tools are not offered, so each line is swapped for its no-video form.

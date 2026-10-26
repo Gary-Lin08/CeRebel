@@ -171,8 +171,10 @@ class QwenDashScopeVLM(VisionLanguageModel):
         thinking_env = os.environ.get("MOTION_AGENT_ENABLE_THINKING", "1").strip().lower()
         enable_thinking = bool(kwargs.get("enable_thinking", True)) and thinking_env not in {"0", "false", "no", "off"}
         extra_body = kwargs.get("extra_body")
-        if extra_body is None and enable_thinking:
-            extra_body = {"enable_thinking": True}
+        if extra_body is None:
+            # Send the flag either way: Qwen3.x hybrid models think when it is left out
+            # (measured: 23 s and 1,369 output tokens vs 1.6 s and 46 with an explicit false).
+            extra_body = {"enable_thinking": enable_thinking}
 
         def _call(body: dict[str, Any] | None) -> Any:
             payload = dict(req)
@@ -185,7 +187,8 @@ class QwenDashScopeVLM(VisionLanguageModel):
         except Exception as first_exc:  # noqa: BLE001
             if extra_body:
                 LOG.warning(
-                    "Qwen request with thinking failed (%s); retrying without",
+                    "Qwen request with %s failed (%s); retrying without",
+                    extra_body,
                     first_exc,
                 )
                 try:

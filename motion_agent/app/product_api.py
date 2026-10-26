@@ -897,6 +897,8 @@ CLIENT_EVENTS = {
     "share_click",
     "progress_card_view",
     "progress_open",
+    "voice_consent",
+    "voice_paywall",
 }
 
 

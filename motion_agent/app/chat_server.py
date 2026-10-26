@@ -52,6 +52,9 @@ _PREFIXED = ("/api/", "/static/", "/media/", "/terms", "/privacy")
 # straight to the app's own origin instead; that origin must list the main site in
 # CEREBEL_ALLOWED_ORIGINS. Empty: uploads use the same path as everything else.
 UPLOAD_ORIGIN = os.environ.get("CEREBEL_UPLOAD_ORIGIN", "").strip().rstrip("/")
+# Same for the live voice call: the main site's proxy does not carry WebSockets. Defaults to the
+# upload origin, which already points at the app itself.
+VOICE_ORIGIN = os.environ.get("CEREBEL_VOICE_ORIGIN", "").strip().rstrip("/") or UPLOAD_ORIGIN
 
 
 def with_base(text: str, base: str) -> str:
@@ -239,6 +242,8 @@ class Handler(BaseHTTPRequestHandler):
             text = with_base(text, self.base)
             if UPLOAD_ORIGIN:
                 text = text.replace(f'"{self.base}/api/upload"', f'"{UPLOAD_ORIGIN}/api/upload"')
+            if VOICE_ORIGIN:
+                text = text.replace(f'"{self.base}/api/voice/live"', f'"{VOICE_ORIGIN}/api/voice/live"')
         return text
 
     def _send_text(self, text: str, mime: str) -> None:
@@ -286,6 +291,18 @@ class Handler(BaseHTTPRequestHandler):
 
         if path in ("/", "/index.html"):
             return self._serve_index()
+        if path == "/api/voice/live":
+            return self._voice_live()
+        if path == "/api/voice/status":
+            from motion_agent.app import billing as _billing
+            from motion_agent.app import voice
+            from motion_agent.app.product_api import current_user
+
+            if not voice.voice_enabled():
+                return _json_response(self, 200, {"enabled": False})
+            user = current_user(SETTINGS, self.headers)
+            pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
+            return _json_response(self, 200, {"enabled": True, **voice.voice_allowance(SETTINGS.product_dir, user, pro)})
         if path in ("/terms", "/privacy"):
             return self._serve_legal(path.strip("/"))
         if path == "/api/billing":
@@ -907,37 +924,9 @@ class Handler(BaseHTTPRequestHandler):
             and _check_prompt_password(_password_from_request(self, parsed))
         )
         backend = (body.get("backend") if dev_backend else None) or BACKEND
-        from motion_agent.app import billing as _billing
-
         if not dev_backend:
-            pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
-            if user:
-                key = "u:" + str(user["user_id"])
-            else:
-                # Behind a proxy (Cloudflare Tunnel, Vercel, the GPU host's port mapping) every request
-                # comes from a local address; use the visitor IP the proxy forwards.
-                forwarded = (self.headers.get("X-Forwarded-For") or "").split(",")[0]
-                ip = (
-                    self.headers.get("CF-Connecting-IP")
-                    or forwarded  # first hop = the visitor; X-Real-IP is the nearest proxy
-                    or self.headers.get("X-Real-IP")
-                    or self.client_address[0]
-                    or "unknown"
-                ).strip()
-                key = "ip:" + ip[:64]
-            allowed, _left = _billing.take_question(
-                SETTINGS.product_dir, key, _billing.daily_question_limit(pro, bool(user))
-            )
-            if allowed and not user:
-                # Forwarded IP headers can be forged: cap all anonymous questions together too.
-                total = int(os.environ.get("CEREBEL_ANON_DAILY_TOTAL", "300"))
-                allowed, _left = _billing.take_question(SETTINGS.product_dir, "anon-total", total)
+            allowed, message = self._take_question(user)
             if not allowed:
-                message = (
-                    "You've reached today's question limit. Create a free account to keep asking."
-                    if not user
-                    else "You've reached today's question limit. It resets at midnight UTC."
-                )
                 return _json_response(self, 429, {"error": True, "limit": True, "message": message})
         try:
             from motion_agent.app.product_api import record_event
@@ -1020,6 +1009,136 @@ class Handler(BaseHTTPRequestHandler):
             return _json_response(self, 200, chat_payload(result))
         except Exception as exc:  # noqa: BLE001
             return _json_response(self, 500, _internal_error(exc, "chat"))
+
+    def _take_question(self, user: dict | None) -> tuple[bool, str]:
+        """Count one coach question against today's cap. Returns (allowed, message for the user)."""
+        from motion_agent.app import billing as _billing
+
+        pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
+        if user:
+            key = "u:" + str(user["user_id"])
+        else:
+            # Behind a proxy (Cloudflare Tunnel, Vercel, the GPU host's port mapping) every request
+            # comes from a local address; use the visitor IP the proxy forwards.
+            forwarded = (self.headers.get("X-Forwarded-For") or "").split(",")[0]
+            ip = (
+                self.headers.get("CF-Connecting-IP")
+                or forwarded  # first hop = the visitor; X-Real-IP is the nearest proxy
+                or self.headers.get("X-Real-IP")
+                or self.client_address[0]
+                or "unknown"
+            ).strip()
+            key = "ip:" + ip[:64]
+        allowed, _left = _billing.take_question(
+            SETTINGS.product_dir, key, _billing.daily_question_limit(pro, bool(user))
+        )
+        if allowed and not user:
+            # Forwarded IP headers can be forged: cap all anonymous questions together too.
+            total = int(os.environ.get("CEREBEL_ANON_DAILY_TOTAL", "300"))
+            allowed, _left = _billing.take_question(SETTINGS.product_dir, "anon-total", total)
+        if allowed:
+            return True, ""
+        if not user:
+            return False, "You've reached today's question limit. Create a free account to keep asking."
+        return False, "You've reached today's question limit. It resets at midnight UTC."
+
+    def _voice_live(self) -> None:
+        """GET /api/voice/live: WebSocket for a live voice call with the coach (see voice.py)."""
+        from motion_agent.app import billing as _billing
+        from motion_agent.app import voice
+        from motion_agent.app import ws as wslib
+        from motion_agent.app.product_api import current_user, default_visible_session_id, media_allowed, record_event
+
+        if not voice.voice_enabled():
+            return _json_response(self, 404, {"error": True, "message": "not found"})
+        # The token travels in the first message, not a cookie, but refuse foreign pages anyway.
+        origin = (self.headers.get("Origin") or "").rstrip("/")
+        if origin and origin not in ALLOWED_ORIGINS and urlparse(origin).netloc != (self.headers.get("Host") or ""):
+            return _json_response(self, 403, {"error": True, "message": "Not allowed"})
+        sock = wslib.server_upgrade(self)
+        if sock is None:
+            return
+
+        def refuse(reason: str, message: str) -> None:
+            try:
+                sock.send_text(json.dumps({"type": "end", "reason": reason, "message": message}))
+            except (OSError, wslib.WebSocketClosed):
+                pass
+            sock.close()
+
+        self.connection.settimeout(10)
+        first = sock.recv()
+        self.connection.settimeout(None)
+        try:
+            start = json.loads(first[1]) if first and first[0] == wslib.OP_TEXT else {}
+        except ValueError:
+            start = {}
+        if start.get("type") != "start":
+            return refuse("error", "Could not start the call.")
+        token = str(start.get("token") or "").strip()
+        user = current_user(SETTINGS, {"Authorization": "Bearer " + token}) if token else None
+        video_id = start.get("video_id")
+        if video_id and not media_allowed(SETTINGS, user, str(video_id)):
+            return refuse("error", "That capture belongs to another account.")
+        video_id = str(video_id or default_visible_session_id(SETTINGS, DATA_DIR, user) or "")
+        if not video_id:
+            return refuse("error", "Upload a swing before calling the coach.")
+        pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
+        allowance = voice.voice_allowance(SETTINGS.product_dir, user, pro)
+        if allowance["need"]:
+            return refuse(allowance["need"], "Live coaching is part of Pro." if allowance["need"] == "upgrade" else "Sign in to talk with the coach.")
+        prompt_mode = None
+        try:
+            from motion_agent.app.product_session import resolve_prompt_mode_for_session
+
+            prompt_mode, _meta = resolve_prompt_mode_for_session(
+                video_id=video_id, data_dir=DATA_DIR, requested=None, allow_dev_modes=False
+            )
+        except Exception:  # noqa: BLE001
+            LOG.exception("prompt_mode clamp failed")
+
+        def answer(question: str, history: list) -> object:
+            return answer_question(
+                question,
+                video_id=video_id,
+                data_dir=DATA_DIR,
+                vlm=build_vlm(BACKEND),
+                attach_video=False,
+                prompt_mode=prompt_mode,
+                history=history,
+                voice=True,
+            )
+
+        def briefs() -> dict:
+            if prompt_mode != "golf":
+                return {}
+            from motion_agent.app.coach_briefs import build_coach_briefs
+
+            return build_coach_briefs(video_id=video_id, data_dir=DATA_DIR, sport="golf")
+
+        try:
+            from motion_agent.app.speech import build_provider
+
+            provider = build_provider()
+        except Exception:  # noqa: BLE001
+            LOG.exception("voice provider unavailable")
+            return refuse("error", "Live coaching isn't available right now. You can keep typing your questions.")
+        call = voice.VoiceCall(
+            sock,
+            provider,
+            answer_fn=answer,
+            seconds=allowance["seconds"],
+            take_question=lambda: self._take_question(user),
+            briefs_fn=briefs,
+        )
+        user_id = (user or {}).get("user_id")
+        record_event(SETTINGS, "voice_call_start", user_id=user_id, session_id=video_id, plan=allowance["kind"])
+        try:
+            call.run()
+        finally:
+            if user_id:
+                voice.record_voice_seconds(SETTINGS.product_dir, str(user_id), allowance["kind"], call.duration())
+            record_event(SETTINGS, "voice_call_end", user_id=user_id, session_id=video_id, **call.summary())
 
     def _chat_stream(
         self,

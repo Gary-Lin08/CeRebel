@@ -15,6 +15,7 @@ from motion_agent.knowledge.sport_sources import (
     default_kb_sources as _default_kb_sources_map,
 )
 from motion_agent.llm.prompts import (
+    VOICE_APPENDIX,
     compose_system_prompt,
     get_preset_prompt,
     user_context_preamble,
@@ -51,6 +52,12 @@ IMAGE_TOOL_NAMES = {
 # First clip frame can also be shown in the UI.
 CLIP_TOOL_NAMES = {"get_rgb_clip"}
 
+# Live voice calls: no picture tools (nothing to show while talking, and images slow the model),
+# and at most this many tool rounds before the model has to answer.
+VOICE_SKIP_TOOLS = {"get_rgb_frame", "get_rgb_clip", "render_force_visualization"}
+VOICE_MAX_TOOL_ROUNDS = 2
+VOICE_HISTORY_MESSAGES = 8
+
 
 @dataclass
 class TraceStep:
@@ -71,6 +78,8 @@ class AgentResult:
     session_id: str = ""
     tool_calls_used: int = 0
     error: str | None = None
+    # Raw tool outputs of this answer, for checking the numbers in it.
+    evidence: list[str] = field(default_factory=list)
 
 
 OnEvent = Callable[[dict[str, Any]], None]
@@ -574,6 +583,17 @@ def _golf_post_bootstrap_nudge(*, kb_bootstrapped: bool) -> dict[str, Any]:
     return {"role": "user", "content": content}
 
 
+def _history_messages(history: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+    """Earlier turns of a conversation as plain user/assistant text, newest last."""
+    rows: list[dict[str, Any]] = []
+    for item in (history or [])[-VOICE_HISTORY_MESSAGES:]:
+        role = item.get("role") if isinstance(item, dict) else None
+        content = item.get("content") if isinstance(item, dict) else None
+        if role in ("user", "assistant") and isinstance(content, str) and content.strip():
+            rows.append({"role": role, "content": content.strip()[:1500]})
+    return rows
+
+
 def _resolve_max_tool_calls(explicit: int | None) -> int | None:
     """Return a positive tool budget, or None for unlimited.
 
@@ -640,6 +660,9 @@ class MotionAgent:
         self,
         question: str,
         on_event: OnEvent | None = None,
+        *,
+        history: list[dict[str, Any]] | None = None,
+        voice: bool = False,
     ) -> AgentResult:
         # Without the video attached, the model is not offered the RGB frame/clip tools.
         tools = (
@@ -647,6 +670,8 @@ class MotionAgent:
             if self.vlm.supports_tool_calling()
             else []
         )
+        if voice:
+            tools = [t for t in tools if t["function"]["name"] not in VOICE_SKIP_TOOLS]
         preamble = user_context_preamble(
             self.seq.video_id,
             self.seq.duration_s,
@@ -674,8 +699,10 @@ class MotionAgent:
                     "motion grounding. For Rules / WHS / equipment / technique "
                     "vocabulary / biomechanics claims, also call search_knowledge_base."
                 )
+        system_prompt = self.system_prompt + ("\n" + VOICE_APPENDIX + "\n" if voice else "")
         messages: list[dict[str, Any]] = [
-            {"role": "system", "content": self.system_prompt},
+            {"role": "system", "content": system_prompt},
+            *_history_messages(history),
             {
                 "role": "user",
                 "content": _build_user_content(
@@ -721,7 +748,11 @@ class MotionAgent:
                 self.seq, messages, push, on_event, sport="baseball"
             )
             messages.append(_sport_analysis_nudge("baseball"))
+        if voice:
+            # Last word before the model answers, so it wins over the fence the presets ask for.
+            messages.append({"role": "user", "content": "Reply for the voice call: SAY: … then SCREEN: … as instructed."})
 
+        tool_rounds = 0
         while True:
             _emit(
                 on_event,
@@ -734,9 +765,9 @@ class MotionAgent:
             )
             resp = self.vlm.generate_with_tools(
                 messages,
-                tools=tools,
-                enable_thinking=True,
-                max_tokens=4096,
+                tools=[] if voice and tool_rounds >= VOICE_MAX_TOOL_ROUNDS else tools,
+                enable_thinking=not voice,
+                max_tokens=600 if voice else 4096,
             )
             if resp.error:
                 _emit(
@@ -765,6 +796,7 @@ class MotionAgent:
                 )
 
             if resp.tool_calls:
+                tool_rounds += 1
                 assistant_msg: dict[str, Any] = {
                     "role": "assistant",
                     "content": resp.content or "",
@@ -817,6 +849,9 @@ class MotionAgent:
                             "interim": True,
                         },
                     )
+                    arguments = tc.arguments
+                    if voice and isinstance(arguments, dict) and "include_plot" in arguments:
+                        arguments = {k: v for k, v in arguments.items() if k != "include_plot"}
                     if tc.name in RGB_TOOL_NAMES and not self.attach_video:
                         # The user's video is not shared with the model: never read its
                         # frames, even when the model calls a tool it was not offered.
@@ -829,7 +864,7 @@ class MotionAgent:
                         result = execute_tool(
                             self.seq,
                             tc.name,
-                            _with_kb_scope(self.prompt_mode, tc.name, tc.arguments),
+                            _with_kb_scope(self.prompt_mode, tc.name, arguments),
                         )
                         result = _scope_kb_tool_result(self.prompt_mode, tc.name, result)
                     used += 1
@@ -862,7 +897,7 @@ class MotionAgent:
                             "content": _tool_message_content(tc.name, result),
                         }
                     )
-                    if image_b64:
+                    if image_b64 and not voice:
                         messages.append(
                             {
                                 "role": "user",
@@ -892,6 +927,7 @@ class MotionAgent:
                 trace=trace,
                 session_id=self.seq.video_id,
                 tool_calls_used=used,
+                evidence=[str(m.get("content") or "") for m in messages if m.get("role") == "tool"],
             )
 
 
@@ -904,6 +940,8 @@ def answer_question(
     system_prompt: str | None = None,
     prompt_mode: str | None = None,
     on_event: OnEvent | None = None,
+    history: list[dict[str, Any]] | None = None,
+    voice: bool = False,
 ) -> AgentResult:
     data_dir = data_dir or Path(os.environ.get("CEREBEL_DATA_DIR", "/root/CerebelServer/data"))
     if video_id:
@@ -936,7 +974,7 @@ def answer_question(
         system_prompt=system_prompt,
         prompt_mode=prompt_mode,
     )
-    return agent.answer(question, on_event=on_event)
+    return agent.answer(question, on_event=on_event, history=history, voice=voice)
 
 
 def get_sport_analysis(
