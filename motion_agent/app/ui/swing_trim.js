@@ -10,10 +10,10 @@
 
   var CFG = Object.assign(
     {
-      bundle: "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs",
-      wasm: "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm",
-      model:
-        "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+      // Served from our own origin (see ui/vendor/pose/README.md): no third party sees the visit.
+      bundle: "/static/vendor/pose/0.10.14/vision_bundle.mjs",
+      wasm: "/static/vendor/pose/0.10.14/wasm",
+      model: "/static/vendor/pose/pose_landmarker_lite_f16_v1.task",
       maxSeconds: 25, // give up and upload untrimmed after this long
       before: 2.2, // seconds kept before the fastest hand movement
       after: 1.3, // seconds kept after it

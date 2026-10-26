@@ -35,6 +35,7 @@ from motion_agent.storage.video_store import resolve_media_file
 LOG = logging.getLogger("motion_agent.chat_server")
 
 UI_DIR = Path(__file__).resolve().parent / "ui"
+VENDOR_DIR = UI_DIR / "vendor"
 # Optional path prefix (e.g. "/playground") when the app is also served under the main site,
 # cerebel.tech/playground, through a reverse proxy that keeps the prefix. Requests without the
 # prefix keep working (playground.cerebel.tech); with it, the prefix is stripped on the way in and
@@ -1082,9 +1083,17 @@ class Handler(BaseHTTPRequestHandler):
             return _json_response(self, 404, {"error": True, "message": f"missing {path.name}"})
         size = path.stat().st_size
         mime, _ = mimetypes.guess_type(str(path))
-        if path.suffix.lower() == ".js" or path.name.endswith(".module.js"):
+        if path.suffix.lower() in (".js", ".mjs") or path.name.endswith(".module.js"):
             mime = "text/javascript; charset=utf-8"
-        if self.base and path.suffix.lower() in (".html", ".js", ".css", ".json") and UI_DIR.resolve() in path.resolve().parents:
+        # Third-party files are served byte for byte (their loaders are full of "/" literals that
+        # the base-path rewrite would break) and are versioned by folder, so browsers keep them.
+        vendored = VENDOR_DIR in path.resolve().parents
+        if (
+            self.base
+            and not vendored
+            and path.suffix.lower() in (".html", ".js", ".css", ".json")
+            and UI_DIR.resolve() in path.resolve().parents
+        ):
             return self._send_text(self._ui_text(path.read_text(encoding="utf-8")), mime or "text/html; charset=utf-8")
         # iOS Safari will not play a <video> unless Range requests get 206 answers.
         start, end = 0, size - 1
@@ -1106,7 +1115,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(end - start + 1))
         _send_cors_headers(self)
         self.send_header("Accept-Ranges", "bytes")
-        self.send_header("Cache-Control", "private, no-cache" if private else "no-cache")
+        if vendored:
+            self.send_header("Cache-Control", "public, max-age=31536000, immutable")
+        else:
+            self.send_header("Cache-Control", "private, no-cache" if private else "no-cache")
         if private:
             self.send_header("Referrer-Policy", "no-referrer")
         self.end_headers()
