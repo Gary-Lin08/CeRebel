@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
@@ -52,10 +53,25 @@ IMAGE_TOOL_NAMES = {
 # First clip frame can also be shown in the UI.
 CLIP_TOOL_NAMES = {"get_rgb_clip"}
 
-# Live voice calls: no picture tools (nothing to show while talking, and images slow the model),
-# and at most this many tool rounds before the model has to answer.
-VOICE_SKIP_TOOLS = {"get_rgb_frame", "get_rgb_clip", "render_force_visualization"}
+# Live voice calls offer only the tools a spoken answer needs (no pictures; the swing phases and
+# the motion board are pre-run), which also keeps the prompt small, and allow at most this many
+# tool rounds before the model has to answer.
+VOICE_TOOLS = {
+    "get_motion_state",
+    "get_motion_events",
+    "get_joint_trajectory",
+    "get_com_trajectory",
+    "get_dynamics_summary",
+    "compare_motion",
+    "search_knowledge_base",
+}
 VOICE_MAX_TOOL_ROUNDS = 2
+# Without its reasoning step the model answers "how fast" from the board, which holds no joint
+# speeds; a voice question about speed must measure it first.
+VOICE_SPEED_QUESTION = re.compile(r"\b(how fast|how quick(ly)?|speed|velocity|rotation rate)\b", re.IGNORECASE)
+# Motion-board fields a spoken answer does not use: the dense per-sample traces (the landmarks
+# carry their peaks, minimums and impact values) and display-only labels.
+VOICE_BOARD_DROP = {"series", "stage_label", "badge", "title", "trail_label", "ui_hint", "disclosure"}
 VOICE_HISTORY_MESSAGES = 8
 
 
@@ -583,6 +599,40 @@ def _golf_post_bootstrap_nudge(*, kb_bootstrapped: bool) -> dict[str, Any]:
     return {"role": "user", "content": content}
 
 
+def _compact_board(content: str) -> str:
+    """A motion board for a spoken answer: phases, landmarks, findings; no per-sample traces."""
+    try:
+        board = json.loads(content)
+    except (TypeError, ValueError):
+        return content
+    if not isinstance(board, dict) or board.get("error"):
+        return content
+    compact = {k: v for k, v in board.items() if k not in VOICE_BOARD_DROP}
+    compact["series"] = [
+        {k: s.get(k) for k in ("id", "label", "unit")} for s in board.get("series") or [] if isinstance(s, dict)
+    ]
+    compact["note_for_model"] = (
+        "Voice call: per-sample traces are left out. The landmarks (peaks, minimums, values at "
+        "release/impact) and the findings' metrics are the measurements you may cite. They hold "
+        "angles, distances and the trail-hand speed only: for how fast a joint turns (hips, pelvis, "
+        "shoulders) or any other number, call get_joint_trajectory first. Do not describe a speed "
+        "you did not measure, and do not invent angles, distances, speeds or times."
+    )
+    return json.dumps(compact, default=str)
+
+
+def _compact_boards_for_voice(messages: list[dict[str, Any]]) -> None:
+    board_calls = {
+        tc["id"]
+        for m in messages
+        for tc in (m.get("tool_calls") or [])
+        if tc.get("function", {}).get("name") == "build_sport_analysis"
+    }
+    for m in messages:
+        if m.get("role") == "tool" and m.get("tool_call_id") in board_calls:
+            m["content"] = _compact_board(m["content"])
+
+
 def _history_messages(history: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
     """Earlier turns of a conversation as plain user/assistant text, newest last."""
     rows: list[dict[str, Any]] = []
@@ -671,7 +721,7 @@ class MotionAgent:
             else []
         )
         if voice:
-            tools = [t for t in tools if t["function"]["name"] not in VOICE_SKIP_TOOLS]
+            tools = [t for t in tools if t["function"]["name"] in VOICE_TOOLS]
         preamble = user_context_preamble(
             self.seq.video_id,
             self.seq.duration_s,
@@ -749,6 +799,7 @@ class MotionAgent:
             )
             messages.append(_sport_analysis_nudge("baseball"))
         if voice:
+            _compact_boards_for_voice(messages)
             # Last word before the model answers, so it wins over the fence the presets ask for.
             messages.append({"role": "user", "content": "Reply for the voice call: SAY: … then SCREEN: … as instructed."})
 
@@ -763,11 +814,21 @@ class MotionAgent:
                     "interim": True,
                 },
             )
+            round_tools = [] if voice and tool_rounds >= VOICE_MAX_TOOL_ROUNDS else tools
+            tool_choice: Any = "auto"
+            if (
+                voice
+                and tool_rounds == 0
+                and VOICE_SPEED_QUESTION.search(question)
+                and any(t["function"]["name"] == "get_joint_trajectory" for t in round_tools)
+            ):
+                tool_choice = {"type": "function", "function": {"name": "get_joint_trajectory"}}
             resp = self.vlm.generate_with_tools(
                 messages,
-                tools=[] if voice and tool_rounds >= VOICE_MAX_TOOL_ROUNDS else tools,
+                tools=round_tools,
                 enable_thinking=not voice,
                 max_tokens=600 if voice else 4096,
+                tool_choice=tool_choice,
             )
             if resp.error:
                 _emit(
@@ -890,13 +951,10 @@ class MotionAgent:
                             interim=True,
                         )
                     )
-                    messages.append(
-                        {
-                            "role": "tool",
-                            "tool_call_id": tc.id,
-                            "content": _tool_message_content(tc.name, result),
-                        }
-                    )
+                    content = _tool_message_content(tc.name, result)
+                    if voice and tc.name == "build_sport_analysis":
+                        content = _compact_board(content)
+                    messages.append({"role": "tool", "tool_call_id": tc.id, "content": content})
                     if image_b64 and not voice:
                         messages.append(
                             {

@@ -361,6 +361,107 @@ class VoiceCallTests(unittest.TestCase):
             self.assertNotIn(name, text)
 
 
+class DeviceSpeechCallTests(unittest.TestCase):
+    """The browser hears and speaks; the call carries text only."""
+
+    def _start(self, answer_fn, briefs_fn=None):
+        sock = FakeSock()
+        call = voice.VoiceCall(sock, None, answer_fn=answer_fn, seconds=60, briefs_fn=briefs_fn)
+        thread = threading.Thread(target=call.run, daemon=True)
+        thread.start()
+        self.assertTrue(_wait(lambda: sock.texts("ready")))
+        self.addCleanup(lambda: (call.end("hangup"), thread.join(2)))
+        return sock, call
+
+    def say(self, sock, text):
+        sock.inbox.put((wslib.OP_TEXT, json.dumps({"type": "say", "text": text}).encode()))
+
+    def test_text_turn_with_opener_and_no_audio(self):
+        answer = lambda q, h: SimpleNamespace(
+            answer="SAY: Your hips slide toward the ball. Keep the trail hip back.\nSCREEN:\n- Pelvis drift after impact: 8 cm",
+            evidence=['{"pelvis_drift_m": 0.08}'], error=None)
+        sock, call = self._start(answer)
+        self.assertEqual(sock.texts("ready")[0]["speech"], "device")
+        self.say(sock, "How are my hips?")
+        self.assertTrue(_wait(lambda: sock.texts("audio_end")))
+        thinking = [m for m in sock.texts("state") if m["state"] == "thinking"][0]
+        self.assertEqual(thinking["ack"], voice.ACK_PHRASES[0])
+        coach = sock.texts("coach")[0]
+        self.assertEqual(coach["say"], "Your hips slide toward the ball. Keep the trail hip back.")
+        self.assertEqual(coach["screen"], ["Pelvis drift after impact: 8 cm"])
+        self.assertEqual(sock.audio_turns(), [])
+        self.assertEqual(len(call.stats["reply_ms"]), 1)
+        self.assertEqual(call.summary()["speech"], "device")
+
+    def test_first_question_waits_for_precomputed_answers(self):
+        brief = {"id": "biggest_fix", "question": "What's the biggest thing I should fix?", "answer": "Early extension\n\nMeasured: 8 cm — drift"}
+
+        def slow_briefs():
+            time.sleep(0.4)
+            return {"briefs": [brief], "findings": []}
+
+        called = []
+        sock, call = self._start(lambda q, h: called.append(q), briefs_fn=slow_briefs)
+        self.say(sock, "What's the biggest thing I should fix?")
+        self.assertTrue(_wait(lambda: sock.texts("coach")))
+        self.assertTrue(sock.texts("coach")[0]["instant"])
+        self.assertEqual(called, [])
+
+    def test_new_sentence_cancels_the_pending_answer(self):
+        gate = threading.Event()
+
+        def slow(q, h):
+            if q.startswith("First"):
+                gate.wait(2)
+            return SimpleNamespace(answer="SAY: " + q, evidence=[], error=None)
+
+        sock, call = self._start(slow)
+        self.say(sock, "First question about my swing?")
+        self.assertTrue(_wait(lambda: sock.texts("user")))
+        self.say(sock, "Second question about my arms?")
+        self.assertTrue(_wait(lambda: any(m["turn"] == 2 for m in sock.texts("audio_end"))))
+        gate.set()
+        time.sleep(0.2)
+        self.assertEqual([m["turn"] for m in sock.texts("coach")], [2])
+        self.assertEqual(call.stats["interrupted"], 1)
+
+    def test_audio_frames_are_ignored(self):
+        sock, call = self._start(lambda q, h: None)
+        sock.inbox.put((wslib.OP_BINARY, b"\x00\x00" * 800))
+        time.sleep(0.1)
+        self.assertFalse(sock.closed)
+        self.assertIsNone(call.asr)
+
+
+class VoiceContextTests(unittest.TestCase):
+    def test_board_is_compacted(self):
+        from motion_agent.llm.agent import _compact_board, _compact_boards_for_voice
+
+        board = {
+            "tool": "build_sport_analysis", "stage_label": "long label", "disclosure": {"x": 1},
+            "phases": [{"id": "address", "start_time": 0.0, "end_time": 0.3}],
+            "series": [{"id": "pelvis-drift", "label": "Pelvis drift", "unit": "cm", "times": [0.1] * 300, "values": [1.5] * 300}],
+            "landmarks": [{"id": "pelvis-drift-event", "value": 8.1, "unit": "cm"}],
+            "findings": [{"id": "early-extension", "metric": {"value": "8 cm"}}],
+            "note_for_model": "cite samples",
+        }
+        out = json.loads(_compact_board(json.dumps(board)))
+        self.assertEqual(out["series"], [{"id": "pelvis-drift", "label": "Pelvis drift", "unit": "cm"}])
+        self.assertEqual(out["landmarks"], board["landmarks"])
+        self.assertEqual(out["findings"], board["findings"])
+        self.assertNotIn("stage_label", out)
+        self.assertIn("get_joint_trajectory", out["note_for_model"])
+        messages = [
+            {"role": "assistant", "tool_calls": [{"id": "b1", "function": {"name": "build_sport_analysis"}}]},
+            {"role": "tool", "tool_call_id": "b1", "content": json.dumps(board)},
+            {"role": "tool", "tool_call_id": "other", "content": json.dumps(board)},
+        ]
+        _compact_boards_for_voice(messages)
+        self.assertLess(len(messages[1]["content"]), len(messages[2]["content"]) / 3)
+        self.assertEqual(json.loads(messages[2]["content"]), board)  # other tools untouched
+        self.assertEqual(_compact_board("not json"), "not json")
+
+
 class UsageTests(unittest.TestCase):
     def setUp(self):
         self.dir = Path(tempfile.mkdtemp())
@@ -423,7 +524,7 @@ class AgentVoiceModeTests(unittest.TestCase):
         return MotionAgent(seq, vlm=vlm, prompt_mode="snowboarding")
 
     def test_voice_mode_settings(self):
-        from motion_agent.llm.agent import VOICE_SKIP_TOOLS
+        from motion_agent.llm.agent import VOICE_TOOLS
 
         vlm = RecordingVLM(tool_rounds=5)
         with mock.patch("motion_agent.llm.agent.execute_tool", return_value={"pelvis_drift_m": 0.0812}):
@@ -434,7 +535,8 @@ class AgentVoiceModeTests(unittest.TestCase):
             )
         first = vlm.calls[0]
         self.assertFalse(first["enable_thinking"])
-        self.assertFalse(VOICE_SKIP_TOOLS & set(first["tools"]))
+        self.assertTrue(set(first["tools"]) <= VOICE_TOOLS)
+        self.assertIn("get_joint_trajectory", first["tools"])
         self.assertIn("Live voice call", first["messages"][0]["content"])
         self.assertEqual([m["role"] for m in first["messages"][:3]], ["system", "user", "assistant"])
         self.assertEqual(first["messages"][1]["content"], "How are my hips?")
@@ -443,6 +545,19 @@ class AgentVoiceModeTests(unittest.TestCase):
         self.assertEqual(vlm.calls[2]["tools"], [])
         self.assertIn("0.0812", result.evidence[0])
         self.assertTrue(result.answer.startswith("SAY:"))
+
+    def test_speed_questions_must_measure_first(self):
+        vlm = RecordingVLM(tool_rounds=1)
+        with mock.patch("motion_agent.llm.agent.execute_tool", return_value={"peak_deg_s": 394.27}):
+            self._agent(vlm).answer("How fast were my hips turning at impact?", voice=True)
+        self.assertEqual(vlm.calls[0]["tool_choice"], {"type": "function", "function": {"name": "get_joint_trajectory"}})
+        self.assertEqual(vlm.calls[1]["tool_choice"], "auto")
+        other = RecordingVLM(tool_rounds=0)
+        self._agent(other).answer("What should I fix first?", voice=True)
+        self.assertEqual(other.calls[0]["tool_choice"], "auto")
+        text = RecordingVLM(tool_rounds=0)
+        self._agent(text).answer("How fast were my hips turning?")
+        self.assertEqual(text.calls[0]["tool_choice"], "auto")
 
     def test_text_mode_unchanged(self):
         vlm = RecordingVLM(tool_rounds=0)
@@ -489,10 +604,13 @@ class FakeTogether:
             def do_GET(self):  # noqa: N802
                 fake.requests.append((self.path, dict(self.headers)))
                 sock = wslib.server_upgrade(self)
-                if self.path.startswith("/v1/realtime"):
-                    fake._stt(sock)
-                else:
-                    fake._tts(sock)
+                try:
+                    if self.path.startswith("/v1/realtime"):
+                        fake._stt(sock)
+                    else:
+                        fake._tts(sock)
+                except (OSError, wslib.WebSocketClosed):
+                    pass  # the client hung up, as the cancel test does
 
         self.server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
         threading.Thread(target=self.server.serve_forever, daemon=True).start()
@@ -677,13 +795,28 @@ class ServerIntegrationTests(unittest.TestCase):
         with self.assertRaises(wslib.WebSocketClosed):
             wslib.connect(self.url, {"Origin": "https://evil.example"})
 
-    def test_status_off_without_a_speech_key(self):
+    def test_without_a_speech_key_only_device_calls_start(self):
         import urllib.request
 
         env = {"CEREBEL_VOICE_PROVIDER": "together", "CEREBEL_VOICE_API_KEY": "", "TOGETHER_API_KEY": "", "MOTION_AGENT_BASE_URL": ""}
         with mock.patch.dict("os.environ", env):
             status = json.loads(urllib.request.urlopen(self.url.replace("ws://", "http://").replace("live", "status")).read())
-            self.assertEqual(status, {"enabled": False})
+            self.assertEqual((status["enabled"], status["cloud"]), (True, False))
+            cloud = wslib.connect(self.url)
+            cloud.send_text(json.dumps({"type": "start", "video_id": "vid", "speech": "cloud"}))
+            end = json.loads(cloud.recv()[1])
+            self.assertEqual((end["type"], end["reason"]), ("end", "unavailable"))
+            device = wslib.connect(self.url)
+            device.send_text(json.dumps({"type": "start", "video_id": "vid", "speech": "device"}))
+            self.assertEqual(json.loads(device.recv()[1])["speech"], "device")
+            device.send_text(json.dumps({"type": "say", "text": "How are my hips?"}))
+            seen = []
+            while not any(m["type"] == "audio_end" for m in seen):
+                op, payload = device.recv()
+                self.assertEqual(op, wslib.OP_TEXT)  # no audio in a device call
+                seen.append(json.loads(payload))
+            self.assertEqual(next(m for m in seen if m["type"] == "coach")["say"], "Keep your trail hip back.")
+            device.send_text(json.dumps({"type": "hangup"}))
 
     def test_disabled_by_default(self):
         with mock.patch.dict("os.environ", {"CEREBEL_VOICE_ENABLED": "0"}):

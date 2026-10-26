@@ -1,17 +1,23 @@
 """Live voice coach: one WebSocket call = streaming recognition -> coach -> streaming speech.
 
+Two ways to carry the voice:
+  device  the browser's own speech recognition and speech synthesis (Apple's in Safari, on-device
+          in Chrome); only text reaches this server, and speech costs nothing
+  cloud   microphone audio streams here and on to the speech provider (speech.py)
+
 Browser -> server
-  {"type": "start", "token": "...", "video_id": "..."}    first message, within 10 s
-  binary frames: 16 kHz mono PCM16 microphone audio
+  {"type": "start", "token": "...", "video_id": "...", "speech": "device" | "cloud"}   first, within 10 s
+  device: {"type": "say", "text"}           what the browser heard, one finished sentence
+  cloud:  binary frames: 16 kHz mono PCM16 microphone audio
   {"type": "interrupt"}   the user started talking over the coach
   {"type": "hangup"}
 Server -> browser
-  {"type": "ready", "seconds": n}        call is live, n = most seconds this call may last
+  {"type": "ready", "seconds": n, "speech"}   call is live, n = most seconds this call may last
   {"type": "partial", "text"}            live caption of what the user is saying
   {"type": "user", "turn", "text"}       final transcript of a turn
-  {"type": "state", "turn", "state"}     thinking | speaking
+  {"type": "state", "turn", "state", "ack"?}   thinking | speaking; device calls get the opener as text
   {"type": "coach", "turn", "say", "screen": [...], "instant"}
-  binary frames: 4-byte little-endian turn id + 24 kHz mono PCM16
+  cloud: binary frames: 4-byte little-endian turn id + 24 kHz mono PCM16
   {"type": "audio_end", "turn"}
   {"type": "end", "reason", "message"}   then the socket closes
 
@@ -298,7 +304,7 @@ class VoiceCall:
     def __init__(
         self,
         sock: wslib.WebSocket,
-        provider: SpeechProvider,
+        provider: SpeechProvider | None,
         *,
         answer_fn: Callable[[str, list[dict[str, Any]]], Any],
         seconds: int,
@@ -309,12 +315,14 @@ class VoiceCall:
     ) -> None:
         self.sock = sock
         self.provider = provider
+        self.device = provider is None  # the browser hears and speaks; only text comes here
         self.answer_fn = answer_fn
         self.seconds = max(1, int(seconds))
         self.take_question = take_question or (lambda: (True, ""))
         self.briefs: list[dict[str, Any]] = []
         self.findings: list[dict[str, Any]] = []
         self._briefs_fn = briefs_fn
+        self.briefs_ready = threading.Event()
         self.idle_seconds = idle_seconds or _env_int("CEREBEL_VOICE_IDLE_S", 90)
         self.log_event = log_event or (lambda *a, **k: None)
         self.history: list[dict[str, str]] = []
@@ -326,7 +334,7 @@ class VoiceCall:
         self.ended = threading.Event()
         self.started_at = time.time()
         self.last_activity = time.time()
-        self.stats = {"turns": 0, "interrupted": 0, "instant": 0, "ungrounded": 0, "tts_failed": 0, "first_audio_ms": [], "answer_audio_ms": []}
+        self.stats = {"turns": 0, "interrupted": 0, "instant": 0, "ungrounded": 0, "tts_failed": 0, "first_audio_ms": [], "answer_audio_ms": [], "reply_ms": []}
         self.end_reason = "hangup"
         self.asr = None
         self.tts: Synthesizer | None = None
@@ -355,16 +363,17 @@ class VoiceCall:
 
     # ---------------------------------------------------------------- lifecycle
     def run(self) -> None:
-        try:
-            self.tts = self.provider.open_tts()
-            self.asr = self.provider.open_asr(self._on_partial, self._on_final, self._on_asr_error)
-        except Exception:  # noqa: BLE001
-            LOG.exception("voice services unavailable")
-            self.end("error", "Live coaching isn't available right now. You can keep typing your questions.")
-            return
+        if not self.device:
+            try:
+                self.tts = self.provider.open_tts()
+                self.asr = self.provider.open_asr(self._on_partial, self._on_final, self._on_asr_error)
+            except Exception:  # noqa: BLE001
+                LOG.exception("voice services unavailable")
+                self.end("error", "Live coaching isn't available right now. You can keep typing your questions.")
+                return
         threading.Thread(target=self._prepare, name="voice-prep", daemon=True).start()
         threading.Thread(target=self._watchdog, name="voice-watchdog", daemon=True).start()
-        self._send({"type": "ready", "seconds": self.seconds})
+        self._send({"type": "ready", "seconds": self.seconds, "speech": "device" if self.device else "cloud"})
         try:
             while not self.ended.is_set():
                 msg = self.sock.recv()
@@ -372,7 +381,7 @@ class VoiceCall:
                     break
                 op, payload = msg
                 if op == wslib.OP_BINARY:
-                    if payload:
+                    if payload and not self.device:
                         self.asr.send_audio(payload)
                     continue
                 try:
@@ -380,7 +389,9 @@ class VoiceCall:
                 except ValueError:
                     continue
                 kind = data.get("type")
-                if kind == "interrupt":
+                if kind == "say" and self.device:
+                    self._on_final(str(data.get("text") or "")[:500])
+                elif kind == "interrupt":
                     self._interrupt()
                 elif kind == "hangup":
                     self.end("hangup")
@@ -414,6 +425,8 @@ class VoiceCall:
             "instant": self.stats["instant"],
             "ungrounded": self.stats["ungrounded"],
             "tts_failed": self.stats["tts_failed"],
+            "speech": "device" if self.device else "cloud",
+            "reply_ms_p50": p50("reply_ms"),
             "first_audio_ms_p50": p50("first_audio_ms"),
             "answer_audio_ms_p50": p50("answer_audio_ms"),
         }
@@ -421,9 +434,10 @@ class VoiceCall:
     def _prepare(self) -> None:
         # Precomputed answers, the opening line and the speech connection are ready a moment
         # after the call starts, so the first reply does not pay for them.
-        with self.tts_lock:
-            if self.tts is not None:
-                self.tts.warm()
+        if not self.device:
+            with self.tts_lock:
+                if self.tts is not None:
+                    self.tts.warm()
         if self._briefs_fn:
             try:
                 payload = self._briefs_fn() or []
@@ -433,8 +447,10 @@ class VoiceCall:
                 self.briefs = list(payload)
             except Exception:  # noqa: BLE001
                 LOG.exception("coach briefs for the call failed")
-        for phrase in ACK_PHRASES:
-            _ack_audio(self.provider, phrase)
+        self.briefs_ready.set()
+        if not self.device:
+            for phrase in ACK_PHRASES:
+                _ack_audio(self.provider, phrase)
 
     def _watchdog(self) -> None:
         while not self.ended.wait(1.0):
@@ -492,15 +508,23 @@ class VoiceCall:
             self._send_audio(turn, pcm)
 
         try:
+            # A question asked the moment the call opens waits briefly for the precomputed answers.
+            self.briefs_ready.wait(3)
+            if cancel.is_set():
+                return
             brief = match_voice_brief(text, self.briefs) if self.briefs else None
             if brief:
                 self.stats["instant"] += 1
                 spoken, screen = brief_reply(brief)
             else:
-                ack = _ack_audio(self.provider, ACK_PHRASES[(turn - 1) % len(ACK_PHRASES)], wait=False)
-                self._send({"type": "state", "turn": turn, "state": "thinking"})
-                if ack:
-                    audio(ack)
+                phrase = ACK_PHRASES[(turn - 1) % len(ACK_PHRASES)]
+                if self.device:
+                    self._send({"type": "state", "turn": turn, "state": "thinking", "ack": phrase})
+                else:
+                    ack = _ack_audio(self.provider, phrase, wait=False)
+                    self._send({"type": "state", "turn": turn, "state": "thinking"})
+                    if ack:
+                        audio(ack)
                 allowed, message = self.take_question()
                 if not allowed:
                     self._send({"type": "coach", "turn": turn, "say": message, "screen": [], "instant": True})
@@ -535,6 +559,7 @@ class VoiceCall:
                 return
             say = " ".join(spoken)
             self._send({"type": "coach", "turn": turn, "say": say, "screen": screen, "instant": bool(brief)})
+            self.stats["reply_ms"].append(int((time.time() - heard_at) * 1000))
             self.history += [{"role": "user", "content": text}, {"role": "assistant", "content": "\n".join([say, *screen])}]
             answer_audio = [None]
 
@@ -556,8 +581,8 @@ class VoiceCall:
             self.last_activity = time.time()
 
     def _speak(self, turn: int, sentences: list[str], cancel: threading.Event, audio: Callable[[bytes], None]) -> None:
-        if cancel.is_set() or not sentences:
-            return
+        if cancel.is_set() or not sentences or self.device:
+            return  # device calls read the "coach" text aloud themselves
         self._send({"type": "state", "turn": turn, "state": "speaking"})
         for sentence in sentences:
             with self.tts_lock:

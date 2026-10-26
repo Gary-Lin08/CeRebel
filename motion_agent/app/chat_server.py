@@ -300,11 +300,14 @@ class Handler(BaseHTTPRequestHandler):
 
             from motion_agent.app.speech import provider_ready
 
-            if not (voice.voice_enabled() and provider_ready()):
+            if not voice.voice_enabled():
                 return _json_response(self, 200, {"enabled": False})
             user = current_user(SETTINGS, self.headers)
             pro = bool(user) and _billing.is_pro(SETTINGS.product_dir, user["user_id"])
-            return _json_response(self, 200, {"enabled": True, **voice.voice_allowance(SETTINGS.product_dir, user, pro)})
+            # cloud: whether the server can carry the audio itself when the browser cannot.
+            return _json_response(
+                self, 200, {"enabled": True, "cloud": provider_ready(), **voice.voice_allowance(SETTINGS.product_dir, user, pro)}
+            )
         if path in ("/terms", "/privacy"):
             return self._serve_legal(path.strip("/"))
         if path == "/api/billing":
@@ -1053,7 +1056,7 @@ class Handler(BaseHTTPRequestHandler):
 
         from motion_agent.app.speech import build_provider, provider_ready
 
-        if not (voice.voice_enabled() and provider_ready()):
+        if not voice.voice_enabled():
             return _json_response(self, 404, {"error": True, "message": "not found"})
         # The token travels in the first message, not a cookie, but refuse foreign pages anyway.
         origin = (self.headers.get("Origin") or "").rstrip("/")
@@ -1079,6 +1082,9 @@ class Handler(BaseHTTPRequestHandler):
             start = {}
         if start.get("type") != "start":
             return refuse("error", "Could not start the call.")
+        device = start.get("speech") == "device"
+        if not device and not provider_ready():
+            return refuse("unavailable", "Voice isn't available in this browser. You can type your question instead.")
         token = str(start.get("token") or "").strip()
         user = current_user(SETTINGS, {"Authorization": "Bearer " + token}) if token else None
         video_id = start.get("video_id")
@@ -1120,11 +1126,13 @@ class Handler(BaseHTTPRequestHandler):
 
             return build_coach_briefs(video_id=video_id, data_dir=DATA_DIR, sport="golf")
 
-        try:
-            provider = build_provider()
-        except Exception:  # noqa: BLE001
-            LOG.exception("voice provider unavailable")
-            return refuse("error", "Live coaching isn't available right now. You can keep typing your questions.")
+        provider = None
+        if not device:
+            try:
+                provider = build_provider()
+            except Exception:  # noqa: BLE001
+                LOG.exception("voice provider unavailable")
+                return refuse("unavailable", "Live coaching isn't available right now. You can keep typing your questions.")
         call = voice.VoiceCall(
             sock,
             provider,
@@ -1134,7 +1142,10 @@ class Handler(BaseHTTPRequestHandler):
             briefs_fn=briefs,
         )
         user_id = (user or {}).get("user_id")
-        record_event(SETTINGS, "voice_call_start", user_id=user_id, session_id=video_id, plan=allowance["kind"])
+        record_event(
+            SETTINGS, "voice_call_start", user_id=user_id, session_id=video_id, plan=allowance["kind"],
+            speech="device" if device else "cloud",
+        )
         try:
             call.run()
         finally:
