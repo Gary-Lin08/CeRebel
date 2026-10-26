@@ -80,3 +80,15 @@ cp deploy/supervisor/cerebel-retention.conf /etc/supervisor/conf.d/ && superviso
 - 每次运行的记录：`data/product/retention.jsonl`（只有 id 和数量），程序日志在 `retention.log`。
 - 一次性清理的记录：`data/product/privacy_backfill.jsonl`。
 - 停用每日任务：`supervisorctl stop cerebel-retention`，再删除 `/etc/supervisor/conf.d/cerebel-retention.conf`，然后执行 `supervisorctl update cerebel-retention`。
+
+## 执行记录（2026-10-26 UTC，用户批准后执行）
+
+- 18:17 第 0 步：3 个新文件上传完成，sha256 与本地一致。
+- 18:39 第 1 步：预检时没有正在运行的流水线进程。18:13 的上传 AE9CB2D7 在 18:23 报了 pipeline_error，原因是 GPU worker 没有运行，与本次清理无关。
+- 18:39 第 2 步：执行 `privacy_backfill --apply`，退出码 0。
+  - 清掉 2 个已删账号的残留：1 个 GEM-X 目录、1 个颈部目录、2 行库记录、8 行 events；另有 2 行 account_deleted 去掉了 user_id。
+  - 69 个 hpe_results.pt 完成脱敏（55FEE713 的那份已随目录删除）。
+  - 复查：报告显示 0 个已删账号、69 个已脱敏；events 从 85 行变为 77 行，库记录从 5 行变为 3 行。备份已删除。
+- 18:40 第 3 步：retention 正式运行，退出码 0，删除了 72 个会话的原始视频（5.55 GB），磁盘可用空间从 22G 增加到 28G。派生结果和 demo 都还在，复跑 dry-run 结果为 0。
+- 18:40 第 4 步：`cerebel-retention` 进入 RUNNING 状态，下次运行时间是 2026-10-27 07:41 UTC。
+- 说明：18:28 有别的会话部署了 claude/sweet-sinoussi-f47a6c 的 product_api.py、library.py、chat_server.py，并在 18:36 重启了 cerebel-product，这不是本次操作做的。那个分支没有改动本次用到的函数。
