@@ -64,7 +64,7 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   cursor: pointer;
   transform: translate(var(--tx), var(--ty)) scale(1);
   transition: transform 0.6s var(--spring), background-color 0.3s ease, box-shadow 0.4s ease;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 10px 30px -10px rgba(232, 201, 138, 0.35);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 10px 24px -12px rgba(0, 0, 0, 0.5);
 }
 .lp-btn > span { position: relative; z-index: 1; transition: transform 0.6s var(--spring); }
 .lp-btn::after {
@@ -72,7 +72,7 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   background: radial-gradient(120px circle at var(--mx) 50%, rgba(255, 255, 255, 0.85), transparent 60%);
   opacity: 0; transition: opacity 0.35s ease;
 }
-.lp-btn:hover { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 16px 40px -12px rgba(232, 201, 138, 0.55); }
+.lp-btn:hover { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 14px 30px -12px rgba(0, 0, 0, 0.6); }
 .lp-btn:hover::after { opacity: 0.6; }
 .lp-btn:active { transform: translate(var(--tx), var(--ty)) scale(0.955); transition-duration: 0.15s; }
 .lp-btn--glass {
@@ -190,7 +190,6 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   background: var(--fix); color: #1B1206;
   font: 600 14px/1 var(--text-font); letter-spacing: -0.01em;
   pointer-events: none; opacity: 0; white-space: nowrap;
-  box-shadow: 0 0 30px rgba(242, 165, 65, 0.5);
 }
 .reel[data-act="2"] .swing__video,
 .reel[data-act="3"] .swing__video {
@@ -227,13 +226,14 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   display: grid; grid-template-columns: auto auto; align-items: start;
   font: 600 clamp(56px, 7vw, 104px)/0.9 var(--display); letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums;
-  color: var(--bone);
-  opacity: 0.18; transition: opacity 0.8s ease, color 0.8s ease, text-shadow 0.8s ease;
+  /* The figure dims through its colour, not opacity, so the label under it stays readable. */
+  color: rgba(238, 240, 234, 0.2);
+  transition: opacity 0.8s ease, color 0.8s ease;
 }
 .reel__deg { font-size: 0.6em; margin-top: 0.08em; }
 .reel__metric small { grid-column: 1 / -1; margin-top: 10px; font: 500 14px/1.2 var(--text-font); letter-spacing: 0; color: var(--mist); }
-.reel.is-fix .reel__metric { opacity: 1; color: var(--fix); text-shadow: 0 0 40px rgba(242, 165, 65, 0.35); }
-.reel[data-act="2"] .reel__metric { opacity: 0.55; }
+.reel[data-act="2"] .reel__metric { color: rgba(238, 240, 234, 0.6); }
+.reel.is-fix .reel__metric { color: var(--fix); }
 .swing__phases { display: flex; gap: 4px; flex-wrap: wrap; }
 .swing__phases button {
   min-height: 34px; padding: 0 14px; border: 0; border-radius: 999px;
@@ -318,7 +318,7 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 .tabs__panel h3 { margin: 0 0 8px; font: 600 clamp(26px, 3vw, 38px)/1.05 var(--display); letter-spacing: -0.03em; }
 .tabs__panel p { max-width: 38em; }
 .lp-fix { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 48px; align-items: start; }
-.lp-big { margin: 0; font: 600 clamp(96px, 14vw, 200px)/0.8 var(--display); letter-spacing: -0.06em; color: var(--fix); text-shadow: 0 0 60px rgba(242, 165, 65, 0.3); }
+.lp-big { margin: 0; font: 600 clamp(96px, 14vw, 200px)/0.8 var(--display); letter-spacing: -0.06em; color: var(--fix); }
 .lp-tracks { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
 .lp-tracks li { padding: 16px 18px; border-radius: 16px; background: rgba(238, 240, 234, 0.05); box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.08); }
 .lp-chat { display: grid; gap: 10px; margin: 24px 0 16px; max-width: 640px; }
@@ -341,24 +341,24 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 @media (max-width: 860px) { .lp-promises { grid-template-columns: 1fr; gap: 16px; } }
 
 /* Pricing */
-.lp-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 420px)); gap: 16px; }
+.lp-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
 .lp-plan {
   position: relative; display: grid; gap: 6px; align-content: start;
-  padding: 32px; border-radius: 28px;
+  padding: 32px; border-radius: 28px; min-width: 0;
   background: rgba(238, 240, 234, 0.04); box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.09);
 }
 .lp-plan b { font: 600 18px/1.2 var(--display); }
-.lp-plan__price { font: 600 64px/1 var(--display); letter-spacing: -0.04em; margin: 12px 0 6px; }
+.lp-plan__price {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+  margin: 12px 0 6px;
+  font: 600 clamp(48px, 5vw, 64px)/1 var(--display); letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.lp-plan__unit { font: 500 17px/1.2 var(--text-font); letter-spacing: 0; color: var(--mist); }
 .lp-plan small { font-size: 15px; color: var(--mist); }
 .lp-plan--paid { background: linear-gradient(160deg, rgba(19, 36, 74, 0.6), rgba(18, 58, 46, 0.5)); }
-.lp-plan--paid::before {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
-  background: conic-gradient(from var(--ang, 0deg), transparent 0 60%, var(--lamp) 75%, transparent 90%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
-  animation: orbit 6s linear infinite;
-}
-@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
-@keyframes orbit { to { --ang: 360deg; } }
+/* The limited offer is the one marked; a still ring, not an orbiting one. */
+.lp-plan--founding { box-shadow: inset 0 0 0 1px rgba(232, 201, 138, 0.6); }
 
 /* End */
 .lp-end { max-width: var(--wrap); margin: 0 auto; padding: clamp(140px, 20vw, 260px) var(--gut) clamp(96px, 12vw, 160px); display: grid; gap: 40px; justify-items: start; }

@@ -2,10 +2,24 @@
 (function () {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function initVanta() {
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  // Vanta paints only the operator UI (?dev=1); customer pages hide it, so they skip the download
+  // and the second WebGL context.
+  async function initVanta() {
     const el = document.getElementById("pgVanta");
-    if (!el || !window.VANTA || !window.THREE || reduce) return null;
+    if (!el || reduce || !document.body.classList.contains("pg-dev")) return null;
     try {
+      await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js");
+      await loadScript("https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js");
       return window.VANTA.FOG({
         el,
         THREE: window.THREE,
