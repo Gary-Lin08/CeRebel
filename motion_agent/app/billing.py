@@ -23,6 +23,7 @@ import hashlib
 import hmac
 import json
 import os
+import secrets
 import threading
 import time
 import urllib.error
@@ -161,14 +162,32 @@ def daily_question_limit(pro: bool, signed_in: bool) -> int:
     return _env_int("CEREBEL_PRO_DAILY_QUESTIONS", 100) if pro else _env_int("CEREBEL_FREE_DAILY_QUESTIONS", 15)
 
 
+# Anonymous visitors are counted per IP, but only an HMAC of the IP is written to disk. The key is
+# random, lives only in this process and changes with the UTC day, so the file cannot be matched
+# back to addresses. A restart forgets the key and with it today's per-IP counts; anon-total stays.
+_VISITOR_KEYS: dict[str, bytes] = {}
+
+
+def _stored_key(key: str, day: str) -> str:
+    if not key.startswith("ip:"):
+        return key
+    secret = _VISITOR_KEYS.get(day)
+    if secret is None:
+        _VISITOR_KEYS.clear()
+        secret = _VISITOR_KEYS[day] = secrets.token_bytes(32)
+    return "ip:" + hmac.new(secret, key[3:].encode("utf-8"), hashlib.sha256).hexdigest()[:32]
+
+
 def take_question(product_dir: Path, key: str, limit: int) -> tuple[bool, int]:
     """Count one coach question for `key` today (UTC). Returns (allowed, remaining).
 
-    The retention job (another process) clears an earlier day's counts, hence the file lock.
+    "ip:<address>" keys are stored hashed. The retention job (another process) clears an earlier
+    day's counts, hence the file lock.
     """
     path = product_dir / "question_counts.json"
     today = _now().strftime("%Y-%m-%d")
     with locked(path, _LOCK):
+        key = _stored_key(key, today)
         try:
             data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
         except (OSError, json.JSONDecodeError):
