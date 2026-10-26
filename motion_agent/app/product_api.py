@@ -201,11 +201,13 @@ def library_payload(settings: Settings, user: dict[str, Any]) -> dict[str, Any]:
             update_status(settings.product_dir, row["session_id"], stage)
             row["status"] = stage
     from motion_agent.app import billing
+    from motion_agent.app.compare import library_compare_block
 
     return {
         "ok": True,
         "user": {"user_id": user["user_id"], "email": user["email"]},
         "captures": rows,
+        "compare": library_compare_block(settings, user["user_id"], rows),
         "quota": billing.quota(settings.product_dir, user["user_id"], rows),
         "subscription": _public_subscription(settings, user["user_id"]),
         "billing": billing.public_plans(settings.product_dir),
@@ -893,6 +895,8 @@ CLIENT_EVENTS = {
     "paywall_view",
     "checkout_click",
     "share_click",
+    "progress_card_view",
+    "progress_open",
 }
 
 

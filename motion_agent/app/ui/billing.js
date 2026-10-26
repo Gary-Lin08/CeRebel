@@ -132,7 +132,7 @@
     var modal = el("div", { id: "cbPaywall", class: "cb-modal", role: "dialog", "aria-modal": "true", "aria-label": "Upgrade to Pro" }, [
       el("div", { class: "cb-card" }, [
         el("button", { type: "button", class: "cb-close", "aria-label": "Close", text: "×", onclick: closePaywall }),
-        el("h3", { text: reason && reason.message ? "You're out of free analyses" : "CeRebel Pro" }),
+        el("h3", { text: (reason && reason.title) || (reason && reason.message ? "You're out of free analyses" : "CeRebel Pro") }),
         el("p", { class: "cb-muted", text: (reason && reason.message) || "" }),
         el("ul", { class: "cb-features" }, [
           el("li", { text: "Up to " + pro + " analyses a month (free plan: " + free + ")" }),

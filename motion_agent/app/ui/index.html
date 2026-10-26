@@ -2140,6 +2140,7 @@ code {
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/playground-landing.css" />
   <link rel="stylesheet" href="/static/playground-app.css" />
+  <link rel="stylesheet" href="/static/compare.css" />
 </head>
 <body class="pg pg-dev">
   <div id="lpLanding" class="lp" hidden>
@@ -5524,6 +5525,7 @@ code {
           return;
         }
         session = await r.json();
+        if (window.cerebelCompare) window.cerebelCompare.onSession(session);
         const meta = document.getElementById("sessionMeta");
         const devMeta = document.getElementById("sessionDevMeta");
         paintCaptureChrome(session);
@@ -6008,6 +6010,7 @@ code {
         quota.textContent = "Failed or unreadable uploads don't count toward your monthly analyses.";
       }
       if (window.cerebelBilling) window.cerebelBilling.paint(data);
+      if (window.cerebelCompare) window.cerebelCompare.onLibrary(data);
       libraryCaptures = data.captures || [];
       const openDrill = document.getElementById("fixDrill");
       const openNote = openDrill && !openDrill.hidden ? currentFixNote() : null;
@@ -6379,6 +6382,7 @@ code {
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="/static/playground-fx.js"></script>
   <script src="/static/billing.js"></script>
+  <script src="/static/compare.js"></script>
   <script src="/static/cinema-fluid.js"></script>
   <script src="/static/cinema-motion.js"></script>
   <script type="module" src="/static/swing-hero.js"></script>

@@ -1,0 +1,77 @@
+/* Progress view (compare.js). Uses the app tokens from playground-app.css with fallbacks
+   so ?dev=1 still reads. Amber stays reserved for the fix; changes use their own two tints. */
+.cp-mini, .cp-sheet {
+  --cp-better: #9FD8B0;
+  --cp-better-bg: rgba(159, 216, 176, 0.14);
+  --cp-worse: var(--fix, #F2A541);
+  --cp-worse-bg: rgba(242, 165, 65, 0.14);
+  --cp-quiet: var(--muted, rgba(238, 240, 234, 0.64));
+}
+
+/* Card on the result page */
+.cp-mini { margin: 0.9rem 0 0.2rem; padding: 0.75rem 0.9rem; border: 1px solid var(--rule, rgba(238, 240, 234, 0.1)); border-radius: 16px; background: var(--panel-2, rgba(22, 46, 39, 0.66)); display: grid; gap: 0.35rem; }
+.cp-mini__kicker { margin: 0; font-size: 0.85rem; color: var(--cp-quiet); }
+.cp-mini__line { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; }
+.cp-mini__figure { font-variant-numeric: tabular-nums; font-weight: 600; }
+.cp-mini__open { justify-self: start; font: inherit; font-size: 0.95rem; min-height: 40px; padding: 0.4rem 1rem; border: 1px solid var(--rule, rgba(238, 240, 234, 0.2)); background: transparent; color: var(--text, #EEF0EA); cursor: pointer; }
+.cp-library-btn { font: inherit; margin: 0.25rem 0 0.5rem; min-height: 44px; padding: 0.5rem 0.9rem; border: 1px solid var(--rule); background: var(--panel-2); color: var(--text); cursor: pointer; }
+
+/* Pills: Better / Worse / No clear change / Can't compare */
+.cp-pill { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; color: var(--cp-quiet); background: rgba(238, 240, 234, 0.08); }
+.cp-pill.is-better { color: var(--cp-better); background: var(--cp-better-bg); }
+.cp-pill.is-worse { color: var(--cp-worse); background: var(--cp-worse-bg); }
+.cp-pill.is-off { color: var(--cp-quiet); background: transparent; border: 1px dashed var(--rule, rgba(238, 240, 234, 0.2)); }
+.cp-pill.is-info { background: transparent; padding: 0; }
+
+/* Sheet: full screen on phones, a centred panel on wider screens */
+html.cp-locked, html.cp-locked body { overflow: hidden; }
+.cp-sheet { position: fixed; inset: 0; z-index: 1001; display: grid; place-items: stretch; background: rgba(5, 12, 10, 0.6); }
+.cp-card { position: relative; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: calc(0.9rem + env(safe-area-inset-top, 0px)) 16px calc(1.5rem + env(safe-area-inset-bottom, 0px)); background: var(--bg, #0A1512); color: var(--text, #EEF0EA); }
+@media (min-width: 720px) {
+  .cp-sheet { place-items: center; padding: 24px; }
+  .cp-card { width: min(560px, 100%); max-height: calc(100vh - 48px); padding: 1.25rem 1.4rem 1.6rem; border: 1px solid var(--rule); border-radius: 22px; }
+}
+.cp-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.cp-head h3 { margin: 0; font-size: 1.35rem; }
+.cp-close { font: inherit; font-size: 1.6rem; line-height: 1; width: 44px; height: 44px; border: 0; background: transparent; color: var(--cp-quiet); cursor: pointer; }
+.cp-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0.5rem; margin: 0.6rem 0 0.4rem; }
+.cp-select { width: 100%; min-width: 0; min-height: 44px; font: inherit; font-size: 0.9rem; padding: 0.35rem 0.6rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--panel-2, #16261f); color: var(--text); }
+.cp-arrow { color: var(--cp-quiet); }
+
+.cp-body { display: grid; gap: 0.2rem; }
+.cp-section { padding: 0.9rem 0; border-top: 1px solid var(--rule, rgba(238, 240, 234, 0.1)); display: grid; gap: 0.4rem; }
+.cp-kicker { margin: 0; font-size: 0.85rem; color: var(--lamp, #E8C98A); }
+.cp-muted { margin: 0; color: var(--cp-quiet); }
+.cp-fine { margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--cp-quiet); }
+.cp-note { margin: 0.3rem 0; padding: 0.55rem 0.75rem; border-radius: 12px; font-size: 0.9rem; background: rgba(238, 240, 234, 0.06); color: var(--cp-quiet); }
+.cp-note.is-warn { background: var(--cp-worse-bg); color: var(--text); }
+.cp-upsell { display: grid; gap: 0.6rem; padding: 0.9rem 0; }
+.cp-upsell p { margin: 0; }
+.cp-row-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.cp-row-actions button, .cp-section > button, .cp-play { font: inherit; font-size: 0.95rem; min-height: 44px; padding: 0.45rem 1rem; border: 1px solid var(--rule); background: transparent; color: var(--text); cursor: pointer; justify-self: start; }
+
+.cp-issue__headline { margin: 0; font-size: 1.1rem; font-weight: 600; }
+.cp-issue__row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.cp-issue__figure { font-size: 1.9rem; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.cp-issue__msg { margin: 0; font-size: 0.95rem; }
+.cp-next { margin: 0; font-weight: 600; }
+
+.cp-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.cp-chips button { font: inherit; font-size: 0.85rem; min-height: 36px; padding: 0.25rem 0.8rem; border: 1px solid var(--rule); background: transparent; color: var(--cp-quiet); cursor: pointer; }
+.cp-chips button.is-on { color: var(--text); border-color: var(--text); }
+.cp-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.cp-pane { margin: 0; display: grid; gap: 0.3rem; min-width: 0; }
+.cp-pane figcaption { font-size: 0.8rem; color: var(--cp-quiet); }
+.cp-pane video, .cp-novideo { width: 100%; aspect-ratio: 3 / 4; border-radius: 12px; background: #000; object-fit: contain; }
+.cp-novideo { display: grid; place-items: center; padding: 0.75rem; font-size: 0.8rem; text-align: center; color: var(--cp-quiet); background: rgba(238, 240, 234, 0.05); }
+
+.cp-metrics { list-style: none; margin: 0; padding: 0; }
+.cp-metric { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.6rem; padding: 0.6rem 0; border: 0; border-bottom: 1px solid var(--rule, rgba(238, 240, 234, 0.08)); border-radius: 0 !important; background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+.cp-metric__label { display: grid; gap: 0.1rem; min-width: 0; }
+.cp-metric__label small { font-size: 0.75rem; color: var(--cp-quiet); }
+.cp-metric__side { display: grid; justify-items: end; gap: 0.3rem; }
+.cp-metric__value { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cp-metric.is-dim .cp-metric__value, .cp-metric.is-dim .cp-metric__label > span { color: var(--cp-quiet); }
+@media (prefers-reduced-motion: reduce) {
+  .cp-sheet * { transition: none !important; }
+}
