@@ -415,7 +415,7 @@ def compare_snapshots(before: dict[str, Any], after: dict[str, Any]) -> dict[str
                     "goal": goal,
                     "noise_floor": spec.noise_floor,
                     "noise_floor_source": NOISE_FLOOR_SOURCE,
-                    "margin": f"±{format_single(spec, spec.noise_floor)}",
+                    "margin": f"±{spec.noise_floor:.1f}" if spec.unit == ":1" else f"±{format_single(spec, spec.noise_floor)}",
                     "verdict": _verdict(spec, b, a, comparable),
                     "estimate": True,
                     "view_sensitive": spec.view_sensitive,

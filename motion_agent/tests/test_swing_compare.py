@@ -178,6 +178,8 @@ class JudgingTests(unittest.TestCase):
             self.assertTrue(metric["estimate"])
             self.assertEqual(metric["noise_floor_source"], "provisional")
             self.assertTrue(metric["margin"].startswith("±"))
+        self.assertEqual(self._metric(result, "tempo")["margin"], "±0.3")
+        self.assertEqual(self._metric(result, "separation_top")["margin"], "±5°")
         self.assertIn("single phone camera", result["disclosure"])
 
     def test_different_camera_angle_blocks_view_sensitive_metrics(self):

@@ -891,6 +891,8 @@ CLIENT_EVENTS = {
     "paywall_view",
     "checkout_click",
     "share_click",
+    "progress_card_view",
+    "progress_open",
 }
 
 
