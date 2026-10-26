@@ -60,7 +60,7 @@ html.cp-locked, html.cp-locked body { overflow: hidden; }
 .cp-chips button { font: inherit; font-size: 0.85rem; min-height: 36px; padding: 0.25rem 0.8rem; border: 1px solid var(--rule); background: transparent; color: var(--cp-quiet); cursor: pointer; }
 .cp-chips button.is-on { color: var(--text); border-color: var(--text); }
 .cp-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.cp-pane { margin: 0; display: grid; gap: 0.3rem; min-width: 0; }
+.cp-pane { position: relative; margin: 0; display: grid; gap: 0.3rem; min-width: 0; }
 .cp-pane figcaption { font-size: 0.8rem; color: var(--cp-quiet); }
 .cp-pane video, .cp-novideo { width: 100%; aspect-ratio: 3 / 4; border-radius: 12px; background: #000; object-fit: contain; }
 .cp-novideo { display: grid; place-items: center; padding: 0.75rem; font-size: 0.8rem; text-align: center; color: var(--cp-quiet); background: rgba(238, 240, 234, 0.05); }

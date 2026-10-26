@@ -1,0 +1,11 @@
+/* Skeleton over the swing video (skeleton-overlay.js). The canvas never takes clicks,
+   so the native video controls underneath keep working. */
+.sk-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.sk-toggle {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  font: inherit; font-size: 0.75rem; font-weight: 600; min-height: 32px; padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(238, 240, 234, 0.35); border-radius: 999px;
+  background: rgba(5, 12, 10, 0.55); color: #EEF0EA; cursor: pointer;
+}
+.sk-toggle.is-off { color: rgba(238, 240, 234, 0.6); background: rgba(5, 12, 10, 0.35); }
+.sk-caption { margin: 0.35rem 0 0; font-size: 0.75rem; color: var(--muted, rgba(238, 240, 234, 0.64)); }
