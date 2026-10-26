@@ -316,6 +316,27 @@ class QuestionAllowanceTests(unittest.TestCase):
             self.assertEqual(billing.take_question(root, "u:1", 2), (False, 0))
             self.assertTrue(billing.take_question(root, "u:2", 2)[0])
 
+    def test_visitor_ips_are_counted_but_not_stored(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.assertEqual(billing.take_question(root, "ip:203.0.113.7", 2), (True, 1))
+            self.assertEqual(billing.take_question(root, "ip:203.0.113.7", 2), (True, 0))
+            self.assertEqual(billing.take_question(root, "ip:203.0.113.7", 2), (False, 0))
+            self.assertTrue(billing.take_question(root, "ip:198.51.100.2", 2)[0])
+            billing.take_question(root, "u:1", 2)
+            text = (root / "question_counts.json").read_text()
+            self.assertNotIn("203.0.113", text)
+            self.assertNotIn("198.51.100", text)
+            counts = json.loads(text)["counts"]
+            self.assertEqual(sorted(counts.values()), [1, 1, 2])
+            self.assertIn("u:1", counts)
+
+    def test_visitor_hash_changes_with_the_day(self):
+        today = billing._stored_key("ip:203.0.113.7", "2026-10-26")
+        self.assertEqual(today, billing._stored_key("ip:203.0.113.7", "2026-10-26"))
+        self.assertNotEqual(today, billing._stored_key("ip:203.0.113.7", "2026-10-27"))
+        self.assertEqual(billing._stored_key("u:abc", "2026-10-27"), "u:abc")
+
     def test_limits_by_plan(self):
         with mock.patch.dict(os.environ, {"CEREBEL_ANON_DAILY_QUESTIONS": "2", "CEREBEL_FREE_DAILY_QUESTIONS": "5"}):
             self.assertEqual(billing.daily_question_limit(False, False), 2)

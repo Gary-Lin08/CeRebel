@@ -23,6 +23,14 @@ What it does, matching the public Privacy Policy:
    kinetic-lens/retargeting_neck_v2/outputs/<session> (CEREBEL_NECK_OUTPUT_ROOT), outside the
    session folder. The session keeps its own copy in ik/, so these folders are removed as soon
    as their session is gone, and otherwise after the raw-video limit.
+5. GEM-X logs. Older builds also wrote <session>_gemx.log next to the GEM-X output folders. Like
+   the other files GEM-X leaves, they are removed after the raw-video limit.
+6. Legacy usage log. The first web build (web_api.py) logged to <data>/product_events.jsonl
+   (browser visitor ids, session ids). Its rows follow the same limit as events.jsonl, and the
+   file is removed once empty. web_api.py takes no file lock, so do not run both at once.
+7. Coach question counters. question_counts.json counts today's questions per account and per
+   visitor IP; take_question only resets it on the next question, so an earlier day's counts are
+   deleted here.
 
 Every run is logged, and appended to <data>/product/retention.jsonl (ids and counts only).
 """
@@ -40,6 +48,7 @@ from pathlib import Path
 from typing import Any
 
 from motion_agent.app.accounts import list_accounts, tokens_for_user
+from motion_agent.app.billing import clear_old_question_counts
 from motion_agent.app.config import Settings, load_settings
 from motion_agent.app.consent import inactive_delete_days, raw_video_retention_days
 from motion_agent.app.library import all_captures
@@ -57,7 +66,9 @@ RAW_SESSION_PATHS = (
 )
 # In the GEM-X output folder only this derived file is needed after processing.
 GEMX_KEEP = {"hpe_results.pt"}
+GEMX_LOG_SUFFIX = "_gemx.log"
 MARKER = "retention.json"
+LEGACY_EVENTS = "product_events.jsonl"
 
 
 def _utc(ts: Any) -> datetime | None:
@@ -171,7 +182,10 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
         "orphan_sessions_deleted": [],
         "orphan_gemx_deleted": [],
         "neck_ik_deleted": [],
+        "gemx_logs_deleted": [],
         "events_removed": 0,
+        "legacy_events_removed": 0,
+        "question_counts_cleared": 0,
     }
 
     # 1. Inactive accounts (first, so their sessions are not counted twice below).
@@ -262,6 +276,16 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
                     shutil.rmtree(item, ignore_errors=True)
                 report["orphan_gemx_deleted"].append(sid)
                 LOG.info("%s GEM-X output without a session: %s", "would delete" if dry_run else "deleted", sid)
+        # <session>_gemx.log files beside the output folders.
+        for item in sorted(p for p in gemx_root.glob("*" + GEMX_LOG_SUFFIX) if p.is_file()):
+            sid = item.name[: -len(GEMX_LOG_SUFFIX)]
+            stamp = _mtime(item)
+            if sid == demo or stamp is None or stamp >= raw_cutoff:
+                continue
+            if not dry_run:
+                item.unlink(missing_ok=True)
+            report["gemx_logs_deleted"].append(sid)
+            LOG.info("%s GEM-X log of session %s", "would delete" if dry_run else "deleted", sid)
 
     # 5. Neck IK files older builds left outside the session folder (session/ik/ has a copy).
     neck_root = _existing_dir(neck_output_root())
@@ -283,6 +307,10 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
         report["events_removed"] = _count_old_events(settings, inactive_cutoff)
     else:
         report["events_removed"] = scrub_events(settings, older_than=inactive_cutoff)
+    report["legacy_events_removed"] = _scrub_legacy_events(settings, inactive_cutoff, dry_run=dry_run)
+
+    # 7. Question counters of an earlier day (they include visitor IPs).
+    report["question_counts_cleared"] = clear_old_question_counts(settings.product_dir, dry_run=dry_run, now=now)
 
     if not dry_run:
         _append_log(settings, report)
@@ -311,6 +339,34 @@ def _count_old_events(settings: Settings, cutoff: datetime) -> int:
     return count
 
 
+def _scrub_legacy_events(settings: Settings, cutoff: datetime, *, dry_run: bool) -> int:
+    """Drop web_api.py's usage-log rows (stamped received_at) older than the cutoff."""
+    path = settings.data_dir / LEGACY_EVENTS
+    if not path.is_file():
+        return 0
+    kept: list[str] = []
+    removed = 0
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            ts = _utc(json.loads(line).get("received_at"))
+        except (json.JSONDecodeError, AttributeError):
+            ts = None
+        if ts is not None and ts < cutoff:
+            removed += 1
+        else:
+            kept.append(line)
+    if removed and not dry_run:
+        if kept:
+            tmp = path.with_suffix(".jsonl.tmp")
+            tmp.write_text("".join(k + "\n" for k in kept), encoding="utf-8")
+            tmp.replace(path)
+        else:
+            path.unlink(missing_ok=True)
+    return removed
+
+
 def _append_log(settings: Settings, report: dict[str, Any]) -> None:
     settings.product_dir.mkdir(parents=True, exist_ok=True)
     with (settings.product_dir / "retention.jsonl").open("a", encoding="utf-8") as handle:
@@ -326,7 +382,10 @@ def summary_line(report: dict[str, Any]) -> str:
         f"{len(report['orphan_sessions_deleted'])} unowned sessions, "
         f"{len(report['orphan_gemx_deleted'])} orphan GEM-X folders, "
         f"{len(report['neck_ik_deleted'])} neck IK folders, "
-        f"{report['events_removed']} old usage events"
+        f"{len(report['gemx_logs_deleted'])} GEM-X logs, "
+        f"{report['events_removed']} old usage events "
+        f"(+{report['legacy_events_removed']} legacy), "
+        f"{report['question_counts_cleared']} stale question counters"
     )
 
 

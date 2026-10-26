@@ -23,6 +23,7 @@ import hashlib
 import hmac
 import json
 import os
+import secrets
 import threading
 import time
 import urllib.error
@@ -31,6 +32,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+from motion_agent.app.file_lock import locked
 
 _LOCK = threading.Lock()
 
@@ -81,6 +84,12 @@ def _now() -> datetime:
 def _path(product_dir: Path) -> Path:
     product_dir.mkdir(parents=True, exist_ok=True)
     return product_dir / "billing.json"
+
+
+def _locked(product_dir: Path):
+    """Around every read-modify-write of billing.json: account deletion (retention, privacy_backfill)
+    rewrites it from other processes."""
+    return locked(_path(product_dir), _LOCK)
 
 
 def _read(product_dir: Path) -> dict[str, Any]:
@@ -159,11 +168,32 @@ def daily_question_limit(pro: bool, signed_in: bool) -> int:
     return _env_int("CEREBEL_PRO_DAILY_QUESTIONS", 100) if pro else _env_int("CEREBEL_FREE_DAILY_QUESTIONS", 15)
 
 
+# Anonymous visitors are counted per IP, but only an HMAC of the IP is written to disk. The key is
+# random, lives only in this process and changes with the UTC day, so the file cannot be matched
+# back to addresses. A restart forgets the key and with it today's per-IP counts; anon-total stays.
+_VISITOR_KEYS: dict[str, bytes] = {}
+
+
+def _stored_key(key: str, day: str) -> str:
+    if not key.startswith("ip:"):
+        return key
+    secret = _VISITOR_KEYS.get(day)
+    if secret is None:
+        _VISITOR_KEYS.clear()
+        secret = _VISITOR_KEYS[day] = secrets.token_bytes(32)
+    return "ip:" + hmac.new(secret, key[3:].encode("utf-8"), hashlib.sha256).hexdigest()[:32]
+
+
 def take_question(product_dir: Path, key: str, limit: int) -> tuple[bool, int]:
-    """Count one coach question for `key` today (UTC). Returns (allowed, remaining)."""
+    """Count one coach question for `key` today (UTC). Returns (allowed, remaining).
+
+    "ip:<address>" keys are stored hashed. The retention job (another process) clears an earlier
+    day's counts, hence the file lock.
+    """
     path = product_dir / "question_counts.json"
     today = _now().strftime("%Y-%m-%d")
-    with _LOCK:
+    with locked(path, _LOCK):
+        key = _stored_key(key, today)
         try:
             data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
         except (OSError, json.JSONDecodeError):
@@ -179,6 +209,28 @@ def take_question(product_dir: Path, key: str, limit: int) -> tuple[bool, int]:
         tmp.write_text(json.dumps(data), encoding="utf-8")
         tmp.replace(path)
         return True, limit - used - 1
+
+
+def clear_old_question_counts(product_dir: Path, *, dry_run: bool = False, now: datetime | None = None) -> int:
+    """Delete an earlier day's question counts, which take_question only resets on the next question.
+
+    Returns how many counters that were (for the retention report).
+    """
+    path = product_dir / "question_counts.json"
+    if not path.is_file():
+        return 0
+    today = (now or _now()).strftime("%Y-%m-%d")
+    with locked(path, _LOCK):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            data = None
+        if isinstance(data, dict) and data.get("day") == today:
+            return 0
+        if not dry_run:
+            path.unlink(missing_ok=True)
+        counts = data.get("counts") if isinstance(data, dict) else None
+        return len(counts) if isinstance(counts, dict) else 0
 
 
 # ---------------------------------------------------------------- plans shown to the browser
@@ -326,7 +378,7 @@ def handle_webhook(product_dir: Path, payload: bytes, signature: str | None) -> 
     kind = str(event.get("type") or "")
     obj = (event.get("data") or {}).get("object") or {}
     changed: str | None = None
-    with _LOCK:
+    with _locked(product_dir):
         data = _read(product_dir)
         if event_id and event_id in data["events"]:
             return {"ok": True, "duplicate": True}

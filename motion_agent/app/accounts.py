@@ -12,6 +12,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from motion_agent.app.file_lock import locked
+
 _LOCK = threading.Lock()
 # Login tokens expire. CEREBEL_TOKEN_TTL_DAYS changes the lifetime (default 30 days).
 TOKEN_TTL = timedelta(days=float(os.environ.get("CEREBEL_TOKEN_TTL_DAYS") or 30))
@@ -24,6 +26,12 @@ def _now() -> str:
 def _paths(product_dir: Path) -> tuple[Path, Path]:
     product_dir.mkdir(parents=True, exist_ok=True)
     return product_dir / "accounts.json", product_dir / "tokens.json"
+
+
+def _locked(product_dir: Path):
+    """Around every write of accounts.json or tokens.json (one lock for both files): the retention
+    job and privacy_backfill delete accounts from other processes."""
+    return locked(product_dir / "accounts.json", _LOCK)
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -71,7 +79,7 @@ def register(
         raise ValueError("Password must be at least 8 characters.")
     if not accepted_terms:
         raise ValueError("Please accept the Terms and Privacy Policy, including video processing.")
-    with _LOCK:
+    with _locked(product_dir):
         accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
         if email in accounts:
@@ -99,7 +107,7 @@ def register(
 
 def login(product_dir: Path, email: str, password: str) -> dict[str, Any]:
     email = (email or "").strip().lower()
-    with _LOCK:
+    with _locked(product_dir):
         accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
         row = accounts.get(email)
@@ -161,7 +169,7 @@ def user_from_token(product_dir: Path, token: str | None) -> dict[str, Any] | No
 
 def delete_account(product_dir: Path, user_id: str) -> None:
     """Remove the account and every login token for that user."""
-    with _LOCK:
+    with _locked(product_dir):
         accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
         accounts = {email: row for email, row in accounts.items() if row.get("user_id") != user_id}
@@ -176,7 +184,7 @@ def logout(product_dir: Path, token: str | None) -> None:
         return
     if token.lower().startswith("bearer "):
         token = token.split(" ", 1)[1].strip()
-    with _LOCK:
+    with _locked(product_dir):
         _, tokens_path = _paths(product_dir)
         tokens = _read(tokens_path)
         tokens.pop(token, None)
@@ -243,7 +251,7 @@ def record_video_consent(product_dir: Path, user_id: str, version: str) -> dict[
 
     if version != VIDEO_CONSENT_VERSION:
         raise ValueError("The consent text has changed. Reload the page and review it again.")
-    with _LOCK:
+    with _locked(product_dir):
         accounts_path, _ = _paths(product_dir)
         accounts = _read(accounts_path)
         row = next((r for r in accounts.values() if r.get("user_id") == user_id), None)
@@ -277,7 +285,7 @@ def touch_activity(product_dir: Path, user_id: str, *, force: bool = False) -> N
                 return
         except (TypeError, ValueError):
             pass
-    with _LOCK:
+    with _locked(product_dir):
         accounts = _read(accounts_path)
         for item in accounts.values():
             if item.get("user_id") == user_id:
