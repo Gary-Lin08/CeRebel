@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cerebel-sdk"
+dynamic = ["version"]
+description = "Python client for the Cerebel motion-analysis API, with the Cerebel AI glasses bridge"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+cerebel = "cerebel.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "cerebel._version.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["cerebel*"]
