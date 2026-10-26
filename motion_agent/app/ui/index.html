@@ -9,6 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="CeRebel" />
+  <meta name="cerebel-surface" content="shared" />
   <meta name="theme-color" content="#0a0b0b" />
   <meta
     name="description"
@@ -2606,9 +2607,12 @@ code {
   </div>
   <script>
     const chat = document.getElementById("chat");
-    // The consumer shell is the default. Operators open the playground with ?dev=1.
-    const isConsumerUi = !new URLSearchParams(window.location.search).has("dev");
-    const isDevUi = !isConsumerUi;
+    // The server marks which port served the page. The developer port always opens the playground,
+    // the customer port never does (?dev=1 is ignored there), and a single shared port keeps ?dev=1.
+    const surfaceMeta = document.querySelector('meta[name="cerebel-surface"]');
+    const surface = surfaceMeta ? surfaceMeta.content : "shared";
+    const isDevUi = surface === "operator" || (surface === "shared" && new URLSearchParams(window.location.search).has("dev"));
+    const isConsumerUi = !isDevUi;
     const AUTH_KEY = "cerebel_user_token_v1";
     const PREFERRED_SPORT_KEY = "cerebel_preferred_sport_v1";
     let authToken = "";

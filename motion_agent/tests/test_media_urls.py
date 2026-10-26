@@ -38,7 +38,9 @@ class TokenTests(unittest.TestCase):
             self.assertTrue(media_urls.token_valid(product, "SID", tok, now=1001))
             self.assertFalse(media_urls.token_valid(product, "OTHER", tok, now=1001))
             self.assertFalse(media_urls.token_valid(product, "SID", tok, now=1000 + media_urls.ttl_seconds() + 1))
-            self.assertFalse(media_urls.token_valid(product, "SID", tok[:-1] + "0", now=1001))
+            # Change the last character to something it is not, or the "tampered" token can equal the real one.
+            tampered = tok[:-1] + ("1" if tok.endswith("0") else "0")
+            self.assertFalse(media_urls.token_valid(product, "SID", tampered, now=1001))
             self.assertFalse(media_urls.token_valid(product, "SID", None))
             self.assertEqual((product / "media_url.key").stat().st_mode & 0o777, 0o600)
 

@@ -7,6 +7,7 @@ import json
 import logging
 import mimetypes
 import os
+import threading
 import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -40,6 +41,11 @@ UI_DIR = Path(__file__).resolve().parent / "ui"
 # added back to the absolute URLs in the UI files and JSON on the way out.
 _base = os.environ.get("CEREBEL_BASE_PATH", "").strip().strip("/")
 BASE_PATH = "/" + _base if _base else ""
+# The developer playground (?dev=1 UI, prompt editor, ops counts) gets its own port on 127.0.0.1,
+# reached over an SSH tunnel. Once it is set, the public port serves only the customer app;
+# unset keeps the single shared port.
+OPERATOR_PORT = int(os.environ.get("CEREBEL_OPERATOR_PORT") or 0)
+SURFACE_META = '<meta name="cerebel-surface" content="{}" />'
 _PREFIXED = ("/api/", "/static/", "/media/", "/terms", "/privacy")
 # Behind the main site's proxy (Vercel caps request bodies at ~4.5 MB), the video upload goes
 # straight to the app's own origin instead; that origin must list the main site in
@@ -218,6 +224,39 @@ class Handler(BaseHTTPRequestHandler):
                 self.path = (path[len(BASE_PATH):] or "/") + sep + query
         return True
 
+    def _surface(self) -> str:
+        """'operator' on the developer port, 'customer' on the public port once they are split, else 'shared'."""
+        if getattr(self.server, "operator", False):
+            return "operator"
+        return "customer" if OPERATOR_PORT else "shared"
+
+    def _dev_allowed(self) -> bool:
+        return self._surface() != "customer"
+
+    def _ui_text(self, text: str) -> str:
+        if self.base:
+            text = with_base(text, self.base)
+            if UPLOAD_ORIGIN:
+                text = text.replace(f'"{self.base}/api/upload"', f'"{UPLOAD_ORIGIN}/api/upload"')
+        return text
+
+    def _send_text(self, text: str, mime: str) -> None:
+        body = text.encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", mime)
+        self.send_header("Content-Length", str(len(body)))
+        _send_cors_headers(self)
+        self.send_header("Cache-Control", "no-cache")
+        self.end_headers()
+        if self.command != "HEAD":
+            self.wfile.write(body)
+
+    def _serve_index(self) -> None:
+        # The page reads this tag to decide between the customer app and the developer playground.
+        text = (UI_DIR / "index.html").read_text(encoding="utf-8")
+        text = text.replace(SURFACE_META.format("shared"), SURFACE_META.format(self._surface()), 1)
+        self._send_text(self._ui_text(text), "text/html; charset=utf-8")
+
     def _serve_legal(self, name: str) -> None:
         raw = _legal_html(name)
         if raw is None:
@@ -245,7 +284,7 @@ class Handler(BaseHTTPRequestHandler):
         path = parsed.path
 
         if path in ("/", "/index.html"):
-            return self._serve_file(UI_DIR / "index.html")
+            return self._serve_index()
         if path in ("/terms", "/privacy"):
             return self._serve_legal(path.strip("/"))
         if path == "/api/billing":
@@ -272,6 +311,8 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/health":
             code, payload = health_report(SETTINGS)
             return _json_response(self, code, payload)
+        if path in ("/api/ops", "/api/system_prompt") and not self._dev_allowed():
+            return _json_response(self, 404, {"error": True, "message": "not found"})
         if path == "/api/ops":
             password = _password_from_request(self, parsed)
             if not _check_prompt_password(password):
@@ -773,6 +814,9 @@ class Handler(BaseHTTPRequestHandler):
         question = (body.get("question") or "").strip()
         if not question:
             return _json_response(self, 400, {"error": True, "message": "question required"})
+        if not self._dev_allowed() and (body.get("system_prompt") or body.get("backend")):
+            # Prompt overrides and backend switches belong to the developer port.
+            return _json_response(self, 403, {"error": True, "message": "Not available here"})
         video_id = body.get("video_id")
         from motion_agent.app.product_api import current_user
 
@@ -796,8 +840,10 @@ class Handler(BaseHTTPRequestHandler):
         # Sending video frames to the language model is off unless the operator opts in:
         # the coach answers from tool outputs, and user video should not leave this server.
         attach_video = bool(body.get("attach_video", True)) and _env_flag("CEREBEL_LLM_ATTACH_VIDEO")
-        dev_backend = (self.headers.get("X-Motion-Dev") or "").strip() == "1" and _check_prompt_password(
-            _password_from_request(self, parsed)
+        dev_backend = (
+            self._dev_allowed()
+            and (self.headers.get("X-Motion-Dev") or "").strip() == "1"
+            and _check_prompt_password(_password_from_request(self, parsed))
         )
         backend = (body.get("backend") if dev_backend else None) or BACKEND
         from motion_agent.app import billing as _billing
@@ -858,7 +904,8 @@ class Handler(BaseHTTPRequestHandler):
             pw = body.get("prompt_password") if isinstance(body.get("prompt_password"), str) else None
             if not pw:
                 pw = _password_from_request(self, parsed)
-            allow_dev = dev_header or (bool(system_prompt) and _check_prompt_password(pw))
+            # On the customer port X-Motion-Dev is ignored: any visitor can send that header.
+            allow_dev = self._dev_allowed() and (dev_header or (bool(system_prompt) and _check_prompt_password(pw)))
             prompt_mode, _mode_meta = resolve_prompt_mode_for_session(
                 video_id=str(video_id) if video_id else None,
                 data_dir=DATA_DIR,
@@ -1009,19 +1056,7 @@ class Handler(BaseHTTPRequestHandler):
         if path.suffix.lower() == ".js" or path.name.endswith(".module.js"):
             mime = "text/javascript; charset=utf-8"
         if self.base and path.suffix.lower() in (".html", ".js", ".css", ".json") and UI_DIR.resolve() in path.resolve().parents:
-            text = with_base(path.read_text(encoding="utf-8"), self.base)
-            if UPLOAD_ORIGIN:
-                text = text.replace(f'"{self.base}/api/upload"', f'"{UPLOAD_ORIGIN}/api/upload"')
-            body = text.encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", mime or "text/html; charset=utf-8")
-            self.send_header("Content-Length", str(len(body)))
-            _send_cors_headers(self)
-            self.send_header("Cache-Control", "no-cache")
-            self.end_headers()
-            if self.command != "HEAD":
-                self.wfile.write(body)
-            return
+            return self._send_text(self._ui_text(path.read_text(encoding="utf-8")), mime or "text/html; charset=utf-8")
         # iOS Safari will not play a <video> unless Range requests get 206 answers.
         start, end = 0, size - 1
         rng = _parse_range(self.headers.get("Range"), size)
@@ -1102,12 +1137,31 @@ def main() -> None:
         session,
         fake_egocentric_enabled(),
     )
-    server = ThreadingHTTPServer((HOST, PORT), Handler)
+    server, operator = build_servers(HOST, PORT, OPERATOR_PORT)
+    if operator is not None:
+        LOG.info("developer playground on 127.0.0.1:%s (public port serves the customer app only)", OPERATOR_PORT)
+        threading.Thread(target=operator.serve_forever, name="operator-http", daemon=True).start()
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         LOG.info("shutting down")
         server.server_close()
+        if operator is not None:
+            operator.server_close()
+
+
+def build_servers(host: str, port: int, operator_port: int) -> tuple[ThreadingHTTPServer, ThreadingHTTPServer | None]:
+    """The public server, plus the developer server on loopback when operator_port is set."""
+    if operator_port and operator_port == port:
+        raise SystemExit("CEREBEL_OPERATOR_PORT must differ from MOTION_AGENT_PORT")
+    public = ThreadingHTTPServer((host, port), Handler)
+    public.operator = False
+    if not operator_port:
+        return public, None
+    # Loopback only, whatever HOST is: the developer surface is never exposed directly.
+    operator = ThreadingHTTPServer(("127.0.0.1", operator_port), Handler)
+    operator.operator = True
+    return public, operator
 
 
 if __name__ == "__main__":
