@@ -6004,12 +6004,20 @@ code {
       if (freeDetail) freeDetail.textContent = freeText;
       (billing.plans || []).forEach((plan) => {
         const row = document.createElement("div");
-        row.className = "lp-plan lp-plan--paid";
+        row.className = "lp-plan lp-plan--paid lp-plan--" + plan.id;
         const name = document.createElement("b");
         name.textContent = plan.label;
         const price = document.createElement("span");
         price.className = "lp-plan__price";
-        price.textContent = plan.price;
+        // "$99.99/year" -> a large amount and a small period, so the figure fits a phone-width card.
+        const parts = /^(\$[\d.,]+)\s*(.*)$/.exec(plan.price || "");
+        price.textContent = parts ? parts[1] : plan.price;
+        if (parts && parts[2]) {
+          const unit = document.createElement("span");
+          unit.className = "lp-plan__unit";
+          unit.textContent = parts[2];
+          price.appendChild(unit);
+        }
         const detail = document.createElement("small");
         detail.textContent = [plan.detail, billing.pro_monthly ? billing.pro_monthly + " swings a month" : ""].filter(Boolean).join(". ");
         row.append(name, price, detail);
@@ -6411,8 +6419,6 @@ code {
     }
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
