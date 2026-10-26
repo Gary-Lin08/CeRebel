@@ -41,6 +41,13 @@ git push origin main
    ```
    必填项：`CEREBEL_PUBLIC_URL`、4 个 Stripe 变量、`CEREBEL_LEGAL_ENTITY`、`CEREBEL_SUPPORT_EMAIL`、`MOTION_AGENT_PROMPT_PASSWORD`。
 3. 启动：`bash deploy/run-product.sh start`。日志在 `product_server.log`。
+4. GPU worker 交给 supervisor 管（GPU 在本机、没设 `CEREBEL_GPU_BACKEND=modal` 时必做）：
+   ```
+   cp deploy/supervisor/cerebel-gemx-worker.conf /etc/supervisor/conf.d/
+   supervisorctl reread && supervisorctl update
+   ```
+   不做这一步，机器一重启 worker 就没了，所有上传都会排队 10 分钟后失败（2026-10-24 的 3 次 `pipeline_error` 就是这样）。
+   模型加载约 2 分钟，之后 `curl -s http://127.0.0.1:8092/api/health` 里 `gpu.state` 应为 `ready`。
 
 ## 第 3 步：HTTPS 公网地址
 
@@ -80,6 +87,7 @@ git push origin main
 
 - [ ] 首页能打开，点 "Try the sample" 能看到示例报告
 - [ ] 不勾选同意就无法注册；勾选后注册成功
+- [ ] `/api/health` 返回 200，`gpu.state` 是 `ready`
 - [ ] 上传一段侧面拍的挥杆，几分钟内出报告，额度显示剩 2 次
 - [ ] 上传一段不是挥杆的视频，提示没识别到挥杆，额度不减少
 - [ ] 3 次用完后再上传，会弹出升级窗口

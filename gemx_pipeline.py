@@ -41,6 +41,10 @@ WORKER_HOST = os.environ.get("CEREBEL_GEMX_WORKER_HOST", "127.0.0.1")
 WORKER_PORT = int(os.environ.get("CEREBEL_GEMX_WORKER_PORT", "61017"))
 WORKER_TIMEOUT_S = float(os.environ.get("CEREBEL_GEMX_WORKER_TIMEOUT_S", "3600"))
 WORKER_WAIT_READY_S = float(os.environ.get("CEREBEL_GEMX_WORKER_WAIT_READY_S", "600"))
+# A job whose connection is refused waits this long for the worker to come back (a supervisor
+# restart reloads the models in ~2 min) before it fails as "gpu_unavailable".
+WORKER_SUBMIT_WAIT_S = float(os.environ.get("CEREBEL_GEMX_WORKER_SUBMIT_WAIT_S", "300"))
+_WAIT_GAVE_UP_AT = float("-inf")  # time.monotonic() when a wait for the worker last ran out
 
 
 @dataclass
@@ -55,6 +59,12 @@ class PipelineResult:
     opensim_motion: Path | None = None
     ik_ok: bool = False
     ik_error: str | None = None
+    # Where it failed: "input", "gpu_unavailable", "gemx" or "ik" (None when it worked).
+    failed_at: str | None = None
+
+
+class WorkerUnavailable(RuntimeError):
+    """The warm GEM-X worker could not be reached, so nothing ran on the GPU."""
 
 
 def _read_header(session_dir: Path) -> dict:
@@ -156,9 +166,24 @@ def wait_for_worker(timeout_s: float = WORKER_WAIT_READY_S) -> None:
             last_err = exc
             LOG.info("waiting for warm worker %s:%s (%s)", WORKER_HOST, WORKER_PORT, exc)
         time.sleep(2.0)
+    global _WAIT_GAVE_UP_AT
+    _WAIT_GAVE_UP_AT = time.monotonic()
     raise TimeoutError(
         f"warm worker not ready after {timeout_s}s at {WORKER_HOST}:{WORKER_PORT}: {last_err}"
     )
+
+
+def worker_status(timeout: float = 2.0) -> str:
+    """GPU state: "remote" (Modal), "ready", "loading" (models still loading) or "down"."""
+    if GPU_BACKEND == "modal":
+        return "remote"
+    try:
+        resp = _rpc({"cmd": "ping"}, timeout=timeout)
+    except (OSError, ValueError, RuntimeError):
+        return "down"
+    if not resp.get("ok"):
+        return "down"
+    return "ready" if resp.get("ready") else "loading"
 
 
 def run_gemx_warm(
@@ -190,7 +215,23 @@ def run_gemx_warm(
         req["jpeg_dir"] = str(jpeg_dir)
     if video_path is not None:
         req["video_path"] = str(video_path)
-    resp = _rpc(req, timeout=WORKER_TIMEOUT_S)
+    try:
+        resp = _rpc(req, timeout=WORKER_TIMEOUT_S)
+    except ConnectionRefusedError as exc:
+        # Refused at connect, so the job never started: safe to wait and submit once more.
+        # Right after a wait ran out, fail at once instead of making every queued job wait again.
+        if time.monotonic() - _WAIT_GAVE_UP_AT < WORKER_SUBMIT_WAIT_S:
+            raise WorkerUnavailable(f"warm worker still down at {WORKER_HOST}:{WORKER_PORT}: {exc}") from exc
+        LOG.warning(
+            "warm worker refused session=%s; waiting up to %.0fs for it to come back",
+            session_id,
+            WORKER_SUBMIT_WAIT_S,
+        )
+        try:
+            wait_for_worker(WORKER_SUBMIT_WAIT_S)
+        except TimeoutError as exc:
+            raise WorkerUnavailable(str(exc)) from exc
+        resp = _rpc(req, timeout=WORKER_TIMEOUT_S)
     if not resp.get("ok"):
         raise RuntimeError(resp.get("error") or f"warm worker failed: {resp}")
     out_dir = Path(resp["output_dir"])
@@ -254,6 +295,7 @@ def write_latest_pointer(
     error: str | None = None,
     opensim_motion: Path | None = None,
     ik_status: str | None = None,
+    failed_at: str | None = None,
 ) -> Path:
     """Atomic write of the pointer the mesh visualizer watches."""
     payload = {
@@ -266,6 +308,7 @@ def write_latest_pointer(
         "ik_status": ik_status or "",
         "updated_at": time.time(),
         "error": error,
+        "failed_at": failed_at,
         "viser_port": VISER_PORT,
         "kinetic_lens_port": KINETIC_LENS_PORT,
     }
@@ -388,8 +431,10 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
         fps=fps,
         status="running",
     )
+    failed_at = "input"
     try:
         jpeg_dir, video_path = _resolve_gemx_input(session_dir)
+        failed_at = "gemx"
         if GPU_BACKEND == "modal":
             src = video_path or next(iter(sorted((session_dir / "upload").glob("source_video.*"))), None)
             if src is None:
@@ -483,9 +528,12 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
             opensim_motion=opensim_motion,
             ik_ok=ik_ok,
             ik_error=ik_error,
+            failed_at="ik" if ik_error else None,
         )
     except Exception as exc:
         LOG.exception("GEM-X failed for session %s", session_id)
+        if isinstance(exc, WorkerUnavailable):
+            failed_at = "gpu_unavailable"
         write_latest_pointer(
             data_dir,
             session_id=session_id,
@@ -494,6 +542,7 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
             fps=fps,
             status="error",
             error=str(exc),
+            failed_at=failed_at,
         )
         return PipelineResult(
             session_id=session_id,
@@ -503,6 +552,7 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
             fps=fps,
             ok=False,
             error=str(exc),
+            failed_at=failed_at,
         )
 
 

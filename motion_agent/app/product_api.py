@@ -286,6 +286,20 @@ def queue_info(session_id: str) -> dict[str, Any] | None:
 
 
 PIPELINE_FAILED_MESSAGE = "Something went wrong on our side while analyzing this video. Please try again."
+GPU_DOWN_MESSAGE = (
+    "Swing analysis is offline for a few minutes. Nothing was uploaded and it didn't use one of "
+    "your analyses. Please try again shortly."
+)
+
+
+def gpu_status() -> str:
+    """State of the GPU that analyses uploads: "ready", "loading", "remote" (Modal), "down",
+    or "unknown" when the pipeline code is not importable here."""
+    try:
+        from gemx_pipeline import worker_status
+    except ImportError:
+        return "unknown"
+    return worker_status()
 
 
 def public_progress(prog: dict[str, Any] | None) -> dict[str, Any] | None:
@@ -583,6 +597,7 @@ def _wait_for_pipeline(settings: Settings, session_id: str, *, poll_s: float = 5
                 percent=100,
                 message="Processing took too long. This upload does not count toward your monthly analyses.",
                 error="timeout",
+                failed_at="timeout",
             )
             return read_progress(settings, session_id) or {"stage": "error"}
         time.sleep(poll_s)
@@ -607,7 +622,8 @@ def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
                     settings,
                     "pipeline_error",
                     session_id=session_id,
-                    message=str(prog.get("message") or prog.get("error") or ""),
+                    failed_at=str(prog.get("failed_at") or "unknown"),
+                    message=str(prog.get("error") or prog.get("message") or ""),
                 )
     except Exception as exc:  # noqa: BLE001
         LOG.exception("pipeline start failed")
@@ -618,9 +634,10 @@ def _run_pipeline(settings: Settings, session_id: str, filename: str) -> None:
             percent=100,
             message="Processing could not start on this machine.",
             error=str(exc),
+            failed_at="start",
         )
         update_status(settings.product_dir, session_id, "error", message=PIPELINE_FAILED_MESSAGE)
-        record_event(settings, "pipeline_error", session_id=session_id, message=str(exc))
+        record_event(settings, "pipeline_error", session_id=session_id, failed_at="start", message=str(exc))
 
 
 def parse_upload(handler: Any, settings: Settings, user: dict[str, Any]) -> tuple[int, dict[str, Any]]:
@@ -645,6 +662,11 @@ def parse_upload(handler: Any, settings: Settings, user: dict[str, Any]) -> tupl
     fileitem = form["file"] if "file" in form else None
     if fileitem is None or not getattr(fileitem, "file", None):
         return 400, {"ok": False, "error": True, "message": "Missing file"}
+    # Checked after the body is read (an early reply can surface as a network error in the
+    # browser) and before anything is saved: without a GPU the job could only wait and fail.
+    if gpu_status() == "down":
+        record_event(settings, "upload_unavailable", user_id=user["user_id"], reason="gpu_down")
+        return 503, {"ok": False, "error": True, "unavailable": True, "message": GPU_DOWN_MESSAGE}
     filename = getattr(fileitem, "filename", None) or "video.mp4"
     trim = None
     if "trim_start" in form and "trim_end" in form:
