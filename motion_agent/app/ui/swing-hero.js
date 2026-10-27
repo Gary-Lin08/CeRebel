@@ -1,9 +1,10 @@
 /* CeRebel swing reel: one real swing, driven by scroll.
-   Data: /static/hero/swing-sample.json (OpenSim IK body transforms, muscle paths, and the clip they came from)
+   Data: /static/hero/swing-sample.json (OpenSim IK body transforms, muscle paths, findings, and the clip)
    and /static/hero/opensim-bones.glb (Rajagopal-Lai-Uhlrich 2023 bones, one node per body).
-   Scrolling through the reel plays the swing from address to the top: the phone video, then the
-   OpenSim body with bones + muscles, then the fix lit up. The phase buttons jump the page to a phase.
-   With reduced motion the reel is a still of the top of the backswing with everything shown. */
+   Scrolling plays the full swing: phone video, then the OpenSim body with bones + muscles. The copy
+   on the right tracks identified issues by time (independent of golf-phase labels). The featured
+   fix lights the related bones near its timestamp. Phase buttons jump the page to a phase.
+   With reduced motion the reel is a still at the featured fix with everything shown. */
 const THREE = await import("/static/three/three.module.js");
 const { GLTFLoader } = await import("/static/three/GLTFLoader.js");
 
@@ -38,11 +39,15 @@ async function start(root) {
   ]);
   const frames = data.frames;
   const tEnd = frames[frames.length - 1].t;
-  const tTop = data.fix.t;
+  const tFix = data.fix.t;
   // The highlighted measurement: frame.v when the data names one, else the lead elbow.
   const fixLabel = data.fix.label || "Lead elbow";
   const fixAnchor = data.fix.anchor || "ulna_l";
   const valueOf = (fr) => (fr.v != null ? fr.v : fr.elbow);
+  const findings = Array.isArray(data.findings) ? data.findings.slice() : [];
+  findings.sort((a, b) => Number(a.start_time) - Number(b.start_time));
+  const findingItems = []; // filled once the acts list is built; safe if pose runs early
+  let introItem = null;
   if (video && data.video && data.video.src) {
     video.dataset.offset = String(data.video.offset || 0);
     video.src = data.video.src;
@@ -221,6 +226,7 @@ async function start(root) {
     trailGeo.setFromPoints(upto);
     trail.computeLineDistances();
 
+    const live = markFinding(t);
     const showFix = fixShown > 0;
     model.traverse((o) => {
       if (!o.isMesh || o.userData.overlay) return;
@@ -229,12 +235,18 @@ async function start(root) {
       o.material = showFix && body && fixBones.has(body.name) ? fixMat : boneMat;
     });
     const value = Math.round(valueOf(a) + (valueOf(b) - valueOf(a)) * k);
-    if (readout) readout.textContent = fixLabel;
-    if (numEl) numEl.textContent = String(value);
-    const anchor = model.getObjectByName(fixAnchor);
+    const metricLabel = (live && live.metric && live.metric.caption) || (live && live.title) || fixLabel;
+    const metricText = (live && live.metric && live.metric.value) || (String(value) + "°");
+    if (readout) readout.textContent = metricLabel;
+    if (numEl) {
+      const raw = String(metricText).replace(/°/g, "");
+      numEl.textContent = raw;
+    }
+    const anchorName = (live && live.focus && live.focus.anchor) || fixAnchor;
+    const anchor = model.getObjectByName(anchorName);
     if (anchor) anchor.getWorldPosition(elbowWorld);
     if (tag) {
-      tag.textContent = value + "°";
+      tag.textContent = metricText;
       tag.style.opacity = String(fixShown);
     }
     markPhase(t);
@@ -278,12 +290,14 @@ async function start(root) {
   ground.position.set(p0[0], 0.001, p0[2]);
   ground.rotation.z = yaw0;
 
-  // Phases up to the top of the backswing, where the reel ends.
-  const rail = data.phases.filter((p) => p[2] <= tTop + 0.01).map((p) => [p[0], p[1], p[2]]);
-  rail.push(["Top", tTop, tTop]);
-  // Latest phase whose start we have reached (handles the small gap before the synthetic Top).
+  // Full-swing phase rail (address through follow-through).
+  const rail = (data.phases || []).map((p) => [p[0], p[1], p[2]]);
+  if (!rail.some((p) => Math.abs(p[1] - tFix) < 1e-3)) {
+    rail.push(["Top", tFix, tFix]);
+    rail.sort((a, b) => a[1] - b[1]);
+  }
   const phaseAt = (t) => {
-    let n = rail[0][0];
+    let n = rail[0] ? rail[0][0] : "";
     rail.forEach((p) => { if (t >= p[1] - 1e-6) n = p[0]; });
     return n;
   };
@@ -304,12 +318,65 @@ async function start(root) {
     });
   }
 
-  // Scroll position through the reel (0 to 1) sets everything. Linear in swing time so the
-  // first scroll pixels leave address immediately (ease-in previously held t≈0 until Takeaway).
+  // Right-side copy: identified issues by time (same rule as the playground sport board).
+  const acts = root.querySelector(".reel__acts");
+  function activeFinding(t) {
+    if (!findings.length) return null;
+    const inside = findings.filter((note) => t >= Number(note.start_time) && t <= Number(note.end_time));
+    if (inside.length) {
+      return inside.reduce((best, note) => (
+        Number(note.start_time) >= Number(best.start_time) ? note : best
+      ));
+    }
+    let last = null;
+    findings.forEach((note) => {
+      if (Number(note.start_time) <= t && (!last || Number(note.start_time) >= Number(last.start_time))) {
+        last = note;
+      }
+    });
+    return last;
+  }
+  if (acts) {
+    acts.innerHTML = "";
+    introItem = document.createElement("li");
+    introItem.dataset.finding = "intro";
+    introItem.innerHTML = "<b>One phone, one swing.</b> Scroll to play — each identified issue appears when it happens.";
+    acts.appendChild(introItem);
+    findings.forEach((note, i) => {
+      const li = document.createElement("li");
+      li.dataset.finding = note.id || String(i);
+      const title = note.headline || note.title || "Finding";
+      const body = note.plain || (note.metric && note.metric.caption) || "";
+      li.innerHTML = "<b></b> ";
+      li.querySelector("b").textContent = title;
+      li.appendChild(document.createTextNode(body));
+      acts.appendChild(li);
+      findingItems.push([note.id || String(i), li, note]);
+    });
+  }
+  function markFinding(t) {
+    const live = activeFinding(t);
+    const liveId = live && (live.id || "");
+    findingItems.forEach(([id, li]) => {
+      const on = !!liveId && id === liveId;
+      li.classList.toggle("is-on", on);
+    });
+    if (introItem) introItem.classList.toggle("is-on", !live);
+    if (live && live.focus && Array.isArray(live.focus.bones)) {
+      fixBones.clear();
+      live.focus.bones.forEach((name) => fixBones.add(name));
+    } else {
+      fixBones.clear();
+      (data.fix.bones || []).forEach((name) => fixBones.add(name));
+    }
+    return live;
+  }
+
+  // Scroll position through the reel (0 to 1) maps linearly across the full swing.
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
   const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
-  const SWING_FROM = 0, SWING_TO = 0.88;
-  const timeAt = (p) => tTop * clamp01((p - SWING_FROM) / (SWING_TO - SWING_FROM));
+  const SWING_FROM = 0, SWING_TO = 0.90;
+  const timeAt = (p) => tEnd * clamp01((p - SWING_FROM) / (SWING_TO - SWING_FROM));
   function scrollProgress() {
     const r = root.getBoundingClientRect();
     return clamp01(-r.top / Math.max(1, r.height - window.innerHeight));
@@ -317,31 +384,35 @@ async function start(root) {
   function scrollToTime(t) {
     let lo = 0, hi = 1;
     for (let k = 0; k < 30; k++) { const mid = (lo + hi) / 2; if (timeAt(mid) < t) lo = mid; else hi = mid; }
-    const p = t >= tTop ? 0.95 : hi;
+    const p = t >= tEnd - 1e-6 ? 0.95 : hi;
     const top = root.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: top + p * (root.offsetHeight - window.innerHeight), behavior: reduced ? "auto" : "smooth" });
   }
 
   let shown = -1;
   function apply(p) {
-    // Act 1: phone. Act 2: muscle skeleton. Act 3: fix lit (same body, highlight).
-    const act = p < 0.26 ? 1 : p < 0.72 ? 2 : 3;
+    // Visual acts stay independent of issue copy: phone → body → lit fix window.
+    const act = p < 0.22 ? 1 : p < 0.55 ? 2 : 3;
     if (root.dataset.act !== String(act)) root.dataset.act = String(act);
-    const o = smooth((p - 0.22) / 0.12);
+    const o = smooth((p - 0.18) / 0.12);
     boneMat.opacity = o;
     fixMat.opacity = o;
     muscleMat.opacity = 0.8 * o;
     trail.material.opacity = 0.9 * o;
     model.visible = o > 0.01;
-    fixShown = clamp01((p - SWING_TO + 0.02) / 0.06);
+    const t = timeAt(p);
+    // Light the featured bones near the fix timestamp (and whenever a finding window is active).
+    const nearFix = 1 - clamp01(Math.abs(t - tFix) / 0.18);
+    const inFinding = findings.some((note) => t >= Number(note.start_time) && t <= Number(note.end_time));
+    fixShown = Math.max(nearFix, inFinding ? 0.85 : 0);
     root.classList.toggle("is-fix", fixShown > 0.5);
     root.style.setProperty("--p", p.toFixed(4));
-    pose(timeAt(p));
+    pose(t);
   }
 
   fit();
   root.classList.add("is-ready");
-  if (reduced) { apply(1); return; }
+  if (reduced) { apply(Math.min(1, tFix / Math.max(tEnd, 1e-6))); return; }
   let cur = scrollProgress(), raf = 0;
   function tick() {
     const p = scrollProgress();

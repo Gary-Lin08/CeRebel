@@ -157,7 +157,7 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 }
 
 /* ---------- The reel: scroll drives the swing ---------- */
-.reel { position: relative; height: 380vh; }
+.reel { position: relative; height: 460vh; } /* longer: full swing + issue windows through finish */
 .reel__sticky {
   position: sticky; top: 0; height: 100svh; overflow: hidden;
   display: grid; grid-template-rows: 1fr auto;
@@ -203,19 +203,18 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 
 .reel__acts {
   position: absolute; z-index: 4; right: var(--gut, 32px); top: 18svh;
-  width: min(340px, 25vw); margin: 0; padding: 0; list-style: none;
+  width: min(360px, 28vw); margin: 0; padding: 0; list-style: none;
+  /* Stay on the right for every visual act — issue copy tracks time, not phone/skeleton staging. */
 }
 .reel__acts li {
   position: absolute; inset: 0 0 auto 0;
   font-size: 17px; color: var(--mist);
   opacity: 0; transform: translateY(24px); filter: blur(6px);
-  transition: opacity 0.7s ease, transform 1s var(--spring), filter 0.7s ease;
+  transition: opacity 0.55s ease, transform 0.8s var(--spring), filter 0.55s ease;
+  pointer-events: none;
 }
-.reel__acts b { display: block; margin-bottom: 8px; color: var(--bone); font: 600 clamp(26px, 2.6vw, 36px)/1.05 var(--display); letter-spacing: -0.03em; }
-.reel[data-act="1"] .reel__acts [data-act="1"],
-.reel[data-act="2"] .reel__acts [data-act="2"],
-.reel[data-act="3"] .reel__acts [data-act="3"] { opacity: 1; transform: none; filter: none; }
-.reel[data-act="1"] .reel__acts { right: auto; left: calc(50% + min(21svh, 214px) + 48px); top: 40svh; }
+.reel__acts b { display: block; margin-bottom: 8px; color: var(--bone); font: 600 clamp(24px, 2.4vw, 34px)/1.05 var(--display); letter-spacing: -0.03em; }
+.reel__acts li.is-on { opacity: 1; transform: none; filter: none; }
 
 .reel__hud {
   position: relative; z-index: 4;
@@ -254,7 +253,7 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 .reel:not([data-act="1"]) .reel__hint, .reel.is-moved .reel__hint { opacity: 0; }
 
 @media (max-width: 860px) {
-  .reel { height: 340vh; }
+  .reel { height: 420vh; }
   .swing__gl { inset: 0; }
   .swing__video { --vh: min(60svh, 560px); --s: 0.4; --cy: 46%; border-radius: 22px; }
   .reel[data-act="2"] .swing__video,
