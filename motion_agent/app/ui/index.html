@@ -2203,14 +2203,37 @@ code {
             <button type="button" role="tab" id="lpTabCoach" aria-controls="lpPanCoach" aria-selected="false" tabindex="-1">Ask the coach</button>
             <i class="tabs__ink" aria-hidden="true"></i>
           </div>
-          <article class="tabs__panel lp-fix" role="tabpanel" id="lpPanFix" aria-labelledby="lpTabFix" tabindex="0">
-            <p class="lp-big"><span>39°</span></p>
-            <div>
-              <h3>Shoulders turn past the hips</h3>
-              <p class="lp-muted">At the top: shoulders 71°, hips 32°.</p>
-              <p><strong>Why it matters.</strong> The gap between shoulders and hips stretches the trunk at the top, and the downswing gets its speed from letting that stretch unwind, hips first.</p>
-              <p><strong>What to keep.</strong> Let the hips stop turning before the shoulders do. Keep the trail knee flexed so the hips stay quiet.</p>
-              <p><strong>Today's drill.</strong> Pause at the top for a count of two, then start down with the lead hip, not the arms. Eight reps.</p>
+          <article class="tabs__panel lp-fix" role="tabpanel" id="lpPanFix" aria-labelledby="lpTabFix" tabindex="0" data-lp-fix>
+            <div class="lp-analysis" id="lpAnalysis">
+              <nav class="lp-analysis__index" id="lpFixIndex" role="tablist" aria-label="Findings in this swing"></nav>
+              <div class="lp-analysis__stage">
+                <p class="lp-analysis__kicker" id="lpFixKicker">The one thing to fix</p>
+                <p class="lp-big" id="lpFixMetric"><span>39°</span></p>
+                <p class="lp-analysis__caption" id="lpFixCaption">shoulders past hips at the top</p>
+              </div>
+              <div class="lp-analysis__copy">
+                <h3 id="lpFixHeadline">Shoulders turn past the hips</h3>
+                <p class="lp-muted" id="lpFixPlain">At the top the shoulders have turned about 39° past the hips.</p>
+                <div class="lp-analysis__blocks">
+                  <section class="lp-analysis__block" id="lpFixWhyBlock">
+                    <h4>Why it matters</h4>
+                    <p id="lpFixWhy"></p>
+                  </section>
+                  <section class="lp-analysis__block" id="lpFixCueBlock">
+                    <h4>What to feel</h4>
+                    <p id="lpFixCue"></p>
+                  </section>
+                  <section class="lp-analysis__block lp-analysis__block--drill" id="lpFixDrillBlock">
+                    <h4>Today's drill</h4>
+                    <p id="lpFixDrill"></p>
+                    <p class="lp-analysis__check" id="lpFixCheckRow"><b>How you'll know it works.</b> <span id="lpFixCheck"></span></p>
+                  </section>
+                </div>
+                <div class="lp-analysis__others" id="lpFixOthersBlock">
+                  <h4>Also in this swing</h4>
+                  <div class="lp-analysis__others-list" id="lpFixOthers"></div>
+                </div>
+              </div>
             </div>
           </article>
           <article class="tabs__panel lp-joint" role="tabpanel" id="lpPanJoint" aria-labelledby="lpTabJoint" tabindex="0" hidden>

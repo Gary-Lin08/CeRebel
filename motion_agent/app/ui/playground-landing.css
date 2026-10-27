@@ -316,15 +316,124 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 @keyframes panelIn { from { opacity: 0; transform: translateY(14px) scale(0.985); } }
 .tabs__panel h3 { margin: 0 0 8px; font: 600 clamp(26px, 3vw, 38px)/1.05 var(--display); letter-spacing: -0.03em; }
 .tabs__panel p { max-width: 38em; }
-.lp-fix { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 48px; align-items: start; }
+.lp-fix { display: block; }
 .lp-big { margin: 0; font: 600 clamp(96px, 14vw, 200px)/0.8 var(--display); letter-spacing: -0.06em; color: var(--fix); text-shadow: 0 0 60px rgba(242, 165, 65, 0.3); }
+
+/* Indexed swing analysis (landing "The fix") — same job as playground Swing analysis, dusk tokens. */
+.lp-analysis {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  grid-template-areas: "index index" "stage copy";
+  gap: 28px 56px;
+  align-items: start;
+}
+.lp-analysis__index {
+  grid-area: index;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 6px; border-radius: 999px; width: fit-content; max-width: 100%;
+  background: rgba(238, 240, 234, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.1);
+}
+.lp-analysis__index button {
+  min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--mist);
+  font: 500 14px/1 var(--text-font);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.45s var(--spring);
+}
+.lp-analysis__index button:hover { color: var(--bone); background: rgba(238, 240, 234, 0.08); }
+.lp-analysis__index button:active { transform: scale(0.96); }
+.lp-analysis__index button[aria-selected="true"] {
+  background: var(--bone); color: #0B1A15;
+}
+.lp-analysis__index button:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+.lp-analysis__stage { grid-area: stage; }
+.lp-analysis__kicker {
+  margin: 0 0 12px;
+  font: 500 13px/1.2 var(--text-font); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--lamp);
+}
+.lp-analysis__caption {
+  margin: 10px 0 0;
+  font: 500 15px/1.35 var(--text-font); color: var(--mist); max-width: 18em;
+}
+.lp-analysis__copy { grid-area: copy; min-width: 0; }
+.lp-analysis__copy h3 {
+  margin: 0 0 10px;
+  font: 600 clamp(28px, 3.4vw, 44px)/1.05 var(--display); letter-spacing: -0.035em;
+}
+.lp-analysis__blocks {
+  display: grid; gap: 12px; margin-top: 28px;
+}
+.lp-analysis__block {
+  padding: 18px 20px; border-radius: 20px;
+  background: rgba(238, 240, 234, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.08);
+}
+.lp-analysis__block h4 {
+  margin: 0 0 6px;
+  font: 600 12px/1.2 var(--text-font); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--lamp);
+}
+.lp-analysis__block p { margin: 0; color: var(--mist); max-width: 38em; }
+.lp-analysis__block--drill {
+  background: linear-gradient(160deg, rgba(242, 165, 65, 0.1), rgba(238, 240, 234, 0.03));
+  box-shadow: inset 0 0 0 1px rgba(242, 165, 65, 0.22);
+}
+.lp-analysis__block--drill h4 { color: var(--fix); }
+.lp-analysis__check {
+  margin-top: 12px !important; padding-top: 12px;
+  border-top: 1px solid rgba(238, 240, 234, 0.1);
+  font-size: 14px;
+}
+.lp-analysis__check b { color: var(--bone); font-weight: 600; }
+.lp-analysis__others { margin-top: 32px; }
+.lp-analysis__others h4 {
+  margin: 0 0 12px;
+  font: 600 12px/1.2 var(--text-font); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--lamp);
+}
+.lp-analysis__others-list { display: grid; gap: 8px; }
+.lp-analysis__other {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: center;
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 14px 16px; border: 0; border-radius: 16px;
+  background: rgba(238, 240, 234, 0.04); color: inherit;
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.08);
+  transition: background-color 0.3s ease, transform 0.45s var(--spring);
+}
+.lp-analysis__other:hover { background: rgba(238, 240, 234, 0.07); }
+.lp-analysis__other:active { transform: scale(0.985); }
+.lp-analysis__other:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+.lp-analysis__other strong {
+  grid-column: 1; font: 600 16px/1.25 var(--display); letter-spacing: -0.02em; color: var(--bone);
+}
+.lp-analysis__other span {
+  grid-column: 1; font: 400 13px/1.35 var(--text-font); color: var(--mist);
+}
+.lp-analysis__other i {
+  grid-column: 2; grid-row: 1 / span 2;
+  font: 600 18px/1 var(--display); color: var(--lamp); font-style: normal;
+}
+.lp-analysis__others[hidden],
+.lp-analysis__block[hidden],
+.lp-analysis__check[hidden] { display: none !important; }
+
 .lp-tracks { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
 .lp-tracks li { padding: 16px 18px; border-radius: 16px; background: rgba(238, 240, 234, 0.05); box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.08); }
 .lp-chat { display: grid; gap: 10px; margin: 24px 0 16px; max-width: 640px; }
 .lp-chat p { margin: 0; padding: 14px 18px; border-radius: 20px; max-width: 85%; }
 .lp-chat__me { justify-self: end; background: var(--bone); color: #0B1A15; border-bottom-right-radius: 6px; }
 .lp-chat__coach { background: rgba(238, 240, 234, 0.08); border-bottom-left-radius: 6px; }
-@media (max-width: 720px) { .lp-fix { grid-template-columns: 1fr; gap: 16px; } }
+@media (max-width: 860px) {
+  .lp-analysis {
+    grid-template-columns: 1fr;
+    grid-template-areas: "index" "stage" "copy";
+    gap: 20px;
+  }
+  .lp-analysis__index { width: 100%; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+  .lp-analysis__index button { flex: none; }
+  .lp-big { font-size: clamp(72px, 22vw, 120px); }
+}
 
 /* Steps: a real sequence, so numbered. */
 .lp-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }

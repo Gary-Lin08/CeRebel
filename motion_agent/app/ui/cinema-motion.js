@@ -97,6 +97,137 @@
     ready.then(place);
   });
 
+  // Landing "The fix": indexed findings (same job as playground Swing analysis).
+  (function initLpFix() {
+    const root = document.querySelector("[data-lp-fix]");
+    if (!root) return;
+    const indexEl = document.getElementById("lpFixIndex");
+    const othersEl = document.getElementById("lpFixOthers");
+    const othersBlock = document.getElementById("lpFixOthersBlock");
+    const els = {
+      kicker: document.getElementById("lpFixKicker"),
+      metric: document.getElementById("lpFixMetric"),
+      caption: document.getElementById("lpFixCaption"),
+      headline: document.getElementById("lpFixHeadline"),
+      plain: document.getElementById("lpFixPlain"),
+      whyBlock: document.getElementById("lpFixWhyBlock"),
+      why: document.getElementById("lpFixWhy"),
+      cueBlock: document.getElementById("lpFixCueBlock"),
+      cue: document.getElementById("lpFixCue"),
+      drillBlock: document.getElementById("lpFixDrillBlock"),
+      drill: document.getElementById("lpFixDrill"),
+      checkRow: document.getElementById("lpFixCheckRow"),
+      check: document.getElementById("lpFixCheck"),
+    };
+    let findings = [];
+    let fi = 0;
+
+    function paint() {
+      const f = findings[fi];
+      if (!f) return;
+      if (els.kicker) {
+        els.kicker.textContent = fi === 0 ? "The one thing to fix" : "Also in this swing";
+      }
+      const metric = (f.metric && f.metric.value) || "—";
+      if (els.metric) els.metric.innerHTML = "<span></span>";
+      if (els.metric) els.metric.querySelector("span").textContent = metric;
+      if (els.caption) els.caption.textContent = (f.metric && f.metric.caption) || "";
+      if (els.headline) els.headline.textContent = f.headline || f.title || "";
+      if (els.plain) els.plain.textContent = f.plain || f.detail || "";
+      const show = (block, node, text) => {
+        const on = !!(text && String(text).trim());
+        if (block) block.hidden = !on;
+        if (node) node.textContent = text || "";
+      };
+      show(els.whyBlock, els.why, f.why);
+      show(els.cueBlock, els.cue, f.cue);
+      show(els.drillBlock, els.drill, f.drill);
+      if (els.checkRow) {
+        const on = !!(f.check && String(f.check).trim());
+        els.checkRow.hidden = !on;
+        if (els.check) els.check.textContent = f.check || "";
+      }
+      if (indexEl) {
+        [...indexEl.querySelectorAll('[role="tab"]')].forEach((btn, i) => {
+          const on = i === fi;
+          btn.setAttribute("aria-selected", String(on));
+          btn.tabIndex = on ? 0 : -1;
+        });
+      }
+      if (othersEl && othersBlock) {
+        othersEl.textContent = "";
+        findings.forEach((o, i) => {
+          if (i === fi) return;
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "lp-analysis__other";
+          const title = document.createElement("strong");
+          title.textContent = o.headline || o.title || "Finding";
+          const line = document.createElement("span");
+          line.textContent = o.metric && o.metric.value
+            ? o.metric.value + " · " + (o.metric.caption || "")
+            : (o.title || "");
+          const chev = document.createElement("i");
+          chev.setAttribute("aria-hidden", "true");
+          chev.textContent = "›";
+          b.append(title, line, chev);
+          b.addEventListener("click", () => select(i, true));
+          othersEl.appendChild(b);
+        });
+        othersBlock.hidden = findings.length < 2;
+      }
+    }
+
+    function select(i, focusIndex) {
+      if (!findings[i]) return;
+      fi = i;
+      paint();
+      if (focusIndex && indexEl) {
+        const btn = indexEl.querySelectorAll('[role="tab"]')[i];
+        if (btn) btn.focus();
+      }
+    }
+
+    function buildIndex() {
+      if (!indexEl) return;
+      indexEl.textContent = "";
+      findings.forEach((f, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("role", "tab");
+        b.id = "lpFixTab-" + (f.id || i);
+        b.setAttribute("aria-controls", "lpPanFix");
+        b.setAttribute("aria-selected", i === 0 ? "true" : "false");
+        b.tabIndex = i === 0 ? 0 : -1;
+        const label = (f.metric && f.metric.value) ? f.metric.value + " · " + (f.title || f.headline || "Fix") : (f.title || f.headline || "Fix");
+        b.textContent = label;
+        b.addEventListener("click", () => select(i));
+        b.addEventListener("keydown", (e) => {
+          const k = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1
+            : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+          if (!k) return;
+          e.preventDefault();
+          select((i + k + findings.length) % findings.length, true);
+        });
+        indexEl.appendChild(b);
+      });
+    }
+
+    function boot(list) {
+      findings = Array.isArray(list) ? list.slice() : [];
+      findings.sort((a, b) => Number(b.severity || 0) - Number(a.severity || 0));
+      if (!findings.length) return;
+      fi = 0;
+      buildIndex();
+      paint();
+    }
+
+    fetch("/static/hero/swing-sample.json")
+      .then((r) => r.json())
+      .then((data) => boot(data.findings || []))
+      .catch(() => {});
+  })();
+
   // A file dragged over the page wakes the background and lights the upload targets.
   let depth = 0;
   addEventListener("dragenter", (e) => {
