@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import sys
 from pathlib import Path
 
@@ -175,7 +176,11 @@ def run_neck_ik(
     pose_yaw = pose3d.get("metadata", {}).get("globalYawRad")
     if pose_yaw:
         yaw = np.asarray(pose_yaw, dtype=np.float64)
-    apply_hand_retargeting_to_motion(motion["frames"], pose3d)
+    # Palm SOMA retarget twists hand_* off the locked radius_hand wrist and makes
+    # the carpal pile look broken. Default is the classic locked-wrist IK (hand
+    # follows radius). Opt in with CEREBEL_HAND_RETARGET=1.
+    if os.environ.get("CEREBEL_HAND_RETARGET", "0").lower() in ("1", "true", "yes", "on"):
+        apply_hand_retargeting_to_motion(motion["frames"], pose3d)
     _postprocess_motion(motion["frames"], yaw, pose3d=pose3d)
     motion["metadata"]["pipeline"] = (
         "SOMA anatomical landmarks → augmented Rajagopal (torso→neck→head) → OpenSim IK"
@@ -189,8 +194,6 @@ def run_neck_ik(
     # Optional: MoBL-ARMS upper-limb musculotendon paths (right model + mirrored left).
     mobl_meta = None
     try:
-        import os
-
         if os.environ.get("CEREBEL_MOBL_ARMS", "1").lower() not in ("0", "false", "no", "off"):
             _scripts_path()
             from mobl_arms_enrich import enrich_opensim_motion

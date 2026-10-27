@@ -574,6 +574,10 @@ def apply_hand_retargeting_to_motion(frames: list[dict], pose3d: dict) -> None:
     ``hand_*`` aligned with ``radius_*``.  This post-pass applies the change in
     SOMA palm orientation relative to the solved forearm, preserving IK wrist
     position and arm pose.
+
+    Off by default in ``run_neck_ik`` (``CEREBEL_HAND_RETARGET=0``): the palm
+    delta often flips the carpal mesh relative to the forearm. Prefer the
+    locked-wrist IK solution for hand/wrist display.
     """
     if not frames or not pose3d.get("frames"):
         return
