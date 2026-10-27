@@ -1,8 +1,8 @@
 /* CeRebel swing reel: one real swing, driven by scroll.
-   Data: /static/hero/swing-sample.json (OpenSim IK body transforms, muscle paths, GEM-X joints, and the clip they came from)
+   Data: /static/hero/swing-sample.json (OpenSim IK body transforms, muscle paths, and the clip they came from)
    and /static/hero/opensim-bones.glb (Rajagopal-Lai-Uhlrich 2023 bones, one node per body).
-   Scrolling through the reel plays the swing from address to the top in three acts: the phone video,
-   then GEM-X joints, then the OpenSim body with the fix lit up. The phase buttons jump the page to a phase.
+   Scrolling through the reel plays the swing from address to the top: the phone video, then the
+   OpenSim body with bones + muscles, then the fix lit up. The phase buttons jump the page to a phase.
    With reduced motion the reel is a still of the top of the backswing with everything shown. */
 const THREE = await import("/static/three/three.module.js");
 const { GLTFLoader } = await import("/static/three/GLTFLoader.js");
@@ -166,64 +166,6 @@ async function start(root) {
   trail.userData.overlay = true;
   model.add(trail);
 
-  // GEM-X: the 3D joints the pose model estimates from the video, before any biomechanics.
-  const gemx = data.gemx;
-  const gemxGroup = new THREE.Group();
-  scene.add(gemxGroup);
-  // GEM-X joints use their own heading; turn them about the hips to face the same way as OpenSim.
-  const gemxInner = new THREE.Group();
-  gemxGroup.add(gemxInner);
-  if (gemx) {
-    const g0 = gemx.frames[0], o0 = frames[0].b, gi = (n) => gemx.names.indexOf(n), oi = (n) => data.bodies.indexOf(n);
-    const L = g0[gi("LeftArm")], R = g0[gi("RightArm")], H = g0[gi("Hips")];
-    const OL = o0[oi("humerus_l")], OR = o0[oi("humerus_r")];
-    const yawG = Math.atan2(L[2] - R[2], L[0] - R[0]);
-    const yawO = Math.atan2(OL[2] - OR[2], OL[0] - OR[0]);
-    gemxInner.position.set(H[0], 0, H[2]);
-    gemxInner.rotation.y = yawG - yawO;
-    gemxInner.userData.pivot = new THREE.Vector3(H[0], 0, H[2]);
-  }
-  const jointGeo = new THREE.SphereGeometry(0.022, 16, 12);
-  const jointMat = new THREE.MeshStandardMaterial({ color: 0xa8d5c2, emissive: 0x0f3a2c, roughness: 0.4, transparent: true });
-  const linkGeo = new THREE.CylinderGeometry(0.011, 0.011, 1, 10);
-  linkGeo.translate(0, 0.5, 0);
-  const linkMat = new THREE.MeshStandardMaterial({ color: 0xeef0ea, roughness: 0.5, transparent: true, opacity: 0.7 });
-  const skip = new Set(["HeadEnd", "Jaw", "LeftEye", "RightEye", "LeftToeEnd", "RightToeEnd"]);
-  const gJoints = gemx ? gemx.names.map((n) => {
-    const m = new THREE.Mesh(jointGeo, jointMat);
-    m.castShadow = true;
-    m.visible = !skip.has(n);
-    gemxInner.add(m);
-    return m;
-  }) : [];
-  const gLinks = gemx ? gemx.parents.map((par, i) => {
-    if (par < 0 || skip.has(gemx.names[i])) return null;
-    const m = new THREE.Mesh(linkGeo, linkMat);
-    m.castShadow = true;
-    gemxInner.add(m);
-    return m;
-  }) : [];
-  const up = new THREE.Vector3(0, 1, 0), dir = new THREE.Vector3();
-  const gp = gemx ? gemx.names.map(() => new THREE.Vector3()) : [];
-  function poseGemx(t) {
-    if (!gemx) return;
-    const f = Math.max(0, Math.min(gemx.frames.length - 1, (t / tEnd) * (gemx.frames.length - 1)));
-    const i = Math.floor(f), j = Math.min(gemx.frames.length - 1, i + 1), k = f - i;
-    gp.forEach((v, n) => {
-      const A = gemx.frames[i][n], Bv = gemx.frames[j][n];
-      v.set(A[0] + (Bv[0] - A[0]) * k, A[1] + (Bv[1] - A[1]) * k, A[2] + (Bv[2] - A[2]) * k).sub(gemxInner.userData.pivot);
-      gJoints[n].position.copy(v);
-    });
-    gLinks.forEach((m, n) => {
-      if (!m) return;
-      const a = gp[gemx.parents[n]], b = gp[n];
-      dir.subVectors(b, a);
-      m.position.copy(a);
-      m.scale.set(1, Math.max(dir.length(), 1e-4), 1);
-      m.quaternion.setFromUnitVectors(up, dir.normalize());
-    });
-  }
-
   // Frame sampling with interpolation between stored frames.
   const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
   function sample(t) {
@@ -241,7 +183,6 @@ async function start(root) {
   const elbowWorld = new THREE.Vector3();
   function pose(t) {
     current = t;
-    poseGemx(t);
     if (video && video.readyState >= 1 && !video.seeking) {
       const vt = t + (parseFloat(video.dataset.offset || "0") || 0);
       if (Math.abs(video.currentTime - vt) > 0.04) video.currentTime = vt;
@@ -291,10 +232,10 @@ async function start(root) {
     const w = stage.clientWidth, h = stage.clientHeight || w * 1.05;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // How wide the lineup is, in metres; portrait screens get a tighter margin so the bodies stay large.
-    const span = (gemx ? 2.2 : 1.05) * (camera.aspect < 1 ? 0.7 : 1);
+    // One body only; portrait screens get a tighter margin so it stays large.
+    const span = 1.05 * (camera.aspect < 1 ? 0.7 : 1);
     const dist = Math.max(4.9, (4.9 * span) / Math.min(span, camera.aspect * 1.1));
-    // On phones the video sits in the top corner, so look a little higher and the bodies drop below it.
+    // On phones the video sits in the top corner, so look a little higher and the body drops below it.
     target.y = camera.aspect < 1 ? 1.2 : 0.95;
     const yaw = 0.42;
     camera.position.set(target.x + Math.sin(yaw) * dist, 1.25, target.z + Math.cos(yaw) * dist);
@@ -314,13 +255,10 @@ async function start(root) {
   }
   new ResizeObserver(fit).observe(stage);
 
-  // Line the two models up side by side on one ground, GEM-X left and OpenSim right, as seen by the camera.
+  // Center the muscle-equipped OpenSim body on the ground plane.
   const p0 = frames[0].b[data.bodies.indexOf("pelvis")];
   const yaw0 = 0.42;
-  const right = new THREE.Vector3(Math.cos(yaw0), 0, -Math.sin(yaw0));
-  const gap = gemx ? 0.62 : 0;
-  model.position.copy(right).multiplyScalar(gap);
-  gemxGroup.position.copy(right).multiplyScalar(-gap);
+  model.position.set(0, 0, 0);
   target.set(p0[0], 0.92, p0[2]);
   ground.position.set(p0[0], 0.001, p0[2]);
   ground.rotation.z = yaw0;
@@ -367,20 +305,15 @@ async function start(root) {
 
   let shown = -1;
   function apply(p) {
-    const act = p < 0.26 ? 1 : p < 0.6 ? 2 : 3;
+    // Act 1: phone. Act 2: muscle skeleton. Act 3: fix lit (same body, highlight).
+    const act = p < 0.26 ? 1 : p < 0.72 ? 2 : 3;
     if (root.dataset.act !== String(act)) root.dataset.act = String(act);
-    const g = smooth((p - 0.22) / 0.1);
-    const o = smooth((p - 0.56) / 0.1);
-    jointMat.opacity = g;
-    linkMat.opacity = 0.7 * g;
-    gemxGroup.visible = g > 0.01;
+    const o = smooth((p - 0.22) / 0.12);
     boneMat.opacity = o;
     fixMat.opacity = o;
     muscleMat.opacity = 0.8 * o;
     trail.material.opacity = 0.9 * o;
     model.visible = o > 0.01;
-    // GEM-X stands alone in the middle, then steps aside for OpenSim.
-    gemxGroup.position.copy(right).multiplyScalar(-gap * o);
     fixShown = clamp01((p - SWING_TO + 0.02) / 0.06);
     root.classList.toggle("is-fix", fixShown > 0.5);
     root.style.setProperty("--p", p.toFixed(4));
