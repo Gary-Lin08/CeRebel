@@ -375,6 +375,10 @@ async function boot(root) {
 
   if (playBtn) {
     playBtn.addEventListener("click", () => {
+      if (!playing && currentT >= t1 - 1e-3) {
+        // At the end, play again from the start (same as a video replay).
+        seek(t0);
+      }
       playing = !playing;
       playBtn.textContent = playing ? "❚❚" : "▶";
       playBtn.setAttribute("aria-label", playing ? "Pause traces" : "Play traces");
@@ -406,7 +410,7 @@ async function boot(root) {
     if (node) node.getWorldPosition(goal);
     const yaw = ((focus.view_yaw || 0) * Math.PI) / 180;
     const tight = focus.anchor && focus.anchor !== "pelvis" && focus.anchor !== "torso";
-    const dist = tight ? 0.78 : 1.25;
+    const dist = tight ? 1.56 : 2.5; // half the prior zoom (×0.5 → 2× camera distance)
     desired.set(goal.x + Math.sin(yaw) * dist, goal.y + dist * 0.18, goal.z + Math.cos(yaw) * dist);
     camera.position.lerp(desired, 0.08);
     look.lerp(goal, 0.1);
