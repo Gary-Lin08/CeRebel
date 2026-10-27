@@ -418,6 +418,157 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 .lp-analysis__block[hidden],
 .lp-analysis__check[hidden] { display: none !important; }
 
+/* Every joint — line graphs + fix windows + skeleton close-up (old Swing analysis, dusk tokens). */
+.lp-joint { display: grid; gap: 22px; }
+.lp-joint__head {
+  display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
+  gap: 16px 40px; align-items: end;
+}
+.lp-joint__kicker {
+  margin: 0 0 8px;
+  font: 500 12px/1.2 var(--text-font); letter-spacing: 0.08em; text-transform: uppercase; color: var(--lamp);
+}
+.lp-joint__head h3 { margin: 0 0 8px; }
+.lp-joint__live {
+  margin: 0; justify-self: end; text-align: right;
+  font: 600 clamp(22px, 3vw, 32px)/1.1 var(--display); letter-spacing: -0.03em; color: var(--fix);
+}
+.lp-joint__live small {
+  display: block; margin-top: 4px;
+  font: 500 13px/1.3 var(--text-font); letter-spacing: 0; color: var(--mist);
+}
+.lp-joint__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.85fr);
+  gap: 0;
+  border-radius: 24px; overflow: hidden;
+  background: rgba(8, 18, 15, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.1);
+}
+.lp-joint__deck {
+  display: grid; gap: 0; padding: 16px 16px 12px;
+  background:
+    radial-gradient(90% 80% at 10% 0%, rgba(18, 58, 46, 0.45), transparent 55%),
+    rgba(8, 18, 15, 0.9);
+}
+.lp-joint__controls {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+}
+.lp-joint__play {
+  width: 40px; height: 40px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--bone); color: #0B1A15;
+  font: 600 14px/1 var(--text-font);
+  transition: transform 0.45s var(--spring), background-color 0.3s ease;
+}
+.lp-joint__play:hover { background: #fff; }
+.lp-joint__play:active { transform: scale(0.94); }
+.lp-joint__play:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+.lp-joint__controls input[type="range"] {
+  flex: 1; height: 4px; border-radius: 999px; appearance: none; background: rgba(238, 240, 234, 0.14);
+}
+.lp-joint__controls input[type="range"]::-webkit-slider-thumb {
+  appearance: none; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--fix); box-shadow: 0 0 0 4px rgba(242, 165, 65, 0.2); cursor: pointer;
+}
+.lp-joint__phases {
+  display: flex; gap: 0; margin: 0 0 14px; padding: 0; list-style: none;
+  border-top: 1px solid rgba(238, 240, 234, 0.1);
+}
+.lp-joint__phases li {
+  flex: var(--span, 1); min-width: 0; padding: 8px 4px 0;
+  border-top: 2px solid transparent; margin-top: -1px;
+  color: var(--mist); font: 500 11px/1.2 var(--text-font);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+}
+.lp-joint__phases li.is-active { color: var(--bone); border-top-color: var(--lamp); }
+.lp-joint-track {
+  display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 10px; align-items: center;
+  margin-bottom: 8px;
+}
+.lp-joint-track__head span {
+  display: block; color: var(--mist); font: 500 12px/1.2 var(--text-font);
+}
+.lp-joint-track__head output {
+  display: block; margin-top: 2px;
+  font: 600 15px/1.1 var(--display); letter-spacing: -0.02em; color: var(--bone);
+}
+.lp-joint-track__lane {
+  position: relative; height: 52px; border-radius: 10px;
+  background: rgba(238, 240, 234, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.06);
+  overflow: hidden;
+}
+.lp-joint-track__lane svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block;
+}
+.lp-joint-track__lane path {
+  fill: none; stroke: var(--bone); stroke-width: 1.6; vector-effect: non-scaling-stroke;
+  opacity: 0.88;
+}
+.lp-joint-track__zero {
+  stroke: rgba(238, 240, 234, 0.18); stroke-width: 1; stroke-dasharray: 2 3; vector-effect: non-scaling-stroke;
+}
+.lp-joint-track__goal {
+  stroke: var(--accent, var(--fix)); stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0.85;
+}
+.lp-joint-track__lane button {
+  position: absolute; top: 4px; bottom: 4px; z-index: 2; border: 0; padding: 0; cursor: pointer;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--accent, var(--fix)) 22%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, var(--fix)) 55%, transparent);
+}
+.lp-joint-track__lane button.is-active {
+  background: color-mix(in srgb, var(--accent, var(--fix)) 38%, transparent);
+}
+.lp-joint-track__lane button:focus-visible { outline: 2px solid var(--lamp); outline-offset: 1px; }
+.lp-joint-track__playhead {
+  position: absolute; top: 0; bottom: 0; width: 1.5px; z-index: 3;
+  background: var(--lamp); pointer-events: none;
+  left: var(--playhead, 0%);
+  box-shadow: 0 0 12px rgba(232, 201, 138, 0.45);
+}
+.lp-joint__closeup {
+  position: relative; min-height: 360px;
+  border-left: 1px solid rgba(238, 240, 234, 0.1);
+  background:
+    radial-gradient(70% 60% at 70% 20%, rgba(242, 165, 65, 0.12), transparent 55%),
+    #08130f;
+  overflow: hidden;
+}
+.lp-joint__closeup canvas { display: block; width: 100%; height: 100%; }
+.lp-joint__closeup-label {
+  position: absolute; z-index: 2; top: 16px; left: 16px; margin: 0;
+  color: var(--mist); font: 500 11px/1 var(--text-font);
+  letter-spacing: 0.12em; text-transform: uppercase; pointer-events: none;
+}
+.lp-joint__closeup-target {
+  position: absolute; z-index: 2; left: 16px; bottom: 16px; margin: 0;
+  color: var(--bone); font: 600 15px/1.2 var(--display); letter-spacing: -0.02em;
+  pointer-events: none;
+}
+.lp-joint__closeup-target span {
+  display: block; margin-bottom: 3px;
+  color: var(--fix); font: 500 11px/1 var(--text-font);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.lp-joint__closeup-status {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  padding: 1rem; color: var(--mist); font-size: 0.85rem; text-align: center;
+  pointer-events: none;
+}
+.lp-joint__closeup-status[hidden] { display: none !important; }
+.lp-joint__note {
+  margin: 0; color: var(--mist); font-size: 13px; max-width: 54em;
+}
+@media (max-width: 860px) {
+  .lp-joint__head { grid-template-columns: 1fr; }
+  .lp-joint__live { justify-self: start; text-align: left; }
+  .lp-joint__stage { grid-template-columns: 1fr; }
+  .lp-joint__closeup { min-height: 280px; border-left: 0; border-top: 1px solid rgba(238, 240, 234, 0.1); }
+  .lp-joint-track { grid-template-columns: 1fr; gap: 4px; }
+}
+
 .lp-tracks { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
 .lp-tracks li { padding: 16px 18px; border-radius: 16px; background: rgba(238, 240, 234, 0.05); box-shadow: inset 0 0 0 1px rgba(238, 240, 234, 0.08); }
 .lp-chat { display: grid; gap: 10px; margin: 24px 0 16px; max-width: 640px; }

@@ -182,6 +182,9 @@
       if (!findings[i]) return;
       fi = i;
       paint();
+      window.dispatchEvent(new CustomEvent("cerebel:lp-fix", {
+        detail: { id: findings[i].id, index: i, finding: findings[i] },
+      }));
       if (focusIndex && indexEl) {
         const btn = indexEl.querySelectorAll('[role="tab"]')[i];
         if (btn) btn.focus();
@@ -220,12 +223,25 @@
       fi = 0;
       buildIndex();
       paint();
+      window.dispatchEvent(new CustomEvent("cerebel:lp-fix", {
+        detail: { id: findings[0].id, index: 0, finding: findings[0] },
+      }));
     }
 
     fetch("/static/hero/swing-sample.json")
       .then((r) => r.json())
       .then((data) => boot(data.findings || []))
       .catch(() => {});
+
+    // Every-joint fix windows can drive the Fix tab selection.
+    window.addEventListener("cerebel:lp-joint-fix", (ev) => {
+      const id = ev.detail && ev.detail.id;
+      if (!id || !findings.length) return;
+      const i = findings.findIndex((f) => f.id === id);
+      if (i < 0 || i === fi) return;
+      fi = i;
+      paint();
+    });
   })();
 
   // A file dragged over the page wakes the background and lights the upload targets.

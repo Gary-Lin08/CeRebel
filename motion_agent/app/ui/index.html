@@ -2236,17 +2236,32 @@ code {
               </div>
             </div>
           </article>
-          <article class="tabs__panel lp-joint" role="tabpanel" id="lpPanJoint" aria-labelledby="lpTabJoint" tabindex="0" hidden>
-            <h3>Six measurements on one timeline</h3>
-            <p class="lp-muted">Scrub from address to follow-through and watch each one change. Anything outside the usual range is marked.</p>
-            <ul class="lp-tracks">
-              <li>Hip-shoulder separation</li>
-              <li>Pelvis turn</li>
-              <li>Pelvis drift from address</li>
-              <li>Lead elbow flex</li>
-              <li>Trail knee flex</li>
-              <li>Trail-hand speed</li>
-            </ul>
+          <article class="tabs__panel" role="tabpanel" id="lpPanJoint" aria-labelledby="lpTabJoint" tabindex="0" hidden data-lp-joint>
+            <div class="lp-joint">
+              <header class="lp-joint__head">
+                <div>
+                  <p class="lp-joint__kicker">Measured traces</p>
+                  <h3>Six measurements on one timeline</h3>
+                  <p class="lp-muted">Scrub the swing. Fix windows mark the traces; the skeleton zooms to the body those fixes care about.</p>
+                </div>
+                <p class="lp-joint__live" id="lpJointLive" aria-live="polite"></p>
+              </header>
+              <div class="lp-joint__stage">
+                <div class="lp-joint__deck" id="lpJointDeck">
+                  <div class="lp-joint__controls">
+                    <button type="button" class="lp-joint__play" id="lpJointPlay" aria-label="Play traces">▶</button>
+                    <input id="lpJointScrub" type="range" min="0" max="1" step="0.001" value="0" aria-label="Swing time" />
+                  </div>
+                  <ol class="lp-joint__phases" id="lpJointPhases" aria-label="Swing phases"></ol>
+                </div>
+                <div class="lp-joint__closeup" id="lpJointCloseup" aria-label="Skeleton close-up">
+                  <p class="lp-joint__closeup-label">Bones + muscles</p>
+                  <p class="lp-joint__closeup-target" id="lpJointCloseupTarget"><span>Fix</span>Body</p>
+                  <div class="lp-joint__closeup-status" id="lpJointCloseupStatus">Loading skeleton…</div>
+                </div>
+              </div>
+              <p class="lp-joint__note" id="lpJointNote"></p>
+            </div>
           </article>
           <article class="tabs__panel lp-coach" role="tabpanel" id="lpPanCoach" aria-labelledby="lpTabCoach" tabindex="0" hidden>
             <h3>Questions about your swing, answered from your swing</h3>
@@ -6411,6 +6426,7 @@ code {
   <script src="/static/cinema-fluid.js"></script>
   <script src="/static/cinema-motion.js"></script>
   <script type="module" src="/static/swing-hero.js"></script>
+  <script type="module" src="/static/lp-joint.js"></script>
   <script src="/static/swing_trim.js"></script>
 </body>
 </html>
