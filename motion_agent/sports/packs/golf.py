@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Any
 
+from motion_agent.sports.packs.golf_gate import NO_SWING_MESSAGE, evaluate_golf_gate
 from motion_agent.sports.schema import DetectResult
+
+LOG = logging.getLogger("motion_agent.sports.golf")
 
 GOLF_QUESTIONS = [
     "What's the biggest thing I should fix in this swing?",
@@ -28,6 +32,18 @@ def _best_swing_confidence(phases_payload: dict[str, Any]) -> float:
         except (TypeError, ValueError):
             continue
     return best
+
+
+def _golf_gate(session_dir: Path, phases_payload: dict[str, Any]) -> dict[str, Any] | None:
+    """Run the "is this really golf" checks; None when the body can't be loaded."""
+    from motion_agent.motion.adapter import adapt_session
+
+    try:
+        seq = adapt_session(session_dir)
+    except Exception:  # noqa: BLE001
+        LOG.exception("golf gate could not load %s", session_dir)
+        return None
+    return evaluate_golf_gate(seq, phases_payload)
 
 
 class GolfPack:
@@ -54,16 +70,24 @@ class GolfPack:
         payload = get_golf_phase_cards(video_id=sid, data_dir=root)
         conf = _best_swing_confidence(payload)
         ok = conf >= CONFIDENCE_MIN and not payload.get("error")
-        return DetectResult(
-            matched=ok,
-            confidence=conf,
-            detail={
-                "swing_count": len(payload.get("swings") or []) if isinstance(payload, dict) else 0,
-                "threshold": CONFIDENCE_MIN,
-                "tool": "segment_golf_swings",
-            },
-            message="" if ok else "No confident golf swing detected in this capture.",
-        )
+        gate = _golf_gate(root / "sessions" / sid, payload) if ok else None
+        detail = {
+            "swing_count": len(payload.get("swings") or []) if isinstance(payload, dict) else 0,
+            "threshold": CONFIDENCE_MIN,
+            "tool": "segment_golf_swings",
+        }
+        if gate is not None:
+            ok = bool(gate["passed"])
+            detail["gate"] = gate
+            detail["not_golf"] = bool(gate.get("not_golf"))
+            detail["looks_like"] = gate.get("looks_like")
+        if ok:
+            message = ""
+        elif gate is not None:
+            message = gate["message"]
+        else:
+            message = NO_SWING_MESSAGE
+        return DetectResult(matched=ok, confidence=conf, detail=detail, message=message)
 
     def build_briefs(
         self,

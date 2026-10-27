@@ -564,6 +564,9 @@ class Handler(BaseHTTPRequestHandler):
                     if user and info.get("sport") == "general":
                         info["no_swing"] = True
                         info["consumer_ready"] = False
+                        # The message saved when the upload finished also says it didn't count.
+                        if (owned_row or {}).get("status") == "no_swing" and owned_row.get("detect_message"):
+                            info["detect_message"] = owned_row["detect_message"]
                         if not info.get("detect_message"):
                             info["detect_message"] = (
                                 "We couldn’t confirm a golf swing in this clip. "

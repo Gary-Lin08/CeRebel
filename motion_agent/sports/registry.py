@@ -109,11 +109,13 @@ def detect_sport(
             return preferred_pack, result
 
     best: tuple[SportPack, DetectResult] | None = None
+    rejected: list[tuple[SportPack, DetectResult]] = []
     for pack in LIVE_PACKS:
         if pack.id == "general":
             continue
         result = pack.detect(session_dir, video_id=video_id, data_dir=data_dir)
         if not result.matched:
+            rejected.append((pack, result))
             continue
         if best is None or result.confidence > best[1].confidence:
             best = (pack, result)
@@ -136,6 +138,16 @@ def detect_sport(
                 "preferred_detect": tried.to_dict(),
             },
             message=tried.message or f"Couldn’t confirm {preferred_pack.label.lower()} in this clip.",
+        )
+    elif rejected:
+        # Pass on why the sport pack said no ("looks more like a one-handed swing"),
+        # not just that nothing matched.
+        pack, tried = max(rejected, key=lambda pr: pr[1].confidence)
+        human_result = DetectResult(
+            matched=False,
+            confidence=0.0,
+            detail={"fallback": True, "rejected_pack": pack.id, "rejected_detect": tried.to_dict()},
+            message=tried.message,
         )
     return _HUMAN, human_result
 

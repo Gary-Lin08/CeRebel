@@ -507,6 +507,9 @@ def _write_progress(settings: Settings, session_id: str, **fields: Any) -> None:
     path.write_text(json.dumps(payload), encoding="utf-8")
 
 
+NOT_COUNTED_NOTE = "This upload does not count toward your monthly analyses."
+
+
 def finalize_capture(settings: Settings, session_id: str) -> dict[str, Any]:
     """After IK is ready, run Sport Pack detect and stamp the library row."""
     session_dir = settings.data_dir / "sessions" / session_id
@@ -524,12 +527,15 @@ def finalize_capture(settings: Settings, session_id: str) -> dict[str, Any]:
     message = (fields.get("detect_message") or "").strip()
     consumer_ready = bool(fields.get("consumer_ready") and sport != "general")
     if sport == "general":
+        # no_swing never counts against the quota (billing._NOT_COUNTED), and the
+        # message says so — including when the clip was another sport.
         status = "no_swing"
         if not message:
             message = (
                 "We rebuilt the body but couldn’t confirm a golf swing. "
                 "Try a side-on clip that shows a full swing."
             )
+        message = f"{message} {NOT_COUNTED_NOTE}"
         consumer_ready = False
     else:
         status = "ready"

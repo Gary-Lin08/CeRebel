@@ -184,6 +184,9 @@ class FinalizeCaptureTests(unittest.TestCase):
                 result = finalize_capture(settings, "GEN1")
             self.assertEqual(result["status"], "no_swing")
             self.assertFalse(result["consumer_ready"])
+            from motion_agent.app.product_api import NOT_COUNTED_NOTE
+
+            self.assertEqual(result["message"], f"No confident golf swing {NOT_COUNTED_NOTE}")
 
 
 class HealthTests(unittest.TestCase):
