@@ -53,13 +53,8 @@ async function start(root) {
       const primed = video.play();
       if (primed) primed.then(() => { video.pause(); pose(current); }).catch(() => {});
     }, { once: true });
-    // Seeks are skipped while one is in flight, so catch up to wherever the model ended up.
+    // Seeks are skipped while one is in flight; syncVideo() catches up on "seeked".
     video.addEventListener("loadeddata", () => pose(current));
-    video.addEventListener("seeked", () => {
-
-      const vt = current + (data.video.offset || 0);
-      if (Math.abs(video.currentTime - vt) > 0.04) video.currentTime = vt;
-    });
   }
 
   // Scene
@@ -166,12 +161,22 @@ async function start(root) {
   trail.userData.overlay = true;
   model.add(trail);
 
-  // Frame sampling with interpolation between stored frames.
+  // Frame sampling with interpolation between stored frames (search by timestamp, not index ratio).
   const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
   function sample(t) {
-    const f = Math.max(0, Math.min(frames.length - 1, (t / tEnd) * (frames.length - 1)));
-    const i = Math.floor(f), j = Math.min(frames.length - 1, i + 1), k = f - i;
-    return { a: frames[i], b: frames[j], k };
+    if (t <= frames[0].t) return { a: frames[0], b: frames[0], k: 0 };
+    if (t >= frames[frames.length - 1].t) {
+      const last = frames[frames.length - 1];
+      return { a: last, b: last, k: 0 };
+    }
+    let lo = 0, hi = frames.length - 1;
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      if (frames[mid].t <= t) lo = mid; else hi = mid;
+    }
+    const a = frames[lo], b = frames[hi];
+    const span = Math.max(1e-6, b.t - a.t);
+    return { a, b, k: (t - a.t) / span };
   }
   function handsAt(fr) {
     const L = fr.b[handIdx[0]], R = fr.b[handIdx[1]];
@@ -180,13 +185,23 @@ async function start(root) {
 
   let fixShown = 0;
   let current = 0;
+  let wantVideoT = 0;
   const elbowWorld = new THREE.Vector3();
+  function syncVideo(t) {
+    if (!video) return;
+    wantVideoT = t + (parseFloat(video.dataset.offset || "0") || 0);
+    if (video.readyState < 1) return;
+    if (video.seeking) return;
+    if (Math.abs(video.currentTime - wantVideoT) > 0.04) video.currentTime = wantVideoT;
+  }
+  if (video) {
+    video.addEventListener("seeked", () => {
+      if (Math.abs(video.currentTime - wantVideoT) > 0.04) video.currentTime = wantVideoT;
+    });
+  }
   function pose(t) {
     current = t;
-    if (video && video.readyState >= 1 && !video.seeking) {
-      const vt = t + (parseFloat(video.dataset.offset || "0") || 0);
-      if (Math.abs(video.currentTime - vt) > 0.04) video.currentTime = vt;
-    }
+    syncVideo(t);
     const { a, b, k } = sample(t);
     nodes.forEach((node, n) => {
       if (!node) return;
@@ -264,9 +279,14 @@ async function start(root) {
   ground.rotation.z = yaw0;
 
   // Phases up to the top of the backswing, where the reel ends.
-  const phaseAt = (t) => { let n = ""; rail.forEach((p) => { if (t >= p[1] - 1e-6) n = p[0]; }); return n; };
   const rail = data.phases.filter((p) => p[2] <= tTop + 0.01).map((p) => [p[0], p[1], p[2]]);
   rail.push(["Top", tTop, tTop]);
+  // Latest phase whose start we have reached (handles the small gap before the synthetic Top).
+  const phaseAt = (t) => {
+    let n = rail[0][0];
+    rail.forEach((p) => { if (t >= p[1] - 1e-6) n = p[0]; });
+    return n;
+  };
   const items = [];
   rail.forEach((p) => {
     const b = document.createElement("button");
@@ -284,13 +304,12 @@ async function start(root) {
     });
   }
 
-  // Scroll position through the reel (0 to 1) sets everything. The value chases the scroll
-  // with a little lag, which is what makes it feel smooth rather than stepped.
+  // Scroll position through the reel (0 to 1) sets everything. Linear in swing time so the
+  // first scroll pixels leave address immediately (ease-in previously held t≈0 until Takeaway).
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
   const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
-  const ease = (x) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
-  const SWING_FROM = 0.04, SWING_TO = 0.86;
-  const timeAt = (p) => tTop * ease(clamp01((p - SWING_FROM) / (SWING_TO - SWING_FROM)));
+  const SWING_FROM = 0, SWING_TO = 0.88;
+  const timeAt = (p) => tTop * clamp01((p - SWING_FROM) / (SWING_TO - SWING_FROM));
   function scrollProgress() {
     const r = root.getBoundingClientRect();
     return clamp01(-r.top / Math.max(1, r.height - window.innerHeight));
@@ -327,7 +346,8 @@ async function start(root) {
   function tick() {
     const p = scrollProgress();
     root.classList.toggle("is-moved", p > 0.02);
-    cur += (p - cur) * 0.14;
+    // Track scroll closely so phase labels and pose stay on the same stage.
+    cur += (p - cur) * 0.35;
     if (Math.abs(p - cur) < 0.0004) cur = p;
     if (cur !== shown) { shown = cur; apply(cur); }
     raf = requestAnimationFrame(tick);
