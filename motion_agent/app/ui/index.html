@@ -289,6 +289,9 @@ body.pg {
   margin-top: 0.65rem;
   display: grid;
   gap: 0.4rem;
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 0 auto;
 }
 .try-ask__label {
   font-size: var(--step-small);
@@ -300,6 +303,8 @@ body.pg {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  min-width: 0;
+  max-width: 100%;
 }
 .try-ask__chips button,
 .examples button {
@@ -312,6 +317,11 @@ body.pg {
   padding: 0.4rem 0.75rem;
   cursor: pointer;
   text-align: left;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .try-ask__chips button:hover,
 .examples button:hover {
@@ -449,18 +459,32 @@ video.is-hidden-source { display: none !important; }
 #coach {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 0;
   max-height: min(78vh, 720px);
+  /* Keep width clipped; allow vertical scroll if the footer still needs room. */
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+#coach > .panel-head,
+#coach > .composer,
+#coach > .try-ask,
+#coach > .status {
+  flex: 0 0 auto;
 }
 #chat {
   display: block;
-  flex: 0 0 auto;
+  /* Transcript scrolls inside this pane; chips below stay on-card. */
+  flex: 1 1 auto;
   box-sizing: border-box;
-  height: min(52vh, 480px);
-  max-height: min(52vh, 480px);
-  min-height: 240px;
+  min-width: 0;
+  min-height: 100px;
+  height: auto;
+  /* Leave room for composer + “Try asking” inside the coach max-height. */
+  max-height: min(34vh, 300px);
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   overscroll-behavior: contain;
   padding-right: 0.45rem;
   -webkit-overflow-scrolling: touch;
@@ -586,9 +610,13 @@ video.is-hidden-source { display: none !important; }
   display: flex;
   gap: 0.5rem;
   margin-top: 0.85rem;
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 0 auto;
 }
 .composer input {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
   font: inherit;
   padding: 0.75rem 0.9rem;
   border-radius: 6px;
@@ -602,6 +630,7 @@ video.is-hidden-source { display: none !important; }
   box-shadow: none;
 }
 .composer button {
+  flex: 0 0 auto;
   font: inherit;
   font-weight: 700;
   padding: 0.75rem 1.1rem;
