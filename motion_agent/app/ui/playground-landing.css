@@ -439,7 +439,8 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
 }
 .lp-joint__stage {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.85fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.72fr);
+  align-items: stretch;
   gap: 0;
   border-radius: 24px; overflow: hidden;
   background: rgba(8, 18, 15, 0.72);
@@ -529,21 +530,26 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   box-shadow: 0 0 12px rgba(232, 201, 138, 0.45);
 }
 .lp-joint__closeup {
-  position: relative; min-height: 360px;
-  border-left: 1px solid rgba(238, 240, 234, 0.1);
+  position: relative;
+  /* Side pane shares the stage field — no hard inset box. */
+  min-height: 280px;
+  max-height: min(320px, 48vh);
+  border-left: 0;
   background:
-    radial-gradient(70% 60% at 70% 20%, rgba(242, 165, 65, 0.12), transparent 55%),
-    #08130f;
+    linear-gradient(90deg, rgba(8, 18, 15, 0.55), transparent 28%),
+    radial-gradient(70% 60% at 70% 20%, rgba(242, 165, 65, 0.14), transparent 55%),
+    radial-gradient(90% 80% at 10% 0%, rgba(18, 58, 46, 0.35), transparent 55%),
+    rgba(8, 18, 15, 0.9);
   overflow: hidden;
 }
 .lp-joint__closeup canvas { display: block; width: 100%; height: 100%; }
 .lp-joint__closeup-label {
-  position: absolute; z-index: 2; top: 16px; left: 16px; margin: 0;
+  position: absolute; z-index: 2; top: 14px; left: 14px; margin: 0;
   color: var(--mist); font: 500 11px/1 var(--text-font);
-  letter-spacing: 0.12em; text-transform: uppercase; pointer-events: none;
+  letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none;
 }
 .lp-joint__closeup-target {
-  position: absolute; z-index: 2; left: 16px; bottom: 16px; margin: 0;
+  position: absolute; z-index: 2; left: 14px; bottom: 14px; margin: 0;
   color: var(--bone); font: 600 15px/1.2 var(--display); letter-spacing: -0.02em;
   pointer-events: none;
 }
@@ -565,7 +571,14 @@ body.lp-mode .pg-shell { min-height: 0; padding: 0; position: relative; z-index:
   .lp-joint__head { grid-template-columns: 1fr; }
   .lp-joint__live { justify-self: start; text-align: left; }
   .lp-joint__stage { grid-template-columns: 1fr; }
-  .lp-joint__closeup { min-height: 280px; border-left: 0; border-top: 1px solid rgba(238, 240, 234, 0.1); }
+  .lp-joint__closeup {
+    min-height: 220px;
+    max-height: min(260px, 36vh);
+    background:
+      linear-gradient(180deg, rgba(8, 18, 15, 0.55), transparent 30%),
+      radial-gradient(70% 60% at 70% 20%, rgba(242, 165, 65, 0.14), transparent 55%),
+      rgba(8, 18, 15, 0.9);
+  }
   .lp-joint-track { grid-template-columns: 1fr; gap: 4px; }
 }
 

@@ -159,9 +159,10 @@ async function boot(root) {
   const accentColor = new THREE.Color(token("--fix", "#F2A541"));
   const lampColor = new THREE.Color(token("--lamp", "#E8C98A"));
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.setClearColor(0x08130f, 1);
+  // Transparent clear — stage CSS field shows through, no hard canvas plate.
+  renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   closeup.appendChild(renderer.domElement);
 

@@ -167,10 +167,15 @@ body.pg-consumer .ma,
 body.pg-consumer .ma [style*="--accent"] { --accent: #F2A541 !important; }
 body.pg-consumer .ma { overflow: hidden; --mono: var(--type); }
 body.pg-consumer .ma__stage { background: transparent; }
-body.pg-consumer .ma__closeup { background: rgba(5, 12, 10, 0.45); border-left-color: var(--rule); border-top-color: var(--rule); }
+body.pg-consumer .ma__closeup {
+  background: transparent;
+  border-left: 0;
+  border-top: 0;
+}
 body.pg-consumer .ma__closeup-label,
 body.pg-consumer .ma__closeup-status,
 body.pg-consumer .ma__closeup-target span { color: var(--muted); letter-spacing: 0; text-transform: none; font-size: 0.8rem; }
+body.pg-consumer .ma__closeup-target { color: var(--text); }
 body.pg-consumer .ma__badge { color: var(--text); background: rgba(10, 21, 18, 0.7); }
 body.pg-consumer .ma__steps { background: rgba(238, 240, 234, 0.08); }
 body.pg-consumer .ma__steps button { color: var(--muted); }
@@ -195,7 +200,14 @@ body.pg-consumer .ma { min-width: 0; max-width: 100%; box-sizing: border-box; }
 body.pg-consumer .ma__stage > *, body.pg-consumer .ma__console, body.pg-consumer .ma-deck > * { min-width: 0; }
 @media (max-width: 800px) {
   body.pg-consumer .ma__stage { grid-template-columns: minmax(0, 1fr); }
-  body.pg-consumer .ma__closeup { min-height: 62vw; }
+  body.pg-consumer #sportBoard .ma__stage { max-height: min(240px, 34vh); }
+  body.pg-consumer .ma__closeup,
+  body.pg-consumer #sportBoard .ma__closeup {
+    width: 100%;
+    min-height: 200px;
+    max-height: min(240px, 34vh);
+    height: min(240px, 34vh);
+  }
 }
 @media (max-width: 560px) {
   body.pg-consumer .ma__phases li:not(.is-active) { color: transparent; }
