@@ -225,7 +225,8 @@ body.pg-consumer .ma__steps { background: rgba(238, 240, 234, 0.08); }
 body.pg-consumer .ma__steps button { color: var(--muted); }
 body.pg-consumer .ma__steps button.is-active { color: #1B1206; background: var(--fix); }
 body.pg-consumer .ma-deck__play { color: #0B1A15; background: var(--bone); }
-body.pg-consumer .ma.is-slow .ma-deck__play { box-shadow: 0 0 0 6px rgba(238, 240, 234, 0.14); }
+body.pg-consumer .ma.is-holding .ma-deck__play { box-shadow: 0 0 0 6px rgba(238, 240, 234, 0.14); }
+body.pg-consumer .ma.is-holding .ma-deck__play::after { color: var(--lamp); }
 body.pg-consumer .ma__timeline input::-webkit-slider-runnable-track { background: linear-gradient(90deg, var(--lamp) var(--playhead), rgba(238, 240, 234, 0.14) var(--playhead)); }
 body.pg-consumer .ma__timeline input::-webkit-slider-thumb { background: var(--bone); }
 body.pg-consumer .ma__phases li { border-top-color: rgba(238, 240, 234, 0.14); color: var(--muted); }

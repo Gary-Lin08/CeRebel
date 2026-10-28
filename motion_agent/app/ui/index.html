@@ -1273,9 +1273,9 @@ code {
       cursor: pointer;
     }
     .ma-deck__play:hover { background: #b594ff; }
-    .ma.is-slow .ma-deck__play { box-shadow: 0 0 0 6px rgba(82, 224, 124, 0.18); }
-    .ma.is-slow .ma-deck__play::after {
-      content: "0.4×";
+    .ma.is-holding .ma-deck__play { box-shadow: 0 0 0 6px rgba(82, 224, 124, 0.18); }
+    .ma.is-holding .ma-deck__play::after {
+      content: "HOLD";
       position: absolute;
       left: 52px;
       color: #52e07c;
@@ -4241,7 +4241,11 @@ code {
     function clearSportBoard() {
       lastSportPayload = null;
       selectedFixId = null;
-      if (sportBoard) sportBoard.hidden = true;
+      resetFixTour();
+      if (sportBoard) {
+        sportBoard.hidden = true;
+        sportBoard.classList.remove("is-holding", "is-slow");
+      }
       disposeSportSkeleton();
       paintFixHero(null);
       const phases = document.getElementById("fixPhases");
@@ -4254,6 +4258,33 @@ code {
 
     let sportSkeleton = null;
     let sportSkeletonGen = 0;
+
+    // Fix tour: halt at each finding's peak (not slow-mo), then zoom out when all are shown.
+    const FIX_HOLD_MS = 2000;
+    let fixTour = {
+      heldIds: new Set(),
+      holdingId: null,
+      holdTimer: null,
+      overview: false,
+      resumeAfterHold: false,
+      pausingForHold: false,
+      resumingFromHold: false,
+    };
+
+    function resetFixTour() {
+      if (fixTour.holdTimer) {
+        clearTimeout(fixTour.holdTimer);
+        fixTour.holdTimer = null;
+      }
+      fixTour.heldIds = new Set();
+      fixTour.holdingId = null;
+      fixTour.overview = false;
+      fixTour.resumeAfterHold = false;
+      fixTour.pausingForHold = false;
+      fixTour.resumingFromHold = false;
+      if (sportBoard) sportBoard.classList.remove("is-holding", "is-slow");
+      if (player && Math.abs(player.playbackRate - 1) > 0.02) player.playbackRate = 1;
+    }
 
     function disposeSportSkeleton() {
       sportSkeletonGen += 1;
@@ -4355,7 +4386,7 @@ code {
       const accent = new THREE.Color(isDevUi ? "#b99bff" : "#F2A541");
       const quiet = new THREE.Color(isDevUi ? "#6a6474" : "#5d6d66");
       const bone = new THREE.Color("#eee9dd");
-      let focus = { anchor: "pelvis", bones: ["pelvis", "torso"], view_yaw: 0, label: "Body" };
+      let focus = { anchor: "pelvis", bones: ["pelvis", "torso"], view_yaw: 0, label: "Body", overview: false };
       let lastFrame = null;
 
       function resize() {
@@ -4370,11 +4401,29 @@ code {
       resize();
 
       function setFocus(note) {
-        const next = (note && note.focus) || focus;
-        focus = next;
+        const next = (note && note.focus) || {
+          anchor: "pelvis",
+          bones: ["pelvis", "torso"],
+          view_yaw: 0,
+          label: (note && note.title) || "Body",
+        };
+        focus = Object.assign({}, next, { overview: false });
         accent.set(isDevUi ? (note && note.accent) || "#b99bff" : "#F2A541");
         const label = document.getElementById("sportCloseupTarget");
-        if (label) label.innerHTML = "<span>Fix</span>" + escapeHtml(next.label || note && note.title || "Body");
+        if (label) label.innerHTML = "<span>Fix</span>" + escapeHtml(focus.label || (note && note.title) || "Body");
+      }
+
+      function setOverview() {
+        focus = {
+          anchor: "pelvis",
+          bones: bodyNames.slice(),
+          view_yaw: 15,
+          label: "Full body",
+          overview: true,
+        };
+        accent.set(isDevUi ? "#b99bff" : "#E8C98A");
+        const label = document.getElementById("sportCloseupTarget");
+        if (label) label.innerHTML = "<span>Tour</span>Full body";
       }
 
       function tick() {
@@ -4391,10 +4440,10 @@ code {
         const node = model.getObjectByName(focus.anchor) || model.getObjectByName("pelvis");
         if (node) node.getWorldPosition(goal);
         const yaw = ((focus.view_yaw || 0) * Math.PI) / 180;
-        const tight = focus.anchor && focus.anchor !== "pelvis" && focus.anchor !== "torso";
-        const dist = tight ? 0.78 : 1.25;
-        desired.set(goal.x + Math.sin(yaw) * dist, goal.y + dist * 0.18, goal.z + Math.cos(yaw) * dist);
-        camera.position.lerp(desired, 0.08);
+        const tight = !focus.overview && focus.anchor && focus.anchor !== "pelvis" && focus.anchor !== "torso";
+        const dist = focus.overview ? 2.45 : (tight ? 0.78 : 1.25);
+        desired.set(goal.x + Math.sin(yaw) * dist, goal.y + dist * (focus.overview ? 0.28 : 0.18), goal.z + Math.cos(yaw) * dist);
+        camera.position.lerp(desired, focus.overview ? 0.05 : 0.08);
         look.lerp(goal, 0.1);
         camera.lookAt(look);
         const lit = new Set(focus.bones || []);
@@ -4407,8 +4456,13 @@ code {
             body = body.parent;
           }
           const on = lit.has(name);
-          object.material.color.copy(on ? accent : bone).lerp(quiet, on ? 0 : 0.55);
-          object.material.emissive.copy(on ? accent : quiet).multiplyScalar(on ? 0.42 : 0);
+          if (focus.overview) {
+            object.material.color.copy(bone).lerp(quiet, 0.2);
+            object.material.emissive.copy(quiet).multiplyScalar(0.08);
+          } else {
+            object.material.color.copy(on ? accent : bone).lerp(quiet, on ? 0 : 0.55);
+            object.material.emissive.copy(on ? accent : quiet).multiplyScalar(on ? 0.42 : 0);
+          }
         });
         renderer.render(scene, camera);
       }
@@ -4419,6 +4473,7 @@ code {
         renderer,
         muscleGroup,
         setFocus,
+        setOverview,
         removeResize: () => window.removeEventListener("resize", onResize),
       };
       if (statusEl) statusEl.hidden = true;
@@ -4497,6 +4552,7 @@ code {
       if (fixVideo && fixVideo.src) {
         try { fixVideo.currentTime = Math.max(0, time); } catch (_) { /* ignore */ }
       }
+      pruneFixTourAfterSeek(Math.max(0, time));
       syncSportPlayhead();
     }
 
@@ -5106,24 +5162,165 @@ code {
       return last || notes[0] || null;
     }
 
-    const SPORT_FIX_RATE = 0.4;
+    function fixPeakTime(note) {
+      const t0 = Number(note.start_time);
+      const t1 = Number(note.end_time);
+      const mid = (t0 + t1) / 2;
+      if (!Number.isFinite(t0) || !Number.isFinite(t1)) return mid;
+      const seriesId = note.series;
+      const series = ((lastSportPayload && lastSportPayload.series) || []).find((s) => s.id === seriesId);
+      if (!series || !series.times || !series.values || !series.times.length) return mid;
+      const goal = note.goal && note.goal.value != null ? Number(note.goal.value) : null;
+      let bestT = mid;
+      let bestScore = -Infinity;
+      for (let i = 0; i < series.times.length; i += 1) {
+        const t = Number(series.times[i]);
+        if (!(t >= t0 && t <= t1)) continue;
+        const v = Number(series.values[i]);
+        if (!Number.isFinite(v)) continue;
+        const score = goal == null ? Math.abs(v) : Math.abs(v - goal);
+        if (score > bestScore) {
+          bestScore = score;
+          bestT = t;
+        }
+      }
+      return bestT;
+    }
 
-    function syncSportPlaybackRate(time) {
-      if (!player) return;
-      const boardOn = lastSportPayload && sportBoard && !sportBoard.hidden && sportFindings.length;
-      const inFix = boardOn && sportFindings.some((note) => (
-        time >= Number(note.start_time) && time <= Number(note.end_time)
-      ));
-      const rate = inFix ? SPORT_FIX_RATE : 1;
-      if (Math.abs(player.playbackRate - rate) > 0.02) player.playbackRate = rate;
-      if (sportBoard) sportBoard.classList.toggle("is-slow", !!inFix);
+    function pruneFixTourAfterSeek(time) {
+      if (fixTour.holdTimer) {
+        clearTimeout(fixTour.holdTimer);
+        fixTour.holdTimer = null;
+      }
+      fixTour.holdingId = null;
+      fixTour.resumeAfterHold = false;
+      if (sportBoard) sportBoard.classList.remove("is-holding");
+      (sportFindings || []).forEach((note) => {
+        if (fixPeakTime(note) > time + 0.04) fixTour.heldIds.delete(note.id);
+      });
+      if (fixTour.overview && (sportFindings || []).some((n) => !fixTour.heldIds.has(n.id))) {
+        fixTour.overview = false;
+      }
+    }
+
+    function enterFixOverview() {
+      if (fixTour.overview) return;
+      fixTour.overview = true;
+      if (sportSkeleton && typeof sportSkeleton.setOverview === "function") {
+        sportSkeleton.setOverview();
+      }
+      if (sportBoard) sportBoard.classList.remove("is-holding", "is-slow");
+    }
+
+    function beginFixHold(note) {
+      if (!player || !note || fixTour.holdingId === note.id) return;
+      if (fixTour.holdTimer) {
+        clearTimeout(fixTour.holdTimer);
+        fixTour.holdTimer = null;
+      }
+      fixTour.holdingId = note.id;
+      fixTour.heldIds.add(note.id);
+      fixTour.resumeAfterHold = true;
+      // Pause first, then seek — avoids seek-while-playing pause events clearing resume.
+      fixTour.pausingForHold = true;
+      try { player.pause(); } catch (_) { /* ignore */ }
+      const fixVideo = document.getElementById("fixVideo");
+      if (fixVideo) {
+        try { fixVideo.pause(); } catch (_) { /* ignore */ }
+      }
+      // Keep the guard up through any deferred pause/seeked handlers.
+      window.setTimeout(() => { fixTour.pausingForHold = false; }, 80);
+
+      const peak = fixPeakTime(note);
+      try {
+        if (Math.abs(player.currentTime - peak) > 0.04) player.currentTime = peak;
+      } catch (_) { /* ignore */ }
+      if (fixVideo && fixVideo.src) {
+        try { fixVideo.currentTime = peak; } catch (_) { /* ignore */ }
+      }
+      if (Math.abs(player.playbackRate - 1) > 0.02) player.playbackRate = 1;
+      sportOpenId = note.id;
+      paintSportCaption(note);
+      if (sportBoard) {
+        sportBoard.classList.add("is-holding");
+        sportBoard.classList.remove("is-slow");
+      }
+      const sportPlayBtn = document.getElementById("sportPlay");
+      if (sportPlayBtn) sportPlayBtn.textContent = "❚❚";
+      const holdMs = FIX_HOLD_MS + Math.min(800, Math.max(0, Number(note.severity || 0)) * 8);
+      fixTour.holdTimer = setTimeout(() => {
+        const shouldResume = fixTour.resumeAfterHold;
+        fixTour.holdTimer = null;
+        fixTour.holdingId = null;
+        if (sportBoard) sportBoard.classList.remove("is-holding");
+        const allDone = fixTour.heldIds.size >= (sportFindings || []).length;
+        if (allDone) enterFixOverview();
+        if (!shouldResume || !player) {
+          fixTour.resumeAfterHold = false;
+          if (sportPlayBtn) sportPlayBtn.textContent = "▶";
+          return;
+        }
+        // Nudge just past the peak so a near-start peak can't re-arm the same hold.
+        try {
+          const nudge = peak + 0.06;
+          if (player.currentTime < nudge) player.currentTime = nudge;
+          if (fixVideo && fixVideo.src && fixVideo.currentTime < nudge) {
+            fixVideo.currentTime = nudge;
+          }
+        } catch (_) { /* ignore */ }
+        // Skip the "restart tour near swing start" reset on this programmatic play().
+        fixTour.resumingFromHold = true;
+        const resume = player.play();
+        const afterPlay = () => {
+          fixTour.resumingFromHold = false;
+          fixTour.resumeAfterHold = false;
+          if (sportPlayBtn) sportPlayBtn.textContent = "❚❚";
+          if (fixVideo && fixVideo.src) {
+            try { fixVideo.play().catch(() => {}); } catch (_) { /* ignore */ }
+          }
+        };
+        if (resume && typeof resume.then === "function") {
+          resume.then(afterPlay).catch(() => {
+            fixTour.resumingFromHold = false;
+            fixTour.resumeAfterHold = false;
+            if (sportPlayBtn) sportPlayBtn.textContent = "▶";
+          });
+        } else {
+          afterPlay();
+        }
+      }, holdMs);
+    }
+
+    function syncSportFixTour(time) {
+      if (!player || !lastSportPayload || !sportBoard || sportBoard.hidden) return;
+      if (!sportFindings.length) return;
+      if (Math.abs(player.playbackRate - 1) > 0.02) player.playbackRate = 1;
+      if (fixTour.holdingId) return;
+      if (player.paused) return;
+
+      const pending = sportFindings
+        .filter((note) => !fixTour.heldIds.has(note.id))
+        .sort((a, b) => fixPeakTime(a) - fixPeakTime(b));
+      for (let i = 0; i < pending.length; i += 1) {
+        const note = pending[i];
+        const peak = fixPeakTime(note);
+        if (time + 0.02 >= peak) {
+          beginFixHold(note);
+          return;
+        }
+      }
+
+      if (!fixTour.overview && fixTour.heldIds.size >= sportFindings.length) {
+        const lastEnd = Math.max.apply(null, sportFindings.map((n) => Number(n.end_time)));
+        if (time >= lastEnd - 0.05) enterFixOverview();
+      }
     }
 
     function syncSportPlayhead() {
       if (!player) return;
       if (!lastSportPayload || !sportBoard || sportBoard.hidden) {
         if (Math.abs(player.playbackRate - 1) > 0.02) player.playbackRate = 1;
-        if (sportBoard) sportBoard.classList.remove("is-slow");
+        if (sportBoard) sportBoard.classList.remove("is-slow", "is-holding");
         return;
       }
       const t0 = Number(lastSportPayload.start_time);
@@ -5140,10 +5337,11 @@ code {
         const out = document.querySelector('[data-readout="' + trace.id + '"]');
         if (out) out.textContent = formatTraceValue(valueAt(trace, clamped), trace.unit);
       });
-      syncSportPlaybackRate(time);
-      const live = activeSportFinding(clamped);
+      syncSportFixTour(time);
+      const live = (fixTour.holdingId && sportFindings.find((n) => n.id === fixTour.holdingId))
+        || activeSportFinding(clamped);
       if (live) sportOpenId = live.id;
-      paintSportCaption(live);
+      if (!fixTour.overview) paintSportCaption(live);
       document.querySelectorAll(".ma-plan li").forEach((li) => {
         const open = live && li.dataset.id === live.id;
         li.classList.toggle("is-open", !!open);
@@ -5253,6 +5451,7 @@ code {
     function renderSportBoard(payload, findingsOverride) {
       if (!sportBoard || !payload || payload.ui_hint !== "sport_motion_board") return;
       lastSportPayload = payload;
+      resetFixTour();
       sportBoard.hidden = false;
       const badge = document.getElementById("sportBadge");
       const kicker = document.getElementById("sportKicker");
@@ -5967,8 +6166,23 @@ code {
     if (sportPlay) {
       sportPlay.addEventListener("click", () => {
         if (!player) return;
-        if (player.paused) player.play().catch(() => {});
-        else player.pause();
+        if (player.paused) {
+          // User explicitly continues — allow auto-resume for later holds.
+          fixTour.resumeAfterHold = true;
+          player.play().catch(() => {});
+          const fixVideo = document.getElementById("fixVideo");
+          if (fixVideo && fixVideo.src) {
+            try { fixVideo.play().catch(() => {}); } catch (_) { /* ignore */ }
+          }
+        } else {
+          // User stop during a tour hold: do not auto-resume when the timer ends.
+          if (fixTour.holdingId) fixTour.resumeAfterHold = false;
+          player.pause();
+          const fixVideo = document.getElementById("fixVideo");
+          if (fixVideo) {
+            try { fixVideo.pause(); } catch (_) { /* ignore */ }
+          }
+        }
         sportPlay.textContent = player.paused ? "▶" : "❚❚";
       });
     }
@@ -5977,8 +6191,26 @@ code {
     }
     if (player) {
       player.addEventListener("timeupdate", syncSportPlayhead);
-      player.addEventListener("play", () => { if (sportPlay) sportPlay.textContent = "❚❚"; });
-      player.addEventListener("pause", () => { if (sportPlay) sportPlay.textContent = "▶"; });
+      player.addEventListener("play", () => {
+        if (sportPlay) sportPlay.textContent = "❚❚";
+        // Restarting from the top of the swing restarts the halt-at-fix tour.
+        // Skip when we just resumed after an automatic HOLD (peak can sit near start).
+        if (fixTour.resumingFromHold) {
+          fixTour.resumingFromHold = false;
+          return;
+        }
+        if (lastSportPayload && player.currentTime <= Number(lastSportPayload.start_time) + 0.2) {
+          resetFixTour();
+        }
+      });
+      player.addEventListener("pause", () => {
+        // During an automatic HOLD the button stays as pause (tour will resume).
+        if (fixTour.holdingId || fixTour.pausingForHold || fixTour.resumingFromHold) {
+          if (sportPlay) sportPlay.textContent = "❚❚";
+          return;
+        }
+        if (sportPlay) sportPlay.textContent = "▶";
+      });
     }
     document.getElementById("savePrompt").addEventListener("click", savePrompt);
     document.getElementById("restorePrompt").addEventListener("click", restoreOriginalPrompt);
