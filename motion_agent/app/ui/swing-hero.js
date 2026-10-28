@@ -1,9 +1,9 @@
 /* CeRebel swing reel: one real swing, driven by scroll.
    Data: /static/hero/swing-sample.json (OpenSim IK body transforms, muscle paths, findings, and the clip)
    and /static/hero/opensim-bones.glb (Rajagopal-Lai-Uhlrich 2023 bones, one node per body).
-   Scrolling plays the full swing: phone video, then the OpenSim body with bones + muscles. The copy
-   on the right tracks identified issues by time (independent of golf-phase labels). The featured
-   fix lights the related bones near its timestamp. Phase buttons jump the page to a phase.
+   Skeleton frame time t is the master clock: scroll → t → pose + phase rail + findings, and the
+   phone clip seeks to t + video.offset. Scrolling plays phone then OpenSim bones + muscles; the
+   right-side copy tracks issues by the same t. Phase buttons jump the page to a phase.
    With reduced motion the reel is a still at the featured fix with everything shown. */
 const THREE = await import("/static/three/three.module.js");
 const { GLTFLoader } = await import("/static/three/GLTFLoader.js");
@@ -48,8 +48,11 @@ async function start(root) {
   findings.sort((a, b) => Number(a.start_time) - Number(b.start_time));
   const findingItems = []; // filled once the acts list is built; safe if pose runs early
   let introItem = null;
+  // Skeleton frame time t is the master clock. Phases + findings use t; the phone
+  // clip seeks to t + video.offset (hero t=0 is offset seconds into the file).
+  const videoOffset = Number(data.video && data.video.offset) || 0;
   if (video && data.video && data.video.src) {
-    video.dataset.offset = String(data.video.offset || 0);
+    video.dataset.offset = String(videoOffset);
     video.src = data.video.src;
     video.hidden = false;
     // iOS Safari paints nothing for a video that has never played, even after a seek; until then
@@ -253,25 +256,38 @@ async function start(root) {
   let fixShown = 0;
   let current = 0;
   let wantVideoT = 0;
+  let videoSeekQueued = false;
   let lastFixKey = "";
   const elbowWorld = new THREE.Vector3();
   const boneMeshes = [];
   model.traverse((o) => {
     if (o.isMesh && !o.userData.overlay) boneMeshes.push(o);
   });
-  function syncVideo(t) {
+  function syncVideo(skeletonT) {
+    // Follow the skeleton clock — never the other way around.
     if (!video) return;
-    wantVideoT = t + (parseFloat(video.dataset.offset || "0") || 0);
+    const dur = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : Infinity;
+    wantVideoT = Math.max(0, Math.min(dur - 1e-3, skeletonT + videoOffset));
     if (video.readyState < 1) return;
-    if (video.seeking) return;
-    if (Math.abs(video.currentTime - wantVideoT) > 0.04) video.currentTime = wantVideoT;
+    if (Math.abs(video.currentTime - wantVideoT) <= 0.03) return;
+    if (video.seeking) {
+      videoSeekQueued = true;
+      return;
+    }
+    videoSeekQueued = false;
+    try { video.currentTime = wantVideoT; } catch (_) { /* ignore */ }
   }
   if (video) {
     video.addEventListener("seeked", () => {
-      if (Math.abs(video.currentTime - wantVideoT) > 0.04) video.currentTime = wantVideoT;
+      if (!videoSeekQueued && Math.abs(video.currentTime - wantVideoT) <= 0.03) return;
+      videoSeekQueued = false;
+      if (Math.abs(video.currentTime - wantVideoT) > 0.03) {
+        try { video.currentTime = wantVideoT; } catch (_) { /* ignore */ }
+      }
     });
   }
   function pose(t) {
+    // t = skeleton time (master). Staging (phases/findings) and video derive from it.
     current = t;
     syncVideo(t);
     const { a, b, k, lo } = sample(t);
@@ -444,7 +460,7 @@ async function start(root) {
     return live;
   }
 
-  // Scroll position through the reel (0 to 1) maps linearly across the full swing.
+  // Scroll → skeleton time (master clock for pose, phase rail, findings, and video).
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
   const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
   const SWING_FROM = 0, SWING_TO = 0.90;
