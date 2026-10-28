@@ -320,6 +320,107 @@ def _soma_pelvis_rotations(pose3d: dict | None, n_frames: int):
     return out
 
 
+def hold_pose_after_root_jumps(
+    frames: list[dict],
+    *,
+    root_body: str = "pelvis",
+    max_step_rad: float = 0.7,
+) -> dict:
+    """Freeze the full solved pose after a discontinuous root orientation jump.
+
+    Rajagopal ``ground_pelvis`` is ZXY Euler (tilt/list/rotation). Near gimbal
+    configurations IK can flip into another basin (~1 rad in one frame). Fixing
+    only the pelvis quaternion (see ``repair_pelvis_orientation_jumps``) leaves
+    femurs/spine in the post-jump basin and looks worse. Holding **all** body
+    transforms + muscle paths from the last good frame keeps the skeleton
+    coherent through the rest of follow-through.
+    """
+    if not frames or root_body not in (frames[0].get("bodies") or {}):
+        return {"held_frames": 0, "jump_index": None}
+
+    n = len(frames)
+    jump_at = None
+    prev_q = None
+    for i, frame in enumerate(frames):
+        q = np.asarray(frame["bodies"][root_body]["q"], dtype=np.float64)
+        q = q / max(float(np.linalg.norm(q)), 1e-8)
+        if prev_q is not None:
+            if float(np.dot(prev_q, q)) < 0.0:
+                q = -q
+            if _quat_angle(prev_q, q) > float(max_step_rad):
+                jump_at = i
+                break
+        prev_q = q
+
+    if jump_at is None or jump_at == 0:
+        return {"held_frames": 0, "jump_index": None}
+
+    good = frames[jump_at - 1]
+    good_bodies = {
+        name: {"p": list(body["p"]), "q": list(body["q"])}
+        for name, body in (good.get("bodies") or {}).items()
+    }
+    # Deep-copy path points so per-frame root deltas do not mutate the template.
+    good_muscles = []
+    for m in (good.get("muscles") or []):
+        if not isinstance(m, dict):
+            continue
+        pts = m.get("points") or []
+        good_muscles.append({
+            "name": m.get("name"),
+            "points": [[float(c) for c in pt] for pt in pts],
+        })
+    good_coords = {
+        k: good.get("coordinates", {}).get(k)
+        for k in ("pelvis_tilt", "pelvis_list", "pelvis_rotation")
+        if k in (good.get("coordinates") or {})
+    }
+    root_good = np.asarray(good_bodies[root_body]["p"], dtype=np.float64)
+
+    held = 0
+    for i in range(jump_at, n):
+        frame = frames[i]
+        bodies = frame.get("bodies") or {}
+        # Soft-hold root height (kill the IK drop) but keep planar travel from the solve.
+        root_body_state = bodies.get(root_body)
+        if root_body_state is not None:
+            bp = np.asarray(root_body_state["p"], dtype=np.float64)
+            root_body_state["q"] = list(good_bodies[root_body]["q"])
+            root_body_state["p"] = [
+                round(float(bp[0]), 8),
+                round(float(0.7 * root_good[1] + 0.3 * bp[1]), 8),
+                round(float(bp[2]), 8),
+            ]
+            root_now = np.asarray(root_body_state["p"], dtype=np.float64)
+        else:
+            root_now = root_good
+        root_delta = root_now - root_good
+        for name, body in bodies.items():
+            if name == root_body:
+                continue
+            src = good_bodies.get(name)
+            if not src:
+                continue
+            body["q"] = list(src["q"])
+            rel = np.asarray(src["p"], dtype=np.float64) - root_good
+            body["p"] = [round(float(v), 8) for v in (root_now + rel)]
+        # Muscles ride the same root delta as the bones (otherwise paths drift in world space).
+        moved = []
+        for m in good_muscles:
+            pts = []
+            for pt in m["points"]:
+                p = np.asarray(pt, dtype=np.float64) + root_delta
+                pts.append([round(float(c), 8) for c in p])
+            moved.append({"name": m["name"], "points": pts})
+        frame["muscles"] = moved
+        coords = frame.setdefault("coordinates", {})
+        for k, v in good_coords.items():
+            coords[k] = v
+        held += 1
+
+    return {"held_frames": held, "jump_index": jump_at, "max_step_rad": float(max_step_rad)}
+
+
 def repair_pelvis_orientation_jumps(
     frames: list[dict],
     *,

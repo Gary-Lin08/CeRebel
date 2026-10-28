@@ -87,12 +87,16 @@ def _postprocess_motion(
     _scripts_path()
     from cerebel_ik_retarget import (
         apply_global_yaw_to_motion,
+        hold_pose_after_root_jumps,
         make_body_quaternions_continuous,
         unwrap_coordinates,
     )
 
     body_names = list(frames[0]["bodies"])
     apply_global_yaw_to_motion(frames, yaw[: len(frames)])
+    make_body_quaternions_continuous(frames, body_names)
+    # Full-pose hold after ground_pelvis ZXY basin flips (pelvis-only retarget desyncs hips).
+    hold_pose_after_root_jumps(frames)
     make_body_quaternions_continuous(frames, body_names)
     unwrap_coordinates(
         frames,
