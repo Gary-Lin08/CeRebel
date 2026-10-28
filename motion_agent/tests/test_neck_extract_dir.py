@@ -48,7 +48,9 @@ class NeckExtractDirTests(unittest.TestCase):
             with mock.patch.object(extract_soma, "session_paths", return_value=paths), \
                     mock.patch.object(extract_soma, "OUTPUTS_DIR", outputs), \
                     mock.patch.object(extract_soma.subprocess, "run", side_effect=fake_worker):
-                aligned = ik_pipeline._extract_soma_aligned("SID", ik_dir, device="cpu")
+                aligned = ik_pipeline._extract_soma_aligned(
+                    "SID", ik_dir, device="cpu", hpe_results=hpe, fps=30.0
+                )
 
             self.assertEqual(aligned, ik_dir / "soma_aligned.npz")
             for name in ("soma_raw.npz", "soma_aligned.npz", "extract_meta.json"):

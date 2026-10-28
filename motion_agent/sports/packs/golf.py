@@ -14,10 +14,6 @@ GOLF_QUESTIONS = [
     "Where does my pelvis drift after impact?",
 ]
 
-# Minimum swing confidence before we activate the golf pack.
-CONFIDENCE_MIN = 0.45
-
-
 def _best_swing_confidence(phases_payload: dict[str, Any]) -> float:
     if not phases_payload or phases_payload.get("error"):
         return 0.0
@@ -53,16 +49,21 @@ class GolfPack:
         root = data_dir or session_dir.parent.parent
         payload = get_golf_phase_cards(video_id=sid, data_dir=root)
         conf = _best_swing_confidence(payload)
-        ok = conf >= CONFIDENCE_MIN and not payload.get("error")
+        # Always activate golf after body reconstruction — no confidence gate.
+        swing_count = (
+            len(payload.get("swings") or []) if isinstance(payload, dict) else 0
+        )
         return DetectResult(
-            matched=ok,
+            matched=True,
             confidence=conf,
             detail={
-                "swing_count": len(payload.get("swings") or []) if isinstance(payload, dict) else 0,
-                "threshold": CONFIDENCE_MIN,
+                "swing_count": swing_count,
                 "tool": "segment_golf_swings",
+                "segment_error": bool(payload.get("error"))
+                if isinstance(payload, dict)
+                else False,
             },
-            message="" if ok else "No confident golf swing detected in this capture.",
+            message="",
         )
 
     def build_briefs(

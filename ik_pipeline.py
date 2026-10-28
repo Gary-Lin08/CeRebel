@@ -68,7 +68,38 @@ def _geometry_dirs() -> list[Path]:
     return [p for p in candidates if p.is_dir()]
 
 
-def _extract_soma_aligned(session_id: str, ik_dir: Path, device: str | None = None) -> Path:
+def _link_hpe_into_session(ik_dir: Path, hpe_results: Path) -> Path:
+    """Symlink GEM-X hpe_results.pt into session/ik/ so SOMA extract can find it locally."""
+    hpe_results = hpe_results.resolve()
+    if not hpe_results.is_file():
+        raise FileNotFoundError(f"missing hpe_results.pt: {hpe_results}")
+    link = ik_dir / "hpe_results.pt"
+    if link.is_symlink() or link.is_file():
+        try:
+            if link.resolve() == hpe_results:
+                return link
+        except FileNotFoundError:
+            pass
+        link.unlink()
+    try:
+        link.symlink_to(hpe_results)
+    except OSError:
+        # Some filesystems disallow symlinks; fall back to a hard link / copy.
+        try:
+            os.link(hpe_results, link)
+        except OSError:
+            shutil.copy2(hpe_results, link)
+    return link
+
+
+def _extract_soma_aligned(
+    session_id: str,
+    ik_dir: Path,
+    device: str | None = None,
+    *,
+    hpe_results: Path | None = None,
+    fps: float | None = None,
+) -> Path:
     """Decode SOMA77 poses for neck landmarks; cache under session/ik/."""
     aligned = ik_dir / "soma_aligned.npz"
     if aligned.is_file():
@@ -79,7 +110,13 @@ def _extract_soma_aligned(session_id: str, ik_dir: Path, device: str | None = No
     device = device or os.environ.get("CEREBEL_IK_DEVICE", "cuda:0")
     # Write straight into session/ik/ so nothing about the user is left outside the session
     # folder (account deletion and retention remove the session folder).
-    extracted = extract_session(session_id, device=device, out_dir=ik_dir)
+    extracted = extract_session(
+        session_id,
+        device=device,
+        out_dir=ik_dir,
+        hpe_results=hpe_results,
+        fps=fps,
+    )
     if extracted.resolve() != aligned.resolve():
         shutil.copy2(extracted, aligned)
     return aligned
@@ -256,9 +293,14 @@ def run_ik_pipeline(
             pose3d_cmd.extend(["--session-header", str(header_path)])
         subprocess.run(pose3d_cmd, check=True, timeout=600)
 
+        # Link GEM-X output into the session so SOMA extract does not depend on SESSIONS_DIR.
+        _link_hpe_into_session(ik_dir, hpe_results)
+
         # Step 1b: SOMA77 joint/pose pack for cervical landmarks
         LOG.info("extracting SOMA for neck-aware IK session=%s", session_id)
-        soma_aligned = _extract_soma_aligned(session_id, ik_dir)
+        soma_aligned = _extract_soma_aligned(
+            session_id, ik_dir, hpe_results=hpe_results, fps=fps
+        )
 
         # Step 2: OpenSim IK on Rajagopal + neck/head (retargeting_neck_v2)
         geometry = _geometry_dirs()

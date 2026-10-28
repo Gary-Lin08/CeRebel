@@ -18,7 +18,20 @@ OFFSETS_PATH = CALIBRATION_DIR / "anatomical_offsets.json"
 SOMA_TO_OPENSIM_CALIB = CALIBRATION_DIR / "soma_to_opensim_neck.json"
 OUTPUTS_DIR = PACKAGE_DIR / "outputs"
 
-SESSIONS_DIR = Path(os.environ.get("CEREBEL_SESSIONS_DIR", str(REPO_ROOT / "data" / "sessions")))
+# Prefer explicit sessions dir; otherwise the product data dir (CEREBEL_DATA_DIR/sessions).
+# Repo-relative data/sessions is only the last resort — playground checkouts often share
+# another tree's CEREBEL_DATA_DIR and would otherwise miss gemx.json / hpe_results.pt.
+def _sessions_dir() -> Path:
+    explicit = os.environ.get("CEREBEL_SESSIONS_DIR", "").strip()
+    if explicit:
+        return Path(explicit)
+    data = os.environ.get("CEREBEL_DATA_DIR", "").strip()
+    if data:
+        return Path(data) / "sessions"
+    return REPO_ROOT / "data" / "sessions"
+
+
+SESSIONS_DIR = _sessions_dir()
 GEMX_ROOT = Path(os.environ.get("CEREBEL_GEMX_ROOT", "/root/GEM-X"))
 SOMA_ASSETS = Path(
     os.environ.get("CEREBEL_SOMA_ASSETS", str(GEMX_ROOT / "inputs" / "soma_assets"))

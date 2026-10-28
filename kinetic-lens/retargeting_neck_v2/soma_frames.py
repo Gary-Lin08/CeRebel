@@ -118,18 +118,29 @@ def relative_rotation(seq: SomaSequence, parent: str, child: str) -> np.ndarray:
 
 
 def session_paths(session_id: str) -> dict[str, Path]:
-    from .config import SESSIONS_DIR
+    import os
+
+    from .config import GEMX_ROOT, SESSIONS_DIR
 
     session = SESSIONS_DIR / session_id
     pose3d = session / "ik" / "pose3d.json"
     gemx = session / "gemx.json"
     hpe = None
     fps = 30.0
+    # Session-local symlink written by the IK pipeline (survives SESSIONS_DIR mismatches).
+    linked = session / "ik" / "hpe_results.pt"
+    if linked.is_file() or linked.is_symlink():
+        try:
+            resolved = linked.resolve(strict=True)
+            if resolved.is_file():
+                hpe = resolved
+        except FileNotFoundError:
+            pass
     if pose3d.is_file():
         meta = json.loads(pose3d.read_text())["metadata"]
         fps = float(meta["fps"])
         src = meta.get("source")
-        if src and Path(src).is_file():
+        if hpe is None and src and Path(src).is_file():
             hpe = Path(src)
     if hpe is None and gemx.is_file():
         g = json.loads(gemx.read_text())
@@ -137,6 +148,12 @@ def session_paths(session_id: str) -> dict[str, Path]:
         if cand.is_file():
             hpe = cand
         fps = float(g.get("fps", fps))
+    if hpe is None:
+        # Last resort: canonical GEM-X output layout, independent of sessions dir.
+        gemx_root = Path(os.environ.get("CEREBEL_GEMX_OUTPUT_ROOT", str(GEMX_ROOT / "outputs" / "cerebel")))
+        cand = gemx_root / session_id / "hpe_results.pt"
+        if cand.is_file():
+            hpe = cand
     return {"session": session, "pose3d": pose3d, "hpe": hpe, "fps": fps}  # type: ignore[dict-item]
 
 

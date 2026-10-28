@@ -106,6 +106,17 @@ body.pg-consumer #accountPanel #libraryList li button:first-child {
   flex: 1; min-width: 0; text-align: left; font-size: 15px;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+/* User coach bubbles use a bone fill; force ink text so they stay readable on dusk. */
+body.pg-consumer .bubble.user {
+  background: var(--user);
+  color: var(--ink);
+  border-color: transparent;
+}
+body.pg-consumer .bubble.user .label {
+  color: color-mix(in srgb, var(--ink) 62%, transparent);
+}
+body.pg-consumer .bubble.user a { color: color-mix(in srgb, var(--ink) 80%, var(--fairway, #3d8b6e)); }
+
 /* The drawer sits where the coach button floats; hide the button while the drawer is open. */
 body.is-drawer-open .coach-fab { display: none !important; }
 /* Jumping to a section from the nav should not tuck its heading under the floating nav. */
