@@ -1608,6 +1608,19 @@ code {
     border-color: transparent;
   }
   .fix-hero__actions button.primary:hover { background: #ebff8a; }
+  .fix-hero__actions button.fix-hero__talk {
+    background: #7ec8ff;
+    color: #062033;
+    border-color: transparent;
+  }
+  .fix-hero__actions button.fix-hero__talk:hover {
+    background: #9ad4ff;
+  }
+  .fix-hero__actions button.fix-hero__talk.is-listening {
+    background: #4eb0f5;
+    color: #041018;
+    border-color: color-mix(in srgb, #7ec8ff 50%, #fff);
+  }
   .fix-hero__side {
     display: grid;
     gap: 0.65rem;
@@ -2552,10 +2565,8 @@ code {
           <p class="fix-hero__cue" id="fixCue"></p>
           <div class="fix-hero__actions">
             <button type="button" class="primary" id="fixPlayMoment">Play this moment</button>
-            <button type="button" id="fixWhy">Why?</button>
             <button type="button" id="fixDrillBtn">Today's drill</button>
-            <button type="button" id="fixCompareToggle">Compare</button>
-            <button type="button" id="fixVoice" title="Talk to coach">Talk to coach</button>
+            <button type="button" id="fixVoice" class="fix-hero__talk" title="Talk to coach">Talk to coach</button>
           </div>
           <div class="fix-hero__chips" id="fixInstantChips" aria-label="Instant answers"></div>
         </div>
