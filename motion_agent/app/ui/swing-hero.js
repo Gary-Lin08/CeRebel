@@ -70,7 +70,10 @@ async function start(root) {
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  (stage.querySelector(".swing__gl") || stage).prepend(renderer.domElement);
+  // Size the buffer to .swing__gl (inset), not the full stage — CSS stretches the
+  // canvas to that box, so using stage width/height makes the skeleton look tall/thin.
+  const glHost = stage.querySelector(".swing__gl") || stage;
+  glHost.prepend(renderer.domElement);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(24, 1, 0.1, 50);
 
@@ -107,55 +110,113 @@ async function start(root) {
   const nodes = data.bodies.map((name) => model.getObjectByName(name));
   scene.add(model);
 
-  // Muscles: fusiform tubes along each OpenSim path, rebuilt per frame (paths change length).
+  // Muscles: one fusiform tube mesh per path, buffers registered once and rewritten in place.
+  // (Rebuilding/disposing 123 geometries every scroll frame was the reel hitch.)
   const muscleMat = new THREE.MeshStandardMaterial({
     color: 0xa9776d, roughness: 0.5, metalness: 0, transparent: true, opacity: 0.8, // muted, so the amber highlight reads
   });
-  const muscleMeshes = data.muscles.map(() => {
-    const m = new THREE.Mesh(new THREE.BufferGeometry(), muscleMat);
-    m.castShadow = true;
-    m.userData.overlay = true;
-    model.add(m); // muscle paths are in the same frame as the bones, so they share its offset
-    return m;
-  });
-  const curvePts = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
-  function muscleGeometry(points) {
-    const v = points.map((p) => new THREE.Vector3(p[0], p[1], p[2]));
-    if (v.length === 2) v.splice(1, 0, v[0].clone().lerp(v[1], 0.5));
-    const curve = new THREE.CatmullRomCurve3(v, false, "centripetal", 0.5);
+  const MUSCLE_SEG = 12;
+  const MUSCLE_RAD = 6;
+  const muscleVertCount = (MUSCLE_SEG + 1) * (MUSCLE_RAD + 1);
+  const muscleIndex = (() => {
+    const index = [];
+    for (let i = 0; i < MUSCLE_SEG; i++) {
+      for (let j = 0; j < MUSCLE_RAD; j++) {
+        const a = i * (MUSCLE_RAD + 1) + j, b = a + MUSCLE_RAD + 1;
+        index.push(a, b, a + 1, b, b + 1, a + 1);
+      }
+    }
+    return index;
+  })();
+  const muscleScratch = {
+    curve: new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]),
+    p: new THREE.Vector3(),
+    n: new THREE.Vector3(),
+    pts: [],
+  };
+  // Generous shared bounds so we skip computeBoundingSphere on the hot path.
+  const muscleBounds = new THREE.Sphere(new THREE.Vector3(0, 1, 0), 2.5);
+  function makeMuscleGeometry() {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(muscleVertCount * 3), 3));
+    g.setAttribute("normal", new THREE.BufferAttribute(new Float32Array(muscleVertCount * 3), 3));
+    g.setIndex(muscleIndex);
+    g.setDrawRange(0, 0);
+    g.boundingSphere = muscleBounds;
+    return g;
+  }
+  function writeMuscleTube(geo, points) {
+    const posAttr = geo.getAttribute("position");
+    const nrmAttr = geo.getAttribute("normal");
+    const pos = posAttr.array;
+    const nrm = nrmAttr.array;
+    if (!points || points.length < 2) {
+      geo.setDrawRange(0, 0);
+      return;
+    }
+    const v = muscleScratch.pts;
+    let nPts = points.length;
+    for (let i = 0; i < nPts; i++) {
+      const p = points[i];
+      if (!v[i]) v[i] = new THREE.Vector3();
+      v[i].set(p[0], p[1], p[2]);
+    }
+    if (nPts === 2) {
+      if (!v[2]) v[2] = new THREE.Vector3();
+      v[2].copy(v[1]);
+      if (!v[1]) v[1] = new THREE.Vector3();
+      v[1].copy(v[0]).lerp(v[2], 0.5);
+      nPts = 3;
+    }
+    v.length = nPts;
+    const curve = muscleScratch.curve;
+    curve.points = v;
+    curve.closed = false;
+    curve.curveType = "centripetal";
+    curve.tension = 0.5;
+    curve.updateArcLengths();
     const len = Math.max(curve.getLength(), 0.02);
     const belly = THREE.MathUtils.clamp(0.011 + len * 0.03, 0.013, 0.026);
     const tip = belly * 0.25;
-    const seg = 18, rad = 8;
-    const fr = curve.computeFrenetFrames(seg, false);
-    const pos = new Float32Array((seg + 1) * (rad + 1) * 3);
-    const nrm = new Float32Array(pos.length);
-    const index = [];
-    const p = new THREE.Vector3(), n = new THREE.Vector3();
-    for (let i = 0; i <= seg; i++) {
-      const u = i / seg;
+    const fr = curve.computeFrenetFrames(MUSCLE_SEG, false);
+    const p = muscleScratch.p, n = muscleScratch.n;
+    for (let i = 0; i <= MUSCLE_SEG; i++) {
+      const u = i / MUSCLE_SEG;
       const r = tip + (belly - tip) * Math.pow(Math.sin(Math.PI * u), 1.2);
       curve.getPointAt(u, p);
-      for (let j = 0; j <= rad; j++) {
-        const a = (j / rad) * Math.PI * 2;
+      for (let j = 0; j <= MUSCLE_RAD; j++) {
+        const a = (j / MUSCLE_RAD) * Math.PI * 2;
         n.copy(fr.normals[i]).multiplyScalar(-Math.cos(a)).addScaledVector(fr.binormals[i], Math.sin(a)).normalize();
-        const k = (i * (rad + 1) + j) * 3;
+        const k = (i * (MUSCLE_RAD + 1) + j) * 3;
         pos[k] = p.x + r * n.x; pos[k + 1] = p.y + r * n.y; pos[k + 2] = p.z + r * n.z;
         nrm[k] = n.x; nrm[k + 1] = n.y; nrm[k + 2] = n.z;
       }
     }
-    for (let i = 0; i < seg; i++) {
-      for (let j = 0; j < rad; j++) {
-        const a = i * (rad + 1) + j, b = a + rad + 1;
-        index.push(a, b, a + 1, b, b + 1, a + 1);
-      }
-    }
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    g.setAttribute("normal", new THREE.BufferAttribute(nrm, 3));
-    g.setIndex(index);
-    return g;
+    posAttr.needsUpdate = true;
+    nrmAttr.needsUpdate = true;
+    geo.setDrawRange(0, MUSCLE_SEG * MUSCLE_RAD * 6);
   }
+  function lerpMusclePath(aPts, bPts, k, out) {
+    if (!aPts || aPts.length < 2) return bPts && bPts.length >= 2 ? bPts : null;
+    if (!bPts || bPts.length < 2 || bPts.length !== aPts.length) return k < 0.5 ? aPts : bPts;
+    for (let i = 0; i < aPts.length; i++) {
+      const a = aPts[i], b = bPts[i];
+      if (!out[i]) out[i] = [0, 0, 0];
+      out[i][0] = a[0] + (b[0] - a[0]) * k;
+      out[i][1] = a[1] + (b[1] - a[1]) * k;
+      out[i][2] = a[2] + (b[2] - a[2]) * k;
+    }
+    out.length = aPts.length;
+    return out;
+  }
+  const muscleMeshes = data.muscles.map(() => {
+    const m = new THREE.Mesh(makeMuscleGeometry(), muscleMat);
+    m.castShadow = true;
+    m.userData.overlay = true;
+    m.userData.lerpPts = [];
+    model.add(m); // muscle paths are in the same frame as the bones, so they share its offset
+    return m;
+  });
 
   // Path of the hands so far, like the light trail in a multiple-exposure swing photo.
   const handIdx = [data.bodies.indexOf("hand_l"), data.bodies.indexOf("hand_r")];
@@ -169,10 +230,10 @@ async function start(root) {
   // Frame sampling with interpolation between stored frames (search by timestamp, not index ratio).
   const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
   function sample(t) {
-    if (t <= frames[0].t) return { a: frames[0], b: frames[0], k: 0 };
+    if (t <= frames[0].t) return { a: frames[0], b: frames[0], k: 0, lo: 0, hi: 0 };
     if (t >= frames[frames.length - 1].t) {
-      const last = frames[frames.length - 1];
-      return { a: last, b: last, k: 0 };
+      const last = frames.length - 1;
+      return { a: frames[last], b: frames[last], k: 0, lo: last, hi: last };
     }
     let lo = 0, hi = frames.length - 1;
     while (hi - lo > 1) {
@@ -181,17 +242,23 @@ async function start(root) {
     }
     const a = frames[lo], b = frames[hi];
     const span = Math.max(1e-6, b.t - a.t);
-    return { a, b, k: (t - a.t) / span };
+    return { a, b, k: (t - a.t) / span, lo, hi };
   }
   function handsAt(fr) {
     const L = fr.b[handIdx[0]], R = fr.b[handIdx[1]];
     return new THREE.Vector3((L[0] + R[0]) / 2, (L[1] + R[1]) / 2, (L[2] + R[2]) / 2);
   }
+  const trailPts = frames.map(handsAt);
 
   let fixShown = 0;
   let current = 0;
   let wantVideoT = 0;
+  let lastFixKey = "";
   const elbowWorld = new THREE.Vector3();
+  const boneMeshes = [];
+  model.traverse((o) => {
+    if (o.isMesh && !o.userData.overlay) boneMeshes.push(o);
+  });
   function syncVideo(t) {
     if (!video) return;
     wantVideoT = t + (parseFloat(video.dataset.offset || "0") || 0);
@@ -207,7 +274,7 @@ async function start(root) {
   function pose(t) {
     current = t;
     syncVideo(t);
-    const { a, b, k } = sample(t);
+    const { a, b, k, lo } = sample(t);
     nodes.forEach((node, n) => {
       if (!node) return;
       const A = a.b[n], Bv = b.b[n];
@@ -215,25 +282,28 @@ async function start(root) {
       qa.set(A[3], A[4], A[5], A[6]); qb.set(Bv[3], Bv[4], Bv[5], Bv[6]);
       node.quaternion.copy(qa.slerp(qb, k));
     });
-    const src = k < 0.5 ? a : b;
+    // Muscles lerp with the same k as bones, writing into the pre-registered tubes.
     muscleMeshes.forEach((mesh, n) => {
-      const pts = src.m[n];
-      mesh.geometry.dispose();
-      mesh.geometry = pts && pts.length >= 2 ? muscleGeometry(pts) : new THREE.BufferGeometry();
+      const pts = lerpMusclePath(a.m[n], b.m[n], k, mesh.userData.lerpPts);
+      writeMuscleTube(mesh.geometry, pts);
     });
-    const upto = frames.filter((fr) => fr.t <= t).map(handsAt);
-    upto.push(handsAt(src));
+    const upto = trailPts.slice(0, lo + 1);
+    const liveHand = new THREE.Vector3().copy(trailPts[lo]).lerp(trailPts[Math.min(lo + 1, trailPts.length - 1)], k);
+    upto.push(liveHand);
     trailGeo.setFromPoints(upto);
     trail.computeLineDistances();
 
     const live = markFinding(t);
     const showFix = fixShown > 0;
-    model.traverse((o) => {
-      if (!o.isMesh || o.userData.overlay) return;
-      let body = o;
-      while (body && !fixBones.has(body.name) && body !== model) body = body.parent;
-      o.material = showFix && body && fixBones.has(body.name) ? fixMat : boneMat;
-    });
+    const fixKey = showFix + ":" + [...fixBones].join(",");
+    if (fixKey !== lastFixKey) {
+      lastFixKey = fixKey;
+      boneMeshes.forEach((o) => {
+        let body = o;
+        while (body && !fixBones.has(body.name) && body !== model) body = body.parent;
+        o.material = showFix && body && fixBones.has(body.name) ? fixMat : boneMat;
+      });
+    }
     const value = Math.round(valueOf(a) + (valueOf(b) - valueOf(a)) * k);
     const metricLabel = (live && live.metric && live.metric.caption) || (live && live.title) || fixLabel;
     const metricText = (live && live.metric && live.metric.value) || (String(value) + "°");
@@ -256,7 +326,9 @@ async function start(root) {
   // Framing: fit the whole swing's extent, three-quarter face-on view.
   const target = new THREE.Vector3(0, 0.95, 0);
   function fit() {
-    const w = stage.clientWidth, h = stage.clientHeight || w * 1.05;
+    const w = glHost.clientWidth || stage.clientWidth;
+    const h = glHost.clientHeight || stage.clientHeight || w * 1.05;
+    if (w < 2 || h < 2) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // One body only; portrait screens get a tighter margin so it stays large.
@@ -276,11 +348,11 @@ async function start(root) {
     if (tag) {
       v.copy(elbowWorld).project(camera);
       const r = renderer.domElement.getBoundingClientRect();
-      const s = (tag.offsetParent || stage).getBoundingClientRect();
+      const s = (tag.offsetParent || glHost).getBoundingClientRect();
       tag.style.transform = `translate(${((v.x + 1) / 2) * r.width + (r.left - s.left) - 64}px, ${((1 - v.y) / 2) * r.height + (r.top - s.top) - 14}px)`;
     }
   }
-  new ResizeObserver(fit).observe(stage);
+  new ResizeObserver(fit).observe(glHost);
 
   // Center the muscle-equipped OpenSim body on the ground plane.
   const p0 = frames[0].b[data.bodies.indexOf("pelvis")];
