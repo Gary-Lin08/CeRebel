@@ -642,6 +642,28 @@ video.is-hidden-source { display: none !important; }
 }
 .composer button:hover { background: #ebff8a; }
 .composer button:disabled { opacity: 0.5; cursor: wait; }
+.composer .voice-mic {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  line-height: 0;
+}
+.composer .voice-mic:hover {
+  background: color-mix(in srgb, var(--lime) 12%, var(--panel-2));
+  border-color: color-mix(in srgb, var(--lime) 40%, var(--border));
+  color: var(--text);
+}
+.composer .voice-mic.is-listening {
+  border-color: color-mix(in srgb, var(--lime) 70%, var(--border));
+  background: color-mix(in srgb, var(--lime) 18%, var(--panel-2));
+  color: var(--lime);
+}
+.composer .voice-mic svg { display: block; }
 
 .bubble img.evidence {
   display: block;
@@ -2533,7 +2555,7 @@ code {
             <button type="button" id="fixWhy">Why?</button>
             <button type="button" id="fixDrillBtn">Today's drill</button>
             <button type="button" id="fixCompareToggle">Compare</button>
-            <button type="button" id="fixVoice" aria-pressed="false" title="Hold to talk">Hold to talk</button>
+            <button type="button" id="fixVoice" title="Talk to coach">Talk to coach</button>
           </div>
           <div class="fix-hero__chips" id="fixInstantChips" aria-label="Instant answers"></div>
         </div>
@@ -2660,7 +2682,12 @@ code {
         <div id="chat" data-lenis-prevent></div>
         <div class="composer">
           <input id="q" type="text" placeholder="What should I fix?" />
-          <button id="send">Ask</button>
+          <button type="button" id="coachVoice" class="voice-mic" aria-label="Talk to coach" title="Talk to coach" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/>
+            </svg>
+          </button>
+          <button id="send" type="button">Ask</button>
         </div>
         <div class="try-ask" id="coachTry">
           <span class="try-ask__label">Try asking</span>
@@ -4561,6 +4588,9 @@ code {
     let coachBriefs = [];
     let compareTimes = { a: 0, b: 0 };
     let voiceRecognition = null;
+    let voiceTranscriptParts = [];
+    let voiceArmed = false;
+    let voiceRestartTimer = null;
 
     function currentFixNote() {
       if (!sportFindings || !sportFindings.length) return null;
@@ -4762,60 +4792,142 @@ code {
       } catch (_) { /* keep session briefs */ }
     }
 
-    function startVoiceAsk() {
+    function voiceAskButtons() {
+      return [
+        document.getElementById("fixVoice"),
+        document.getElementById("coachVoice"),
+      ].filter(Boolean);
+    }
+
+    function setVoiceListening(on) {
+      voiceAskButtons().forEach((btn) => {
+        btn.classList.toggle("is-listening", !!on);
+        if (btn.id === "coachVoice") {
+          btn.setAttribute("aria-pressed", on ? "true" : "false");
+          btn.setAttribute("aria-label", on ? "Stop recording" : "Talk to coach");
+          btn.title = on ? "Stop recording" : "Talk to coach";
+        }
+      });
+    }
+
+    function clearVoiceRestartTimer() {
+      if (!voiceRestartTimer) return;
+      window.clearTimeout(voiceRestartTimer);
+      voiceRestartTimer = null;
+    }
+
+    function finishVoiceAsk(rawText) {
+      const text = String(rawText || "").replace(/\s+/g, " ").trim();
+      if (!text) {
+        status.textContent = "Couldn’t catch that — tap the mic, speak, then tap again to send.";
+        status.className = "status warn";
+        return;
+      }
+      // Put the final transcript in the coach box and ask — never divert to instant-fix cards.
+      showConsumerChat({ focusInput: false });
+      if (qInput) qInput.value = text;
+      ask({ skipBrief: true });
+    }
+
+    function beginVoiceRecognitionSession() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const btn = document.getElementById("fixVoice");
+      if (!SpeechRecognition || !voiceArmed) return;
+      if (voiceRecognition) return;
+      const rec = new SpeechRecognition();
+      voiceRecognition = rec;
+      rec.lang = "en-US";
+      // Stay armed until the user toggles off. Do not paint interim text into the composer.
+      rec.continuous = true;
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+      rec.onresult = (event) => {
+        for (let i = event.resultIndex; i < event.results.length; i += 1) {
+          const result = event.results[i];
+          if (!result || !result.isFinal) continue;
+          const piece = result[0] && result[0].transcript ? String(result[0].transcript).trim() : "";
+          if (piece) voiceTranscriptParts.push(piece);
+        }
+      };
+      rec.onerror = (event) => {
+        const err = event && event.error;
+        if (err === "aborted" || err === "no-speech") return;
+        if (err === "not-allowed" || err === "service-not-allowed") {
+          voiceArmed = false;
+          clearVoiceRestartTimer();
+          setVoiceListening(false);
+          status.textContent = "Microphone permission is blocked for this browser.";
+          status.className = "status warn";
+          return;
+        }
+        status.textContent = "Voice input failed — tap the mic and try again.";
+        status.className = "status warn";
+      };
+      rec.onend = () => {
+        voiceRecognition = null;
+        if (!voiceArmed) {
+          const parts = voiceTranscriptParts.slice();
+          voiceTranscriptParts = [];
+          setVoiceListening(false);
+          finishVoiceAsk(parts.join(" "));
+          return;
+        }
+        // Chrome forbids starting a new session synchronously inside onend.
+        clearVoiceRestartTimer();
+        voiceRestartTimer = window.setTimeout(() => {
+          voiceRestartTimer = null;
+          if (voiceArmed) beginVoiceRecognitionSession();
+        }, 140);
+      };
+      try {
+        rec.start();
+      } catch (_) {
+        clearVoiceRestartTimer();
+        voiceRestartTimer = window.setTimeout(() => {
+          voiceRestartTimer = null;
+          if (voiceArmed) beginVoiceRecognitionSession();
+        }, 220);
+      }
+    }
+
+    function startVoiceAsk({ jumpToCoach = false } = {}) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
         status.textContent = "Voice input is not supported in this browser.";
         status.className = "status warn";
         return;
       }
-      if (voiceRecognition) {
-        try { voiceRecognition.stop(); } catch (_) {}
-        voiceRecognition = null;
-      }
-      const rec = new SpeechRecognition();
-      voiceRecognition = rec;
-      rec.lang = "en-US";
-      rec.interimResults = false;
-      rec.maxAlternatives = 1;
-      if (btn) {
-        btn.classList.add("is-listening");
-        btn.setAttribute("aria-pressed", "true");
-        btn.textContent = "Listening…";
-      }
-      rec.onresult = (event) => {
-        const text = event.results && event.results[0] && event.results[0][0]
-          ? event.results[0][0].transcript
-          : "";
-        if (!text) return;
-        const brief = matchCoachBrief(text);
-        if (brief) {
-          applyInstantBrief(brief);
-          return;
+      if (jumpToCoach) showConsumerChat({ focusInput: false });
+
+      // Toggle off → stop listening, then transcribe once.
+      if (voiceArmed) {
+        voiceArmed = false;
+        clearVoiceRestartTimer();
+        if (voiceRecognition) {
+          try { voiceRecognition.stop(); } catch (_) { /* ignore */ }
+        } else {
+          const parts = voiceTranscriptParts.slice();
+          voiceTranscriptParts = [];
+          setVoiceListening(false);
+          finishVoiceAsk(parts.join(" "));
         }
-        if (qInput) qInput.value = text;
-        showConsumerChat();
-        ask();
-      };
-      rec.onerror = () => {
-        status.textContent = "Couldn’t catch that — try again or tap a chip.";
-        status.className = "status warn";
-      };
-      rec.onend = () => {
-        if (btn) {
-          btn.classList.remove("is-listening");
-          btn.setAttribute("aria-pressed", "false");
-          btn.textContent = "Hold to talk";
-        }
-        voiceRecognition = null;
-      };
-      try { rec.start(); } catch (_) { /* ignore */ }
+        return;
+      }
+
+      // Toggle on → record only; transcript waits until the next tap.
+      voiceArmed = true;
+      voiceTranscriptParts = [];
+      setVoiceListening(true);
+      beginVoiceRecognitionSession();
     }
 
-    function stopVoiceAsk() {
-      if (!voiceRecognition) return;
-      try { voiceRecognition.stop(); } catch (_) {}
+    function bindVoiceToggle(btn) {
+      if (!btn || btn.dataset.voiceBound === "1") return;
+      btn.dataset.voiceBound = "1";
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        startVoiceAsk();
+      });
     }
 
     function renderFixPhases(payload) {
@@ -5023,13 +5135,13 @@ code {
       explainFollowUp = false;
     }
 
-    function showConsumerChat() {
+    function showConsumerChat({ focusInput = true } = {}) {
       if (isDevUi) return;
       document.body.classList.add("pg-consumer-chat-open");
       const coach = document.getElementById("coach");
       if (coach) coach.scrollIntoView({ behavior: "smooth", block: "start" });
       closeExplainDrawer();
-      if (qInput) qInput.focus();
+      if (focusInput && qInput) qInput.focus();
     }
 
     function bindFixHeroControls() {
@@ -5123,24 +5235,22 @@ code {
         compareRange.addEventListener("input", () => setCompareWipe(compareRange.value));
         setCompareWipe(compareRange.value);
       }
-      const voiceBtn = document.getElementById("fixVoice");
       const voiceOk = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
-      if (voiceBtn && !voiceOk) voiceBtn.hidden = true;
-      if (voiceBtn && voiceOk) {
-        const press = (e) => { e.preventDefault(); startVoiceAsk(); };
-        const release = (e) => { e.preventDefault(); stopVoiceAsk(); };
-        voiceBtn.addEventListener("mousedown", press);
-        voiceBtn.addEventListener("mouseup", release);
-        voiceBtn.addEventListener("mouseleave", release);
-        voiceBtn.addEventListener("touchstart", press, { passive: false });
-        voiceBtn.addEventListener("touchend", release);
-        voiceBtn.addEventListener("click", (e) => {
-          // Mobile fallback: tap once to start if hold is awkward.
-          if (!voiceRecognition) {
+      const fixVoice = document.getElementById("fixVoice");
+      const coachVoice = document.getElementById("coachVoice");
+      if (!voiceOk) {
+        if (fixVoice) fixVoice.hidden = true;
+        if (coachVoice) coachVoice.hidden = true;
+      } else {
+        if (fixVoice && fixVoice.dataset.voiceBound !== "1") {
+          fixVoice.dataset.voiceBound = "1";
+          fixVoice.addEventListener("click", (e) => {
             e.preventDefault();
-            startVoiceAsk();
-          }
-        });
+            e.stopPropagation();
+            startVoiceAsk({ jumpToCoach: true });
+          });
+        }
+        bindVoiceToggle(coachVoice);
       }
     }
 
@@ -6069,7 +6179,7 @@ code {
       if (copy && data && data.product_subtitle && data.empty) copy.textContent = data.product_subtitle;
     }
 
-    async function ask() {
+    async function ask({ skipBrief = false } = {}) {
       const question = qInput.value.trim();
       if (!question) return;
       if (session && (session.empty || session.processing || session.no_swing)) {
@@ -6082,7 +6192,8 @@ code {
         if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
-      if (!isDevUi) {
+      // Chip taps / typed near-matches can use instant briefs. Voice transcripts always go to the coach.
+      if (!isDevUi && !skipBrief) {
         const brief = matchCoachBrief(question);
         if (brief) {
           qInput.value = "";
