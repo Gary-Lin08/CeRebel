@@ -5872,7 +5872,8 @@ code {
             }
           });
         }
-        if (bodyUpdated || (sportBoard && !sportBoard.hidden)) {
+        // Dev playground still jumps to the body after an answer; consumer stays on the coach.
+        if (isDevUi && (bodyUpdated || (sportBoard && !sportBoard.hidden))) {
           revealBodyAfterAnswer({ updated: bodyUpdated });
         }
       }
