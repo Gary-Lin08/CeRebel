@@ -179,6 +179,12 @@ def _legal_html(name: str) -> bytes | None:
 
     fills["{{RAW_VIDEO_RETENTION_DAYS}}"] = str(raw_video_retention_days())
     fills["{{INACTIVE_DELETE_PERIOD}}"] = period_label(inactive_delete_days())
+    from motion_agent.app.questions import retention_days as question_retention_days
+
+    fills["{{QUESTION_RETENTION_DAYS}}"] = str(question_retention_days())
+    from motion_agent.app.site_traffic import retention_days as site_retention_days
+
+    fills["{{SITE_EVENT_RETENTION_DAYS}}"] = str(site_retention_days())
     for key, value in fills.items():
         html = html.replace(key, value)
     return html.encode("utf-8")
@@ -193,7 +199,46 @@ def _sign_media(handler: BaseHTTPRequestHandler, payload: dict) -> dict:
     return sign_payload(SETTINGS.product_dir, payload, lambda sid: media_allowed(SETTINGS, user, sid))
 
 
-def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) -> None:
+def _client_ip(handler: BaseHTTPRequestHandler) -> str:
+    """Behind a proxy (Cloudflare Tunnel, Vercel, the GPU host's port mapping) every request comes
+    from a local address; use the visitor IP the proxy forwards."""
+    forwarded = (handler.headers.get("X-Forwarded-For") or "").split(",")[0]
+    return (
+        handler.headers.get("CF-Connecting-IP")
+        or forwarded  # first hop = the visitor; X-Real-IP is the nearest proxy
+        or handler.headers.get("X-Real-IP")
+        or handler.client_address[0]
+        or "unknown"
+    ).strip()[:64]
+
+
+def _read_json(handler: BaseHTTPRequestHandler, limit: int = 16_384) -> tuple[dict | None, tuple[int, dict] | None]:
+    """The request body as a JSON object, or (None, error response)."""
+    length = int(handler.headers.get("Content-Length", "0") or 0)
+    if length > limit:
+        return None, (413, {"error": True, "message": "body too large"})
+    raw = handler.rfile.read(length) if length else b"{}"
+    try:
+        body = json.loads(raw.decode("utf-8") or "{}")
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return None, (400, {"error": True, "message": "invalid JSON"})
+    return (body if isinstance(body, dict) else {}), None
+
+
+ADMIN_PAGE_HEADERS = {
+    "Cache-Control": "no-store",
+    "X-Frame-Options": "DENY",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "X-Robots-Tag": "noindex, nofollow",
+    "Content-Security-Policy": (
+        "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; "
+        "connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+    ),
+}
+
+
+def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict, *, no_store: bool = False) -> None:
     raw = json.dumps(payload, default=str).encode("utf-8")
     if code < 400 and b'"/media/' in raw:
         raw = json.dumps(_sign_media(handler, payload), default=str).encode("utf-8")
@@ -203,6 +248,8 @@ def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict) ->
     handler.send_response(code)
     handler.send_header("Content-Type", "application/json")
     handler.send_header("Content-Length", str(len(raw)))
+    if no_store:
+        handler.send_header("Cache-Control", "no-store")
     _send_cors_headers(handler)
     handler.end_headers()
     handler.wfile.write(raw)
@@ -258,6 +305,34 @@ class Handler(BaseHTTPRequestHandler):
         text = text.replace(SURFACE_META.format("shared"), SURFACE_META.format(self._surface()), 1)
         self._send_text(self._ui_text(text), "text/html; charset=utf-8")
 
+    def _serve_admin(self) -> None:
+        from motion_agent.app import admin
+
+        if not admin.enabled():
+            return _json_response(self, 404, {"error": True, "message": "not found"})
+        body = self._ui_text((UI_DIR / "admin.html").read_text(encoding="utf-8")).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        for name, value in ADMIN_PAGE_HEADERS.items():
+            self.send_header(name, value)
+        self.end_headers()
+        if self.command != "HEAD":
+            self.wfile.write(body)
+
+    def _admin_api(self, method: str, parsed) -> None:
+        from motion_agent.app import admin
+
+        body: dict = {}
+        if method == "POST":
+            body, error = _read_json(self)
+            if error:
+                return _json_response(self, *error, no_store=True)
+        code, payload = admin.handle(
+            SETTINGS, method, parsed.path, parse_qs(parsed.query or ""), self.headers, body, _client_ip(self)
+        )
+        return _json_response(self, code, payload, no_store=True)
+
     def _serve_legal(self, name: str) -> None:
         raw = _legal_html(name)
         if raw is None:
@@ -288,6 +363,10 @@ class Handler(BaseHTTPRequestHandler):
             return self._serve_index()
         if path in ("/terms", "/privacy"):
             return self._serve_legal(path.strip("/"))
+        if path in ("/admin", "/admin/"):
+            return self._serve_admin()
+        if path.startswith("/api/admin/"):
+            return self._admin_api("GET", parsed)
         if path == "/api/billing":
             from motion_agent.app.product_api import current_user, library_payload
 
@@ -734,17 +813,53 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
-        if parsed.path in ("/api/auth/register", "/api/auth/login", "/api/auth/logout"):
-            length = int(self.headers.get("Content-Length", "0"))
-            raw = self.rfile.read(length) if length else b"{}"
+        if parsed.path.startswith("/api/admin/"):
+            return self._admin_api("POST", parsed)
+        if parsed.path in ("/api/site/ping", "/api/site/backers"):
+            body, error = _read_json(self, 4096)
+            if error:
+                return _json_response(self, *error, no_store=True)
+            from motion_agent.app import admin, site_traffic
+            from motion_agent.app.accounts import user_from_token
+            from motion_agent.app.product_api import token_from_headers
+
+            ip = _client_ip(self)
             try:
-                body = json.loads(raw.decode("utf-8") or "{}")
-            except json.JSONDecodeError:
-                return _json_response(self, 400, {"error": True, "message": "invalid JSON"})
+                if parsed.path == "/api/site/backers":
+                    code, payload = site_traffic.handle_backer(SETTINGS.product_dir, body, self.headers, ip)
+                    return _json_response(self, code, payload, no_store=True)
+                # Not current_user: a heartbeat is not "using the app" for the inactivity clock.
+                user = user_from_token(SETTINGS.product_dir, token_from_headers(self.headers))
+                if user and str(user.get("email") or "").lower() in admin.admin_emails():
+                    return _json_response(self, 200, {"ok": True}, no_store=True)  # our own visits don't count
+                code, payload = site_traffic.handle_ping(SETTINGS.product_dir, body, self.headers, ip, user)
+            except Exception as exc:  # noqa: BLE001
+                return _json_response(self, 500, _internal_error(exc, "site traffic"), no_store=True)
+            return _json_response(self, code, payload, no_store=True)
+        if parsed.path in (
+            "/api/auth/register", "/api/auth/login", "/api/auth/logout", "/api/auth/forgot", "/api/auth/reset"
+        ):
+            body, error = _read_json(self)
+            if error:
+                return _json_response(self, *error)
             from motion_agent.app.product_api import handle_auth_post
 
-            code, payload = handle_auth_post(SETTINGS, parsed.path, body, self.headers)
-            return _json_response(self, code, payload)
+            code, payload = handle_auth_post(SETTINGS, parsed.path, body, self.headers, ip=_client_ip(self))
+            return _json_response(self, code, payload, no_store=True)
+        if parsed.path in ("/api/account/password", "/api/feedback", "/api/activity/ping"):
+            body, error = _read_json(self)
+            if error:
+                return _json_response(self, *error)
+            from motion_agent.app.product_api import current_user, handle_change_password, handle_feedback
+
+            user = current_user(SETTINGS, self.headers)
+            if not user:
+                return _json_response(self, 401, {"error": True, "message": "Sign in required"})
+            if parsed.path == "/api/activity/ping":
+                return _json_response(self, 200, {"ok": True})
+            handler = handle_change_password if parsed.path == "/api/account/password" else handle_feedback
+            code, payload = handler(SETTINGS, user, body)
+            return _json_response(self, code, payload, no_store=True)
         if parsed.path == "/api/upload":
             from motion_agent.app.product_api import current_user, parse_upload
 
@@ -914,17 +1029,7 @@ class Handler(BaseHTTPRequestHandler):
             if user:
                 key = "u:" + str(user["user_id"])
             else:
-                # Behind a proxy (Cloudflare Tunnel, Vercel, the GPU host's port mapping) every request
-                # comes from a local address; use the visitor IP the proxy forwards.
-                forwarded = (self.headers.get("X-Forwarded-For") or "").split(",")[0]
-                ip = (
-                    self.headers.get("CF-Connecting-IP")
-                    or forwarded  # first hop = the visitor; X-Real-IP is the nearest proxy
-                    or self.headers.get("X-Real-IP")
-                    or self.client_address[0]
-                    or "unknown"
-                ).strip()
-                key = "ip:" + ip[:64]
+                key = "ip:" + _client_ip(self)
             allowed, _left = _billing.take_question(
                 SETTINGS.product_dir, key, _billing.daily_question_limit(pro, bool(user))
             )
@@ -943,6 +1048,10 @@ class Handler(BaseHTTPRequestHandler):
             from motion_agent.app.product_api import record_event
 
             record_event(SETTINGS, "chat_question", user_id=(user or {}).get("user_id"), session_id=str(video_id))
+            from motion_agent.app import questions
+
+            if user and questions.may_store(SETTINGS.product_dir, str(user["user_id"])):
+                questions.record(SETTINGS.product_dir, str(user["user_id"]), str(video_id), question)
         except Exception:  # noqa: BLE001
             LOG.exception("chat event failed")
         system_prompt = body.get("system_prompt")

@@ -35,6 +35,40 @@
     } catch (_) {}
   }
 
+  // Page view and a heartbeat every 30 seconds while the tab is visible, for the admin dashboard's
+  // live view. Same random browser ID as the events above; the server stores no IP address.
+  function sitePing(eventType) {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      fetch("/api/site/ping", {
+        method: "POST",
+        headers: headers({ "Content-Type": "application/json" }),
+        body: JSON.stringify({
+          eventType: eventType,
+          visitor: visitor,
+          site: "playground",
+          path: window.location.pathname,
+          referrer: document.referrer,
+          utmSource: params.get("utm_source") || "",
+          utmMedium: params.get("utm_medium") || "",
+          utmCampaign: params.get("utm_campaign") || "",
+          tz: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+        }),
+        keepalive: true,
+      }).catch(function () {});
+    } catch (_) {}
+  }
+  function startSitePings() {
+    if (!visitor) return;
+    sitePing("page_view");
+    window.setInterval(function () {
+      if (document.visibilityState === "visible") sitePing("heartbeat");
+    }, 30000);
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") sitePing("heartbeat");
+    });
+  }
+
   function el(tag, attrs, children) {
     var node = document.createElement(tag);
     Object.keys(attrs || {}).forEach(function (k) {
@@ -195,6 +229,41 @@
       track(ok ? "trust_yes" : "trust_no", { session_id: sid || "" });
       row.innerHTML = "";
       row.appendChild(el("span", { class: "cb-muted", text: ok ? "Thanks — noted." : "Thanks. That helps us improve the analysis." }));
+      if (signedIn()) row.appendChild(moreBox(ok, sid));
+    }
+    // Optional words after Yes / Not really. Written feedback needs an account (no anonymous spam).
+    function moreBox(ok, sid) {
+      var text = el("textarea", {
+        rows: "2",
+        maxlength: "2000",
+        "aria-label": "Tell us more (optional)",
+        placeholder: ok ? "Anything to add? (optional)" : "What feels different? (optional)",
+      });
+      var status = el("span", { class: "cb-muted" });
+      var send = el("button", { type: "button", text: "Send" });
+      send.addEventListener("click", async function () {
+        var words = text.value.trim();
+        if (!words) return;
+        send.disabled = true;
+        status.textContent = "Sending…";
+        try {
+          var r = await fetch("/api/feedback", {
+            method: "POST",
+            headers: headers({ "Content-Type": "application/json" }),
+            body: JSON.stringify({ text: words, session_id: sid || "", rating: ok ? "yes" : "no" }),
+          });
+          var data = {};
+          try { data = await r.json(); } catch (_) {}
+          if (!r.ok) throw new Error(data.message || "Could not send.");
+          box.innerHTML = "";
+          box.appendChild(el("span", { class: "cb-muted", text: "Thanks! We read every message." }));
+        } catch (err) {
+          status.textContent = err.message;
+          send.disabled = false;
+        }
+      });
+      var box = el("div", { class: "cb-trust__more" }, [text, send, status]);
+      return box;
     }
     row.appendChild(el("button", { type: "button", text: "Yes", onclick: function () { answer(true); } }));
     row.appendChild(el("button", { type: "button", text: "Not really", onclick: function () { answer(false); } }));
@@ -379,6 +448,7 @@
     wireHero();
     window.setTimeout(openDeepLink, 600);
     track("landing_view", { signed_in: signedIn() });
+    startSitePings();
     wireTrust();
     handleReturn();
   }

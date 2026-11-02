@@ -14,13 +14,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from motion_agent.app import rate_limit
 from motion_agent.app.accounts import (
+    RESET_TTL,
+    change_password,
+    create_password_reset,
     delete_account,
     has_video_consent,
     login,
     logout,
     record_video_consent,
     register,
+    reset_password,
     touch_activity,
     user_from_token,
     video_consent_status,
@@ -133,6 +138,9 @@ def current_user(settings: Settings, headers: Any) -> dict[str, Any] | None:
         # Any signed-in request counts as an interaction for the inactivity-deletion clock.
         try:
             touch_activity(settings.product_dir, str(user["user_id"]))
+            from motion_agent.app import activity
+
+            activity.touch(settings.product_dir, str(user["user_id"]))
         except OSError:
             LOG.warning("could not record account activity")
     return user
@@ -162,7 +170,12 @@ def handle_video_consent(settings: Settings, user: dict[str, Any], body: dict[st
     return 200, {"ok": True, "video_consent": video_consent_status(settings.product_dir, user["user_id"])}
 
 
-def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], headers: Any) -> tuple[int, dict[str, Any]]:
+TOO_MANY_SIGNINS = "Too many sign-in attempts. Wait 15 minutes and try again, or reset your password."
+
+
+def handle_auth_post(
+    settings: Settings, path: str, body: dict[str, Any], headers: Any, *, ip: str = ""
+) -> tuple[int, dict[str, Any]]:
     if path == "/api/auth/register":
         try:
             created = register(
@@ -182,14 +195,120 @@ def handle_auth_post(settings: Settings, path: str, body: dict[str, Any], header
         )
         return 200, created
     if path == "/api/auth/login":
+        email = str(body.get("email") or "").strip().lower()
+        keys = (rate_limit.LOGIN_PER_EMAIL, "e:" + email), (rate_limit.LOGIN_PER_IP, "ip:" + ip)
+        if any(limiter.blocked(key) for limiter, key in keys):
+            return 429, {"ok": False, "error": True, "message": TOO_MANY_SIGNINS}
         try:
-            return 200, login(settings.product_dir, str(body.get("email") or ""), str(body.get("password") or ""))
+            result = login(settings.product_dir, email, str(body.get("password") or ""))
         except ValueError as exc:
+            for limiter, key in keys:
+                limiter.hit(key)
             return 401, {"ok": False, "error": True, "message": str(exc)}
+        rate_limit.LOGIN_PER_EMAIL.clear("e:" + email)
+        record_event(settings, "login", user_id=result["user"]["user_id"])
+        return 200, result
+    if path == "/api/auth/forgot":
+        return _forgot_password(settings, str(body.get("email") or ""), ip)
+    if path == "/api/auth/reset":
+        try:
+            result = reset_password(settings.product_dir, str(body.get("token") or ""), str(body.get("password") or ""))
+        except ValueError as exc:
+            return 400, {"ok": False, "error": True, "message": str(exc)}
+        record_event(settings, "password_reset", user_id=result["user"]["user_id"])
+        return 200, result
     if path == "/api/auth/logout":
         logout(settings.product_dir, token_from_headers(headers))
         return 200, {"ok": True}
     return 404, {"error": True, "message": "not found"}
+
+
+def reset_link(token: str) -> str:
+    """The page reads #reset=… on load; a fragment never reaches server or proxy logs."""
+    base = (os.environ.get("CEREBEL_PUBLIC_URL") or "http://localhost:8092").strip().rstrip("/")
+    return f"{base}/#reset={token}"
+
+
+def _forgot_password(settings: Settings, email: str, ip: str) -> tuple[int, dict[str, Any]]:
+    """Same answer whether or not the email has an account, so this cannot be used to probe."""
+    from motion_agent.app import notify
+
+    email = email.strip().lower()
+    if "@" not in email:
+        return 400, {"ok": False, "error": True, "message": "Enter the email you signed up with."}
+    if not notify.enabled():
+        support = os.environ.get("CEREBEL_SUPPORT_EMAIL") or "support@cerebel.ai"
+        return 200, {
+            "ok": True,
+            "emailed": False,
+            "message": f"Password reset by email isn't switched on yet. Write to {support} from this address and we'll help.",
+        }
+    keys = (rate_limit.RESET_PER_EMAIL, "e:" + email), (rate_limit.RESET_PER_IP, "ip:" + ip)
+    if any(limiter.blocked(key) for limiter, key in keys):
+        return 429, {"ok": False, "error": True, "message": "Too many reset requests. Try again in an hour."}
+    for limiter, key in keys:
+        limiter.hit(key)
+    token = create_password_reset(settings.product_dir, email)
+    if token:
+        minutes = int(RESET_TTL.total_seconds() // 60)
+        if notify.send_password_reset(email, reset_link(token), minutes):
+            user_id = (profile_by_email(settings, email) or {}).get("user_id")
+            record_event(settings, "password_reset_requested", user_id=user_id)
+    return 200, {
+        "ok": True,
+        "emailed": True,
+        "message": "If an account uses that email, we've sent it a link to choose a new password. Check your inbox.",
+    }
+
+
+def profile_by_email(settings: Settings, email: str) -> dict[str, Any] | None:
+    from motion_agent.app.accounts import list_accounts
+
+    return next((row for row in list_accounts(settings.product_dir) if row.get("email") == email), None)
+
+
+def handle_change_password(settings: Settings, user: dict[str, Any], body: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+    """POST /api/account/password {"current_password", "new_password"}."""
+    key = "e:" + str(user.get("email") or "").lower()
+    if rate_limit.LOGIN_PER_EMAIL.blocked(key):
+        return 429, {"ok": False, "error": True, "message": TOO_MANY_SIGNINS}
+    try:
+        result = change_password(
+            settings.product_dir,
+            user["user_id"],
+            str(body.get("current_password") or ""),
+            str(body.get("new_password") or ""),
+        )
+    except ValueError as exc:
+        if "current password" in str(exc):
+            rate_limit.LOGIN_PER_EMAIL.hit(key)
+        return 400, {"ok": False, "error": True, "message": str(exc)}
+    except LookupError as exc:
+        return 404, {"ok": False, "error": True, "message": str(exc)}
+    record_event(settings, "password_changed", user_id=user["user_id"])
+    return 200, result
+
+
+FEEDBACK_MAX_CHARS = 2000
+
+
+def handle_feedback(settings: Settings, user: dict[str, Any], body: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+    """POST /api/feedback {"text", "session_id"?, "rating"?: "yes" | "no"}: written feedback."""
+    text = str(body.get("text") or "").strip()
+    if not text:
+        return 400, {"ok": False, "error": True, "message": "Write something first."}
+    if len(text) > FEEDBACK_MAX_CHARS:
+        return 400, {"ok": False, "error": True, "message": f"Please keep it under {FEEDBACK_MAX_CHARS} characters."}
+    key = "u:" + str(user["user_id"])
+    if rate_limit.FEEDBACK_PER_USER.blocked(key):
+        return 429, {"ok": False, "error": True, "message": "Thanks! That's a lot of feedback for one day. Email us for more."}
+    rate_limit.FEEDBACK_PER_USER.hit(key)
+    session_id = str(body.get("session_id") or "")
+    if session_id and not user_may_view_session(settings, user, session_id):
+        session_id = ""
+    rating = body.get("rating") if body.get("rating") in ("yes", "no") else None
+    record_event(settings, "feedback", user_id=user["user_id"], session_id=session_id or None, rating=rating, text=text)
+    return 200, {"ok": True}
 
 
 def library_payload(settings: Settings, user: dict[str, Any]) -> dict[str, Any]:
@@ -789,6 +908,9 @@ def remove_capture(settings: Settings, user: dict[str, Any], session_id: str) ->
     if not delete_capture(settings.product_dir, user["user_id"], session_id):
         return 404, {"ok": False, "error": True, "message": "Capture not found"}
     purge_session_dir(settings, session_id)
+    from motion_agent.app import questions
+
+    questions.scrub(settings.product_dir, session_ids=[session_id])
     record_event(settings, "capture_deleted", user_id=user["user_id"], session_id=session_id)
     return 200, {"ok": True, "session_id": session_id}
 

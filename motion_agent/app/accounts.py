@@ -56,7 +56,8 @@ def _hash_password(password: str, salt: str) -> str:
     return digest.hex()
 
 
-TERMS_VERSION = "2026-10-24"
+# 2026-10-26: the privacy policy now keeps signed-in users' coach question text (questions.py).
+TERMS_VERSION = "2026-10-26"
 
 
 def _clean_coach_code(code: str | None) -> str | None:
@@ -168,7 +169,9 @@ def user_from_token(product_dir: Path, token: str | None) -> dict[str, Any] | No
 
 
 def delete_account(product_dir: Path, user_id: str) -> None:
-    """Remove the account and every login token for that user."""
+    """Remove the account, every login token and reset link, its visits and its coach questions."""
+    from motion_agent.app import activity, questions, site_traffic
+
     with _locked(product_dir):
         accounts_path, tokens_path = _paths(product_dir)
         accounts = _read(accounts_path)
@@ -177,6 +180,122 @@ def delete_account(product_dir: Path, user_id: str) -> None:
         tokens = _read(tokens_path)
         tokens = {tok: row for tok, row in tokens.items() if row.get("user_id") != user_id}
         _write(tokens_path, tokens)
+        _drop_resets(product_dir, user_id)
+    activity.forget(product_dir, user_id)
+    questions.scrub(product_dir, user_id=user_id)
+    site_traffic.forget(product_dir, user_id)
+
+
+# ---------------------------------------------------------------- passwords
+
+# A reset link works once, for an hour (CEREBEL_RESET_TTL_MINUTES). Only its SHA-256 is on disk.
+RESET_TTL = timedelta(minutes=float(os.environ.get("CEREBEL_RESET_TTL_MINUTES") or 60))
+
+
+def _resets_path(product_dir: Path) -> Path:
+    return product_dir / "password_resets.json"
+
+
+def _reset_key(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _live_resets(product_dir: Path, now: datetime) -> dict[str, Any]:
+    return {k: r for k, r in _read(_resets_path(product_dir)).items() if not _token_expired(r, now)}
+
+
+def _drop_resets(product_dir: Path, user_id: str) -> None:
+    """Caller holds the accounts lock."""
+    path = _resets_path(product_dir)
+    if not path.is_file():
+        return
+    resets = {k: r for k, r in _read(path).items() if isinstance(r, dict) and r.get("user_id") != user_id}
+    _write(path, resets)
+
+
+def _set_password(row: dict[str, Any], password: str) -> None:
+    if len(password or "") < 8:
+        raise ValueError("Password must be at least 8 characters.")
+    row["salt"] = secrets.token_hex(16)
+    row["password_hash"] = _hash_password(password, row["salt"])
+    row["password_changed_at"] = row["last_active_at"] = _now()
+
+
+def create_password_reset(product_dir: Path, email: str, *, ttl: timedelta | None = None) -> str | None:
+    """A one-time reset token for this email, or None when no account uses it."""
+    email = (email or "").strip().lower()
+    now = datetime.now(timezone.utc)
+    with _locked(product_dir):
+        accounts_path, _ = _paths(product_dir)
+        row = _read(accounts_path).get(email)
+        if not row:
+            return None
+        resets = _live_resets(product_dir, now)
+        token = secrets.token_urlsafe(32)
+        resets[_reset_key(token)] = {
+            "user_id": row["user_id"],
+            "created_at": now.isoformat(),
+            "expires_at": (now + (ttl or RESET_TTL)).isoformat(),
+        }
+        _write(_resets_path(product_dir), resets)
+    return token
+
+
+def reset_password(product_dir: Path, token: str, new_password: str) -> dict[str, Any]:
+    """Set a new password from a reset link. Signs out every device and returns a fresh login."""
+    if len(new_password or "") < 8:
+        raise ValueError("Password must be at least 8 characters.")
+    now = datetime.now(timezone.utc)
+    with _locked(product_dir):
+        reset = _live_resets(product_dir, now).get(_reset_key(str(token or "")))
+        accounts_path, tokens_path = _paths(product_dir)
+        accounts = _read(accounts_path)
+        row = next((r for r in accounts.values() if reset and r.get("user_id") == reset.get("user_id")), None)
+        if row is None:
+            raise ValueError("This reset link has expired or was already used. Ask for a new one.")
+        _set_password(row, new_password)
+        _write(accounts_path, accounts)
+        _drop_resets(product_dir, row["user_id"])
+        _revoke_tokens(tokens_path, row["user_id"])
+        login_token = _issue_token(tokens_path, row["user_id"], row["email"])
+    return {"ok": True, "token": login_token, "user": {"user_id": row["user_id"], "email": row["email"]}}
+
+
+def change_password(product_dir: Path, user_id: str, current: str, new_password: str) -> dict[str, Any]:
+    """Signed-in password change. Other devices are signed out; returns this device's new login."""
+    with _locked(product_dir):
+        accounts_path, tokens_path = _paths(product_dir)
+        accounts = _read(accounts_path)
+        row = next((r for r in accounts.values() if r.get("user_id") == user_id), None)
+        if row is None:
+            raise LookupError("Account not found.")
+        given = _hash_password(current or "", row.get("salt") or "")
+        if not hmac.compare_digest(given, str(row.get("password_hash") or "")):
+            raise ValueError("Your current password is incorrect.")
+        _set_password(row, new_password)
+        _write(accounts_path, accounts)
+        _drop_resets(product_dir, user_id)
+        _revoke_tokens(tokens_path, user_id)
+        login_token = _issue_token(tokens_path, user_id, row["email"])
+    return {"ok": True, "token": login_token, "user": {"user_id": user_id, "email": row["email"]}}
+
+
+def _revoke_tokens(tokens_path: Path, user_id: str) -> None:
+    tokens = {tok: r for tok, r in _read(tokens_path).items() if isinstance(r, dict) and r.get("user_id") != user_id}
+    _write(tokens_path, tokens)
+
+
+def prune_password_resets(product_dir: Path) -> int:
+    """Drop expired reset tokens (the retention job calls this)."""
+    path = _resets_path(product_dir)
+    if not path.is_file():
+        return 0
+    with _locked(product_dir):
+        resets = _read(path)
+        live = _live_resets(product_dir, datetime.now(timezone.utc))
+        if len(live) != len(resets):
+            _write(path, live)
+    return len(resets) - len(live)
 
 
 def logout(product_dir: Path, token: str | None) -> None:
@@ -206,6 +325,8 @@ def profile(product_dir: Path, user_id: str) -> dict[str, Any]:
                 "video_consent_at": row.get("video_consent_at"),
                 "video_consent_retention_days": row.get("video_consent_retention_days"),
                 "last_active_at": row.get("last_active_at"),
+                "last_login_at": row.get("last_login_at"),
+                "password_changed_at": row.get("password_changed_at"),
             }
     return {}
 

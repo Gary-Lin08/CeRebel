@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>CeRebel 后台</title>
+  <link rel="stylesheet" href="/static/admin.css" />
+  <script src="/static/admin-charts.js" defer></script>
+  <script src="/static/admin.js" defer></script>
+</head>
+<body>
+  <main id="login" class="login" hidden>
+    <form id="loginForm" class="card login__card" autocomplete="on">
+      <h1>CeRebel 后台</h1>
+      <p class="muted">用管理员邮箱登录，再输入后台密码。</p>
+      <label>邮箱 <input id="loginEmail" type="email" autocomplete="username" required /></label>
+      <label>账号密码 <input id="loginPassword" type="password" autocomplete="current-password" required /></label>
+      <label>后台密码 <input id="loginAdminPassword" type="password" autocomplete="off" required /></label>
+      <button type="submit" class="primary" id="loginSubmit">登录</button>
+      <p class="status" id="loginStatus" role="status"></p>
+    </form>
+  </main>
+
+  <div id="app" hidden>
+    <header class="top">
+      <strong class="top__brand">CeRebel 后台</strong>
+      <nav class="tabs" aria-label="后台栏目">
+        <button type="button" data-tab="live" class="is-active">实时</button>
+        <button type="button" data-tab="traffic">流量</button>
+        <button type="button" data-tab="backers">Backer</button>
+        <button type="button" data-tab="overview">总览</button>
+        <button type="button" data-tab="users">用户</button>
+        <button type="button" data-tab="feedback">反馈</button>
+        <button type="button" data-tab="questions">提问</button>
+        <button type="button" data-tab="audit">审计日志</button>
+      </nav>
+      <span class="top__me muted" id="meEmail"></span>
+      <button type="button" id="refresh">刷新</button>
+      <button type="button" id="logout">退出</button>
+    </header>
+    <p class="status status--bar" id="appStatus" role="status"></p>
+
+    <section id="tab-live" class="tab"></section>
+    <section id="tab-traffic" class="tab" hidden></section>
+    <section id="tab-backers" class="tab" hidden></section>
+    <section id="tab-overview" class="tab" hidden></section>
+    <section id="tab-users" class="tab" hidden>
+      <div class="toolbar">
+        <input id="userSearch" type="search" placeholder="搜索邮箱、用户 ID、教练码" aria-label="搜索用户" />
+        <span class="muted" id="userCount"></span>
+      </div>
+      <div class="table-wrap"><table id="userTable"></table></div>
+    </section>
+    <section id="tab-user" class="tab" hidden></section>
+    <section id="tab-feedback" class="tab" hidden></section>
+    <section id="tab-questions" class="tab" hidden></section>
+    <section id="tab-audit" class="tab" hidden></section>
+  </div>
+
+  <dialog id="videoDialog" class="video-dialog">
+    <div class="video-dialog__head">
+      <strong id="videoTitle">视频</strong>
+      <button type="button" id="videoClose">关闭</button>
+    </div>
+    <video id="videoPlayer" controls playsinline preload="metadata"></video>
+    <p class="muted" id="videoMeta"></p>
+    <div id="videoSources" class="video-dialog__sources"></div>
+    <p class="muted small">每次播放都会记入审计日志。</p>
+  </dialog>
+</body>
+</html>

@@ -31,6 +31,10 @@ What it does, matching the public Privacy Policy:
 7. Coach question counters. question_counts.json counts today's questions per account and per
    visitor IP; take_question only resets it on the next question, so an earlier day's counts are
    deleted here.
+8. Coach questions (questions.jsonl, signed-in users' question text) after
+   CEREBEL_QUESTION_RETENTION_DAYS (default 90). Visits (activity.json) and the admin audit log
+   after the inactivity limit; expired password-reset links right away. Website page views
+   (site_events.jsonl) after CEREBEL_SITE_EVENT_RETENTION_DAYS (default 90).
 
 Every run is logged, and appended to <data>/product/retention.jsonl (ids and counts only).
 """
@@ -186,6 +190,11 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
         "events_removed": 0,
         "legacy_events_removed": 0,
         "question_counts_cleared": 0,
+        "questions_removed": 0,
+        "visits_removed": 0,
+        "password_resets_removed": 0,
+        "admin_audit_removed": 0,
+        "site_events_removed": 0,
     }
 
     # 1. Inactive accounts (first, so their sessions are not counted twice below).
@@ -312,6 +321,27 @@ def run(settings: Settings, *, dry_run: bool = False, now: datetime | None = Non
     # 7. Question counters of an earlier day (they include visitor IPs).
     report["question_counts_cleared"] = clear_old_question_counts(settings.product_dir, dry_run=dry_run, now=now)
 
+    # 8. Coach question text, visits, reset links and the admin audit log.
+    from motion_agent.app import activity, admin, questions, site_traffic
+    from motion_agent.app.accounts import prune_password_resets
+
+    report["site_events_removed"] = site_traffic.prune(
+        settings.product_dir, older_than=now - timedelta(days=site_traffic.retention_days()), dry_run=dry_run
+    )
+
+    report["questions_removed"] = questions.scrub(
+        settings.product_dir, older_than=now - timedelta(days=questions.retention_days()), dry_run=dry_run
+    )
+    report["visits_removed"] = activity.prune(
+        settings.product_dir,
+        older_than=inactive_cutoff,
+        keep_users={str(a.get("user_id")) for a in list_accounts(settings.product_dir) if a.get("user_id")},
+        dry_run=dry_run,
+    )
+    if not dry_run:
+        report["password_resets_removed"] = prune_password_resets(settings.product_dir)
+    report["admin_audit_removed"] = admin.prune_audit(settings, older_than=inactive_cutoff, dry_run=dry_run)
+
     if not dry_run:
         _append_log(settings, report)
     return report
@@ -385,7 +415,9 @@ def summary_line(report: dict[str, Any]) -> str:
         f"{len(report['gemx_logs_deleted'])} GEM-X logs, "
         f"{report['events_removed']} old usage events "
         f"(+{report['legacy_events_removed']} legacy), "
-        f"{report['question_counts_cleared']} stale question counters"
+        f"{report['question_counts_cleared']} stale question counters, "
+        f"{report.get('questions_removed', 0)} coach questions, "
+        f"{report.get('visits_removed', 0)} visits"
     )
 
 

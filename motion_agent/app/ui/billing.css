@@ -49,3 +49,22 @@ body.pg-consumer .account-panel a { color: var(--accent, #e1fe67); }
 .cb-tips summary { cursor: pointer; color: var(--text); }
 .cb-tips ul { margin: .4rem 0 0; padding-left: 1.1rem; color: var(--muted); }
 .cb-tips li { margin: .2rem 0; }
+.cb-trust__more{display:flex;flex-wrap:wrap;align-items:flex-start;gap:.5rem;flex-basis:100%}
+.cb-trust__more textarea{flex:1 1 16rem;min-height:2.6rem;font:inherit;font-size:.9rem;padding:.4rem .55rem;border:1px solid var(--rule);background:var(--panel-2);color:var(--text);resize:vertical}
+/* Forgot password, change password and feedback in the account panel. */
+.account-forgot { margin: -.15rem 0 0; }
+.account-linkish { font: inherit; font-size: .875rem; padding: 0; border: 0; background: none; color: var(--accent, #e1fe67); text-decoration: underline; cursor: pointer; }
+.account-more { margin: .75rem 0; font-size: var(--step-small, .9rem); }
+.account-more summary { cursor: pointer; color: var(--text); padding: .35rem 0; }
+.account-more form { display: grid; gap: .5rem; margin-top: .4rem; }
+.account-more label { display: grid; gap: .25rem; color: var(--muted); }
+.account-more input, .account-more textarea {
+  font: inherit; padding: .45rem .55rem; border: 1px solid var(--rule); background: var(--panel-2); color: var(--text);
+}
+.account-more textarea { resize: vertical; }
+.account-more button {
+  justify-self: start; font: inherit; font-size: .9rem; padding: .45rem .9rem; min-height: 40px;
+  border: 1px solid var(--rule); background: var(--panel-2); color: var(--text); cursor: pointer;
+}
+.account-more button.primary { background: var(--accent, #e1fe67); color: #0b0c0b; border-color: transparent; font-weight: 600; }
+.account-more .status { margin: 0; }

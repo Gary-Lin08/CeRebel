@@ -2441,8 +2441,9 @@ code {
       </div>
       <form id="accountForm">
         <p id="accountHint">Sign in to upload your own clip. Without an account you can still try the sample. <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
-        <label>Email <input id="accountEmail" type="email" autocomplete="username" required /></label>
-        <label>Password <input id="accountPassword" type="password" autocomplete="current-password" minlength="8" required /></label>
+        <label id="accountEmailRow">Email <input id="accountEmail" type="email" autocomplete="username" required /></label>
+        <label id="accountPasswordRow"><span id="accountPasswordLabel">Password</span> <input id="accountPassword" type="password" autocomplete="current-password" minlength="8" required /></label>
+        <p class="account-forgot" id="accountForgotRow"><button type="button" class="account-linkish" id="accountForgot">Forgot password?</button></p>
         <label id="accountCoachRow" hidden>Coach code (optional) <input id="accountCoach" type="text" maxlength="32" autocomplete="off" placeholder="If a coach sent you here" /></label>
         <label class="cb-consent" id="accountConsentRow" hidden><input id="accountConsent" type="checkbox" /> <span>I'm 18+ (or have a parent's OK), I agree to the <a href="/terms" target="_blank">Terms</a> and <a href="/privacy" target="_blank">Privacy Policy</a>, and I consent to CeRebel processing my videos and the body data derived from them to analyse my movement.</span></label>
         <div class="account-panel__actions">
@@ -2459,6 +2460,24 @@ code {
         <p class="status" id="uploadQuota"></p>
         <p class="status" id="uploadStatus"></p>
         <ul id="libraryList"></ul>
+        <details class="account-more" id="feedbackBox">
+          <summary>Send feedback</summary>
+          <form id="feedbackForm">
+            <label for="feedbackText">What worked, what didn't, what you'd like next?</label>
+            <textarea id="feedbackText" rows="4" maxlength="2000" required></textarea>
+            <button type="submit" class="primary">Send</button>
+            <p class="status" id="feedbackStatus"></p>
+          </form>
+        </details>
+        <details class="account-more" id="passwordBox">
+          <summary>Change password</summary>
+          <form id="passwordForm">
+            <label>Current password <input id="passwordCurrent" type="password" autocomplete="current-password" required /></label>
+            <label>New password <input id="passwordNew" type="password" autocomplete="new-password" minlength="8" required /></label>
+            <button type="submit" class="primary">Change password</button>
+            <p class="status" id="passwordStatus"></p>
+          </form>
+        </details>
         <button type="button" id="deleteAccount">Delete account and videos</button>
       </div>
     </section>
@@ -2796,6 +2815,15 @@ code {
     let libraryPoll = null;
     let preferredSport = "golf";
     try { authToken = localStorage.getItem(AUTH_KEY) || ""; } catch (_) {}
+    // A password-reset email links to /#reset=<token> (a fragment never reaches server logs).
+    let resetToken = "";
+    const resetMatch = /^#reset=([A-Za-z0-9_-]{20,})$/.exec(window.location.hash || "");
+    if (resetMatch) {
+      resetToken = resetMatch[1];
+      authToken = "";
+      try { localStorage.removeItem(AUTH_KEY); } catch (_) {}
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
     try {
       preferredSport = localStorage.getItem(PREFERRED_SPORT_KEY) || "golf";
     } catch (_) {}
@@ -6615,19 +6643,54 @@ code {
       if (!isDevUi) paintLandingPlans();
       syncTocHome();
     })();
+    // "login" | "register" | "forgot" (email a reset link) | "reset" (choose a new password from the link).
+    let accountHintDefault = null;
+    function setAccountMode(mode) {
+      accountMode = mode;
+      const submit = document.getElementById("accountSubmit");
+      if (submit) {
+        submit.textContent = { login: "Sign in", register: "Create account", forgot: "Email me a reset link", reset: "Set new password" }[mode];
+      }
+      if (accountModeBtn) accountModeBtn.textContent = mode === "login" ? "Create account" : mode === "register" ? "Have an account? Sign in" : "Back to sign in";
+      const show = (id, on) => { const el = document.getElementById(id); if (el) el.hidden = !on; };
+      show("accountCoachRow", mode === "register");
+      show("accountConsentRow", mode === "register");
+      show("accountEmailRow", mode !== "reset");
+      show("accountPasswordRow", mode !== "forgot");
+      show("accountForgotRow", mode === "login");
+      const email = document.getElementById("accountEmail");
+      if (email) email.required = mode !== "reset";
+      const pw = document.getElementById("accountPassword");
+      if (pw) {
+        pw.required = mode !== "forgot";
+        pw.autocomplete = mode === "register" || mode === "reset" ? "new-password" : "current-password";
+      }
+      const pwLabel = document.getElementById("accountPasswordLabel");
+      if (pwLabel) pwLabel.textContent = mode === "reset" ? "New password" : "Password";
+      const hint = document.getElementById("accountHint");
+      if (hint) {
+        if (!accountHintDefault) accountHintDefault = Array.from(hint.childNodes, (n) => n.cloneNode(true));
+        const text = {
+          forgot: "Enter the email you signed up with. We'll send a link to choose a new password.",
+          reset: "Choose a new password. You'll be signed out on your other devices.",
+        }[mode];
+        if (text) hint.textContent = text;
+        else hint.replaceChildren(...accountHintDefault.map((n) => n.cloneNode(true)));
+      }
+      if (accountStatus) accountStatus.textContent = "";
+      if (mode === "register" && window.cerebelBilling) window.cerebelBilling.track("signup_view");
+    }
     if (accountModeBtn) {
       accountModeBtn.addEventListener("click", () => {
-        accountMode = accountMode === "login" ? "register" : "login";
-        const submit = document.getElementById("accountSubmit");
-        if (submit) submit.textContent = accountMode === "login" ? "Sign in" : "Create account";
-        accountModeBtn.textContent = accountMode === "login" ? "Create account" : "Have an account? Sign in";
-        const coachRow = document.getElementById("accountCoachRow");
-        const consentRow = document.getElementById("accountConsentRow");
-        if (coachRow) coachRow.hidden = accountMode !== "register";
-        if (consentRow) consentRow.hidden = accountMode !== "register";
-        const pw = document.getElementById("accountPassword");
-        if (pw) pw.autocomplete = accountMode === "register" ? "new-password" : "current-password";
-        if (accountMode === "register" && window.cerebelBilling) window.cerebelBilling.track("signup_view");
+        setAccountMode(accountMode === "login" ? "register" : "login");
+      });
+    }
+    const accountForgot = document.getElementById("accountForgot");
+    if (accountForgot) {
+      accountForgot.addEventListener("click", () => {
+        setAccountMode("forgot");
+        const email = document.getElementById("accountEmail");
+        if (email) email.focus();
       });
     }
     if (accountForm) {
@@ -6641,21 +6704,45 @@ code {
           return;
         }
         if (accountStatus) accountStatus.textContent = "Working…";
-        const payload = { email, password };
+        let url = "/api/auth/login";
+        let payload = { email, password };
         if (accountMode === "register") {
+          url = "/api/auth/register";
           payload.accept_terms = true;
           const coach = document.getElementById("accountCoach");
           if (coach && coach.value.trim()) payload.coach_code = coach.value.trim();
+        } else if (accountMode === "forgot") {
+          url = "/api/auth/forgot";
+          payload = { email };
+        } else if (accountMode === "reset") {
+          url = "/api/auth/reset";
+          payload = { token: resetToken, password };
         }
-        const r = await fetch(accountMode === "register" ? "/api/auth/register" : "/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await r.json();
+        let r;
+        let data = {};
+        try {
+          r = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          data = await r.json();
+        } catch (_) {
+          if (accountStatus) accountStatus.textContent = "Network problem. Check your connection and try again.";
+          return;
+        }
         if (!r.ok) {
           if (accountStatus) accountStatus.textContent = data.message || "Could not sign in";
           return;
+        }
+        if (accountMode === "forgot") {
+          if (accountStatus) accountStatus.textContent = data.message || "Check your inbox.";
+          return;
+        }
+        if (accountMode === "reset") {
+          resetToken = "";
+          setAccountMode("login");
+          showToast("Password changed. You're signed in.");
         }
         authToken = data.token || "";
         try { localStorage.setItem(AUTH_KEY, authToken); } catch (_) {}
@@ -6763,6 +6850,74 @@ code {
         if (libraryList) libraryList.innerHTML = "";
         loadSession();
       });
+    }
+    const passwordForm = document.getElementById("passwordForm");
+    if (passwordForm) {
+      passwordForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const status = document.getElementById("passwordStatus");
+        if (status) status.textContent = "Working…";
+        const r = await fetch("/api/account/password", {
+          method: "POST",
+          headers: authHeaders({ "Content-Type": "application/json" }),
+          body: JSON.stringify({
+            current_password: document.getElementById("passwordCurrent").value,
+            new_password: document.getElementById("passwordNew").value,
+          }),
+        });
+        let data = {};
+        try { data = await r.json(); } catch (_) {}
+        if (!r.ok) {
+          if (status) status.textContent = data.message || "Could not change the password.";
+          return;
+        }
+        authToken = data.token || authToken;
+        try { localStorage.setItem(AUTH_KEY, authToken); } catch (_) {}
+        passwordForm.reset();
+        if (status) status.textContent = "Password changed. Your other devices were signed out.";
+      });
+    }
+    const feedbackForm = document.getElementById("feedbackForm");
+    if (feedbackForm) {
+      feedbackForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const status = document.getElementById("feedbackStatus");
+        const text = document.getElementById("feedbackText").value.trim();
+        if (!text) return;
+        if (status) status.textContent = "Sending…";
+        const r = await fetch("/api/feedback", {
+          method: "POST",
+          headers: authHeaders({ "Content-Type": "application/json" }),
+          body: JSON.stringify({ text, session_id: activeSessionId || "" }),
+        });
+        let data = {};
+        try { data = await r.json(); } catch (_) {}
+        if (!r.ok) {
+          if (status) status.textContent = data.message || "Could not send. Try again.";
+          return;
+        }
+        feedbackForm.reset();
+        if (status) status.textContent = "Thanks! We read every message.";
+      });
+    }
+    // While the page is open and visible, tell the server once a minute so time spent reading a
+    // report counts as use (the admin dashboard shows visits and their length).
+    function pingActivity() {
+      if (!authToken || document.visibilityState !== "visible") return;
+      fetch("/api/activity/ping", {
+        method: "POST",
+        headers: authHeaders({ "Content-Type": "application/json" }),
+        body: "{}",
+        keepalive: true,
+      }).catch(() => {});
+    }
+    window.setInterval(pingActivity, 60000);
+    document.addEventListener("visibilitychange", pingActivity);
+    if (resetToken) {
+      setAccountMode("reset");
+      openAccountPanel(false);
+      const pw = document.getElementById("accountPassword");
+      if (pw) pw.focus();
     }
     // Drop a clip anywhere on the page to upload it.
     if (!isDevUi && uploadFile) {

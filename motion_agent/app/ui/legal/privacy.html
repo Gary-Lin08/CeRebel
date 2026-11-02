@@ -9,7 +9,7 @@ p,li{color:var(--ink)}.meta{color:var(--muted);font-size:14px;margin-bottom:24px
 table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600}
 </style></head><body><main>
 <h1>Privacy Policy</h1>
-<p class="meta">Effective October 24, 2026 · <a href="/">Back to CeRebel</a> · <a href="/terms">Terms of Service</a></p>
+<p class="meta">Effective October 26, 2026 · <a href="/">Back to CeRebel</a> · <a href="/terms">Terms of Service</a></p>
 
 <div class="box"><strong>In short:</strong> we use your swing videos only to build a 3D model of your body and coach your swing. Everything is stored and processed in the United States. We never use your video to identify you, never build face templates, never sell your data, and never give medical diagnoses. Original videos are deleted {{RAW_VIDEO_RETENTION_DAYS}} days after processing, and you can delete any swing, or your whole account, at any time.</div>
 
@@ -17,13 +17,16 @@ table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}th,td{bord
 
 <h2>1. What we collect</h2>
 <ul>
-<li><strong>Account:</strong> your email address, a salted hash of your password (never the password itself), an optional coach code, login sessions, when you accepted the Terms and this policy, when and to which version of the video consent you agreed, and when you last used CeRebel.</li>
+<li><strong>Account:</strong> your email address, a salted hash of your password (never the password itself), an optional coach code, login sessions, when you signed in, when and for how long you used CeRebel while signed in (visits), when you accepted the Terms and this policy, and when and to which version of the video consent you agreed.</li>
 <li><strong>Videos you upload.</strong> To process a video we also keep, for a short time, the frames extracted from it, a playback copy for your report, and one still image.</li>
 <li><strong>Body data derived from your videos</strong> (see section 2): a 3D body model, joint positions, joint angles, estimated joint loads, swing phases and the coaching results.</li>
-<li><strong>Coach questions.</strong> Your questions and the coach's answers are processed to answer you. We do not keep a transcript on our servers; we record only that a question was asked (time, account and swing).</li>
+<li><strong>Coach questions.</strong> Your questions and the coach's answers are processed to answer you. If you are signed in, we keep the text of your questions (not the answers) for {{QUESTION_RETENTION_DAYS}} days, with the time and the swing, to help you when you contact us and to improve the coach. If you are not signed in, we record only that a question was asked.</li>
+<li><strong>Feedback you send us:</strong> your answer to "Does this match what you feel?" and anything you write to us in the app, with your account ID and the swing it is about.</li>
 <li><strong>Billing:</strong> handled by Stripe. We receive your subscription status, plan and a Stripe customer ID, never your card number.</li>
 <li><strong>Usage events</strong> such as "upload started" or "report viewed", with a time, your account ID, the swing ID and a random browser ID, to improve the product.</li>
-<li><strong>Technical data:</strong> our web server and Cloudflare process your IP address, browser type and the pages you request to deliver and secure the service, and our server writes them to its technical logs.</li>
+<li><strong>Website visits (cerebel.tech and the Playground, signed in or not):</strong> a random browser ID kept in your browser's local storage, the page you opened (without its query string), the website that sent you and any campaign tags in the link, the buttons you click, your country, your time zone, your device type and your browser family. We do not store your IP address with this data. If you are signed in, it is linked to your account. We use it to see how many people visit and where they come from.</li>
+<li><strong>Glasses presale list:</strong> if you join it, your email, the optional name and intended use you enter, the time, your country and the website that sent you. We use your email only for presale news. Joining takes no payment.</li>
+<li><strong>Technical data:</strong>our web server and Cloudflare process your IP address, browser type and the pages you request to deliver and secure the service, and our server writes them to its technical logs.</li>
 </ul>
 
 <h2>2. The 3D body model and joint angles</h2>
@@ -38,7 +41,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}th,td{bord
 <p>CeRebel gives coaching feedback, not a medical diagnosis or treatment. Joint loads are model-based estimates from a single phone video. Talk to a doctor or physical therapist about pain or injury.</p>
 
 <h2>4. How we use your data</h2>
-<p>Only to provide CeRebel to you: to rebuild and analyse your movement, show your history, answer your questions, run billing, send account and "your analysis is ready" emails, keep the service secure, and improve the product from usage events. We do not sell, rent or trade personal information, we do not share it for targeted advertising, and we do not use your videos or body data to train third-party AI models.</p>
+<p>Only to provide CeRebel to you: to rebuild and analyse your movement, show your history, answer your questions, run billing, send account, password-reset and "your analysis is ready" emails, help you when you contact us, keep the service secure, and improve the product from usage events, feedback and coach questions. We do not sell, rent or trade personal information, we do not share it for targeted advertising, and we do not use your videos or body data to train third-party AI models.</p>
 
 <h2>5. Your consent to video processing</h2>
 <p>Before your first upload we ask for a separate, explicit consent that names the services below and the retention periods in section 8. We record the version of that text and the time you agreed. If the text or the retention period becomes longer, we ask again before your next upload. You can withdraw consent at any time by deleting your swings or your account; we then stop processing them.</p>
@@ -55,6 +58,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}th,td{bord
 <tr><td>SpaceMail</td><td>Account and "analysis ready" emails</td><td>United States</td></tr>
 </table>
 <p>We may also disclose information if the law requires it, or to protect the safety of our users, and only as that requires.</p>
+<p><strong>Inside CeRebel</strong>, only team members who need it can see account data, through an admin dashboard that requires an administrator account and a separate admin password. They may play a swing video or look at its results only to give support you asked for, fix a problem with that swing, or keep the service secure. Every video playback is logged with who viewed it and when.</p>
 
 <h2>7. Where your data is stored</h2>
 <p>We store and process your videos, body data and account data only in the United States, using the providers above. We do not transfer them to other countries.</p>
@@ -65,7 +69,10 @@ table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}th,td{bord
 <tr><td>Original video, its frames, playback copy and still image</td><td>Deleted automatically {{RAW_VIDEO_RETENTION_DAYS}} days after processing. Your report then shows the 3D model and numbers without video playback.</td></tr>
 <tr><td>Uploads that fail our quality check</td><td>Deleted immediately.</td></tr>
 <tr><td>3D body model, joint angles and other results</td><td>Until you delete the swing or your account, and deleted automatically {{INACTIVE_DELETE_PERIOD}} after your last interaction with CeRebel (signing in, uploading or using the app while signed in). An account with a paid subscription that is still renewing is treated as active.</td></tr>
-<tr><td>Account and usage events</td><td>Until you delete your account, or {{INACTIVE_DELETE_PERIOD}} after your last interaction. Usage events are also deleted once they are {{INACTIVE_DELETE_PERIOD}} old.</td></tr>
+<tr><td>Account and usage events (including sign-ins, visits and feedback)</td><td>Until you delete your account, or {{INACTIVE_DELETE_PERIOD}} after your last interaction. Usage events and visits are also deleted once they are {{INACTIVE_DELETE_PERIOD}} old.</td></tr>
+<tr><td>Website visits</td><td>{{SITE_EVENT_RETENTION_DAYS}} days, or earlier for visits linked to your account when you delete it.</td></tr>
+<tr><td>Glasses presale list</td><td>Until you ask us to remove you, by writing to the contact in section 9. Deleting a CeRebel account does not remove it, because the list is separate from accounts.</td></tr>
+<tr><td>Text of your coach questions</td><td>{{QUESTION_RETENTION_DAYS}} days, or earlier when you delete that swing or your account.</td></tr>
 </table>
 <p>A deletion job runs every day. When you delete a swing or your account, we remove it from our live servers right away: your account, login sessions, videos, body data, local billing status and usage events. Account records are also in daily server backups that are kept for 14 days, so they disappear from backups within 14 days. Stripe keeps payment records as the law requires, and emails we already sent stay in your mailbox. We keep a deletion log that contains only random IDs and counts. If you have a Pro subscription that is still set to renew, cancel it first in <em>Manage subscription</em> so you are not charged again, then delete your account.</p>
 

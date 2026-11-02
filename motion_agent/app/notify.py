@@ -1,4 +1,5 @@
-"""Email the user when an analysis finishes. SMTP settings come from the environment.
+"""Email the user when an analysis finishes or a password reset is asked for.
+SMTP settings come from the environment.
 
     CEREBEL_SMTP_HOST, CEREBEL_SMTP_PORT (465 = SSL, otherwise STARTTLS),
     CEREBEL_SMTP_USER, CEREBEL_SMTP_PASSWORD, CEREBEL_MAIL_FROM
@@ -74,7 +75,7 @@ def _send(msg: EmailMessage) -> None:
                     smtp.login(user, password)
                 smtp.send_message(msg)
     except Exception:  # noqa: BLE001
-        LOG.exception("analysis email failed to=%s", msg.get("To"))
+        LOG.exception("email failed subject=%r", msg.get("Subject"))
 
 
 def notify_analysis(to: str | None, status: str, session_id: str, detail: str = "") -> bool:
@@ -83,4 +84,21 @@ def notify_analysis(to: str | None, status: str, session_id: str, detail: str = 
         return False
     msg = build_message(to, status, session_id, detail)
     threading.Thread(target=_send, args=(msg,), name=f"mail-{session_id[:8]}", daemon=True).start()
+    return True
+
+
+def send_password_reset(to: str | None, link: str, minutes: int) -> bool:
+    """Send a reset link in the background. Returns True when an email was queued."""
+    if not to or not enabled():
+        return False
+    msg = EmailMessage()
+    msg["From"] = _env("CEREBEL_MAIL_FROM")
+    msg["To"] = to
+    msg["Subject"] = "Reset your CeRebel password"
+    msg.set_content(
+        "Someone (hopefully you) asked to reset the password of your CeRebel account.\n\n"
+        f"Choose a new password here. The link works once, for {minutes} minutes:\n{link}\n\n"
+        "If you didn't ask for this, ignore this email. Your password stays the same.\n\n— CeRebel\n"
+    )
+    threading.Thread(target=_send, args=(msg,), name="mail-reset", daemon=True).start()
     return True
