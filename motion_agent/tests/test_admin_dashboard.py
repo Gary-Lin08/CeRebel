@@ -492,6 +492,53 @@ class SiteTrafficTests(unittest.TestCase):
         self.assertEqual(path.read_text(encoding="utf-8"), "{broken")
 
 
+class SupabaseBackerTests(unittest.TestCase):
+    ENV = {"CEREBEL_SUPABASE_URL": "https://x.example.test", "CEREBEL_SUPABASE_KEY": "k", "CEREBEL_BACKERS_ADMIN_TOKEN": "t"}
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.product = Path(self.tmp.name)
+        rate_limit.clear_all()
+        site_traffic._forget_remote_cache()  # noqa: SLF001
+        patcher = mock.patch.dict(os.environ, self.ENV)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.addCleanup(self.tmp.cleanup)
+        self.addCleanup(site_traffic._forget_remote_cache)  # noqa: SLF001
+
+    def test_list_is_read_with_the_token_and_cached(self):
+        rows = [{"id": "a", "email": "fan@example.com", "use_case": "Research", "created_at": "2026-11-02T00:00:00+00:00"}]
+        with mock.patch.object(site_traffic, "_rpc", return_value=rows) as rpc:
+            first = site_traffic.backers(self.product)
+            site_traffic.backers(self.product)
+        rpc.assert_called_once_with("admin_list_backers", {"token": "t"})
+        self.assertEqual((first[0]["email"], first[0]["use"]), ("fan@example.com", "Research"))
+        self.assertIsNone(site_traffic.backer_store_error())
+
+    def test_failed_read_keeps_last_list_and_reports_it(self):
+        rows = [{"id": "a", "email": "fan@example.com"}]
+        with mock.patch.object(site_traffic, "_rpc", return_value=rows):
+            site_traffic.backers(self.product)
+        site_traffic._remote["at"] = None  # noqa: SLF001
+        with mock.patch.object(site_traffic, "_rpc", side_effect=RuntimeError("down")):
+            self.assertEqual(site_traffic.backers(self.product)[0]["email"], "fan@example.com")
+        self.assertTrue(site_traffic.backer_store_error())
+
+    def test_signup_through_server_goes_to_supabase_not_the_file(self):
+        with mock.patch.object(site_traffic, "_rpc") as rpc:
+            code, _ = site_traffic.handle_backer(self.product, {"email": "fan@example.com"}, BROWSER, "1.1.1.1")
+        self.assertEqual(code, 200)
+        self.assertEqual(rpc.call_args[0][0], "join_backer_list")
+        self.assertFalse((self.product / "backers.json").exists())
+
+    def test_remove_uses_token_and_refreshes(self):
+        with mock.patch.object(site_traffic, "_rpc", return_value="fan@example.com") as rpc:
+            self.assertEqual(site_traffic.remove_backer(self.product, "a"), "fan@example.com")
+        rpc.assert_called_once_with("admin_remove_backer", {"token": "t", "backer_id": "a"})
+        with mock.patch.object(site_traffic, "_rpc", return_value=None):
+            self.assertIsNone(site_traffic.remove_backer(self.product, "gone"))
+
+
 class SiteTrafficHttpTests(AdminHttpTests):
     """Everything together over HTTP, on the same server setup as the admin tests."""
 

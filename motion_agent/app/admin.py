@@ -363,6 +363,7 @@ def live(settings: Settings) -> dict[str, Any]:
             "payments": sum(1 for e in product if e.get("kind") == PAYMENT_DONE and is_today(e.get("ts"))),
         },
         "backers_total": len(backers),
+        "backer_store_error": site_traffic.backer_store_error(),
         "latest_backer": backers[0].get("email") if backers else None,
         "pro_total": sum(1 for uid in bill.get("users", {}) if billing.is_pro(settings.product_dir, uid)),
         "feed": feed[:50],
@@ -451,13 +452,16 @@ def backer_overview(settings: Settings) -> dict[str, Any]:
         {**b, "has_account": str(b.get("email") or "") in by_email}
         for b in site_traffic.backers(settings.product_dir)
     ]
-    return {"ok": True, "backers": backers, "paying": paying, "founding_used": int(billing._read(settings.product_dir).get("founding_used") or 0)}  # noqa: SLF001
+    return {"ok": True, "backers": backers, "backer_store_error": site_traffic.backer_store_error(), "paying": paying, "founding_used": int(billing._read(settings.product_dir).get("founding_used") or 0)}  # noqa: SLF001
 
 
 def remove_backer(settings: Settings, sess: dict[str, Any], backer_id: str) -> tuple[int, dict[str, Any]]:
     if not _ID.match(backer_id):
         return 400, {"error": True, "message": "bad id"}
-    email = site_traffic.remove_backer(settings.product_dir, backer_id)
+    try:
+        email = site_traffic.remove_backer(settings.product_dir, backer_id)
+    except RuntimeError:
+        return 502, {"error": True, "message": "连不上 Supabase，没有移除，请稍后再试。"}
     if email is None:
         return 404, {"error": True, "message": "这条记录已不存在。"}
     # The log keeps the row's random id, not the address of someone who asked to be removed.

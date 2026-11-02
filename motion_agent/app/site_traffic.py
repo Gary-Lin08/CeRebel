@@ -12,9 +12,12 @@ Stored for a visitor: a random browser ID, the page without its query string, th
 hostname, UTM tags, country, time zone, device type and browser family. The IP address and the full
 user agent are never written; the IP is only a key for the in-memory rate limit.
 
-Presale sign-ups go to data/product/backers.json, one row per email, kept until an admin removes the
-row. They are not tied to accounts, so deleting an account does not remove them; an account's rows in
-site_events.jsonl do go with the account.
+Presale sign-ups live in Supabase once CEREBEL_SUPABASE_URL, CEREBEL_SUPABASE_KEY and
+CEREBEL_BACKERS_ADMIN_TOKEN are set, so a GPU server outage cannot lose one: cerebel.tech writes to the
+join_backer_list function directly, and this module reads through admin_list_backers. Without those
+variables they go to data/product/backers.json. Either way there is one row per email, kept until an
+admin removes it. They are not tied to accounts, so deleting an account does not remove them; an
+account's rows in site_events.jsonl do go with the account.
 """
 
 from __future__ import annotations
@@ -24,6 +27,9 @@ import os
 import re
 import secrets
 import threading
+import time
+import urllib.error
+import urllib.request
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -53,6 +59,8 @@ _STATE_LOCK = threading.Lock()
 _presence: dict[str, dict[str, Any]] = {}
 _minutes: dict[int, set[str]] = {}
 _cache: dict[str, Any] = {"key": None, "rows": []}
+REMOTE_CACHE_S = 15.0  # the live page polls every 5 seconds
+_remote: dict[str, Any] = {"at": None, "rows": [], "error": None}
 
 
 def retention_days() -> int:
@@ -190,6 +198,14 @@ def handle_backer(product_dir: Path, body: dict[str, Any], headers: Any, ip: str
     if rate_limit.BACKER_PER_IP.blocked(ip):
         return 429, {"error": True, "message": "Too many tries. Please try again later."}
     rate_limit.BACKER_PER_IP.hit(ip)
+    if _remote_config():
+        try:
+            _rpc("join_backer_list", {"p": {k: body.get(k) for k in (
+                "email", "name", "use", "list", "path", "referrer", "utmSource", "utmCampaign", "visitor",
+            )}})
+        except RuntimeError:
+            return 503, {"error": True, "message": "Please try again later."}
+        return 200, {"ok": True}
     stamp = (now or datetime.now(timezone.utc)).isoformat()
     fields = {
         "name": _text(body.get("name"), 80),
@@ -417,8 +433,72 @@ def _write_backers(path: Path, data: dict[str, Any]) -> None:
     tmp.replace(path)
 
 
+def _remote_config() -> tuple[str, str, str] | None:
+    url = (os.environ.get("CEREBEL_SUPABASE_URL") or "").strip().rstrip("/")
+    key = (os.environ.get("CEREBEL_SUPABASE_KEY") or "").strip()
+    token = (os.environ.get("CEREBEL_BACKERS_ADMIN_TOKEN") or "").strip()
+    return (url, key, token) if url and key and token else None
+
+
+def _rpc(name: str, args: dict[str, Any]) -> Any:
+    """Call a Postgres function through Supabase. Raises RuntimeError on any failure."""
+    config = _remote_config()
+    if config is None:
+        raise RuntimeError("Supabase is not configured")
+    url, key, _token = config
+    req = urllib.request.Request(
+        f"{url}/rest/v1/rpc/{name}",
+        data=json.dumps(args).encode("utf-8"),
+        headers={"apikey": key, "Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            raw = resp.read()
+    except (OSError, ValueError) as exc:  # URLError and HTTPError are OSErrors
+        raise RuntimeError(f"Supabase {name} failed: {getattr(exc, 'code', type(exc).__name__)}") from None
+    try:
+        return json.loads(raw) if raw else None
+    except ValueError:
+        raise RuntimeError(f"Supabase {name} sent an unreadable answer") from None
+
+
+def _remote_backers() -> list[dict[str, Any]]:
+    """The list from Supabase, briefly cached. If a read fails, keep the last good list and say so."""
+    token = _remote_config()[2]  # type: ignore[index]
+    with _STATE_LOCK:
+        at = _remote["at"]
+        if at is not None and time.monotonic() - at < REMOTE_CACHE_S:
+            return _remote["rows"]
+    try:
+        rows_ = _rpc("admin_list_backers", {"token": token})
+        fresh = [{**r, "use": r.get("use_case") or ""} for r in rows_ if isinstance(r, dict)]
+        error = None
+    except RuntimeError as exc:
+        fresh, error = None, str(exc)
+    with _STATE_LOCK:
+        _remote["at"] = time.monotonic()
+        _remote["error"] = error
+        if fresh is not None:
+            _remote["rows"] = fresh
+        return _remote["rows"]
+
+
+def backer_store_error() -> str | None:
+    """Why the last read of the list failed, or None. The rows shown may then be out of date or empty."""
+    with _STATE_LOCK:
+        return _remote["error"] if _remote_config() else None
+
+
+def _forget_remote_cache() -> None:
+    with _STATE_LOCK:
+        _remote.update(at=None, rows=[], error=None)
+
+
 def backers(product_dir: Path) -> list[dict[str, Any]]:
     """Newest first."""
+    if _remote_config():
+        return _remote_backers()
     rows_ = [r for r in _read_backers(_backers_path(product_dir)).values() if isinstance(r, dict)]
     rows_.sort(key=lambda r: str(r.get("created_at") or ""), reverse=True)
     return rows_
@@ -426,6 +506,10 @@ def backers(product_dir: Path) -> list[dict[str, Any]]:
 
 def remove_backer(product_dir: Path, backer_id: str) -> str | None:
     """Delete one row by its id; returns the email removed, or None."""
+    if _remote_config():
+        email = _rpc("admin_remove_backer", {"token": _remote_config()[2], "backer_id": backer_id})  # type: ignore[index]
+        _forget_remote_cache()
+        return email if isinstance(email, str) else None
     path = _backers_path(product_dir)
     with locked(path, _BACKERS_LOCK):
         data = _read_backers(path)

@@ -336,16 +336,18 @@
     nodes.dot.classList.remove("is-stale");
     nodes.count.textContent = d.online.length;
     nodes.note.textContent = "每 5 秒刷新，最近 " + clock(d.now) + "。90 秒内有心跳算在线。";
-    if (state.backersSeen !== null && d.backers_total > state.backersSeen && d.latest_backer) {
+    if (d.backer_store_error) nodes.note.textContent += " Backer 数字可能不是最新：读取 Supabase 失败。";
+    if (!d.backer_store_error && state.backersSeen !== null && d.backers_total > state.backersSeen && d.latest_backer) {
       nodes.banner.textContent = "新 backer：" + d.latest_backer;
       nodes.banner.hidden = false;
     }
-    state.backersSeen = d.backers_total;
+    // A failed read must not look like a drop in backers, or set off the "new backer" notice later.
+    if (!d.backer_store_error) state.backersSeen = d.backers_total;
     var t = d.today;
     nodes.kpis.replaceChildren(
       kpi("今天访客", t.visitors, "打开页面 " + t.page_views + " 次（UTC）"),
       kpi("今天注册", t.signups),
-      kpi("今天新 backer", t.backers, "累计 " + d.backers_total),
+      kpi("今天新 backer", d.backer_store_error ? "—" : t.backers, d.backer_store_error ? "读取失败" : "累计 " + d.backers_total),
       kpi("今天付款", t.payments, "当前 Pro " + d.pro_total)
     );
     nodes.online.replaceChildren(table([
@@ -483,9 +485,10 @@
     query.addEventListener("input", paint);
     paint();
     var pro = d.paying.filter(function (p) { return p.pro; });
+    setStatus(d.backer_store_error ? "读取 Supabase 失败，下面的名单可能不是最新，甚至是空的。报名本身不受影响。" : "", !!d.backer_store_error);
     box.replaceChildren(
       h("div", { class: "kpis" }, [
-        kpi("Backer（预售名单）", d.backers.length, "只留了邮箱，没有付款"),
+        kpi("Backer（预售名单）", d.backer_store_error ? "—" : d.backers.length, "只留了邮箱，没有付款"),
         kpi("付费 Pro", pro.length, "创始会员名额已用 " + d.founding_used),
       ]),
       h("section", { class: "card" }, [
