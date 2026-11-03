@@ -1323,6 +1323,10 @@ def main() -> None:
         LOG.info("developer playground on 127.0.0.1:%s (public port serves the customer app only)", OPERATOR_PORT)
         threading.Thread(target=operator.serve_forever, name="operator-http", daemon=True).start()
     try:
+        from motion_agent.app import mirror
+
+        if mirror.start(SETTINGS.product_dir):
+            LOG.info("mirroring product data to Supabase every %ss", mirror.MIRROR_EVERY_S)
         server.serve_forever()
     except KeyboardInterrupt:
         LOG.info("shutting down")
