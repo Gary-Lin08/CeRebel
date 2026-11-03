@@ -1,6 +1,12 @@
 # 开发者后台：部署记录
 
-后台地址：`https://cerebel.tech/playground/admin`。
+主后台在 `https://cerebel.tech/admin`（主站仓库 `src/dashboard/`），读 Supabase 镜像，服务器停机也能打开。服务器自带的 `https://cerebel.tech/playground/admin` 保留，用来播放视频和生成重置密码链接。
+
+## 镜像
+
+`motion_agent/app/mirror.py` 随产品服务启动，每 30 秒把 `data/product/` 的变化（含删除）推到 Supabase。需要 `CEREBEL_SUPABASE_URL` 和 `CEREBEL_SUPABASE_SERVICE_KEY`。手动核对：`python -m motion_agent.app.mirror --once`，每张表应显示 OK。
+
+## 服务器后台的登录
 
 登录要同时满足：
 1. 用 `CEREBEL_ADMIN_EMAILS` 里的邮箱，以普通用户身份登录（账号要先在网站上注册）；
