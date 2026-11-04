@@ -30,4 +30,5 @@ for g in $SMOKE_GPUS; do
   "$PY" -m modal run deploy/modal_gemx.py::smoke --video "$SAMPLE" --gpu "$g" || echo "   smoke on $g failed"
 done
 echo
-echo "Done. On the web server set CEREBEL_GPU_BACKEND=modal plus MODAL_TOKEN_ID/MODAL_TOKEN_SECRET, then restart."
+echo "Done. Check runtime_ready: True in the prefetch result and the hub path in the smoke lines."
+echo "Then switch the web server: deploy/MODAL_SWITCH.md (CEREBEL_GPU_BACKEND=modal, MODAL_TOKEN_ID/SECRET, restart)."

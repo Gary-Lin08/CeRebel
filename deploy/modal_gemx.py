@@ -14,9 +14,9 @@ which runs:
     modal run deploy/modal_gemx.py::prefetch              # weights -> Volume (once)
     modal run deploy/modal_gemx.py::smoke --video clip.mp4 [--gpu A100-40GB]
 
-Then on the web server set CEREBEL_GPU_BACKEND=modal (see gemx_pipeline.run_gemx_modal,
-which calls Cls.from_name("cerebel-gemx", "Gemx")().run.remote(session_id, video_bytes,
-suffix, fps)).
+Then switch the web server over with deploy/MODAL_SWITCH.md (gemx_pipeline.run_gemx_modal calls
+Cls.from_name("cerebel-gemx", "Gemx")().run.spawn(session_id, video_bytes, suffix, fps) and
+waits for the result with a timeout).
 
 Knobs (read at deploy time): CEREBEL_MODAL_GPU (default L40S), CEREBEL_MODAL_MIN_CONTAINERS
 (default 0), CEREBEL_MODAL_MAX_CONTAINERS (default 10 = Modal Starter plan GPU limit),
