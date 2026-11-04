@@ -124,7 +124,9 @@ class WorkerStatusTests(_WorkerPort):
         self.assertEqual(gemx_pipeline.worker_status(timeout=1), "loading")
         w.ready = True
         self.assertEqual(gemx_pipeline.worker_status(timeout=1), "ready")
-        with mock.patch.object(gemx_pipeline, "GPU_BACKEND", "modal"):
+        # Modal: the state comes from a (mocked) lookup of the deployed class, see test_modal_backend.
+        with mock.patch.object(gemx_pipeline, "GPU_BACKEND", "modal"), \
+                mock.patch.object(gemx_pipeline, "modal_status", return_value="remote"):
             self.assertEqual(gemx_pipeline.worker_status(timeout=1), "remote")
 
 

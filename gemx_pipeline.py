@@ -45,6 +45,22 @@ WORKER_WAIT_READY_S = float(os.environ.get("CEREBEL_GEMX_WORKER_WAIT_READY_S", "
 # restart reloads the models in ~2 min) before it fails as "gpu_unavailable".
 WORKER_SUBMIT_WAIT_S = float(os.environ.get("CEREBEL_GEMX_WORKER_SUBMIT_WAIT_S", "300"))
 _WAIT_GAVE_UP_AT = float("-inf")  # time.monotonic() when a wait for the worker last ran out
+# CEREBEL_GPU_BACKEND=modal: the deployed app (deploy/modal_gemx.py) and how long one call may take.
+# The Modal function itself stops at 20 min; this client-side limit frees the queue slot if the
+# connection to Modal hangs, and cancels the call so it stops billing.
+MODAL_APP = os.environ.get("CEREBEL_MODAL_APP") or "cerebel-gemx"
+MODAL_CALL_TIMEOUT_S = float(os.environ.get("CEREBEL_MODAL_CALL_TIMEOUT_S") or "1500")
+# /api/health and the upload check look the class up on Modal (no GPU starts); the answer is
+# cached this long when it worked, and 30 s when it did not.
+MODAL_STATUS_TTL_S = float(os.environ.get("CEREBEL_MODAL_STATUS_TTL_S") or "300")
+MODAL_STATUS_TIMEOUT_S = float(os.environ.get("CEREBEL_MODAL_STATUS_TIMEOUT_S") or "10")
+_MODAL_DOWN_TTL_S = 30.0
+_MODAL_STATUS: dict = {"state": None, "at": float("-inf"), "error": None}
+_MODAL_STATUS_LOCK = threading.Lock()
+# IK, the display export and the privacy strip run on this machine's CPU after the GPU step.
+# With Modal, CEREBEL_QUEUE_WORKERS jobs can reach that step together; this caps how many do.
+POSTPROCESS_WORKERS = max(1, int(os.environ.get("CEREBEL_POSTPROCESS_WORKERS") or "4"))
+_POSTPROCESS_SLOTS = threading.BoundedSemaphore(POSTPROCESS_WORKERS)
 
 
 @dataclass
@@ -173,10 +189,64 @@ def wait_for_worker(timeout_s: float = WORKER_WAIT_READY_S) -> None:
     )
 
 
+def _modal_credentials() -> bool:
+    """A Modal token in the environment (MODAL_TOKEN_ID/SECRET) or in ~/.modal.toml."""
+    if os.environ.get("MODAL_TOKEN_ID") and os.environ.get("MODAL_TOKEN_SECRET"):
+        return True
+    config = os.environ.get("MODAL_CONFIG_PATH") or str(Path.home() / ".modal.toml")
+    return Path(config).is_file()
+
+
+def _modal_lookup() -> None:
+    """Resolve the deployed GEM-X class on Modal. Needs the API, starts no container."""
+    import modal
+
+    modal.Cls.from_name(MODAL_APP, "Gemx").hydrate()
+
+
+def _set_modal_status(state: str, error: str | None = None) -> None:
+    with _MODAL_STATUS_LOCK:
+        if state != _MODAL_STATUS["state"]:
+            (LOG.info if state == "remote" else LOG.warning)(
+                "Modal GPU backend %s%s", state, f": {error}" if error else ""
+            )
+        _MODAL_STATUS.update(state=state, at=time.monotonic(), error=error)
+
+
+def modal_status() -> str:
+    """"remote" when the deployed Modal class can be reached, else "down" (no token, modal not
+    installed, app not deployed, Modal unreachable or too slow). Cached, see MODAL_STATUS_TTL_S."""
+    with _MODAL_STATUS_LOCK:
+        state, at = _MODAL_STATUS["state"], _MODAL_STATUS["at"]
+        ttl = MODAL_STATUS_TTL_S if state == "remote" else _MODAL_DOWN_TTL_S
+        if state is not None and time.monotonic() - at < ttl:
+            return state
+    if not _modal_credentials():
+        _set_modal_status("down", "no Modal token (MODAL_TOKEN_ID/MODAL_TOKEN_SECRET)")
+        return "down"
+    found: dict = {}
+
+    def probe() -> None:
+        try:
+            _modal_lookup()
+            found["state"] = "remote"
+        except BaseException as exc:  # noqa: BLE001 - ImportError, auth, not found, network
+            found["state"] = "down"
+            found["error"] = f"{type(exc).__name__}: {exc}"
+
+    thread = threading.Thread(target=probe, name="modal-status", daemon=True)
+    thread.start()
+    thread.join(MODAL_STATUS_TIMEOUT_S)
+    if "state" not in found:
+        found = {"state": "down", "error": f"Modal lookup took over {MODAL_STATUS_TIMEOUT_S:.0f}s"}
+    _set_modal_status(found["state"], found.get("error"))
+    return found["state"]
+
+
 def worker_status(timeout: float = 2.0) -> str:
-    """GPU state: "remote" (Modal), "ready", "loading" (models still loading) or "down"."""
+    """GPU state: "remote" (Modal reachable), "ready", "loading" (models still loading) or "down"."""
     if GPU_BACKEND == "modal":
-        return "remote"
+        return modal_status()
     try:
         resp = _rpc({"cmd": "ping"}, timeout=timeout)
     except (OSError, ValueError, RuntimeError):
@@ -264,12 +334,34 @@ def _safe_extract(archive: bytes, dest: Path) -> None:
         tar.extractall(root)
 
 
+def _is_timeout(exc: BaseException) -> bool:
+    # FunctionCall.get(timeout=...) raises a TimeoutError; Modal's own classes are named *Timeout*.
+    return isinstance(exc, TimeoutError) or "Timeout" in type(exc).__name__
+
+
 def run_gemx_modal(session_id: str, fps: float, *, video_path: Path) -> Path:
     """Run GEM-X on Modal's autoscaling GPUs (deploy/modal_gemx.py) and unpack the result locally."""
-    import modal  # only needed when CEREBEL_GPU_BACKEND=modal
+    video = Path(video_path).read_bytes()
+    try:
+        import modal  # only needed when CEREBEL_GPU_BACKEND=modal
 
-    cls = modal.Cls.from_name(os.environ.get("CEREBEL_MODAL_APP", "cerebel-gemx"), "Gemx")
-    resp = cls().run.remote(session_id, Path(video_path).read_bytes(), Path(video_path).suffix, float(fps))
+        cls = modal.Cls.from_name(MODAL_APP, "Gemx")
+        call = cls().run.spawn(session_id, video, Path(video_path).suffix, float(fps))
+    except Exception as exc:  # noqa: BLE001 - the job never started on a GPU
+        _set_modal_status("down", f"{type(exc).__name__}: {exc}")
+        raise WorkerUnavailable(f"Modal GEM-X not reachable: {type(exc).__name__}: {exc}") from exc
+    LOG.info("Modal GEM-X call session=%s id=%s", session_id, getattr(call, "object_id", "?"))
+    try:
+        resp = call.get(timeout=MODAL_CALL_TIMEOUT_S)
+    except Exception as exc:  # noqa: BLE001
+        if not _is_timeout(exc):
+            raise
+        try:
+            call.cancel()
+        except Exception:  # noqa: BLE001
+            LOG.warning("could not cancel Modal call for session %s", session_id)
+        raise RuntimeError(f"Modal GEM-X job timed out after {MODAL_CALL_TIMEOUT_S:.0f}s") from exc
+    _set_modal_status("remote")
     if not resp.get("ok"):
         raise RuntimeError(resp.get("error") or "Modal GEM-X job failed")
     out_dir = DEFAULT_OUTPUT_ROOT / session_id
@@ -296,8 +388,13 @@ def write_latest_pointer(
     opensim_motion: Path | None = None,
     ik_status: str | None = None,
     failed_at: str | None = None,
+    session_dir: Path | None = None,
 ) -> Path:
-    """Atomic write of the pointer the mesh visualizer watches."""
+    """Atomic write of the pointer the mesh visualizer watches.
+
+    latest_mesh.json holds only the newest job; with several jobs at once (Modal) each would
+    overwrite the others, so with ``session_dir`` the same payload also goes to that session's
+    own SESSION_STATUS file, which the upload progress reads first (see read_session_pointer)."""
     payload = {
         "session_id": session_id,
         "status": status,
@@ -313,11 +410,36 @@ def write_latest_pointer(
         "kinetic_lens_port": KINETIC_LENS_PORT,
     }
     target = data_dir / "latest_mesh.json"
-    tmp = data_dir / "latest_mesh.json.tmp"
+    # One temp file per writer: with parallel jobs a shared name made one job's replace() fail
+    # with FileNotFoundError after another job had already moved the file.
+    tmp = data_dir / f"latest_mesh.json.{os.getpid()}.{threading.get_ident()}.tmp"
     data_dir.mkdir(parents=True, exist_ok=True)
     tmp.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     tmp.replace(target)
+    if session_dir is not None and Path(session_dir).is_dir():
+        own = Path(session_dir) / SESSION_STATUS
+        own_tmp = own.with_name(own.name + ".tmp")
+        own_tmp.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        own_tmp.replace(own)
     return target
+
+
+SESSION_STATUS = "gemx_status.json"
+
+
+def read_session_pointer(data_dir: Path, session_id: str) -> dict | None:
+    """This session's pipeline state: its own status file, else latest_mesh.json if it is about
+    this session (older runs and other writers only update latest_mesh.json)."""
+    for path in (Path(data_dir) / "sessions" / session_id / SESSION_STATUS, Path(data_dir) / "latest_mesh.json"):
+        if not path.is_file():
+            continue
+        try:
+            ptr = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if ptr.get("session_id") == session_id:
+            return ptr
+    return None
 
 
 def _run_ik_subprocess(session_dir: Path, hpe_results: Path, fps: float) -> tuple[bool, Path | None, str | None]:
@@ -425,6 +547,7 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
     fps = _session_fps(header)
     write_latest_pointer(
         data_dir,
+        session_dir=session_dir,
         session_id=session_id,
         output_dir=session_dir,
         hpe_results=Path(),
@@ -455,33 +578,36 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
         opensim_motion: Path | None = None
         ik_ok = False
         ik_error: str | None = None
-        if IK_ENABLED:
-            try:
-                write_latest_pointer(
-                    data_dir,
-                    session_id=session_id,
-                    output_dir=out_dir,
-                    hpe_results=hpe,
-                    fps=fps,
-                    status="running",
-                    ik_status="running",
-                )
-                ik_ok, opensim_motion, ik_error = _run_ik_subprocess(session_dir, hpe, fps)
-            except Exception as exc:
-                LOG.exception("IK pipeline failed for session %s", session_id)
-                ik_error = str(exc)
-
         soma_display: Path | None = None
-        if _fake_egocentric_enabled():
-            try:
-                soma_display = _export_soma_display(session_dir, hpe, fps)
-            except Exception:
-                LOG.exception("SOMA display export raised for session %s", session_id)
+        with _POSTPROCESS_SLOTS:  # CPU work on this machine; see CEREBEL_POSTPROCESS_WORKERS
+            if IK_ENABLED:
+                try:
+                    write_latest_pointer(
+                        data_dir,
+                        session_dir=session_dir,
+                        session_id=session_id,
+                        output_dir=out_dir,
+                        hpe_results=hpe,
+                        fps=fps,
+                        status="running",
+                        ik_status="running",
+                    )
+                    ik_ok, opensim_motion, ik_error = _run_ik_subprocess(session_dir, hpe, fps)
+                except Exception as exc:
+                    LOG.exception("IK pipeline failed for session %s", session_id)
+                    ik_error = str(exc)
 
-        _sanitize_hpe(hpe)
+            if _fake_egocentric_enabled():
+                try:
+                    soma_display = _export_soma_display(session_dir, hpe, fps)
+                except Exception:
+                    LOG.exception("SOMA display export raised for session %s", session_id)
+
+            _sanitize_hpe(hpe)
 
         write_latest_pointer(
             data_dir,
+            session_dir=session_dir,
             session_id=session_id,
             output_dir=out_dir,
             hpe_results=hpe,
@@ -497,8 +623,9 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
             "output_dir": str(out_dir),
             "hpe_results": str(hpe),
             "fps": fps,
-            "mode": "warm",
-            "input": "jpegs" if jpeg_dir is not None else "video",
+            # Modal is always sent the uploaded video, even when the JPEGs were ready first.
+            "mode": "modal" if GPU_BACKEND == "modal" else "warm",
+            "input": "jpegs" if jpeg_dir is not None and GPU_BACKEND != "modal" else "video",
             "fake_egocentric": _fake_egocentric_enabled(),
         }
         if soma_display:
@@ -536,6 +663,7 @@ def process_session(session_dir: Path, data_dir: Path) -> PipelineResult:
             failed_at = "gpu_unavailable"
         write_latest_pointer(
             data_dir,
+            session_dir=session_dir,
             session_id=session_id,
             output_dir=session_dir,
             hpe_results=Path(),
@@ -576,7 +704,8 @@ class GemxPipelineQueue:
         # One local GPU = one job at a time. With CEREBEL_GPU_BACKEND=modal each job gets its
         # own autoscaled GPU container, so several jobs can run side by side.
         default_workers = "10" if GPU_BACKEND == "modal" else "1"
-        self.workers = max(1, int(os.environ.get("CEREBEL_QUEUE_WORKERS", default_workers)))
+        # deploy/env.product.example ships "CEREBEL_QUEUE_WORKERS=" (empty): that means the default.
+        self.workers = max(1, int(os.environ.get("CEREBEL_QUEUE_WORKERS") or default_workers))
         for n in range(self.workers):
             threading.Thread(target=self._loop, name=f"gemx-queue-{n}", daemon=True).start()
         if GPU_BACKEND == "modal":
@@ -627,6 +756,12 @@ class GemxPipelineQueue:
                 self._running.add(session_dir.name)
             try:
                 result = process_session(session_dir, self.data_dir)
+            except Exception as exc:  # noqa: BLE001 - an escaped error must not end this worker thread
+                LOG.exception("GEM-X job crashed for session %s", session_dir.name)
+                result = PipelineResult(
+                    session_id=session_dir.name, video_path=session_dir, output_dir=session_dir,
+                    hpe_results=Path(), fps=0.0, ok=False, error=str(exc), failed_at="gemx",
+                )
             finally:
                 with self._cv:
                     self._running.discard(session_dir.name)

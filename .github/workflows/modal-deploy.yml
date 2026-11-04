@@ -16,6 +16,7 @@
 #                                 Must stay inside the US: the privacy policy promises it.
 #   CEREBEL_MODAL_MIN_CONTAINERS  default 0
 #   CEREBEL_MODAL_MAX_CONTAINERS  default 10
+#   CEREBEL_MODAL_SCALEDOWN_S     default 300 (seconds an idle GPU container stays up and bills)
 #   CEREBEL_MODAL_HF_SECRET       name of a Modal Secret holding HF_TOKEN, if ever needed
 
 name: modal-deploy
@@ -55,6 +56,7 @@ jobs:
           VAR_GPU: ${{ vars.CEREBEL_MODAL_GPU }}
           VAR_MIN: ${{ vars.CEREBEL_MODAL_MIN_CONTAINERS }}
           VAR_MAX: ${{ vars.CEREBEL_MODAL_MAX_CONTAINERS }}
+          VAR_SCALEDOWN: ${{ vars.CEREBEL_MODAL_SCALEDOWN_S }}
           VAR_HF: ${{ vars.CEREBEL_MODAL_HF_SECRET }}
           VAR_REGION: ${{ vars.CEREBEL_MODAL_REGION }}
           # 1 would leave the GPU class out of the deploy (prefetch-only mode); never here.
@@ -67,6 +69,7 @@ jobs:
           if [ -n "$VAR_GPU" ]; then export CEREBEL_MODAL_GPU="$VAR_GPU"; fi
           if [ -n "$VAR_MIN" ]; then export CEREBEL_MODAL_MIN_CONTAINERS="$VAR_MIN"; fi
           if [ -n "$VAR_MAX" ]; then export CEREBEL_MODAL_MAX_CONTAINERS="$VAR_MAX"; fi
+          if [ -n "$VAR_SCALEDOWN" ]; then export CEREBEL_MODAL_SCALEDOWN_S="$VAR_SCALEDOWN"; fi
           if [ -n "$VAR_HF" ]; then export CEREBEL_MODAL_HF_SECRET="$VAR_HF"; fi
           if [ -n "$VAR_REGION" ]; then
             for r in ${VAR_REGION//,/ }; do

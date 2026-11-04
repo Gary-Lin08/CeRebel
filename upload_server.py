@@ -24,7 +24,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from gemx_pipeline import GemxPipelineQueue, PipelineResult
+from gemx_pipeline import GemxPipelineQueue, PipelineResult, read_session_pointer
 
 LOG = logging.getLogger("cerebel.upload")
 
@@ -314,19 +314,18 @@ def _extract_frames_background(
 
 
 def _watch_pipeline(session_id: str) -> None:
-    """Mirror latest_mesh.json into upload_progress while this session is active."""
-    pointer = DATA_DIR / "latest_mesh.json"
+    """Mirror the pipeline pointer into upload_progress while this session is active.
+
+    Reads the session's own gemx_status.json first: latest_mesh.json only shows the newest job,
+    so with several jobs at once (CEREBEL_QUEUE_WORKERS > 1) it would skip other sessions' steps."""
     deadline = time.time() + 7200
     while time.time() < deadline:
         prog = _read_progress(session_id) or {}
         stage = prog.get("stage")
         if stage in ("ready", "error"):
             return
-        if pointer.is_file():
-            try:
-                ptr = json.loads(pointer.read_text(encoding="utf-8"))
-            except (OSError, json.JSONDecodeError):
-                ptr = {}
+        ptr = read_session_pointer(DATA_DIR, session_id)
+        if ptr:
             if ptr.get("session_id") == session_id:
                 status = ptr.get("status") or ""
                 ik_status = ptr.get("ik_status") or ""
@@ -585,14 +584,9 @@ class Handler(BaseHTTPRequestHandler):
                 return _json_response(self, 404, {"error": True, "message": "unknown session"})
             # Refresh from pointer if still in flight
             if prog.get("stage") not in ("ready", "error"):
-                pointer = DATA_DIR / "latest_mesh.json"
-                if pointer.is_file():
-                    try:
-                        ptr = json.loads(pointer.read_text(encoding="utf-8"))
-                        if ptr.get("session_id") == session_id:
-                            prog = _enrich_from_pointer(session_id, prog, ptr)
-                    except (OSError, json.JSONDecodeError):
-                        pass
+                ptr = read_session_pointer(DATA_DIR, session_id)
+                if ptr:
+                    prog = _enrich_from_pointer(session_id, prog, ptr)
             return _json_response(self, 200, prog)
         _json_response(self, 404, {"error": True, "message": "not found"})
 

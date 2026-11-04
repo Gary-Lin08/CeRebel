@@ -19,7 +19,15 @@ which calls Cls.from_name("cerebel-gemx", "Gemx")().run.remote(session_id, video
 suffix, fps)).
 
 Knobs (read at deploy time): CEREBEL_MODAL_GPU (default L40S), CEREBEL_MODAL_MIN_CONTAINERS
-(default 0), CEREBEL_MODAL_MAX_CONTAINERS (default 10 = Modal Starter plan GPU limit).
+(default 0), CEREBEL_MODAL_MAX_CONTAINERS (default 10 = Modal Starter plan GPU limit),
+CEREBEL_MODAL_SCALEDOWN_S (default 300: an idle GPU container stays up, and bills, this long).
+
+No github.com at run time: GEM-X's ViTPose and SAM-3D-Body loaders call
+torch.hub.load("facebookresearch/dinov3", ..., source="github"), and torch.hub asks github.com for
+the repo's default branch on every such call, even when the code is already cached (this
+crash-looped the China GPU worker on 2026-11-02). `prefetch` puts that code in the cache Volume and
+Gemx.load sends those calls to the cached copy (_use_cached_hub_repos). Weights, YOLOX and the
+SOMA assets come from the Volume or the image, so a cold container needs no download at all.
 """
 
 from __future__ import annotations
@@ -41,6 +49,8 @@ GPU = os.environ.get("CEREBEL_MODAL_GPU", "L40S")
 # base price; a narrow region ("us-east") 1.75x. Comma-separated for several; empty means "us".
 REGION = [r.strip() for r in (os.environ.get("CEREBEL_MODAL_REGION") or "us").split(",")
           if r.strip()] or ["us"]
+if any(not (r == "us" or r.startswith("us-")) for r in REGION):
+    raise SystemExit(f"CEREBEL_MODAL_REGION={REGION}: GPU containers must stay in the US (privacy policy)")
 OVERLAY = Path(__file__).resolve().parent / "gemx_overlay"
 
 
@@ -51,6 +61,9 @@ def _base_commit() -> str:
 
 BASE_COMMIT = _base_commit()
 _WEIGHT_DIRS = ("checkpoints", "pretrained", "mhr_data", "soma_data")
+# torch.hub repos that GEM-X loads with source="github"; prefetch caches them under TORCH_HOME/hub.
+HUB_REPOS = ("facebookresearch/dinov3",)
+TORCH_HOME = "/cache/torch"  # in the cache Volume
 
 # Mirrors the GPU server's working env (torch 2.4.0 + cu124, Python 3.10) and GEM-X's Dockerfile.
 image = (
@@ -99,10 +112,39 @@ image = (
         "PYOPENGL_PLATFORM": "egl",
         "EGL_PLATFORM": "surfaceless",
         "HF_HOME": "/cache/hf",
-        "TORCH_HOME": "/cache/torch",
+        "TORCH_HOME": TORCH_HOME,
         "PYTHONPATH": GEMX_REMOTE,
     })
 )
+
+
+def _hub_cache_dir(repo: str, torch_home: str | None = None) -> Path:
+    """Where torch.hub keeps `owner/name` (default branch main): <TORCH_HOME>/hub/owner_name_main."""
+    home = torch_home or os.environ.get("TORCH_HOME") or TORCH_HOME
+    return Path(home) / "hub" / (repo.replace("/", "_") + "_main")
+
+
+def _use_cached_hub_repos(torch_home: str | None = None) -> dict:
+    """Send torch.hub.load(<repo in HUB_REPOS>, ..., source="github") to the cached copy
+    (source="local"), so loading the models never contacts github.com. Repos missing from the
+    cache are left alone (torch.hub then tries GitHub) and reported, so smoke output shows it."""
+    import torch
+
+    local = {r: _hub_cache_dir(r, torch_home) for r in HUB_REPOS}
+    info = {r: (str(d) if (d / "hubconf.py").is_file() else "missing: run prefetch") for r, d in local.items()}
+    cached = {r: d for r, d in local.items() if (d / "hubconf.py").is_file()}
+    original = getattr(torch.hub.load, "_cerebel_original", torch.hub.load)
+
+    def load(repo_or_dir, model, *args, source="github", **kwargs):
+        repo = str(repo_or_dir).split(":", 1)[0]
+        if source == "github" and repo in cached:
+            return original(str(cached[repo]), model, *args, source="local", **kwargs)
+        return original(repo_or_dir, model, *args, source=source, **kwargs)
+
+    load._cerebel_original = original
+    torch.hub.load = load
+    return info
+
 
 inputs_vol = modal.Volume.from_name("cerebel-gemx-inputs", create_if_missing=True)
 # torch.hub (DINOv3 / ViTPose code), YOLOX weights and other runtime downloads are cached here.
@@ -198,7 +240,10 @@ def prefetch() -> dict:
 
         torch.hub.load("facebookresearch/dinov3", "dinov3_vits16", source="github",
                        pretrained=False, skip_validation=True, trust_repo=True)
-        extra["dinov3_hub"] = "ok"
+        # Load it again the way Gemx does at run time (cached copy, no GitHub) to prove it works.
+        _use_cached_hub_repos()
+        torch.hub.load("facebookresearch/dinov3", "dinov3_vits16", source="github", pretrained=False)
+        extra["dinov3_hub"] = str(_hub_cache_dir("facebookresearch/dinov3"))
     except Exception as exc:  # noqa: BLE001
         extra["dinov3_error"] = repr(exc)
     cache_vol.commit()
@@ -207,7 +252,16 @@ def prefetch() -> dict:
         total = sum(p.stat().st_size for p in Path(VOL_INPUTS, d).rglob("*") if p.is_file())
         sizes[d] = f"{total / 1e9:.2f} GB"
     soma_assets = Path(GEMX_REMOTE, "inputs", "soma_assets")
+    # Everything a cold GPU container reads instead of downloading. False = run prefetch again.
+    runtime_ready = (
+        not missing
+        and "yolox" in extra
+        and "dinov3_hub" in extra
+        and all((_hub_cache_dir(r) / "hubconf.py").is_file() for r in HUB_REPOS)
+        and soma_assets.exists()
+    )
     result = {
+        "runtime_ready": runtime_ready,
         "files": done,
         "missing": missing,
         "hf_revision": revision,
@@ -230,7 +284,7 @@ if os.environ.get("CEREBEL_MODAL_PREFETCH_ONLY") != "1":
         image=image,
         volumes=VOLUMES,
         timeout=20 * 60,
-        scaledown_window=5 * 60,
+        scaledown_window=int(os.environ.get("CEREBEL_MODAL_SCALEDOWN_S", "300")),
         min_containers=int(os.environ.get("CEREBEL_MODAL_MIN_CONTAINERS", "0")),
         max_containers=int(os.environ.get("CEREBEL_MODAL_MAX_CONTAINERS", "10")),
     )
@@ -242,6 +296,7 @@ if os.environ.get("CEREBEL_MODAL_PREFETCH_ONLY") != "1":
             sys.path.insert(0, GEMX_REMOTE)
             os.chdir(GEMX_REMOTE)
             t0 = time.time()
+            self.hub = _use_cached_hub_repos()  # before any GEM-X import: no github.com at run time
             from scripts.demo.warm_soma_pipeline import WarmSomaPipeline
 
             ckpt = Path(GEMX_REMOTE) / "inputs" / "pretrained" / "gem_soma.ckpt"
@@ -282,6 +337,7 @@ if os.environ.get("CEREBEL_MODAL_PREFETCH_ONLY") != "1":
                     "frames": result.get("frames"),
                     "elapsed_s": round(time.time() - started, 2),
                     "model_load_s": getattr(self, "load_s", None),
+                    "hub": getattr(self, "hub", None),
                 }
 
 
