@@ -92,15 +92,21 @@ def _route_block(source: str, path: str) -> str:
 
 class PageSendsLoginHeaderTests(unittest.TestCase):
     def setUp(self):
-        self.html = (chat_server.UI_DIR / "index.html").read_text(encoding="utf-8")
+        ui = chat_server.UI_DIR
+        # Main app fetch() calls live in playground-main.js (extracted from index.html).
+        self.sources = {
+            "index.html": (ui / "index.html").read_text(encoding="utf-8"),
+            "playground-main.js": (ui / "playground-main.js").read_text(encoding="utf-8"),
+        }
 
     def test_every_api_request_sends_the_login_header(self):
         missing, seen = [], set()
-        for line, args, before in _fetch_calls(self.html):
-            paths = _api_paths(args, before)
-            seen |= paths
-            if paths - PUBLIC and not _sends_login(args, before):
-                missing.append(f"index.html:{line} {sorted(paths - PUBLIC)}")
+        for name, source in self.sources.items():
+            for line, args, before in _fetch_calls(source):
+                paths = _api_paths(args, before)
+                seen |= paths
+                if paths - PUBLIC and not _sends_login(args, before):
+                    missing.append(f"{name}:{line} {sorted(paths - PUBLIC)}")
         self.assertEqual(missing, [], "add { headers: authHeaders() } to these requests")
         # Guard the scanner itself: it must still see the requests the report page depends on.
         for path in ("/api/session", "/api/golf_phases", "/api/sport_analysis", "/api/coach_briefs", "/api/smplx_mesh_clip", "/api/chat/stream"):
